@@ -1,0 +1,402 @@
+html{
+	background:url(img/Background.jpg) no-repeat;
+  	background-size: cover;
+  	background-attachment: fixed;
+  	height:100%;
+}
+
+#fname-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#lname-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#account-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#alias-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#repassword-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#password-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#email-tooltip{margin-right: 0px; margin-top: -20px; display: block;}
+#forgetA-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#forgetQ-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#type-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#gender-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#phone-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#postalCode-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#addressCity-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#addressDistrict-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#address-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#birthday-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#selfIntroduction-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+
+#ltitle{
+	width:auto;
+	float:left;
+	height: 100%;
+}
+#rtitle{
+	width:auto;
+	height: 100%;
+	float:right;
+	margin-right: 50px;
+}
+
+.login {
+	color:#3c3c3c;
+	font-family: Helvetica, Arial, sans-serif;
+  	font-weight:50;
+	font-size: 18px;
+	border-radius: 5px;
+	line-height: 25px;
+	background-color: #fbfbfb;
+	padding: 5px 0px 0px 15px;
+	margin-top: 8%;
+	width:100px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid black;
+}
+#loginBtn{
+	padding: 5px 0px 0px 0px;
+	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+	border: #fbfbfb solid 1px;
+	background-color: #3498db;
+	color:white;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+#loginBtn:hover{
+	background-color: rgba(0,0,0,0);
+}
+.loginease {
+	background-color: #fbfbfb;
+	-webkit-transition: .3s ease;
+	-moz-transition: .3s ease;
+	-o-transition: .3s ease;
+	-ms-transition: .3s ease;
+	transition: .3s ease;
+}
+
+#form-main{
+	width:100%;
+	float:left;
+	padding-top:0px;
+}
+
+#form-div {
+	background-color:rgba(72,72,72,0.4);
+	padding-left:35px;
+	padding-right:35px;
+	padding-top:35px;
+	padding-bottom:50px;
+	width: 650px;
+  	-moz-border-radius: 7px;
+  	-webkit-border-radius: 7px;
+  	margin: 0px auto;
+  	margin-top:30px;
+}
+
+#fname-div{
+	width:48%;
+	float:left;
+}
+#lname-div{
+	width:48%;
+	float:left;
+	margin-left: 4%;
+	margin-bottom: 10px;
+}
+
+.feedback-input {
+	color:#3c3c3c;
+	font-family: Helvetica, Arial, sans-serif;
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 5px;
+	line-height: 22px;
+	background-color: #fbfbfb;
+	padding: 13px 13px 13px 54px;
+	margin-bottom: 10px;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 3px solid rgba(0,0,0,0);
+}
+
+/* Icons ---------------------------------- */
+#fname, #lname{
+	background-image: url(http://rexkirby.com/kirbyandson/images/name.svg);
+	background-size: 30px 30px;
+	background-position: 10px ,right;
+	background-repeat: no-repeat;
+}
+#alias{
+	background-image: url(../img/alias.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#account{
+	background-image: url(../img/account.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#password{
+	background-image: url(../img/password.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#repassword{
+	background-image: url(../img/repassword.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#email{
+	background-image: url(../img/email.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#forgetQ{
+	background-image: url(../img/forgetQ.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#forgetA{
+	background-image: url(../img/forgetA.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#type{
+	background-image: url(../img/type.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#gender{
+	background-image: url(../img/gender.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#phone{
+	background-image: url(../img/phone.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#postalCode{
+	background-image: url(../img/postalCode.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#addressCity{
+	background-image: url(../img/addressCity.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#addressDistrict{
+	background-image: url(../img/addressDistrict.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#address{
+	background-image: url(../img/address.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#birthday{
+	background-image: url(../img/birthday.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+}
+#image{
+	background-image: url(../img/image.png);
+	background-size: 30px 30px;
+	background-position: 10px,right;
+	background-repeat: no-repeat;
+	text-align: left;
+}
+#selfIntroduction{
+	background-image: url(../img/selfIntroduction.png);
+	background-size: 30px 30px;
+	background-position: 10px 8px,right;
+	background-repeat: no-repeat;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    line-height: 150%;
+    resize:vertical;
+}
+
+input:hover, textarea:hover,
+input:focus, textarea:focus {
+	background-color:#DDDDDD;
+}
+
+#button-blue{
+	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+	float:left;
+	width: 100%;
+	border: #fbfbfb solid 4px;
+	border-radius: 5px;
+	cursor:pointer;
+	background-color: #3498db;
+	color:white;
+	font-size:24px;
+	padding-top:22px;
+	padding-bottom:22px;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+  	margin-top:-4px;
+  	font-weight:700;
+}
+#button-blue:hover{
+	background-color: rgba(0,0,0,0);
+	color: #0493bd;
+}
+.submit:hover {
+	color: #3498db;
+}
+.ease {
+	width: 0px;
+	height: 74px;
+	background-color: #fbfbfb;
+	-webkit-transition: .3s ease;
+	-moz-transition: .3s ease;
+	-o-transition: .3s ease;
+	-ms-transition: .3s ease;
+	transition: .3s ease;
+}
+.submit:hover .ease{
+  width:100%;
+  background-color:white;
+}
+
+
+
+@media all and (min-width: 768px){
+    body{
+      font-size:16px;
+    }
+    #top{
+		width:100%;
+		height: 80px;
+		background-color:darkslategray;
+	}
+	#homepage1{
+		text-decoration:none;
+		font-family: Comic Sans MS;
+		font-weight: 900;
+		margin-left: 50px;
+		color:white;
+		font-size: 50px;
+		display: block;
+		width:100%;
+	}
+	#forget{
+		margin-right:35%;
+		float:right;
+		color:white;
+	}
+	ul{
+		display:none;
+	}
+}
+@media all and (max-width: 768px) {
+	#form-div{
+		left: 3%;
+		right: 3%;
+		width: 88%;
+		padding-left: 3%;
+		padding-right: 3%;
+	}
+	#ltitle{
+		width:auto;
+		float:none;
+		height: 100%;
+	}
+	#homepage1{
+		text-decoration:none;
+		font-family: Comic Sans MS;
+		font-weight: 900;
+		color:white;
+		font-size: 50px;
+		display: block;
+		width:100%;
+		font-size:30px;
+    	text-align: center;
+	}
+    #top{
+		width:100%;
+		height: 50px;
+		background-color:darkslategray;
+	}
+	#rtitle{
+		display: none;
+	}
+	ul{
+		background-color:darkslategray;
+		list-style:none;margin:0px;
+		margin:0; padding:0; 
+	}
+	.login_list {
+		color:#3c3c3c;
+		font-family: Helvetica, Arial, sans-serif;
+  		font-weight:50;
+		font-size: 18px;
+		border-radius: 5px;
+		line-height: 25px;
+		background-color: #fbfbfb;
+		padding: 5px 0px 0px 15px;
+		margin-top: 7px;
+		margin-bottom: 7px;
+		width:80%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		box-sizing: border-box;
+  		border: 1px solid black;
+  		margin-left: 10%;
+	}
+	.avatar-view{
+		height: 100px;
+		width: 100px;
+	}
+	#forget{
+		margin-right:10%;
+		float:right;
+		color:white;
+	}
+	.feedback-input {
+		color:#3c3c3c;
+		font-family: Helvetica, Arial, sans-serif;
+  		font-weight:500;
+		font-size: 15px;
+		border-radius: 5px;
+		line-height: 15px;
+		padding: 10px 10px 10px 54px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		box-sizing: border-box;
+  		border: 1px solid rgba(0,0,0,0);
+	}
+}
+@media all and (min-width: 320px) and (max-width: 480px) {
+}
+@media all and (max-width: 320px) {
+}

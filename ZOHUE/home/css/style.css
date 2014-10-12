@@ -1,0 +1,170 @@
+#body{
+	background-image: url(../images/classy_fabric.png);
+	background-position: center;
+	height:100%;
+}
+
+#page{
+
+	background-image: url(../images/texturetastic_gray.png);
+	margin:30px 25px 25px 25px;
+	height:905px;
+	//height:100%;
+	border-radius: 15px;
+}
+
+#header{
+	height:130px;
+	width: 100%;
+　	text-align:center;
+　	line-height:80px;
+	border-radius:15px 15px 0px 0px;
+	color:#272727;
+	font-family: "mistral"; 
+	font-size:70px;
+}
+
+#icon{
+	float:left;
+	width:80px; 
+	height:80px;
+	margin:20px 5px 0px 20px;
+}
+
+#zohue{
+	color:black;
+	height:100px;
+	float:left;
+	margin:20px 0px 0px 10px;
+}
+
+#login{
+	font-size:20px;
+	font-family: "微軟正黑體";
+	float:right;
+	margin:20px 30px 0px 0px;
+	height:105px;
+	width:25%;
+	border-radius:20px;
+}
+
+#loginAc{
+	color:orange;
+	font-size: 15px;
+}
+
+.bb{
+	color:#3c3c3c;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 10px;
+	line-height: 22px;
+	background-color: rgba(74, 181, 151, 0.5);
+	padding: 8px 8px 8px 8px;
+	margin-bottom: 10px;
+	width:58%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);]
+
+}
+
+#inputLoginPw{
+	float:left;
+}
+
+#loginPw{
+	float:left;
+}
+
+#userLogin{
+	width:60px;
+	float:left;
+	margin: 2px 15px 0px 10px;
+
+}
+
+
+#leftSection{
+	border-style:solid;
+	border-color:rgb(74, 181, 151);
+	float:left;
+	border-radius:15px;
+	height:730px;
+	width: 17%;
+	margin:20px;
+
+}
+
+#content{
+	border-style:solid;
+	border-color:rgb(74, 181, 151);
+	float:left;
+	border-radius:15px;
+	height:730px;
+	width: 50%;
+	margin: 20px 20px 20px 0px;
+	color:rgb(74, 181, 151);
+	font-family:"微軟正黑體";
+	font-size:35px;
+	font-weight: bold;
+
+}
+
+#rightSection{
+	border-style:solid;
+	border-color:rgb(74, 181, 151);
+	float:left;
+	border-radius:15px;
+	height:730px;
+	width: 25%;
+	margin: 20px 20px 20px 0px;
+	color:rgb(74, 181, 151);
+	font-family:"微軟正黑體";
+	font-size:35px;
+	font-weight: bold;
+}
+
+#signUp{
+	margin:15px;
+	color:black;
+	font-size:18px;
+	font-weight: normal;
+}
+
+.aa{
+	color:#3c3c3c;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 10px;
+	line-height: 22px;
+	background-color: rgba(74, 181, 151, 0.5);
+	padding: 8px 8px 8px 8px;
+	margin-bottom: 10px;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
+#submit{
+	width:100px;
+	float:right;
+	margin-top:25px;
+}
+
+.check{
+	color:orange;
+	font-size:15px;
+	//display: none;
+}
+
+#account{
+	onkeyup:"(/[^-_A-Z0-9]/g,'')";
+}
