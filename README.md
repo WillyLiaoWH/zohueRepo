@@ -1,5 +1,5 @@
 zohueRepo
 =========
 
-testㄉ by Parker
+test by Parker
 for zohue
