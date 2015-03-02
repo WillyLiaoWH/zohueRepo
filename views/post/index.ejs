@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Join Us | ZOHUE</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+    <link rel="stylesheet" href="/styles/css_post/style.css">
+    <link rel="stylesheet" href="/styles/css_post/crop-avatar.css">
+    <link rel="stylesheet" href="/styles/css_post/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/css_post/cropper.min.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+
+    <script src="/js/js_post/mainJS.js"></script>
+    <script src="/js/js_post/bootstrap.min.js"></script>
+    <script src="/js/js_post/cropper.min.js"></script>
+    <script src="/js/js_post/crop-avatar.js"></script>
+	</head>
+	<body id="body">
+    <div id="post-form-main" class="container">
+    <div id="content">&nbsp癌病友論壇：發表文章<br>
+      <div id="postArticle">
+        文章標題<br><input type="text" name="postTitle" class="s" id="postTitle" style='margin-bottom: 20px;'><br>
+        文章分類&nbsp&nbsp&nbsp
+        <form id="articleClass">
+          <label><input type=radio name="classification" class="c" value="心情">心情</label>
+          <label><input type=radio name="classification" class="c" value="分享">分享</label>
+          <label><input type=radio name="classification" class="c" value="問題">問題</label>
+          <label><input type=radio name="classification" class="c" value="其它" style='margin-bottom: 20px;'>其它</label><br>
+        </form>
+        文章內容
+        <div id="postPanel">
+          <button value="恢復暫存" id="load" class="b" onclick="load();"><img src="/images/img_forum/back_icon.png"/>恢復暫存</button>
+          <button value="暫存" id="save" class="b" onclick="save();" style="width:90px;"><img src="/images/img_forum/save_icon.png"/>暫存</button>
+          <button name="image" id="image" value="上傳相片" class="b"><img src="/images/img_forum/images_icon.png"/>上傳相片</button>
+          <label id="savedText">已暫存</label>
+          <label id="loadedText">已恢復</label>
+        </div>
+        <div contentEditable="true" name="postContent" class="s" id="postContent">
+        </div>
+        <button value="確認送出" id="submitArticle" class="b" onclick="post();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
+        <button value="取消發表" id="abortArticle" class="b" onclick="abort();"><img src="/images/img_forum/cancel_icon.png"/>取消發表</button>
+        <!-- <input type="button" value="確認送出" class="b" id="" onclick="post();">
+        <input type="button" value="取消發表" class="b" id="abortArticle" onclick="abort();"> -->
+      </div>
+      <!-- Cropping modal -->
+        <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" id="avatar-modal-label">上傳相片</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="avatar-body">
+                    <!-- Upload image and data -->
+                    <div class="avatar-upload">
+                      <input class="avatar-src" name="avatar_src" type="hidden">
+                      <input class="avatar-data" name="avatar_data" type="hidden">
+                      <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
+                    </div>
+                    <!-- Crop and preview -->
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="avatar-wrapper"></div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="avatar-preview preview-lg"></div>
+                        <div class="avatar-preview preview-md"></div>
+                        <div class="avatar-preview preview-sm"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>儲存</button>
+                  <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div><!-- /.modal -->
+      </div>
+    </div>
+
+    
+  </body>
+</html>

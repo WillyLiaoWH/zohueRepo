@@ -1,0 +1,41 @@
+#changePassword{
+	margin:15px;
+	color:#816C5B;
+	font-size:18px;
+	font-weight: normal;
+}
+
+.s{
+	color:#816C58;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 10px;
+	line-height: 22px;
+	//background-color: rgba(195, 183, 172, 0.5);
+	background-color: rgba(102, 141, 60, 0.4);
+	padding: 8px 8px 8px 8px;
+	margin-bottom: 10px;
+	width:350px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
+#submit{
+	width:125px;
+	float:left;
+	font-size: 20px;
+	margin-top:25px;
+	color:#533828;
+}
+
+#submit:hover{
+	background-color: rgba(102, 141, 60, 0.5);
+}
+
+#account{
+	onkeyup:"(/[^-_A-Z0-9]/g,'')";
+}

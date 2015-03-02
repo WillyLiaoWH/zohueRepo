@@ -1,0 +1,123 @@
+#searchPanel{
+	//margin-right: 150px;
+	float:right;
+	width: 600px;
+}
+
+#searchWord{
+	width:350px;
+	margin: 8px 0px 0px 0px;
+}
+
+#search{
+	//width:90px;
+	font-size: 20px;
+	color:#533828;
+	margin-top:9px;
+	background-color: rgba(102, 141, 60, 0.4);
+}
+
+#search.hover{
+	background-color: rgba(102, 141, 60, 0.8);
+	color:#816C58;
+}
+
+#cancleSearch{
+	//width:90px;
+	font-size: 20px;
+	color:#533828;
+	margin-top:9px;
+	background-color: rgba(102, 141, 60, 0.4);
+}
+
+#cancleSearch.hover{
+	background-color: rgba(102, 141, 60, 0.8);
+	color:#816C58;
+}
+
+#page{
+	float:left;
+	margin: 15px 0px 0px 20px;
+	font-size: 22px;
+	color:#533828;
+
+}
+
+#pageDown{
+	float:left;
+	margin: 5px 0px 10px 20px;
+	font-size: 22px;
+	color:#533828;
+
+}
+
+#article{
+	/*margin: 26px 0px 0px 15px;*/
+	margin: 60px 0px 0px 15px;
+}
+
+#articleList{
+	padding:10px;
+	color:#533828;
+	font-size: 23px;
+
+}
+
+#simpleSignUp{
+	margin:15px;
+	color:#816C5B;
+	font-size:18px;
+	font-weight: normal;
+}
+
+.s{
+	height:48px;
+	color:#816C58;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 10px;
+	line-height: 22px;
+	//background-color: rgba(195, 183, 172, 0.5);
+	background-color: rgba(102, 141, 60, 0.4);
+	padding: 8px 8px 8px 8px;
+	//margin: 8px 3px 0px 0px;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
+.b{
+	//float:right;
+	background-color: rgba(232, 81, 0, 0.7);
+	color:#533828;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
+.b:hover{
+	background-color: rgba(102, 141, 60, 0.4);
+	color:#816C58;
+}
+
+.check{
+	color:#D26900;
+	font-size: 15px;
+}
+
+
+
+#account{
+	onkeyup:"(/[^-_A-Z0-9]/g,'')";
+}

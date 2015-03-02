@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Join Us | ZOHUE</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+
+    <link rel="stylesheet" href="styles/css_signup/crop-avatar.css">
+    <link rel="stylesheet" href="styles/css_signup/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/css_signup/cropper.min.css">
+    <link rel="stylesheet" href="styles/css_signup/style_signup.css" />
+    
+    <script src="js/js_signup/bootstrap.min.js"></script>
+    <script src="js/js_signup/cropper.min.js"></script>
+    <script src="js/js_signup/crop-avatar.js"></script>
+    
+    <script src="js/js_signup/joinus.js"></script>
+	</head>
+	<body id="body">
+    <ul>
+      <li>
+        <input name="login_a" type="text" class="login_list" id="login_a" placeholder="帳號"/>
+      </li>
+      <li>
+        <input name="login_p" type="text" class="login_list" id="login_p" placeholder="密碼"/>
+        <br><a id="forget" href="http://www.im.ntu.edu.tw/~lckung/">忘記密碼?</a>
+      </li>
+      <li>
+        <input name="loginBtn" type="button" class="login_list" id="loginBtn" value="登入" onclick="Login()"/>
+        <div class="loginease"></div>
+      </li>
+    </ul>
+
+
+		<div id="form-main" class="container"><label id="contentTitle">完整註冊，成為正式會員！</label>
+  			<div id="form-div">
+    			<form class="form" id="form1">
+      			<p class="name">
+      				<div id="fname-div">
+                <h class="input_title">姓氏</h>
+        				<input name="fname" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="fname" placeholder="姓氏" must="t"/>
+                <div class="tooltip fade bottom in" role="tooltip" id="fname-tooltip">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner" id="fname-inner"></div>
+                </div>
+        			</div>
+              
+        			<div id="lname-div">
+                <h class="input_title">名字</h>
+        				<input name="lname" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="lname" placeholder="名字" must="t"/>
+                <div class="tooltip fade bottom in" role="tooltip" id="lname-tooltip">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner" id="lname-inner"></div>
+                </div>
+        			</div>
+      			</p>
+      			<p class="alias">
+                <h class="input_title">上傳相片</h>
+                <input name="image" type="button" class="validate[required,custom[image]] feedback-input" id="image" value="上傳相片"/>
+              <div class="avatar-view" title="上傳相片">
+                <img id="avatar" src="images/img_signup/default_img.jpeg" alt="Avatar">
+              </div>
+      			</p>
+
+            <p class="forgetQ">
+              <h class="input_title">安全問題</h>
+              <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t">
+                <option value="" disabled selected>安全問題</option>
+                <script>ShowAllQ();</script>
+              </select>
+              <div class="tooltip fade bottom in" role="tooltip" id="forgetQ-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="forgetQ-inner"></div>
+              </div>
+            </p>
+            <p class="forgetA">
+              <h class="input_title">安全問題答案</h>
+              <input name="forgetA" type="text" class="validate[required,custom[forgetA]] feedback-input" id="forgetA" placeholder="安全問題答案" must="t"/>
+              <div class="tooltip fade bottom in" role="tooltip" id="forgetA-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="forgetA-inner"></div>
+              </div>
+            </p>
+            <p class="gender">
+              <h class="input_title">性別</h>
+              <select id="gender" class="validate[required,custom[gender]] feedback-input" must="t">
+                <option value="" disabled selected>性別</option>
+                <option value='M'>男性</option>
+                <option value='F'>女性</option>
+              </select>
+              <div class="tooltip fade bottom in" role="tooltip" id="gender-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="gender-inner"></div>
+              </div>
+            </p>
+            <p class="phone">
+              <h class="input_title">連絡電話</h>
+              <input name="phone" type="text" class="validate[required,custom[phone]] feedback-input" id="phone" placeholder="連絡電話"/>
+              <div class="tooltip fade bottom in" role="tooltip" id="phone-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="phone-inner"></div>
+              </div>
+            </p>
+
+            <p class="postalCode">
+              <h class="input_title">郵遞區號</h>
+              <input name="postalCode" type="text" class="validate[required,custom[postalCode]] feedback-input" id="postalCode" placeholder="郵遞區號" must="t"/>
+              <div class="tooltip fade bottom in" role="tooltip" id="postalCode-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="postalCode-inner"></div>
+              </div>
+            </p>
+            <p class="city">
+              <div id="fname-div">
+                <h class="input_title">居住縣市</h>
+                <select id="addressCity" class="validate[required,custom[postalCode]] feedback-input" must="t"> 
+                  <option value="" disabled selected>居住縣市</option>
+                  <script>ShowAllCity();</script>
+                </select>
+                <div class="tooltip fade bottom in" role="tooltip" id="addressCity-tooltip">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner" id="addressCity-inner"></div>
+                </div>
+              </div>
+              <div id="lname-div">
+                <h class="input_title">居住區</h>
+                <select id="addressDistrict" class="validate[required,custom[postalCode]] feedback-input" must="t">
+                  <option value="" disabled selected>居住區</option>
+                </select>
+                <div class="tooltip fade bottom in" role="tooltip" id="addressDistrict-tooltip">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner" id="addressDistrict-inner"></div>
+                </div>
+              </div>
+            </p>
+            <p class="address">
+              <h class="input_title">詳細住址</h>
+              <input name="address" type="text" class="validate[required,custom[address]] feedback-input" id="address" placeholder="地址" />
+              <div class="tooltip fade bottom in" role="tooltip" id="address-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="address-inner"></div>
+              </div>
+            </p>
+
+            <p class="birthday">
+              <h class="input_title">生日</h>
+              <div id="birthday_Y-div">
+                <input name="birthday_Y" type="text" class="validate[required,custom[birthday]] feedback-input" id="birthday_Y" placeholder="年(YYYY)" />
+              </div>
+              <div class="tooltip fade bottom in" role="tooltip" id="birthday_Y-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="birthday_Y-inner"></div>
+              </div>
+              <div id="birthday_M-div">
+                <select id="birthday_M" class="validate[required,custom[postalCode]] feedback-input" must="t">
+                  <option value="" disabled selected>月</option>
+                  <script>ShowMonth();</script>
+                </select>
+                <div class="tooltip fade bottom in" role="tooltip" id="birthday_M-tooltip">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner" id="birthday_M-inner"></div>
+                </div>
+              </div>
+              <div id="birthday_D-div">
+                <select id="birthday_D" class="validate[required,custom[postalCode]] feedback-input" must="t">
+                  <option value="" disabled selected>日</option>
+                </select>
+                <div class="tooltip fade bottom in" role="tooltip" id="birthday_D-tooltip">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner" id="birthday_D-inner"></div>
+                </div>
+              </div>
+            </p>
+
+            <p class="type">
+              <h class="input_title">主要疾病</h>
+              <select id="type" class="validate[required,custom[type]] feedback-input" must="t">
+                <option value="" disabled selected>主要疾病</option>
+                <option value='1'>鼻咽癌</option>
+                <option value='2'>鼻竇癌</option>
+                <option value='3'>副鼻竇癌</option>
+                <option value='4'>口腔癌</option>
+                <option value='5'>口咽癌</option>
+                <option value='6'>下咽癌</option>
+                <option value='7'>喉癌</option>
+                <option value='8'>唾液腺癌</option>
+                <option value='9'>甲狀腺癌</option>
+              </select>
+              <div class="tooltip fade bottom in" role="tooltip" id="type-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="type-inner"></div>
+              </div>
+            </p>
+      			<p class="selfIntroduction">
+              <h class="input_title">次要疾病</h>
+        			<textarea name="selfIntroduction" class="validate[required,length[6,300]] feedback-input" id="selfIntroduction" placeholder="次要疾病"></textarea>
+              <div class="tooltip fade bottom in" role="tooltip" id="selfIntroduction-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="selfIntroduction-inner"></div>
+              </div>
+      			</p>
+
+      
+      			<div class="submit">
+        			<input type="button" value="送 出" id="button-blue" onclick="Submit()"/>
+        			<div class="ease"></div>
+      			</div>
+    		  </form>
+          <form style="display: hidden" action="/change/index.html" method="post" id="hform">
+            <input type="hidden" id="haccount" name="var1" value=""/>
+            <input type="hidden" id="var2" name="var2" value=""/>
+          </form>
+  		  </div>
+
+        <!-- Cropping modal -->
+        <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form class="avatar-form" method="post" action="/imgupload_avatar" enctype="multipart/form-data">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" id="avatar-modal-label">上傳相片</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="avatar-body">
+                    <!-- Upload image and data -->
+                    <div class="avatar-upload">
+                      <input class="avatar-src" name="avatar_src" type="hidden">
+                      <input class="avatar-data" name="avatar_data" type="hidden">
+                      <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
+                    </div>
+                    <!-- Crop and preview -->
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="avatar-wrapper"></div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="avatar-preview preview-lg"></div>
+                        <div class="avatar-preview preview-md"></div>
+                        <div class="avatar-preview preview-sm"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>儲存</button>
+                  <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div><!-- /.modal -->
+    </div>
+  </body>
+</html>

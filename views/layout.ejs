@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZOHUE</title>
+    <link rel="icon" href="/images/img_public/favicon2.ico" type="image/x-icon">
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--  
+        Stylesheets and Preprocessors
+        ==============================
+
+        You can always bring in CSS files manually with `<link>` tags, or asynchronously
+        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
+        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+        By default, stylesheets from your `assets/styles` folder are included
+        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+        are supported. In production, your styles will be minified and concatenated into
+        a single file.
+        
+        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+            
+            + Change the order of your CSS files
+            + Import stylesheets from other directories
+            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+    -->
+
+    <!--STYLES-->
+    
+    <!--STYLES END-->
+    <script src="/js/js_public/jquery.min.js"></script>
+    <script src="/js/js_public/jquery.scrolly.min.js"></script>
+    <script src="/js/js_public/jquery.scrollzer.min.js"></script>
+    <script src="/js/js_public/topControl.js"></script>
+    <link rel="stylesheet" href="/styles/css_public/topControl.css">
+  </head>
+
+  <body>
+    <div id="header">
+      <a id="z" class="title" href="/home">Z</a>
+      <a id="o" class="title" href="/home">O</a>
+      <a id="h" class="title" href="/home">H</a>
+      <a id="u" class="title" href="/home">U</a>
+      <a id="e" class="title" href="/home">E</a>
+      <div id="loginSection">
+        帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
+        &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
+        <!-- <input type="button" value="登入" class="b" id="login" onclick="Login();"> -->
+        <button value="登入" id="login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
+      </div>
+      <!-- <input type="button" value="登出" class="b" id="logout" onclick="Logout();"> -->
+      <button value="登出" id="logout" onclick="Logout();"><img style="width:24px; height:24px;" src="/images/img_public/logout_icon.png"/>登出</button>
+      <div id="profile">
+        <img id="userimg" src="http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/durchschnittsgesichter/m(01-32)_gr.jpg" alt="Smiley face" height="50" width="50">
+        <div id="userAlias"></div></div>
+    </div>
+    <hr id="hr">
+    
+    <div id="menu">
+      <!-- <a class="item"><label>＞ 最新消息</label></a><br> -->
+      <a class="item" id="forum"><label><img src="/images/img_public/forum_icon.png"/>&nbsp論壇</label></a><br>
+      <a class="item" id="proInfo"><label><img style='height:32px; width:30px;' src="/images/img_public/pro_icon.png"/>&nbsp專業知識</label></a><br>
+      <a class="item" id="setUp"><label><img src="/images/img_public/setting_icon.png"/>&nbsp設定</label></a><br>
+      <div id="setUpMenu">
+        <a class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
+        <a class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
+        <a class="setUpItem"><label>隱私權設定</label></a><br>
+      </div>
+      <div id="fullSignup">
+        <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
+      </div>
+    </div>
+    <%- body %>
+
+
+
+    <!--
+        Client-side Templates
+        ========================
+
+        HTML templates are important prerequisites of modern, rich client applications.
+        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+        that you load these templates client-side.
+
+        By default, your Gruntfile is configured to automatically load and precompile
+        client-side JST templates in your `assets/templates` folder, then
+        include them here automatically (between TEMPLATES and TEMPLATES END).
+        
+        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Import templates from other directories
+            + Use a different template engine (handlebars, jade, dust, etc.)
+            + Internationalize your client-side templates using a server-side
+              stringfile before they're served.
+    -->
+
+    <!--TEMPLATES-->
+    
+    <!--TEMPLATES END-->
+
+
+    <!--
+
+      Client-side Javascript
+      ========================
+
+      You can always bring in JS files manually with `script` tags, or asynchronously
+      on the client using a solution like AMD (RequireJS).  Or, if you like, you can 
+      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, files in your `assets/js` folder are included here
+      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+      and concatenated into a single file.
+      
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+          
+          + Change the order of your scripts
+          + Import scripts from other directories
+          + Use a different preprocessor, like TypeScript
+
+    -->
+
+    <div id="signup">&nbsp簡易註冊
+        <form id="simpleSignUp">
+          暱稱<label id="checkAlias" class="check"></label><br>
+          <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
+          帳號<label id="checkAccount" class="check"></label><br>
+          <input type="text" name="UserAccount" class="s" id="UserAccount"><br>
+          密碼<label id="checkPwd" class="check"></label><br>
+          <input type="password" name="UserPwd" class="s" id="UserPwd"><br>
+          確認密碼<label id="checkPwdConfirm" class="check"></label><br>
+          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm"><br>
+          身分<label id="checkType" class="check"></label><br>
+          <select name="UserType" class="s" id="UserType">
+            <option value='P'>病友</option>
+            <option value='F'>家屬</option>
+            <option value='S'>社工師</option>
+            <option value='D'>醫生</option>
+            <option value='N'>一般民眾</option>
+          </select><br>
+          E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
+　        <!-- <input type="button" value="確認送出" class="s" id="submit" onclick="check();"> -->
+          <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
+        </form>
+    </div>
+
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <!--SCRIPTS END-->
+    
+  </body>
+</html>
