@@ -217,8 +217,8 @@
               </div>
             </p>
 
-            <p class="type">
-              <h class="input_title">主要疾病</h>
+            <p class="type" id="p_type">
+              <h id="prim_dis" class="input_title">主要疾病</h>
               <select id="type" class="validate[required,custom[type]] feedback-input" must="t">
                 <option value="" disabled selected>主要疾病</option>
                 <option value='1'>鼻咽癌</option>
@@ -236,8 +236,8 @@
                 <div class="tooltip-inner" id="type-inner"></div>
               </div>
             </p>
-      			<p class="selfIntroduction">
-              <h class="input_title">次要疾病</h>
+      			<p class="selfIntroduction" id="p_selfIntroduction">
+              <h id="sec_dis" class="input_title">次要疾病</h>
         			<textarea name="selfIntroduction" class="validate[required,length[6,300]] feedback-input" id="selfIntroduction" placeholder="次要疾病"></textarea>
               <div class="tooltip fade bottom in" role="tooltip" id="selfIntroduction-tooltip">
                 <div class="tooltip-arrow"></div>
