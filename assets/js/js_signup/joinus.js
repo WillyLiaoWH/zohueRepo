@@ -1,6 +1,27 @@
 var obj_postal;
 
 $(document).ready(function(){
+  $.get("/user/showProfile", function(full){
+    ooo = JSON.parse(full);
+    var type=ooo.type;
+    switch(type){
+      case "P":
+      case "F":
+        document.getElementById("prim_dis").innerHTML = "主要疾病";
+        document.getElementById("sec_dis").innerHTML = "次要疾病";
+        break;
+      case "S":
+      case "N":
+        document.getElementById("p_type").style.visibility = "hidden";
+        document.getElementById("p_selfIntroduction").style.display = "none";
+        break;
+      case "D":
+        document.getElementById("prim_dis").innerHTML = "主治科目";
+        document.getElementById("sec_dis").innerHTML = "其他專長";
+        break;
+    }
+  });
+  
   $("#addressCity").change(function() { // 用縣市篩選區
     ShowAllDistrict(document.getElementById("addressCity").value);
   });

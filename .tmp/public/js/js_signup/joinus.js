@@ -4,7 +4,6 @@ $(document).ready(function(){
   $.get("/user/showProfile", function(full){
     ooo = JSON.parse(full);
     var type=ooo.type;
-    alert(type);
     switch(type){
       case "P":
       case "F":
@@ -22,8 +21,7 @@ $(document).ready(function(){
         break;
     }
   });
-
-
+  
   $("#addressCity").change(function() { // 用縣市篩選區
     ShowAllDistrict(document.getElementById("addressCity").value);
   });
