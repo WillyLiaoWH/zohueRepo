@@ -98,7 +98,7 @@ function post() {
   if(allowed) {
     var posting = $.post( "/postArticle", { title: postTitle, content: postContent, classification: postClass, responseNum: responseNum, clickNum: clickNum}, function(res){
       alert("文章發表成功！");
-      window.location.replace("/article/"+res[0].id);
+      window.location.replace("/article/"+res[0].id+"?page=1");
     })
       .error(function(res){
         alert(res.responseJSON.err);
