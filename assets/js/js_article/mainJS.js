@@ -242,3 +242,7 @@ function notNiceResponse(response_id) {
 function editProfile(){
   content.style.display="none";
 }
+
+function sendEmail(){
+  
+}
