@@ -244,5 +244,15 @@ function editProfile(){
 }
 
 function sendEmail(){
-  
+
+  if(confirm("是否要把這篇寄給")){
+    var mailaddress=""
+  }
+  else{
+    var mailaddress = prompt('請輸入email') ;
+  }
+  var url = document.URL;
+  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var article_id = url.replace(regex,"$1");
+ location.assign("/email/"+article_id);
 }

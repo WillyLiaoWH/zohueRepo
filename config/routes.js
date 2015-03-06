@@ -59,6 +59,7 @@ module.exports.routes = {
   'GET /setForumPage': 'Articles.setForumPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
+  'GET /email/:article_id':'Articles.mailAritlce',
   'GET /article/*': {
     view: 'article/index'
   },
