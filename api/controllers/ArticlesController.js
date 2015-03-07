@@ -326,7 +326,8 @@ module.exports = {
         });
     },
     mailAritlce: function(req,res){
-        var articleId = req.param("id");
+        var articleId = req.param("article_id");
+
           //引用 nodemailer  
         var nodemailer = require('nodemailer');  
         //宣告發信物件  
@@ -341,7 +342,7 @@ module.exports = {
             //寄件者  
             from: 'ntu.cpcp@gmail.com',  
             //收件者  
-            to: 'b00705048@ntu.edu.tw',   
+            to: req.param("mailaddress"),   
             
             //主旨  
             subject: '這是 node.js 發送的測試信件', // Subject line  
