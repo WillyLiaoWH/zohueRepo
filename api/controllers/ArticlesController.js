@@ -327,50 +327,73 @@ module.exports = {
     },
     mailAritlce: function(req,res){
         var articleId = req.param("article_id");
-        Articles.find({id: articleId}).populate("nicer").exec(function(err, article) {
+        Articles.find({id: articleId}).populate("response").exec(function(err, article) {
             if (err){
                 res.send(500,{err:"找不到文章!"});
             }
             else{
-                  //引用 nodemailer  
-                var nodemailer = require('nodemailer');  
-                //宣告發信物件  
-                var transporter = nodemailer.createTransport({  
-                    service: 'Gmail',  
-                    auth: {  
-                        user: 'ntu.cpcp@gmail.com',  
-                        pass: 'lckung413'  
-                    }  
-                });  
-                var options = {  
-                    //寄件者  
-                    from: 'ntu.cpcp@gmail.com',  
-                    //收件者  
-                    to: req.param("mailaddress"),   
-                    
-                    //主旨  
-                    subject: article[0].title, // Subject line  
-                    
-                    //嵌入 html 的內文  
-                    html: article[0].content,   
-                                        
-                };  
-                //發送信件方法  
-                transporter.sendMail(options, function(error, info){  
-                    if(error){  
-                        console.log(error);  
-                    }else{  
-                        console.log('訊息發送: ' + info.response);  
-                    }  
-                });  
-                res.send("SEND");
+                var content=article[0].content+"<br>"+"<br>";
+
+                var async = require('async');
+                async.each(article[0].response, function(val, callback) {
+                    //每次要做的
+                    User.find({id: val.author}).exec(function(err,author){
+                        if (err){
+                            callback("error"); 
+                        }
+                        else{
+                            name=author[0].alias;  
+                            content=content+name+" : "+val.comment+"<br>"; 
+                            callback(); 
+                        }  
+                    });
+
+                    // show that no errors happened
+                }, function(err) {
+                    if(err) {
+                        console.log("There was an error" + err);
+                        res.send(500,{err:"找不到文章作者"});
+                    } else {
+                        
+                        //結束以後
+                        //引用 nodemailer  
+                        var nodemailer = require('nodemailer');  
+                        var transporter = nodemailer.createTransport({  
+                            service: 'Gmail',  
+                            auth: {  
+                             user: 'ntu.cpcp@gmail.com',  
+                             pass: 'lckung413'  
+                            }  
+                        });  
+                        var options = {  
+                            //寄件者  
+                            from: 'ntu.cpcp@gmail.com',  
+                            //收件者  
+                            to: req.param("mailaddress"),   
+                            
+                            //主旨  
+                            subject: article[0].title, // Subject line  
+                            
+                            //嵌入 html 的內文  
+                            html: content,   
+                               
+                        };  
+                        console.log("--"+content);
+                        
+                        //發送信件方法  
+                        transporter.sendMail(options, function(error, info){  
+                            if(error){  
+                                console.log(error);  
+                            }else{  
+                                console.log('訊息發送: ' + info.response);  
+                            }  
+                        });  
+                        res.send("SEND");
+                    }
+                });    
             }
 
         });
-
-        
-
-       
     },
 };
 
