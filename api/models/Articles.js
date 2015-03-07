@@ -39,6 +39,10 @@ module.exports = {
     nicer: {
       collection: 'user'
     },
+    board: {
+      type: 'string',
+      defaultsTo: '分類一'
+    },
     lastResponseTime: {
       type: 'datetime',
     }
