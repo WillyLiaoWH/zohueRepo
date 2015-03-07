@@ -2,20 +2,21 @@ var allow_create;
 var searched;
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var loaded=false;
-
+var page;
+var keyword="";
 $(document).ready(function(){
   if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   var url = document.URL;
   if(url.search("search")!=-1) {
     regex=/.*search\/+(.*)+\/+(.*)/
-    var keyword=url.replace(regex, "$1");
+    keyword=url.replace(regex, "$1");
     keyword = decodeURIComponent(keyword);
-    var page=url.replace(regex,"$2");
-    setPage(page, keyword);
+    page=url.replace(regex,"$2");
+    setPage(page, keyword, 0);
   } else {
     var regex = /.*forum\/+(.*)/;
-    var page = url.replace(regex,"$1");
-    setPage(page, "");
+    page = url.replace(regex,"$1");
+    setPage(page, "", 0);
   }
 
 
@@ -40,7 +41,7 @@ $(document).ready(function(){
   });
 });
 
-function setPage(page, keyword) {
+function setPage(page, keyword, sort) {
   if(keyword!="") {
     document.getElementById("searchWord").value = keyword;
     $.post( "/searchArticle", { keyword: keyword}, function(res_search){
@@ -64,18 +65,23 @@ function setPage(page, keyword) {
         test+=articleList[i].updatedAt;
       }
 
-      articleList.sort(function(a, b) {
-        return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
-      });
-     
+      if(sort==0) {
+        articleList.sort(function(a, b) {
+          return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
+        });
+      } else if (sort==1) {
+        articleList.sort(function(a, b) {
+          return new Date(b.createdAt)-new Date(a.createdAt);
+        });
+      }
 
       myTable="<tr style='background-color: #1D3521; color:white;'>";
       myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
       myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'>文章標題</td>";
-      myTable+="<td style='text-align:center;'>發表人/發表時間</td>";
+      myTable+="<td style='text-align:center;'>發表人/<a onclick='setPage(page, keyword, 1)'>發表時間</a></td>";
       myTable+="<td style='text-align:center;'>點閱/回覆</td>";
       myTable+="<td style='text-align:center;'>推薦</td>";
-      myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
+      myTable+="<td style='text-align:center;'><a onclick='setPage(page, keyword, 0)'>最新回應時間</a></td></tr>";
 
       articleNum=20;
 
