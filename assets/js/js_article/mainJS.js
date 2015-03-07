@@ -259,13 +259,14 @@ function sendEmail(){
       mailaddress=prompt('把這封email送到：') ;
     }
 
-    
     if (mailaddress.length>0){
       var url = document.URL;
       var regex = /.*article\/+(.*)\?page=+(.*)/;
       var article_id = url.replace(regex,"$1");
       $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
-        alert("已經送出信件至"+mailaddress);
+        if (res == "SEND"){
+          alert("已經送出信件至"+mailaddress); 
+        }
       });
     }
   });

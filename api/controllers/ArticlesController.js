@@ -327,40 +327,48 @@ module.exports = {
     },
     mailAritlce: function(req,res){
         var articleId = req.param("article_id");
+        Articles.find({id: articleId}).populate("nicer").exec(function(err, article) {
+            if (err){
+                res.send(500,{err:"找不到文章!"});
+            }
+            else{
+                  //引用 nodemailer  
+                var nodemailer = require('nodemailer');  
+                //宣告發信物件  
+                var transporter = nodemailer.createTransport({  
+                    service: 'Gmail',  
+                    auth: {  
+                        user: 'ntu.cpcp@gmail.com',  
+                        pass: 'lckung413'  
+                    }  
+                });  
+                var options = {  
+                    //寄件者  
+                    from: 'ntu.cpcp@gmail.com',  
+                    //收件者  
+                    to: req.param("mailaddress"),   
+                    
+                    //主旨  
+                    subject: article[0].title, // Subject line  
+                    
+                    //嵌入 html 的內文  
+                    html: article[0].content,   
+                                        
+                };  
+                //發送信件方法  
+                transporter.sendMail(options, function(error, info){  
+                    if(error){  
+                        console.log(error);  
+                    }else{  
+                        console.log('訊息發送: ' + info.response);  
+                    }  
+                });  
+                res.send("SEND");
+            }
 
-          //引用 nodemailer  
-        var nodemailer = require('nodemailer');  
-        //宣告發信物件  
-        var transporter = nodemailer.createTransport({  
-            service: 'Gmail',  
-            auth: {  
-                user: 'ntu.cpcp@gmail.com',  
-                pass: 'lckung413'  
-            }  
-        });  
-        var options = {  
-            //寄件者  
-            from: 'ntu.cpcp@gmail.com',  
-            //收件者  
-            to: req.param("mailaddress"),   
-            
-            //主旨  
-            subject: '這是 node.js 發送的測試信件', // Subject line  
-            //純文字  
-            text: 'Hello world2', // plaintext body  
-            //嵌入 html 的內文  
-            html: '<h2>Why and How</h2> <p>The <a href="http://en.wikipedia.org/wiki/Lorem_ipsum" title="Lorem ipsum - Wikipedia, the free encyclopedia">Lorem ipsum</a> text is typically composed of pseudo-Latin words. It is commonly used as placeholder text to examine or demonstrate the visual effects of various graphic design. Since the text itself is meaningless, the viewers are therefore able to focus on the overall layout without being attracted to the text.</p>',   
-            //附件檔案  
-            
-        };  
-        //發送信件方法  
-        transporter.sendMail(options, function(error, info){  
-            if(error){  
-                console.log(error);  
-            }else{  
-                console.log('訊息發送: ' + info.response);  
-            }  
-        });  
+        });
+
+        
 
        
     },
