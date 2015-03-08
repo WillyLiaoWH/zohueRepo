@@ -47,6 +47,8 @@ module.exports.routes = {
   'POST /updateClickNum': 'ArticlesController.updateClickNum',
   'POST /clickNice': 'ArticlesController.clickNice',
   'POST /cancelNice': 'ArticlesController.cancelNice',
+  'POST /clickReport': 'ArticlesController.clickReport',
+  'POST /cancelReport': 'ArticlesController.cancelReport',
   'POST /niceResponse': 'ArticlesController.niceResponse',
   'POST /notNiceResponse': 'ArticlesController.notNiceResponse',
   'POST /searchArticle': 'ArticlesController.searchArticle',

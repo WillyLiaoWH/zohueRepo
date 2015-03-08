@@ -7264,26 +7264,6 @@
         "id": 1147
       },
       {
-        "user_nicer_user": 79,
-        "articles_nicer": 197,
-        "id": 1151
-      },
-      {
-        "user_nicer_user": 83,
-        "articles_nicer": 197,
-        "id": 1152
-      },
-      {
-        "user_nicer_user": 86,
-        "articles_nicer": 197,
-        "id": 1153
-      },
-      {
-        "user_nicer_user": 81,
-        "articles_nicer": 197,
-        "id": 1154
-      },
-      {
         "user_nicer_user": 81,
         "articles_nicer": 196,
         "id": 1155
@@ -7327,6 +7307,26 @@
         "user_nicer_user": 89,
         "articles_nicer": 194,
         "id": 1194
+      },
+      {
+        "user_nicer_user": 79,
+        "articles_nicer": 197,
+        "id": 1220
+      },
+      {
+        "user_nicer_user": 81,
+        "articles_nicer": 197,
+        "id": 1221
+      },
+      {
+        "user_nicer_user": 86,
+        "articles_nicer": 197,
+        "id": 1222
+      },
+      {
+        "user_nicer_user": 83,
+        "articles_nicer": 197,
+        "id": 1223
       }
     ],
     "response_nicer__user_nicer_user": [
@@ -8399,9 +8399,9 @@
         "content": "不好意思我是剛剛住院的病人<br>在醫院除了接受治療以外的時間都好無聊<br>但是住院又是必須的<br>想問一下各位有住院過的病友們都有些什麼娛樂呢?<br>請各位推薦一下謝謝~~",
         "classification": "問題",
         "responseNum": "4",
-        "clickNum": "30",
+        "clickNum": "45",
         "createdAt": "2014-12-22T07:45:45.874Z",
-        "updatedAt": "2015-03-03T06:57:33.152Z",
+        "updatedAt": "2015-03-08T05:55:53.959Z",
         "id": 197,
         "lastResponseTime": "2015-02-24T07:13:08.727Z",
         "nicer": [
@@ -8431,43 +8431,6 @@
             "selfIntroduction": ""
           },
           {
-            "account": "hoho",
-            "password": "1234",
-            "alias": "Hoho",
-            "email": "ho@ho.ho",
-            "type": "F",
-            "isFullSignup": true,
-            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419233033894.jpg",
-            "createdAt": "2014-12-22T07:22:44.415Z",
-            "updatedAt": "2014-12-22T07:24:28.100Z",
-            "id": 83,
-            "fname": "何",
-            "lname": "禾",
-            "forgetQ": "2",
-            "forgetA": "Ruki",
-            "gender": "F",
-            "phone": "1234",
-            "postalCode": "709",
-            "addressCity": "臺南市",
-            "addressDistrict": "安南區",
-            "address": "",
-            "birthday": "Tue Feb 04 1992 00:00:00 GMT+0800 (台北標準時間)",
-            "primaryDisease": "",
-            "selfIntroduction": ""
-          },
-          {
-            "account": "black",
-            "password": "1234",
-            "alias": "阿黑",
-            "email": "b@b.b",
-            "type": "P",
-            "isFullSignup": false,
-            "img": "http://140.112.107.168:1337/images/img_avatar/upload/default.png",
-            "createdAt": "2014-12-22T07:35:27.865Z",
-            "updatedAt": "2014-12-22T07:35:27.865Z",
-            "id": 86
-          },
-          {
             "account": "bbb",
             "password": "bbb",
             "alias": "廣末涼子",
@@ -8491,8 +8454,46 @@
             "birthday": "Wed Nov 16 1994 08:00:00 GMT+0800 (China Standard Time)",
             "primaryDisease": "4",
             "selfIntroduction": "很餓耶"
+          },
+          {
+            "account": "black",
+            "password": "1234",
+            "alias": "阿黑",
+            "email": "b@b.b",
+            "type": "P",
+            "isFullSignup": false,
+            "img": "http://140.112.107.168:1337/images/img_avatar/upload/default.png",
+            "createdAt": "2014-12-22T07:35:27.865Z",
+            "updatedAt": "2014-12-22T07:35:27.865Z",
+            "id": 86
+          },
+          {
+            "account": "hoho",
+            "password": "1234",
+            "alias": "Hoho",
+            "email": "ho@ho.ho",
+            "type": "F",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419233033894.jpg",
+            "createdAt": "2014-12-22T07:22:44.415Z",
+            "updatedAt": "2014-12-22T07:24:28.100Z",
+            "id": 83,
+            "fname": "何",
+            "lname": "禾",
+            "forgetQ": "2",
+            "forgetA": "Ruki",
+            "gender": "F",
+            "phone": "1234",
+            "postalCode": "709",
+            "addressCity": "臺南市",
+            "addressDistrict": "安南區",
+            "address": "",
+            "birthday": "Tue Feb 04 1992 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "",
+            "selfIntroduction": ""
           }
-        ]
+        ],
+        "reporter": []
       },
       {
         "title": "鼻咽癌病徵、成因及治療",
@@ -8896,7 +8897,8 @@
         "updatedAt": "2015-03-02T17:51:16.572Z",
         "id": 91
       }
-    ]
+    ],
+    "articles_reporter__user_reporter_user": []
   },
   "schema": {
     "localdb": {
@@ -9167,6 +9169,10 @@
       "clickNum": {
         "type": "string"
       },
+      "board": {
+        "type": "string",
+        "defaultsTo": "分類一"
+      },
       "lastResponseTime": {
         "type": "datetime"
       },
@@ -9254,6 +9260,28 @@
       "updatedAt": {
         "type": "datetime"
       }
+    },
+    "articles_reporter__user_reporter_user": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "articles_reporter": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "articles",
+        "on": "id",
+        "via": "user_reporter_user"
+      },
+      "user_reporter_user": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "user",
+        "on": "id",
+        "via": "articles_reporter"
+      }
     }
   },
   "counters": {
@@ -9280,13 +9308,16 @@
       "id": 3
     },
     "articles_nicer__user_nicer_user": {
-      "id": 1195
+      "id": 1223
     },
     "response_nicer__user_nicer_user": {
       "id": 544
     },
     "proinfo": {
       "id": 15
+    },
+    "articles_reporter__user_reporter_user": {
+      "id": 8
     }
   }
 }
