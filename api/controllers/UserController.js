@@ -283,6 +283,21 @@ module.exports = {
             
         });
     },
+    getEmail: function(req, res) {
+        var account = req.session.user.account;
+        User.findByAccount(account).exec(function(err, usr) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                if (usr.length!=0) {
+                    res.send(usr[0].email);
+                } else {
+                    res.send(404, { err: "User not Found" });
+                }
+            }
+        });
+
+    }
 
 
 	// beforeCreate: function (attrs, next) {

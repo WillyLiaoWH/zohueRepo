@@ -55,9 +55,11 @@ module.exports.routes = {
   'POST /searchProInfo': 'ProInfoController.searchProInfo',
   'POST /imgupload_avatar': 'ImguploadController.upload_avatar',
   'POST /imgupload_post': 'ImguploadController.upload_post',
+  'POST /sendEmail' : 'ArticlesController.mailAritlce',
   
   'GET /checkAuth': 'SessionController.checkAuth',
   'GET /checkFull': 'User.checkFull',
+  'GET /getEmail' : 'User.getEmail',
   'GET /setForumPage': 'Articles.setForumPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
