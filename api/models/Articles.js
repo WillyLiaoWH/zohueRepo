@@ -39,12 +39,15 @@ module.exports = {
     nicer: {
       collection: 'user'
     },
+    reporter: {
+      collection: 'user',
+    },
     board: {
       type: 'string',
       defaultsTo: '分類一'
     },
     lastResponseTime: {
-      type: 'datetime',
+      type: 'datetime'
     }
   }
 };

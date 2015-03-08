@@ -15,6 +15,7 @@ function setPage() {
     if(auth) {
       document.getElementById("content").style.width = "80%";
       document.getElementById("niceArticle").style.display="inline";
+      document.getElementById("report").style.display="inline";
     }
   });
 
@@ -22,6 +23,7 @@ function setPage() {
     articleList=res.articleList;
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
+    alert(JSON.stringify(articleList[0]));
     updateClickNum();
 
     response=res.responseList;
@@ -47,7 +49,7 @@ function setPage() {
     } else if(articleList[0].author.type=="F") {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/user_icon.png' title='家屬'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
+      articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
     } else {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/user_icon.png' title='一般民眾'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
@@ -114,6 +116,13 @@ function setPage() {
     } else {
       document.getElementById("niceArticle").innerHTML = "<button value='推薦' class='n' onclick='clickNice();'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>";
       document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
+    }
+    if(res.isReport) {
+      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'>&nbsp收回</button>";
+      document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
+    } else {
+      document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'>&nbsp檢舉</button>";
+      document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
     }
 
   }).error(function(err){
@@ -236,6 +245,31 @@ function notNiceResponse(response_id) {
     document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;' value='推薦' class='n' onclick='niceResponse("+response_id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
   }).error(function(res){
       alert(res.responseJSON.err);
+  });
+}
+
+function clickReport() {
+  var url = document.URL;
+  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var id = url.replace(regex,"$1");
+  document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'>&nbsp收回</button>";
+  $.post("/clickReport", {article_id: id}, function(res){
+    document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+  }).error(function(res){
+    alert(res.err);
+  });
+}
+
+function cancelReport() {
+  var url = document.URL;
+  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var id = url.replace(regex,"$1");
+  document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'>&nbsp檢舉</button>";  
+  $.post("/cancelReport", {article_id: id}, function(res){
+    document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+  }).error(function(res){
+    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'>&nbsp收回</button>"; 
+    alert(res.responseJSON.err);
   });
 }
 

@@ -58,6 +58,14 @@
 	font-size: 27px;
 }
 
+#report{
+	padding:20px;
+	align: right;
+	display: none;
+	color:#533828;
+	font-size: 27px;
+}
+
 #commentDiv{
 	margin: 30px 0px 0px 15px;
 	font-size: 22px;
