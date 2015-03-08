@@ -8399,9 +8399,9 @@
         "content": "不好意思我是剛剛住院的病人<br>在醫院除了接受治療以外的時間都好無聊<br>但是住院又是必須的<br>想問一下各位有住院過的病友們都有些什麼娛樂呢?<br>請各位推薦一下謝謝~~",
         "classification": "問題",
         "responseNum": "4",
-        "clickNum": "87",
+        "clickNum": "105",
         "createdAt": "2014-12-22T07:45:45.874Z",
-        "updatedAt": "2015-03-07T15:26:49.658Z",
+        "updatedAt": "2015-03-08T06:36:28.358Z",
         "id": 197,
         "lastResponseTime": "2015-02-24T07:13:08.727Z",
         "nicer": [
@@ -8491,6 +8491,83 @@
             "birthday": "Wed Nov 16 1994 08:00:00 GMT+0800 (China Standard Time)",
             "primaryDisease": "4",
             "selfIntroduction": "很餓耶"
+          }
+        ],
+        "reporter": [
+          {
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419232403064.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2014-12-22T07:14:06.613Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
+            "forgetQ": "3",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (China Standard Time)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
+          },
+          {
+            "account": "hoho",
+            "password": "1234",
+            "alias": "Hoho",
+            "email": "ho@ho.ho",
+            "type": "F",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419233033894.jpg",
+            "createdAt": "2014-12-22T07:22:44.415Z",
+            "updatedAt": "2014-12-22T07:24:28.100Z",
+            "id": 83,
+            "fname": "何",
+            "lname": "禾",
+            "forgetQ": "2",
+            "forgetA": "Ruki",
+            "gender": "F",
+            "phone": "1234",
+            "postalCode": "709",
+            "addressCity": "臺南市",
+            "addressDistrict": "安南區",
+            "address": "",
+            "birthday": "Tue Feb 04 1992 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "",
+            "selfIntroduction": ""
+          },
+          {
+            "account": "1234",
+            "password": "1234",
+            "alias": "王景權",
+            "email": "1@1.1",
+            "type": "D",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419232470538.jpg",
+            "createdAt": "2014-12-22T07:12:45.681Z",
+            "updatedAt": "2014-12-22T07:14:58.218Z",
+            "id": 79,
+            "fname": "王",
+            "lname": "景權",
+            "forgetQ": "3",
+            "forgetA": "Canada",
+            "gender": "M",
+            "phone": "1234",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "1234",
+            "birthday": "Mon Feb 01 1960 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "",
+            "selfIntroduction": ""
           }
         ]
       },
@@ -8896,6 +8973,23 @@
         "updatedAt": "2015-03-02T17:51:16.572Z",
         "id": 91
       }
+    ],
+    "articles_reporter__user_reporter_user": [
+      {
+        "user_reporter_user": 78,
+        "articles_reporter": 197,
+        "id": 29
+      },
+      {
+        "user_reporter_user": 83,
+        "articles_reporter": 197,
+        "id": 30
+      },
+      {
+        "user_reporter_user": 79,
+        "articles_reporter": 197,
+        "id": 31
+      }
     ]
   },
   "schema": {
@@ -9167,6 +9261,10 @@
       "clickNum": {
         "type": "string"
       },
+      "board": {
+        "type": "string",
+        "defaultsTo": "分類一"
+      },
       "lastResponseTime": {
         "type": "datetime"
       },
@@ -9254,6 +9352,28 @@
       "updatedAt": {
         "type": "datetime"
       }
+    },
+    "articles_reporter__user_reporter_user": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "articles_reporter": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "articles",
+        "on": "id",
+        "via": "user_reporter_user"
+      },
+      "user_reporter_user": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "user",
+        "on": "id",
+        "via": "articles_reporter"
+      }
     }
   },
   "counters": {
@@ -9287,6 +9407,9 @@
     },
     "proinfo": {
       "id": 15
+    },
+    "articles_reporter__user_reporter_user": {
+      "id": 31
     }
   }
 }

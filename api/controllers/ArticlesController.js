@@ -8,7 +8,7 @@
 module.exports = {
     
 	setForumPage: function(req, res){
-		Articles.find().populate('author').populate('nicer').exec(function(err, articlesList) {
+		Articles.find().populate('author').populate('nicer').populate('reporter').exec(function(err, articlesList) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {

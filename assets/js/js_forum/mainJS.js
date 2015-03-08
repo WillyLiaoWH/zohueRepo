@@ -4,6 +4,7 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var loaded=false;
 var page;
 var keyword="";
+var maxReport=3;
 $(document).ready(function(){
   if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   var url = document.URL;
@@ -133,8 +134,18 @@ function setPage(page, keyword, sort) {
             authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
           }
 
+          if(articleList[i+articleNum*(page-1)].reporter) {
+            if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
+              color="color:#FF0000;";
+            } else {
+              color="";
+            }
+          } else {
+            color="";
+          }
+
           if(i%2==0){
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
@@ -146,7 +157,7 @@ function setPage(page, keyword, sort) {
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
            
           }else{
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
@@ -185,21 +196,29 @@ function setPage(page, keyword, sort) {
           }else{
             authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
           }
-
+          if(articleList[i+articleNum*(page-1)].reporter) {
+            if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
+              color="color:#FF0000;";
+            } else {
+              color="";
+            }
+          } else {
+            color="";
+          }
           if(i%2==0){
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
-            myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
+            myTable+="<tr><td style=''>"+postTime+"</td></tr></table></td>";
 
 
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].clickNum+"/"+articleList[i+articleNum*(page-1)].responseNum+"</td>";
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>";
           }else{
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline; '>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
