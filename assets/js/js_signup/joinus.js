@@ -12,6 +12,7 @@ $(document).ready(function(){
         break;
       case "S":
       case "N":
+      case "RN":
         document.getElementById("p_type").style.visibility = "hidden";
         document.getElementById("p_selfIntroduction").style.display = "none";
         break;
@@ -72,6 +73,9 @@ $(document).ready(function(){
           }
           break;
         case "forgetQ":
+          if($(this).val()==999){ // 其他
+            document.getElementById("forgetQ-other").style.display="block";
+          }else{document.getElementById("forgetQ-other").style.display="none";}
         case "type":
         case "gender":
         case "addressCity":
@@ -174,13 +178,15 @@ function Submit(){
   var lname = document.getElementById("lname").value;
   var img = document.getElementById("avatar").src;
   var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
+  if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
   var forgetA = document.getElementById("forgetA").value;
   var gender = document.getElementById("gender").options[document.getElementById("gender").selectedIndex].value;
   var phone = document.getElementById("phone").value;
   var addressCity = document.getElementById("addressCity").options[document.getElementById("addressCity").selectedIndex].value;
   var addressDistrict = document.getElementById("addressDistrict").options[document.getElementById("addressDistrict").selectedIndex].value;
   var address = document.getElementById("address").value;
-  var birthday_Y = document.getElementById("birthday_Y").value;
+  var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
+  alert(birthday_Y);
   var birthday_M = document.getElementById("birthday_M").value;
   var birthday_D = document.getElementById("birthday_D").value;
   var birthday = new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D);
@@ -217,6 +223,7 @@ function HandleResponse_ShowAllQ(response){
     var questionID = obj_Q[r].id;
     $("#forgetQ").append('<option value='+questionID+'>'+question+'</option>');
   }
+  $("#forgetQ").append('<option value=999>其它</option>');
 }
 
 

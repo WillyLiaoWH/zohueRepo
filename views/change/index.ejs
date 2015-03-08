@@ -107,19 +107,20 @@
       			</p>
 
             <p class="forgetQ">
-              <h class="input_title">安全問題</h>
+              <h class="input_title">找回密碼問題</h>
               <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t">
-                <option value="" disabled selected>安全問題</option>
+                <option value="" disabled selected>找回密碼問題</option>
                 <script>ShowAllQ();</script>
               </select>
               <div class="tooltip fade bottom in" role="tooltip" id="forgetQ-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="forgetQ-inner"></div>
               </div>
+              <input name="forgetQ-other" type="text" class="validate[required,custom[forgetQ-other]] feedback-input" id="forgetQ-other" placeholder="找回密碼問題" must="t"/>
             </p>
             <p class="forgetA">
-              <h class="input_title">安全問題答案</h>
-              <input name="forgetA" type="text" class="validate[required,custom[forgetA]] feedback-input" id="forgetA" placeholder="安全問題答案" must="t"/>
+              <h class="input_title">找回密碼問題答案</h>
+              <input name="forgetA" type="text" class="validate[required,custom[forgetA]] feedback-input" id="forgetA" placeholder="找回密碼問題答案" must="t"/>
               <div class="tooltip fade bottom in" role="tooltip" id="forgetA-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="forgetA-inner"></div>
@@ -190,7 +191,7 @@
               <h class="input_title">生日</h>
               <!--<input name="birthday" placeholder="生日" class="validate[required,custom[birthday]] feedback-input" type="text" onfocus="(this.type='date')" id="birthday" must="t"/>-->
               <div id="birthday_Y-div">
-                <input name="birthday_Y" type="text" class="validate[required,custom[birthday]] feedback-input" id="birthday_Y" placeholder="年(YYYY)" />
+                <input name="birthday_Y" type="text" class="validate[required,custom[birthday]] feedback-input" id="birthday_Y" placeholder="民國年(YY)" />
               </div>
               <div class="tooltip fade bottom in" role="tooltip" id="birthday_Y-tooltip">
                 <div class="tooltip-arrow"></div>
@@ -230,6 +231,7 @@
                 <option value='7'>喉癌</option>
                 <option value='8'>唾液腺癌</option>
                 <option value='9'>甲狀腺癌</option>
+                <option value='999'>其它</option>
               </select>
               <div class="tooltip fade bottom in" role="tooltip" id="type-tooltip">
                 <div class="tooltip-arrow"></div>
@@ -283,7 +285,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>儲存</button>
+                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>上傳</button>
                   <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
                 </div>
               </form>
