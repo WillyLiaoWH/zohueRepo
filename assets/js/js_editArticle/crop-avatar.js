@@ -1,27 +1,41 @@
 var check_out = 0;
 
+// function insertHtmlAtCursor(html) {
+//   try{
+//     //alert(window.getSelection().getRangeAt(0).startContainer.parentNode.id);
+//     var currentE = window.getSelection().getRangeAt(0).startContainer; // 取得目前 select 的 element
+//     if(currentE.tagName!='DIV' | currentE.id==""){
+//       do{
+//         currentE = currentE.parentNode;
+//       }while(currentE.tagName!='DIV' | currentE.id=="");
+//     }
+
+//     if(currentE.id == "postContent"){
+//       var range, node;
+//       if (window.getSelection && window.getSelection().getRangeAt) {
+//         range = window.getSelection().getRangeAt(0);
+//         node = range.createContextualFragment(html);
+//         range.insertNode(node);
+//       } else if (document.selection && document.selection.createRange) {
+//         document.selection.createRange().pasteHTML(html);
+//       }
+//     }else{
+//       alert("先決定你要把這張圖片放在哪吧~");
+//     }
+//   }catch(err) {
+//     alert("錯誤!");
+//   }
+// }
+
+// 新增圖片至固定DIV
 function insertHtmlAtCursor(html) {
   try{
-    //alert(window.getSelection().getRangeAt(0).startContainer.parentNode.id);
-    var currentE = window.getSelection().getRangeAt(0).startContainer; // 取得目前 select 的 element
-    if(currentE.tagName!='DIV' | currentE.id==""){
-      do{
-        currentE = currentE.parentNode;
-      }while(currentE.tagName!='DIV' | currentE.id=="");
-    }
+    var orinode = document.getElementById("image_div").lastChild; // 找到插入圖片的DIV
+    var range = document.createRange(); // 設定插入圖片時的range function
+    range.setStart(orinode, 0); // 設定range起始點
 
-    if(currentE.id == "postContent"){
-      var range, node;
-      if (window.getSelection && window.getSelection().getRangeAt) {
-        range = window.getSelection().getRangeAt(0);
-        node = range.createContextualFragment(html);
-        range.insertNode(node);
-      } else if (document.selection && document.selection.createRange) {
-        document.selection.createRange().pasteHTML(html);
-      }
-    }else{
-      alert("先決定你要把這張圖片放在哪吧~");
-    }
+    var node = range.createContextualFragment(html); // 欲插入之element
+    range.insertNode(node);
   }catch(err) {
     alert("錯誤!");
   }
