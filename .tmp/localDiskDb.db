@@ -7210,6 +7210,57 @@
         "createdAt": "2015-02-24T07:13:08.727Z",
         "updatedAt": "2015-02-24T07:13:08.727Z",
         "id": 166
+      },
+      {
+        "author": 78,
+        "comment": "不要檢舉我",
+        "article": 235,
+        "createdAt": "2015-03-08T15:58:41.235Z",
+        "updatedAt": "2015-03-08T15:58:45.101Z",
+        "id": 167,
+        "nicer": [
+          {
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168/images/img_avatar/upload/1425830200318.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2015-03-08T15:56:49.010Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
+            "forgetQ": "3",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
+          }
+        ]
+      },
+      {
+        "author": 78,
+        "comment": "<a href=\"../images/img_post/1425963319254.jpg\"><img src=\"../images/img_post/resize/1425963319254.jpg\"> ",
+        "article": 237,
+        "createdAt": "2015-03-10T04:55:49.205Z",
+        "updatedAt": "2015-03-10T04:55:49.205Z",
+        "id": 168
+      },
+      {
+        "author": 78,
+        "comment": "<a href=\"../images/img_post/1425963638568.jpg\"><img src=\"../images/img_post/resize/1425963638568.jpg\"> ",
+        "article": 237,
+        "createdAt": "2015-03-10T05:00:42.454Z",
+        "updatedAt": "2015-03-10T05:00:42.455Z",
+        "id": 169
       }
     ],
     "recoveryquestion": [
@@ -7327,6 +7378,11 @@
         "user_nicer_user": 89,
         "articles_nicer": 194,
         "id": 1194
+      },
+      {
+        "user_nicer_user": 78,
+        "articles_nicer": 235,
+        "id": 1196
       }
     ],
     "response_nicer__user_nicer_user": [
@@ -7889,6 +7945,11 @@
         "user_nicer_user": 89,
         "response_nicer": 137,
         "id": 544
+      },
+      {
+        "user_nicer_user": 78,
+        "response_nicer": 167,
+        "id": 545
       }
     ],
     "proinfo": [
@@ -8080,9 +8141,9 @@
         "content": "我喉嚨長這樣<br>它很痛<a href=\"../images/img_post/1419232472395.jpg\"><br><img src=\"../images/img_post/resize/1419232472395.jpg\"></a>\n        ",
         "classification": "問題",
         "responseNum": "2",
-        "clickNum": "15",
+        "clickNum": "16",
         "createdAt": "2014-12-22T07:14:55.192Z",
-        "updatedAt": "2014-12-23T02:01:56.289Z",
+        "updatedAt": "2015-03-08T15:57:29.442Z",
         "id": 192,
         "lastResponseTime": "2014-12-22T07:15:57.040Z",
         "nicer": [
@@ -8399,9 +8460,9 @@
         "content": "不好意思我是剛剛住院的病人<br>在醫院除了接受治療以外的時間都好無聊<br>但是住院又是必須的<br>想問一下各位有住院過的病友們都有些什麼娛樂呢?<br>請各位推薦一下謝謝~~",
         "classification": "問題",
         "responseNum": "4",
-        "clickNum": "105",
+        "clickNum": "106",
         "createdAt": "2014-12-22T07:45:45.874Z",
-        "updatedAt": "2015-03-08T06:36:28.358Z",
+        "updatedAt": "2015-03-08T15:20:49.681Z",
         "id": 197,
         "lastResponseTime": "2015-02-24T07:13:08.727Z",
         "nicer": [
@@ -8685,6 +8746,112 @@
             "selfIntroduction": ""
           }
         ]
+      },
+      {
+        "title": "嗨大家好 裡面有我的帥照",
+        "author": 78,
+        "content": "<a href=\"../images/img_post/1425830284731.jpg\"><img src=\"../images/img_post/resize/1425830284731.jpg\"><br></a>\n        ",
+        "classification": "心情",
+        "responseNum": "1",
+        "clickNum": "5",
+        "board": "分類一",
+        "createdAt": "2015-03-08T15:58:26.465Z",
+        "updatedAt": "2015-03-10T05:01:13.074Z",
+        "id": 235,
+        "lastResponseTime": "2015-03-08T15:58:41.235Z",
+        "reporter": [
+          {
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168/images/img_avatar/upload/1425830200318.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2015-03-08T15:56:49.010Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
+            "forgetQ": "3",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
+          }
+        ],
+        "nicer": [
+          {
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168/images/img_avatar/upload/1425830200318.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2015-03-08T15:56:49.010Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
+            "forgetQ": "3",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
+          }
+        ]
+      },
+      {
+        "title": "嗨大家好 我整行了",
+        "author": 78,
+        "content": "<a href=\"../images/img_post/1425911000681.jpg\"><img src=\"../images/img_post/resize/1425911000681.jpg\"></a>\n        ",
+        "classification": "心情",
+        "responseNum": "0",
+        "clickNum": "2",
+        "board": "分類一",
+        "createdAt": "2015-03-09T14:23:25.287Z",
+        "updatedAt": "2015-03-09T14:45:37.439Z",
+        "id": 236,
+        "lastResponseTime": "2015-03-09T14:23:25.287Z"
+      },
+      {
+        "title": "tt",
+        "author": 78,
+        "content": "\n          test<br>\n          <div contenteditable=\"false\" id=\"image_div\"><br><a href=\"../images/img_post/1425917589213.jpg\"><img src=\"../images/img_post/resize/1425917589213.jpg\"><br></a> </div>\n        ",
+        "classification": "問題",
+        "responseNum": "2",
+        "clickNum": "33",
+        "board": "分類一",
+        "createdAt": "2015-03-09T16:13:17.300Z",
+        "updatedAt": "2015-03-10T05:00:44.151Z",
+        "id": 237,
+        "lastResponseTime": "2015-03-10T05:00:42.454Z"
+      },
+      {
+        "title": "123",
+        "author": 78,
+        "content": "\n          123<br>\n          <div contenteditable=\"false\" id=\"image_div\"><br><a href=\"../images/img_post/1425963878609.jpg\"><img src=\"../images/img_post/resize/1425963878609.jpg\"><br></a><a href=\"../images/img_post/1425963913150.jpg\"><img src=\"../images/img_post/resize/1425963913150.jpg\"></a> </div>\n        ",
+        "classification": "問題",
+        "responseNum": "0",
+        "clickNum": "2",
+        "board": "分類一",
+        "createdAt": "2015-03-10T05:04:50.404Z",
+        "updatedAt": "2015-03-10T05:05:24.594Z",
+        "id": 238,
+        "lastResponseTime": "2015-03-10T05:04:50.404Z"
       }
     ],
     "user": [
@@ -8695,9 +8862,9 @@
         "email": "aa@aa.aa",
         "type": "P",
         "isFullSignup": true,
-        "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419232403064.jpg",
+        "img": "http://140.112.107.168/images/img_avatar/upload/1425910958532.jpg",
         "createdAt": "2014-12-22T07:12:26.834Z",
-        "updatedAt": "2014-12-22T07:14:06.613Z",
+        "updatedAt": "2015-03-09T14:22:44.288Z",
         "id": 78,
         "fname": "陳",
         "lname": "忠誠",
@@ -8709,7 +8876,7 @@
         "addressCity": "臺北市",
         "addressDistrict": "士林區",
         "address": "羅斯福路 150號",
-        "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (China Standard Time)",
+        "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
         "primaryDisease": "8",
         "selfIntroduction": "我好餓"
       },
@@ -8989,6 +9156,11 @@
         "user_reporter_user": 79,
         "articles_reporter": 197,
         "id": 31
+      },
+      {
+        "user_reporter_user": 78,
+        "articles_reporter": 235,
+        "id": 32
       }
     ]
   },
@@ -9391,25 +9563,25 @@
       "id": 370
     },
     "articles": {
-      "id": 234
+      "id": 238
     },
     "response": {
-      "id": 166
+      "id": 169
     },
     "recoveryquestion": {
       "id": 3
     },
     "articles_nicer__user_nicer_user": {
-      "id": 1195
+      "id": 1196
     },
     "response_nicer__user_nicer_user": {
-      "id": 544
+      "id": 545
     },
     "proinfo": {
       "id": 15
     },
     "articles_reporter__user_reporter_user": {
-      "id": 31
+      "id": 32
     }
   }
 }

@@ -189,11 +189,14 @@
 	background-position: 10px,right;
 	background-repeat: no-repeat;
 }
-#forgetQ{
+#forgetQ, #forgetQ-other{
 	background-image: url(../../../images/img_signup/forgetQ.png);
 	background-size: 30px 30px;
 	background-position: 10px,right;
 	background-repeat: no-repeat;
+}
+#forgetQ-other{
+	display: none;
 }
 #forgetA{
 	background-image: url(../../../images/img_signup/forgetA.png);

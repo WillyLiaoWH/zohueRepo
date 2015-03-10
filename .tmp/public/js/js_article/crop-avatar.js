@@ -30,7 +30,7 @@ var check_out = 0;
 // 新增圖片至固定DIV
 function insertHtmlAtCursor(html) {
   try{
-    var orinode = document.getElementById("image_div").lastChild; // 找到插入圖片的DIV
+    var orinode = document.getElementById("comment").lastChild; // 找到插入圖片的DIV
     var range = document.createRange(); // 設定插入圖片時的range function
     range.setStart(orinode, 0); // 設定range起始點
 
@@ -77,7 +77,7 @@ function insertHtmlAtCursor(html) {
 
     this.$avatarBtn = this.$container.find("#image");
 
-    this.$contentDIV = this.$container.find("#postContent");
+    //this.$contentDIV = this.$container.find("#postContent");
 
     this.init();
     log(this);
@@ -105,30 +105,30 @@ function insertHtmlAtCursor(html) {
     },
 
     addListener: function () {
-      $(document).mouseup(function(){
-        if(document.activeElement.id!=='postContent'){
-          if(document.activeElement.id=='image' & check_out == 1){
-            check_out = 1;
-            $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-          }else{
-            check_out = 0;
-            $("#image").css("background-color", "#ADADAD");
-            $("#image").hover(function(){
-              $("#image").css("background-color", "#ADADAD");
-              },function(){
-              $("#image").css("background-color", "#ADADAD");
-            });
-          }
-        }else{
-          check_out = 1;
-          $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-          $("#image").hover(function(){
-              $("#image").css("background-color", "rgba(102, 141, 60, 0.4)");
-              },function(){
-              $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-            });
-        }
-      });
+      // $(document).mouseup(function(){
+      //   if(document.activeElement.id!=='postContent'){
+      //     if(document.activeElement.id=='image' & check_out == 1){
+      //       check_out = 1;
+      //       $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
+      //     }else{
+      //       check_out = 0;
+      //       $("#image").css("background-color", "#ADADAD");
+      //       $("#image").hover(function(){
+      //         $("#image").css("background-color", "#ADADAD");
+      //         },function(){
+      //         $("#image").css("background-color", "#ADADAD");
+      //       });
+      //     }
+      //   }else{
+      //     check_out = 1;
+      //     $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
+      //     $("#image").hover(function(){
+      //         $("#image").css("background-color", "rgba(102, 141, 60, 0.4)");
+      //         },function(){
+      //         $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
+      //       });
+      //   }
+      // });
       
       this.$avatarBtn.on("click", $.proxy(this.click, this));
       this.$avatarView.on("click", $.proxy(this.click, this));
@@ -190,10 +190,10 @@ function insertHtmlAtCursor(html) {
     },
 
     click: function () {
-      if(check_out == 1){
+      //if(check_out == 1){
         this.$avatarModal.modal("show");
-        check_out = 0;
-      }
+        //check_out = 0;
+      //}
     },
 
     change: function () {

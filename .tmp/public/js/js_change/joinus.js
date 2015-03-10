@@ -26,6 +26,7 @@ $(document).ready(function(){
             break;
           case "S":
           case "N":
+          case "RN":
             document.getElementById("p_type").style.visibility = "hidden";
             document.getElementById("p_selfIntroduction").style.display = "none";
             break;
@@ -95,6 +96,9 @@ $(document).ready(function(){
           }
           break;
         case "forgetQ":
+          if($(this).val()==999){ // 其他
+            document.getElementById("forgetQ-other").style.display="block";
+          }else{document.getElementById("forgetQ-other").style.display="none";}
         case "type":
         case "gender":
         case "addressCity":
@@ -199,6 +203,7 @@ function Submit(){
   var lname = document.getElementById("lname").value;
   var img = document.getElementById("avatar").src;
   var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
+  if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
   var forgetA = document.getElementById("forgetA").value;
   var gender = document.getElementById("gender").options[document.getElementById("gender").selectedIndex].value;
   var phone = document.getElementById("phone").value;
@@ -206,7 +211,7 @@ function Submit(){
   var addressCity = document.getElementById("addressCity").options[document.getElementById("addressCity").selectedIndex].value;
   var addressDistrict = document.getElementById("addressDistrict").options[document.getElementById("addressDistrict").selectedIndex].value;
   var address = document.getElementById("address").value;
-  var birthday_Y = document.getElementById("birthday_Y").value;
+  var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
   var birthday_M = document.getElementById("birthday_M").value;
   var birthday_D = document.getElementById("birthday_D").value;
   var birthday = new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D);
@@ -255,6 +260,7 @@ function HandleResponse_ShowAllQ(response){
     var questionID = obj[r].id;
     $("#forgetQ").append('<option value='+questionID+'>'+question+'</option>');
   }
+  $("#forgetQ").append('<option value=999>其它</option>');
 }
 
 function showProfile(){
@@ -300,15 +306,19 @@ function HandleResponse_showProfile(response){
   document.getElementById("lname").value = lname;
   document.getElementById("avatar").src = img;
   try{
-    document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;
-  }catch(e){window.location.reload();}
+    if(forgetQ.search('[otherQ]')==1){ // 其他
+      document.querySelector('#forgetQ [value="999"]').selected = true;
+      document.getElementById("forgetQ-other").style.display="block";
+      document.getElementById("forgetQ-other").value=forgetQ.substr(8);
+    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;}
+  }catch(e){/*window.location.reload();*/}
   document.getElementById("forgetA").value = forgetA;
   document.querySelector('#gender [value="' + gender + '"]').selected = true;
   document.getElementById("phone").value = phone;
   document.getElementById("postalCode").value = postalCode;
   getCity(document.getElementById("postalCode").value);
   document.getElementById("address").value = address;
-  document.getElementById("birthday_Y").value = Y;
+  document.getElementById("birthday_Y").value = Y-1911;
   document.getElementById("birthday_M").value = M;
   ShowDate(M, Y)
   document.getElementById("birthday_D").value = D;
