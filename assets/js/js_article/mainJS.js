@@ -23,7 +23,7 @@ function setPage() {
     articleList=res.articleList;
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
-    alert(JSON.stringify(articleList[0]));
+    // alert(JSON.stringify(articleList[0]));
     updateClickNum();
 
     response=res.responseList;

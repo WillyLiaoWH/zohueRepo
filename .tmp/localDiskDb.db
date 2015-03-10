@@ -7261,6 +7261,38 @@
         "createdAt": "2015-03-10T05:00:42.454Z",
         "updatedAt": "2015-03-10T05:00:42.455Z",
         "id": 169
+      },
+      {
+        "author": 78,
+        "comment": "發文不附圖",
+        "article": 235,
+        "createdAt": "2015-03-10T06:20:27.786Z",
+        "updatedAt": "2015-03-10T06:20:27.786Z",
+        "id": 170
+      },
+      {
+        "author": 78,
+        "comment": "<a href=\"../images/img_post/1425969527165.jpg\"><img src=\"../images/img_post/resize/1425969527165.jpg\"> ",
+        "article": 235,
+        "createdAt": "2015-03-10T06:39:35.280Z",
+        "updatedAt": "2015-03-10T06:39:35.280Z",
+        "id": 171
+      },
+      {
+        "author": 78,
+        "comment": "<a href=\"../images/img_post/1425969591543.jpg\"><img src=\"../images/img_post/resize/1425969591543.jpg\"> ",
+        "article": 235,
+        "createdAt": "2015-03-10T06:39:58.057Z",
+        "updatedAt": "2015-03-10T06:39:58.057Z",
+        "id": 172
+      },
+      {
+        "author": 78,
+        "comment": "<a href=\"../images/img_post/1425969624549.jpg\"><img src=\"../images/img_post/resize/1425969624549.jpg\"> ",
+        "article": 235,
+        "createdAt": "2015-03-10T06:40:30.069Z",
+        "updatedAt": "2015-03-10T06:40:30.069Z",
+        "id": 173
       }
     ],
     "recoveryquestion": [
@@ -7383,6 +7415,11 @@
         "user_nicer_user": 78,
         "articles_nicer": 235,
         "id": 1196
+      },
+      {
+        "user_nicer_user": 78,
+        "articles_nicer": 238,
+        "id": 1197
       }
     ],
     "response_nicer__user_nicer_user": [
@@ -8460,9 +8497,9 @@
         "content": "不好意思我是剛剛住院的病人<br>在醫院除了接受治療以外的時間都好無聊<br>但是住院又是必須的<br>想問一下各位有住院過的病友們都有些什麼娛樂呢?<br>請各位推薦一下謝謝~~",
         "classification": "問題",
         "responseNum": "4",
-        "clickNum": "106",
+        "clickNum": "115",
         "createdAt": "2014-12-22T07:45:45.874Z",
-        "updatedAt": "2015-03-08T15:20:49.681Z",
+        "updatedAt": "2015-03-10T06:54:18.545Z",
         "id": 197,
         "lastResponseTime": "2015-02-24T07:13:08.727Z",
         "nicer": [
@@ -8556,29 +8593,29 @@
         ],
         "reporter": [
           {
-            "account": "aaa",
-            "password": "aaa",
-            "alias": "aaa",
-            "email": "aa@aa.aa",
-            "type": "P",
+            "account": "1234",
+            "password": "1234",
+            "alias": "王景權",
+            "email": "1@1.1",
+            "type": "D",
             "isFullSignup": true,
-            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419232403064.jpg",
-            "createdAt": "2014-12-22T07:12:26.834Z",
-            "updatedAt": "2014-12-22T07:14:06.613Z",
-            "id": 78,
-            "fname": "陳",
-            "lname": "忠誠",
+            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419232470538.jpg",
+            "createdAt": "2014-12-22T07:12:45.681Z",
+            "updatedAt": "2014-12-22T07:14:58.218Z",
+            "id": 79,
+            "fname": "王",
+            "lname": "景權",
             "forgetQ": "3",
-            "forgetA": "日本",
-            "gender": "F",
-            "phone": "1234456",
+            "forgetA": "Canada",
+            "gender": "M",
+            "phone": "1234",
             "postalCode": "111",
             "addressCity": "臺北市",
             "addressDistrict": "士林區",
-            "address": "羅斯福路 150號",
-            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (China Standard Time)",
-            "primaryDisease": "8",
-            "selfIntroduction": "我好餓"
+            "address": "1234",
+            "birthday": "Mon Feb 01 1960 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "",
+            "selfIntroduction": ""
           },
           {
             "account": "hoho",
@@ -8606,29 +8643,29 @@
             "selfIntroduction": ""
           },
           {
-            "account": "1234",
-            "password": "1234",
-            "alias": "王景權",
-            "email": "1@1.1",
-            "type": "D",
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
             "isFullSignup": true,
-            "img": "http://140.112.107.168:1337/images/img_avatar/upload/1419232470538.jpg",
-            "createdAt": "2014-12-22T07:12:45.681Z",
-            "updatedAt": "2014-12-22T07:14:58.218Z",
-            "id": 79,
-            "fname": "王",
-            "lname": "景權",
+            "img": "http://140.112.107.168/images/img_avatar/upload/1425910958532.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2015-03-09T14:22:44.288Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
             "forgetQ": "3",
-            "forgetA": "Canada",
-            "gender": "M",
-            "phone": "1234",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
             "postalCode": "111",
             "addressCity": "臺北市",
             "addressDistrict": "士林區",
-            "address": "1234",
-            "birthday": "Mon Feb 01 1960 00:00:00 GMT+0800 (台北標準時間)",
-            "primaryDisease": "",
-            "selfIntroduction": ""
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
           }
         ]
       },
@@ -8752,13 +8789,13 @@
         "author": 78,
         "content": "<a href=\"../images/img_post/1425830284731.jpg\"><img src=\"../images/img_post/resize/1425830284731.jpg\"><br></a>\n        ",
         "classification": "心情",
-        "responseNum": "1",
-        "clickNum": "5",
+        "responseNum": "5",
+        "clickNum": "14",
         "board": "分類一",
         "createdAt": "2015-03-08T15:58:26.465Z",
-        "updatedAt": "2015-03-10T05:01:13.074Z",
+        "updatedAt": "2015-03-10T06:45:53.990Z",
         "id": 235,
-        "lastResponseTime": "2015-03-08T15:58:41.235Z",
+        "lastResponseTime": "2015-03-10T06:40:30.069Z",
         "reporter": [
           {
             "account": "aaa",
@@ -8846,12 +8883,79 @@
         "content": "\n          123<br>\n          <div contenteditable=\"false\" id=\"image_div\"><br><a href=\"../images/img_post/1425963878609.jpg\"><img src=\"../images/img_post/resize/1425963878609.jpg\"><br></a><a href=\"../images/img_post/1425963913150.jpg\"><img src=\"../images/img_post/resize/1425963913150.jpg\"></a> </div>\n        ",
         "classification": "問題",
         "responseNum": "0",
-        "clickNum": "2",
+        "clickNum": "7",
         "board": "分類一",
         "createdAt": "2015-03-10T05:04:50.404Z",
-        "updatedAt": "2015-03-10T05:05:24.594Z",
+        "updatedAt": "2015-03-10T06:22:24.725Z",
         "id": 238,
-        "lastResponseTime": "2015-03-10T05:04:50.404Z"
+        "lastResponseTime": "2015-03-10T05:04:50.404Z",
+        "reporter": [
+          {
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168/images/img_avatar/upload/1425910958532.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2015-03-09T14:22:44.288Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
+            "forgetQ": "3",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
+          }
+        ],
+        "nicer": [
+          {
+            "account": "aaa",
+            "password": "aaa",
+            "alias": "aaa",
+            "email": "aa@aa.aa",
+            "type": "P",
+            "isFullSignup": true,
+            "img": "http://140.112.107.168/images/img_avatar/upload/1425910958532.jpg",
+            "createdAt": "2014-12-22T07:12:26.834Z",
+            "updatedAt": "2015-03-09T14:22:44.288Z",
+            "id": 78,
+            "fname": "陳",
+            "lname": "忠誠",
+            "forgetQ": "3",
+            "forgetA": "日本",
+            "gender": "F",
+            "phone": "1234456",
+            "postalCode": "111",
+            "addressCity": "臺北市",
+            "addressDistrict": "士林區",
+            "address": "羅斯福路 150號",
+            "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+            "primaryDisease": "8",
+            "selfIntroduction": "我好餓"
+          }
+        ]
+      },
+      {
+        "title": "dsdsd",
+        "author": 78,
+        "content": "\n          fdfdfdfdsfsfdfd<br>ds<br>dsd<br><br>ds<br><br>\n          <div contenteditable=\"false\" id=\"image_div\"><br><a href=\"../images/img_post/1425969725553.jpg\"><img src=\"../images/img_post/resize/1425969725553.jpg\"><br></a><a href=\"../images/img_post/1425969754762.jpg\"><img src=\"../images/img_post/resize/1425969754762.jpg\"><br></a> </div>\n        ",
+        "classification": "其它",
+        "responseNum": "0",
+        "clickNum": "2",
+        "board": "分類一",
+        "createdAt": "2015-03-10T06:43:37.239Z",
+        "updatedAt": "2015-03-10T06:45:09.652Z",
+        "id": 239,
+        "lastResponseTime": "2015-03-10T06:43:37.239Z"
       }
     ],
     "user": [
@@ -8864,19 +8968,19 @@
         "isFullSignup": true,
         "img": "http://140.112.107.168/images/img_avatar/upload/1425910958532.jpg",
         "createdAt": "2014-12-22T07:12:26.834Z",
-        "updatedAt": "2015-03-09T14:22:44.288Z",
+        "updatedAt": "2015-03-10T06:34:39.908Z",
         "id": 78,
         "fname": "陳",
         "lname": "忠誠",
-        "forgetQ": "3",
-        "forgetA": "日本",
+        "forgetQ": "[otherQ]FFF",
+        "forgetA": "FFF",
         "gender": "F",
         "phone": "1234456",
-        "postalCode": "111",
-        "addressCity": "臺北市",
-        "addressDistrict": "士林區",
+        "postalCode": "",
+        "addressCity": "",
+        "addressDistrict": "",
         "address": "羅斯福路 150號",
-        "birthday": "Fri Feb 16 1996 00:00:00 GMT+0800 (台北標準時間)",
+        "birthday": "Tue May 07 1901 00:00:00 GMT+0800 (台北標準時間)",
         "primaryDisease": "8",
         "selfIntroduction": "我好餓"
       },
@@ -9144,23 +9248,28 @@
     "articles_reporter__user_reporter_user": [
       {
         "user_reporter_user": 78,
-        "articles_reporter": 197,
-        "id": 29
+        "articles_reporter": 235,
+        "id": 32
       },
       {
-        "user_reporter_user": 83,
-        "articles_reporter": 197,
-        "id": 30
+        "user_reporter_user": 78,
+        "articles_reporter": 238,
+        "id": 33
       },
       {
         "user_reporter_user": 79,
         "articles_reporter": 197,
-        "id": 31
+        "id": 36
+      },
+      {
+        "user_reporter_user": 83,
+        "articles_reporter": 197,
+        "id": 37
       },
       {
         "user_reporter_user": 78,
-        "articles_reporter": 235,
-        "id": 32
+        "articles_reporter": 197,
+        "id": 38
       }
     ]
   },
@@ -9563,16 +9672,16 @@
       "id": 370
     },
     "articles": {
-      "id": 238
+      "id": 239
     },
     "response": {
-      "id": 169
+      "id": 173
     },
     "recoveryquestion": {
       "id": 3
     },
     "articles_nicer__user_nicer_user": {
-      "id": 1196
+      "id": 1197
     },
     "response_nicer__user_nicer_user": {
       "id": 545
@@ -9581,7 +9690,7 @@
       "id": 15
     },
     "articles_reporter__user_reporter_user": {
-      "id": 32
+      "id": 38
     }
   }
 }
