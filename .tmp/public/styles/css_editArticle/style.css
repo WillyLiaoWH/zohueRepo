@@ -1,3 +1,30 @@
+.clear { /* 解決 float+height auto 問題 */
+  clear:both;
+}
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;
+    height: auto;
+    margin: 0 auto;
+}
+div.show-image:hover img{
+    opacity:0.5;
+}
+div.show-image:hover input {
+    display: block;
+}
+div.show-image input {
+    position:absolute;
+    display:none;
+}
+div.show-image input.delete {
+    top:0;
+    right:0;
+}
+
+
+
 #body{
 	background-image: url(../../../images/img_home/shl.png);
 }
@@ -156,6 +183,11 @@
 	height:auto;
 	font-size: 22px;
 	margin-top: -12px;
+	margin-bottom:25px;
+}
+#postContent_image{
+	min-height: 200px;
+	height:auto;
 	margin-bottom:25px;
 }
 

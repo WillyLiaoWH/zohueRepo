@@ -61,18 +61,25 @@ function setPage() {
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
 
-    document.getElementById("postTitle").value = articleTitle;
-    document.getElementById("postContent").innerHTML = articleContent;
+    content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
+    content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("\n        </div>"));
 
+    document.getElementById("postContent_image").innerHTML = content2;
+    document.getElementById("postTitle").value = articleTitle;
+    document.getElementById("postContent").innerHTML = content1;
+
+    $( ".show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
   }).error(function(res){
     alert(res.responseJSON.err);
   });
 }
 
 function post() {
+  if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
   var allowed=true;
   var postTitle = $("#postTitle").val();
   var postContent = $("#postContent").html();
+  var postContent_image = $("#postContent_image").html();
   if(!postTitle||postTitle.trim()=="") {
     alert("文章標題不能空白喔");
     allowed=false;
@@ -82,7 +89,9 @@ function post() {
     alert("文章內容不能空白喔");
   }
 
+  postContent = postContent+"<div id='postContent_image'>\n"+postContent_image+"\n        </div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
+
   var url = document.URL;
   var regex = /.*editArticle\/+(.*)/;
   var id = url.replace(regex,"$1");
