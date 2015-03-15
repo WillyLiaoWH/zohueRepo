@@ -25,53 +25,6 @@
 #birthday_D-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #selfIntroduction-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 
-#menu{
-	//background-color: blue;
-	margin:36px 20px 20px 28px;
-	border-radius: 5px;
-	font-family: "微軟正黑體";
-	font-size:20px;
-	width: 14%;
-	height: 550px;
-	float:left;
-	line-height:35px;　
-}
-
-#setUpMenu{
-	color:#816C5B;
-	display:none;
-	font-family: "微軟正黑體";
-	margin-left: 25px;
-	font-size: 18px;
-	text-decoration:none;
-}
-
-.setUpItem{
-	color:#816C5B;
-}
-
-.setUpItem:hover{
-	color:#D26900;
-}
-
-.item{
-	font-weight: normal;
-	text-decoration:none;
-	color:#816C5B;
-	font-weight: normal;
-}
-
-.item:hover{
-	//color:#0097AC;
-	color:#D26900;
-	font-size:22px;
-}
-
-#contentTitle{
-	font-size:35px;
-	color:#D26900;
-}
-
 #form-main,#form-main_ez{
 	margin:45px 0px 20px 0px;
 	width:57%;
@@ -332,7 +285,7 @@ input:focus, textarea:focus {
 
 
 
-@media all and (min-width: 768px){
+/*@media all and (min-width: 768px){
     body{
       font-size:16px;
     }
@@ -444,3 +397,4 @@ input:focus, textarea:focus {
 }
 @media all and (max-width: 320px) {
 }
+*/
