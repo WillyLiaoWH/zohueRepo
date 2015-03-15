@@ -21,7 +21,7 @@
 }
 
 #searchWord{
-	width:350px;
+	//width:350px;
 	margin: 8px 0px 0px 0px;
 }
 
@@ -69,7 +69,7 @@
 
 #article{
 	/*margin: 26px 0px 0px 15px;*/
-	margin: 60px 0px 0px 15px;
+	margin: 70px 0px 0px 15px;
 }
 
 #articleList{
