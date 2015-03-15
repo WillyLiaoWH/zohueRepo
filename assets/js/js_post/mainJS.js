@@ -58,7 +58,7 @@ function checkAuth2() {
 }
 
 function post() {
-  if(document.getElementById("rmimg")){document.getElementById("rmimg").remove();} // 去除叉叉紐
+  if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
   var allowed=true;
   var postTitle = $("#postTitle").val();
   var postContent = $("#postContent").html();
