@@ -126,6 +126,9 @@ function setPage(page, keyword, sort) {
           }else if(articleList[i].author.type=="S"){
             authorType="&nbsp社工師";
             authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+          }else if(articleList[i].author.type=="RN"){
+            authorType="&nbsp護理師";
+            authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
           }else if(articleList[i].author.type=="P"){
             authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
           }else if(articleList[i].author.type=="F"){
@@ -189,6 +192,9 @@ function setPage(page, keyword, sort) {
           }else if(articleList[i].author.type=="S"){
             authorType="&nbsp社工師";
             authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+          }else if(articleList[i].author.type=="RN"){
+            authorType="&nbsp護理師";
+            authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
           }else if(articleList[i].author.type=="P"){
             authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
           }else if(articleList[i].author.type=="F"){
@@ -356,6 +362,9 @@ function setSearchResult(articleList){
         }else if(articleList[i].author.type=="S"){
           authorType="&nbsp社工師";
           authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+        }else if(articleList[i].author.type=="RN"){
+          authorType="&nbsp護理師";
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="P"){
           authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="F"){
@@ -413,6 +422,9 @@ function setSearchResult(articleList){
         }else if(articleList[i].author.type=="S"){
           authorType="&nbsp社工師";
           authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+        }else if(articleList[i].author.type=="RN"){
+          authorType="&nbsp護理師";
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="P"){
           authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="F"){

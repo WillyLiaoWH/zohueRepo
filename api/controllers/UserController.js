@@ -16,7 +16,7 @@ module.exports = {
         var email=req.param("email");
         var type=req.param("type");
         var isFullSignup=req.param("isFullSignup");
-        var img="http://140.112.107.168:1337/images/img_avatar/upload/default.png";
+        var img="http://localhost/images/img_avatar/upload/default.png";
         
         User.findByAccount(account).exec(function(err, usr) {
             if(err){

@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	createpost: function(req, res) {
+	createpost: function(req, res) { // 將郵遞區號檔案轉換成local DB
 		fs = require('fs')
 		var content;
 		var array;
@@ -41,7 +41,7 @@ module.exports = {
   			console.log('The record has been deleted');
   		});
 	},
-	getall: function(req, res) {
+	getall: function(req, res) { // 回傳郵遞區號資料之 API
 		var array1=[],array2=[],array3=[],array4=[],array5=[],array6=[],
             array7=[],array8=[],array9=[],array10=[],array11=[],array12=[],
             array13=[],array14=[],array15=[],array16=[],array17=[],array18=[],
