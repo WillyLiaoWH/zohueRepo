@@ -30,12 +30,12 @@ var check_out = 0;
 // 新增圖片至固定DIV
 function insertHtmlAtCursor(html) {
   try{
-    var orinode = document.getElementById("image_div").lastChild; // 找到插入圖片的DIV
+    var orinode = document.getElementById("postContent_image"); // 找到插入圖片的DIV
     var range = document.createRange(); // 設定插入圖片時的range function
     range.setStart(orinode, 0); // 設定range起始點
 
     var node = range.createContextualFragment(html); // 欲插入之element
-    range.insertNode(node);
+    orinode.insertBefore(node, document.getElementById("clear"));
   }catch(err) {
     alert("錯誤!");
   }
@@ -127,6 +127,10 @@ function insertHtmlAtCursor(html) {
               },function(){
               $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
             });
+        }
+
+        if(document.activeElement.id=='rmimg'){
+          document.activeElement.parentNode.remove();
         }
       });
       
@@ -334,9 +338,11 @@ function insertHtmlAtCursor(html) {
           this.url = data.result;
           var href_img = '../'+this.url;
           href_img = href_img.replace("resize\/" ,'');
-          insertHtmlAtCursor('<a href="'+href_img+'"><img src="..\/' + this.url + '">');
+          //insertHtmlAtCursor('<a href="'+href_img+'"><img src="..\/' + this.url + '">');
 
           //insertHtmlAtCursor('<img src="..\/' + this.url + '">');
+
+          insertHtmlAtCursor("<div class=\"show-image\"><img src=\"..\/"+this.url+"\" /><input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\" /></div>");
 
           if (this.support.datauri || this.uploaded) {
             this.uploaded = false;
