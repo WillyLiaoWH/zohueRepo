@@ -80,10 +80,10 @@ function setPage(page, keyword, sort) {
       myTable="<tr style='background-color: #1D3521; color:white;'>";
       myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
       myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'>文章標題</td>";
-      myTable+="<td style='text-align:center;'>發表人/<a onclick='setPage(page, keyword, 1)'>發表時間</a></td>";
+      myTable+="<td style='text-align:center;'>發表人/發表時間</td>";
       myTable+="<td style='text-align:center;'>點閱/回覆</td>";
       myTable+="<td style='text-align:center;'>推薦</td>";
-      myTable+="<td style='text-align:center;'><a onclick='setPage(page, keyword, 0)'>最新回應時間</a></td></tr>";
+      myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
 
       articleNum=20;
 
