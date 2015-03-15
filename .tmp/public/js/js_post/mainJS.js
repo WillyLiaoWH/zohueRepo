@@ -58,14 +58,17 @@ function checkAuth2() {
 }
 
 function post() {
+  if(document.getElementById("rmimg")){document.getElementById("rmimg").remove();} // 去除叉叉紐
   var allowed=true;
   var postTitle = $("#postTitle").val();
   var postContent = $("#postContent").html();
+  var postContent_image = $("#postContent_image").html();
   if(!postTitle||postTitle.trim()=="") {
     alert("文章標題不能空白喔");
     allowed=false;
   }
 
+  postContent = postContent+"<div id='postContent_image'>"+postContent_image+"</div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
 
   var responseNum = "0";
