@@ -18,11 +18,11 @@
 }
 
 #article{
-	margin: 20px 0px 0px 15px;
+	//margin: 20px 0px 0px 15px;
 	border: solid rgba(102, 141, 60, 0.4);
 	border-width:1px;
 	border-radius: 10px;
-	width: 95%;
+	width: 100%;
 }
 
 #articleTitle{

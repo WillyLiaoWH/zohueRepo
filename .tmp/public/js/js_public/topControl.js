@@ -83,7 +83,7 @@ function checkAuth() {
 
       var postformmain=document.getElementById("post-form-main");
       if(postformmain) {
-        postformmain.style.width="80%";
+        postformmain.style.width="100%";
       }
 
       $.get("/checkFull", function(full){

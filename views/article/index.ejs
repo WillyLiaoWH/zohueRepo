@@ -17,81 +17,47 @@
     <script src="/js/js_article/crop-avatar.js"></script>
 	</head>
 	<body id="body">
-  <div id="post-form-main" class="container">
-    <div id="content">&nbsp癌病友論壇
-      <div id="ArticlePanel">
-        <button value="刪除文章" id="deleteArticle" class="b" onclick="deleteArticle();" style="display:none;"><img src="/images/img_forum/delete_icon.png"/>刪除文章</button>
-        <button value="編輯文章" id="editArticle" class="b" onclick="editArticle();" style="display:none;"><img src="/images/img_forum/post_icon.png"/>編輯文章</button>
-        <button value="瀏覽其它文章" id="backToList" class="b" onclick="backToList();"><img src="/images/img_forum/view_icon.png"/>瀏覽其他文章</button>
-        <button value="轉寄文章" id="sendEmail" class="b" onclick="sendEmail()">轉寄文章</button>
-        <button value="分享至臉書" id="shareFB" class="b" onclick="shareFB()">分享至臉書</button>
 
-
-      </div>
-      <!-- <table id="article">
-        <tr>
-　       <td id="articleAvatar" rowspan="2" style='width:50px;'></td>
-　       <td id="articleTitle"></td>
-         <td></td> <td></td>
-         <td id="articleAvatar_type" rowspan="2" style='width:50px;'></td></tr>
-　      <tr id="articleData"></tr>
-        <tr><td colspan=5 id="articleContent"></td></tr>
-        <tr><td id="niceArticle"></td><td id="niceCount" style="padding:12px 0px 2px 20px; color:black; font-size:20px;"></td></tr>
-      </table> -->
-      <table id="article">
-        <tr>
-         <td id="articleAvatar_type" rowspan="2" style='width:50px;'></td>
-　       <td id="articleAvatar" rowspan="2" style='width:50px;'></td>
-　       <td id="articleTitle" colspan="3"></td>
-         <td></td> <td></td>
-         </tr>
-　      <tr id="articleData"></tr>
-        <tr><td colspan=5 id="articleContent"></td></tr>
-        <tr>
-          <td id="niceArticle"></td>
-          <td colspan=2 id="niceCount" style="padding:5px 0px 0px 20px; color:#533828; font-size:20px;"></td>
-        </tr>
-        <tr>
-          <td id="report"></td>
-          <td colspan=2 id="reportCount" style="padding:5px 0px 0px 20px; color:#533828; font-size:20px;"></td>
-        </tr>
-      </table>
-
-      <div id="commentDiv">
-        <table id="commentList"></table><br>
-
-        <div id="leaveMessage">
-          留個言吧！<br>
-          <textarea type="text" name="comment" class="s" id="comment"> </textarea>
-          <button value="送出留言" id="commentSend" class="b" onclick="leaveComment();updateResponseNum();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
-          <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
+    <div class="container container-fluid" id="post-form-main">
+    &nbsp癌病友論壇
+    <div class="row-fluid">
+      <div class="span7" id="artContent">
+        <div class="row-fluid">
+          <button value="刪除文章" id="deleteArticle" class="b" onclick="deleteArticle();" style="display:none;"><img src="/images/img_forum/delete_icon.png"/>刪除文章</button>
+          <button value="編輯文章" id="editArticle" class="b" onclick="editArticle();" style="display:none;"><img src="/images/img_forum/post_icon.png"/>編輯文章</button>
+          <button value="瀏覽其它文章" id="backToList" class="b" onclick="backToList();"><img src="/images/img_forum/view_icon.png"/>瀏覽其他文章</button>
+          <button value="轉寄文章" id="sendEmail" class="b" onclick="sendEmail()">轉寄文章</button>
+          <button value="分享至臉書" id="shareFB" class="b" onclick="shareFB()">分享至臉書</button>
+        </div>
+        <div class="row-fluid">
+          <table id="article">
+            <tr>
+              <td id="articleAvatar_type" rowspan="2" style='width:50px;'></td>
+　            <td id="articleAvatar" rowspan="2" style='width:50px;'></td>
+　            <td id="articleTitle" colspan="3"></td>
+              <td></td> <td></td>
+            </tr>
+　          <tr id="articleData"></tr>
+            <tr><td colspan=5 id="articleContent"></td></tr>
+            <tr>
+              <td id="niceArticle"></td>
+              <td colspan=2 id="niceCount" style="padding:5px 0px 0px 20px; color:#533828; font-size:20px;"></td>
+            </tr>
+            <tr>
+              <td id="report"></td>
+              <td colspan=2 id="reportCount" style="padding:5px 0px 0px 20px; color:#533828; font-size:20px;"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="row-fluid">
+          <table id="commentList"></table><br>
+          <div id="leaveMessage">留個言吧！<br>
+            <textarea type="text" name="comment" class="s" id="comment"> </textarea>
+            <button value="送出留言" id="commentSend" class="b" onclick="leaveComment();updateResponseNum();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+            <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- <div id="signup">&nbsp簡易註冊
-        <form id="simpleSignUp">
-          暱稱<label id="checkAlias" class="check"></label><br>
-          <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
-          帳號<label id="checkAccount" class="check"></label><br>
-          <input type="text" name="UserAccount" class="s" id="UserAccount"><br>
-          密碼<label id="checkPwd" class="check"></label><br>
-          <input type="password" name="UserPwd" class="s" id="UserPwd"><br>
-          確認密碼<label id="checkPwdConfirm" class="check"></label><br>
-          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm"><br>
-          身分<label id="checkType" class="check"></label><br>
-          <select name="UserType" class="s" id="UserType">
-            <option value='P'>病友</option>
-            <option value='F'>家屬</option>
-            <option value='S'>社工師</option>
-            <option value='D'>醫生</option>
-            <option value='N'>一般民眾</option>
-          </select><br>
-          E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
-          <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
-        </form>
-    </div> -->
-
 
     <!-- Cropping modal -->
         <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
@@ -131,6 +97,94 @@
             </div>
           </div>
         </div><!-- /.modal -->
-  </div>
+
+    </div>
+
+
+
+
+
+  <!-- <div id="post-form-main" class="container container-fluid">
+    <div id="content">&nbsp癌病友論壇
+      <div id="ArticlePanel">
+        <button value="刪除文章" id="deleteArticle" class="b" onclick="deleteArticle();" style="display:none;"><img src="/images/img_forum/delete_icon.png"/>刪除文章</button>
+        <button value="編輯文章" id="editArticle" class="b" onclick="editArticle();" style="display:none;"><img src="/images/img_forum/post_icon.png"/>編輯文章</button>
+        <button value="瀏覽其它文章" id="backToList" class="b" onclick="backToList();"><img src="/images/img_forum/view_icon.png"/>瀏覽其他文章</button>
+        <button value="轉寄文章" id="sendEmail" class="b" onclick="sendEmail()">轉寄文章</button>
+        <button value="分享至臉書" id="shareFB" class="b" onclick="shareFB()">分享至臉書</button>
+      </div>
+
+      <table id="article">
+        <tr>
+         <td id="articleAvatar_type" rowspan="2" style='width:50px;'></td>
+　       <td id="articleAvatar" rowspan="2" style='width:50px;'></td>
+　       <td id="articleTitle" colspan="3"></td>
+         <td></td> <td></td>
+         </tr>
+　      <tr id="articleData"></tr>
+        <tr><td colspan=5 id="articleContent"></td></tr>
+        <tr>
+          <td id="niceArticle"></td>
+          <td colspan=2 id="niceCount" style="padding:5px 0px 0px 20px; color:#533828; font-size:20px;"></td>
+        </tr>
+        <tr>
+          <td id="report"></td>
+          <td colspan=2 id="reportCount" style="padding:5px 0px 0px 20px; color:#533828; font-size:20px;"></td>
+        </tr>
+      </table>
+
+      <div id="commentDiv">
+        <table id="commentList"></table><br>
+
+        <div id="leaveMessage">
+          留個言吧！<br>
+          <textarea type="text" name="comment" class="s" id="comment"> </textarea>
+          <button value="送出留言" id="commentSend" class="b" onclick="leaveComment();updateResponseNum();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+          <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
+        </div>
+      </div>
+    </div> -->
+
+
+
+    <!-- Cropping modal -->
+       <!--  <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" id="avatar-modal-label">上傳相片</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="avatar-body"> -->
+                    <!-- Upload image and data -->
+                    <!-- <div class="avatar-upload">
+                      <input class="avatar-src" name="avatar_src" type="hidden">
+                      <input class="avatar-data" name="avatar_data" type="hidden">
+                      <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
+                    </div> -->
+                    <!-- Crop and preview -->
+                    <!-- <div class="row">
+                      <div class="col-md-9">
+                        <div class="avatar-wrapper"></div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="avatar-preview preview-lg"></div>
+                        <div class="avatar-preview preview-md"></div>
+                        <div class="avatar-preview preview-sm"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>上傳</button>
+                  <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div> --><!-- /.modal -->
+<!--   </div> -->
   </body>
 </html>
