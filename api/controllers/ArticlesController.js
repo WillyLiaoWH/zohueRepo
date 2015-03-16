@@ -409,8 +409,9 @@ module.exports = {
                 res.send(500,{err:"找不到文章!"});
             }
             else{
-                regexp=''
-                var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");                var async = require('async');
+                
+                var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");               
+                var async = require('async');
                 async.each(article[0].response, function(val, callback) {
                     //每次要做的
                     User.find({id: val.author}).exec(function(err,author){

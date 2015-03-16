@@ -279,29 +279,47 @@ function editProfile(){
 }
 
 function sendEmail(){
-  var mailaddress=""
+  var mailaddress="";
   $.get("/checkAuth", function(auth){
     if(auth) {
       $.get("/getEmail",function(res){
         mailaddress=res;
-        if(!confirm("是否要把這篇寄給"+mailaddress)){
-          mailaddress=prompt('把這封email送到：') ;
-        }
+
+        alertify.set({ labels : { ok: "轉寄給其他人", cancel: "是" } });
+        alertify.confirm("是否要把這篇寄給"+mailaddress,function(e){
+          if (e){
+            alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+            mailaddress=alertify.prompt('把這封email送到：') ;
+          }
+          
+          if (mailaddress.length>0){
+            var url = document.URL;
+            var regex = /.*article\/+(.*)\?page=+(.*)/;
+            var article_id = url.replace(regex,"$1");
+            $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              if (res == "SEND"){
+                alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+                alertify.alert("已經送出信件至"+mailaddress); 
+             }
+            });
+          }
+        });
       });
     }
     else{
-      mailaddress=prompt('把這封email送到：') ;
-    }
-
-    if (mailaddress.length>0){
-      var url = document.URL;
-      var regex = /.*article\/+(.*)\?page=+(.*)/;
-      var article_id = url.replace(regex,"$1");
-      $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
-        if (res == "SEND"){
-          alert("已經送出信件至"+mailaddress); 
-        }
-      });
+      alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+      mailaddress=alertify.prompt('把這封email送到：') ;
+    
+      if (mailaddress.length>0){
+        var url = document.URL;
+        var regex = /.*article\/+(.*)\?page=+(.*)/;
+        var article_id = url.replace(regex,"$1");
+        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+          if (res == "SEND"){
+            alert("已經送出信件至"+mailaddress); 
+          }
+        });
+      }
     }
   });
 
