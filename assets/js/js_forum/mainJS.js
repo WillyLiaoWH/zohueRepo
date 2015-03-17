@@ -140,16 +140,19 @@ function setPage(page, keyword, sort) {
 
           if(articleList[i+articleNum*(page-1)].reporter) {
             if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
-              color="color:#FF0000;";
+              var color="color:#FF0000;";
+              var badPic='<img src="/images/img_forum/bad_article.jpg" title="檢舉" style="margin-right:10px; height:50px; width:50px;">';
             } else {
-              color="";
+              var color="";
+              var badPic="";
             }
           } else {
-            color="";
+            var color="";
+            var badPic="";
           }
 
           if(i%2==0){
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
@@ -161,7 +164,7 @@ function setPage(page, keyword, sort) {
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
            
           }else{
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
@@ -205,15 +208,18 @@ function setPage(page, keyword, sort) {
           }
           if(articleList[i+articleNum*(page-1)].reporter) {
             if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
-              color="color:#FF0000;";
+              var color="color:#FF0000;";
+              var badPic='<img src="/images/img_forum/bad_article.jpg" title="檢舉" style="margin-right:10px; height:50px; width:50px;">'
             } else {
-              color="";
+              var color="";
+              var badPic="";
             }
           } else {
-            color="";
+            var color="";
+            var badPic="";
           }
           if(i%2==0){
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
@@ -225,7 +231,7 @@ function setPage(page, keyword, sort) {
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>";
           }else{
-            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+            myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
             myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"?page="+page+"\" style='text-decoration:none; color:#000079;text-decoration:underline; '>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
