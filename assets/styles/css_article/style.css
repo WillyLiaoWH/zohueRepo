@@ -18,11 +18,11 @@
 }
 
 #article{
-	margin: 20px 0px 0px 15px;
+	//margin: 20px 0px 0px 15px;
 	border: solid rgba(102, 141, 60, 0.4);
 	border-width:1px;
 	border-radius: 10px;
-	width: 95%;
+	width: 100%;
 }
 
 #articleTitle{
@@ -47,6 +47,8 @@
 	border-top-width:1px;
 	border-bottom: dotted rgba(102, 141, 60, 0.4);
 	border-bottom-width:1px;
+	border-right: solid rgba(102, 141, 60, 0.4);
+	border-right-width:1px;
 	word-break:break-all;
 }
 
@@ -80,7 +82,7 @@
 #commentSend{
 	float:right;
 	//width: 100px;
-	margin: -8px 0px 10px 0px;
+	//margin: -8px 0px 10px 0px;
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
 }

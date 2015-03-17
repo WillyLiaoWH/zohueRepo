@@ -409,8 +409,8 @@ module.exports = {
                 res.send(500,{err:"找不到文章!"});
             }
             else{
-                var content=article[0].content+"<br>"+"<br>";
-
+                
+                var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");               
                 var async = require('async');
                 async.each(article[0].response, function(val, callback) {
                     //每次要做的
@@ -455,7 +455,6 @@ module.exports = {
                             html: content,   
                                
                         };  
-                        console.log("--"+content);
                         
                         //發送信件方法  
                         transporter.sendMail(options, function(error, info){  

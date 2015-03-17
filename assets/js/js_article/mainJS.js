@@ -13,9 +13,10 @@ function setPage() {
 
   $.get("/checkAuth", function(auth){
     if(auth) {
-      document.getElementById("content").style.width = "80%";
+      //document.getElementById("content").style.width = "80%";
       document.getElementById("niceArticle").style.display="inline";
       document.getElementById("report").style.display="inline";
+      document.getElementById("artContent").className = "span10";
     }
   });
 
@@ -35,25 +36,25 @@ function setPage() {
     updateTime=lastResponseTime.slice(0, lastResponseTime.length-3);
     
     if(articleList[0].author.type=="S") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else if(articleList[0].author.type=="D") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp醫師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp醫師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else if(articleList[0].author.type=="P") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/user_icon.png' title='病友'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/user_icon.png' title='病友'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else if(articleList[0].author.type=="F") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/user_icon.png' title='家屬'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/user_icon.png' title='家屬'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;width:70px;' src='/images/img_forum/user_icon.png' title='一般民眾'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;width:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>更新時間："+updateTime+"</td>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/user_icon.png' title='一般民眾'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     }
 
 
@@ -88,7 +89,7 @@ function setPage() {
             var user_type = "";
           break;
         }
-        var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px; width:70px;'></td>";
+        var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
 
         responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
         responseContext += "<tr><td style='padding:20px 0px 0px 10px;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
@@ -118,10 +119,10 @@ function setPage() {
       document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
     }
     if(res.isReport) {
-      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'>&nbsp收回</button>";
+      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'><img style='width:24px; height:22px;' src='/images/img_forum/report2_icon.png'/>&nbsp收回</button>";
       document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
     } else {
-      document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'>&nbsp檢舉</button>";
+      document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'><img style='width:24px; height:22px;' src='/images/img_forum/report_icon.png'/>&nbsp檢舉</button>";
       document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
     }
 
@@ -252,7 +253,7 @@ function clickReport() {
   var url = document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var id = url.replace(regex,"$1");
-  document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'>&nbsp收回</button>";
+  document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:22px;' src='/images/img_forum/report2_icon.png'/>&nbsp收回</button>";
   $.post("/clickReport", {article_id: id}, function(res){
     document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
   }).error(function(res){
@@ -264,11 +265,11 @@ function cancelReport() {
   var url = document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var id = url.replace(regex,"$1");
-  document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'>&nbsp檢舉</button>";  
+  document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:22px;' src='/images/img_forum/report_icon.png'/>&nbsp檢舉</button>";  
   $.post("/cancelReport", {article_id: id}, function(res){
     document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
   }).error(function(res){
-    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'>&nbsp收回</button>"; 
+    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:22px;' src='/images/img_forum/report2_icon.png'/>&nbsp收回</button>"; 
     alert(res.responseJSON.err);
   });
 }
@@ -278,29 +279,47 @@ function editProfile(){
 }
 
 function sendEmail(){
-  var mailaddress=""
+  var mailaddress="";
   $.get("/checkAuth", function(auth){
     if(auth) {
       $.get("/getEmail",function(res){
         mailaddress=res;
-        if(!confirm("是否要把這篇寄給"+mailaddress)){
-          mailaddress=prompt('把這封email送到：') ;
-        }
+
+        alertify.set({ labels : { ok: "轉寄給其他人", cancel: "是" } });
+        alertify.confirm("是否要把這篇寄給"+mailaddress,function(e){
+          if (e){
+            alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+            mailaddress=alertify.prompt('把這封email送到：') ;
+          }
+          
+          if (mailaddress.length>0){
+            var url = document.URL;
+            var regex = /.*article\/+(.*)\?page=+(.*)/;
+            var article_id = url.replace(regex,"$1");
+            $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              if (res == "SEND"){
+                alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+                alertify.alert("已經送出信件至"+mailaddress); 
+             }
+            });
+          }
+        });
       });
     }
     else{
-      mailaddress=prompt('把這封email送到：') ;
-    }
-
-    if (mailaddress.length>0){
-      var url = document.URL;
-      var regex = /.*article\/+(.*)\?page=+(.*)/;
-      var article_id = url.replace(regex,"$1");
-      $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
-        if (res == "SEND"){
-          alert("已經送出信件至"+mailaddress); 
-        }
-      });
+      alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+      mailaddress=alertify.prompt('把這封email送到：') ;
+    
+      if (mailaddress.length>0){
+        var url = document.URL;
+        var regex = /.*article\/+(.*)\?page=+(.*)/;
+        var article_id = url.replace(regex,"$1");
+        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+          if (res == "SEND"){
+            alert("已經送出信件至"+mailaddress); 
+          }
+        });
+      }
     }
   });
 
