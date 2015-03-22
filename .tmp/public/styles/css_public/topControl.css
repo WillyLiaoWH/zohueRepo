@@ -32,12 +32,18 @@ button, input[type="button"], input[type="submit"]{
 	text-decoration: none;
 }
 
-#z{ margin-left:15px;
+#logo{
+	width: 436px;
+	height: 94px;
+	margin: 15px 0px 0px 20px;
+}
+
+/*#z{ margin-left:15px;
 	color:#D26900;}
 #o{ color:#816C58;}
 #h{ color:#668D3C;}
 #u{ color:#0097AC;}
-#e{ color:#007996;}
+#e{ color:#007996;}*/
 
 #loginSection{
 	font-size:20px;
