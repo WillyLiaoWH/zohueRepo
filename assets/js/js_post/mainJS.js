@@ -70,6 +70,8 @@ function post() {
 
   postContent = postContent+"<div id='postContent_image'>"+postContent_image+"</div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
+  postContent = postContent.replace(/dummy href=/g, "a href=");
+  postContent = postContent.replace(/\/dummy/g, "\/a");
 
   var responseNum = "0";
   var clickNum = "0";
@@ -118,10 +120,13 @@ function editProfile(){
 }
 
 var saveContent="";
+var saveContent_image="";
 function save() {
   var postContent = $("#postContent").html();
+  var postContent_image = $("#postContent_image").html();
   if(postContent.trim()!="") {
     saveContent=postContent;
+    saveContent_image=postContent_image;
     savedText=document.getElementById("savedText");
     savedText.style.display="inline";
     $("#savedText").fadeOut(1500);
@@ -130,7 +135,12 @@ function save() {
 function load() {
   if(saveContent!=""&&confirm("會覆蓋現有文章，確定嗎?")) {
     document.getElementById("postContent").innerHTML=saveContent;
+    document.getElementById("postContent_image").innerHTML=saveContent_image;
     document.getElementById("loadedText").style.display="inline";
     $("#loadedText").fadeOut(1500);
+
+    if(saveContent_image.indexOf("img") != -1){ // div 內有圖片
+      $("#postContent_image").css("display", "block");
+    }
   } 
 }

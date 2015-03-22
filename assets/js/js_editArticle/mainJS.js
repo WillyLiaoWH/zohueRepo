@@ -63,6 +63,10 @@ function setPage() {
 
     content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
     content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("\n        </div>"));
+    content2 = content2.replace(/<a/g, "<dummy");
+    if(content2.indexOf("img") == -1){ // div 內無圖片
+      $("#postContent_image").css("display", "none");
+    }
 
     document.getElementById("postContent_image").innerHTML = content2;
     document.getElementById("postTitle").value = articleTitle;
@@ -91,6 +95,8 @@ function post() {
 
   postContent = postContent+"<div id='postContent_image'>\n"+postContent_image+"\n        </div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
+  postContent = postContent.replace(/dummy href=/g, "a href=");
+  postContent = postContent.replace(/\/dummy/g, "\/a");
 
   var url = document.URL;
   var regex = /.*editArticle\/+(.*)/;
@@ -118,10 +124,13 @@ function editProfile(){
 }
 
 var saveContent="";
+var saveContent_image="";
 function save() {
   var postContent = $("#postContent").html();
+  var postContent_image = $("#postContent_image").html();
   if(postContent.trim()!="") {
     saveContent=postContent;
+    saveContent_image=postContent_image;
     savedText=document.getElementById("savedText");
     savedText.style.display="inline";
     $("#savedText").fadeOut(1500);
@@ -130,5 +139,10 @@ function save() {
 function load() {
   if(saveContent!=""&&confirm("會覆蓋現有文章，確定嗎?")) {
     document.getElementById("postContent").innerHTML=saveContent;
+    document.getElementById("postContent_image").innerHTML=saveContent_image;
+
+    if(saveContent_image.indexOf("img") != -1){ // div 內有圖片
+      $("#postContent_image").css("display", "block");
+    }
   } 
 }

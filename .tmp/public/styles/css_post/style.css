@@ -72,6 +72,7 @@ div.show-image input.delete {
 	margin-bottom:25px;
 }
 #postContent_image{
+	display: none;
 	min-height: 200px;
 	height:100%;
 	margin-bottom:25px;
@@ -141,7 +142,7 @@ div.show-image input.delete {
 	background-color: rgba(102, 141, 60, 0.4);
 	color:#816C58;
 }
-#image, #save{
+#save{
 	background-color: #ADADAD;
 }
 

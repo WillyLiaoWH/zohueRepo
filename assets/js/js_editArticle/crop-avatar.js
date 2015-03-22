@@ -1,36 +1,10 @@
-var check_out = 0;
-
-// function insertHtmlAtCursor(html) {
-//   try{
-//     //alert(window.getSelection().getRangeAt(0).startContainer.parentNode.id);
-//     var currentE = window.getSelection().getRangeAt(0).startContainer; // 取得目前 select 的 element
-//     if(currentE.tagName!='DIV' | currentE.id==""){
-//       do{
-//         currentE = currentE.parentNode;
-//       }while(currentE.tagName!='DIV' | currentE.id=="");
-//     }
-
-//     if(currentE.id == "postContent"){
-//       var range, node;
-//       if (window.getSelection && window.getSelection().getRangeAt) {
-//         range = window.getSelection().getRangeAt(0);
-//         node = range.createContextualFragment(html);
-//         range.insertNode(node);
-//       } else if (document.selection && document.selection.createRange) {
-//         document.selection.createRange().pasteHTML(html);
-//       }
-//     }else{
-//       alert("先決定你要把這張圖片放在哪吧~");
-//     }
-//   }catch(err) {
-//     alert("錯誤!");
-//   }
-// }
+var once = 0;
 
 // 新增圖片至固定DIV
 function insertHtmlAtCursor(html) {
   try{
     var orinode = document.getElementById("postContent_image"); // 找到插入圖片的DIV
+    $("#postContent_image").css("display", "block");
     var range = document.createRange(); // 設定插入圖片時的range function
     range.setStart(orinode, 0); // 設定range起始點
 
@@ -106,31 +80,11 @@ function insertHtmlAtCursor(html) {
 
     addListener: function () {
       $(document).mouseup(function(){
-        if(document.activeElement.id!=='postContent'){
-          if(document.activeElement.id=='image' & check_out == 1){
-            check_out = 1;
-            $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-          }else{
-            check_out = 0;
-            $("#image").css("background-color", "#ADADAD");
-            $("#image").hover(function(){
-              $("#image").css("background-color", "#ADADAD");
-              },function(){
-              $("#image").css("background-color", "#ADADAD");
-            });
-          }
-        }else{
-          check_out = 1;
-          $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-          $("#image").hover(function(){
-              $("#image").css("background-color", "rgba(102, 141, 60, 0.4)");
-              },function(){
-              $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-            });
-        }
-
         if(document.activeElement.id=='rmimg'){
           document.activeElement.parentNode.remove();
+          if($("#postContent_image").html().indexOf("img") == -1){ // div 內已無圖片
+            $("#postContent_image").css("display", "none");
+          }
         }
       });
       
@@ -194,10 +148,8 @@ function insertHtmlAtCursor(html) {
     },
 
     click: function () {
-      if(check_out == 1){
-        this.$avatarModal.modal("show");
-        check_out = 0;
-      }
+      this.$avatarModal.modal("show");
+      once = 0; // 可以 submit 圖片
     },
 
     change: function () {
@@ -228,7 +180,12 @@ function insertHtmlAtCursor(html) {
         return false;
       }
 
+      if(once != 0){ // 禁止 submit 圖片
+        return false;
+      }
+
       if (this.support.formData) {
+        once++;
         this.ajaxUpload();
         return false;
       }
@@ -342,7 +299,7 @@ function insertHtmlAtCursor(html) {
 
           //insertHtmlAtCursor('<img src="..\/' + this.url + '">');
 
-          insertHtmlAtCursor("<div class=\"show-image\"><img src=\"..\/"+this.url+"\" /><input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\" /></div>");
+          insertHtmlAtCursor("<div class=\"show-image\"><dummy href=\""+href_img+"\"><img src=\"..\/"+this.url+"\" /></dummy><input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\" /></div>");
 
           if (this.support.datauri || this.uploaded) {
             this.uploaded = false;

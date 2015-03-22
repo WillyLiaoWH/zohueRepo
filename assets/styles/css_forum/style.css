@@ -1,3 +1,7 @@
+#body{
+	font-family: "微軟正黑體";
+}
+
 #post{
 	float:right;
 	//width: 125px;
@@ -49,6 +53,25 @@
 #cancleSearch.hover{
 	background-color: rgba(102, 141, 60, 0.8);
 	color:#816C58;
+}
+
+#sortAs{
+	height:48px;
+	color:#816C58;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 10px;
+	line-height: 22px;
+	width:60%;
+	background-color: rgba(102, 141, 60, 0.4);
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+  	margin-top: 7px;
 }
 
 #page{
