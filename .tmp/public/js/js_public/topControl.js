@@ -14,7 +14,7 @@ $(window).load(function(){ // 暫存回覆頁面
 $(document).ready(function(){
   checkAuth();
 
-  
+  FB_API();
 
   $( "#setUp" ).click(function() {
     if(setUpMenu.style.display=="block"){
@@ -44,6 +44,54 @@ $(document).ready(function(){
   });
 
 });
+
+function FB_API(){
+ window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1639694986252116',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+}
+
+
+//取得登入者的資料。
+function GetStatus(){
+var
+  div    = document.getElementById('me'),
+  showMe = function(response) {
+    if (response.status !== 'connected') {
+      div.innerHTML = '<em>Not Connected</em>';
+    } else {
+      FB.api('/me', function(response) {
+        var html = '<table>';
+        for (var key in response) {
+          html += (
+            '<tr>' +
+              '<th>' + key + '</th>' +
+              '<td>' + response[key] + '</td>' +
+            '</tr>'
+          );
+        }
+        div.innerHTML = html;
+      });
+    }
+  };
+FB.getLoginStatus(function(response) {
+  showMe(response);
+  FB.Event.subscribe('auth.sessionChange', showMe);
+});
+}
+
 
 function checkAuth() {
   $.get("/checkAuth", function(auth){
