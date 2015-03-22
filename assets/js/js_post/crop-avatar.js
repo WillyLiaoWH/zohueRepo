@@ -1,4 +1,5 @@
 var check_out = 0;
+var once = 0;
 
 // 要在範圍內才允許新增圖片
 // function insertHtmlAtCursor(html) {
@@ -207,6 +208,7 @@ function insertHtmlAtCursor(html) {
       if(check_out == 1){
         this.$avatarModal.modal("show");
         check_out = 0;
+        once = 0; // 可以 submit 圖片
       }
     },
 
@@ -238,7 +240,12 @@ function insertHtmlAtCursor(html) {
         return false;
       }
 
+      if(once != 0){ // 禁止 submit 圖片
+        return false;
+      }
+      
       if (this.support.formData) {
+        once++;
         this.ajaxUpload();
         return false;
       }
