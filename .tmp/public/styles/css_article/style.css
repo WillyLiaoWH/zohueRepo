@@ -8,10 +8,15 @@
 	//margin: -8px 0px 10px 0px;
 }
 
-#backToList{
+#backToList,#shareFB{
 	width: 170px;
 	height:48px;
 }
+
+#FB{
+	opacity:0.8;
+}
+
 #editArticle, #deleteArticle, #commentSend, #addImage{
 	width: 130px;
 	height:48px;
