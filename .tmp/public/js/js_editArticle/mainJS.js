@@ -63,6 +63,7 @@ function setPage() {
 
     content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
     content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("\n        </div>"));
+    content2 = content2.replace(/<a/g, "<dummy");
     if(content2.indexOf("img") == -1){ // div 內無圖片
       $("#postContent_image").css("display", "none");
     }
@@ -94,6 +95,8 @@ function post() {
 
   postContent = postContent+"<div id='postContent_image'>\n"+postContent_image+"\n        </div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
+  postContent = postContent.replace(/dummy href=/g, "a href=");
+  postContent = postContent.replace(/\/dummy/g, "\/a");
 
   var url = document.URL;
   var regex = /.*editArticle\/+(.*)/;
@@ -104,7 +107,8 @@ function post() {
   if(allowed) {
     var posting = $.post( "/changeArticle", { id: id, newTitle: newTitle, newContent: newContent}, function(res){
       alert("文章編輯成功！");
-      window.location.replace("/forum/1");
+      //window.location.replace("/forum/1");
+      window.location.replace("/article/"+id+"?page=1");
     })
       .error(function(res){
         alert(res.responseJSON.err);

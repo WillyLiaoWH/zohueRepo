@@ -61,6 +61,12 @@ function setPage() {
     document.getElementById("articleTitle").innerHTML = articleTitle;
     document.getElementById("articleData").innerHTML = articleData;
     document.getElementById("articleContent").innerHTML = articleContent;
+    // 插入 HR
+    var orinode = document.getElementById("articleContent"); // 找到插入圖片的DIV
+    var range = document.createRange(); // 設定插入圖片時的range function
+    range.setStart(orinode, 0); // 設定range起始點
+    var node = range.createContextualFragment("<hr id='hr'>"); // 欲插入之element
+    orinode.insertBefore(node, document.getElementById("postContent_image"));
 
     responseContext="";
     if(response.length!=0) {
@@ -119,10 +125,10 @@ function setPage() {
       document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
     }
     if(res.isReport) {
-      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'><img style='width:24px; height:22px;' src='/images/img_forum/report2_icon.png'/>&nbsp收回</button>";
+      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
       document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
     } else {
-      document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'><img style='width:24px; height:22px;' src='/images/img_forum/report_icon.png'/>&nbsp檢舉</button>";
+      document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";
       document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
     }
 
@@ -253,7 +259,7 @@ function clickReport() {
   var url = document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var id = url.replace(regex,"$1");
-  document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:22px;' src='/images/img_forum/report2_icon.png'/>&nbsp收回</button>";
+  document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
   $.post("/clickReport", {article_id: id}, function(res){
     document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
   }).error(function(res){
@@ -265,11 +271,11 @@ function cancelReport() {
   var url = document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var id = url.replace(regex,"$1");
-  document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:22px;' src='/images/img_forum/report_icon.png'/>&nbsp檢舉</button>";  
+  document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
   $.post("/cancelReport", {article_id: id}, function(res){
     document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
   }).error(function(res){
-    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:22px;' src='/images/img_forum/report2_icon.png'/>&nbsp收回</button>"; 
+    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
     alert(res.responseJSON.err);
   });
 }
