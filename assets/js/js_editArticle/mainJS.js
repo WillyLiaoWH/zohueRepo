@@ -63,6 +63,9 @@ function setPage() {
 
     content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
     content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("\n        </div>"));
+    if(content2.indexOf("img") == -1){ // div 內無圖片
+      $("#postContent_image").css("display", "none");
+    }
 
     document.getElementById("postContent_image").innerHTML = content2;
     document.getElementById("postTitle").value = articleTitle;
