@@ -141,7 +141,7 @@ function setPage(page, keyword, sort) {
           if(articleList[i+articleNum*(page-1)].reporter) {
             if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
               var color="color:#FF0000;";
-              var badPic='<img src="/images/img_forum/bad_article.jpg" title="檢舉" style="margin-right:10px; height:50px; width:50px;">';
+              var badPic='<img src="/images/img_forum/bad2_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:10px; height:40px; width:40px;">';
             } else {
               var color="";
               var badPic="";
@@ -209,7 +209,7 @@ function setPage(page, keyword, sort) {
           if(articleList[i+articleNum*(page-1)].reporter) {
             if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
               var color="color:#FF0000;";
-              var badPic='<img src="/images/img_forum/bad_article.jpg" title="檢舉" style="margin-right:10px; height:50px; width:50px;">'
+              var badPic='<img src="/images/img_forum/bad2_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:10px; height:40px; width:40px;">'
             } else {
               var color="";
               var badPic="";
