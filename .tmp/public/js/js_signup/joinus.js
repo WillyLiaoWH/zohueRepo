@@ -113,8 +113,7 @@ $(document).ready(function(){
         case "birthday_Y":
           var taiwanY = $(this).val();
           if(taiwanY>-50 & taiwanY<100){
-            statusIMG("#addressCity","O");
-            statusIMG("#addressDistrict","O");
+            statusIMG("#birthday_Y","O");
           }else{
             statusIMG(this,"X");
             statusWarn(this,"日期格式錯誤，請輸入民國年！");

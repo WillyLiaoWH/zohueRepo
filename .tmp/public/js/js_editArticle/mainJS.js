@@ -107,7 +107,8 @@ function post() {
   if(allowed) {
     var posting = $.post( "/changeArticle", { id: id, newTitle: newTitle, newContent: newContent}, function(res){
       alert("文章編輯成功！");
-      window.location.replace("/forum/1");
+      //window.location.replace("/forum/1");
+      window.location.replace("/article/"+id+"?page=1");
     })
       .error(function(res){
         alert(res.responseJSON.err);
