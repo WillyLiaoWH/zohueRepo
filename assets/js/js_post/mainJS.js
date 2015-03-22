@@ -70,6 +70,8 @@ function post() {
 
   postContent = postContent+"<div id='postContent_image'>"+postContent_image+"</div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
+  postContent = postContent.replace(/dummy href=/g, "a href=");
+  postContent = postContent.replace(/\/dummy/g, "\/a");
 
   var responseNum = "0";
   var clickNum = "0";
