@@ -117,7 +117,7 @@ function post() {
 }
 
 function abort() {
-  window.location.replace("/forum/1");
+  window.location.replace("/forum/1#all");
 }
 
 function editProfile(){

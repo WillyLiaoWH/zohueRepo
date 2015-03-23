@@ -8,7 +8,26 @@
 module.exports = {
     
 	setForumPage: function(req, res){
-		Articles.find().populate('author').populate('nicer').populate('reporter').exec(function(err, articlesList) {
+        var tab=req.param("tab");
+        var classification;
+        switch (tab) {
+            case "all":
+              classification="";
+              break;
+            case "motion":
+              classification="心情"
+              break;
+            case "share":
+              classification="分享";
+              break;
+            case "problem":
+              classification="問題";
+              break;
+            case "others":
+              classification="其它";
+              break;
+        }
+		Articles.find({classification: {'contains': classification}}).populate('author').populate('nicer').populate('reporter').exec(function(err, articlesList) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {
@@ -390,7 +409,27 @@ module.exports = {
         var keyword = req.param("keyword");
         console.log(keyword);
 
-        Articles.find({ title: { 'contains': keyword }}).populate("author").populate('nicer').exec(function(err,found){
+        var tab=req.param("tab");
+        var classification;
+        switch (tab) {
+            case "all":
+              classification="";
+              break;
+            case "motion":
+              classification="心情"
+              break;
+            case "share":
+              classification="分享";
+              break;
+            case "problem":
+              classification="問題";
+              break;
+            case "others":
+              classification="其它";
+              break;
+        }
+
+        Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
             if (err){
                 res.send(500, { err: "DB Error" });
             } else{

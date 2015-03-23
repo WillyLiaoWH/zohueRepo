@@ -44,12 +44,33 @@ $(document).ready(function(){
       }
     }catch(err){}
   });
+
+  $(".tabs li a").click(function(){
+    window.location.reload();
+  });
 });
 
 function setPage(page, keyword, sort) {
+  switch (tab) {
+    case "all":
+      $("#all").addClass("active");
+      break;
+    case "motion":
+      $("#motion").addClass("active");
+      break;
+    case "share":
+      $("#share").addClass("active");
+      break;
+    case "problem":
+      $("#problem").addClass("active");
+      break;
+    case "others":
+      $("#others").addClass("active");
+      break;
+  }
   if(keyword!="") {
     document.getElementById("searchWord").value = keyword;
-    $.post( "/searchArticle", { keyword: keyword}, function(res_search){
+    $.post( "/searchArticle/"+tab, { keyword: keyword}, function(res_search){
       temp_result=res_search;
       if(res_search.length==0){
         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
@@ -63,7 +84,7 @@ function setPage(page, keyword, sort) {
       alert("not found");
     });
   } else {
-    $.get("/setForumPage", function(articleList){
+    $.get("/setForumPage/"+tab, function(articleList){
       test="";
       for(i=0; i<articleList.length; i++) {
         test+=articleList[i].title;
@@ -98,7 +119,7 @@ function setPage(page, keyword, sort) {
       pageContext="<tr><td>頁次：</td>"
       for(i=1; i<=pageNum; i++) {
         if(i!=page) {
-          pageContext+="<td><label><a href='/forum/"+i+"'>"+i+"</a></label></td>"
+          pageContext+="<td><label><a href='/forum/"+i+"#"+"tab'>"+i+"</a></label></td>"
         } else {
           pageContext+="<td>"+i+"</td>"
         }
@@ -300,14 +321,14 @@ function searchArticle() {
     alert("搜尋不能搜空白唷！");
   }
   else{
-    window.location.assign("/forum/search/"+keyword+"/1");
+    window.location.assign("/forum/search/"+keyword+"/1#"+tab);
   }
 }
 
 function cancleSearch(){
   
   document.getElementById("searchWord").value = "";
-  window.location.assign("/forum/1");
+  window.location.assign("/forum/1#"+tab);
   
 }
 
@@ -318,7 +339,7 @@ function setSearchResult(articleList){
       return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
     });
     var url = document.URL;
-    regex=/.*search\/+(.*)+\/+(.*)/
+    regex=/.*search\/+(.*)+\/+(.*)\#+(.*)/
     var keyword=url.replace(regex, "$1");
     var page=url.replace(regex,"$2");
 
@@ -340,7 +361,7 @@ function setSearchResult(articleList){
     pageContext="<tr><td>頁次：</td>";
     for(i=1; i<=pageNum; i++) {
       if(i!=page) {
-        pageContext+="<td><label><a href='/forum/search/"+keyword+"/"+i+"'>"+i+"</a></label></td>";
+        pageContext+="<td><label><a href='/forum/search/"+keyword+"/"+i+"#"+tab+"'>"+i+"</a></label></td>";
       } else {
         pageContext+="<td>"+i+"</td>";
       }
