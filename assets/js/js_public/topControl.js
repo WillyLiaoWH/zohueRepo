@@ -76,6 +76,11 @@ function FB_API(){
       // Logged into your app and Facebook.
       FB.api('/me',function(response){
         $.post('/checkFB',{FBmail:response.email},function(res){
+          if(res.user){
+            console.log("hi hi");
+          }else{
+            console.log("no no");
+          }
 
         });
       });

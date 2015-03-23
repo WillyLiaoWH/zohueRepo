@@ -56,8 +56,8 @@ module.exports.routes = {
   'POST /imgupload_avatar': 'ImguploadController.upload_avatar',
   'POST /imgupload_post': 'ImguploadController.upload_post',
   'POST /sendEmail' : 'ArticlesController.mailAritlce',
-  
   'POST /checkFB' : 'User.checkFB',
+  
   'GET /checkAuth': 'SessionController.checkAuth',
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',

@@ -78,7 +78,7 @@ module.exports = {
       collection: 'response',
       via: 'author'
     },
-    FBmail{
+    FBmail:{
       type:'string'
     }
   }

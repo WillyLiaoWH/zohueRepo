@@ -302,7 +302,13 @@ module.exports = {
         var FBmail=req.param("FBmail");
         User.findByFBmail(FBmail).exec(function(err,usr){
             if (err){
-                res.send(500,{err:"DB Error"})
+                res.send(500,{err:"DB Error"});
+            } else{
+                if (usr.length!=0){
+                    res.json({'user':true,'account':usr.account,'password':usr.password});
+                }else{
+                    res.json({'user':false});
+                }
             }
         });
     }
