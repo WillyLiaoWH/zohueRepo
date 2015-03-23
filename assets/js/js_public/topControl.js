@@ -79,7 +79,14 @@ function FB_API(){
           if(res.user){
             console.log("hi hi");
           }else{
-            console.log("no no");
+            var password=response.id+Math.random();
+            document.getElementById('FBlogin').style.display='none';
+            document.getElementById('UserAccount').value=response.id;
+            document.getElementById('UserAlias').value=response.name;
+            document.getElementById('UserPwd').value=password;
+            document.getElementById('UserPwdConfirm').value=password;
+            document.getElementById('UserEmail').value=response.email;
+            document.getElementById('FBmail').value=response.email;            
           }
 
         });
@@ -119,15 +126,6 @@ function FB_API(){
 
   };
 
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-    });
-  }
 
 
 function checkAuth() {
