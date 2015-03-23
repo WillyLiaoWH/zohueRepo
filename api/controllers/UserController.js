@@ -305,12 +305,14 @@ module.exports = {
             if (err){
                 res.send(500,{err:"DB Error"});
             } else{
-                if (usr.length!=0){
-                    req.session.user = usr;
+                console.log(JSON.stringify(usr))
+                console.log(usr.length);
+                if (usr.length>0){
+                    req.session.user = usr[0];
                     req.session.authenticated=true;
-                    res.json({'user':true});
+                    res.send(true);
                 }else{
-                    res.json({'user':false});
+                    res.send(false);
                 }
             }
         });
