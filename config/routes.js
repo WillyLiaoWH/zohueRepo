@@ -51,7 +51,7 @@ module.exports.routes = {
   'POST /cancelReport': 'ArticlesController.cancelReport',
   'POST /niceResponse': 'ArticlesController.niceResponse',
   'POST /notNiceResponse': 'ArticlesController.notNiceResponse',
-  'POST /searchArticle': 'ArticlesController.searchArticle',
+  'POST /searchArticle/:tab': 'ArticlesController.searchArticle',
   'POST /searchProInfo': 'ProInfoController.searchProInfo',
   'POST /imgupload_avatar': 'ImguploadController.upload_avatar',
   'POST /imgupload_post': 'ImguploadController.upload_post',
@@ -61,7 +61,7 @@ module.exports.routes = {
   'GET /checkAuth': 'SessionController.checkAuth',
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
-  'GET /setForumPage': 'Articles.setForumPage',
+  'GET /setForumPage/:tab': 'Articles.setForumPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /article/*': {

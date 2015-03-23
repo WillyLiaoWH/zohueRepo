@@ -142,7 +142,7 @@ function backToList() {
   var url=document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var page = url.replace(regex,"$2");
-  window.location.assign("/forum/"+page);
+  window.location.assign("/forum/"+page+"#all");
 }
 
 function editArticle() {
@@ -160,7 +160,7 @@ function deleteArticle() {
     var id = url.replace(regex,"$1");
     $.post( "/deleteArticle", { id: id}, function(res){
      alert("文章刪除成功！");
-      window.location.replace("/forum/1");
+      window.location.replace("/forum/1#all");
     })
     .error(function(res){
     alert(res.responseJSON.err);
