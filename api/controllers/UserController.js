@@ -14,6 +14,7 @@ module.exports = {
         var password=req.param("password");
         var alias=req.param("alias");
         var email=req.param("email");
+        var FBmail=req.param("FBmail");
         var type=req.param("type");
         var isFullSignup=req.param("isFullSignup");
         var img="http://localhost/images/img_avatar/upload/default.png";
@@ -27,7 +28,7 @@ module.exports = {
                 // var hasher = require("password-hash");
                 // password = hasher.generate(password);
                 User.create({account: account, password: password, alias: alias, email: email, type: type
-                            , isFullSignup: isFullSignup, img: img}).exec(function(error, user) {
+                            , isFullSignup: isFullSignup, img: img , FBmail:FBmail}).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
@@ -305,7 +306,9 @@ module.exports = {
                 res.send(500,{err:"DB Error"});
             } else{
                 if (usr.length!=0){
-                    res.json({'user':true,'account':usr.account,'password':usr.password});
+                    req.session.user = usr;
+                    req.session.authenticated=true;
+                    res.json({'user':true});
                 }else{
                     res.json({'user':false});
                 }

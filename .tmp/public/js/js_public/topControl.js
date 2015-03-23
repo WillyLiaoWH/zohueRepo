@@ -77,11 +77,12 @@ function FB_API(){
       FB.api('/me',function(response){
         $.post('/checkFB',{FBmail:response.email},function(res){
           if(res.user){
-            console.log("hi hi");
+            console.log("found");
+            location.reload();
           }else{
             var password=response.id+Math.random();
-            document.getElementById('FBlogin').style.display='none';
-            document.getElementById('UserAccount').value=response.id;
+            //document.getElementById('FBlogin').style.display='none';
+            document.getElementById('UserAccount').value=response.id-1;
             document.getElementById('UserAlias').value=response.name;
             document.getElementById('UserPwd').value=password;
             document.getElementById('UserPwdConfirm').value=password;
@@ -273,7 +274,8 @@ function Submit(){
   var password = $("#UserPwd").val();
   var email = $("#UserEmail").val();
   var type = $("#UserType").val();
-  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email, type: type, isFullSignup: false}, function(res){
+  var FBmail = $("#FBmail").val();
+  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FBmail:FBmail, type: type, isFullSignup: false}, function(res){
     alert("註冊成功！");
     loginWithAccount(account, password);
   })
