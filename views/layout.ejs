@@ -107,12 +107,14 @@
         <form id="simpleSignUp">
           暱稱<label id="checkAlias" class="check"></label><br>
           <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
+          <div id="FBlogin">
           帳號<label id="checkAccount" class="check"></label><br>
           <input type="text" name="UserAccount" class="s" id="UserAccount"><br>
           密碼<label id="checkPwd" class="check"></label><br>
           <input type="password" name="UserPwd" class="s" id="UserPwd"><br>
           確認密碼<label id="checkPwdConfirm" class="check"></label><br>
           <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm"><br>
+          </div>
           身分<label id="checkType" class="check"></label><br>
           <select name="UserType" class="s" id="UserType">
             <option value='P'>病友</option>
@@ -123,6 +125,7 @@
             <option value='N'>一般民眾</option>
           </select><br>
           E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
+          <input type="text" name="FBmail" id="FBmail" hidden="true">
           <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
         </form>
     </div>
