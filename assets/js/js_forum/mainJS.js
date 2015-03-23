@@ -4,19 +4,22 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var loaded=false;
 var page;
 var keyword="";
+var tab="";
 var maxReport=3;
 $(document).ready(function(){
   if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   var url = document.URL;
   if(url.search("search")!=-1) {
-    regex=/.*search\/+(.*)+\/+(.*)/
+    regex=/.*search\/+(.*)+\/+(.*)+\#+(.*)/
     keyword=url.replace(regex, "$1");
     keyword = decodeURIComponent(keyword);
     page=url.replace(regex,"$2");
+    tab=url.replace(regex, "$3")
     setPage(page, keyword, 0);
   } else {
-    var regex = /.*forum\/+(.*)/;
+    var regex = /.*forum\/+(.*)+\#+(.*)/;
     page = url.replace(regex,"$1");
+    tab=url.replace(regex, "$2")
     setPage(page, "", 0);
   }
 

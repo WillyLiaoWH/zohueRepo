@@ -6,15 +6,15 @@ var loaded=false;
 $(window).load(function(){ // 暫存回覆頁面
   var url = document.URL;
   if(url.match('forum')!=null){
-    var regex = /.*forum\/+(.*)/;
+    var regex = /.*forum\/+(.*)+\#+(.*)/;
     page = url.replace(regex,"$1");
   }
 });
 
-$(document).ready(function(){
+$(document).ready(function(){  
+  FB_API();
   checkAuth();
 
-  FB_API();
 
   $( "#setUp" ).click(function() {
     if(setUpMenu.style.display=="block"){
@@ -29,7 +29,7 @@ $(document).ready(function(){
   });
 
   $( "#forum" ).click(function() {
-    window.location.assign("/forum/1");
+    window.location.assign("/forum/1#all");
   });
 
   $( "#proInfo" ).click(function() {
@@ -64,36 +64,69 @@ function FB_API(){
 }
 
 
-//取得登入者的資料。
-function GetStatus(){
-var
-  div    = document.getElementById('me'),
-  showMe = function(response) {
-    if (response.status !== 'connected') {
-      div.innerHTML = '<em>Not Connected</em>';
-    } else {
-      FB.api('/me', function(response) {
-        var html = '<table>';
-        for (var key in response) {
-          html += (
-            '<tr>' +
-              '<th>' + key + '</th>' +
-              '<td>' + response[key] + '</td>' +
-            '</tr>'
-          );
-        }
-        div.innerHTML = html;
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      FB.api('/me',function(response){
+        $.post('/checkFB',{FBmail:response.email},function(res){
+
+        });
       });
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
     }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+      appId      : '1639694986252116',
+      xfbml      : true,
+      version    : 'v2.2'
+  });
+
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
   };
-FB.getLoginStatus(function(response) {
-  showMe(response);
-  FB.Event.subscribe('auth.sessionChange', showMe);
-});
-}
+
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+    });
+  }
 
 
 function checkAuth() {
+
   $.get("/checkAuth", function(auth){
     if(auth) {
       var setUp=document.getElementById("setUp");

@@ -297,6 +297,14 @@ module.exports = {
             }
         });
 
+    },
+    checkFB :function(req,res){
+        var FBmail=req.param("FBmail");
+        User.findByFBmail(FBmail).exec(function(err,usr){
+            if (err){
+                res.send(500,{err:"DB Error"})
+            }
+        });
     }
 
 

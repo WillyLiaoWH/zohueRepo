@@ -77,6 +77,9 @@ module.exports = {
     reponsesLeave: {
       collection: 'response',
       via: 'author'
+    },
+    FBmail{
+      type:'string'
     }
   }
 };
