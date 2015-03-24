@@ -316,26 +316,42 @@ function sendEmail(){
         alertify.confirm("是否要把這篇寄給"+mailaddress,function(e){
           if (e){
             alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
-            mailaddress=alertify.prompt('把這封email送到：') ;
+            mailaddress=prompt('把這封email送到：');
+            console.log("123"+mailaddress)
+            if (mailaddress.length>0){
+              
+              var url = document.URL;
+              var regex = /.*article\/+(.*)\?page=+(.*)/;
+              var article_id = url.replace(regex,"$1");
+              console.log("22222");
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+                if (res == "SEND"){
+                  alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+                  alertify.alert("已經送出信件至"+mailaddress); 
+               }
+              });
+            }
           }
-          
-          if (mailaddress.length>0){
-            var url = document.URL;
-            var regex = /.*article\/+(.*)\?page=+(.*)/;
-            var article_id = url.replace(regex,"$1");
-            $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
-              if (res == "SEND"){
-                alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
-                alertify.alert("已經送出信件至"+mailaddress); 
-             }
-            });
+          else{
+            if (mailaddress.length>0){
+              var url = document.URL;
+              var regex = /.*article\/+(.*)\?page=+(.*)/;
+              var article_id = url.replace(regex,"$1");
+              console.log("1234532");
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+                if (res == "SEND"){
+                  alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+                  alertify.alert("已經送出信件至"+mailaddress); 
+               }
+              });
+            }  
           }
         });
       });
     }
     else{
       alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
-      mailaddress=alertify.prompt('把這封email送到：') ;
+      mailaddress=prompt('把這封email送到：') ;
     
       if (mailaddress.length>0){
         var url = document.URL;
