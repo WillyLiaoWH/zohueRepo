@@ -39,8 +39,9 @@ module.exports = {
     nicer: {
       collection: 'user'
     },
-    reporter: {
-      collection: 'user',
+    report: {
+      collection: 'report',
+      via: 'article'
     },
     board: {
       type: 'string',

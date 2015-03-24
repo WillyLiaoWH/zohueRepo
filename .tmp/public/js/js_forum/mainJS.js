@@ -51,6 +51,7 @@ $(document).ready(function(){
 });
 
 function setPage(page, keyword, sort) {
+  // 篩選頁籤
   switch (tab) {
     case "all":
       $("#all").addClass("active");
@@ -68,6 +69,7 @@ function setPage(page, keyword, sort) {
       $("#others").addClass("active");
       break;
   }
+  // 獲得文章
   if(keyword!="") {
     document.getElementById("searchWord").value = keyword;
     $.post( "/searchArticle/"+tab, { keyword: keyword}, function(res_search){
@@ -162,8 +164,8 @@ function setPage(page, keyword, sort) {
             authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
           }
 
-          if(articleList[i+articleNum*(page-1)].reporter) {
-            if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
+          if(articleList[i+articleNum*(page-1)].report) {
+            if(articleList[i+articleNum*(page-1)].report.length>=maxReport) {
               var color="color:#FF0000;";
               var badPic='<img src="/images/img_forum/bad2_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:10px; height:40px; width:40px;">';
             } else {
@@ -230,8 +232,8 @@ function setPage(page, keyword, sort) {
           }else{
             authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
           }
-          if(articleList[i+articleNum*(page-1)].reporter) {
-            if(articleList[i+articleNum*(page-1)].reporter.length>=maxReport) {
+          if(articleList[i+articleNum*(page-1)].report) {
+            if(articleList[i+articleNum*(page-1)].report.length>=maxReport) {
               var color="color:#FF0000;";
               var badPic='<img src="/images/img_forum/bad2_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:10px; height:40px; width:40px;">'
             } else {
