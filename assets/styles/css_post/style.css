@@ -1,3 +1,7 @@
+#body{
+	font-family: "微軟正黑體";
+}
+
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
@@ -26,8 +30,8 @@ div.show-image input.delete {
 
 
 #post-form-main{
-	float:left;
-	width:54%;
+	//float:left;
+	//width:54%;
 }
 
 #content{
@@ -43,8 +47,8 @@ div.show-image input.delete {
 }
 
 #postPanel{
-	margin-top: -30px;
-	margin-bottom:30px;
+	//margin-top: -30px;
+	//margin-bottom:30px;
 }
 
 #postArticle{
@@ -112,7 +116,7 @@ div.show-image input.delete {
 	line-height: 22px;
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
-	margin-bottom: 10px;
+	//margin-bottom: 10px;
 	width:100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -124,7 +128,8 @@ div.show-image input.delete {
 .b{
 	margin: -20px 5px 10px 0px;
 	float:right;
-	width: 125px;
+	//width:100%;
+	//width: 125px;
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
