@@ -27,7 +27,7 @@ module.exports = {
               classification="其它";
               break;
         }
-		Articles.find({classification: {'contains': classification}}).populate('author').populate('nicer').populate('reporter').exec(function(err, articlesList) {
+		Articles.find({classification: {'contains': classification}}).populate('author').populate('nicer').populate('report').exec(function(err, articlesList) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {
@@ -97,7 +97,7 @@ module.exports = {
                 }
             });
         }
-        Articles.find({id: req.param('article_id')}).populate('author').populate('response').exec(function(err, articlesList) {
+        Articles.find({id: req.param('article_id')}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -122,16 +122,20 @@ module.exports = {
                         isNice=false;
                     }
 
-                    var isReport;
-                    var reportCount=articlesList[0].reporter.length;
-                    if(req.session.authenticated && articlesList[0].reporter) {
-                        isReport=false;
-                        for(i=0; i<articlesList[0].reporter.length; i++) {
-                            if(articlesList[0].reporter[i]&&req.session.user.id==articlesList[0].reporter[i].id) {
-                                isReport=true;
-                                break;
+                    var isReport=false;
+                    var reportCount=articlesList[0].report.length;
+                    if(req.session.authenticated) {
+                        Report.find({article: req.param('article_id'), reporter: req.session.user.id}).exec(function(err, report){
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                if(report && report.length!=0) {
+                                    isReport=true;
+                                } else {
+                                    isReport=false;
+                                }
                             }
-                        }
+                        });
                     } else {
                         isReport=false;
                     }
@@ -299,59 +303,35 @@ module.exports = {
 
     clickReport: function(req, res) {
         var articleId = req.param("article_id");
-        Articles.find({id: articleId}).populate("reporter").exec(function(error, article) {
+        var reason = req.param("reason");
+        Report.create({article: articleId, reporter: req.session.user.id, reason: reason}).exec(function(error, report) {
             if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log("error"+error);
+                console.log("error:"+error);
+                res.send(500, {err: "DB Error"});
+            }
+        });
+        Articles.find({id: articleId}).populate('report').exec(function(error, article) {
+            if(error) {
+                res.send(500, {err: "DB Error"});
+                console.log(error);
             } else {
-                var reporterList=article[0].reporter;
-                console.log(reporterList);
-                if(!reporterList) {
-                    reporterList=[];
-                }
-                var newReporterList=[]
-                for(i=0; i<reporterList.length; i++) {
-                    if(reporterList[i]&&reporterList[i].id!=req.session.user.id) {
-                        newReporterList.push(reporterList[i]);
-                    }
-                }
-                newReporterList.push(req.session.user);
-
-                Articles.update({id: articleId}, {reporter: newReporterList}).exec(function(error, updated) {
-                    if(error) {
-                        res.send(500,{err: "DB Error" });
-                        console.log("error2"+error);
-                    } else {
-                        console.log("no error");
-                        console.log(updated[0].reporter.length);
-                        res.send({num:updated[0].reporter.length});
-                    }
-                });
+                res.send({num: article[0].report.length});
             }
         });
     },
 
     cancelReport: function(req, res) {
-        console.log("cancel");
         var articleId = req.param("article_id");
-        Articles.find({id: articleId}).populate("reporter").exec(function(error, article) {
+        Articles.find({id: articleId}).populate("report").exec(function(error, article) {
             if(error) {
                 res.send(500,{err: "DB Error" });
             } else {
-                var reporterList=article[0].reporter;
-                console.log(reporterList);
-                var newReporterList=[];
-                for(i=0; i<reporterList.length; i++) {
-                    if(reporterList[i]&&reporterList[i].id!=req.session.user.id) {
-                        newReporterList.push(reporterList[i]);
-                    }
-                }
-                console.log(newReporterList);
-                Articles.update({id: articleId}, {reporter: newReporterList}).exec(function(error, updated) {
+                Report.destroy({article: articleId, reporter: req.session.user.id}).exec(function(error) {
                     if(error) {
-                        res.send(500,{err: "DB Error" });
+                        console.log(error);
+                        res.send(500, {err: "DB Error"});
                     } else {
-                        res.send({num:updated[0].reporter.length});
+                        res.send({num: article[0].report.length-1});
                     }
                 });
             }

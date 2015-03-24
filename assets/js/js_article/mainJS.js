@@ -3,6 +3,27 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var loaded=false;
 $(document).ready(function(){
   setPage();
+  var dialog = $("#reportDialog").dialog({
+    autoOpen: false,
+    height: 350,
+    width: 450,
+    modal: true,
+    buttons: {   
+        "檢舉": function() {   
+            alert("name: "+name.val()+", email: "+email.val());   
+        },   
+        "取消": function() {   
+            $(this).dialog("close");   
+        }   
+    },   
+    close: function() {   
+        
+    }
+  });
+  $("#create-user").click(function() {   
+    $("#reportDialog").dialog("open");   
+  });
+  
 });
 
 var nice;
