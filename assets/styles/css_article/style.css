@@ -1,3 +1,7 @@
+#body{
+	font-family: "微軟正黑體";
+}
+
 #postContent_image img{
 	outline: 1px solid rgb(180, 195, 163);
 }
