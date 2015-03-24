@@ -145,7 +145,7 @@ module.exports = {
                         req.session.authenticated=true;
                         res.send(usr[0]);
                     } else {
-                        res.send(400, { err: "Wrong Password" });
+                        res.send(400, { err: "Wrong Password~~~~~~~~" });
                     }
                 } else {
                     res.send(404, { err: "User not Found" });
