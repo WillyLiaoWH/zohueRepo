@@ -227,7 +227,7 @@ function insertHtmlAtCursor(html) {
         this.$img = $('<img src="' + this.url + '">');
         this.$avatarWrapper.empty().html(this.$img);
         this.$img.cropper({
-          //aspectRatio: 1,
+          aspectRatio: 1,
           preview: this.$avatarPreview.selector,
           done: function (data) {
             var json = [

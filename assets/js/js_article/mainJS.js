@@ -61,12 +61,17 @@ function setPage() {
     document.getElementById("articleTitle").innerHTML = articleTitle;
     document.getElementById("articleData").innerHTML = articleData;
     document.getElementById("articleContent").innerHTML = articleContent;
-    // 插入 HR
-    var orinode = document.getElementById("articleContent"); // 找到插入圖片的DIV
-    var range = document.createRange(); // 設定插入圖片時的range function
-    range.setStart(orinode, 0); // 設定range起始點
-    var node = range.createContextualFragment("<hr id='hr'>"); // 欲插入之element
-    orinode.insertBefore(node, document.getElementById("postContent_image"));
+
+    if(document.getElementById("postContent_image").innerHTML.indexOf("images")>-1)
+    {
+      // 插入 HR
+      var orinode = document.getElementById("articleContent"); // 找到插入圖片的DIV
+      var range = document.createRange(); // 設定插入圖片時的range function
+      range.setStart(orinode, 0); // 設定range起始點
+      var node = range.createContextualFragment("<hr id='hr'>"); // 欲插入之element
+      orinode.insertBefore(node, document.getElementById("postContent_image"));
+    }
+    
 
     responseContext="";
     if(response.length!=0) {
