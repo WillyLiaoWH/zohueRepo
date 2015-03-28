@@ -14,6 +14,7 @@ module.exports = {
         var password=req.param("password");
         var alias=req.param("alias");
         var email=req.param("email");
+        var FBmail=req.param("FBmail");
         var type=req.param("type");
         var isFullSignup=req.param("isFullSignup");
         var img="http://localhost/images/img_avatar/upload/default.png";
@@ -27,7 +28,7 @@ module.exports = {
                 // var hasher = require("password-hash");
                 // password = hasher.generate(password);
                 User.create({account: account, password: password, alias: alias, email: email, type: type
-                            , isFullSignup: isFullSignup, img: img}).exec(function(error, user) {
+                            , isFullSignup: isFullSignup, img: img , FBmail:FBmail}).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
@@ -144,7 +145,7 @@ module.exports = {
                         req.session.authenticated=true;
                         res.send(usr[0]);
                     } else {
-                        res.send(400, { err: "Wrong Password" });
+                        res.send(400, { err: "Wrong Password~~~~~~~~" });
                     }
                 } else {
                     res.send(404, { err: "User not Found" });
@@ -297,6 +298,24 @@ module.exports = {
             }
         });
 
+    },
+    checkFB :function(req,res){
+        var FBmail=req.param("FBmail");
+        User.findByFBmail(FBmail).exec(function(err,usr){
+            if (err){
+                res.send(500,{err:"DB Error"});
+            } else{
+                console.log(JSON.stringify(usr))
+                console.log(usr.length);
+                if (usr.length>0){
+                    req.session.user = usr[0];
+                    req.session.authenticated=true;
+                    res.send(true);
+                }else{
+                    res.send(false);
+                }
+            }
+        });
     }
 
 

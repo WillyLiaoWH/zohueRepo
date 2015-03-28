@@ -299,7 +299,7 @@ function insertHtmlAtCursor(html) {
 
           //insertHtmlAtCursor('<img src="..\/' + this.url + '">');
 
-          insertHtmlAtCursor("<div class=\"show-image\"><img src=\"..\/"+this.url+"\" /><input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\" /></div>");
+          insertHtmlAtCursor("<div class=\"show-image\"><dummy href=\""+href_img+"\"><img src=\"..\/"+this.url+"\" /></dummy><input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\" /></div>");
 
           if (this.support.datauri || this.uploaded) {
             this.uploaded = false;

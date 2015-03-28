@@ -6,15 +6,15 @@ var loaded=false;
 $(window).load(function(){ // 暫存回覆頁面
   var url = document.URL;
   if(url.match('forum')!=null){
-    var regex = /.*forum\/+(.*)/;
+    var regex = /.*forum\/+(.*)+\#+(.*)/;
     page = url.replace(regex,"$1");
   }
 });
 
-$(document).ready(function(){
+$(document).ready(function(){  
+  FB_API();
   checkAuth();
 
-  
 
   $( "#setUp" ).click(function() {
     if(setUpMenu.style.display=="block"){
@@ -29,7 +29,7 @@ $(document).ready(function(){
   });
 
   $( "#forum" ).click(function() {
-    window.location.assign("/forum/1");
+    window.location.assign("/forum/1#all");
   });
 
   $( "#proInfo" ).click(function() {
@@ -45,7 +45,93 @@ $(document).ready(function(){
 
 });
 
+function FB_API(){
+ window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1639694986252116',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+}
+
+
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      FB.api('/me',function(response){
+        $.post('/checkFB',{FBmail:response.email},function(res){
+          console.log(res);
+          if(res){
+            console.log("found");
+            location.reload();
+          }else{
+            var password=response.id+Math.random();
+            document.getElementById('FBlogin').style.display='none';
+            document.getElementById('UserAccount').value=response.id-1;
+            document.getElementById('UserAlias').value=response.name;
+            document.getElementById('UserPwd').value=password;
+            document.getElementById('UserPwdConfirm').value=password;
+            document.getElementById('UserEmail').value=response.email;
+            document.getElementById('FBmail').value=response.email;            
+          }
+
+        });
+      });
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+      appId      : '1639694986252116',
+      xfbml      : true,
+      version    : 'v2.2'
+  });
+
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+
+
 function checkAuth() {
+
   $.get("/checkAuth", function(auth){
     if(auth) {
       var setUp=document.getElementById("setUp");
@@ -189,7 +275,8 @@ function Submit(){
   var password = $("#UserPwd").val();
   var email = $("#UserEmail").val();
   var type = $("#UserType").val();
-  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email, type: type, isFullSignup: false}, function(res){
+  var FBmail = $("#FBmail").val();
+  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FBmail:FBmail, type: type, isFullSignup: false}, function(res){
     alert("註冊成功！");
     loginWithAccount(account, password);
   })
@@ -207,8 +294,15 @@ function Login(){
       var password=arguments[1];
     break;
     default:
-      var account=$("#LoginAccount").val();
-      var password=$("#LoginPwd").val();
+      if ($(window).width() <= 768){
+        var account=$("#mLoginAccount").val();
+        var password=$("#mLoginPwd").val();
+        alert(account+"wwwwwwww"+password);
+      }else{
+        var account=$("#LoginAccount").val();
+        var password=$("#LoginPwd").val();
+      }
+      
     break;
   }
   

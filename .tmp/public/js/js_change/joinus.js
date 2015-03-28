@@ -46,6 +46,9 @@ $(document).ready(function(){
   $("#birthday_M").change(function() { // 年月產生日數
     ShowDate(document.getElementById("birthday_M").value, document.getElementById("birthday_Y").value);
   });
+  $("#birthday_Y").change(function() { // 年月產生日數
+    ShowDate(document.getElementById("birthday_M").value, document.getElementById("birthday_Y").value);
+  });
 
   //$(".feedback-input").bind("keyup change", function(e) { // 顯示 O、X
   $(".feedback-input[must='t']").bind("keyup change", function(e) { // 顯示 O、X
@@ -128,6 +131,15 @@ $(document).ready(function(){
           else{
             statusIMG("#addressCity","O");
             statusIMG("#addressDistrict","O");
+          }
+          break;
+        case "birthday_Y":
+          var taiwanY = $(this).val();
+          if(taiwanY>-50 & taiwanY<100){
+            statusIMG("#birthday_Y","O");
+          }else{
+            statusIMG(this,"X");
+            statusWarn(this,"日期格式錯誤，請輸入民國年！");
           }
           break;
       }
