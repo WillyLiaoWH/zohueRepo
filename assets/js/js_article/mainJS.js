@@ -198,7 +198,8 @@ function leaveComment(){
   var url = document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var article_id = url.replace(regex,"$1");
-  var comment = $("#comment").val();
+  var comment = $("#comment").html();
+  alert(comment);
   $.post( "/leaveComment", { comment: comment, article_id: article_id}, function(res){
     window.location.replace(url);
   })

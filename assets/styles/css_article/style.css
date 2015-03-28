@@ -2,6 +2,31 @@
 	font-family: "微軟正黑體";
 }
 
+.clear { /* 解決 float+height auto 問題 */
+  clear:both;
+}
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;
+    height: auto;
+    margin: 0 auto;
+}
+div.show-image:hover img{
+    opacity:0.5;
+}
+div.show-image:hover input {
+    display: block;
+}
+div.show-image input {
+    position:absolute;
+    display:none;
+}
+div.show-image input.delete {
+    top:0;
+    right:0;
+}
+
 #postContent_image img{
 	outline: 1px solid rgb(180, 195, 163);
 }
@@ -97,6 +122,12 @@
 
 #comment{
 	height: 90px;
+}
+#comment_image{
+	display: none;
+	min-height: 200px;
+	height:100%;
+	margin-bottom:25px;
 }
 
 #commentSend{
@@ -228,4 +259,34 @@
 	border: 1px solid rgba(102, 141, 60, 0.4);
 	color:#816C58;
 	vertical-align: center;
+}
+
+
+.imgupload_btn{
+	margin-right: 10px;
+	float:right;
+	background-color: rgba(232, 81, 0, 0.7);
+	color:#533828;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	line-height: 22px;
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+.imgupload_btn:hover{
+	background-color: rgba(102, 141, 60, 0.4);
+	color:#816C58;
+}
+
+#avatar-modal-label{
+	font-size: 40px;
+}
+.avatar-upload{
+	font-size: 25px;
 }
