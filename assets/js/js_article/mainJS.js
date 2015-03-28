@@ -123,9 +123,14 @@ function setPage() {
         }
         var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
 
+        // 預先處理comment中的圖片
+        var pre_comment_image = response[i].comment_image;
+        pre_comment_image = pre_comment_image.replace(/dummy href=/g, "a href=");
+        pre_comment_image = pre_comment_image.replace(/\/dummy/g, "\/a");
+
         responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
         responseContext += "<tr><td style='padding:20px 0px 0px 10px;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
-        responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"</label></td></tr>";
+        responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br>"+pre_comment_image+"</label></td></tr>";
         if(res.login) {
           if(res.responseNice[i]) {
             responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse("+response[i].id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
@@ -195,12 +200,15 @@ function deleteArticle() {
 }
 
 function leaveComment(){
+  if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
+  if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
   var url = document.URL;
   var regex = /.*article\/+(.*)\?page=+(.*)/;
   var article_id = url.replace(regex,"$1");
   var comment = $("#comment").html();
-  alert(comment);
-  $.post( "/leaveComment", { comment: comment, article_id: article_id}, function(res){
+  var comment_image = $("#comment_image").html();
+  //alert(comment);
+  $.post( "/leaveComment", { comment: comment, comment_image: comment_image, article_id: article_id}, function(res){
     window.location.replace(url);
   })
     .error(function(res){

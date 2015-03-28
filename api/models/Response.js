@@ -18,6 +18,9 @@ module.exports = {
       type: 'string',
       required: true
     },
+    comment_image: {
+      type: 'string'
+    },
     nicer: {
       collection: 'user'
     }

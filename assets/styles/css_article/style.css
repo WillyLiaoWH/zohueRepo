@@ -121,7 +121,8 @@ div.show-image input.delete {
 }
 
 #comment{
-	height: 90px;
+	min-height: 90px;
+	height: auto;
 }
 #comment_image{
 	display: none;
