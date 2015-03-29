@@ -81,14 +81,16 @@ function FB_API(){
             console.log("found");
             location.reload();
           }else{
+            console.log(response);
             var password=response.id+Math.random();
             document.getElementById('FBlogin').style.display='none';
-            document.getElementById('UserAccount').value=response.id-1;
+            document.getElementById('UserAccount').value=response.id;
             document.getElementById('UserAlias').value=response.name;
             document.getElementById('UserPwd').value=password;
             document.getElementById('UserPwdConfirm').value=password;
             document.getElementById('UserEmail').value=response.email;
             document.getElementById('FBmail').value=response.email;            
+            document.getElementById('UserGender').value=response.Gender;
           }
 
         });
