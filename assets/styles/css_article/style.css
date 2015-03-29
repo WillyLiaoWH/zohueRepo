@@ -50,13 +50,10 @@ div.show-image input.delete {
 	//height:48px;
 }
 
-<<<<<<< HEAD
-=======
 #FB{
 	opacity:0.8;
 }
 
->>>>>>> 3044750bf14aa17d2815903b2df70e133d9ea0da
 #editArticle, #deleteArticle, #commentSend, #addImage{
 	width: 130px;
 	//height:48px;
@@ -181,6 +178,9 @@ div.show-image input.delete {
 	display: block
 
 }*/
+#backToList{
+	float:left;
+}
 
 #simpleSignUp{
 	margin:15px;
