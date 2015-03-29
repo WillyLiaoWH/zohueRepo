@@ -62,8 +62,9 @@ function setPage() {
     articleContent=articleList[0].content;
 
     content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
-    content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("\n        </div>"));
+    content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
     content2 = content2.replace(/<a/g, "<dummy");
+
     if(content2.indexOf("img") == -1){ // div 內無圖片
       $("#postContent_image").css("display", "none");
     }

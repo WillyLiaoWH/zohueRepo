@@ -62,7 +62,8 @@
           帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
           &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
           <button value="登入" id="login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
-          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+          
+          <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
         </div>
         <div class="row-fluid">
           <div class="span9">
@@ -147,7 +148,7 @@
             <option value='N'>一般民眾</option>
           </select><br>
           E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
-          <input type="text" name="FBmail" id="FBmail" type="hidden">
+          <input type="hidden" name="FBmail" id="FBmail">
           <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
         </form>
     </div>

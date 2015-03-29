@@ -9,8 +9,9 @@ module.exports = {
 	leaveComment: function(req, res){
 		var author=req.session.user.id;
 		var comment=req.param("comment");
+        var comment_image=req.param("comment_image");
 		var article_id=req.param("article_id");
-		Response.create({author: author, comment: comment, article: article_id}).exec(function(error, response) {
+		Response.create({author: author, comment: comment, comment_image: comment_image, article: article_id}).exec(function(error, response) {
             if(error) {
                 res.send(500,{err: "DB Error" });
                 console.log(error);

@@ -1,43 +1,17 @@
 var check_out = 0;
 
-// function insertHtmlAtCursor(html) {
-//   try{
-//     //alert(window.getSelection().getRangeAt(0).startContainer.parentNode.id);
-//     var currentE = window.getSelection().getRangeAt(0).startContainer; // 取得目前 select 的 element
-//     if(currentE.tagName!='DIV' | currentE.id==""){
-//       do{
-//         currentE = currentE.parentNode;
-//       }while(currentE.tagName!='DIV' | currentE.id=="");
-//     }
-
-//     if(currentE.id == "postContent"){
-//       var range, node;
-//       if (window.getSelection && window.getSelection().getRangeAt) {
-//         range = window.getSelection().getRangeAt(0);
-//         node = range.createContextualFragment(html);
-//         range.insertNode(node);
-//       } else if (document.selection && document.selection.createRange) {
-//         document.selection.createRange().pasteHTML(html);
-//       }
-//     }else{
-//       alert("先決定你要把這張圖片放在哪吧~");
-//     }
-//   }catch(err) {
-//     alert("錯誤!");
-//   }
-// }
-
 // 新增圖片至固定DIV
 function insertHtmlAtCursor(html) {
   try{
-    var orinode = document.getElementById("comment").lastChild; // 找到插入圖片的DIV
+    var orinode = document.getElementById("comment_image"); // 找到插入圖片的DIV
+    $("#comment_image").css("display", "block");
     var range = document.createRange(); // 設定插入圖片時的range function
     range.setStart(orinode, 0); // 設定range起始點
 
     var node = range.createContextualFragment(html); // 欲插入之element
-    range.insertNode(node);
+    orinode.insertBefore(node, document.getElementById("comment_clear"));
   }catch(err) {
-    alert("錯誤!");
+    alert(err);
   }
 }
 
@@ -105,30 +79,14 @@ function insertHtmlAtCursor(html) {
     },
 
     addListener: function () {
-      // $(document).mouseup(function(){
-      //   if(document.activeElement.id!=='postContent'){
-      //     if(document.activeElement.id=='image' & check_out == 1){
-      //       check_out = 1;
-      //       $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-      //     }else{
-      //       check_out = 0;
-      //       $("#image").css("background-color", "#ADADAD");
-      //       $("#image").hover(function(){
-      //         $("#image").css("background-color", "#ADADAD");
-      //         },function(){
-      //         $("#image").css("background-color", "#ADADAD");
-      //       });
-      //     }
-      //   }else{
-      //     check_out = 1;
-      //     $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-      //     $("#image").hover(function(){
-      //         $("#image").css("background-color", "rgba(102, 141, 60, 0.4)");
-      //         },function(){
-      //         $("#image").css("background-color", "rgba(232, 81, 0, 0.7)");
-      //       });
-      //   }
-      // });
+      $(document).mouseup(function(){
+        if(document.activeElement.id=='rmimg'){
+          document.activeElement.parentNode.remove();
+          if($("#comment_image").html().indexOf("img") == -1){ // div 內已無圖片
+            $("#comment_image").css("display", "none");
+          }
+        }
+      });
       
       this.$avatarBtn.on("click", $.proxy(this.click, this));
       this.$avatarView.on("click", $.proxy(this.click, this));
@@ -259,7 +217,7 @@ function insertHtmlAtCursor(html) {
         this.$img = $('<img src="' + this.url + '">');
         this.$avatarWrapper.empty().html(this.$img);
         this.$img.cropper({
-          //aspectRatio: 1,
+          aspectRatio: 1,
           preview: this.$avatarPreview.selector,
           done: function (data) {
             var json = [
@@ -334,9 +292,9 @@ function insertHtmlAtCursor(html) {
           this.url = data.result;
           var href_img = '../'+this.url;
           href_img = href_img.replace("resize\/" ,'');
-          insertHtmlAtCursor('<a href="'+href_img+'"><img src="..\/' + this.url + '">');
+          //insertHtmlAtCursor('<a href="'+href_img+'"><img src="..\/' + this.url + '">');
+          insertHtmlAtCursor("<div class=\"show-image\"><dummy href=\""+href_img+"\"><img src=..\/"+this.url+" /></dummy><input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\" /></div>");
 
-          //insertHtmlAtCursor('<img src="..\/' + this.url + '">');
 
           if (this.support.datauri || this.uploaded) {
             this.uploaded = false;

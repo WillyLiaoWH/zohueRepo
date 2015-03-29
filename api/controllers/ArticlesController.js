@@ -409,13 +409,40 @@ module.exports = {
               break;
         }
 
-        Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
+        //Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
+        Articles.find({classification: {'contains': classification}}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
             if (err){
                 res.send(500, { err: "DB Error" });
             } else{
                 if(found){
-                    res.send(found);
+                    // 搜尋完alias後，一個一個串起來
+                    var obj = [];
+                    for(f in found){
+                        if(found[f].author){
+                            //console.log(found[f].author);
+                            obj.push(found[f]);
+                        }
+                    }
+
+                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
+                        if (err){
+                            res.send(500, { err: "DB Error" });
+                        } else{
+                            if(found){
+                                for(o in obj){
+                                    found.push(obj[o]);
+                                }
+                                //console.log(found);
+                                console.log(found);
+                                res.send(found);
+                            }else{
+                                console.log("not found");
+                                res.send(500, { err: "找不到喔！" });
+                            }
+                        }
+                    });
                 }else{
+                    console.log("not found");
                     res.send(500, { err: "找不到喔！" });
                 }
             }

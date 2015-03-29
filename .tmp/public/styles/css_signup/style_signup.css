@@ -20,9 +20,9 @@
 #addressCity-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #addressDistrict-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #address-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
-#birthday_Y-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
-#birthday_M-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
-#birthday_D-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#birthday_Y-tooltip{margin-right: 0px; margin-top: 55px; display: none;}
+#birthday_M-tooltip{margin-right: 0px; margin-top: 55px; display: none;}
+#birthday_D-tooltip{margin-right: 0px; margin-top: 55px; display: none;}
 #selfIntroduction-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 
 #profile{
