@@ -15,9 +15,22 @@ module.exports = {
         var alias=req.param("alias");
         var email=req.param("email");
         var FBmail=req.param("FBmail");
+        var gender=req.param("gender");
         var type=req.param("type");
+        var lname=req.param("lname");
+        var fname=req.param("fname");
         var isFullSignup=req.param("isFullSignup");
         var img="http://localhost/images/img_avatar/upload/default.png";
+        if (gender=="male"){
+            gender="M";
+        }
+        else if (gender=="female"){
+            gender="F";
+        }
+        if (FBmail.length>2){
+            img="http://graph.facebook.com/"+account+"/picture";
+
+        }
         
         User.findByAccount(account).exec(function(err, usr) {
             if(err){
@@ -28,11 +41,12 @@ module.exports = {
                 // var hasher = require("password-hash");
                 // password = hasher.generate(password);
                 User.create({account: account, password: password, alias: alias, email: email, type: type
-                            , isFullSignup: isFullSignup, img: img , FBmail:FBmail}).exec(function(error, user) {
+                            , isFullSignup: isFullSignup, img: img , FBmail:FBmail,gender:gender,fname:fname,lname:lname}).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
                     } else {
+
                         req.session.user = user;
                         res.send(user);
                     }

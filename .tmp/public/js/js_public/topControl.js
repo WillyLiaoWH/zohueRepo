@@ -66,8 +66,7 @@ function FB_API(){
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
+
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
@@ -75,13 +74,13 @@ function FB_API(){
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       FB.api('/me',function(response){
+        console.log(response);
+        alert();
         $.post('/checkFB',{FBmail:response.email},function(res){
-          console.log(res);
           if(res){
-            console.log("found");
             location.reload();
           }else{
-            console.log(response);
+
             var password=response.id+Math.random();
             document.getElementById('FBlogin').style.display='none';
             document.getElementById('UserAccount').value=response.id;
@@ -90,7 +89,10 @@ function FB_API(){
             document.getElementById('UserPwdConfirm').value=password;
             document.getElementById('UserEmail').value=response.email;
             document.getElementById('FBmail').value=response.email;            
-            document.getElementById('UserGender').value=response.Gender;
+            document.getElementById('UserGender').value=response.gender;
+            document.getElementById('fname').value=response.first_name;
+            document.getElementById('lname').value=response.last_name;
+
           }
 
         });
@@ -278,7 +280,11 @@ function Submit(){
   var email = $("#UserEmail").val();
   var type = $("#UserType").val();
   var FBmail = $("#FBmail").val();
-  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FBmail:FBmail, type: type, isFullSignup: false}, function(res){
+  var gender = $("#UserGender").val();
+  var fname = $("#fname").val();
+  var lname = $("#lname").val();
+  console.log(gender);
+  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FBmail:FBmail,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, function(res){
     alert("註冊成功！");
     loginWithAccount(account, password);
   })
