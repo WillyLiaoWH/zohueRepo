@@ -45,7 +45,10 @@ $(document).ready(function(){
     }catch(err){}
   });
 
-  $(".tabs li a").click(function(){
+  // $(".tabs li a").click(function(){
+  //   window.location.reload();
+  // });
+  $("#tabs li a").click(function(){
     window.location.reload();
   });
 });
