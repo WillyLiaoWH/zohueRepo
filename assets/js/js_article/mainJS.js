@@ -3,6 +3,7 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var loaded=false;
 $(document).ready(function(){
   setPage();
+
   var dialog = $("#reportDialog").dialog({
     autoOpen: false,
     height: 350,
@@ -10,20 +11,31 @@ $(document).ready(function(){
     modal: true,
     buttons: {   
         "檢舉": function() {   
-            alert("name: "+name.val()+", email: "+email.val());   
+            report();   
         },   
         "取消": function() {   
             $(this).dialog("close");   
         }   
     },   
     close: function() {   
-        
+      var form=document.getElementById('reportForm');
+      for (var i=0; i<form.reason.length; i++) {
+        if (form.reason[i].checked) {
+          form.reason[i].checked=false;
+          break;
+        }
+      }
+      document.getElementById('reasonInput').value="";
     }
   });
-  $("#create-user").click(function() {   
-    $("#reportDialog").dialog("open");   
-  });
   
+  $('input[type=radio][name=reason]').change(function(){
+    if(this.value=='others') {
+      document.getElementById('reasonInput').style.display="inline";
+    } else {
+      document.getElementById('reasonInput').style.display="none";
+    }
+  });
 });
 
 var nice;
@@ -291,28 +303,51 @@ function notNiceResponse(response_id) {
 }
 
 function clickReport() {
-  var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
-  var id = url.replace(regex,"$1");
-  document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
-  $.post("/clickReport", {article_id: id}, function(res){
-    document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
-  }).error(function(res){
-    alert(res.err);
-  });
+  $("#reportDialog").dialog("open");
+}
+
+function report() {
+  var form=document.getElementById('reportForm');
+  for (var i=0; i<form.reason.length; i++) {
+    if (form.reason[i].checked) {
+      var choose = form.reason[i].value;
+      break;
+    }
+  }
+  if(choose=='others') {
+    var reason=document.getElementById('reasonInput').value.trim();
+  } else {
+    var reason=choose;
+  }
+  if(!reason) {
+    alert("請選擇原因");
+  } else {
+    var url = document.URL;
+    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var id = url.replace(regex,"$1");
+    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
+    $.post("/clickReport", {article_id: id, reason: reason}, function(res){
+      document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+      $("#reportDialog").dialog("close");
+    }).error(function(res){
+      alert(res.err);
+    });
+  }
 }
 
 function cancelReport() {
-  var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
-  var id = url.replace(regex,"$1");
-  document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
-  $.post("/cancelReport", {article_id: id}, function(res){
-    document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
-  }).error(function(res){
-    document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
-    alert(res.responseJSON.err);
-  });
+  if(confirm("確定要取消檢舉嗎")) {
+    var url = document.URL;
+    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var id = url.replace(regex,"$1");
+    document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
+    $.post("/cancelReport", {article_id: id}, function(res){
+      document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+    }).error(function(res){
+      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
+      alert(res.responseJSON.err);
+    });
+  }
 }
 
 function editProfile(){
