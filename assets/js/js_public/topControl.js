@@ -166,6 +166,31 @@ function checkAuth() {
         post.style.display="block";
       }
 
+
+      var setUp=document.getElementById("mobile_setUp");
+      setUp.style.display="block";
+
+      var mlogin=document.getElementById("mobile_loginSection");
+      mlogin.style.display="none";
+
+      var mlogout=document.getElementById("mobile_logout");
+      mlogout.style.display="block";
+
+      var profile=document.getElementById("mobile_profile");
+      profile.style.display="block";
+      document.getElementById("mobile_userAlias").innerHTML = "嗨！ "+auth.alias;
+      document.getElementById("mobile_userimg").src = auth.img;
+
+      $.get("/checkFull", function(full){
+        var fullSignup=document.getElementById("mobile_fullSignup");
+        if(!full){
+          fullSignup.style.display="block";
+        }else{
+          fullSignup.style.display="none";
+        }
+      });
+
+
       var leaveMessage=document.getElementById("leaveMessage");
       if(leaveMessage) {
         leaveMessage.style.display="block";
@@ -190,6 +215,17 @@ function checkAuth() {
 
       var logout=document.getElementById("logout");
       logout.style.display="none";
+
+
+
+      var mlogout=document.getElementById("mobile_logout");
+      mlogout.style.display="none";
+     
+      var setUp=document.getElementById("mobile_setUp");
+      setUp.style.display="none";
+
+
+
 
       var post=document.getElementById("post");
       if(post){
