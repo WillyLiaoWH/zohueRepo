@@ -158,7 +158,19 @@ function setPage() {
       }
       document.getElementById("commentList").innerHTML = responseContext;
       document.getElementById("commentList").style.display = "block";
+
+      
     }
+
+    // 圖片跳窗，使用 modalBox.js
+    $('.show-image a').click(function(event){
+      event.preventDefault();
+      var ss = '<img src="'+$(this).attr("href")+'">';
+      $( ".modalBox" ).empty();
+      $( ".modalBox" ).append(ss);
+      $('.modalBox').modalBox('open');
+    });
+
     if(res.isAuthor) {
       document.getElementById("editArticle").style.display = "inline";
       document.getElementById("deleteArticle").style.display = "inline";

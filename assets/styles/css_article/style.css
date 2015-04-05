@@ -291,3 +291,55 @@ div.show-image input.delete {
 .avatar-upload{
 	font-size: 25px;
 }
+
+.modalBox{
+	padding:5px;
+	border:1px solid #CCC;
+	background:#FFF;
+	height:90%;
+	width:50%;
+	display:none;
+	margin-top:0; margin-right:auto; margin-bottom:0; margin-left:auto;
+	overflow:auto;
+	border-radius: 10px;
+}
+img.iw-closeImg{
+	width:24px;
+	height:24px;
+}
+.modalFooter{
+	color:#FFF;
+	position:absolute;
+	bottom:0px;
+}
+.modalFooter span{
+	cursor:pointer;
+}
+.iw-modalOverlay{
+	background:#000;
+	opacity:.5;
+}
+.modalBox img{
+	height:100%;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
