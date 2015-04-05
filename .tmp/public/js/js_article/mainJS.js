@@ -7,8 +7,8 @@ $(document).ready(function(){
 
   var dialog = $("#reportDialog").dialog({
     autoOpen: false,
-    height: 350,
-    width: 450,
+    height: "auto",
+    width: 300,
     modal: true,
     buttons: {   
         "檢舉": function() {   
@@ -27,6 +27,7 @@ $(document).ready(function(){
         }
       }
       document.getElementById('reasonInput').value="";
+      document.getElementById('reasonInput').style.display="none";
     }
   });
   
