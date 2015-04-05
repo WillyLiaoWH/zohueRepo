@@ -113,7 +113,7 @@ $(document).ready(function(){
           break;
         case "birthday_Y":
           var taiwanY = $(this).val();
-          if(taiwanY>-50 & taiwanY<100){
+          if(taiwanY>-50 & taiwanY<100 & taiwanY%1===0){
             statusIMG("#birthday_Y","O");
           }else{
             statusIMG(this,"X");
