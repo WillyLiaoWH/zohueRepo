@@ -29,7 +29,7 @@ $(document).ready(function(){
   });
 
   $( "#forum" ).click(function() {
-    window.location.assign("/forum/1#all");
+    window.location.assign("/forum");
   });
 
   $( "#proInfo" ).click(function() {

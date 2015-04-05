@@ -7,7 +7,7 @@
 
 module.exports = {
     
-	setForumPage: function(req, res){
+	setBoardPage: function(req, res){
         var tab=req.param("tab");
         var classification;
         switch (tab) {
@@ -27,7 +27,8 @@ module.exports = {
               classification="其它";
               break;
         }
-		Articles.find({classification: {'contains': classification}}).populate('author').populate('nicer').populate('report').exec(function(err, articlesList) {
+        var board=req.param("board");
+		Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').exec(function(err, articlesList) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {
@@ -165,8 +166,9 @@ module.exports = {
 		var content=req.param("content");
         var responseNum=req.param("responseNum");
         var clickNum=req.param("clickNum");
+        var board=req.param("board");
 
-		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum}).exec(function(error, article) {
+		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board}).exec(function(error, article) {
             if(error) {
                 console.log(title);console.log(author);console.log(content);
                 res.send(500,{err: "DB Error" });

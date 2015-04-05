@@ -1,6 +1,7 @@
 var allow_create;
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var loaded=false;
+var board="";
 $(document).ready(function(){
   setPage();
 
@@ -41,7 +42,7 @@ $(document).ready(function(){
 var nice;
 function setPage() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var article_id = url.replace(regex,"$1");
 
   $.get("/checkAuth", function(auth){
@@ -57,6 +58,7 @@ function setPage() {
     articleList=res.articleList;
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
+    board=articleList[0].board;
     // alert(JSON.stringify(articleList[0]));
     updateClickNum();
 
@@ -182,15 +184,20 @@ function setPage() {
 }
 
 function backToList() {
-  var url=document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
-  var page = url.replace(regex,"$2");
-  window.location.assign("/forum/"+page+"#all");
+  // var url=document.URL;
+  // var regex = /.*article\/+(.*)\?board=+(.*)&page=+(.*)/;
+  // var board=url.replace(regex,"$2");
+  // var page = url.replace(regex,"$3");
+  // window.location.assign("/board-"+board+"/"+page+"#all");
+  if(document.referrer.search("board")!=-1)
+    window.location.assign(document.referrer);
+  else
+    window.location.assign("/board-"+board+"/1?tab=all")
 }
 
 function editArticle() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var article_id = url.replace(regex,"$1");
   location.assign("/editArticle/"+article_id);
 }
@@ -199,11 +206,15 @@ function deleteArticle() {
   var r = confirm("確定要刪除文章嗎？");
   if (r == true) {
     var url = document.URL;
-    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var regex = /.*article\/+(.*)/;
     var id = url.replace(regex,"$1");
     $.post( "/deleteArticle", { id: id}, function(res){
      alert("文章刪除成功！");
-      window.location.replace("/forum/1#all");
+      // window.location.replace("/board-"+board+"/1#all");
+      if(document.referrer.search("board")!=-1)
+        window.location.assign(document.referrer);
+      else
+        window.location.assign("/board-"+board+"/1?tab=all")
     })
     .error(function(res){
     alert(res.responseJSON.err);
@@ -215,7 +226,7 @@ function leaveComment(){
   if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
   if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var article_id = url.replace(regex,"$1");
   var comment = $("#comment").html();
   var comment_image = $("#comment_image").html();
@@ -231,7 +242,7 @@ function leaveComment(){
 
 function updateResponseNum(){
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   var responseNum = parseInt(response.length)+1;
   $.post( "/updateResponseNum", { id: id, responseNum: responseNum}, function(res){
@@ -244,7 +255,7 @@ function updateResponseNum(){
 
 function updateClickNum(){
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   var clickNum=parseInt(articleList[0].clickNum)+1;
   $.post( "/updateClickNum", { id: id, clickNum: clickNum}, function(res){
@@ -256,7 +267,7 @@ function updateClickNum(){
 
 function clickNice() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;'src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
   $.post("/clickNice", {article_id: id}, function(res){
@@ -268,7 +279,7 @@ function clickNice() {
 
 function cancelNice() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   document.getElementById("niceArticle").innerHTML = "<button value='推薦' class='n' onclick='clickNice()'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>";  
   $.post("/cancelNice", {article_id: id}, function(res){
@@ -323,7 +334,7 @@ function report() {
     alert("請選擇原因");
   } else {
     var url = document.URL;
-    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var regex = /.*article\/+(.*)/;
     var id = url.replace(regex,"$1");
     document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
     $.post("/clickReport", {article_id: id, reason: reason}, function(res){
@@ -338,7 +349,7 @@ function report() {
 function cancelReport() {
   if(confirm("確定要取消檢舉嗎")) {
     var url = document.URL;
-    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var regex = /.*article\/+(.*)/;
     var id = url.replace(regex,"$1");
     document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
     $.post("/cancelReport", {article_id: id}, function(res){
@@ -370,7 +381,7 @@ function sendEmail(){
             if (mailaddress.length>0){
               
               var url = document.URL;
-              var regex = /.*article\/+(.*)\?page=+(.*)/;
+              var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
               console.log("22222");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
@@ -384,7 +395,7 @@ function sendEmail(){
           else{
             if (mailaddress.length>0){
               var url = document.URL;
-              var regex = /.*article\/+(.*)\?page=+(.*)/;
+              var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
               console.log("1234532");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
@@ -404,7 +415,7 @@ function sendEmail(){
     
       if (mailaddress.length>0){
         var url = document.URL;
-        var regex = /.*article\/+(.*)\?page=+(.*)/;
+        var regex = /.*article\/+(.*)/;
         var article_id = url.replace(regex,"$1");
         $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
           if (res == "SEND"){
