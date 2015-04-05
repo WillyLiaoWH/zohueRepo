@@ -241,6 +241,17 @@ function checkAuth() {
       if(postformmain) {
         postformmain.style.width="100%";
       }
+
+      var simpleS=document.getElementById("signup");
+      if(simpleS){
+        simpleS.style.display="block";
+      }
+
+      var login=document.getElementById("loginSection");
+      login.style.display="block";
+
+      var mlogin=document.getElementById("mobile_loginSection");
+      mlogin.style.display="block";
     }
   });
 }
