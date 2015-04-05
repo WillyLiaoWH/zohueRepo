@@ -27,10 +27,10 @@ div.show-image input.delete {
     right:0;
 }
 
-#postContent_image img{
+.show-image img{
 	outline: 1px solid rgb(180, 195, 163);
 }
-#postContent_image a{
+.show-image a{
 	float: left;
 	margin: 10px;
 }
