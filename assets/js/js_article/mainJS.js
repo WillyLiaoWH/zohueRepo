@@ -7,8 +7,8 @@ $(document).ready(function(){
 
   var dialog = $("#reportDialog").dialog({
     autoOpen: false,
-    height: 350,
-    width: 450,
+    height: "auto",
+    width: 300,
     modal: true,
     buttons: {   
         "檢舉": function() {   
@@ -27,6 +27,7 @@ $(document).ready(function(){
         }
       }
       document.getElementById('reasonInput').value="";
+      document.getElementById('reasonInput').style.display="none";
     }
   });
   
@@ -144,7 +145,11 @@ function setPage() {
 
         responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
         responseContext += "<tr><td style='padding:20px 0px 0px 10px;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
-        responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br>"+pre_comment_image+"</label></td></tr>";
+        if(pre_comment_image.indexOf("images")>-1){
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
+        }else{
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br>"+pre_comment_image+"</label></td></tr>";
+        }
         if(res.login) {
           if(res.responseNice[i]) {
             responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse("+response[i].id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
@@ -158,6 +163,16 @@ function setPage() {
       document.getElementById("commentList").innerHTML = responseContext;
       document.getElementById("commentList").style.display = "block";
     }
+
+    // 圖片跳窗，使用 modalBox.js
+    $('.show-image a').click(function(event){
+      event.preventDefault();
+      var ss = '<img src="'+$(this).attr("href")+'">';
+      $( ".modalBox" ).empty();
+      $( ".modalBox" ).append(ss);
+      $('.modalBox').modalBox('open');
+    });
+
     if(res.isAuthor) {
       document.getElementById("editArticle").style.display = "inline";
       document.getElementById("deleteArticle").style.display = "inline";

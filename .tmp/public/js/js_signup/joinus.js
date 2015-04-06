@@ -35,6 +35,16 @@ $(document).ready(function(){
     ShowDate(document.getElementById("birthday_M").value, document.getElementById("birthday_Y").value);
   });
 
+  // 預設必填
+  $(".feedback-input[must='t']").each(function( index ) {
+    var id = ($(this).attr("id"));
+    if( $(this).val()!="" & $(this).val()!=null ){
+      statusIMG(this,"O");
+    }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
+      statusIMG(this,"M");
+    }
+  });
+
   //$(".feedback-input").bind("keyup change", function(e) { // 顯示 O、X
   $(".feedback-input[must='t']").bind("keyup change", function(e) { // 顯示 O、X
     var id = ($(this).attr("id"));
@@ -113,7 +123,7 @@ $(document).ready(function(){
           break;
         case "birthday_Y":
           var taiwanY = $(this).val();
-          if(taiwanY>-50 & taiwanY<100){
+          if(taiwanY>-50 & taiwanY<100 & taiwanY%1===0){
             statusIMG("#birthday_Y","O");
           }else{
             statusIMG(this,"X");
@@ -187,36 +197,45 @@ function getXMLHttp(){
 }
 
 function Submit(){
-  var fname = document.getElementById("fname").value;
-  var lname = document.getElementById("lname").value;
-  var img = document.getElementById("avatar").src;
-  var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
-  if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
-  var forgetA = document.getElementById("forgetA").value;
-  var gender = document.getElementById("gender").options[document.getElementById("gender").selectedIndex].value;
-  var phone = document.getElementById("phone").value;
-  var addressCity = document.getElementById("addressCity").options[document.getElementById("addressCity").selectedIndex].value;
-  var addressDistrict = document.getElementById("addressDistrict").options[document.getElementById("addressDistrict").selectedIndex].value;
-  var address = document.getElementById("address").value;
-  var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
-  alert(birthday_Y);
-  var birthday_M = document.getElementById("birthday_M").value;
-  var birthday_D = document.getElementById("birthday_D").value;
-  var birthday = new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D);
-  var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
-  var selfIntroduction = document.getElementById("selfIntroduction").value;
-  var postalCode = document.getElementById("postalCode").value;
+  var pass_signup = 1;
+  $(".feedback-input[must='t']").each(function( index ) {
+    if( $(this).val()=="" || $(this).val()==null ){
+      pass_signup = 0;
+    }else{}
+  });
 
-  var posting = $.post( "/fullSignup", { fname: fname, lname: lname, img: img, 
+  if(pass_signup==1){
+    var fname = document.getElementById("fname").value;
+    var lname = document.getElementById("lname").value;
+    var img = document.getElementById("avatar").src;
+    var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
+    if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
+    var forgetA = document.getElementById("forgetA").value;
+    var gender = document.getElementById("gender").options[document.getElementById("gender").selectedIndex].value;
+    var phone = document.getElementById("phone").value;
+    var addressCity = document.getElementById("addressCity").options[document.getElementById("addressCity").selectedIndex].value;
+    var addressDistrict = document.getElementById("addressDistrict").options[document.getElementById("addressDistrict").selectedIndex].value;
+    var address = document.getElementById("address").value;
+    var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
+    var birthday_M = document.getElementById("birthday_M").value;
+    var birthday_D = document.getElementById("birthday_D").value;
+    var birthday = new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D);
+    var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
+    var selfIntroduction = document.getElementById("selfIntroduction").value;
+    var postalCode = document.getElementById("postalCode").value;
+
+    var posting = $.post( "/fullSignup", { fname: fname, lname: lname, img: img, 
                                           forgetQ: forgetQ, forgetA: forgetA, 
                                           gender: gender, phone: phone, addressCity: addressCity,
                                           addressDistrict: addressDistrict, address: address, 
                                           birthday: birthday, selfIntroduction: selfIntroduction,
                                           postalCode: postalCode, primaryDisease: primaryDisease}, function(res){
-    alert("完整註冊成功！");
-    window.location = "/home";
-  }).error(function(res){
+      alert("完整註冊成功！");
+      window.location = "/home";
+    }).error(function(res){
+      alert(res.responseJSON.err);
     });
+  }else{alert("你是不是少填了什麼呢！");}
 }
 
 function ShowAllQ(){

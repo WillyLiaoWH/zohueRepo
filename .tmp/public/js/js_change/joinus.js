@@ -50,6 +50,17 @@ $(document).ready(function(){
     ShowDate(document.getElementById("birthday_M").value, document.getElementById("birthday_Y").value);
   });
 
+  // 預設必填
+  $(".feedback-input[must='t']").each(function( index ) {
+    var id = ($(this).attr("id"));
+    //alert($(this).val()!="");
+    if( $(this).val()!="" || $(this).val()!=null ){
+      statusIMG(this,"O");
+    }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
+      statusIMG(this,"M");
+    }
+  });
+
   //$(".feedback-input").bind("keyup change", function(e) { // 顯示 O、X
   $(".feedback-input[must='t']").bind("keyup change", function(e) { // 顯示 O、X
     var id = ($(this).attr("id"));
@@ -209,39 +220,48 @@ function getXMLHttp(){
 }
 
 function Submit(){
-  var email = document.getElementById("email").value;
-  var alias = document.getElementById("alias").value;
-  var fname = document.getElementById("fname").value;
-  var lname = document.getElementById("lname").value;
-  var img = document.getElementById("avatar").src;
-  var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
-  if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
-  var forgetA = document.getElementById("forgetA").value;
-  var gender = document.getElementById("gender").options[document.getElementById("gender").selectedIndex].value;
-  var phone = document.getElementById("phone").value;
-  var postalCode = document.getElementById("postalCode").value;
-  var addressCity = document.getElementById("addressCity").options[document.getElementById("addressCity").selectedIndex].value;
-  var addressDistrict = document.getElementById("addressDistrict").options[document.getElementById("addressDistrict").selectedIndex].value;
-  var address = document.getElementById("address").value;
-  var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
-  var birthday_M = document.getElementById("birthday_M").value;
-  var birthday_D = document.getElementById("birthday_D").value;
-  var birthday = new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D);
-  var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
-  var selfIntroduction = document.getElementById("selfIntroduction").value;
-  var posting = $.post( "/change", { email: email, alias: alias,
+  var pass_signup = 1;
+  $(".feedback-input[must='t']").each(function( index ) {
+    if( $(this).val()=="" || $(this).val()==null ){
+      pass_signup = 0;
+    }else{}
+  });
+
+  if(pass_signup==1){
+    var email = document.getElementById("email").value;
+    var alias = document.getElementById("alias").value;
+    var fname = document.getElementById("fname").value;
+    var lname = document.getElementById("lname").value;
+    var img = document.getElementById("avatar").src;
+    var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
+    if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
+    var forgetA = document.getElementById("forgetA").value;
+    var gender = document.getElementById("gender").options[document.getElementById("gender").selectedIndex].value;
+    var phone = document.getElementById("phone").value;
+    var postalCode = document.getElementById("postalCode").value;
+    var addressCity = document.getElementById("addressCity").options[document.getElementById("addressCity").selectedIndex].value;
+    var addressDistrict = document.getElementById("addressDistrict").options[document.getElementById("addressDistrict").selectedIndex].value;
+    var address = document.getElementById("address").value;
+    var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
+    var birthday_M = document.getElementById("birthday_M").value;
+    var birthday_D = document.getElementById("birthday_D").value;
+    var birthday = new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D);
+    var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
+    var selfIntroduction = document.getElementById("selfIntroduction").value;
+    var posting = $.post( "/change", { email: email, alias: alias,
                                           fname: fname, lname: lname, img: img, 
                                           forgetQ: forgetQ, forgetA: forgetA, 
                                           gender: gender, phone: phone, postalCode: postalCode, 
                                           addressCity: addressCity, addressDistrict: addressDistrict,
                                           address: address, birthday: birthday, selfIntroduction: selfIntroduction,
                                           primaryDisease: primaryDisease}, function(res){
-    // alert(JSON.stringify(res));
-    alert("修改會員資料成功！");
-    window.location = "/home";
-  }).error(function(res){
+      // alert(JSON.stringify(res));
+      alert("修改會員資料成功！");
+      window.location = "/home";
+    }).error(function(res){
       alert(res.responseJSON.err);
     });
+  }else{alert("你是不是少填了什麼呢！");}
 }
 function Submit_ez(){
   var email = document.getElementById("email_ez").value;

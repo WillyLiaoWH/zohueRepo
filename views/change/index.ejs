@@ -18,21 +18,8 @@
     <script src="js/js_change/joinus.js"></script>
 	</head>
 	<body id="body">
-<!--     <ul>
-      <li>
-        <input name="login_a" type="text" class="login_list" id="login_a" placeholder="帳號"/>
-      </li>
-      <li>
-        <input name="login_p" type="text" class="login_list" id="login_p" placeholder="密碼"/>
-        <br><a id="forget" href="http://www.im.ntu.edu.tw/~lckung/">忘記密碼?</a>
-      </li>
-      <li>
-        <input name="loginBtn" type="button" class="login_list" id="loginBtn" value="登入" onclick="Login()"/>
-        <div class="loginease"></div>
-      </li>
-    </ul> -->
-
-    <div id="form-main_ez" class="container"><label id="contentTitle">修改會員資料</label>
+    <div id="form-main_ez" class="col-md-7">
+      <h1 style="color:#D26900;">修改會員資料</h1>
       <div id="form-div">
         <form class="form" id="form1">
           <p class="alias_ez">
@@ -60,7 +47,8 @@
 
     </div>
 
-		<div id="form-main" class="container"><label id="contentTitle">修改會員資料</label>
+		<div id="form-main" class="col-md-7">
+        <h1 style="color:#D26900;">修改會員資料</h1>
   			<div id="form-div">
     			<form class="form" id="form1">
             <p class="alias">
@@ -117,6 +105,10 @@
                 <div class="tooltip-inner" id="forgetQ-inner"></div>
               </div>
               <input name="forgetQ-other" type="text" class="validate[required,custom[forgetQ-other]] feedback-input" id="forgetQ-other" placeholder="找回密碼問題" must="t"/>
+              <div class="tooltip fade bottom in" role="tooltip" id="forgetQ-other-tooltip">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" id="forgetQ-other-inner"></div>
+              </div>
             </p>
             <p class="forgetA">
               <h class="input_title">找回密碼問題答案</h>
