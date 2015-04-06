@@ -12,8 +12,6 @@ $(window).load(function(){ // 暫存回覆頁面
 });
 
 $(document).ready(function(){  
-
-
   checkAuth();
 
   $('.dropdown-toggle').dropdown(); //For bootstrap dropdown menu

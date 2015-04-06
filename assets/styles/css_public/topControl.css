@@ -59,6 +59,10 @@ button, input[type="button"], input[type="submit"]{
 	display: none;
 }
 
+#Fblogin{
+	float:left;
+}
+
 .l{
 	height: 48px;
 	color:#816C5B;
