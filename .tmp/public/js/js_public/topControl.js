@@ -75,7 +75,7 @@ function FB_API(){
       // Logged into your app and Facebook.
       FB.api('/me',function(response){
         console.log(response);
-        alert();
+        
         $.post('/checkFB',{FBmail:response.email},function(res){
           if(res){
             location.reload();
