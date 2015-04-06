@@ -15,6 +15,7 @@ $(document).ready(function(){
   FB_API();
   checkAuth();
 
+  $('.dropdown-toggle').dropdown(); //For bootstrap dropdown menu
 
   $( "#setUp" ).click(function() {
     if(setUpMenu.style.display=="block"){
