@@ -61,7 +61,7 @@ module.exports.routes = {
   'GET /checkAuth': 'SessionController.checkAuth',
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
-  'GET /setForumPage/:tab': 'Articles.setForumPage',
+  'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /article/*': {
@@ -88,7 +88,7 @@ module.exports.routes = {
     view: 'change/index'
   },
 
-  '/forum/*': {
+  '/forum': {
     view: 'forum/index'
   },
 
@@ -96,15 +96,20 @@ module.exports.routes = {
     view: 'proInfo/index'
   },
 
-  '/post': {
+  '/post/*': {
     view: 'post/index'
   },
 
   '/article/:id': {
     view: 'article/index'
   },
+  '/board-*': {
+    view: 'board/index'
+  },
 
   '/': '/home'
+
+
 
 
 

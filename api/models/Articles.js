@@ -49,6 +49,9 @@ module.exports = {
     },
     lastResponseTime: {
       type: 'datetime'
+    }, 
+    board: {
+      model: 'boards'
     }
   }
 };

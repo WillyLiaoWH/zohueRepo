@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/styles/css_public/themes/alertify.core.css">
     <link rel="stylesheet" href="/styles/css_public/themes/alertify.default.css">
 
+    <script src="/js/js_public/modalBox.js-master/modalBox-min.js"></script>
     <script src="/js/js_public/alertify.js"></script>
     <script src="/js/js_article/mainJS.js"></script>
     <script src="/js/js_post/bootstrap.min.js"></script>
@@ -81,7 +82,7 @@
               <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title" id="avatar-modal-label">上傳相片</h4>
+                  <h4 class="modal-title" id="avatar-modal-label">上傳相片（讀者點擊縮圖後即可看到原圖）</h4>
                 </div>
                 <div class="modal-body">
                   <div class="avatar-body">
@@ -115,7 +116,8 @@
 
     </div>
 
-
+    <!-- image modal -->
+    <div class="modalBox"></div>
 
     <!-- 檢舉視窗 -->
     <div id="reportDialog" title="協助我們瞭解發生的狀況">
@@ -124,8 +126,9 @@
         <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
         <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
         <label><input type="radio" name="reason" value="others"> 其它</label><br>
+        <input type="text" id="reasonInput" style="display: none;">
       </form> 
-        <textarea id="reasonInput" style="width:400px;height:120px;display: none;"></textarea>
     </div>
+  </div>
   </body>
 </html>

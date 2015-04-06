@@ -1,13 +1,14 @@
 var allow_create;
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var loaded=false;
+var board="";
 $(document).ready(function(){
   setPage();
 
   var dialog = $("#reportDialog").dialog({
     autoOpen: false,
-    height: 350,
-    width: 450,
+    height: "auto",
+    width: 300,
     modal: true,
     buttons: {   
         "檢舉": function() {   
@@ -26,6 +27,7 @@ $(document).ready(function(){
         }
       }
       document.getElementById('reasonInput').value="";
+      document.getElementById('reasonInput').style.display="none";
     }
   });
   
@@ -41,7 +43,7 @@ $(document).ready(function(){
 var nice;
 function setPage() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var article_id = url.replace(regex,"$1");
 
   $.get("/checkAuth", function(auth){
@@ -57,6 +59,7 @@ function setPage() {
     articleList=res.articleList;
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
+    board=articleList[0].board;
     // alert(JSON.stringify(articleList[0]));
     updateClickNum();
 
@@ -142,7 +145,11 @@ function setPage() {
 
         responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
         responseContext += "<tr><td style='padding:20px 0px 0px 10px;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
-        responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br>"+pre_comment_image+"</label></td></tr>";
+        if(pre_comment_image.indexOf("images")>-1){
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
+        }else{
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br>"+pre_comment_image+"</label></td></tr>";
+        }
         if(res.login) {
           if(res.responseNice[i]) {
             responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse("+response[i].id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
@@ -156,6 +163,16 @@ function setPage() {
       document.getElementById("commentList").innerHTML = responseContext;
       document.getElementById("commentList").style.display = "block";
     }
+
+    // 圖片跳窗，使用 modalBox.js
+    $('.show-image a').click(function(event){
+      event.preventDefault();
+      var ss = '<img src="'+$(this).attr("href")+'">';
+      $( ".modalBox" ).empty();
+      $( ".modalBox" ).append(ss);
+      $('.modalBox').modalBox('open');
+    });
+
     if(res.isAuthor) {
       document.getElementById("editArticle").style.display = "inline";
       document.getElementById("deleteArticle").style.display = "inline";
@@ -182,15 +199,20 @@ function setPage() {
 }
 
 function backToList() {
-  var url=document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
-  var page = url.replace(regex,"$2");
-  window.location.assign("/forum/"+page+"#all");
+  // var url=document.URL;
+  // var regex = /.*article\/+(.*)\?board=+(.*)&page=+(.*)/;
+  // var board=url.replace(regex,"$2");
+  // var page = url.replace(regex,"$3");
+  // window.location.assign("/board-"+board+"/"+page+"#all");
+  if(document.referrer.search("board")!=-1)
+    window.location.assign(document.referrer);
+  else
+    window.location.assign("/board-"+board+"/1?tab=all")
 }
 
 function editArticle() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var article_id = url.replace(regex,"$1");
   location.assign("/editArticle/"+article_id);
 }
@@ -199,11 +221,15 @@ function deleteArticle() {
   var r = confirm("確定要刪除文章嗎？");
   if (r == true) {
     var url = document.URL;
-    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var regex = /.*article\/+(.*)/;
     var id = url.replace(regex,"$1");
     $.post( "/deleteArticle", { id: id}, function(res){
      alert("文章刪除成功！");
-      window.location.replace("/forum/1#all");
+      // window.location.replace("/board-"+board+"/1#all");
+      if(document.referrer.search("board")!=-1)
+        window.location.assign(document.referrer);
+      else
+        window.location.assign("/board-"+board+"/1?tab=all")
     })
     .error(function(res){
     alert(res.responseJSON.err);
@@ -215,7 +241,7 @@ function leaveComment(){
   if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
   if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var article_id = url.replace(regex,"$1");
   var comment = $("#comment").html();
   var comment_image = $("#comment_image").html();
@@ -231,7 +257,7 @@ function leaveComment(){
 
 function updateResponseNum(){
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   var responseNum = parseInt(response.length)+1;
   $.post( "/updateResponseNum", { id: id, responseNum: responseNum}, function(res){
@@ -244,7 +270,7 @@ function updateResponseNum(){
 
 function updateClickNum(){
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   var clickNum=parseInt(articleList[0].clickNum)+1;
   $.post( "/updateClickNum", { id: id, clickNum: clickNum}, function(res){
@@ -256,7 +282,7 @@ function updateClickNum(){
 
 function clickNice() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;'src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
   $.post("/clickNice", {article_id: id}, function(res){
@@ -268,7 +294,7 @@ function clickNice() {
 
 function cancelNice() {
   var url = document.URL;
-  var regex = /.*article\/+(.*)\?page=+(.*)/;
+  var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
   document.getElementById("niceArticle").innerHTML = "<button value='推薦' class='n' onclick='clickNice()'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>";  
   $.post("/cancelNice", {article_id: id}, function(res){
@@ -323,7 +349,7 @@ function report() {
     alert("請選擇原因");
   } else {
     var url = document.URL;
-    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var regex = /.*article\/+(.*)/;
     var id = url.replace(regex,"$1");
     document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
     $.post("/clickReport", {article_id: id, reason: reason}, function(res){
@@ -338,7 +364,7 @@ function report() {
 function cancelReport() {
   if(confirm("確定要取消檢舉嗎")) {
     var url = document.URL;
-    var regex = /.*article\/+(.*)\?page=+(.*)/;
+    var regex = /.*article\/+(.*)/;
     var id = url.replace(regex,"$1");
     document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
     $.post("/cancelReport", {article_id: id}, function(res){
@@ -370,7 +396,7 @@ function sendEmail(){
             if (mailaddress.length>0){
               
               var url = document.URL;
-              var regex = /.*article\/+(.*)\?page=+(.*)/;
+              var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
               console.log("22222");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
@@ -384,7 +410,7 @@ function sendEmail(){
           else{
             if (mailaddress.length>0){
               var url = document.URL;
-              var regex = /.*article\/+(.*)\?page=+(.*)/;
+              var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
               console.log("1234532");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
@@ -404,7 +430,7 @@ function sendEmail(){
     
       if (mailaddress.length>0){
         var url = document.URL;
-        var regex = /.*article\/+(.*)\?page=+(.*)/;
+        var regex = /.*article\/+(.*)/;
         var article_id = url.replace(regex,"$1");
         $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
           if (res == "SEND"){

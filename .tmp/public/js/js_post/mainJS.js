@@ -101,7 +101,10 @@ function post() {
   }
 
   if(allowed) {
-    var posting = $.post( "/postArticle", { title: postTitle, content: postContent, classification: postClass, responseNum: responseNum, clickNum: clickNum}, function(res){
+    var url = document.URL;
+    var regex = /.*post+\/+(.*)/;
+    var board=url.replace(regex, "$1");
+    var posting = $.post( "/postArticle", { title: postTitle, content: postContent, classification: postClass, responseNum: responseNum, clickNum: clickNum, board: board}, function(res){
       alert("文章發表成功！");
       window.location.replace("/article/"+res[0].id+"?page=1");
     })

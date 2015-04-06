@@ -1,7 +1,5 @@
-
-
-
 var allow_create;
+var board="";
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
   setPage();
@@ -60,6 +58,7 @@ function setPage() {
     articleList=res.articleList;
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
+    board=articleList[0].board;
 
     content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
     content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
@@ -109,7 +108,7 @@ function post() {
     var posting = $.post( "/changeArticle", { id: id, newTitle: newTitle, newContent: newContent}, function(res){
       alert("文章編輯成功！");
       //window.location.replace("/forum/1");
-      window.location.replace("/article/"+id+"?page=1");
+      window.location.replace("/article/"+id);
     })
       .error(function(res){
         alert(res.responseJSON.err);
@@ -118,7 +117,10 @@ function post() {
 }
 
 function abort() {
-  window.location.replace("/forum/1#all");
+  var url = document.URL;
+  var regex = /.*editArticle\/+(.*)/;
+  var id = url.replace(regex,"$1");
+  window.location.replace("/article/"+id);
 }
 
 function editProfile(){

@@ -13,8 +13,10 @@ $(window).load(function(){ // 暫存回覆頁面
 
 $(document).ready(function(){  
 
+
   checkAuth();
 
+  $('.dropdown-toggle').dropdown(); //For bootstrap dropdown menu
   $( "#setUp" ).click(function() {
     if(setUpMenu.style.display=="block"){
       setUpMenu.style.display="none";
@@ -28,7 +30,7 @@ $(document).ready(function(){
   });
 
   $( "#forum" ).click(function() {
-    window.location.assign("/forum/1#all");
+    window.location.assign("/forum");
   });
 
   $( "#proInfo" ).click(function() {
@@ -224,6 +226,17 @@ function checkAuth() {
       if(postformmain) {
         postformmain.style.width="100%";
       }
+
+      var simpleS=document.getElementById("signup");
+      if(simpleS){
+        simpleS.style.display="block";
+      }
+
+      var login=document.getElementById("loginSection");
+      login.style.display="block";
+
+      var mlogin=document.getElementById("mobile_loginSection");
+      mlogin.style.display="block";
     }
   });
 }

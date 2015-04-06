@@ -240,6 +240,9 @@
 	background-position: 10px,right;
 	background-repeat: no-repeat;
 }
+.birthday{
+	margin: 0 0 0px;
+}
 #birthday_Y,#birthday_M,#birthday_D{
 	background-image: url(../../../images/img_signup/birthday.png);
 	background-size: 30px 30px;
