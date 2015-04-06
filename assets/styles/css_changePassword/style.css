@@ -1,5 +1,5 @@
 #changePassword{
-	//margin:15px;
+	margin-top:15px;
 	color:#533828;
 	font-size:20px;
 	font-weight: normal;
@@ -27,7 +27,7 @@
 	width:125px;
 	float:left;
 	font-size: 20px;
-	margin-top:20px;
+	margin-top:10px;
 	color:#533828;
 }
 
