@@ -36,6 +36,7 @@ button, input[type="button"], input[type="submit"]{
 #logo{
 	width: 436px;
 	height: 94px;
+	margin-left:20px;
 }
 
 @media all and (max-width: 768px) {
@@ -43,6 +44,7 @@ button, input[type="button"], input[type="submit"]{
 		width:100%;
 		height: auto;
 		margin-top: 10px;
+		margin-left:0px;
 	}
 }
 

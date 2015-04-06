@@ -39,16 +39,18 @@
 
 #form-div {
 	background-color:rgba(102, 141, 60, 0.4);
-	padding-left:35px;
+/*	padding-left:35px;
 	padding-right:35px;
 	padding-top:35px;
-	padding-bottom:50px;
+	padding-bottom:50px;*/
+	padding:35px 35px 50px 35px;
 	width: 100%;
   	-moz-border-radius: 7px;
   	-webkit-border-radius: 7px;
   	//margin: 0px auto;
-  	margin-left:20px;
+  	//margin-left:20px;
   	margin-top:15px;
+  	margin-bottom:20px;
 }
 
 #fname-div{
