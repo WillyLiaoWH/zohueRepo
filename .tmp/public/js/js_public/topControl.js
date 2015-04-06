@@ -12,6 +12,7 @@ $(window).load(function(){ // 暫存回覆頁面
 });
 
 $(document).ready(function(){  
+  FB_API();
   checkAuth();
 
   $('.dropdown-toggle').dropdown(); //For bootstrap dropdown menu
@@ -101,19 +102,23 @@ $(document).ready(function(){
     });
   }
 
-  window.fbAsyncInit = function() {
-  FB.init({
+function FB_API(){
+ window.fbAsyncInit = function() {
+    FB.init({
       appId      : '1639694986252116',
       xfbml      : true,
       version    : 'v2.2'
-  });
-
-
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-
+    });
   };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1639694986252116&version=v2.3";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+}
 
 
 
