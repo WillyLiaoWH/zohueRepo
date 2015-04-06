@@ -10,17 +10,15 @@
     <script src="/js/js_changePassword/mainJS.js"></script>
 	</head>
 	<body id="body">
-    </div>
-
-    <div id="content">&nbsp更換密碼<br>
-      <div id="changePassword">
+    <div class="container-fluid">
+      <h1 style="color:#D26900;">更換密碼</h1>
+      <div id="changePassword" class="col-md-3">
       舊密碼<label id="oldLabel" class="check"></label><br>
-      <input type="password" name="old" class="s" id="old"><br>
+      <input type="password" name="old" class="changePassword_s" id="old"><br>
       新密碼<label id="newLabel" class="check"></label><br>
-      <input type="password" name="new" class="s" id="new"><br>
+      <input type="password" name="new" class="changePassword_s" id="new"><br>
       新密碼確認<label id="reNewLabel" class="check"></label><br>
-      <input type="password" name="reNew" class="s" id="reNew"><br>
-<!--       <input type="button" value="確認送出" class="s" id="submit" onclick="Submit();"> -->
+      <input type="password" name="reNew" class="changePassword_s" id="reNew"><br>
       <button type="button" id="submit" class="s" onclick="Submit();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
       </div>
     </div>

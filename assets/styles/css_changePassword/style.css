@@ -1,22 +1,21 @@
 #changePassword{
-	margin:15px;
-	color:#816C5B;
-	font-size:18px;
+	//margin:15px;
+	color:#533828;
+	font-size:20px;
 	font-weight: normal;
 }
 
-.s{
+.changePassword_s{
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 18px;
+	font-size: 20px;
 	border-radius: 10px;
-	line-height: 22px;
-	//background-color: rgba(195, 183, 172, 0.5);
+	line-height: 30px;
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
-	width:350px;
+	width:100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
@@ -28,7 +27,7 @@
 	width:125px;
 	float:left;
 	font-size: 20px;
-	margin-top:25px;
+	margin-top:20px;
 	color:#533828;
 }
 
