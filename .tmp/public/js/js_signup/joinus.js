@@ -205,8 +205,8 @@ function Submit(){
   });
 
   if(pass_signup==1){
-    var fname = document.getElementById("fname").value;
-    var lname = document.getElementById("lname").value;
+    var fname = document.getElementById("fname_reg").value;
+    var lname = document.getElementById("lname_reg").value;
     var img = document.getElementById("avatar").src;
     var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
     if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
@@ -399,8 +399,8 @@ function HandleResponse_showProfile(response){
     // var D = b.getDate();
     // var primaryDisease=obj.primaryDisease;
     // var selfIntroduction=obj.selfIntroduction;
-    document.getElementById("fname").value = 123;
-    document.getElementById("lname").value = lname;
+    document.getElementById("fname_reg").value = lname;
+    document.getElementById("lname_reg").value = nname;
     document.getElementById("avatar").src = img;
     // try{
     //   if(forgetQ.search('[otherQ]')==1){ // 其他

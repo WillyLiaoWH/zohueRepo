@@ -177,7 +177,7 @@
 }
 
 /* Icons ---------------------------------- */
-#fname, #lname{
+#fname_reg, #lname_reg{
 	background-image: url(http://rexkirby.com/kirbyandson/images/name.svg);
 	background-size: 30px 30px;
 	background-position: 10px ,right;

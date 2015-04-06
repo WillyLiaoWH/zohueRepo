@@ -59,6 +59,24 @@ button, input[type="button"], input[type="submit"]{
 	display: none;
 }
 
+#Fblogin{
+	cursor: pointer;
+	margin-left:10px;
+	background-color: rgba(232, 81, 0, 0.6);
+	color:#533828;
+	margin-top: 1px;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
 .l{
 	height: 48px;
 	color:#816C5B;
