@@ -10,7 +10,7 @@ div.show-image {
     float:left;
     margin:5px;
     height: auto;
-    margin: 0 auto;
+    margin: 10 auto;
 }
 div.show-image:hover img{
     opacity:0.5;

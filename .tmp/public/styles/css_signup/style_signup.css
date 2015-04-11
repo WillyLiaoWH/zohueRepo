@@ -25,7 +25,7 @@
 #birthday_D-tooltip{margin-right: 0px; margin-top: 55px; display: none;}
 #selfIntroduction-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 
-#profile{
+/*#profile{
 	font-size:20px;
 	font-family: "微軟正黑體";
 	border: solid rgba(102, 141, 60, 0.4);
@@ -95,11 +95,11 @@
 #contentTitle{
 	font-size:35px;
 	color:#D26900;
-}
+}*/
 
 #form-main{
-	margin:45px 0px 20px 0px;
-	width:57%;
+	//margin:45px 0px 20px 0px;
+	//width:57%;
 	float:left;
 	padding-top:0px;
 	//background-color:rgba(102, 141, 60, 0.4);
@@ -109,26 +109,28 @@
 	font-size:30px;
 }
 
-#contentTitle{
+/*#contentTitle{
 	color:#D26900;
 	font-size: 35px;
 	font-weight: normal;
-}
+}*/
 
 
 #form-div {
 	//background-color:rgba(72,72,72,0.4);
 	background-color:rgba(102, 141, 60, 0.4);
-	padding-left:35px;
+	padding:35px 35px 50px 35px;
+/*	padding-left:35px;
 	padding-right:35px;
 	padding-top:35px;
-	padding-bottom:50px;
+	padding-bottom:50px;*/
 	width: 100%;
   	-moz-border-radius: 7px;
   	-webkit-border-radius: 7px;
   	//margin: 0px auto;
-  	margin-left:20px;
+  	//margin-left:20px;
   	margin-top:15px;
+  	margin-bottom:20px;
 }
 
 #fname-div{
