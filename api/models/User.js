@@ -80,6 +80,15 @@ module.exports = {
     },
     FBmail:{
       type:'string'
+    },
+    friends:{
+      collection: 'user'
+    },
+    unconfirmedFriends:{
+      collection: 'user'
+    },
+    blackList:{
+      collection: 'user'
     }
   }
 };

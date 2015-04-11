@@ -57,7 +57,8 @@ module.exports.routes = {
   'POST /imgupload_post': 'ImguploadController.upload_post',
   'POST /sendEmail' : 'ArticlesController.mailAritlce',
   'POST /checkFB' : 'User.checkFB',
-  
+
+  'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
@@ -105,6 +106,9 @@ module.exports.routes = {
   },
   '/board-*': {
     view: 'board/index'
+  },
+  '/friends': {
+    view: 'friends/index'
   },
 
   '/': '/home'

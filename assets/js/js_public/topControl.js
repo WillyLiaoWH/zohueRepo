@@ -43,6 +43,10 @@ $(document).ready(function(){
     window.location.assign("/changePassword");
   });
 
+  $("#friends").click(function(){
+    window.location.assign("/friends")
+  });
+
 });
 
 
