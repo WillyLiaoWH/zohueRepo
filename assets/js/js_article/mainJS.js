@@ -145,10 +145,12 @@ function setPage() {
 
         responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
         responseContext += "<tr><td style='padding:20px 0px 0px 10px;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
-        if(pre_comment_image.indexOf("images")>-1){
+        if(response[i].comment.trim()==""){ // 沒有文字 => 只有圖片
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+pre_comment_image+"</label></td></tr>";
+        }else if(pre_comment_image.indexOf("images")==-1){ // 沒有圖片 => 只有文字
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"</label></td></tr>";
+        }else{ // 有文字、圖片
           responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
-        }else{
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br>"+pre_comment_image+"</label></td></tr>";
         }
         if(res.login) {
           if(res.responseNice[i]) {
@@ -167,7 +169,8 @@ function setPage() {
     // 圖片跳窗，使用 modalBox.js
     $('.show-image a').click(function(event){
       event.preventDefault();
-      var ss = '<img src="'+$(this).attr("href")+'">';
+      //var ss = '<img src="'+$(this).attr("href")+'">';
+      var ss = '<a href="'+$(this).attr("href")+'" target="_blank"><img src="'+$(this).attr("href")+'"></a>';
       $( ".modalBox" ).empty();
       $( ".modalBox" ).append(ss);
       $('.modalBox').modalBox('open');
@@ -245,14 +248,17 @@ function leaveComment(){
   var article_id = url.replace(regex,"$1");
   var comment = $("#comment").html();
   var comment_image = $("#comment_image").html();
-  //alert(comment);
-  $.post( "/leaveComment", { comment: comment, comment_image: comment_image, article_id: article_id}, function(res){
-    window.location.replace(url);
-  })
+  
+
+  if(comment.trim()=="" & comment_image.trim()==""){alert("留言失敗！");}
+  else{
+    $.post( "/leaveComment", { comment: comment, comment_image: comment_image, article_id: article_id}, function(res){
+      window.location.replace(url);
+    })
     .error(function(res){
       alert(res.responseJSON.err);
     });
-
+  }
 }
 
 function updateResponseNum(){

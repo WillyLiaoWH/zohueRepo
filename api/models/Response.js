@@ -15,8 +15,7 @@ module.exports = {
     	model: 'user'
     },
     comment: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     comment_image: {
       type: 'string'
