@@ -4,8 +4,8 @@
 	font-size: 20px;
 }
 
-#fname-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
-#lname-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#fname_reg-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#lname_reg-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #account-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #alias-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #repassword-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
@@ -133,11 +133,11 @@
   	margin-bottom:20px;
 }
 
-#fname-div{
+#fname_reg-div{
 	width:48%;
 	float:left;
 }
-#lname-div{
+#lname_reg-div{
 	width:48%;
 	float:left;
 	margin-left: 4%;

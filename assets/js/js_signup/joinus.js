@@ -35,16 +35,6 @@ $(document).ready(function(){
     ShowDate(document.getElementById("birthday_M").value, document.getElementById("birthday_Y").value);
   });
 
-  // 預設必填
-  $(".feedback-input[must='t']").each(function( index ) {
-    var id = ($(this).attr("id"));
-    if( $(this).val()!="" & $(this).val()!=null ){
-      statusIMG(this,"O");
-    }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
-      statusIMG(this,"M");
-    }
-  });
-
   //$(".feedback-input").bind("keyup change", function(e) { // 顯示 O、X
   $(".feedback-input[must='t']").bind("keyup change", function(e) { // 顯示 O、X
     var id = ($(this).attr("id"));
@@ -370,10 +360,7 @@ function showProfile(){
   xmlHttp.open("GET", "/user/showProfile", true);
   xmlHttp.send(null);
 }
-
 function HandleResponse_showProfile(response){
-  //alert(response);
-
   obj = JSON.parse(response);
   var FBmail=obj.FBmail;
   if (FBmail.length>2){
@@ -399,8 +386,8 @@ function HandleResponse_showProfile(response){
     // var D = b.getDate();
     // var primaryDisease=obj.primaryDisease;
     // var selfIntroduction=obj.selfIntroduction;
-    document.getElementById("fname_reg").value = lname;
-    document.getElementById("lname_reg").value = nname;
+    document.getElementById("fname_reg").value = fname;
+    document.getElementById("lname_reg").value = lname;
     document.getElementById("avatar").src = img;
     // try{
     //   if(forgetQ.search('[otherQ]')==1){ // 其他
@@ -410,7 +397,11 @@ function HandleResponse_showProfile(response){
     //   }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;}
     // }catch(e){/*window.location.reload();*/}
     // document.getElementById("forgetA").value = forgetA;
-    document.querySelector('#gender [value="' + gender + '"]').selected = true;
+
+    if(gender=="M" || gender=="F"){
+      document.querySelector('#gender [value="' + gender + '"]').selected = true;
+    }
+    
     // document.getElementById("phone").value = phone;
     // document.getElementById("postalCode").value = postalCode;
     // getCity(document.getElementById("postalCode").value);
@@ -421,5 +412,19 @@ function HandleResponse_showProfile(response){
     // document.getElementById("birthday_D").value = D;
     // document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
     // document.getElementById("selfIntroduction").value = selfIntroduction;
+
   }
+
+
+
+    // 預設必填
+    $(".feedback-input[must='t']").each(function( index ) {
+      var id = ($(this).attr("id"));
+      if( $(this).val()=="" || $(this).val()==null ){
+        statusIMG(this,"M");
+      }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
+        statusIMG(this,"O");
+      }
+    });
+  
 }
