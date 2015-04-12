@@ -404,7 +404,6 @@ function sendEmail(){
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              console.log("22222");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
@@ -418,7 +417,6 @@ function sendEmail(){
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              console.log("1234532");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });

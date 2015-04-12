@@ -458,9 +458,8 @@ module.exports = {
             }
             else{
                 var regex = /\".+\"/g;
-                var arr=article[0].content.match(regex);
+                var arr=article[0].content;
                 console.log(arr[0],arr[1]);
-
                 //var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");               
                 var async = require('async');
                 async.each(article[0].response, function(val, callback) {
