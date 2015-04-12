@@ -179,6 +179,8 @@ function setPage() {
     if(res.isAuthor) {
       document.getElementById("editArticle").style.display = "inline";
       document.getElementById("deleteArticle").style.display = "inline";
+      document.getElementById("mobile_editArticle").style.display = "inline";
+      document.getElementById("mobile_deleteArticle").style.display = "inline";
     }
     if(res.isNice) {
       document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
@@ -398,14 +400,12 @@ function sendEmail(){
           if (e){
             alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
             mailaddress=prompt('把這封email送到：');
-            console.log("123"+mailaddress)
             if (mailaddress.length>0){
               
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              console.log("22222");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
                   alertify.alert("已經送出信件至"+mailaddress); 
@@ -418,8 +418,7 @@ function sendEmail(){
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              console.log("1234532");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
                   alertify.alert("已經送出信件至"+mailaddress); 
@@ -431,14 +430,13 @@ function sendEmail(){
       });
     }
     else{
-      alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
       mailaddress=prompt('把這封email送到：') ;
     
       if (mailaddress.length>0){
         var url = document.URL;
         var regex = /.*article\/+(.*)/;
         var article_id = url.replace(regex,"$1");
-        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
           if (res == "SEND"){
             alert("已經送出信件至"+mailaddress); 
           }
