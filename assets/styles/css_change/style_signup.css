@@ -7,8 +7,8 @@
 #email-tooltip,#email_ez-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #alias-tooltip,#alias_ez-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #type-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
-#fname-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
-#lname-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#fname_reg-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
+#lname_reg-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #account-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #repassword-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #password-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
@@ -26,15 +26,13 @@
 #selfIntroduction-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 
 #form-main,#form-main_ez{
-	//margin:45px 0px 20px 0px;
-	//width:57%;
 	float:left;
 	padding-top:0px;
-	//background-color:rgba(102, 141, 60, 0.4);
 	-moz-border-radius: 7px;
   	-webkit-border-radius: 7px;
   	font-family: "微軟正黑體";
 	font-size:30px;
+	display:none;
 }
 
 #form-div {
@@ -53,11 +51,11 @@
   	margin-bottom:20px;
 }
 
-#fname-div{
+#fname_reg-div{
 	width:48%;
 	float:left;
 }
-#lname-div{
+#lname_reg-div{
 	width:48%;
 	float:left;
 	margin-left: 4%;
@@ -105,7 +103,7 @@
 	background-position: 10px,right;
 	background-repeat: no-repeat;
 }
-#fname, #lname{
+#fname_reg, #lname_reg{
 	background-image: url(http://rexkirby.com/kirbyandson/images/name.svg);
 	background-size: 30px 30px;
 	background-position: 10px ,right;

@@ -3,16 +3,12 @@ var obj_postal;
 $(document).ready(function(){
   $.get("/checkFull", function(full){
     if(!full){
-      var formmain=document.getElementById("form-main");
-      formmain.style.display="none";
       var formmain_ez=document.getElementById("form-main_ez");
       formmain_ez.style.display="block";
       showProfile_ez();
     }else{
       var formmain=document.getElementById("form-main");
       formmain.style.display="block";
-      var formmain_ez=document.getElementById("form-main_ez");
-      formmain_ez.style.display="none";
       showProfile();
       
       $.get("/user/showProfile", function(full){
@@ -230,8 +226,8 @@ function Submit(){
   if(pass_signup==1){
     var email = document.getElementById("email").value;
     var alias = document.getElementById("alias").value;
-    var fname = document.getElementById("fname").value;
-    var lname = document.getElementById("lname").value;
+    var fname = document.getElementById("fname_reg").value;
+    var lname = document.getElementById("lname_reg").value;
     var img = document.getElementById("avatar").src;
     var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
     if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
@@ -334,8 +330,8 @@ function HandleResponse_showProfile(response){
 
   document.getElementById("email").value = email;
   document.getElementById("alias").value = alias;
-  document.getElementById("fname").value = fname;
-  document.getElementById("lname").value = lname;
+  document.getElementById("fname_reg").value = fname;
+  document.getElementById("lname_reg").value = lname;
   document.getElementById("avatar").src = img;
   try{
     if(forgetQ.search('[otherQ]')==1){ // 其他
