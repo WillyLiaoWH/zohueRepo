@@ -29,10 +29,8 @@ $(document).ready(function(){
 
 
   $.get("/checkAuth", function(auth){
-    if(auth) {
-      // document.getElementById("content").style.width = "80%";
-      // document.getElementById("articleList").style.width = "100%";
-      document.getElementById("forumContent").className = "span10";
+    if(!auth) {
+      document.getElementById("forumContent").className = "span7";
     }
   });
 
