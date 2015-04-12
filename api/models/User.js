@@ -87,6 +87,9 @@ module.exports = {
     unconfirmedFriends:{
       collection: 'user'
     },
+    sentAddFriends:{
+      collection: 'user'
+    },
     blackList:{
       collection: 'user'
     }

@@ -57,6 +57,12 @@ module.exports.routes = {
   'POST /imgupload_post': 'ImguploadController.upload_post',
   'POST /sendEmail' : 'ArticlesController.mailAritlce',
   'POST /checkFB' : 'User.checkFB',
+  'POST /removeBlack': 'User.removeBlack',
+  'POST /addFriend': 'User.addFriend',
+  'POST /addBlack' : 'User.addBlack',
+  'POST /confirmFriend': 'User.confirmFriend',
+  'POST /removeFriend': 'User.removeFriend',
+  'POST /removeAddFriend': 'User.removeAddFriend',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
