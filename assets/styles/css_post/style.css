@@ -47,8 +47,7 @@ div.show-image input.delete {
 }
 
 #postPanel{
-	//margin-top: -30px;
-	//margin-bottom:30px;
+	margin-bottom:5px;	
 }
 
 #postArticle{
@@ -125,17 +124,20 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 
-.b{
+#submitArticle, #abortArticle{
 	margin: -20px 5px 10px 0px;
 	float:right;
-	//width:100%;
-	//width: 125px;
+}
+
+
+.b{
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
 	font-size: 20px;
 	border-radius: 10px;
+	margin:3px;
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
