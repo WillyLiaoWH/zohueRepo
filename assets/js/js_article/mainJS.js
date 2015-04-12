@@ -179,6 +179,8 @@ function setPage() {
     if(res.isAuthor) {
       document.getElementById("editArticle").style.display = "inline";
       document.getElementById("deleteArticle").style.display = "inline";
+      document.getElementById("mobile_editArticle").style.display = "inline";
+      document.getElementById("mobile_deleteArticle").style.display = "inline";
     }
     if(res.isNice) {
       document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
