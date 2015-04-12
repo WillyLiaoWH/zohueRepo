@@ -33,36 +33,7 @@ div.show-image input.delete {
 	background-image: url(../../../images/img_home/shl.png);
 }
 
-#header{
-	height: 102px;
-	margin-top: 10px;
-}
 
-.title{
-	margin:3px;
-	font-family: "Gulim"; 
-	font-size:70px;
-	text-decoration:none;
-}
-
-#z{ margin-left:15px;
-	color:#D26900;}
-#o{ color:#816C58;}
-#h{ color:#668D3C;}
-#u{ color:#0097AC;}
-#e{ color:#007996;}
-
-
-#loginSection{
-	font-size:20px;
-	font-family: "微軟正黑體";
-	float:right;
-	margin-top:25px;
-	height:50px;
-	width:40%;
-	color:#816C5B;
-	display: ;
-}
 
 /*.l{
 	color:#816C5B;
@@ -82,21 +53,7 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);]
 }*/
 
-#login{
-	width:60px;
-	margin-left:15px;
-}
 
-#login:hover{
-	background-color: rgba(102, 141, 60, 0.7);
-}
-
-
-#hr{
-	width:99%;
-	border-bottom:none; 
-	border-top:1px solid gray;
-}
 
 /*#menu{
 	margin:20px;
@@ -112,40 +69,6 @@ div.show-image input.delete {
 	display:none;
 }*/
 
-#setUpMenu{
-	text-decoration:none;
-	display:none;
-	font-family: "微軟正黑體";
-	margin-left: 25px;
-	font-size: 18px;
-	color:#816C5B;
-}
-
-.setUpItem{
-	text-decoration:none;
-	color:#816C5B;
-}
-
-.setUpItem:hover{
-	color:#D26900;
-}
-
-#fullSignup {
-	display: none;
-	//font-size: 22px;
-
-}
-
-.item{
-	text-decoration:none;
-	color:#816C5B;
-}
-
-.item:hover{
-	//color:#0097AC;
-	color:#D26900;
-	font-size:22px;
-}
 
 #post-form-main{
 /*	float:left;
@@ -239,10 +162,12 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 
-.b{
+#submitArticle, #abortArticle{
 	margin: -20px 5px 10px 0px;
 	float:right;
-	//width: 125px;
+}
+
+.b{
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
