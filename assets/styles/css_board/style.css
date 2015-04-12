@@ -241,10 +241,14 @@ div.tab_container .tab_content h2 {
 	background-color: #1D3521;
 }
 
+.nav-pills li{
+	font-size:22px;
+}
+
 .nav-pills li a{
 	color:#1D3521;
 }
 .nav-pills li a:hover{
-	background-color: #1D3521;
+	background-color: rgba(102, 141, 60, 0.4);
 	color:white;
 }
