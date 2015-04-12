@@ -35,16 +35,6 @@ div.show-image input.delete {
 	margin: 10px;
 }
 
-#ArticlePanel{
-	float:right;
-	//width: 50%;
-	height: 70px;
-	margin-top: 20px;
-	margin-bottom: -15px;
-	margin-right:4.5%;
-	//margin: -8px 0px 10px 0px;
-}
-
 #backToList,#shareFB{
 	width: 170px;
 	//height:48px;
@@ -65,6 +55,7 @@ div.show-image input.delete {
 	border-width:1px;
 	border-radius: 10px;
 	width: 100%;
+	margin-top:-20px;
 }
 
 #articleTitle{
@@ -209,11 +200,16 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 
+#commentSend, #image{
+	float:right;
+	margin-bottom:10px;
+}
+
 .b{
 	//margin: -20px 5px 10px 0px;
-	margin-left:5px;
+	margin:3px;
 	//display: none;
-	float:right;
+	//float:right;
 	width: 125px;
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;

@@ -63,16 +63,15 @@
 }
 
 #birthday_Y-div{
-	width:32%;
+	width:100%;
 	float:left;
 }
 #birthday_M-div{
-	width:30%;
+	width:48%;
 	float:left;
-	margin-left: 4%;
 }
 #birthday_D-div{
-	width:30%;
+	width:48%;
 	float:left;
 	margin-left: 4%;
 	margin-bottom: 10px;
