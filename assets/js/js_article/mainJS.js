@@ -398,13 +398,12 @@ function sendEmail(){
           if (e){
             alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
             mailaddress=prompt('把這封email送到：');
-            console.log("123"+mailaddress)
             if (mailaddress.length>0){
               
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
                   alertify.alert("已經送出信件至"+mailaddress); 
@@ -417,7 +416,7 @@ function sendEmail(){
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
                   alertify.alert("已經送出信件至"+mailaddress); 
@@ -429,14 +428,13 @@ function sendEmail(){
       });
     }
     else{
-      alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
       mailaddress=prompt('把這封email送到：') ;
     
       if (mailaddress.length>0){
         var url = document.URL;
         var regex = /.*article\/+(.*)/;
         var article_id = url.replace(regex,"$1");
-        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
           if (res == "SEND"){
             alert("已經送出信件至"+mailaddress); 
           }
