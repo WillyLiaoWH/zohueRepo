@@ -386,8 +386,8 @@ function HandleResponse_showProfile(response){
     // var D = b.getDate();
     // var primaryDisease=obj.primaryDisease;
     // var selfIntroduction=obj.selfIntroduction;
-    document.getElementById("fname_reg").value = fname;
-    document.getElementById("lname_reg").value = lname;
+    document.getElementById("fname_reg").value = lname;
+    document.getElementById("lname_reg").value = fname;
     document.getElementById("avatar").src = img;
     // try{
     //   if(forgetQ.search('[otherQ]')==1){ // 其他
