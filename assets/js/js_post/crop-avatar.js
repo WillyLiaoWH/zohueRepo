@@ -288,9 +288,11 @@ function insertHtmlAtCursor(html) {
 
     submitStart: function () {
       this.$loading.fadeIn();
+      $(".spinner").css("display", "block");
     },
 
     submitDone: function (data) {
+      $(".spinner").css("display", "none");
       log(data);
 
       try {
@@ -321,7 +323,8 @@ function insertHtmlAtCursor(html) {
           this.alert(data.message);
         }
       } else {
-        this.alert("Failed to response");
+        //this.alert("Failed to response");
+        this.alert(data);
       }
     },
 
