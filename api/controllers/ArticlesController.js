@@ -503,12 +503,12 @@ module.exports = {
                         });  
                         var options = {  
                             //寄件者  
-                            from: 'ntu.cpcp@gmail.com',  
+                            from: 'ParkerPo',  
                             //收件者  
                             to: req.param("mailaddress"),   
                             
                             //主旨  
-                            subject: article[0].title, // Subject line  
+                            subject: "[Zohue] "+article[0].title, // Subject line  
                             
                             //嵌入 html 的內文  
                             html: content,   
