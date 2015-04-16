@@ -2,13 +2,15 @@ var obj_postal;
 
 $(document).ready(function(){
   $.get("/checkFull", function(full){
+    var formmain_ez=document.getElementById("form-main_ez");
+    var formmain=document.getElementById("form-main");
     if(!full){
-      var formmain_ez=document.getElementById("form-main_ez");
       formmain_ez.style.display="block";
+      formmain.remove();
       showProfile_ez();
     }else{
-      var formmain=document.getElementById("form-main");
       formmain.style.display="block";
+      formmain_ez.remove();
       showProfile();
       
       $.get("/user/showProfile", function(full){
@@ -25,6 +27,7 @@ $(document).ready(function(){
           case "RN":
             document.getElementById("p_type").style.visibility = "hidden";
             document.getElementById("p_selfIntroduction").style.display = "none";
+            $("#type").attr("must","f");
             break;
           case "D":
             document.getElementById("prim_dis").innerHTML = "主治科目";
@@ -108,7 +111,9 @@ $(document).ready(function(){
         case "forgetQ":
           if($(this).val()==999){ // 其他
             document.getElementById("forgetQ-other").style.display="block";
-          }else{document.getElementById("forgetQ-other").style.display="none";}
+            $("#forgetQ-other").attr("must","t");
+          }else{document.getElementById("forgetQ-other-tooltip").style.display="none";document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
+          break;
         case "type":
         case "gender":
         case "addressCity":
@@ -338,7 +343,7 @@ function HandleResponse_showProfile(response){
       document.querySelector('#forgetQ [value="999"]').selected = true;
       document.getElementById("forgetQ-other").style.display="block";
       document.getElementById("forgetQ-other").value=forgetQ.substr(8);
-    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;}
+    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;$("#forgetQ-other").attr("must","f");}
   }catch(e){/*window.location.reload();*/}
   document.getElementById("forgetA").value = forgetA;
   document.querySelector('#gender [value="' + gender + '"]').selected = true;
@@ -434,7 +439,7 @@ function getCity(e){
   }
   $('#addressCity option:first').prop({selected: true});
   if(!obj_postal){
-    window.location.reload();
+    window.location.reload(); // 需要找到更聰明的方法解決
   }
   ShowAllDistrict(obj_postal[city].addressCity);
   $('#addressDistrict option:first').prop({selected: true});

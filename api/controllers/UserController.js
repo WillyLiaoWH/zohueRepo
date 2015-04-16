@@ -20,7 +20,7 @@ module.exports = {
         var lname=req.param("lname");
         var fname=req.param("fname");
         var isFullSignup=req.param("isFullSignup");
-        var img="http://localhost/images/img_avatar/upload/default.png";
+        var img="../images/img_avatar/upload/default.png";
         if (gender=="male"){
             gender="M";
         }

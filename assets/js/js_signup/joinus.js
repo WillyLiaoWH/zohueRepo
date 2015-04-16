@@ -16,6 +16,7 @@ $(document).ready(function(){
       case "RN":
         document.getElementById("p_type").style.visibility = "hidden";
         document.getElementById("p_selfIntroduction").style.display = "none";
+        $("#type").attr("must","f");
         break;
       case "D":
         document.getElementById("prim_dis").innerHTML = "主治科目";
@@ -79,14 +80,16 @@ $(document).ready(function(){
         case "forgetQ":
           if($(this).val()==999){ // 其他
             document.getElementById("forgetQ-other").style.display="block";
-          }else{document.getElementById("forgetQ-other").style.display="none";}
+            $("#forgetQ-other").attr("must","t");
+          }else{document.getElementById("forgetQ-other-tooltip").style.display="none";document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
+          break;
         case "type":
         case "gender":
         case "addressCity":
           if($(this).val()==null){
             statusIMG(this,"X");
             statusWarn(this,"需要填喔，不可以偷懶！");
-          } else{/*document.getElementById("postalCode").value="";*/}
+          } else{document.getElementById("postalCode").value="";}
           break;
         case "addressDistrict":
           var dis = $(this).val();
@@ -386,8 +389,8 @@ function HandleResponse_showProfile(response){
     // var D = b.getDate();
     // var primaryDisease=obj.primaryDisease;
     // var selfIntroduction=obj.selfIntroduction;
-    document.getElementById("fname_reg").value = fname;
-    document.getElementById("lname_reg").value = lname;
+    document.getElementById("fname_reg").value = lname;
+    document.getElementById("lname_reg").value = fname;
     document.getElementById("avatar").src = img;
     // try{
     //   if(forgetQ.search('[otherQ]')==1){ // 其他

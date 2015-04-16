@@ -33,36 +33,7 @@ div.show-image input.delete {
 	background-image: url(../../../images/img_home/shl.png);
 }
 
-#header{
-	height: 102px;
-	margin-top: 10px;
-}
 
-.title{
-	margin:3px;
-	font-family: "Gulim"; 
-	font-size:70px;
-	text-decoration:none;
-}
-
-#z{ margin-left:15px;
-	color:#D26900;}
-#o{ color:#816C58;}
-#h{ color:#668D3C;}
-#u{ color:#0097AC;}
-#e{ color:#007996;}
-
-
-#loginSection{
-	font-size:20px;
-	font-family: "微軟正黑體";
-	float:right;
-	margin-top:25px;
-	height:50px;
-	width:40%;
-	color:#816C5B;
-	display: ;
-}
 
 /*.l{
 	color:#816C5B;
@@ -82,21 +53,7 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);]
 }*/
 
-#login{
-	width:60px;
-	margin-left:15px;
-}
 
-#login:hover{
-	background-color: rgba(102, 141, 60, 0.7);
-}
-
-
-#hr{
-	width:99%;
-	border-bottom:none; 
-	border-top:1px solid gray;
-}
 
 /*#menu{
 	margin:20px;
@@ -112,40 +69,6 @@ div.show-image input.delete {
 	display:none;
 }*/
 
-#setUpMenu{
-	text-decoration:none;
-	display:none;
-	font-family: "微軟正黑體";
-	margin-left: 25px;
-	font-size: 18px;
-	color:#816C5B;
-}
-
-.setUpItem{
-	text-decoration:none;
-	color:#816C5B;
-}
-
-.setUpItem:hover{
-	color:#D26900;
-}
-
-#fullSignup {
-	display: none;
-	//font-size: 22px;
-
-}
-
-.item{
-	text-decoration:none;
-	color:#816C5B;
-}
-
-.item:hover{
-	//color:#0097AC;
-	color:#D26900;
-	font-size:22px;
-}
 
 #post-form-main{
 /*	float:left;
@@ -239,10 +162,13 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 
-.b{
+#submitArticle, #abortArticle{
 	margin: -20px 5px 10px 0px;
 	float:right;
-	//width: 125px;
+}
+
+.b{
+	margin:4px;
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
@@ -315,4 +241,132 @@ div.show-image input.delete {
 }
 .avatar-upload{
 	font-size: 25px;
+}
+
+
+
+
+
+/*Loading animation*/
+.spinner {
+  display: none;
+  margin: 5% auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.container1 > div, .container2 > div, .container3 > div {
+  width: 12px;
+  height: 12px;
+  background-color: #333;
+  border-radius: 100%;
+  position: absolute;
+  -webkit-animation: bouncedelay 1.2s infinite ease-in-out;
+  animation: bouncedelay 1.2s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.spinner .spinner-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.container2 {
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+}
+.container3 {
+  -webkit-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+.circle1 { top: 0; left: 0; }
+.circle2 { top: 0; right: 0; }
+.circle3 { right: 0; bottom: 0; }
+.circle4 { left: 0; bottom: 0; }
+.container2 .circle1 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.container3 .circle1 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+.container1 .circle2 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.container2 .circle2 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+.container3 .circle2 {
+  -webkit-animation-delay: -0.7s;
+  animation-delay: -0.7s;
+}
+.container1 .circle3 {
+  -webkit-animation-delay: -0.6s;
+  animation-delay: -0.6s;
+}
+.container2 .circle3 {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+.container3 .circle3 {
+  -webkit-animation-delay: -0.4s;
+  animation-delay: -0.4s;
+}
+.container1 .circle4 {
+  -webkit-animation-delay: -0.3s;
+  animation-delay: -0.3s;
+}
+.container2 .circle4 {
+  -webkit-animation-delay: -0.2s;
+  animation-delay: -0.2s;
+}
+.container3 .circle4 {
+  -webkit-animation-delay: -0.1s;
+  animation-delay: -0.1s;
+}
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+@keyframes bouncedelay {
+  0%, 80%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+.avatar-input {
+  color: transparent;
+}
+.avatar-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.avatar-input::before {
+  content: '選擇檔案';
+  display: inline-block;
+  cursor: pointer;
+  background-color: rgba(232, 81, 0, 0.7);
+  color:#533828;
+  font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  font-weight:500;
+  font-size: 20px;
+  border-radius: 10px;
+  margin:3px;
+  padding: 8px 8px 8px 8px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0);
+}
+.avatar-input:hover::before {
+  background-color: rgba(102, 141, 60, 0.4);
+  color:#816C58;
 }

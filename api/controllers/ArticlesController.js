@@ -452,13 +452,25 @@ module.exports = {
     },
     mailAritlce: function(req,res){
         var articleId = req.param("article_id");
+        var url=req.param("url");
+        url=url.replace(/article.+/,"");
         Articles.find({id: articleId}).populate("response").exec(function(err, article) {
             if (err){
                 res.send(500,{err:"找不到文章!"});
             }
             else{
+                var regex = /href=\".+?\">/g;
+               
+                var content="原文："+url+"/article/"+articleId+"<br><br>";
+                content=content+article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
+                console.log(content);
+                var arr=content.match(regex);
                 
-                var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");               
+                for (var img in arr){
+                    arr[img]=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
+                    content=content+"圖片"+" : " +arr[img]+"<br>";
+                }
+
                 var async = require('async');
                 async.each(article[0].response, function(val, callback) {
                     //每次要做的
@@ -472,8 +484,7 @@ module.exports = {
                             callback(); 
                         }  
                     });
-
-                    // show that no errors happened
+                // show that no errors happened
                 }, function(err) {
                     if(err) {
                         console.log("There was an error" + err);

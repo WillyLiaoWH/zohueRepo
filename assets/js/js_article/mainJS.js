@@ -144,13 +144,13 @@ function setPage() {
         pre_comment_image = pre_comment_image.replace(/\/dummy/g, "\/a");
 
         responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
-        responseContext += "<tr><td style='padding:20px 0px 0px 10px;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
+        responseContext += "<tr><td style='padding:20px 0px 0px 10px;width: 100%;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
         if(response[i].comment.trim()==""){ // 沒有文字 => 只有圖片
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+pre_comment_image+"</label></td></tr>";
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;'>"+pre_comment_image+"</label></td></tr>";
         }else if(pre_comment_image.indexOf("images")==-1){ // 沒有圖片 => 只有文字
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"</label></td></tr>";
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;'>"+response[i].comment+"</label></td></tr>";
         }else{ // 有文字、圖片
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;'>"+response[i].comment+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
+          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+response[i].author.alias+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;'>"+response[i].comment+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
         }
         if(res.login) {
           if(res.responseNice[i]) {
@@ -179,6 +179,8 @@ function setPage() {
     if(res.isAuthor) {
       document.getElementById("editArticle").style.display = "inline";
       document.getElementById("deleteArticle").style.display = "inline";
+      document.getElementById("mobile_editArticle").style.display = "inline";
+      document.getElementById("mobile_deleteArticle").style.display = "inline";
     }
     if(res.isNice) {
       document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
@@ -398,14 +400,12 @@ function sendEmail(){
           if (e){
             alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
             mailaddress=prompt('把這封email送到：');
-            console.log("123"+mailaddress)
             if (mailaddress.length>0){
               
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              console.log("22222");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
                   alertify.alert("已經送出信件至"+mailaddress); 
@@ -418,8 +418,7 @@ function sendEmail(){
               var url = document.URL;
               var regex = /.*article\/+(.*)/;
               var article_id = url.replace(regex,"$1");
-              console.log("1234532");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
                   alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
                   alertify.alert("已經送出信件至"+mailaddress); 
@@ -431,14 +430,13 @@ function sendEmail(){
       });
     }
     else{
-      alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
       mailaddress=prompt('把這封email送到：') ;
     
       if (mailaddress.length>0){
         var url = document.URL;
         var regex = /.*article\/+(.*)/;
         var article_id = url.replace(regex,"$1");
-        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress},function(res){
+        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
           if (res == "SEND"){
             alert("已經送出信件至"+mailaddress); 
           }
