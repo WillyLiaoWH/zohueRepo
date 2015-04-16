@@ -110,14 +110,15 @@ $(document).ready(function(){
         case "forgetQ":
           if($(this).val()==999){ // 其他
             document.getElementById("forgetQ-other").style.display="block";
-          }else{document.getElementById("forgetQ-other").style.display="none";}
+            $("#forgetQ-other").attr("must","t");
+          }else{document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
         case "type":
         case "gender":
         case "addressCity":
           if($(this).val()==null){
             statusIMG(this,"X");
             statusWarn(this,"需要填喔，不可以偷懶！");
-          } else{document.getElementById("postalCode").value="";}
+          } else{/*document.getElementById("postalCode").value="";*/}
           break;
         case "addressDistrict":
           var dis = $(this).val();
@@ -222,6 +223,7 @@ function Submit(){
   $(".feedback-input[must='t']").each(function( index ) {
     if( $(this).val()=="" || $(this).val()==null ){
       pass_signup = 0;
+      alert($(this).attr("id"));
     }else{}
   });
 

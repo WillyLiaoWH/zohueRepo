@@ -79,6 +79,7 @@ $(document).ready(function(){
         case "forgetQ":
           if($(this).val()==999){ // 其他
             document.getElementById("forgetQ-other").style.display="block";
+            //$.("#forgetQ-other").attr("must")="t";
           }else{document.getElementById("forgetQ-other").style.display="none";}
         case "type":
         case "gender":
