@@ -27,6 +27,7 @@ $(document).ready(function(){
           case "RN":
             document.getElementById("p_type").style.visibility = "hidden";
             document.getElementById("p_selfIntroduction").style.display = "none";
+            $("#type").attr("must","f");
             break;
           case "D":
             document.getElementById("prim_dis").innerHTML = "主治科目";
@@ -112,13 +113,14 @@ $(document).ready(function(){
             document.getElementById("forgetQ-other").style.display="block";
             $("#forgetQ-other").attr("must","t");
           }else{document.getElementById("forgetQ-other-tooltip").style.display="none";document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
+          break;
         case "type":
         case "gender":
         case "addressCity":
           if($(this).val()==null){
             statusIMG(this,"X");
             statusWarn(this,"需要填喔，不可以偷懶！");
-          } else{/*document.getElementById("postalCode").value="";*/}
+          } else{document.getElementById("postalCode").value="";}
           break;
         case "addressDistrict":
           var dis = $(this).val();
@@ -341,7 +343,7 @@ function HandleResponse_showProfile(response){
       document.querySelector('#forgetQ [value="999"]').selected = true;
       document.getElementById("forgetQ-other").style.display="block";
       document.getElementById("forgetQ-other").value=forgetQ.substr(8);
-    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;}
+    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;$("#forgetQ-other").attr("must","f");}
   }catch(e){/*window.location.reload();*/}
   document.getElementById("forgetA").value = forgetA;
   document.querySelector('#gender [value="' + gender + '"]').selected = true;
@@ -437,7 +439,7 @@ function getCity(e){
   }
   $('#addressCity option:first').prop({selected: true});
   if(!obj_postal){
-    window.location.reload();
+    window.location.reload(); // 需要找到更聰明的方法解決
   }
   ShowAllDistrict(obj_postal[city].addressCity);
   $('#addressDistrict option:first').prop({selected: true});
