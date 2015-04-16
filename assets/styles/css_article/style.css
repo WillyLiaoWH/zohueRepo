@@ -11,6 +11,7 @@ div.show-image {
     margin:5px;
     height: auto;
     margin: 0 auto;
+    max-width: 50%;
 }
 div.show-image:hover img{
     opacity:0.5;
@@ -29,6 +30,7 @@ div.show-image input.delete {
 
 .show-image img{
 	outline: 1px solid rgb(180, 195, 163);
+	width: 100%;
 }
 .show-image a{
 	float: left;
@@ -114,9 +116,9 @@ div.show-image input.delete {
 }
 #comment_image{
 	display: none;
-	min-height: 200px;
 	height:100%;
 	margin-bottom:25px;
+	float: left; /*把float設為left，且不要限制min-height，即可自動調整height*/
 }
 
 #commentSend{
