@@ -345,13 +345,11 @@ module.exports = {
                             console.log(err);
                             res.send({err: "DB error"});
                         } else {
-                            console.log(user[0].friends);
-                            console.log(user[0].unconfirmedFriends);
-                            console.log(user[0].sentAddFriends);
-                            console.log(user[0].blackList);
                             for(i=0; i<allUser.length; i++) {
                                 if(allUser[i].id!=req.session.user.id) {
-                                    if(user[0].friends.indexOf(allUser[i].id)!=-1) {
+                                    if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
+                                        isFriend.push(-2);
+                                    } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
                                         isFriend.push(3);
                                     } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
                                         isFriend.push(2);
@@ -389,6 +387,21 @@ module.exports = {
                         if(err) {
                             console.log(err);
                             res.send({err:"DB error"});
+                        }
+                    });
+                }
+            });
+            User.find({id: req.param("id")}).exec(function(err, user) {
+                if(err) {
+                    console.log(err);
+                    res.send({err: "DB error"});
+                } else {
+                    var blackerList=user[0].blackerList;
+                    blackerList.splice(blackerList.indexOf(req.session.user.id, 1));
+                    User.update({id: req.param("id")}, {blackerList: blackerList}).exec(function(err, user) {
+                        if(err) {
+                            console.log(err);
+                            res.send({err:"DB error"});
                         } else {
                             res.send({user: user});
                         }
@@ -409,7 +422,6 @@ module.exports = {
                 } else {
                     var sentAddFriendsList=user[0].sentAddFriends;
                     sentAddFriendsList.push(parseInt(req.param("id")));
-                    console.log(sentAddFriendsList);
                     User.update({id: req.session.user.id}, {sentAddFriends: sentAddFriendsList}).exec(function(err, user) {
                         if(err) {
                             console.log(err);
@@ -477,7 +489,11 @@ module.exports = {
                                     if(friendsList.indexOf(req.session.user.id)!=-1) {
                                         friendsList.splice(friendsList.indexOf(req.session.user.id), 1);
                                     }
-                                    User.update({id: req.param("id")}, {unconfirmedFriends: unconfirmedFriendsList, friends: friendsList}).exec(function(err, user) {
+                                    var blackerList=user[0].blackerList;
+                                    if(blackerList.indexOf(req.session.user.id)==-1) {
+                                        blackerList.push(req.session.user.id);
+                                    }
+                                    User.update({id: req.param("id")}, {unconfirmedFriends: unconfirmedFriendsList, friends: friendsList, blackerList: blackerList}).exec(function(err, user) {
                                         if(err) {
                                             console.log(err);
                                             res.send({err:"DB error"});
