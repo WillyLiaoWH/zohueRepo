@@ -111,7 +111,7 @@ $(document).ready(function(){
           if($(this).val()==999){ // 其他
             document.getElementById("forgetQ-other").style.display="block";
             $("#forgetQ-other").attr("must","t");
-          }else{document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
+          }else{document.getElementById("forgetQ-other-tooltip").style.display="none";document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
         case "type":
         case "gender":
         case "addressCity":
@@ -223,7 +223,6 @@ function Submit(){
   $(".feedback-input[must='t']").each(function( index ) {
     if( $(this).val()=="" || $(this).val()==null ){
       pass_signup = 0;
-      alert($(this).attr("id"));
     }else{}
   });
 

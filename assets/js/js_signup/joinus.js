@@ -79,8 +79,8 @@ $(document).ready(function(){
         case "forgetQ":
           if($(this).val()==999){ // 其他
             document.getElementById("forgetQ-other").style.display="block";
-            //$.("#forgetQ-other").attr("must")="t";
-          }else{document.getElementById("forgetQ-other").style.display="none";}
+            //$("#forgetQ-other").attr("must","t");
+          }else{document.getElementById("forgetQ-other-tooltip").style.display="none";document.getElementById("forgetQ-other").style.display="none";$("#forgetQ-other").attr("must","f");}
         case "type":
         case "gender":
         case "addressCity":
