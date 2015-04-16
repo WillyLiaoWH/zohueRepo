@@ -461,7 +461,8 @@ module.exports = {
             else{
                 var regex = /href=\".+?\">/g;
                
-                var content="原文："+url+"/article/"+articleId+"<br><br>";
+                var orginurl=url+"article/"+articleId+"<br><br>";
+                var content = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
                 content=content+article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
                 console.log(content);
                 var arr=content.match(regex);
@@ -503,12 +504,12 @@ module.exports = {
                         });  
                         var options = {  
                             //寄件者  
-                            from: 'ntu.cpcp@gmail.com',  
+                            from: "ZOHUE",  
                             //收件者  
                             to: req.param("mailaddress"),   
                             
                             //主旨  
-                            subject: article[0].title, // Subject line  
+                            subject: "[癌友加油站] "+article[0].title, // Subject line  
                             
                             //嵌入 html 的內文  
                             html: content,   

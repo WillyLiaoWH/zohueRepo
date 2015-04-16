@@ -8,8 +8,6 @@
 module.exports = {
     upload_avatar: function(req, res){
         //var imageType = require('image-type');
-
-
         //console.log(req.file("avatar_file"));
         console.log(req.param("avatar_data"));
         console.log(req.param("avatar_src"));
@@ -68,7 +66,6 @@ module.exports = {
             setTimeout(function(){
                 res.ok(JSON.stringify({state:200,message:null,result:a}));
             }, 2000);
-            
         });
     },
 
@@ -102,22 +99,27 @@ module.exports = {
                 var time = new Date().getTime();
                 var recall_url = 'images/img_post/upload/'+time+'.jpg';
                 var easyimg = require('easyimage');
-                easyimg.crop({
-                    src:files[0].fd, dst:'assets/'+recall_url,
-                    // width:200, height:200,
-                    cropwidth:data2.width, cropheight:data2.height,
-                    // width:data2.width, height:data2.height,
-                    // cropwidth:200, cropheight:200,
-                    gravity:'NorthWest',
-                    x:data2.x, y:data2.y
-                }).then(
-                function(image) {
-                    cb(recall_url);
-                    console.log('Croped: ' + image.width + ' x ' + image.height);
-                },
-                function (err) {
-                    console.log(err);
-                });
+
+                try {
+                    easyimg.crop({
+                        src:files[0].fd, dst:'assets/'+recall_url,
+                        // width:200, height:200,
+                        cropwidth:data2.width, cropheight:data2.height,
+                        // width:data2.width, height:data2.height,
+                        // cropwidth:200, cropheight:200,
+                        gravity:'NorthWest',
+                        x:data2.x, y:data2.y
+                    }).then(
+                    function(image) {
+                        cb(recall_url);
+                        console.log('Croped: ' + image.width + ' x ' + image.height);
+                    },
+                    function (err) {
+                        console.log(err);
+                    });
+                } catch (e) {
+                    res.ok("檔案上傳失敗！");
+                }
             });
         }
 
@@ -125,23 +127,24 @@ module.exports = {
             var time = new Date().getTime();
             var easyimg = require('easyimage');
             var recall_url2 = 'images/img_post/resize/'+uni_fn+'.jpg';
-            easyimg.resize({
-                src:'assets/'+recall_url, dst:'assets/'+recall_url2,
-                width:300, height:300
-            }).then(
-            function(image) {
-                //res.ok(JSON.stringify({state:200,message:null,result:recall_url2}));
-                cb(recall_url2);
-                console.log('Resized: ' + image.width + ' x ' + image.height);
-            },
-            function (err) {
-                console.log(err);
-            });
+            
+            try{
+                easyimg.resize({
+                    src:'assets/'+recall_url, dst:'assets/'+recall_url2,
+                    width:300, height:300
+                }).then(
+                function(image) {
+                    //res.ok(JSON.stringify({state:200,message:null,result:recall_url2}));
+                    cb(recall_url2);
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                },
+                function (err) {
+                    console.log(err);
+                });
+            } catch (e) {
+                res.ok("圖片處理失敗！");
+            }
         }
-
-        // upload(function(a) {
-        //  res_upload(a);
-        // });
 
         var uni_fn = new Date().getTime();
         upload(uni_fn, function(a) {
