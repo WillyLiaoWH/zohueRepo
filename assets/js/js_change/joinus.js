@@ -2,13 +2,15 @@ var obj_postal;
 
 $(document).ready(function(){
   $.get("/checkFull", function(full){
+    var formmain_ez=document.getElementById("form-main_ez");
+    var formmain=document.getElementById("form-main");
     if(!full){
-      var formmain_ez=document.getElementById("form-main_ez");
       formmain_ez.style.display="block";
+      formmain.remove();
       showProfile_ez();
     }else{
-      var formmain=document.getElementById("form-main");
       formmain.style.display="block";
+      formmain_ez.remove();
       showProfile();
       
       $.get("/user/showProfile", function(full){
