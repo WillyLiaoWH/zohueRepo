@@ -92,6 +92,9 @@ module.exports = {
     },
     blackList:{
       collection: 'user'
+    }, 
+    blackerList: {
+      collection: 'user'
     }
   }
 };
