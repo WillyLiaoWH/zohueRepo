@@ -454,22 +454,24 @@ module.exports = {
         var articleId = req.param("article_id");
         var url=req.param("url");
         url=url.replace(/article.+/,"");
-        Articles.find({id: articleId}).populate("response").exec(function(err, article) {
+        Articles.find({id: articleId}).populate("response").populate("author").exec(function(err, article) {
             if (err){
                 res.send(500,{err:"找不到文章!"});
             }
             else{
                 var regex = /href=\".+?\">/g;
-               
+                var author = "作者："+article[0].author.alias;
+                console.log("AUTHOR : "+author);
                 var orginurl=url+"article/"+articleId+"<br><br>";
-                var content = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
-                content=content+article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
+                var link = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
+                var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
                 console.log(content);
                 var arr=content.match(regex);
-                
+                var counter=0;
                 for (var img in arr){
-                    arr[img]=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
-                    content=content+"圖片"+" : " +arr[img]+"<br>";
+                    counter=counter+1;
+                    pic_addr=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
+                    content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
                 }
 
                 var async = require('async');
@@ -512,7 +514,7 @@ module.exports = {
                             subject: "[癌友加油站] "+article[0].title, // Subject line  
                             
                             //嵌入 html 的內文  
-                            html: content,   
+                            html: link+"<br>"+author+"<br>"+content,   
                                
                         };  
                         
