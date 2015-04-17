@@ -387,7 +387,7 @@ input:focus, textarea:focus {
 	#form-div{
 		left: 3%;
 		right: 3%;
-		width: 88%;
+		width: 100%;
 		padding-left: 3%;
 		padding-right: 3%;
 	}

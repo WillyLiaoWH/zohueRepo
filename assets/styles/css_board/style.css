@@ -252,3 +252,13 @@ div.tab_container .tab_content h2 {
 	background-color: rgba(102, 141, 60, 0.4);
 	color:white;
 }
+
+#hoho{
+	margin-top:20px;
+}
+
+@media all and (max-width: 768px) {
+	#hoho{
+		margin-top: 80px;
+	}
+}
