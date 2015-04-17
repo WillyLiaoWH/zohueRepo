@@ -89,7 +89,7 @@ $(document).ready(function(){
           if($(this).val()==null){
             statusIMG(this,"X");
             statusWarn(this,"需要填喔，不可以偷懶！");
-          } else{document.getElementById("postalCode").value="";}
+          } else{/*document.getElementById("postalCode").value="";*/}
           break;
         case "addressDistrict":
           var dis = $(this).val();
