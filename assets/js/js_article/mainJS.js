@@ -159,7 +159,7 @@ function setPage() {
 
 
         if ($(window).width() < 768) {
-          var type_avatar = "<tr><td rowspan='4'><div style='padding:5px;'><img "+type_avatar_img+" style='height:40px;'></div>";
+          var type_avatar = "<tr><td valign=top rowspan='4'><div style='padding:5px; margin-top:20px;'><img "+type_avatar_img+" style='height:40px;'></div>";
           responseContext += type_avatar+"<div style='padding:5px;'><img src='"+response[i].author.img+"' style='height:40px; width:40px;'></div></td></tr>";
         }else{
           var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
