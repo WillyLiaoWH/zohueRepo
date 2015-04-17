@@ -182,11 +182,15 @@ function setPage() {
     // 圖片跳窗，使用 modalBox.js
     $('.show-image a').click(function(event){
       event.preventDefault();
-      //var ss = '<img src="'+$(this).attr("href")+'">';
-      var ss = '<a href="'+$(this).attr("href")+'" target="_blank"><img src="'+$(this).attr("href")+'"></a>';
-      $( ".modalBox" ).empty();
-      $( ".modalBox" ).append(ss);
-      $('.modalBox').modalBox('open');
+      if ($(window).width() < 768) {
+        window.open($(this).attr("href"),'_blank');
+      }else{
+        //var ss = '<img src="'+$(this).attr("href")+'">';
+        var ss = '<a href="'+$(this).attr("href")+'" target="_blank"><img src="'+$(this).attr("href")+'"></a>';
+        $( ".modalBox" ).empty();
+        $( ".modalBox" ).append(ss);
+        $('.modalBox').modalBox('open');
+      }
     });
 
     if(res.isAuthor) {
