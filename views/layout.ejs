@@ -55,9 +55,10 @@
           帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
           &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
           <button value="登入" id="login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
-          <!-- <button value="臉書登入" id="Fblogin" onclick="checkLoginState()"><img src="/images/img_forum/facebook.png" >&nbspFB登入</button> -->
+          <button value="臉書登入" id="Fblogin" onclick="checkLoginState()"><img src="/images/img_forum/facebook.png" >&nbspFB登入</button>
+          <div style="display:none">
           <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkLoginState()"></div>
-
+          </div>
         </div>
         <div class="row-fluid">
           <div class="span9">
