@@ -87,7 +87,7 @@ function setPage() {
     if(articleList[0].author.type=="S") {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
     } else if(articleList[0].author.type=="D") {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px; display: inline-block;height:"+ava_height+";' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
@@ -95,15 +95,15 @@ function setPage() {
     } else if(articleList[0].author.type=="P") {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='病友'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
     } else if(articleList[0].author.type=="F") {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='家屬'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+      articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
     } else {
       document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='一般民眾'>";
       document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
     }
 
 
