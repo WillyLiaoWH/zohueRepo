@@ -162,6 +162,12 @@ function checkAuth() {
       var setUp=document.getElementById("mobile_setUp");
       setUp.style.display="block";
 
+      var friends=document.getElementById("friends");
+      friends.style.display="block";
+
+      var mfriends=document.getElementById("mobile_friends");
+      mfriends.style.display="block";
+
       var mlogin=document.getElementById("mobile_loginSection");
       mlogin.style.display="none";
 

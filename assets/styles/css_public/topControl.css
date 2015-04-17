@@ -175,9 +175,10 @@ button, input[type="button"], input[type="submit"]{
 	line-height:45px;
 }
 
-#setUp{
+#setUp, #friends, #mobile_friends{
 	display:none;
 }
+
 
 #setUpMenu{
 	text-decoration:none;
