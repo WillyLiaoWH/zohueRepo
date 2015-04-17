@@ -344,7 +344,6 @@ function Login(){
       if ($(window).width() <= 768){
         var account=$("#mLoginAccount").val();
         var password=$("#mLoginPwd").val();
-        alert(account+"wwwwwwww"+password);
       }else{
         var account=$("#LoginAccount").val();
         var password=$("#LoginPwd").val();
