@@ -71,25 +71,38 @@ function setPage() {
     lastResponseTime=new Date(articleList[0].lastResponseTime).toLocaleString();
     updateTime=lastResponseTime.slice(0, lastResponseTime.length-3);
     
+    if ($(window).width() < 768) {
+      document.getElementById("adj_tr").innerHTML = "<td rowspan='2'><div id='articleAvatar_type' style='padding:0px'></div><div id='articleAvatar' style='padding:0px'></div><td id='articleTitle' colspan='2'></td></td><td></td> <td></td> <td ></td>";
+      var ava_height = "50px";
+      var adj_td="";
+      var adj_border="border-right:solid 1px rgba(102, 141, 60, 0.4)";
+    }else{
+      document.getElementById("adj_tr").innerHTML = "<td id='articleAvatar_type' rowspan='2' style='width:50px;'></td><td id='articleAvatar' rowspan='2' style='width:50px;'></td><td id='articleTitle' colspan='3'></td><td></td> <td></td> <td ></td>";
+      var ava_height = "70px";
+      var adj_td="<td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+      var adj_border="";
+    }
+
+
     if(articleList[0].author.type=="S") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
       articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else if(articleList[0].author.type=="D") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp醫師</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px; display: inline-block;height:"+ava_height+";' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
+      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"&nbsp醫師</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
     } else if(articleList[0].author.type=="P") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/user_icon.png' title='病友'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='病友'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
       articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else if(articleList[0].author.type=="F") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/user_icon.png' title='家屬'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='家屬'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
       articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     } else {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:15px 20px 5px 25px;display: inline-block;height:70px;' src='/images/img_forum/user_icon.png' title='一般民眾'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:15px 0px 5px 0px;display: inline-block;height:70px;' src='"+articleList[0].author.img+"'>";
+      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='一般民眾'>";
+      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
       articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+articleList[0].author.alias+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間："+postTime+"</td><td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
     }
 
