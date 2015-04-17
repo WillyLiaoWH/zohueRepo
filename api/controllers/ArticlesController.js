@@ -469,9 +469,9 @@ module.exports = {
                 for (var img in arr){
                     counter=counter+1;
                     pic_addr=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
-                    content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br><br><br>";
+                    content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
                 }
-
+                content=content+"<br><br>"
                 var async = require('async');
                 async.each(article[0].response, function(val, callback) {
                     //每次要做的
@@ -490,7 +490,7 @@ module.exports = {
                             }
                             content=content+name+" : "+val.comment+"<br>";
                             if (pic_addr.length!=0){
-                                content=content + "圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
+                                content=content + "<blockquote>圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a></blockquote>"+"<br>";
                             } 
                             
                             callback(); 
@@ -523,7 +523,7 @@ module.exports = {
                             subject: "[癌友加油站] "+article[0].title, // Subject line  
                             
                             //嵌入 html 的內文  
-                            html: link+"<br>"+author+"<br>"+content,   
+                            html: author+"<br>"+link+content,   
                                
                         };  
                         
