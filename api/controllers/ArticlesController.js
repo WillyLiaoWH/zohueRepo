@@ -461,11 +461,9 @@ module.exports = {
             else{
                 var regex = /href=\".+?\">/g;
                 var author = "作者："+article[0].author.alias;
-                console.log("AUTHOR : "+author);
                 var orginurl=url+"article/"+articleId+"<br><br>";
                 var link = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
                 var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
-                console.log(content);
                 var arr=content.match(regex);
                 var counter=0;
                 for (var img in arr){
@@ -483,9 +481,20 @@ module.exports = {
                         }
                         else{
                             name=author[0].alias;  
-                            content=content+name+" : "+val.comment+"<br>"; 
+                            var regex = /href=\".+?\">/g;
+                            var image_url=val.comment_image.match(regex);
+                            var pic_addr="";
+                            for (var img in image_url){
+                                pic_addr=image_url[img].replace(/href=\"..\//,url).replace(/\">/,"");
+                                
+                            }
+                            content=content+name+" : "+val.comment+"<br>";
+                            // if (pic_addr.length!=0){
+                            //     content=content + "圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a>";
+                            // } 
+                            
                             callback(); 
-                        }  
+                        }    
                     });
                 // show that no errors happened
                 }, function(err) {
