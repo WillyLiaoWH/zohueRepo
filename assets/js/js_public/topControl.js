@@ -165,8 +165,8 @@ function checkAuth() {
       var mlogin=document.getElementById("mobile_loginSection");
       mlogin.style.display="none";
 
-      var mlogout=document.getElementById("mobile_logout");
-      mlogout.style.display="block";
+      // var mlogout=document.getElementById("mobile_logout");
+      // mlogout.style.display="block";
 
       var profile=document.getElementById("mobile_profile");
       profile.style.display="block";
@@ -210,8 +210,8 @@ function checkAuth() {
 
 
 
-      var mlogout=document.getElementById("mobile_logout");
-      mlogout.style.display="none";
+      // var mlogout=document.getElementById("mobile_logout");
+      // mlogout.style.display="none";
      
       var setUp=document.getElementById("mobile_setUp");
       setUp.style.display="none";
