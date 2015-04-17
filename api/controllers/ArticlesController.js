@@ -469,7 +469,7 @@ module.exports = {
                 for (var img in arr){
                     counter=counter+1;
                     pic_addr=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
-                    content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
+                    content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br><br><br>";
                 }
 
                 var async = require('async');
@@ -490,7 +490,7 @@ module.exports = {
                             }
                             content=content+name+" : "+val.comment+"<br>";
                             if (pic_addr.length!=0){
-                                content=content + "圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a>";
+                                content=content + "圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
                             } 
                             
                             callback(); 
@@ -515,7 +515,7 @@ module.exports = {
                         });  
                         var options = {  
                             //寄件者  
-                            from: "ZOHUE",  
+                            from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
                             //收件者  
                             to: req.param("mailaddress"),   
                             
