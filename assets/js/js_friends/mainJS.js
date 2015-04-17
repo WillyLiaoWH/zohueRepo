@@ -10,7 +10,7 @@ $(document).ready(function(){
       var html="";
       for(i=0; i<allUser.length; i++) {
         if(isFriend[i]!=-2) {
-          html+="<div>";
+          html+="<div style='margin: 30px;'><div>";
           switch(allUser[i].type) {
             case "D":
               authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
@@ -54,7 +54,7 @@ $(document).ready(function(){
               html+="<button type='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
               break;
           }
-          html+="</div>";
+          html+="</div></div>";
         }
       }
       document.getElementById("friendsList").innerHTML=html;
