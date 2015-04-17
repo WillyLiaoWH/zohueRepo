@@ -489,9 +489,9 @@ module.exports = {
                                 
                             }
                             content=content+name+" : "+val.comment+"<br>";
-                            // if (pic_addr.length!=0){
-                            //     content=content + "圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a>";
-                            // } 
+                            if (pic_addr.length!=0){
+                                content=content + "圖片 : " +"<a href='"+pic_addr+"''>"+pic_addr+"</a>";
+                            } 
                             
                             callback(); 
                         }    
