@@ -74,6 +74,10 @@ module.exports = {
       collection: 'articles',
       via: 'author'
     },
+    timelinesPost: {
+      collection: 'timelines',
+      via: 'author'
+    },
     reponsesLeave: {
       collection: 'response',
       via: 'author'
