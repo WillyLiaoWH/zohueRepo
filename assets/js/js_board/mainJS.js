@@ -77,7 +77,12 @@ function setPage(page, keyword, sort) {
   // 獲得文章
   if(keyword!="") {
     document.getElementById("searchWord").value = keyword;
-    $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res_search){
+    $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
+      var boardName=res.board.title;
+      var boardCate=res.board.category.title;
+      document.getElementById('title').innerHTML=boardCate+"-"+boardName;
+
+      var res_search=res.articlesList
       temp_result=res_search;
       if(res_search.length==0){
         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
@@ -91,7 +96,13 @@ function setPage(page, keyword, sort) {
       alert("not found");
     });
   } else {
-    $.get("/setBoardPage/"+board+"/"+tab, function(articleList){
+    $.get("/setBoardPage/"+board+"/"+tab, function(res){
+
+      var articleList=res.articlesList;
+      var boardName=res.board.title;
+      var boardCate=res.board.category.title;
+      document.getElementById('title').innerHTML=boardCate+"-"+boardName;
+
       test="";
       for(i=0; i<articleList.length; i++) {
         test+=articleList[i].title;
@@ -126,7 +137,7 @@ function setPage(page, keyword, sort) {
       pageContext="<tr><td>頁次：</td>"
       for(i=1; i<=pageNum; i++) {
         if(i!=page) {
-          pageContext+="<td><label><a href='/board-"+board+"/"+i+"#"+tab+"'>"+i+"</a></label></td>";
+          pageContext+="<td><label><a href='/board-"+board+"/"+i+"?tab="+tab+"'>"+i+"</a></label></td>";
         } else {
           pageContext+="<td>"+i+"</td>"
         }
@@ -328,14 +339,14 @@ function searchArticle() {
     alert("搜尋不能搜空白唷！");
   }
   else{
-    window.location.assign("/board-"+board+"/search/"+keyword+"/1#"+tab);
+    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab="+tab);
   }
 }
 
 function cancleSearch(){
   
   document.getElementById("searchWord").value = "";
-  window.location.assign("/board-"+board+"/1#"+tab);
+  window.location.assign("/board-"+board+"/1?tab="+tab);
   
 }
 
@@ -368,7 +379,7 @@ function setSearchResult(articleList){
     pageContext="<tr><td>頁次：</td>";
     for(i=1; i<=pageNum; i++) {
       if(i!=page) {
-        pageContext+="<td><label><a href='/board-"+board+"/search/"+keyword+"/"+i+"#"+tab+"'>"+i+"</a></label></td>";
+        pageContext+="<td><label><a href='/board-"+board+"/search/"+keyword+"/"+i+"?tab="+tab+"'>"+i+"</a></label></td>";
       } else {
         pageContext+="<td>"+i+"</td>";
       }
