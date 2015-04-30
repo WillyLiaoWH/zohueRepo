@@ -2,20 +2,14 @@
 	font-family: "微軟正黑體";
 }
 
+/*使 contenteditable 有 placeholder*/
 [contenteditable=true]:empty:before{
   content: attr(placeholder);
   display: block; /* For Firefox */
 }
-.timeline_event, .publish_event{
-	//margin: 20px 0px 0px 15px;
-	border: solid rgba(102, 141, 60, 0.4);
-	border-width:1px;
-	border-radius: 10px;
-	width: 100%;
-	margin-top:-20px;
-}
+
 #timeline_post_content{
-	min-height: 90px;
+	min-height: 100px;
 	height: auto;
 }
 #timeline_post_image{
@@ -27,6 +21,23 @@
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
+
+.timeline_event{
+	border: solid rgba(102, 141, 60, 0.4);
+	border-width:1px;
+	border-radius: 10px;
+	//width: 100%;
+	margin-top:-20px;
+}
+#event_info, .event_text, .event_img{
+	padding:20px;
+	padding-bottom:0px;
+}
+#event_author_img{
+	float:left;
+	margin-right: 2%;
+}
+
 
 
 
