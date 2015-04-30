@@ -12,7 +12,7 @@ module.exports = {
 		var contentImg=req.param("timeline_post_image");
 		if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "DB Error" });};
 
-		Timelines.create({author: author, content: content, contentImg: contentImg}).exec(function(error, timeline) {
+		Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0"}).exec(function(error, timeline) {
             if(error) {
                 console.log(author);console.log(content);
                 res.send(500,{err: "DB Error" });
@@ -30,6 +30,20 @@ module.exports = {
                 });
             }
         });
+	},
+	setTimelinePage: function(req, res){
+		//var tab=req.param("tab");
+		var account = req.session.user.account;
+		//var account = "bbb";
+
+		// notes: 未來可能需要用到.skip(10).limit(10)
+		User.find({account: account}).populate('timelinesPost').exec(function(err, result) {
+			if (err) {
+            	res.send(500, { err: "DB Error" });
+        	} else {
+        		res.send({timelinesList: result[0].timelinesPost, avatar: req.session.user.img});
+            }
+		});
 	}
 };
 

@@ -1,9 +1,7 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var board="";
 $(document).ready(function(){
-
-  $('#myTab a:last').tab('show');
-
+  setTimelinePage()
 
 
   // $('#tabs a').click(function (e) {
@@ -282,14 +280,55 @@ $(document).ready(function(){
 // }
 
 
+
+
+function setTimelinePage(){
+  $.post( "/setTimelinePage", {}, function(res){
+    var avatar = res["avatar"];
+    for(i in res["timelinesList"]){
+      var author = res["timelinesList"][i].author;
+      var content = res["timelinesList"][i].content;
+      var contentImg = res["timelinesList"][i].contentImg;
+      var updatedAt = res["timelinesList"][i].updatedAt;
+      // var responseNum = res["timelinesList"][i].responseNum;
+      // var clickNum = res["timelinesList"][i].clickNum;
+      // var nicer = res["timelinesList"][i].nicer;
+
+      // 預先處理comment中的圖片
+      contentImg = contentImg.replace(/dummy href=/g, "a href=");
+      contentImg = contentImg.replace(/\/dummy/g, "\/a");
+
+      var append_element ='<div class="container-fluid timeline_event" style="margin-top:50px;">\
+                <div class="row-fluid" id="event_info">\
+                  <div id="event_author_img">\
+                    <image src="'+avatar+'" height="50" width="50">\
+                  </div>\
+                  <div id="event_author">\
+                    <div id="event_author_name">'+author+'</div>\
+                    <div id="event_time">'+updatedAt+'</div>\
+                  </div>\
+                </div>\
+                <div class="row-fluid">\
+                  <div class="event_text">'+content+'</div>\
+                </div>\
+                <div class="row-fluid">\
+                  <div class="event_img">'+contentImg+'</div>\
+                </div>\
+              </div>';
+
+      $( "#timeline" ).append( append_element );
+    }
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+
 function postTimeline(){
   if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
   if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
   var timeline_post_content = $("#timeline_post_content").html();
   var timeline_post_image = $("#timeline_post_image").html().trim();
-
-  alert(timeline_post_content);
-  //alert(timeline_post_image);
 
   if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
   else{
@@ -298,7 +337,6 @@ function postTimeline(){
       window.location.replace(document.URL);
     })
     .error(function(res){
-      alert("ss");
       alert(res.responseJSON.err);
     });
   }

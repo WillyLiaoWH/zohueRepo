@@ -26,15 +26,15 @@ module.exports = {
     // },
     responseNum: {
       type: 'string',
-      //required: true
+      required: true
     },
     clickNum: {
       type: 'string',
-      //required: true
+      required: true
     },
-    // nicer: {
-    //   collection: 'user'
-    // },
+    nicer: {
+      collection: 'user'
+    },
     // report: {
     //   collection: 'report',
     //   via: 'article'
