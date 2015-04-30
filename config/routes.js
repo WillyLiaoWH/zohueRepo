@@ -63,6 +63,7 @@ module.exports.routes = {
   'POST /confirmFriend': 'User.confirmFriend',
   'POST /removeFriend': 'User.removeFriend',
   'POST /removeAddFriend': 'User.removeAddFriend',
+  'POST /postTimeline': 'TimelinesController.postTimeline',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
@@ -73,6 +74,10 @@ module.exports.routes = {
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /article/*': {
     view: 'article/index'
+  },
+
+  'GET /profile': {
+    view: 'profile/index'
   },
 
   'GET /editArticle/*': {

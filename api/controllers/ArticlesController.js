@@ -28,11 +28,17 @@ module.exports = {
               break;
         }
         var board=req.param("board");
-		Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').exec(function(err, articlesList) {
+		Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {
-                res.send(articlesList);
+                Boards.find({id: board}).populate('category').exec(function(err, board) {
+                    if(err) {
+                        res.send(500, { err: "DB Error" });
+                    } else {
+                        res.send({articlesList: articlesList, board: board[0]});
+                    }
+                });
             }
 		});
 	},
@@ -389,6 +395,7 @@ module.exports = {
 
     searchArticle: function(req, res){
         var keyword = req.param("keyword");
+        var board=req.param("board");
         console.log(keyword);
 
         var tab=req.param("tab");
@@ -425,18 +432,27 @@ module.exports = {
                             obj.push(found[f]);
                         }
                     }
-
                     Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{
                             if(found){
                                 for(o in obj){
-                                    found.push(obj[o]);
+                                    var exist=false;
+                                    for(f in found) {
+                                        if(found[f].id==obj[o].id)
+                                            exist=true;
+                                    }
+                                    if(!exist)
+                                        found.push(obj[o]);
                                 }
-                                //console.log(found);
-                                console.log(found);
-                                res.send(found);
+                                Boards.find({id: board}).populate('category').exec(function(err, board) {
+                                    if(err) {
+                                        res.send(500, { err: "DB Error" });
+                                    } else {
+                                        res.send({articlesList: found, board: board[0]});
+                                    }
+                                });
                             }else{
                                 console.log("not found");
                                 res.send(500, { err: "找不到喔！" });

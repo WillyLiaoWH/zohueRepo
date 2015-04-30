@@ -65,7 +65,9 @@
             <div id="profile">
               <div class="row-fluid">  
                 <div class="span3 offset6 text-right">
-                  <img id="userimg" src="https://dl.dropboxusercontent.com/u/134734866/images/1511350_10201201963605015_1047947590_n.jpg" alt="Smiley face" height="60px" width="60px">
+                  <a href="/profile">
+                    <img id="userimg" src="https://dl.dropboxusercontent.com/u/134734866/images/1511350_10201201963605015_1047947590_n.jpg" alt="Smiley face" height="60px" width="60px">
+                  </a>
                 </div>
                 <div id="userAlias" class="span3"></div>
               </div>
@@ -107,16 +109,16 @@
 
     <div class="visible-desktop hidden-phone visible-tablet">
     <div id="menu" class="col-md-2">
-      <div class="row-fluid">
-        <a class="item" id="forum"><label><img src="/images/img_public/forum_icon.png"/>&nbsp論壇</label></a><br>
-      </div>
-      <a class="item" id="proInfo"><label><img style='height:32px; width:30px;' src="/images/img_public/pro_icon.png"/>&nbsp專業知識</label></a><br>
-      <a class="item" id="friends"><label><img style='height:32px; width:30px;' src="/images/img_public/friend_icon.png"/>&nbsp朋友</label></a>
-      <a class="item" id="setUp"><label><img src="/images/img_public/setting_icon.png"/>&nbsp設定</label></a><br>
+      
+      <a href="/profile" class="item" id="profile_page"><label><span class="glyphicon glyphicon-user" style="color:rgb(211, 106, 1)" aria-hidden="true"></span>&nbsp個人頁面</label></a><br>
+      <a href="/forum" class="item" id="forum"><label><span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp論壇</label></a><br>
+      <a href="/proInfo/1" class="item" id="proInfo"><label><span class="glyphicon glyphicon-eye-open" style="color:rgb(102, 141, 60)" aria-hidden="true"></span>&nbsp專業知識</label></a><br>
+      <a href="/friends" class="item" id="friends"><label><span class="glyphicon glyphicon-globe" style="color:rgb(1, 151, 172)" aria-hidden="true"></span>&nbsp朋友</label></a>
+      <a class="item" id="setUp"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp設定</label></a><br>
       <div id="setUpMenu">
-        <a class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
-        <a class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
-        <a class="setUpItem"><label>隱私權設定</label></a><br>
+        <a href="/change" class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
+        <a href="/changePassword" class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
+        <a href="" class="setUpItem"><label>隱私權設定</label></a><br>
       </div>
       <div id="fullSignup">
         <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
@@ -127,6 +129,7 @@
     <!-- menu部份的mobile版 -->
     <div id="mobile_menu" class="row-fluid hidden-desktop visible-phone hidden-tablet visible-xs" style="margin-top:15px;">
     <ul class="nav nav-tabs nav-stacked">
+      <li><a href="/profile">個人頁面</a></li>
       <li><a href="/forum">論壇</a></li>
       <li><a href="/proInfo/1">專業知識</a></li>
       <li id="mobile_friends"><a href="/friends">朋友</a></li>
