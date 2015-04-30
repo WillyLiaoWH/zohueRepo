@@ -31,52 +31,62 @@
           <div id="hoho" class="span12">
           <!-- <ul class="tabs"> -->
             <ul class="nav nav-pills" id="tabs">
-              <li id="timeline"><a href="?tab=timeline">動態時報</a></li>
-              <li id="about"><a href="?tab=about">關於</a></li>
-              <li id="share"><a href="?tab=share">分享</a></li>
-              <li id="problem"><a href="?tab=problem">問題</a></li>
-              <li id="others"><a href="?tab=others">其它</a></li>
+              <li><a href="#timeline" data-toggle="pill">動態時報</a></li>
+              <li><a href="#about" data-toggle="pill">關於</a></li>
+              <li><a href="#personal_friend" data-toggle="pill">朋友</a></li>
+              <li><a href="#personal_photo" data-toggle="pill">相片</a></li>
+              <li><a href="#personal_others" data-toggle="pill">更多</a></li>
+
             </ul>
           </div>
         </div>
 
-        <div class="row-fluid">
-          <div><label style="font-size:22px;">在想什麼呢？</label><br>
-            <div contentEditable="true" class="s" id="timeline_post_content"></div>
-            <div contentEditable="false" class="s" id="timeline_post_image">
-              <div class="clear" id="comment_clear"></div>
-            </div>
-
-            <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
-            <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
-          </div>
-        </div>
-
-        <div class="row-fluid" style="margin-top:50px;">
-          <div class="timeline_event">
+        <div class="tab-content">
+          <div class="tab-pane" id="timeline">
             <div class="row-fluid">
-              <div class="event_info">
-                <div class="span1" id="event_author_img">
-                  <image src='https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png' height="50" width="50">
+              <div><label style="font-size:22px;">在想什麼呢？</label><br>
+                <div contentEditable="true" class="s" id="timeline_post_content"></div>
+                <div contentEditable="false" class="s" id="timeline_post_image">
+                  <div class="clear" id="comment_clear"></div>
                 </div>
-                <div class="span11" id="event_author">
-                  <div id="event_author_name">event_author_name</div>
-                  <div id="event_time">event_time</div>
-                </div>
+
+                <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+                <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
               </div>
             </div>
 
-            <div class="row-fluid">
-              <div class="event_text">event_text</div>
+            <div class="row-fluid" style="margin-top:50px;">
+              <div class="timeline_event">
+                <div class="row-fluid">
+                  <div class="event_info">
+                    <div class="span1" id="event_author_img">
+                      <image src='https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png' height="50" width="50">
+                    </div>
+                    <div class="span11" id="event_author">
+                      <div id="event_author_name">event_author_name</div>
+                      <div id="event_time">event_time</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="event_text">event_text</div>
+                </div>
+                <div class="row-fluid">
+                  <div class="event_img">event_img</div>
+                </div>
+              </div>
             </div>
-
-            <div class="row-fluid">
-              <div class="event_img">event_img</div>
-            </div>
-                          
           </div>
-        </div>
 
+
+
+          <div class="tab-pane" id="about">...about</div>
+          <div class="tab-pane" id="personal_friend">...friend</div>
+          <div class="tab-pane" id="personal_photo">...photo</div>
+          <div class="tab-pane" id="personal_others">...others</div>
+            
+          
+        </div>
       </div>
 
       <!-- Cropping modal -->
