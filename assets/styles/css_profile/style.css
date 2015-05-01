@@ -8,6 +8,8 @@
   display: block; /* For Firefox */
 }
 
+
+/* PO 文區塊 */
 #timeline_post_content{
 	min-height: 100px;
 	height: auto;
@@ -22,21 +24,29 @@
   clear:both;
 }
 
+/* 動態時報區塊 */
 .timeline_event{
-	border: solid rgba(102, 141, 60, 0.4);
-	border-width:1px;
+	border: 1px solid rgba(102, 141, 60, 0.4);
 	border-radius: 10px;
-	//width: 100%;
 	margin-top:-20px;
+	padding: 0px;
 }
-#event_info, .event_text, .event_img{
-	padding:20px;
+.event_info, .event_text, .event_img, .event_option, .event_comment, .container_event_comment_list {
+	padding:15px;
 	padding-bottom:0px;
+	word-wrap: break-word; /*自動換行*/
 }
-#event_author_img{
-	float:left;
-	margin-right: 2%;
+
+/* 動態時報留言區塊 */
+.event_commentlist{
+	padding: 0px;
 }
+.container_event_comment_list, .event_comment{
+	border-top: 1px solid rgba(102, 141, 60, 0.4);
+	margin-top: 20px;
+	padding-top:20px;
+}
+
 
 
 
@@ -216,7 +226,7 @@ div.show-image input.delete {
 }
 
 .s{
-	height:48px;
+	min-height: 50px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;

@@ -250,7 +250,7 @@ button, input[type="button"], input[type="submit"]{
 }
 
 .s{
-	height: 48px;
+	min-height: 48px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
