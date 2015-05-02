@@ -3,14 +3,15 @@ var board="";
 $(document).ready(function(){
   setTimelinePage();
 
-  $(document).on("click","#commentSend",function(e){
-    postTimeline_comment(this.name)
-  });
-
   $(document).on("click",".event_del",function(e){
     delTimeline(this.name);
     //postTimeline_comment(this.name)
   });
+
+  $(document).on("click","#TimelineCommentSend",function(e){
+    postTimeline_comment(this.name);
+  });
+  
 
   
 
@@ -352,17 +353,20 @@ function setTimelinePage(){
                         <image src="'+author_avater+'" height="50" width="50">\
                       </td>\
                       <td style="padding:5px">\
-                        <div id="event_comment_input" contentEditable="true" class="s"></div>\
+                        <div id="event_comment_input'+timelinesID+'" contentEditable="true" class="s"></div>\
                       </td>\
                     </tr>\
                     <tr>\
                       <td></td>\
                       <td>\
-                        <button value="送出留言" name="'+timelinesID+'" id="commentSend" class="b"><img src="/images/img_forum/check_icon.png"/>送出留言</button>\
-                        <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>\
+                        <button value="送出留言" name="'+timelinesID+'" id="TimelineCommentSend" class="b"><img src="/images/img_forum/check_icon.png"/>送出留言</button>\
+                        <button value="插入圖片" name="'+timelinesID+'" id="TimelineImage" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>\
                       </td>\
                     </tr>\
                   </table>\
+                  <div contentEditable="false" class="s" id="timeline_comment_image'+timelinesID+'">\
+                    <div class="clear" id="comment_clear"></div>\
+                  </div>\
                 </div>\
                 <div class="row-fluid event_commentlist">\
                   <div class="container-fluid container_event_comment_list">\
@@ -402,6 +406,11 @@ function setTimelinePage(){
               </div>';
 
       $( "#timeline" ).append( append_element );
+      // $.getScript("/js/js_profile/crop-avatar.js?ver=2", function(){
+      //   alert("Script loaded and executed.");
+      //   // Use anything defined in the loaded script...
+      // });
+
     }
   })
   .error(function(res){
@@ -440,20 +449,23 @@ function delTimeline(id){
 }
 
 function postTimeline_comment(id){
+  var spec_div = "event_comment_input"+id;
+  var con = document.getElementById(spec_div).innerHTML;
+  alert(con);
   // if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
   // if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
-  // var timeline_post_content = $("#timeline_post_content").html();
-  // var timeline_post_image = $("#timeline_post_image").html().trim();
+  //var timeline_comment_content = $("#timeline_post_content").html();
+  // var timeline_comment_image = $("#timeline_post_image").html().trim();
 
   // if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
   // else{
-  //   $.post( "/postTimeline", { timeline_post_content: timeline_post_content, timeline_post_image: timeline_post_image}, function(res){
-  //     alert("發佈成功！");
-  //     window.location.replace(document.URL);
-  //   })
-  //   .error(function(res){
-  //     alert(res.responseJSON.err);
-  //   });
+    // $.post( "/postTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image}, function(res){
+    //   alert("發佈成功！");
+    //   window.location.replace(document.URL);
+    // })
+    // .error(function(res){
+    //   alert(res.responseJSON.err);
+    // });
   // }
 }
 

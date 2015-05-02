@@ -14,7 +14,7 @@
 	min-height: 100px;
 	height: auto;
 }
-#timeline_post_image{
+#timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
 	height:100%;
 	margin-bottom:25px;
@@ -92,11 +92,6 @@ div.show-image input.delete {
 	opacity:0.8;
 }
 
-#editArticle, #deleteArticle, #commentSend, #addImage{
-	width: 130px;
-	//height:48px;
-}
-
 #article{
 	//margin: 20px 0px 0px 15px;
 	border: solid rgba(102, 141, 60, 0.4);
@@ -164,7 +159,7 @@ div.show-image input.delete {
 
 
 
-#commentSend{
+/*#commentSend{
 	float:right;
 	//width: 100px;
 	//margin: -8px 0px 10px 0px;
@@ -175,7 +170,7 @@ div.show-image input.delete {
 #commentSend:hover{
 	background-color: rgba(102, 141, 60, 0.4);
 	color:#816C58;	
-}
+}*/
 
 
 #commentList{
@@ -245,7 +240,7 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 
-#commentSend, #image{
+#commentSend, #image, #TimelineCommentSend, #TimelineImage{
 	float:right;
 	margin-bottom:10px;
 }

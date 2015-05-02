@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
   	timeline: {
-		  model: 'timelines'
+		model: 'timelines'
     },
     author: {
     	model: 'user'
