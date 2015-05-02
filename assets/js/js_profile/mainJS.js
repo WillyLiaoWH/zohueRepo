@@ -3,11 +3,16 @@ var board="";
 $(document).ready(function(){
   setTimelinePage();
 
-  
-
   $(document).on("click","#commentSend",function(e){
     postTimeline_comment(this.name)
   });
+
+  $(document).on("click",".event_del",function(e){
+    delTimeline(this.name);
+    //postTimeline_comment(this.name)
+  });
+
+  
 
 
   // $('#tabs a').click(function (e) {
@@ -336,7 +341,7 @@ function setTimelinePage(){
                     <ul class="dropdown-menu n" role="menu">\
                       <li><a href="#">檢舉</a></li>\
                       <li><a href="#">編輯</a></li>\
-                      <li><a href="#">刪除</a></li>\
+                      <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>\
                     </ul>\
                   </div>\
                 </div>\
@@ -420,6 +425,18 @@ function postTimeline(){
       alert(res.responseJSON.err);
     });
   }
+}
+
+function delTimeline(id){
+    $.post( "/delTimeline", { id: id }, function(res){
+      alert(res);
+      // alert("發佈成功！");
+      window.location.replace(document.URL);
+    })
+    .error(function(res){
+      alert(res.responseJSON.err);
+    });
+
 }
 
 function postTimeline_comment(id){

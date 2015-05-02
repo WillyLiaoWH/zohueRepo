@@ -14,23 +14,52 @@ module.exports = {
 
 		Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0"}).exec(function(error, timeline) {
             if(error) {
-                console.log(author);console.log(content);
                 res.send(500,{err: "DB Error" });
-                console.log(error);
             } else {
-                console.log(timeline);
-                Timelines.update({id: timeline.id},{lastResponseTime: timeline.updatedAt}).exec(function(err, timeline) {
-                    if(err) {
-                        res.send(500,{err: "DB Error" });
-                        console.log(err);
-                    } else {
-                        console.log(timeline);
-                        res.send(timeline);
-                    }
-                });
+                res.send(timeline);
+                // Timelines.update({id: timeline.id},{lastResponseTime: timeline.updatedAt}).exec(function(err, timeline) {
+                //     if(err) {
+                //         res.send(500,{err: "DB Error" });
+                //         console.log(err);
+                //     } else {
+                //         console.log(timeline);
+                //         res.send(timeline);
+                //     }
+                // });
             }
         });
 	},
+    delTimeline: function(req, res){
+        function chechAtuh(id, cb){
+            Timelines.find({id: id}).populate('author').exec(function(error, timeline) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                } else {
+                    if(req.session.user.account == timeline[0].author.account){
+                        cb(true);
+                    }else{cb(false);}
+                }
+            });
+        }
+        function del(isAuth, TimelineId){
+            if(isAuth){
+                Timelines.destroy({id: TimelineId}).exec(function(err){
+                    if(err) {
+                        res.send(500,{err: "DB Error" });
+                    } else {
+                        res.send('文章刪除成功！');
+                    }
+                });
+            }else{
+                res.send("No permission");
+            }
+        }
+        var TimelineId = req.param("id");
+        // 用 call back 先檢查 session 是否有刪除 timeline 之權限
+        chechAtuh(TimelineId, function(isAuth){
+            del(isAuth, TimelineId);
+        });
+    },
 	setTimelinePage: function(req, res){
 		//var tab=req.param("tab");
 		var account = req.session.user.account;
