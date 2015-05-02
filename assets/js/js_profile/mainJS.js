@@ -353,7 +353,7 @@ function setTimelinePage(){
                         <image src="'+author_avater+'" height="50" width="50">\
                       </td>\
                       <td style="padding:5px">\
-                        <div id="event_comment_input'+timelinesID+'" contentEditable="true" class="s"></div>\
+                        <div id="timeline_comment_content'+timelinesID+'" contentEditable="true" class="s"></div>\
                       </td>\
                     </tr>\
                     <tr>\
@@ -419,8 +419,8 @@ function setTimelinePage(){
 }
 
 function postTimeline(){
-  if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
-  if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
+  if($("#timeline_post_image #rmimg")){$("#timeline_post_image .delete").remove();} // 去除叉叉紐
+  if($("#timeline_post_image #comment_clear")){$("#timeline_post_image .clear").remove();} // 去除clear
   var timeline_post_content = $("#timeline_post_content").html();
   var timeline_post_image = $("#timeline_post_image").html().trim();
 
@@ -439,7 +439,6 @@ function postTimeline(){
 function delTimeline(id){
     $.post( "/delTimeline", { id: id }, function(res){
       alert(res);
-      // alert("發佈成功！");
       window.location.replace(document.URL);
     })
     .error(function(res){
@@ -449,24 +448,26 @@ function delTimeline(id){
 }
 
 function postTimeline_comment(id){
-  var spec_div = "event_comment_input"+id;
-  var con = document.getElementById(spec_div).innerHTML;
-  alert(con);
-  // if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
-  // if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
-  //var timeline_comment_content = $("#timeline_post_content").html();
-  // var timeline_comment_image = $("#timeline_post_image").html().trim();
+  var spec_div_content = "timeline_comment_content"+id;
+  var spec_div_img = "timeline_comment_image"+id;
 
-  // if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
-  // else{
-    // $.post( "/postTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image}, function(res){
-    //   alert("發佈成功！");
-    //   window.location.replace(document.URL);
-    // })
-    // .error(function(res){
-    //   alert(res.responseJSON.err);
-    // });
-  // }
+  if($("#"+spec_div_img+" #rmimg")){$("#"+spec_div_img+" .delete").remove();} // 去除叉叉紐
+  if($("#"+spec_div_img+" #comment_clear")){$("#"+spec_div_img+" .clear").remove();} // 去除clear
+
+  var timeline_comment_content = $("#"+spec_div_content).html();
+  var timeline_comment_image = $("#"+spec_div_img).html().trim();
+
+  if(timeline_comment_content.trim()=="" & timeline_comment_image.trim()==""){alert("發佈失敗！");}
+  else{
+    $.post( "/leaveCommentTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image, timeline_id: id}, function(res){
+      //alert("發佈成功！");
+      alert(res);
+      window.location.replace(document.URL);
+    })
+    .error(function(res){
+      alert(res.responseJSON.err);
+    });
+  }
 }
 
 

@@ -69,6 +69,7 @@ module.exports = {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {
+                //console.log(result);
         		res.send({timelinesList: result[0].timelinesPost, avatar: req.session.user.img});
             }
 		});

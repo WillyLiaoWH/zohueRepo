@@ -5,14 +5,10 @@ var insert_ele = "timeline_post_image"; // 設定全域變數，紀錄應該把�
 function insertHtmlAtCursor(html) {
   try{
     var orinode = document.getElementById(insert_ele); // 找到插入圖片的DIV
-    //var orinode = $("#"+insert_ele)[0];
     $("#"+insert_ele).css("display", "block");
     var range = document.createRange(); // 設定插入圖片時的range function
     range.setStart(orinode, 0); // 設定range起始點
-
     var node = range.createContextualFragment(html); // 欲插入之element
-    alert(orinode.id);
-
     var insert_clear = $( "#"+insert_ele ).find( "#comment_clear" )[0];
     orinode.insertBefore(node, insert_clear);
     //orinode.insertBefore(node, document.getElementById("comment_clear"));
@@ -89,13 +85,9 @@ function insertHtmlAtCursor(html) {
     },
 
     addListener: function () {
-      // $( "#"+insert_ele+" #rmimg" ).click(function() {
-      //   alert( "Handler for .click() called." );
-      // });
-
       $(document).mouseup(function(){
         if(document.activeElement.id=='rmimg'){
-          alert(document.activeElement.parentNode.id);
+          insert_ele = document.activeElement.parentNode.parentNode.id; // 更新 insert_ele
           document.activeElement.parentNode.remove();
           if($("#"+insert_ele).html().indexOf("img") == -1){ // div 內已無圖片
             $("#"+insert_ele).css("display", "none");
