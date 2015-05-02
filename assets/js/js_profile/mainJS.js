@@ -1,7 +1,13 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var board="";
 $(document).ready(function(){
-  setTimelinePage()
+  setTimelinePage();
+
+  
+
+  $(document).on("click","#commentSend",function(e){
+    postTimeline_comment(this.name)
+  });
 
 
   // $('#tabs a').click(function (e) {
@@ -290,29 +296,103 @@ function setTimelinePage(){
       var content = res["timelinesList"][i].content;
       var contentImg = res["timelinesList"][i].contentImg;
       var updatedAt = res["timelinesList"][i].updatedAt;
+      var timelinesID = res["timelinesList"][i].id;
+      var author_avater = res["avatar"];
       // var responseNum = res["timelinesList"][i].responseNum;
       // var clickNum = res["timelinesList"][i].clickNum;
       // var nicer = res["timelinesList"][i].nicer;
+
+      //var author_avater = 'https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png';
 
       // 預先處理comment中的圖片
       contentImg = contentImg.replace(/dummy href=/g, "a href=");
       contentImg = contentImg.replace(/\/dummy/g, "\/a");
 
-      var append_element ='<div class="container-fluid timeline_event" style="margin-top:50px;">\
-                <div class="row-fluid" id="event_info">\
-                  <div id="event_author_img">\
-                    <image src="'+avatar+'" height="50" width="50">\
-                  </div>\
-                  <div id="event_author">\
-                    <div id="event_author_name">'+author+'</div>\
-                    <div id="event_time">'+updatedAt+'</div>\
+      var append_element ='<div class="container-fluid timeline_event" style="margin-top:30px;">\
+                <div class="row-fluid event_info">\
+                  <table style="width:100%;">\
+                    <tr>\
+                      <td rowspan="2" style="width:50px;padding:5px;">\
+                        <image src="'+author_avater+'" height="50" width="50">\
+                      </td>\
+                      <td><div id="event_author_name">'+author+'</div></td>\
+                    </tr>\
+                    <tr>\
+                      <td><div id="event_time">'+updatedAt+'</div></td>\
+                    </tr>\
+                  </table>\
+                </div>\
+                <div class="row-fluid event_text">'+content+'</div>\
+                <div class="row-fluid event_img">'+contentImg+'</div>\
+                <div class="row-fluid event_option btn-group">\
+                  <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                  <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
+                  <div class="btn-group" style="float:none;">\
+                    <button type="button" class="n" data-toggle="dropdown">\
+                      <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
+                        &nbsp;其他\
+                      <span class="caret"></span>\
+                    </button>\
+                    <ul class="dropdown-menu n" role="menu">\
+                      <li><a href="#">檢舉</a></li>\
+                      <li><a href="#">編輯</a></li>\
+                      <li><a href="#">刪除</a></li>\
+                    </ul>\
                   </div>\
                 </div>\
-                <div class="row-fluid">\
-                  <div class="event_text">'+content+'</div>\
+                <div class="row-fluid event_comment">\
+                  <table style="width:100%;">\
+                    <tr>\
+                      <td style="width:50px;padding:5px;">\
+                        <image src="'+author_avater+'" height="50" width="50">\
+                      </td>\
+                      <td style="padding:5px">\
+                        <div id="event_comment_input" contentEditable="true" class="s"></div>\
+                      </td>\
+                    </tr>\
+                    <tr>\
+                      <td></td>\
+                      <td>\
+                        <button value="送出留言" name="'+timelinesID+'" id="commentSend" class="b"><img src="/images/img_forum/check_icon.png"/>送出留言</button>\
+                        <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>\
+                      </td>\
+                    </tr>\
+                  </table>\
                 </div>\
-                <div class="row-fluid">\
-                  <div class="event_img">'+contentImg+'</div>\
+                <div class="row-fluid event_commentlist">\
+                  <div class="container-fluid container_event_comment_list">\
+                    <div class="row-fluid">\
+                      <table style="width:100%;">\
+                        <tr>\
+                          <td rowspan="2" style="width:50px;padding:5px;">\
+                            <image src="'+author_avater+'" height="50" width="50">\
+                          </td>\
+                          <td><div id="event_author_name">'+author+'</div></td>\
+                        </tr>\
+                        <tr>\
+                          <td><div id="event_time">'+updatedAt+'</div></td>\
+                        </tr>\
+                      </table>\
+                    </div>\
+                    <div class="row-fluid event_text">'+content+'</div>\
+                    <div class="row-fluid event_img">'+contentImg+'</div>\
+                  </div>\
+                  <div class="row-fluid event_option btn-group">\
+                    <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                    <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
+                    <div class="btn-group" style="float:none;">\
+                      <button type="button" class="n" data-toggle="dropdown">\
+                        <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
+                        &nbsp;其他\
+                        <span class="caret"></span>\
+                      </button>\
+                      <ul class="dropdown-menu n" role="menu">\
+                        <li><a href="#">檢舉</a></li>\
+                        <li><a href="#">編輯</a></li>\
+                        <li><a href="#">刪除</a></li>\
+                      </ul>\
+                    </div>\
+                  </div>\
                 </div>\
               </div>';
 
@@ -340,6 +420,24 @@ function postTimeline(){
       alert(res.responseJSON.err);
     });
   }
+}
+
+function postTimeline_comment(id){
+  // if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
+  // if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
+  // var timeline_post_content = $("#timeline_post_content").html();
+  // var timeline_post_image = $("#timeline_post_image").html().trim();
+
+  // if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
+  // else{
+  //   $.post( "/postTimeline", { timeline_post_content: timeline_post_content, timeline_post_image: timeline_post_image}, function(res){
+  //     alert("發佈成功！");
+  //     window.location.replace(document.URL);
+  //   })
+  //   .error(function(res){
+  //     alert(res.responseJSON.err);
+  //   });
+  // }
 }
 
 

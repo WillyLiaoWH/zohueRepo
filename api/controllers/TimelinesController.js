@@ -34,10 +34,9 @@ module.exports = {
 	setTimelinePage: function(req, res){
 		//var tab=req.param("tab");
 		var account = req.session.user.account;
-		//var account = "bbb";
 
 		// notes: 未來可能需要用到.skip(10).limit(10)
-		User.find({account: account}).populate('timelinesPost').exec(function(err, result) {
+		User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function(err, result) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
         	} else {
