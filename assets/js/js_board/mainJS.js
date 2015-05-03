@@ -101,23 +101,23 @@ function setPage(page, keyword, sort) {
       var articleList=res.articlesList;
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML=boardCate+"-"+boardName;
+      //document.getElementById('title').innerHTML=boardCate+"-"+boardName;
 
-      test="";
-      for(i=0; i<articleList.length; i++) {
-        test+=articleList[i].title;
-        test+=articleList[i].updatedAt;
-      }
+      // test="";
+      // for(i=0; i<articleList.length; i++) {
+      //   test+=articleList[i].title;
+      //   test+=articleList[i].updatedAt;
+      // }
 
-      if(sort==0) {
-        articleList.sort(function(a, b) {
-          return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
-        });
-      } else if (sort==1) {
-        articleList.sort(function(a, b) {
-          return new Date(b.createdAt)-new Date(a.createdAt);
-        });
-      }
+      // if(sort==0) {
+      //   articleList.sort(function(a, b) {
+      //     return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
+      //   });
+      // } else if (sort==1) {
+      //   articleList.sort(function(a, b) {
+      //     return new Date(b.createdAt)-new Date(a.createdAt);
+      //   });
+      // }
 
       myTable="<tr style='background-color: #1D3521; color:white;'>";
       myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
@@ -126,6 +126,8 @@ function setPage(page, keyword, sort) {
       myTable+="<td style='text-align:center;'>點閱/回覆</td>";
       myTable+="<td style='text-align:center;'>推薦</td>";
       myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
+
+
 
       articleNum=20;
 
