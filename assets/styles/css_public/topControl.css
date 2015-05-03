@@ -380,3 +380,24 @@ button, input[type="button"], input[type="submit"]{
 #mobile_fullSignup {
 	display: none;
 }
+
+#e-newsletterSend{
+	float:right;
+}
+
+/*input placeholder 顏色設定*/
+::-webkit-input-placeholder {
+   color: grey;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: grey;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: grey;  
+}
+
+:-ms-input-placeholder {  
+   color: grey;  
+}
