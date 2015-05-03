@@ -61,18 +61,55 @@ module.exports = {
         });
     },
 	setTimelinePage: function(req, res){
-		//var tab=req.param("tab");
-		var account = req.session.user.account;
+		// var account = req.session.user.account;
 
-		// notes: 未來可能需要用到.skip(10).limit(10)
-		User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function(err, result) {
-			if (err) {
-            	res.send(500, { err: "DB Error" });
-        	} else {
-                //console.log(result);
-        		res.send({timelinesList: result[0].timelinesPost, avatar: req.session.user.img});
+		// // notes: 未來可能需要用到.skip(10).limit(10)
+		// User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function(err, result) {
+		// 	if (err) {
+  //           	res.send(500, { err: "DB Error" });
+  //       	} else {
+  //       		res.send({timelinesList: result[0].timelinesPost, avatar: req.session.user.img});
+  //           }
+		// });
+
+
+
+
+        var account = req.session.user.account;
+        // notes: 未來可能需要用到.skip(10).limit(10)
+        User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
+            if(err) {
+                sails.log.error("ERR:", err);
             }
-		});
+            sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
+                if (err) {
+                    sails.log.error("ERR:", err);
+                }else {
+                    res.send({timelinesList: result.timelinesPost, avatar: req.session.user.img});
+                }
+            });
+        });
+
+        // var account = req.session.user.account;
+        // // notes: 未來可能需要用到.skip(10).limit(10)
+        // User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
+        //     if(err) {
+        //         sails.log.error("ERR:", err);
+        //     }
+        //     sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
+        //         if (err) {
+        //             sails.log.error("ERR:", err);
+        //         }else {
+        //             sails.services['util'].populateDeep('timelines', result[0], 'response.author', function (err, result2) {
+        //                 if (err) {
+        //                     sails.log.error("ERR:", err);
+        //                 }else {
+        //                     res.send({timelinesList: result2.timelinesPost, avatar: req.session.user.img});
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
 	}
 };
 

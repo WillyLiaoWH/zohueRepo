@@ -308,9 +308,53 @@ function setTimelinePage(){
       // var clickNum = res["timelinesList"][i].clickNum;
       // var nicer = res["timelinesList"][i].nicer;
 
-      //var author_avater = 'https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png';
+      // 預先處理每個 timeline event comment
+      var append_element_comment = "";
+      for(element_res of res["timelinesList"][i].response){
+        //var comment_author_avater=;
+        //var comment_author=;
+        var comment_content=element_res.comment;
+        var comment_contentImg=element_res.comment_image;
+        var comment_updatedAt=element_res.updatedAt;
+        // 預先處理 timeline event 中的圖片
+        comment_contentImg = comment_contentImg.replace(/dummy href=/g, "a href=");
+        comment_contentImg = comment_contentImg.replace(/\/dummy/g, "\/a");
+        append_element_comment = append_element_comment+'<div class="container-fluid container_event_comment_list">\
+                    <div class="row-fluid">\
+                      <table style="width:100%;">\
+                        <tr>\
+                          <td rowspan="2" style="width:50px;padding:5px;">\
+                            <image src="'+author_avater+'" height="50" width="50">\
+                          </td>\
+                          <td><div id="event_author_name">'+author+'</div></td>\
+                        </tr>\
+                        <tr>\
+                          <td><div id="event_time">'+comment_updatedAt+'</div></td>\
+                        </tr>\
+                      </table>\
+                    </div>\
+                    <div class="row-fluid event_text">'+comment_content+'</div>\
+                    <div class="row-fluid event_img">'+comment_contentImg+'</div>\
+                  </div>\
+                  <div class="row-fluid event_option btn-group">\
+                    <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                    <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
+                    <div class="btn-group" style="float:none;">\
+                      <button type="button" class="n" data-toggle="dropdown">\
+                        <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
+                        &nbsp;其他\
+                        <span class="caret"></span>\
+                      </button>\
+                      <ul class="dropdown-menu n" role="menu">\
+                        <li><a href="#">檢舉</a></li>\
+                        <li><a href="#">編輯</a></li>\
+                        <li><a href="#">刪除</a></li>\
+                      </ul>\
+                    </div>\
+                  </div>';
+      }
 
-      // 預先處理comment中的圖片
+      // 預先處理 timeline event 中的圖片
       contentImg = contentImg.replace(/dummy href=/g, "a href=");
       contentImg = contentImg.replace(/\/dummy/g, "\/a");
 
@@ -369,39 +413,7 @@ function setTimelinePage(){
                   </div>\
                 </div>\
                 <div class="row-fluid event_commentlist">\
-                  <div class="container-fluid container_event_comment_list">\
-                    <div class="row-fluid">\
-                      <table style="width:100%;">\
-                        <tr>\
-                          <td rowspan="2" style="width:50px;padding:5px;">\
-                            <image src="'+author_avater+'" height="50" width="50">\
-                          </td>\
-                          <td><div id="event_author_name">'+author+'</div></td>\
-                        </tr>\
-                        <tr>\
-                          <td><div id="event_time">'+updatedAt+'</div></td>\
-                        </tr>\
-                      </table>\
-                    </div>\
-                    <div class="row-fluid event_text">'+content+'</div>\
-                    <div class="row-fluid event_img">'+contentImg+'</div>\
-                  </div>\
-                  <div class="row-fluid event_option btn-group">\
-                    <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
-                    <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
-                    <div class="btn-group" style="float:none;">\
-                      <button type="button" class="n" data-toggle="dropdown">\
-                        <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
-                        &nbsp;其他\
-                        <span class="caret"></span>\
-                      </button>\
-                      <ul class="dropdown-menu n" role="menu">\
-                        <li><a href="#">檢舉</a></li>\
-                        <li><a href="#">編輯</a></li>\
-                        <li><a href="#">刪除</a></li>\
-                      </ul>\
-                    </div>\
-                  </div>\
+                  '+append_element_comment+'\
                 </div>\
               </div>';
 
