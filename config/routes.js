@@ -126,6 +126,9 @@ module.exports.routes = {
   '/friends': {
     view: 'friends/index'
   },
+  '/backend': {
+    view: 'backend/index'
+  },
 
   '/': '/home'
 

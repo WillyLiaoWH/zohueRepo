@@ -1,0 +1,23 @@
+#userManage{
+	display:block;
+	margin-top:20px;
+}
+
+#forumManage{
+	display:none;
+	margin-top:20px;
+}
+
+.nav-pills li a:hover{
+	cursor:pointer;
+	font-weight:bold;
+}
+
+.nav-pills li a{
+	font-size:22px;
+}
+
+.form-control{
+	font-size: 20px;
+	height:45px;
+}
