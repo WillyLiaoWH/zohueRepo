@@ -632,6 +632,55 @@ module.exports = {
                 }
             });
         }
+    },
+
+    searchAlias: function(req, res) {
+        var alias=req.param("alias");
+        if(!req.session.user) {
+            User.find({alias: {'contains': alias}}).exec(function(err, users) {
+                if(err) {
+                    console.log(err);
+                    res.send(500, {err: "DB Error"});
+                } else {
+                    res.send({users: users});
+                }
+            });
+        } else {
+            User.find({alias: {'contains': alias}}).exec(function(err, allUser){
+                if(err) {
+                    res.send(500, {err: "DB Error"});
+                } else {
+                    var isFriend=[];
+                    User.find({account: req.session.user.account}).exec(function(err, user) {
+                        if(err) {
+                            console.log(err);
+                            res.send({err: "DB error"});
+                        } else {
+                            for(i=0; i<allUser.length; i++) {
+                                if(allUser[i].id!=req.session.user.id) {
+                                    if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
+                                        isFriend.push(-2);
+                                    } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
+                                        isFriend.push(3);
+                                    } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
+                                        isFriend.push(2);
+                                    } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
+                                        isFriend.push(-1);
+                                    } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
+                                        isFriend.push(1);
+                                    } else {
+                                        isFriend.push(0);
+                                    }
+                                } else {
+                                    isFriend.push(-2);
+                                }
+                            }
+                            res.send({users: allUser, isFriend: isFriend})
+                        }
+                    });
+                }
+            });
+        }
     }
 
 
