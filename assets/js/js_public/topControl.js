@@ -23,30 +23,6 @@ $(document).ready(function(){
       setUpMenu.style.display="block";
     }
   });
-
-  $( "#editProfile" ).click(function() {
-    editProfile();
-  });
-
-  $( "#forum" ).click(function() {
-    window.location.assign("/forum");
-  });
-
-  $( "#proInfo" ).click(function() {
-    window.location.assign("/proInfo/1");
-  });
-
-  $( "#editProfile" ).click(function() {
-    window.location.assign("/change");
-  });
-  $( "#editPW" ).click(function() {
-    window.location.assign("/changePassword");
-  });
-
-  $("#friends").click(function(){
-    window.location.assign("/friends")
-  });
-
 });
 
 
@@ -406,4 +382,15 @@ function enterLogin(e) {
   } else {
     return true;
   }
+}
+
+function subscribe(){
+  var subscribeEmail = $("#subscribeEmail").val();
+  var posting = $.post( "/subscribe", { email: subscribeEmail}, function(res){
+    alert(res);
+  })
+    .error(function(res){
+      alert(res.responseJSON.err);
+      alert("fuck");
+    });
 }

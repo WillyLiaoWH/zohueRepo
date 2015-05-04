@@ -250,7 +250,7 @@ button, input[type="button"], input[type="submit"]{
 }
 
 .s{
-	height: 48px;
+	min-height: 48px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -379,4 +379,25 @@ button, input[type="button"], input[type="submit"]{
 
 #mobile_fullSignup {
 	display: none;
+}
+
+#subscribe{
+	float:right;
+}
+
+/*input placeholder 顏色設定*/
+::-webkit-input-placeholder {
+   color: grey;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: grey;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: grey;  
+}
+
+:-ms-input-placeholder {  
+   color: grey;  
 }

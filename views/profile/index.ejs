@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Join Us | ZOHUE</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+    <link rel="stylesheet" href="/styles/css_profile/style.css">
+    <link rel="stylesheet" href="/styles/css_post/crop-avatar.css">
+
+    <link rel="stylesheet" href="/styles/css_post/cropper.min.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/css_public/themes/alertify.core.css">
+    <link rel="stylesheet" href="/styles/css_public/themes/alertify.default.css">
+
+    <script src="/js/js_public/modalBox.js-master/modalBox-min.js"></script>
+    <script src="/js/js_public/alertify.js"></script>
+    <script src="/js/js_profile/mainJS.js"></script>
+
+    <script src="/js/js_post/cropper.min.js"></script>
+    <script src="/js/js_profile/crop-avatar.js?ver=1"></script>
+	</head>
+	<body id="body">
+    <!-- 正文 -->
+    <div class="container container-fluid" id="post-form-main">
+
+    <div class="row-fluid">
+      <div class="span7" id="artContent">
+
+        <div class="row-fluid" style="margin-top:10px;">
+          <div id="hoho" class="span12">
+          <!-- <ul class="tabs"> -->
+            <ul class="nav nav-pills" id="tabs">
+              <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
+              <li><a href="#about" data-toggle="pill">關於</a></li>
+              <li><a href="#personal_friend" data-toggle="pill">朋友</a></li>
+              <li><a href="#personal_photo" data-toggle="pill">相片</a></li>
+              <li><a href="#personal_others" data-toggle="pill">更多</a></li>
+
+            </ul>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="timeline">
+            <div class="row-fluid">
+              <div><label style="font-size:22px;">在想什麼呢？</label><br>
+                <div contentEditable="true" class="s" id="timeline_post_content"></div>
+                <div contentEditable="false" class="s" id="timeline_post_image">
+                  <div class="clear" id="comment_clear"></div>
+                </div>
+
+                <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+                <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
+              </div>
+            </div>
+
+            
+              <!-- <div class="container-fluid timeline_event" style="margin-top:150px;">
+                <div class="row-fluid event_info">
+                  <table style="width:100%;">
+                    <tr>
+                      <td rowspan="2" style="width:50px;">
+                        <image src='https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png' height="50" width="50">
+                      </td>
+                      <td><div id="event_author_name">HOHO</div></td>
+                    </tr>
+                    <tr>
+                      <td><div id="event_time">2015/04/10</div></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="row-fluid event_text">
+                  fdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebt fdsfdsrgtreb tfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebtfdsfdsrgtrebt
+                </div>
+                <div class="row-fluid event_img">
+                  <div class="show-image"><a href="http://140.112.107.168/images/img_post/1429263250479.jpg"><img src="http://140.112.107.168/images/img_post/resize/1429263250479.jpg"></a></div>
+                  <div class="show-image"><a href="http://140.112.107.168/images/img_post/1429263250479.jpg"><img src="http://140.112.107.168/images/img_post/resize/1429263250479.jpg"></a></div>
+                </div>
+                <div class="row-fluid event_option btn-group">
+                  <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>
+                  <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>
+                  <div class="btn-group" style="float:none;">
+                    <button type="button" class="n" data-toggle="dropdown">
+                      <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">
+                        &nbsp;其他
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu n" role="menu">
+                      <li><a href="#">檢舉</a></li>
+                      <li><a href="#">編輯</a></li>
+                      <li><a href="#">刪除</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row-fluid event_comment">
+                  <table style="width:100%;">
+                    <tr>
+                      <td style="width:50px;">
+                        <image src='https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png' height="50" width="50">
+                      </td>
+                      <td>
+                        <div id="event_comment_input" contentEditable="true" class="s"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+                        <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <div contentEditable="false" class="s" id="timeline_post_image">
+                    <div class="clear" id="comment_clear"></div>
+                  </div>
+
+                </div>
+                <div class="row-fluid event_commentlist">
+
+                  <div class="container-fluid container_event_comment_list">
+                    <div class="row-fluid">
+                      <table style="width:100%;">
+                        <tr>
+                          <td rowspan="2" style="width:50px;">
+                            <image src='https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png' height="50" width="50">
+                          </td>
+                          <td><div id="event_author_name">HOHO</div></td>
+                        </tr>
+                        <tr>
+                          <td><div id="event_time">2015/04/10</div></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="row-fluid event_text">
+                      一一暗暗三三
+                    </div>
+                    <div class="row-fluid event_img">
+                    </div>
+                  </div>
+                  <div class="row-fluid event_option btn-group">
+                    <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>
+                    <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>
+                    <div class="btn-group" style="float:none;">
+                      <button type="button" class="n" data-toggle="dropdown">
+                        <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">
+                        &nbsp;其他
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu n" role="menu">
+                        <li><a href="#">檢舉</a></li>
+                        <li><a href="#">編輯</a></li>
+                        <li><a href="#">刪除</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+
+                  <div class="container-fluid container_event_comment_list">
+                    <div class="row-fluid">
+                      <table style="width:100%;">
+                        <tr>
+                          <td rowspan="2" style="width:50px;">
+                            <image src='https://cdn2.iconfinder.com/data/icons/faceavatars/PNG/D04.png' height="50" width="50">
+                          </td>
+                          <td><div id="event_author_name">HOHO</div></td>
+                        </tr>
+                        <tr>
+                          <td><div id="event_time">2015/04/10</div></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="row-fluid event_text">
+                      一一暗暗三三
+                    </div>
+                    <div class="row-fluid event_img">
+                    </div>
+                  </div>
+                  <div class="row-fluid event_option btn-group">
+                    <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>
+                    <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>
+                    <div class="btn-group" style="float:none;">
+                      <button type="button" class="n" data-toggle="dropdown">
+                        <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">
+                        &nbsp;其他
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu n" role="menu">
+                        <li><a href="#">檢舉</a></li>
+                        <li><a href="#">編輯</a></li>
+                        <li><a href="#">刪除</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div> -->
+            
+
+
+          </div>
+
+
+
+          <div class="tab-pane" id="about">...about</div>
+          <div class="tab-pane" id="personal_friend">...friend</div>
+          <div class="tab-pane" id="personal_photo">...photo</div>
+          <div class="tab-pane" id="personal_others">...others</div>
+            
+          
+        </div>
+      </div>
+
+      <!-- Cropping modal -->
+      <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="avatar-modal-label">上傳相片（讀者點擊縮圖後即可看到原圖）</h4>
+
+                <div class="spinner">
+                  <div class="spinner-container container1">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                  </div>
+                  <div class="spinner-container container2">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                  </div>
+                  <div class="spinner-container container3">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                  </div>
+                </div>
+                  
+              </div>
+              <div class="modal-body">
+                <div class="avatar-body">
+                  <!-- Upload image and data -->
+                  <div class="avatar-upload">
+                    <input class="avatar-src" name="avatar_src" type="hidden">
+                    <input class="avatar-data" name="avatar_data" type="hidden">
+                    <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
+                  </div>
+                  <!-- Crop and preview -->
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="avatar-wrapper"></div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="avatar-preview preview-lg"></div>
+                      <div class="avatar-preview preview-md"></div>
+                      <div class="avatar-preview preview-sm"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>上傳</button>
+                <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- image modal -->
+    <div class="modalBox"></div>
+
+    <!-- 檢舉視窗 -->
+    <!-- <div id="reportDialog" title="協助我們瞭解發生的狀況">
+      <form id="reportForm">  
+        <label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br>
+        <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
+        <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
+        <label><input type="radio" name="reason" value="others"> 其它</label><br>
+        <input type="text" id="reasonInput" style="display: none;">
+      </form> 
+    </div> -->
+  </div>
+  </body>
+</html>
