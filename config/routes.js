@@ -71,6 +71,7 @@ module.exports.routes = {
   'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
+  'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /article/*': {
     view: 'article/index'
   },

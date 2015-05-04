@@ -53,6 +53,40 @@ $(document).ready(function(){
   $("#tabs li a").click(function(){
     window.location.reload();
   });
+
+  document.getElementById("boardCategory").onchange=function() {
+    $.get("/getBoardsOfCategory/"+$("#boardCategory").val(), function(boards) {
+      var boardSelect=document.getElementById("board");
+      while(boardSelect.length>0) {
+        boardSelect.remove(0);
+      }
+      var option=document.createElement('option');
+      option.text="請選擇";
+      option.value="";
+      option.disabled=true;
+      option.selected=true;
+      try {
+          boardSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          boardSelect.add(option);
+        }
+      for(var i=0; i<boards.length; i++) {
+        var option=document.createElement('option');
+        option.text=boards[i].title;
+        option.value=boards[i].id;
+        try {
+          boardSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          boardSelect.add(option);
+        }
+      }
+    });
+  };
+  document.getElementById("board").onchange=function() {
+    window.location.assign("/board-"+$("#board").val()+"/1?tab=all");
+  };
 });
 
 function setPage(page, keyword, sort) {
@@ -102,7 +136,34 @@ function setPage(page, keyword, sort) {
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
       document.getElementById('title').innerHTML=boardCate+"-"+boardName;
-
+      var cateSelect=document.getElementById('boardCategory');
+      for(var i=0; i<res.boardCate.length; i++) {
+        var option=document.createElement('option');
+        option.text=res.boardCate[i].title;
+        option.value=res.boardCate[i].id;
+        if(res.board.category.id==res.boardCate[i].id)
+          option.selected=true;
+        try {
+          cateSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          cateSelect.add(option);
+        }
+      }
+      var boardSelect=document.getElementById('board');
+      for(var i=0; i<res.boards.length; i++) {
+        var option=document.createElement('option');
+        option.text=res.boards[i].title;
+        option.value=res.boards[i].id;
+        if(board==res.boards[i].id)
+          option.selected=true;
+        try {
+          boardSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          boardSelect.add(option);
+        }
+      }
       test="";
       for(i=0; i<articleList.length; i++) {
         test+=articleList[i].title;
