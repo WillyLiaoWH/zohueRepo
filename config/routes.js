@@ -69,6 +69,7 @@ module.exports.routes = {
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
+  'POST /searchAlias': 'User.searchAlias',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
