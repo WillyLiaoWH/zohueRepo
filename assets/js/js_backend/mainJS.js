@@ -3,16 +3,10 @@ var board=1;
 var tab="all";
 var myTable="";
 
-
-
-// $(document).ready(function(){
-//     $("#ruki").load("");
-// });
 function loadUserList(){
   document.getElementById("userManage").style.display="block";
   document.getElementById("forumManage").style.display="none";
 }
-
 
 function loadForumList(){
   document.getElementById("forumManage").style.display="block";
@@ -20,13 +14,11 @@ function loadForumList(){
 }
 
 $.get("/setBoardPage/"+board+"/"+tab, function(res){
-
       var articleList=res.articlesList;
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      //document.getElementById('title').innerHTML=boardCate+"-"+boardName;
 
-      myTable="<tr><th>文章類別</th><th>文章標題</th><th>發表人</th><th>身分別</th><th>發表時間</th><th>檢舉次數</th><tr>";
+      myTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th>檢舉次數</th><tr>";
       for(i=0; i<articleList.length; i++) {
         clickNum=articleList[i].clickNum;
         responseNum=articleList[i].responseNum;
@@ -39,33 +31,33 @@ $.get("/setBoardPage/"+board+"/"+tab, function(res){
         reportNum=articleList[i].report.length;
 
         myTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
-        myTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+reportNum+"</td><tr>";
+        myTable+="<td>"+authorType+"</td><td>"+postTime+"</td>";
+        if(reportNum>=3){
+          reportobj=articleList[i].report;
 
-          // if(i%2==0){
-          //   myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          //   myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-            
-          //   myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
-          //   myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
-          //   myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
-
-          //   myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+clickNum+"/"+responseNum+"</td>";
-          //   myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
-          //   myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
-           
-          // }else{
-          //   myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          //   myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-          //   myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
-          //   myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
-          //   myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
-
-          //   myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+clickNum+"/"+responseNum+"</td>";
-          //   myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
-          //   myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>";
-          // }
+          myTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' onClick='showReason(reportobj, "+i+")'></span>";
+          myTable+="<div id='reportReason_"+i+"' style='display:none;'></div></td><tr>";
+        }else{
+          myTable+="<td>"+reportNum+"</td><tr>";
+        }
       }
       document.getElementById("backend_articleList").innerHTML = myTable;
     }).error(function(res){
       alert(res.responseJSON.err);
-    });
+});
+
+function showReason(reportobj, ulId){
+  var reportReasonHtml="檢舉理由：";
+    for(k=0; k<reportobj.length; k++){
+      reportReasonHtml+="<ul><li>"+reportobj[k].reason+"</li></ul>";
+    }
+  document.getElementById("reportReason_"+ulId).innerHTML=reportReasonHtml;
+  if(document.getElementById("reportReason_"+ulId).style.display=="none"){
+    document.getElementById("reportReason_"+ulId).style.display="block";
+  }else{
+    document.getElementById("reportReason_"+ulId).style.display="none";
+  }
+  
+}
+
+

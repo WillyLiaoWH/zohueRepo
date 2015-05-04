@@ -25,3 +25,14 @@
 #backend_articleList{
 	margin-top:20px;
 }
+
+.glyphicon-exclamation-sign{
+	margin-left:5px; 
+	cursor:pointer;
+	color:#CE0000;
+	font-size: 25px;
+}
+
+.glyphicon-exclamation-sign:hover{
+	color:#FF5151;'
+}
