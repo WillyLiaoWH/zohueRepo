@@ -135,7 +135,6 @@ function setPage(page, keyword, sort) {
       var articleList=res.articlesList;
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-<<<<<<< HEAD
       document.getElementById('title').innerHTML=boardCate+"-"+boardName;
       var cateSelect=document.getElementById('boardCategory');
       for(var i=0; i<res.boardCate.length; i++) {
