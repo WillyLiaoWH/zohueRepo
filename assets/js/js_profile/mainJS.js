@@ -333,7 +333,7 @@ function setTimelinePage(){
                         <image src="'+comment_author_avater+'" height="50" width="50">\
                       </div>\
                       <div id="content_timeline_res">\
-                        <div class="row-fluid event_text_r">'+comment_author+' '+comment_content+'</div>\
+                        <div class="event_text_r">'+comment_author+' '+comment_content+'</div>\
                         <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
                         <div class="row-fluid event_option btn-group">\
                           <a href=" " title="'+comment_updatedAt+'">'+time+'</a>\
@@ -365,7 +365,7 @@ function setTimelinePage(){
                 <div class="row-fluid event_info">\
                   <table style="width:100%;">\
                     <tr>\
-                      <td rowspan="2" style="width:50px;padding:5px;">\
+                      <td rowspan="2" style="width:50px;padding-right:15px;">\
                         <image src="'+author_avater+'" height="50" width="50">\
                       </td>\
                       <td><div id="event_author_name">'+author+'</div></td>\
@@ -399,7 +399,7 @@ function setTimelinePage(){
                 <div class="row-fluid event_comment">\
                   <table style="width:100%;">\
                     <tr>\
-                      <td style="width:50px;padding:5px;">\
+                      <td style="width:50px;">\
                         <image src="'+author_avater+'" height="50" width="50">\
                       </td>\
                       <td style="padding:5px">\
