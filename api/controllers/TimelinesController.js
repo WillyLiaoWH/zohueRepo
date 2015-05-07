@@ -61,55 +61,61 @@ module.exports = {
         });
     },
 	setTimelinePage: function(req, res){
-		// var account = req.session.user.account;
-
-		// // notes: 未來可能需要用到.skip(10).limit(10)
-		// User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function(err, result) {
-		// 	if (err) {
-  //           	res.send(500, { err: "DB Error" });
-  //       	} else {
-  //       		res.send({timelinesList: result[0].timelinesPost, avatar: req.session.user.img});
-  //           }
-		// });
-
-
-
-
         var account = req.session.user.account;
-        // notes: 未來可能需要用到.skip(10).limit(10)
-        User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
-            if(err) {
-                sails.log.error("ERR:", err);
-            }
-            sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
-                if (err) {
+
+        function findTimelineResponse(cb){
+            // notes: 未來可能需要用到.skip(10).limit(10)
+            User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
+                if(err) {
                     sails.log.error("ERR:", err);
-                }else {
-                    res.send({timelinesList: result.timelinesPost, avatar: req.session.user.img});
+                    console.log("err1");
+                }
+                sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
+                    if (err) {
+                        sails.log.error("ERR:", err);
+                        console.log("err2");
+                    }else {
+                        cb(result);
+                    }
+                });
+            });
+        }
+
+        function AuthorQuery(timelineRes, cb){
+            TimelineResponse.find(timelineRes.id).populate('author').exec(function (err, result2) {
+                if(err) {
+                    console.log("err");
+                }else{
+                    cb(result2[0].author.alias, result2[0].author.img);
                 }
             });
-        });
+        }
 
-        // var account = req.session.user.account;
-        // // notes: 未來可能需要用到.skip(10).limit(10)
-        // User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
-        //     if(err) {
-        //         sails.log.error("ERR:", err);
-        //     }
-        //     sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
-        //         if (err) {
-        //             sails.log.error("ERR:", err);
-        //         }else {
-        //             sails.services['util'].populateDeep('timelines', result[0], 'response.author', function (err, result2) {
-        //                 if (err) {
-        //                     sails.log.error("ERR:", err);
-        //                 }else {
-        //                     res.send({timelinesList: result2.timelinesPost, avatar: req.session.user.img});
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
+        function findTimelineResponseAuthor(Response, cb){
+            var async = require('async');
+            var c = 0;
+            async.each(Response.timelinesPost, function(timeline, callback) {
+                c++;
+                if(Response.timelinesPost.length==c & timeline.length==0){cb(Response);} // 最後一個 timeline 且無留言
+                async.each(timeline.response, function(timelineRes, callback2) {
+                    AuthorQuery(timelineRes, function(alias, img){
+                        var i=Response.timelinesPost.indexOf(timeline);
+                        var j=timeline.response.indexOf(timelineRes);
+                        Response.timelinesPost[i].response[j].alias=alias;
+                        Response.timelinesPost[i].response[j].img=img;
+
+                        // 最後一個 timeline 且最後一個留言
+                        if(Response.timelinesPost.length==c & Response.timelinesPost[i].response.length==j+1){cb(Response);}
+                    });
+                });
+            });
+        }
+
+        findTimelineResponse(function(Response){
+            findTimelineResponseAuthor(Response,function(Response2){
+                res.send({timelinesList: Response.timelinesPost, avatar: req.session.user.img, alias: req.session.user.alias});
+            });
+        });
 	}
 };
 
