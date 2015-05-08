@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html style="height: 100%">
 	<head>
 		<title>Join Us | ZOHUE</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -13,11 +13,15 @@
     <script src="/js/js_public/alertify.js"></script>
     <script src="/js/js_friends/mainJS.js"></script>
 	</head>
-	<body id="body">
-    <div class="container-fluid">
+	<body id="body" style="height: 100%">
+    <div class="container-fluid"  style="height: 100%">
         <!-- 正文 -->
         <h1 style="color:#D26900;">朋友</h1>
-        <div id="friendsList">
+        搜尋暱稱：<input type="text" name="alias" id="alias">
+        <input type="button" value="搜尋" onclick="searchAlias()"><br>
+        <div id="searchList" style="float: left; width: 225px; height: 100%">
+        </div>
+        <div id="friendsList" style="float: left; width: 225px; height: 100%">
         </div>
     </div>
   </body>

@@ -6,6 +6,16 @@
  */
 
 module.exports = {
-	
+	getBoardsOfCategory: function(req, res) {
+		var category=req.param("category");
+		Boards.find({category: category}).exec(function(err, boards) {
+			if(err) {
+				console.log(err);
+				res.send(500, "DB error");
+			} else {
+				res.send(boards);
+			}
+		});
+	}
 };
 

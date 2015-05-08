@@ -53,6 +53,40 @@ $(document).ready(function(){
   $("#tabs li a").click(function(){
     window.location.reload();
   });
+
+  document.getElementById("boardCategory").onchange=function() {
+    $.get("/getBoardsOfCategory/"+$("#boardCategory").val(), function(boards) {
+      var boardSelect=document.getElementById("board");
+      while(boardSelect.length>0) {
+        boardSelect.remove(0);
+      }
+      var option=document.createElement('option');
+      option.text="請選擇";
+      option.value="";
+      option.disabled=true;
+      option.selected=true;
+      try {
+          boardSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          boardSelect.add(option);
+        }
+      for(var i=0; i<boards.length; i++) {
+        var option=document.createElement('option');
+        option.text=boards[i].title;
+        option.value=boards[i].id;
+        try {
+          boardSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          boardSelect.add(option);
+        }
+      }
+    });
+  };
+  document.getElementById("board").onchange=function() {
+    window.location.assign("/board-"+$("#board").val()+"/1?tab=all");
+  };
 });
 
 function setPage(page, keyword, sort) {
@@ -102,7 +136,34 @@ function setPage(page, keyword, sort) {
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
       document.getElementById('title').innerHTML=boardCate+"-"+boardName;
-
+      var cateSelect=document.getElementById('boardCategory');
+      for(var i=0; i<res.boardCate.length; i++) {
+        var option=document.createElement('option');
+        option.text=res.boardCate[i].title;
+        option.value=res.boardCate[i].id;
+        if(res.board.category.id==res.boardCate[i].id)
+          option.selected=true;
+        try {
+          cateSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          cateSelect.add(option);
+        }
+      }
+      var boardSelect=document.getElementById('board');
+      for(var i=0; i<res.boards.length; i++) {
+        var option=document.createElement('option');
+        option.text=res.boards[i].title;
+        option.value=res.boards[i].id;
+        if(board==res.boards[i].id)
+          option.selected=true;
+        try {
+          boardSelect.add(option, null);
+        } catch(ex) {
+          //for IE
+          boardSelect.add(option);
+        }
+      }
       test="";
       for(i=0; i<articleList.length; i++) {
         test+=articleList[i].title;
@@ -126,6 +187,8 @@ function setPage(page, keyword, sort) {
       myTable+="<td style='text-align:center;'>點閱/回覆</td>";
       myTable+="<td style='text-align:center;'>推薦</td>";
       myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
+
+
 
       articleNum=20;
 
@@ -182,20 +245,26 @@ function setPage(page, keyword, sort) {
 
           if(articleList[i+articleNum*(page-1)].report) {
             if(articleList[i+articleNum*(page-1)].report.length>=maxReport) {
-              var color="color:#FF0000;";
-              var badPic='<img src="/images/img_forum/bad2_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:10px; height:40px; width:40px;">';
+              var link="onClick='readConfirm("+articleList[i+articleNum*(page-1)].id+");'";
+              var color="color:grey;";
+              var linkcolor="color:grey;";
+              var badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">'
             } else {
+              var link="href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\"";
               var color="";
+              var linkcolor="color:#000079;";
               var badPic="";
             }
           } else {
+            var link="href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\"";
             var color="";
+            var linkcolor="color:#000079;";
             var badPic="";
           }
 
           if(i%2==0){
             myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
@@ -207,7 +276,7 @@ function setPage(page, keyword, sort) {
            
           }else{
             myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
             myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
@@ -250,19 +319,25 @@ function setPage(page, keyword, sort) {
           }
           if(articleList[i+articleNum*(page-1)].report) {
             if(articleList[i+articleNum*(page-1)].report.length>=maxReport) {
-              var color="color:#FF0000;";
-              var badPic='<img src="/images/img_forum/bad2_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:10px; height:40px; width:40px;">'
+              var link="onClick='readConfirm("+articleList[i+articleNum*(page-1)].id+");'";
+              var color="color:grey;";
+              var linkcolor="color:grey;";
+              var badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">'
             } else {
+              var link="href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\"";
               var color="";
+              var linkcolor="color:#000079;";
               var badPic="";
             }
           } else {
+            var link="href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\"";
             var color="";
+            var linkcolor="color:#000079;";
             var badPic="";
           }
           if(i%2==0){
             myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a "+link+" style='cursor: pointer; text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
@@ -274,7 +349,7 @@ function setPage(page, keyword, sort) {
             myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>";
           }else{
             myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline; '>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a "+link+" style='cursor: pointer; text-decoration:none;"+linkcolor+"text-decoration:underline; '>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
             myTable+="<td>"+articleList[i+articleNum*(page-1)].author.alias+authorType+"</td></tr>";
             myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
@@ -290,9 +365,13 @@ function setPage(page, keyword, sort) {
     }).error(function(res){
       alert(res.responseJSON.err);
     });
+  }  
+}
+
+function readConfirm(articleid){
+  if(confirm("這篇文章已經被檢舉超過三次以上囉！確定要觀看嗎？")){
+    window.location = "/article/"+articleid;
   }
-  
-  
 }
 
 function postArticle() {

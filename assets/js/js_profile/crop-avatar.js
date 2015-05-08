@@ -1,15 +1,17 @@
 var check_out = 0;
+var insert_ele = "timeline_post_image"; // 設定全域變數，紀錄應該把圖片插在哪個div中（藉由.modal("show")觸發）
 
 // 新增圖片至固定DIV
 function insertHtmlAtCursor(html) {
   try{
-    var orinode = document.getElementById("timeline_post_image"); // 找到插入圖片的DIV
-    $("#timeline_post_image").css("display", "block");
+    var orinode = document.getElementById(insert_ele); // 找到插入圖片的DIV
+    $("#"+insert_ele).css("display", "block");
     var range = document.createRange(); // 設定插入圖片時的range function
     range.setStart(orinode, 0); // 設定range起始點
-
     var node = range.createContextualFragment(html); // 欲插入之element
-    orinode.insertBefore(node, document.getElementById("comment_clear"));
+    var insert_clear = $( "#"+insert_ele ).find( "#comment_clear" )[0];
+    orinode.insertBefore(node, insert_clear);
+    //orinode.insertBefore(node, document.getElementById("comment_clear"));
   }catch(err) {
     alert(err);
   }
@@ -51,10 +53,14 @@ function insertHtmlAtCursor(html) {
 
     this.$avatarBtn = this.$container.find("#image");
 
-    //this.$contentDIV = this.$container.find("#postContent");
-
     this.init();
     log(this);
+
+    $(document).on("click","#TimelineImage",function(e){
+      $("#avatar-modal").modal("show");
+      insert_ele = "timeline_comment_image"+this.name;
+
+    });
   }
 
   CropAvatar.prototype = {
@@ -81,9 +87,10 @@ function insertHtmlAtCursor(html) {
     addListener: function () {
       $(document).mouseup(function(){
         if(document.activeElement.id=='rmimg'){
+          insert_ele = document.activeElement.parentNode.parentNode.id; // 更新 insert_ele
           document.activeElement.parentNode.remove();
-          if($("#timeline_post_image").html().indexOf("img") == -1){ // div 內已無圖片
-            $("#timeline_post_image").css("display", "none");
+          if($("#"+insert_ele).html().indexOf("img") == -1){ // div 內已無圖片
+            $("#"+insert_ele).css("display", "none");
           }
         }
       });
@@ -150,6 +157,7 @@ function insertHtmlAtCursor(html) {
     click: function () {
       //if(check_out == 1){
         this.$avatarModal.modal("show");
+        insert_ele = "timeline_post_image";
         //check_out = 0;
       //}
     },

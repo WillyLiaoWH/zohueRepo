@@ -2,23 +2,19 @@
 	font-family: "微軟正黑體";
 }
 
+/*使 contenteditable 有 placeholder*/
 [contenteditable=true]:empty:before{
   content: attr(placeholder);
   display: block; /* For Firefox */
 }
-.timeline_event, .publish_event{
-	//margin: 20px 0px 0px 15px;
-	border: solid rgba(102, 141, 60, 0.4);
-	border-width:1px;
-	border-radius: 10px;
-	width: 100%;
-	margin-top:-20px;
-}
+
+
+/* PO 文區塊 */
 #timeline_post_content{
-	min-height: 90px;
+	min-height: 100px;
 	height: auto;
 }
-#timeline_post_image{
+#timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
 	height:100%;
 	margin-bottom:25px;
@@ -27,6 +23,56 @@
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
+
+/* 動態時報區塊 */
+.timeline_event{
+	border: 1px solid rgba(102, 141, 60, 0.4);
+	border-radius: 10px;
+	margin-top:-20px;
+	padding: 0px;
+}
+.event_info, .event_comment {
+	padding:15px;
+	word-wrap: break-word; /*自動換行*/
+}
+.event_text_r{
+	padding:15px;
+	padding-bottom:0px;
+	word-wrap: break-word; /*自動換行*/
+}
+.event_text, .event_img, .event_option  {
+	padding:15px;
+	padding-top:0px;
+	word-wrap: break-word; /*自動換行*/
+}
+.event_img{
+	display: none;
+}
+
+/* 動態時報留言區塊 */
+#container_timeline_res { /* 分左右兩塊 */
+    width:100%;
+    margin: 0 auto;
+}
+#sidebar_timeline_res { /*左*/
+	margin:15px;
+    float: left;
+    width:50px;
+    margin-right: -50px;
+    position: relative;
+}
+#content_timeline_res { /*右*/
+    //float:left;
+    width:100%;
+    border-left: 65px solid transparent;
+}
+.event_comment, .event_commentlist{
+	border-top: 1px solid rgba(102, 141, 60, 0.4);
+}
+
+
+
+
 
 
 
@@ -69,11 +115,6 @@ div.show-image input.delete {
 
 #FB{
 	opacity:0.8;
-}
-
-#editArticle, #deleteArticle, #commentSend, #addImage{
-	width: 130px;
-	//height:48px;
 }
 
 #article{
@@ -143,7 +184,7 @@ div.show-image input.delete {
 
 
 
-#commentSend{
+/*#commentSend{
 	float:right;
 	//width: 100px;
 	//margin: -8px 0px 10px 0px;
@@ -154,7 +195,7 @@ div.show-image input.delete {
 #commentSend:hover{
 	background-color: rgba(102, 141, 60, 0.4);
 	color:#816C58;	
-}
+}*/
 
 
 #commentList{
@@ -205,7 +246,7 @@ div.show-image input.delete {
 }
 
 .s{
-	height:48px;
+	min-height: 50px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -215,7 +256,7 @@ div.show-image input.delete {
 	//background-color: rgba(195, 183, 172, 0.5);
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
-	margin-bottom: 10px;
+	margin: 5px;
 	width:100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -224,7 +265,7 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 
-#commentSend, #image{
+#commentSend, #image, #TimelineCommentSend, #TimelineImage{
 	float:right;
 	margin-bottom:10px;
 }

@@ -64,6 +64,12 @@ module.exports.routes = {
   'POST /removeFriend': 'User.removeFriend',
   'POST /removeAddFriend': 'User.removeAddFriend',
   'POST /postTimeline': 'TimelinesController.postTimeline',
+  'POST /delTimeline': 'TimelinesController.delTimeline',
+  'POST /setTimelinePage': 'Timelines.setTimelinePage',
+  'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
+  'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
+  'POST /subscribe': 'SubscribeEmailController.subscribe',
+  'POST /searchAlias': 'User.searchAlias',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
@@ -72,6 +78,7 @@ module.exports.routes = {
   'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
+  'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /article/*': {
     view: 'article/index'
   },
@@ -120,6 +127,9 @@ module.exports.routes = {
   },
   '/friends': {
     view: 'friends/index'
+  },
+  '/backend': {
+    view: 'backend/index'
   },
 
   '/': '/home'

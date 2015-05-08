@@ -1,9 +1,19 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var board="";
 $(document).ready(function(){
+  setTimelinePage();
 
-  $('#myTab a:last').tab('show');
+  $(document).on("click",".event_del",function(e){
+    delTimeline(this.name);
+    //postTimeline_comment(this.name)
+  });
 
+  $(document).on("click","#TimelineCommentSend",function(e){
+    postTimeline_comment(this.name);
+  });
+  
+
+  
 
 
   // $('#tabs a').click(function (e) {
@@ -282,14 +292,152 @@ $(document).ready(function(){
 // }
 
 
+
+
+function setTimelinePage(){
+  $.post( "/setTimelinePage", {}, function(res){
+    var author_avater = res["avatar"];
+    var author = res["alias"];
+    var timeInMs = new Date().getTime();
+    for(i in res["timelinesList"]){
+      var content = res["timelinesList"][i].content;
+      var contentImg = res["timelinesList"][i].contentImg;
+      var dif = timeInMs-Date(updatedAt);
+      var updatedAt = new Date(res["timelinesList"][i].updatedAt).toLocaleString();
+      var timelinesID = res["timelinesList"][i].id;
+      // var responseNum = res["timelinesList"][i].responseNum;
+      // var clickNum = res["timelinesList"][i].clickNum;
+      // var nicer = res["timelinesList"][i].nicer;
+
+      // 預先處理每個 timeline event comment
+      var append_element_comment = "";
+      for(element_res of res["timelinesList"][i].response){
+        var comment_author_avater=element_res.img;
+        var comment_author=element_res.alias;
+        var comment_content=element_res.comment;
+        var comment_contentImg=element_res.comment_image;
+        var comment_updatedAt = new Date(element_res.updatedAt).toLocaleString();
+        var dif2 = (timeInMs-new Date(element_res.updatedAt).getTime())/1000;
+        if(dif2 > 86400){var time=Math.round(dif2/86400)+"天前";
+        }else if(dif2 > 3600){var time=Math.round(dif2/3600)+"小時前";
+        }else if(dif2 > 60){var time=Math.round(dif2/60)+"分鐘前";
+        }else{var time=Math.round(dif2)+"秒前";}
+
+        // 預先處理 timeline event 中的圖片
+        comment_contentImg = comment_contentImg.replace(/dummy href=/g, "a href=");
+        comment_contentImg = comment_contentImg.replace(/\/dummy/g, "\/a");
+
+        if(comment_contentImg){var display_img='block';}else{var display_img='none';}
+        append_element_comment = append_element_comment+'<div id="container_timeline_res container-fluid">\
+                      <div id="sidebar_timeline_res">\
+                        <image src="'+comment_author_avater+'" height="50" width="50">\
+                      </div>\
+                      <div id="content_timeline_res">\
+                        <div class="event_text_r">'+comment_author+' '+comment_content+'</div>\
+                        <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
+                        <div class="row-fluid event_option btn-group">\
+                          <a href=" " title="'+comment_updatedAt+'">'+time+'</a>\
+                          <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                          <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
+                          <div class="btn-group" style="float:none;">\
+                            <button type="button" class="n" data-toggle="dropdown">\
+                              <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
+                              &nbsp;其他\
+                              <span class="caret"></span>\
+                            </button>\
+                            <ul class="dropdown-menu n" role="menu">\
+                              <li><a href="#">檢舉</a></li>\
+                              <li><a href="#">編輯</a></li>\
+                              <li><a href="#">刪除</a></li>\
+                            </ul>\
+                          </div>\
+                        </div>\
+                      </div>\
+                    </div>';
+      }
+
+      // 預先處理 timeline event 中的圖片
+      contentImg = contentImg.replace(/dummy href=/g, "a href=");
+      contentImg = contentImg.replace(/\/dummy/g, "\/a");
+
+      if(contentImg){var display_img='block';}else{var display_img='none';}
+      var append_element ='<div class="container-fluid timeline_event" style="margin-top:30px;">\
+                <div class="row-fluid event_info">\
+                  <table style="width:100%;">\
+                    <tr>\
+                      <td rowspan="2" style="width:50px;padding-right:15px;">\
+                        <image src="'+author_avater+'" height="50" width="50">\
+                      </td>\
+                      <td><div id="event_author_name">'+author+'</div></td>\
+                    </tr>\
+                    <tr>\
+                      <td><div id="event_time">'+updatedAt+'</div></td>\
+                    </tr>\
+                  </table>\
+                </div>\
+                <div class="row-fluid event_text">'+content+'</div>\
+                <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
+                <div class="row-fluid event_option btn-group">\
+                  <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                  <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
+                  <div class="btn-group" style="float:none;">\
+                    <button type="button" class="n" data-toggle="dropdown">\
+                      <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
+                        &nbsp;其他\
+                      <span class="caret"></span>\
+                    </button>\
+                    <ul class="dropdown-menu n" role="menu">\
+                      <li><a href="#">檢舉</a></li>\
+                      <li><a href="#">編輯</a></li>\
+                      <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>\
+                    </ul>\
+                  </div>\
+                </div>\
+                <div class="row-fluid event_commentlist">\
+                  '+append_element_comment+'\
+                </div>\
+                <div class="row-fluid event_comment">\
+                  <table style="width:100%;">\
+                    <tr>\
+                      <td style="width:50px;">\
+                        <image src="'+author_avater+'" height="50" width="50">\
+                      </td>\
+                      <td style="padding:5px">\
+                        <div id="timeline_comment_content'+timelinesID+'" contentEditable="true" class="s"></div>\
+                      </td>\
+                    </tr>\
+                    <tr>\
+                      <td></td>\
+                      <td>\
+                        <button value="送出留言" name="'+timelinesID+'" id="TimelineCommentSend" class="b"><img src="/images/img_forum/check_icon.png"/>送出留言</button>\
+                        <button value="插入圖片" name="'+timelinesID+'" id="TimelineImage" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>\
+                      </td>\
+                    </tr>\
+                  </table>\
+                  <div contentEditable="false" class="s" id="timeline_comment_image'+timelinesID+'">\
+                    <div class="clear" id="comment_clear"></div>\
+                  </div>\
+                </div>\
+              </div>';
+
+      $( "#timeline" ).append( append_element );
+      // $.getScript("/js/js_profile/crop-avatar.js?ver=2", function(){
+      //   alert("Script loaded and executed.");
+      //   // Use anything defined in the loaded script...
+      // });
+
+    }
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+
 function postTimeline(){
-  if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
-  if(document.getElementById("comment_clear")){$(".clear").remove();} // 去除clear
+  if($("#timeline_post_image #rmimg")){$("#timeline_post_image .delete").remove();} // 去除叉叉紐
+  if($("#timeline_post_image #comment_clear")){$("#timeline_post_image .clear").remove();} // 去除clear
   var timeline_post_content = $("#timeline_post_content").html();
   var timeline_post_image = $("#timeline_post_image").html().trim();
-
-  alert(timeline_post_content);
-  //alert(timeline_post_image);
 
   if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
   else{
@@ -298,7 +446,42 @@ function postTimeline(){
       window.location.replace(document.URL);
     })
     .error(function(res){
-      alert("ss");
+      alert(res.responseJSON.err);
+    });
+  }
+}
+
+function delTimeline(id){
+  var r = confirm("確定要刪除文章嗎？");
+  if (r == true) {
+    $.post( "/delTimeline", { id: id }, function(res){
+      alert(res);
+      window.location.replace(document.URL);
+    })
+    .error(function(res){
+      alert(res.responseJSON.err);
+    });
+  }
+}
+
+function postTimeline_comment(id){
+  var spec_div_content = "timeline_comment_content"+id;
+  var spec_div_img = "timeline_comment_image"+id;
+
+  if($("#"+spec_div_img+" #rmimg")){$("#"+spec_div_img+" .delete").remove();} // 去除叉叉紐
+  if($("#"+spec_div_img+" #comment_clear")){$("#"+spec_div_img+" .clear").remove();} // 去除clear
+
+  var timeline_comment_content = $("#"+spec_div_content).html();
+  var timeline_comment_image = $("#"+spec_div_img).html().trim();
+
+  if(timeline_comment_content.trim()=="" & timeline_comment_image.trim()==""){alert("發佈失敗！");}
+  else{
+    $.post( "/leaveCommentTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image, timeline_id: id}, function(res){
+      //alert("發佈成功！");
+      alert(res);
+      window.location.replace(document.URL);
+    })
+    .error(function(res){
       alert(res.responseJSON.err);
     });
   }

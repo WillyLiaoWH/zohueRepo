@@ -20,25 +20,25 @@ module.exports = {
       type: 'json',
       //required: true
     },
-    // response: {
-    //   collection: 'response',
-    //   via: 'article'
-    // },
+    response: {
+      collection: 'TimelineResponse',
+      via: 'timeline'
+    },
     responseNum: {
       type: 'string',
-      //required: true
+      required: true
     },
     clickNum: {
       type: 'string',
-      //required: true
+      required: true
     },
-    // nicer: {
-    //   collection: 'user'
-    // },
-    // report: {
-    //   collection: 'report',
-    //   via: 'article'
-    // },
+    nicer: {
+      collection: 'user'
+    },
+    report: {
+      collection: 'TimelineReport',
+      via: 'timeline'
+    },
     // lastResponseTime: {
     //   type: 'datetime'
     // }

@@ -28,6 +28,13 @@ module.exports = {
               break;
         }
         var board=req.param("board");
+
+        var boards;
+        var boardCate;
+        
+        BoardCategory.find().exec(function(err, boardCateList) {
+            boardCate=boardCateList;
+        });
 		Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
 			if (err) {
             	res.send(500, { err: "DB Error" });
@@ -36,7 +43,10 @@ module.exports = {
                     if(err) {
                         res.send(500, { err: "DB Error" });
                     } else {
-                        res.send({articlesList: articlesList, board: board[0]});
+                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                            boards=boardsList;
+                            res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
+                        });
                     }
                 });
             }
