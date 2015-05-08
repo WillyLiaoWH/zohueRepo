@@ -365,7 +365,7 @@ function setTimelinePage(){
                           <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
                           <div class="btn-group" style="float:none;">\
                             <button type="button" class="n" data-toggle="dropdown">\
-                              <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
+                              <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
                               &nbsp;其他\
                               <span class="caret"></span>\
                             </button>\
@@ -409,11 +409,11 @@ function setTimelinePage(){
                 <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
                 <div class="row-fluid event_option btn-group">\
                   <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
-                  <button value="留言" class="n" onclick="cancelNice();"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;留言</button>\
+                  <button value="留言" class="n" onclick="cancelNice();"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;留言</button>\
                   <div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
-                      <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">\
-                        &nbsp;其他\
+                      <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
+                      &nbsp;其他\
                       <span class="caret"></span>\
                     </button>\
                     <ul class="dropdown-menu n" role="menu">\
