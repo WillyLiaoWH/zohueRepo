@@ -158,7 +158,7 @@
         <h1>簡易註冊</h1>
         <form id="simpleSignUp">
           暱稱<label id="checkAlias" class="check"></label><br>
-          <input type="text" name="UserAlias" class="s" id="UserAlias" placeholder="aaa"><br>
+          <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
           <div id="FBlogin">
           帳號<label id="checkAccount" class="check"></label><br>
           <input type="text" name="UserAccount" class="s" id="UserAccount"><br>
@@ -167,6 +167,11 @@
           確認密碼<label id="checkPwdConfirm" class="check"></label><br>
           <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm"><br>
           </div>
+          E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
+          <input type="hidden" name="FBmail" id="FBmail">
+          <input type="hidden" name="UserGender" id="UserGender">
+          <input type="hidden" name="fname" id="fname">
+          <input type="hidden" name="lname" id="lname">
           身分<label id="checkType" class="check"></label><br>
           <select name="UserType" class="s" id="UserType">
             <option value='P'>病友</option>
@@ -176,11 +181,6 @@
             <option value='RN'>護理師</option>
             <option value='N'>一般民眾</option>
           </select><br>
-          E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
-          <input type="hidden" name="FBmail" id="FBmail">
-          <input type="hidden" name="UserGender" id="UserGender">
-          <input type="hidden" name="fname" id="fname">
-          <input type="hidden" name="lname" id="lname">
           <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
         </form>
         <br>        

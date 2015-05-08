@@ -295,7 +295,11 @@ $(document).ready(function(){
 
 
 function setTimelinePage(){
-  $.post( "/setTimelinePage", {}, function(res){
+  //alert(window.location.toString().split('?')[1]);
+  // var regex = /profile\?(*)/gi;
+  // match = regex.exec(window.location);
+  // alert(match[0]);
+  $.post( "/setTimelinePage/"+window.location.toString().split('?')[1], {}, function(res){
     var author_avater = res["avatar"];
     var author = res["alias"];
     var timeInMs = new Date().getTime();

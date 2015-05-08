@@ -61,7 +61,7 @@ module.exports = {
         });
     },
 	setTimelinePage: function(req, res){
-        //var d = new Date().getTime();
+        var d = new Date().getTime();
         function checkLogin(cb){
             if(req.session.user === 'undefined' & req.param("account") === 'undefined'){
                 res.send(500,{err: "DB Error" });
@@ -78,7 +78,7 @@ module.exports = {
             cb(account);
         }
 
-        function findTimelineResponse(account, cb){
+        function findTimeline(account, cb){
             // notes: 未來可能需要用到.skip(10).limit(10)
             User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
                 if(err) {
@@ -92,6 +92,17 @@ module.exports = {
                     }else {
                         cb(result);
                     }
+                });
+            });
+        }
+
+        function findTimelineResponse(user, cb){
+            var async = require('async');
+            async.each(user.timelinesPost, function(timeline, callback) {
+                Timelines.find(timeline.id).populate('response', { sort: 'updatedAt DESC' }).exec(function (err, response) {
+                    var i=user.timelinesPost.indexOf(timeline);
+                    user.timelinesPost[i]=response[0];
+                    if(i+1==user.timelinesPost.length){cb(user);}
                 });
             });
         }
@@ -130,11 +141,13 @@ module.exports = {
 
         checkLogin(function(){
             findAccount(function(account){
-                findTimelineResponse(account, function(Response){
-                    findTimelineResponseAuthor(Response, function(Response2){
-                        //var n = new Date().getTime();
-                        //console.log(n-d);
-                        res.send({timelinesList: Response2.timelinesPost, avatar: Response.img, alias: Response.alias});
+                findTimeline(account, function(Timeline){
+                    findTimelineResponse(Timeline, function(TimelineResponse){
+                        findTimelineResponseAuthor(TimelineResponse, function(TimelineResponseAuthor){
+                            var n = new Date().getTime();
+                            console.log(n-d);
+                            res.send({timelinesList: TimelineResponseAuthor.timelinesPost, avatar: Response.img, alias: Response.alias});
+                        });
                     });
                 });
             });

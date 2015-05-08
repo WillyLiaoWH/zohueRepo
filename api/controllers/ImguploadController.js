@@ -118,7 +118,7 @@ module.exports = {
                         console.log(err);
                     });
                 } catch (e) {
-                    res.ok("檔案上傳失敗！");
+                    res.ok("不能上傳圖片以外的檔案！");
                 }
             });
         }

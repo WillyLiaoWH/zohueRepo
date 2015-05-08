@@ -65,7 +65,7 @@ module.exports.routes = {
   'POST /removeAddFriend': 'User.removeAddFriend',
   'POST /postTimeline': 'TimelinesController.postTimeline',
   'POST /delTimeline': 'TimelinesController.delTimeline',
-  'POST /setTimelinePage': 'Timelines.setTimelinePage',
+  'POST /setTimelinePage/:account': 'Timelines.setTimelinePage',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
