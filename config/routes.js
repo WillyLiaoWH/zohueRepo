@@ -67,6 +67,7 @@ module.exports.routes = {
   'POST /delTimeline': 'TimelinesController.delTimeline',
   'POST /setTimelinePage/:account': 'Timelines.setTimelinePage',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
+  'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchAlias': 'User.searchAlias',

@@ -40,12 +40,14 @@
 	padding-bottom:0px;
 	word-wrap: break-word; /*自動換行*/
 }
-.event_text, .event_img, .event_option  {
+.event_text, .event_option  {
 	padding:15px;
 	padding-top:0px;
 	word-wrap: break-word; /*自動換行*/
 }
 .event_img{
+	padding-left:15px;
+	padding-bottom:0px;
 	display: none;
 }
 
@@ -307,7 +309,7 @@ div.show-image input.delete {
 .n{
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: rgb(179, 194, 162);
 	padding: 4px 8px 4px 8px;
 	font-size:20px;
 	color:#533828;
@@ -315,9 +317,8 @@ div.show-image input.delete {
 	margin-bottom: 5px;
 	vertical-align: center;
 }
-
 .n:hover{
-	background-color: rgba(0,0,0,0);
+	background-color: rgb(241, 241, 241);
 	border: 1px solid rgba(102, 141, 60, 0.4);
 	color:#816C58;
 	vertical-align: center;

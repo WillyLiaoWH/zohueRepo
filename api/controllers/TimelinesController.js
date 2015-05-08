@@ -101,7 +101,7 @@ module.exports = {
                 if(err) {
                     console.log("err");
                 }else{
-                    cb(result2[0].author.alias, result2[0].author.img);
+                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account);
                 }
             });
         }
@@ -115,9 +115,10 @@ module.exports = {
 
             async.each(Response.timelinesPost, function(timeline, callback) {
                 async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img){
+                    AuthorQuery(timelineRes, function(alias, img, account){
                         var i=Response.timelinesPost.indexOf(timeline);
                         var j=timeline.response.indexOf(timelineRes);
+                        Response.timelinesPost[i].response[j].account=account;
                         Response.timelinesPost[i].response[j].alias=alias;
                         Response.timelinesPost[i].response[j].img=img;
 
