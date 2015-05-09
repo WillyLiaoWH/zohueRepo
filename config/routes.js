@@ -80,6 +80,7 @@ module.exports.routes = {
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
+  'GET /getProfile/:account':'User.getProfile',
   'GET /article/*': {
     view: 'article/index'
   },

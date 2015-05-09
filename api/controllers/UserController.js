@@ -243,6 +243,25 @@ module.exports = {
         console.log(req.session.user);
         res.send(JSON.stringify(req.session.user));
     },
+    getProfile: function(req ,res){
+        pri_account = req.session.user.account;
+        if (pri_account === req.param("account")){
+            res.send(JSON.stringfy(req.session.user))
+        }
+        else{
+            User.findByAccount(account).exec(function(err, usr) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                if (usr.length!=0) {
+                    res.send(JSON.stringfy(usr[0]));
+                } else {
+                    res.send(404, { err: "User not Found" });
+                }
+            }
+        });
+        }
+    },
 
     upload: function(req, res){
         console.log(req.param("avatar_data"));

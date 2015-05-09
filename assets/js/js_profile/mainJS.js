@@ -2,7 +2,6 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var board="";
 $(document).ready(function(){
   setTimelinePage();
-  //showProfile();
 
 
   $(document).on("click","#TimelineCommentSend",function(e){
@@ -311,6 +310,7 @@ function setTimelinePage(){
   });
   
   var ori_author=window.location.toString().split('?')[1];
+  showProfile(ori_author);
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     var author_avater = res["avatar"];
     var author = res["alias"];
@@ -552,14 +552,20 @@ function getXMLHttp(){
 }
 
 // ==== Profile 相關
-function showProfile(){
+function showProfile(ori_author){
   var xmlHttp = getXMLHttp();
   xmlHttp.onreadystatechange = function(){
     if(xmlHttp.readyState == 4){
       HandleResponse_showProfile(xmlHttp.responseText);
     }
   }
-  xmlHttp.open("GET", "/user/showProfile", true);
+  if (!ori_author){
+    xmlHttp.open("GET", "/user/showProfile",true);
+  }
+  else{
+    xmlHttp.open("GET", "/user/getProfile/"+ori_author, true);
+  }
+  
   xmlHttp.send(null);
 }
 function HandleResponse_showProfile(response){
