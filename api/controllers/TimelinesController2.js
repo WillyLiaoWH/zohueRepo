@@ -61,7 +61,7 @@ module.exports = {
         });
     },
 	setTimelinePage: function(req, res){
-        //var d = new Date().getTime();
+        var d = new Date().getTime();
         function checkLogin(cb){
             if(req.session.user === 'undefined' & req.param("account") === 'undefined'){
                 res.send(500,{err: "DB Error" });
@@ -78,7 +78,7 @@ module.exports = {
             cb(account);
         }
 
-        function findTimelineResponse(account, cb){
+        function findTimeline(account, cb){
             // notes: 未來可能需要用到.skip(10).limit(10)
             User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
                 if(err) {
@@ -96,12 +96,23 @@ module.exports = {
             });
         }
 
+        function findTimelineResponse(user, cb){
+            var async = require('async');
+            async.each(user.timelinesPost, function(timeline, callback) {
+                Timelines.find(timeline.id).populate('response', { sort: 'updatedAt DESC' }).exec(function (err, response) {
+                    var i=user.timelinesPost.indexOf(timeline);
+                    user.timelinesPost[i]=response[0];
+                    if(i+1==user.timelinesPost.length){cb(user);}
+                });
+            });
+        }
+
         function AuthorQuery(timelineRes, cb){
             TimelineResponse.find(timelineRes.id).populate('author').exec(function (err, result2) {
                 if(err) {
                     console.log("err");
                 }else{
-                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account);
+                    cb(result2[0].author.alias, result2[0].author.img);
                 }
             });
         }
@@ -115,10 +126,9 @@ module.exports = {
 
             async.each(Response.timelinesPost, function(timeline, callback) {
                 async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img, account){
+                    AuthorQuery(timelineRes, function(alias, img){
                         var i=Response.timelinesPost.indexOf(timeline);
                         var j=timeline.response.indexOf(timelineRes);
-                        Response.timelinesPost[i].response[j].account=account;
                         Response.timelinesPost[i].response[j].alias=alias;
                         Response.timelinesPost[i].response[j].img=img;
 
@@ -131,11 +141,13 @@ module.exports = {
 
         checkLogin(function(){
             findAccount(function(account){
-                findTimelineResponse(account, function(Response){
-                    findTimelineResponseAuthor(Response, function(Response2){
-                        //var n = new Date().getTime();
-                        //console.log(n-d);
-                        res.send({timelinesList: Response2.timelinesPost, avatar: Response.img, alias: Response.alias});
+                findTimeline(account, function(Timeline){
+                    findTimelineResponse(Timeline, function(TimelineResponse){
+                        findTimelineResponseAuthor(TimelineResponse, function(TimelineResponseAuthor){
+                            var n = new Date().getTime();
+                            console.log(n-d);
+                            res.send({timelinesList: TimelineResponseAuthor.timelinesPost, avatar: Response.img, alias: Response.alias});
+                        });
                     });
                 });
             });
