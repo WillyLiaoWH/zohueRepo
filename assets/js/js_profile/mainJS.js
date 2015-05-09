@@ -2,7 +2,7 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var board="";
 $(document).ready(function(){
   setTimelinePage();
-
+  //showProfile();
   $(document).on("click",".event_del",function(e){
     delTimeline(this.name);
     //postTimeline_comment(this.name)
@@ -487,6 +487,85 @@ function postTimeline_comment(id){
   }
 }
 
+//=====  LINK 
+function getXMLHttp(){
+  var xmlHttp
+  try{
+    //Firefox, Opera 8.0+, Safari
+    xmlHttp = new XMLHttpRequest();
+  }
+  catch(e){
+    //Internet Explorer
+    try{
+      xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e){
+      try{
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch(e){
+        alert("Your browser does not support AJAX!");
+        return false;
+      }
+    }
+  }
+  return xmlHttp;
+}
+
+// ==== Profile 相關
+function showProfile(){
+  var xmlHttp = getXMLHttp();
+  xmlHttp.onreadystatechange = function(){
+    if(xmlHttp.readyState == 4){
+      HandleResponse_showProfile(xmlHttp.responseText);
+    }
+  }
+  xmlHttp.open("GET", "/user/showProfile", true);
+  xmlHttp.send(null);
+}
+function HandleResponse_showProfile(response){
+  //alert(response);
+  obj = JSON.parse(response);
+
+  var email=obj.email;
+  var fname=obj.fname;
+  var lname=obj.lname;
+  var img=obj.img;
+  var gender=obj.gender;
+  var phone=obj.phone;
+  var postalCode=obj.postalCode;
+  var addressCity=obj.addressCity;
+  var addressDistrict=obj.addressDistrict;
+  var address=obj.address;
+  var birthday = obj.birthday;
+  var b = new Date(birthday)
+  var Y = b.getFullYear();
+  var M = b.getMonth()+1;
+  var D = b.getDate();
+  var primaryDisease=obj.primaryDisease;
+  var selfIntroduction=obj.selfIntroduction;
+
+  $('#email').text(email);
+  $('#name').text(fname+lname);
+  $('#avatar').attr('src',img);
+  if (gender=='M'){
+    gender="男";
+  }
+  else{
+    gender="女";
+  }
+  $('#gender').text(gender);
+  $('#phone').text(phone);
+  document.getElementById("postalCode").value = postalCode;
+  getCity(document.getElementById("postalCode").value);
+  document.getElementById("address").value = address;
+  document.getElementById("birthday_Y").value = Y-1911;
+  document.getElementById("birthday_M").value = M;
+  ShowDate(M, Y)
+  document.getElementById("birthday_D").value = D;
+  document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
+  document.getElementById("selfIntroduction").value = selfIntroduction;
+}
 
 // function updateResponseNum(){
 //   var url = document.URL;
