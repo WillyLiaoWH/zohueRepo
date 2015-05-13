@@ -8,6 +8,11 @@
 	margin-top:20px;
 }
 
+#enlManage{
+	display:none;
+	margin-top:20px;
+}
+
 .nav-pills li a:hover{
 	cursor:pointer;
 	font-weight:bold;

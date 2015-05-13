@@ -17,6 +17,7 @@
           <ul class="nav nav-pills">
             <li onclick="loadUserList()"><a>帳號管理</a></li>
             <li onclick="loadForumList()"><a>論壇管理</a></li>
+            <li onclick="loadEnlManage()"><a>發送電子報</a></li>
           </ul>
           <div id="backend_content">
             <div id="userManage">
@@ -84,6 +85,30 @@
                 </div>
               </div>
             </div>
+            <div id="enlManage">
+              <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h2>發送電子報</h2></div>
+                <div class="panel-body">
+                  <div class="col-md-7">
+                    <form >
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">主旨</label>
+                        <input type="text" class="form-control" placeholder="主旨">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">電子報內文</label>
+                        <textarea class="form-control" rows="10"></textarea>
+                      </div>
+                      <button class="btn btn-default" id="haha">上傳圖片</button>
+                      <button class="btn btn-default" onclick="sendNewsLetter()">發送電子報</button>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
 
           </div>
 

@@ -6,11 +6,19 @@ var myTable="";
 function loadUserList(){
   document.getElementById("userManage").style.display="block";
   document.getElementById("forumManage").style.display="none";
+  document.getElementById("enlManage").style.display="none";
 }
 
 function loadForumList(){
   document.getElementById("forumManage").style.display="block";
   document.getElementById("userManage").style.display="none";
+  document.getElementById("enlManage").style.display="none";
+}
+
+function loadEnlManage(){
+  document.getElementById("forumManage").style.display="none";
+  document.getElementById("userManage").style.display="none";
+  document.getElementById("enlManage").style.display="block";
 }
 
 $.get("/setBoardPage/"+board+"/"+tab, function(res){
@@ -59,5 +67,18 @@ function showReason(reportobj, ulId){
   }
   
 }
+
+function sendNewsLetter() {
+  alert("sss");
+    var link = "mailto:hoho1234578@gmail.com"
+             + "?cc=R03725041@ntu.edu.tw"
+             + "&subject=" + escape("This is my subject")
+             + "&body=" + escape(document.getElementById('myText').value)
+    ;
+
+    window.location.href = link;
+    alert("發送成功!");
+}
+
 
 
