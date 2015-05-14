@@ -150,7 +150,6 @@ function search() {
     if(res.err) {
       alert(res.err);
     } else {
-      alert(JSON.stringify(res));
       if(res.isFriend) {
         var allUser=res.users;
         var isFriend=res.isFriend;
