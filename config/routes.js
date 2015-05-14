@@ -70,7 +70,7 @@ module.exports.routes = {
   'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
-  'POST /searchAlias': 'User.searchAlias',
+  'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
 
   'GET /setFriendPage': 'User.setFriendPage',

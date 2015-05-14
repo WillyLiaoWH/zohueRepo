@@ -135,7 +135,10 @@ function setPage(page, keyword, sort) {
       var articleList=res.articlesList;
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML=boardCate+"-"+boardName;
+      document.getElementById('title').innerHTML="癌病友論壇-"+boardCate+"-"+boardName;
+      res.boardCate.sort(function(a, b) {
+        return a.id-b.id;
+      });
       var cateSelect=document.getElementById('boardCategory');
       for(var i=0; i<res.boardCate.length; i++) {
         var option=document.createElement('option');
@@ -150,6 +153,9 @@ function setPage(page, keyword, sort) {
           cateSelect.add(option);
         }
       }
+      res.boards.sort(function(a, b) {
+        return a.id-b.id;
+      });
       var boardSelect=document.getElementById('board');
       for(var i=0; i<res.boards.length; i++) {
         var option=document.createElement('option');

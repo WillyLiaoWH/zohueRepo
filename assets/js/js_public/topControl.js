@@ -386,11 +386,10 @@ function enterLogin(e) {
 
 function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
-  var posting = $.post( "/subscribe", { email: subscribeEmail}, function(res){
-    alert(res);
-  })
+    $.post( "/subscribe", { email: subscribeEmail}, function(res){
+      alert(res);
+    })
     .error(function(res){
       alert(res.responseJSON.err);
-      alert("fuck");
     });
 }
