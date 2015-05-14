@@ -48,6 +48,44 @@ module.exports = {
             	subs();
         	});
         });
-	}
+	},
+    sendNewsLetter: function(req, res) {
+        var mailSubject = req.param("mailSubject");
+        var mailContent = req.param("mailContent");
+        SubscribeEmail.find().exec(function(err, mailList) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                var receivers = "";
+                for(i=0; i<mailList.length; i++){
+                    receivers += mailList[i].email;
+                    receivers +=",";
+                }
+                var nodemailer = require('nodemailer');  
+                var transporter = nodemailer.createTransport({  
+                    service: 'Gmail',  
+                    auth: {  
+                        user: 'ntu.cpcp@gmail.com',  
+                        pass: 'lckung413'  
+                    }  
+                });  
+                var options = {  
+                    from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                    bcc: receivers,    
+                    subject: mailSubject,
+                    text: mailContent, 
+                };  
+                //發送信件方法  
+                transporter.sendMail(options, function(error, info){  
+                    if(error){  
+                        console.log(error);  
+                    }else{  
+                        console.log('訊息發送: ' + info.response);  
+                        res.send("SEND"); 
+                    }  
+                }); 
+            }
+        });
+    }
 };
 

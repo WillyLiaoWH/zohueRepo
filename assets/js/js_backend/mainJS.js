@@ -68,17 +68,19 @@ function showReason(reportobj, ulId){
   
 }
 
-function sendNewsLetter() {
-  alert("sss");
-    var link = "mailto:hoho1234578@gmail.com"
-             + "?cc=R03725041@ntu.edu.tw"
-             + "&subject=" + escape("This is my subject")
-             + "&body=" + escape(document.getElementById('myText').value)
-    ;
-
-    window.location.href = link;
-    alert("發送成功!");
+function sendNewsLetter(){
+  var mailSubject = document.getElementById("mailSubject").value;
+  var mailContent = document.getElementById("mailContent").value;
+  if (mailSubject=="" && mailContent==""){
+    alert("尚未輸入主旨或內文!");
+  }else{
+    $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
+      if (res == "SEND"){
+        alert("電子報發送成功!"); 
+      }else{
+        alert("電子報發送失敗!");
+      }
+    });
+  }
 }
-
-
 

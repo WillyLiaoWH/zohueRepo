@@ -71,6 +71,7 @@ module.exports.routes = {
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchAlias': 'User.searchAlias',
+  'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',

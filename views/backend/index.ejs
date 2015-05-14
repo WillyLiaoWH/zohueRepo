@@ -94,17 +94,16 @@
                     <form >
                       <div class="form-group">
                         <label for="exampleInputEmail1">主旨</label>
-                        <input type="text" class="form-control" placeholder="主旨">
+                        <input id="mailSubject" type="text" class="form-control" placeholder="主旨">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">電子報內文</label>
-                        <textarea class="form-control" rows="10"></textarea>
+                        <textarea id="mailContent" class="form-control" rows="10"></textarea>
                       </div>
-                      <button class="btn btn-default" id="haha">上傳圖片</button>
-                      <button class="btn btn-default" onclick="sendNewsLetter()">發送電子報</button>
+                      <!-- <button class="btn btn-default" id="haha">上傳圖片</button> -->
                     </form>
+                    <button class="btn btn-default" onclick="sendNewsLetter()">發送電子報</button>
                   </div>
-
                 </div>
               </div>
             </div>
