@@ -11,12 +11,24 @@ function loadUserList(){
 
   $.get("/getAllUsers", function(userList){
 
-    userTable="<tr><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>停權</th><tr>";
+    //alert(JSON.stringify(userList[2]));
+    //alert(JSON.stringify(userList[1].articlesPost[0].report.length));
+
+    userTable="<tr><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
     for(i=0; i<userList.length; i++) {
       fullName=userList[i].lname+" "+userList[i].fname;
       createdAt=new Date(userList[i].createdAt).toLocaleString();
       postNum = userList[i].articlesPost.length;
+      totalReport=0;
+      for(j=0; j<userList[i].articlesPost.length; j++) {
+        totalReport+=userList[i].articlesPost[j].report.length;
+      }
+      if(postNum==0){
+        avgReportNum = 0
+      }else{
+        avgReportNum = totalReport/postNum;
+      }
       
       userTable+="<tr><td>"+userList[i].account+"</td><td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+userList[i].gender+"</td>";
       userTable+="</td><td>"+userList[i].type+"</td><td>"+userList[i].email+"</td><td>"+createdAt+"</td>";
@@ -25,7 +37,7 @@ function loadUserList(){
       }else{
         userTable+="<td><span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span></td>";
       }
-      userTable+="<td>"+postNum+"</td><td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
+      userTable+="<td>"+postNum+"</td><td>"+avgReportNum+"</td><td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
     }
     
 

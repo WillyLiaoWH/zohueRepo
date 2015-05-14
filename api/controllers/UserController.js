@@ -744,11 +744,19 @@ module.exports = {
         }
     },
     getAllUsers: function(req, res){
-        User.find().populate('articlesPost').exec(function(err, userList) {
+        User.find().populate('articlesPost').exec(function(err, allUsers) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
-                res.send(userList);
+                sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
+                    if (err) {
+                        sails.log.error("ERR:", err);
+                        console.log("err2");
+                    }else {
+                        res.send(userList);
+                    }
+                });
+                //res.send(userList);
             }
         });
     },
