@@ -37,7 +37,13 @@ function loadUserList(){
       }else{
         userTable+="<td><span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span></td>";
       }
-      userTable+="<td>"+postNum+"</td><td>"+avgReportNum+"</td><td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
+      userTable+="<td>"+postNum+"</td>";
+      if (avgReportNum>=3){
+        userTable+="<td>"+avgReportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' title='文章平均檢舉數超過3'></span></td>";
+      }else{
+        userTable+="<td>"+avgReportNum+"</td>";
+      }
+      userTable+="<td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
     }
     
 
@@ -53,6 +59,11 @@ function loadForumList(){
   document.getElementById("enlManage").style.display="none";
 
   $.get("/setBoardPage/"+board+"/"+tab, function(res){
+
+    res.articlesList.sort(function(a, b) {
+      return b.report.length-a.report.length;
+    });
+
     var articleList=res.articlesList;
     var boardName=res.board.title;
     var boardCate=res.board.category.title;
