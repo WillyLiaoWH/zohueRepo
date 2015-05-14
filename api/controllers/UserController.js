@@ -653,8 +653,11 @@ module.exports = {
         }
     },
 
-    searchAlias: function(req, res) {
+    searchFriends: function(req, res) {
         var alias=req.param("alias");
+        var disease=req.param("disease");
+        var place=req.param("place");
+        var userType=req.param("userType");
         if(!req.session.user) {
             User.find({alias: {'contains': alias}}).exec(function(err, users) {
                 if(err) {
@@ -665,7 +668,7 @@ module.exports = {
                 }
             });
         } else {
-            User.find({alias: {'contains': alias}}).exec(function(err, allUser){
+            User.find({alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}}).exec(function(err, allUser){
                 if(err) {
                     res.send(500, {err: "DB Error"});
                 } else {
