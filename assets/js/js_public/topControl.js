@@ -106,6 +106,12 @@ function checkAuth() {
 
   $.get("/checkAuth", function(auth){
     if(auth) {
+
+      if(auth.account == 'zohueadmin'){
+        document.getElementById("backend").style.display="block";
+        document.getElementById("mobile_backend").style.display="block";
+      }
+
       var setUp=document.getElementById("setUp");
       setUp.style.display="inline";
 
@@ -388,6 +394,8 @@ function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
     $.post( "/subscribe", { email: subscribeEmail}, function(res){
       alert(res);
+      //document.getElementById("subscribeEmail").value="";
+
     })
     .error(function(res){
       alert(res.responseJSON.err);

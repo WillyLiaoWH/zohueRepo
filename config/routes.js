@@ -82,6 +82,7 @@ module.exports.routes = {
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /getProfile/:account':'User.getProfile',
+  'GET /getAllUsers':'User.getAllUsers',
   'GET /article/*': {
     view: 'article/index'
   },

@@ -700,7 +700,17 @@ module.exports = {
                 }
             });
         }
-    }
+    },
+    getAllUsers: function(req, res){
+        User.find().exec(function(err, userList) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                console.log(userList);
+                res.send(userList);
+            }
+        });
+    },
 
 
 

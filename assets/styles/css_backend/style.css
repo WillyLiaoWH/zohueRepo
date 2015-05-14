@@ -1,5 +1,5 @@
 #userManage{
-	display:block;
+	display:none;
 	margin-top:20px;
 }
 
@@ -28,7 +28,7 @@
 	height:45px;
 }
 
-#backend_articleList{
+#backend_articleList, #backend_userList{
 	margin-top:20px;
 }
 
@@ -41,4 +41,14 @@
 
 .glyphicon-exclamation-sign:hover{
 	color:#FF5151;'
+}
+
+.glyphicon-remove-circle{
+	color:#CE0000;
+	font-size: 20px;
+}
+
+.glyphicon-ok-circle{
+	color:#467500;
+	font-size: 20px
 }
