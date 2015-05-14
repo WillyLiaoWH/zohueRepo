@@ -135,7 +135,7 @@ function setPage(page, keyword, sort) {
       var articleList=res.articlesList;
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML=boardCate+"-"+boardName;
+      document.getElementById('title').innerHTML="癌病友論壇-"+boardCate+"-"+boardName;
       res.boardCate.sort(function(a, b) {
         return a.id-b.id;
       });
