@@ -391,6 +391,5 @@ function subscribe(){
   })
     .error(function(res){
       alert(res.responseJSON.err);
-      alert("fuck");
     });
 }

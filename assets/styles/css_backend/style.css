@@ -15,7 +15,8 @@
 
 .nav-pills li a:hover{
 	cursor:pointer;
-	font-weight:bold;
+	color: #CE0000;
+	background-color: transparent;
 }
 
 .nav-pills li a{

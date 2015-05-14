@@ -175,7 +175,7 @@ button, input[type="button"], input[type="submit"]{
 	line-height:45px;
 }
 
-#setUp, #friends, #mobile_friends{
+#setUp, #friends, #mobile_friends, #mobile_backend{
 	display:none;
 }
 
@@ -213,6 +213,7 @@ button, input[type="button"], input[type="submit"]{
 	//color:#0097AC;
 	color:#D26900;
 	//font-size:22px;
+	
 }
 
 
