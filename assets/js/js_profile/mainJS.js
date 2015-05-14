@@ -560,16 +560,19 @@ function showProfile(ori_author){
     }
   }
   if (!ori_author){
-    xmlHttp.open("GET", "/user/showProfile",true);
+    xmlHttp.open("GET", "/showProfile",true);
   }
   else{
-    xmlHttp.open("GET", "/user/getProfile/"+ori_author, true);
+    var addr="/getProfile/"+ori_author;
+    console.log(addr);
+    xmlHttp.open("GET", addr, true);
+    $('.auth_btn').hide()
   }
   
   xmlHttp.send(null);
 }
 function HandleResponse_showProfile(response){
-  //alert(response);
+
   obj = JSON.parse(response);
 
   var email=obj.email;
@@ -587,8 +590,8 @@ function HandleResponse_showProfile(response){
   var Y = b.getFullYear();
   var M = b.getMonth()+1;
   var D = b.getDate();
-  var primaryDisease=obj.primaryDisease;
-  var selfIntroduction=obj.selfIntroduction;
+  // var primaryDisease=obj.primaryDisease;
+  // var selfIntroduction=obj.selfIntroduction;
 
   $('#email').text(email);
   $('#name').text(fname+lname);
@@ -601,15 +604,9 @@ function HandleResponse_showProfile(response){
   }
   $('#gender').text(gender);
   $('#phone').text(phone);
-  document.getElementById("postalCode").value = postalCode;
-  getCity(document.getElementById("postalCode").value);
-  document.getElementById("address").value = address;
-  document.getElementById("birthday_Y").value = Y-1911;
-  document.getElementById("birthday_M").value = M;
-  ShowDate(M, Y)
-  document.getElementById("birthday_D").value = D;
-  document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
-  document.getElementById("selfIntroduction").value = selfIntroduction;
+  $("#bday").text((Y-1911).toString()+" 年 "+M.toString()+" 月 "+D.toString())
+  $('#city').text(addressCity);
+
 }
 
 // function updateResponseNum(){
