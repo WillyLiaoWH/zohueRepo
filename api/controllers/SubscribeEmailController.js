@@ -7,6 +7,21 @@
 
 module.exports = {
 	subscribe: function(req, res) {
+        var email="";
+        var login=0;
+
+        function getEmail(cb){
+            if(typeof req.session.user == 'undefined'){
+                email=req.param("email");
+                login = 0;
+                cb();
+            }else{
+                email = req.session.user.email;
+                login = 1;
+                cb();
+            }
+        }
+
 		function checkSpec(cb){
 			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
 			if(re.test(email)){
@@ -22,7 +37,18 @@ module.exports = {
             	    console.log(error);
             	} else {
             		if(response.length > 0){
-            			res.send('已經訂閱過囉！');
+                        if(login==0){
+                            res.send('已經訂閱過囉！');
+                        }
+                        else{
+                            SubscribeEmail.destroy({email: email}).exec(function(err){
+                                if(err) {
+                                    res.send(500,{err: "DB Error" });
+                                } else {
+                                    res.send('您已取消訂閱電子報，再按一次即可恢復訂閱！');
+                                }
+                            });
+                        }
             		}else{
             			cb();
             		}
@@ -40,13 +66,12 @@ module.exports = {
         	});   
         }
 
-
-        var email=req.param("email");
-        // 用 call back 先檢查 session 是否有刪除 timeline 之權限
-        checkSpec(function(){
-        	checkExist(function(){
-            	subs();
-        	});
+        getEmail(function(){
+            checkSpec(function(){
+                checkExist(function(){
+                    subs();
+                });
+            });
         });
 	},
     sendNewsLetter: function(req, res) {
