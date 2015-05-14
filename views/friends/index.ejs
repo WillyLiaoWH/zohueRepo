@@ -17,8 +17,41 @@
     <div class="container-fluid"  style="height: 100%">
         <!-- 正文 -->
         <h1 style="color:#D26900;">朋友</h1>
-        搜尋暱稱：<input type="text" name="alias" id="alias">
-        <input type="button" value="搜尋" onclick="searchAlias()"><br>
+        搜尋：
+        暱稱<div id="inputAlias" style="display: inline;"><input type="text" name="alias" id="alias"></div>
+        疾病<div id="inputDisease" style="display: inline;">
+            <select id="disease">
+                <option value="" selected="true">請選擇</option>
+                <option value='鼻咽癌'>鼻咽癌</option>
+                <option value='鼻竇癌'>鼻竇癌</option>
+                <option value='副鼻竇癌'>副鼻竇癌</option>
+                <option value='口腔癌'>口腔癌</option>
+                <option value='口咽癌'>口咽癌</option>
+                <option value='下咽癌'>下咽癌</option>
+                <option value='喉癌'>喉癌</option>
+                <option value='唾液腺癌'>唾液腺癌</option>
+                <option value='甲狀腺癌'>甲狀腺癌</option>
+                <option value='其它'>其它</option>
+            </select>
+        </div>
+        居住地<div id="inputPlace" style="display: inline;">
+            <select id="place">
+                <option value="" selected="true">請選擇</option>
+                <script>ShowAllCity();</script>
+            </select>
+        </div>
+        身分<div id="inputUserType" style="display: inline;">
+            <select id="userType">
+                <option value="" selected="true">請選擇</option>
+                <option value='P'>病友</option>
+                <option value='F'>家屬</option>
+                <option value='S'>社工師</option>
+                <option value='D'>醫生</option>
+                <option value='RN'>護理師</option>
+                <option value='N'>一般民眾</option>
+            </select>
+        </div>
+        <input type="button" value="搜尋" onclick="search()"><br>
         <div id="searchList" style="float: left; width: 225px; height: 100%">
         </div>
         <div id="friendsList" style="float: left; width: 225px; height: 100%">

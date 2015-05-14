@@ -60,6 +60,7 @@ $(document).ready(function(){
       document.getElementById("friendsList").innerHTML=html;
     }
   });
+  
 });
 
 function removeBlack(id) {
@@ -140,9 +141,12 @@ function removeAddFriend(id) {
   });
 }
 
-function searchAlias() {
+function search() {
   var alias=document.getElementById("alias").value;
-  $.post("/searchAlias", {alias: alias}, function(res) {
+  var disease=$("#disease").val();
+  var place=$("#place").val();
+  var userType=$("#userType").val();
+  $.post("/searchFriends", {alias: alias, disease: disease, place: place, userType: userType}, function(res) {
     if(res.err) {
       alert(res.err);
     } else {
@@ -233,4 +237,22 @@ function searchAlias() {
       }
     }
   });
+}
+
+/************************** 郵遞區號相關 **************************/
+function ShowAllCity(){
+  $.get("/postallist/getall", function(res){
+      if(res.err) {
+        alert(res.err);
+      } else {
+        HandleResponse_ShowAllCity(res);
+      }
+  });
+}
+function HandleResponse_ShowAllCity(response){
+  obj_postal = JSON.parse(response);
+  for(var r in obj_postal){
+    var addressCity = obj_postal[r].addressCity;
+    $("#place").append('<option value='+addressCity+'>'+addressCity+'</option>');
+  }
 }

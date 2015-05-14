@@ -70,7 +70,7 @@ module.exports.routes = {
   'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
-  'POST /searchAlias': 'User.searchAlias',
+  'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
 
   'GET /setFriendPage': 'User.setFriendPage',
@@ -81,6 +81,7 @@ module.exports.routes = {
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
+  'GET /showProfile':'User.showProfile',
   'GET /getProfile/:account':'User.getProfile',
   'GET /getAllUsers':'User.getAllUsers',
   'GET /article/*': {

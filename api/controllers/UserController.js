@@ -243,10 +243,12 @@ module.exports = {
         console.log(req.session.user);
         res.send(JSON.stringify(req.session.user));
     },
-    getProfile: function(req ,res){
+    getProfile: function(req, res){
         pri_account = req.session.user.account;
-        if (pri_account === req.param("account")){
-            res.send(JSON.stringfy(req.session.user))
+        var account=req.param("account");
+        
+        if (pri_account === account){
+            res.send(JSON.stringify(req.session.user))
         }
         else{
             User.findByAccount(account).exec(function(err, usr) {
@@ -254,7 +256,7 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 if (usr.length!=0) {
-                    res.send(JSON.stringfy(usr[0]));
+                    res.send(JSON.stringify(usr[0]));
                 } else {
                     res.send(404, { err: "User not Found" });
                 }
@@ -653,8 +655,11 @@ module.exports = {
         }
     },
 
-    searchAlias: function(req, res) {
+    searchFriends: function(req, res) {
         var alias=req.param("alias");
+        var disease=req.param("disease");
+        var place=req.param("place");
+        var userType=req.param("userType");
         if(!req.session.user) {
             User.find({alias: {'contains': alias}}).exec(function(err, users) {
                 if(err) {
@@ -665,40 +670,77 @@ module.exports = {
                 }
             });
         } else {
-            User.find({alias: {'contains': alias}}).exec(function(err, allUser){
-                if(err) {
-                    res.send(500, {err: "DB Error"});
-                } else {
-                    var isFriend=[];
-                    User.find({account: req.session.user.account}).exec(function(err, user) {
-                        if(err) {
-                            console.log(err);
-                            res.send({err: "DB error"});
-                        } else {
-                            for(i=0; i<allUser.length; i++) {
-                                if(allUser[i].id!=req.session.user.id) {
-                                    if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
-                                        isFriend.push(-2);
-                                    } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
-                                        isFriend.push(3);
-                                    } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
-                                        isFriend.push(2);
-                                    } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
-                                        isFriend.push(-1);
-                                    } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
-                                        isFriend.push(1);
+            if(disease!=""||place!="") {
+                User.find({alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}}).exec(function(err, allUser){
+                    if(err) {
+                        res.send(500, {err: "DB Error"});
+                    } else {
+                        var isFriend=[];
+                        User.find({account: req.session.user.account}).exec(function(err, user) {
+                            if(err) {
+                                console.log(err);
+                                res.send({err: "DB error"});
+                            } else {
+                                for(i=0; i<allUser.length; i++) {
+                                    if(allUser[i].id!=req.session.user.id) {
+                                        if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(-2);
+                                        } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(3);
+                                        } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(2);
+                                        } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(-1);
+                                        } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(1);
+                                        } else {
+                                            isFriend.push(0);
+                                        }
                                     } else {
-                                        isFriend.push(0);
+                                        isFriend.push(-2);
                                     }
-                                } else {
-                                    isFriend.push(-2);
                                 }
+                                res.send({users: allUser, isFriend: isFriend})
                             }
-                            res.send({users: allUser, isFriend: isFriend})
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+            } else {
+                User.find({alias: {'contains': alias}, type: {'contains': userType}}).exec(function(err, allUser){
+                    if(err) {
+                        res.send(500, {err: "DB Error"});
+                    } else {
+                        var isFriend=[];
+                        User.find({account: req.session.user.account}).exec(function(err, user) {
+                            if(err) {
+                                console.log(err);
+                                res.send({err: "DB error"});
+                            } else {
+                                for(i=0; i<allUser.length; i++) {
+                                    if(allUser[i].id!=req.session.user.id) {
+                                        if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(-2);
+                                        } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(3);
+                                        } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(2);
+                                        } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(-1);
+                                        } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
+                                            isFriend.push(1);
+                                        } else {
+                                            isFriend.push(0);
+                                        }
+                                    } else {
+                                        isFriend.push(-2);
+                                    }
+                                }
+                                res.send({users: allUser, isFriend: isFriend})
+                            }
+                        });
+                    }
+                });
+            }
         }
     },
     getAllUsers: function(req, res){
