@@ -125,8 +125,10 @@ function sendNewsLetter(){
     alert("尚未輸入主旨或內文!");
   }else{
     $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
+      drawszlider(121, 56);
       if (res == "SEND"){
-        alert("電子報發送成功!"); 
+        alert("電子報發送成功!");
+        //document.getElementById("subscribeEmail").value=""; 
       }else{
         alert("電子報發送失敗!");
       }
@@ -134,3 +136,8 @@ function sendNewsLetter(){
   }
 }
 
+// function drawszlider(ossz, meik){
+//     var szazalek=Math.round((meik*100)/ossz);
+//     document.getElementById("szliderbar").style.width=szazalek+'%';
+//     document.getElementById("szazalek").innerHTML=szazalek+'%';
+// }

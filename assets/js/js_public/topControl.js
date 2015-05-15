@@ -394,10 +394,12 @@ function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
     $.post( "/subscribe", { email: subscribeEmail}, function(res){
       alert(res);
-      //document.getElementById("subscribeEmail").value="";
+      document.getElementById("mailSubject").value="";
+      document.getElementById("mailContent").value="";
 
     })
     .error(function(res){
       alert(res.responseJSON.err);
     });
 }
+
