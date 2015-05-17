@@ -60,9 +60,9 @@ function loadForumList(){
 
   $.get("/setBoardPage/"+board+"/"+tab, function(res){
 
-    res.articlesList.sort(function(a, b) {
-      return b.report.length-a.report.length;
-    });
+    // res.articlesList.sort(function(a, b) {
+    //   return b.report.length-a.report.length;
+    // });
 
     var articleList=res.articlesList;
     var boardName=res.board.title;
@@ -124,20 +124,22 @@ function sendNewsLetter(){
   if (mailSubject=="" && mailContent==""){
     alert("尚未輸入主旨或內文!");
   }else{
+    document.getElementById("mailSpinner").style.display="block";
+    document.getElementById("mailEdit").style.display="none";
     $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
-      drawszlider(121, 56);
       if (res == "SEND"){
         alert("電子報發送成功!");
-        //document.getElementById("subscribeEmail").value=""; 
+        document.getElementById("mailSubject").value="";
+        document.getElementById("mailContent").value="";
+        document.getElementById("mailEdit").style.display="block"; 
+        document.getElementById("mailSpinner").style.display="none";
       }else{
         alert("電子報發送失敗!");
+        document.getElementById("mailSubject").value="";
+        document.getElementById("mailContent").value="";
+        document.getElementById("mailEdit").style.display="block"; 
+        document.getElementById("mailSpinner").style.display="none";
       }
     });
   }
 }
-
-// function drawszlider(ossz, meik){
-//     var szazalek=Math.round((meik*100)/ossz);
-//     document.getElementById("szliderbar").style.width=szazalek+'%';
-//     document.getElementById("szazalek").innerHTML=szazalek+'%';
-// }
