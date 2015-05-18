@@ -84,8 +84,12 @@ function loadForumList(){
       articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td>";
       if(reportNum>=3){
         reportobj=articleList[i].report;
-        articleTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' onClick='showReason(reportobj, "+i+")'></span>";
-        articleTable+="<div id='reportReason_"+i+"' style='display:none;'></div></td><tr>";
+        var reasonHtml = reasonHtmlCreate(reportobj);
+        articleTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' onClick='showReason("+i+")'></span>";
+        articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td><tr>";
+
+
+
       }else{
         articleTable+="<td>"+reportNum+"</td><tr>";
       }
@@ -102,20 +106,20 @@ function loadEnlManage(){
   document.getElementById("enlManage").style.display="block";
 }
 
-
-
-function showReason(reportobj, ulId){
+function reasonHtmlCreate(reportobj){
   var reportReasonHtml="檢舉理由：";
-    for(k=0; k<reportobj.length; k++){
-      reportReasonHtml+="<ul><li>"+reportobj[k].reason+"</li></ul>";
-    }
-  document.getElementById("reportReason_"+ulId).innerHTML=reportReasonHtml;
-  if(document.getElementById("reportReason_"+ulId).style.display=="none"){
-    document.getElementById("reportReason_"+ulId).style.display="block";
-  }else{
-    document.getElementById("reportReason_"+ulId).style.display="none";
+  for(k=0; k<reportobj.length; k++){
+    reportReasonHtml+="<ul><li>"+reportobj[k].reason+"</li></ul>";
   }
-  
+  return(reportReasonHtml);
+}
+
+function showReason(ulId){
+  if(document.getElementById("reportReason_"+ulId).style.display=="none"){
+     document.getElementById("reportReason_"+ulId).style.display="block";
+   }else{
+     document.getElementById("reportReason_"+ulId).style.display="none";
+   }
 }
 
 function sendNewsLetter(){
