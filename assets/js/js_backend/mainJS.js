@@ -3,6 +3,7 @@ var board=1;
 var tab="all";
 var userTable="";
 var articleTable="";
+var articleList="";
 
 function loadUserList(){
   document.getElementById("userManage").style.display="block";
@@ -64,11 +65,11 @@ function loadForumList(){
     //   return b.report.length-a.report.length;
     // });
 
-    var articleList=res.articlesList;
+    articleList=res.articlesList;
     var boardName=res.board.title;
     var boardCate=res.board.category.title;
-
-    articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th>檢舉次數</th><tr>";
+    //sortArticles(articleList);
+    articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles(articleList)'>檢舉次數</th><tr>";
     for(i=0; i<articleList.length; i++) {
       clickNum=articleList[i].clickNum;
       responseNum=articleList[i].responseNum;
@@ -87,9 +88,6 @@ function loadForumList(){
         var reasonHtml = reasonHtmlCreate(reportobj);
         articleTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' onClick='showReason("+i+")'></span>";
         articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td><tr>";
-
-
-
       }else{
         articleTable+="<td>"+reportNum+"</td><tr>";
       }
@@ -105,6 +103,16 @@ function loadEnlManage(){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="block";
 }
+
+function sortArticles(articlesList){
+  alert(JSON.stringify(articlesList));
+  var test=articlesList.sort(function(a, b) {
+      return b.report.length-a.report.length;
+  });
+  alert(JSON.stringify(test));
+  return test;
+}
+
 
 function reasonHtmlCreate(reportobj){
   var reportReasonHtml="檢舉理由：";
