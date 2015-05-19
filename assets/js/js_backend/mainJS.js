@@ -12,9 +12,6 @@ function loadUserList(){
 
   $.get("/getAllUsers", function(userList){
 
-    //alert(JSON.stringify(userList[2]));
-    //alert(JSON.stringify(userList[1].articlesPost[0].report.length));
-
     userTable="<tr><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
     for(i=0; i<userList.length; i++) {
@@ -72,7 +69,8 @@ function loadForumList(articleList){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
 
-  articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles()'>檢舉次數</th><tr>";
+  articleTable="<tr><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
+  articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
     for(i=0; i<articleList.length; i++) {
       clickNum=articleList[i].clickNum;
       responseNum=articleList[i].responseNum;
@@ -85,7 +83,7 @@ function loadForumList(articleList){
       reportNum=articleList[i].report.length;
 
       articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
-      articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td>";
+      articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
       if(reportNum>=3){
         reportobj=articleList[i].report;
         var reasonHtml = reasonHtmlCreate(reportobj);
@@ -97,47 +95,6 @@ function loadForumList(articleList){
     }
   document.getElementById("backend_articleList").innerHTML = articleTable;
 }
-
-// function loadForumList_backup(){
-//   document.getElementById("forumManage").style.display="block";
-//   document.getElementById("userManage").style.display="none";
-//   document.getElementById("enlManage").style.display="none";
-
-//   $.get("/setBoardPage/"+board+"/"+tab, function(res){
-
-
-//     articleList=res.articlesList;
-//     var boardName=res.board.title;
-//     var boardCate=res.board.category.title;
-
-//     articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles(articleList)'>檢舉次數</th><tr>";
-//     for(i=0; i<articleList.length; i++) {
-//       clickNum=articleList[i].clickNum;
-//       responseNum=articleList[i].responseNum;
-//       niceNum=articleList[i].nicer.length;
-//       lastTime=new Date(articleList[i].lastResponseTime).toLocaleString();
-//       lastResponseTime=lastTime.slice(0, lastTime.length-3);
-//       createdAt=new Date(articleList[i].createdAt).toLocaleString();
-//       postTime=createdAt.slice(0,createdAt.length-3);
-//       authorType=articleList[i].author.type;
-//       reportNum=articleList[i].report.length;
-
-//       articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
-//       articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td>";
-//       if(reportNum>=3){
-//         reportobj=articleList[i].report;
-//         var reasonHtml = reasonHtmlCreate(reportobj);
-//         articleTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' onClick='showReason("+i+")'></span>";
-//         articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td><tr>";
-//       }else{
-//         articleTable+="<td>"+reportNum+"</td><tr>";
-//       }
-//     }
-//     document.getElementById("backend_articleList").innerHTML = articleTable;
-//   }).error(function(res){
-//     alert(res.responseJSON.err);
-//   });
-// }
 
 function loadEnlManage(){
   document.getElementById("forumManage").style.display="none";
