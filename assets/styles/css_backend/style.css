@@ -15,7 +15,7 @@
 
 .nav-pills li a:hover{
 	cursor:pointer;
-	color: #CE0000;
+	color: #D26900;
 	background-color: transparent;
 }
 
@@ -53,6 +53,10 @@
 	font-size: 20px
 }
 
+th:hover{
+  color:#337ab7;
+  cursor:pointer;
+}
 
 /********For spinners********/
 #mailSpinner{

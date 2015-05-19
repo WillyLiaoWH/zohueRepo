@@ -39,6 +39,10 @@ $(document).ready(function(){
   $(document).on("click",".auth_set_self",function(e){
     auth_set(this.name,"self");
   });
+
+  $(document).on("click",".profile_auth",function(e){
+    profile_auth(this.name);
+  });
   
 
   
@@ -88,7 +92,7 @@ $(document).ready(function(){
   //     document.getElementById('reasonInput').style.display="none";
   //   }
   // });
-});
+//});
 
 // var nice;
 // function setPage() {
@@ -103,7 +107,7 @@ $(document).ready(function(){
 //       document.getElementById("report").style.display="inline";
 //       document.getElementById("artContent").className = "span10";
 //     }
-//   });
+   });
 
 //   $.get("/setArticlePage/"+article_id, function(res){
 //     articleList=res.articleList;
@@ -511,6 +515,13 @@ function setTimelinePage(pri_account, pri_id){
   .error(function(res){
     alert(res.responseJSON.err);
   });
+}
+
+function profile_auth(route){
+  $.get("/setProfileAuth/"+route,function(res){
+    alert(res);
+  })
+  
 }
 
 function postTimeline(){

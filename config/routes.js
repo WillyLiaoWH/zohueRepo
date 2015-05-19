@@ -87,6 +87,7 @@ module.exports.routes = {
   'GET /showProfile':'User.showProfile',
   'GET /getProfile/:account':'User.getProfile',
   'GET /getAllUsers':'User.getAllUsers',
+  'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
   'GET /article/*': {
     view: 'article/index'
   },

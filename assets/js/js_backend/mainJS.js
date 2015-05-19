@@ -12,9 +12,6 @@ function loadUserList(){
 
   $.get("/getAllUsers", function(userList){
 
-    //alert(JSON.stringify(userList[2]));
-    //alert(JSON.stringify(userList[1].articlesPost[0].report.length));
-
     userTable="<tr><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
     for(i=0; i<userList.length; i++) {
@@ -54,22 +51,26 @@ function loadUserList(){
   });
 }
 
-function loadForumList(){
+function getart(callback){
+  $.get("/setBoardPage/"+board+"/"+tab, function(res){
+    
+    articleList=res.articlesList;
+    var boardName=res.board.title;
+    var boardCate=res.board.category.title;
+
+    callback(articleList);
+  }).error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+
+function loadForumList(articleList){
   document.getElementById("forumManage").style.display="block";
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
 
-  $.get("/setBoardPage/"+board+"/"+tab, function(res){
-
-    // res.articlesList.sort(function(a, b) {
-    //   return b.report.length-a.report.length;
-    // });
-
-    articleList=res.articlesList;
-    var boardName=res.board.title;
-    var boardCate=res.board.category.title;
-    //sortArticles(articleList);
-    articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles(articleList)'>檢舉次數</th><tr>";
+  articleTable="<tr><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
+  articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
     for(i=0; i<articleList.length; i++) {
       clickNum=articleList[i].clickNum;
       responseNum=articleList[i].responseNum;
@@ -82,7 +83,7 @@ function loadForumList(){
       reportNum=articleList[i].report.length;
 
       articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
-      articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td>";
+      articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
       if(reportNum>=3){
         reportobj=articleList[i].report;
         var reasonHtml = reasonHtmlCreate(reportobj);
@@ -92,10 +93,7 @@ function loadForumList(){
         articleTable+="<td>"+reportNum+"</td><tr>";
       }
     }
-    document.getElementById("backend_articleList").innerHTML = articleTable;
-  }).error(function(res){
-    alert(res.responseJSON.err);
-  });
+  document.getElementById("backend_articleList").innerHTML = articleTable;
 }
 
 function loadEnlManage(){
@@ -104,13 +102,13 @@ function loadEnlManage(){
   document.getElementById("enlManage").style.display="block";
 }
 
-function sortArticles(articlesList){
-  alert(JSON.stringify(articlesList));
-  var test=articlesList.sort(function(a, b) {
+function sortArticles(){
+  
+  articleList=articleList.sort(function(a, b) {
       return b.report.length-a.report.length;
   });
-  alert(JSON.stringify(test));
-  return test;
+  //alert("sort"+JSON.stringify(articleList));
+  loadForumList(articleList);
 }
 
 
