@@ -39,6 +39,9 @@ module.exports = {
       collection: 'TimelineReport',
       via: 'timeline'
     },
+    auth:{
+      type:'string',
+    }
     // lastResponseTime: {
     //   type: 'datetime'
     // }

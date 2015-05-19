@@ -72,6 +72,7 @@ module.exports.routes = {
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
+  'POST /auth_setTimeline':'Timelines.auth_set',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',

@@ -14,6 +14,22 @@ $(document).ready(function(){
   $(document).on("click",".comment_del",function(e){
     delTimeline_comment(this.name);
   });
+
+  $(document).on("click",".auth_set_friend",function(e){
+    auth_set(this.name,"friend");
+  });
+
+  $(document).on("click",".auth_set_doctor",function(e){
+    auth_set(this.name,"doctor");
+  });
+
+  $(document).on("click",".auth_set_all",function(e){
+    auth_set(this.name,"all");
+  });
+
+  $(document).on("click",".auth_set_self",function(e){
+    auth_set(this.name,"self");
+  });
   
 
   
@@ -353,7 +369,6 @@ function setTimelinePage(){
         }else{ // 非原作者
           var comment_option = '<li><a arget="_blank">檢舉</a></li>';
         }
-
         if(comment_contentImg){var display_img='block';}else{var display_img='none';}
         append_element_comment = append_element_comment+'<div id="container_timeline_res container-fluid">\
                       <div id="sidebar_timeline_res">\
@@ -389,8 +404,22 @@ function setTimelinePage(){
       if(pri_account==ori_author || !ori_author){ // 原作者
         var event_option = '<li><a target="_blank">編輯</a></li>\
                               <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
+        var auth_option='<div class="btn-group" style="float:none;">\
+                    <button type="button" class="n" data-toggle="dropdown">\
+                      <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
+                      &nbsp;權限\
+                      <span class="caret"></span>\
+                    </button>\
+                    <ul class="dropdown-menu n" role="menu">\
+                     <li><a class="auth_set_all" name="'+timelinesID+'">每個人</a></li>\
+                          <li><a class="auth_set_friend" name="'+timelinesID+'">好友</a></li>\
+                          <li><a class="auth_set_doctor" name="'+timelinesID+'">醫生</a></li>\
+                          <li><a class="auth_set_self" name="'+timelinesID+'">只有自己</a></li>\
+                    </ul>\
+                  </div>'
       }else{ // 非原作者
         var event_option = '<li><a target="_blank">檢舉</a></li>';
+        var auth_option="";
       }
       if(contentImg){var display_img='block';}else{var display_img='none';}
       var append_element ='<div class="container-fluid timeline_event" style="margin-top:30px;">\
@@ -422,6 +451,7 @@ function setTimelinePage(){
                       '+event_option+'\
                     </ul>\
                   </div>\
+                  '+auth_option+'\
                 </div>\
                 <div class="row-fluid event_commentlist">\
                   '+append_element_comment+'\
@@ -525,6 +555,16 @@ function delTimeline_comment(id){
     });
   }
 }
+
+function auth_set(id,target){
+  $.post("/auth_setTimeline",{id:id , target:target},function(res){
+    alert(res);
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+
 
 //=====  LINK 
 function getXMLHttp(){
