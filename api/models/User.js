@@ -82,6 +82,10 @@ module.exports = {
       collection: 'response',
       via: 'author'
     },
+    Userauth:{
+      collection:'Userauth',
+      via: 'user'
+    },
     FBmail:{
       type:'string'
     },
