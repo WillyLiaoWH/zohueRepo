@@ -54,22 +54,25 @@ function loadUserList(){
   });
 }
 
-function loadForumList(){
+function getart(callback){
+  $.get("/setBoardPage/"+board+"/"+tab, function(res){
+    
+    articleList=res.articlesList;
+    var boardName=res.board.title;
+    var boardCate=res.board.category.title;
+
+    callback(articleList);
+  }).error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+
+function loadForumList(articleList){
   document.getElementById("forumManage").style.display="block";
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
 
-  $.get("/setBoardPage/"+board+"/"+tab, function(res){
-
-    // res.articlesList.sort(function(a, b) {
-    //   return b.report.length-a.report.length;
-    // });
-
-    articleList=res.articlesList;
-    var boardName=res.board.title;
-    var boardCate=res.board.category.title;
-    //sortArticles(articleList);
-    articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles(articleList)'>檢舉次數</th><tr>";
+  articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles()'>檢舉次數</th><tr>";
     for(i=0; i<articleList.length; i++) {
       clickNum=articleList[i].clickNum;
       responseNum=articleList[i].responseNum;
@@ -92,11 +95,49 @@ function loadForumList(){
         articleTable+="<td>"+reportNum+"</td><tr>";
       }
     }
-    document.getElementById("backend_articleList").innerHTML = articleTable;
-  }).error(function(res){
-    alert(res.responseJSON.err);
-  });
+  document.getElementById("backend_articleList").innerHTML = articleTable;
 }
+
+// function loadForumList_backup(){
+//   document.getElementById("forumManage").style.display="block";
+//   document.getElementById("userManage").style.display="none";
+//   document.getElementById("enlManage").style.display="none";
+
+//   $.get("/setBoardPage/"+board+"/"+tab, function(res){
+
+
+//     articleList=res.articlesList;
+//     var boardName=res.board.title;
+//     var boardCate=res.board.category.title;
+
+//     articleTable="<tr><th style='width:110px;'>文章類別</th><th style='width:600px;'>文章標題</th><th style='width:200px;'>發表人</th><th style='width:200px;'>身分別</th><th style='width:200px;'>發表時間</th><th onclick='sortArticles(articleList)'>檢舉次數</th><tr>";
+//     for(i=0; i<articleList.length; i++) {
+//       clickNum=articleList[i].clickNum;
+//       responseNum=articleList[i].responseNum;
+//       niceNum=articleList[i].nicer.length;
+//       lastTime=new Date(articleList[i].lastResponseTime).toLocaleString();
+//       lastResponseTime=lastTime.slice(0, lastTime.length-3);
+//       createdAt=new Date(articleList[i].createdAt).toLocaleString();
+//       postTime=createdAt.slice(0,createdAt.length-3);
+//       authorType=articleList[i].author.type;
+//       reportNum=articleList[i].report.length;
+
+//       articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
+//       articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td>";
+//       if(reportNum>=3){
+//         reportobj=articleList[i].report;
+//         var reasonHtml = reasonHtmlCreate(reportobj);
+//         articleTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' onClick='showReason("+i+")'></span>";
+//         articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td><tr>";
+//       }else{
+//         articleTable+="<td>"+reportNum+"</td><tr>";
+//       }
+//     }
+//     document.getElementById("backend_articleList").innerHTML = articleTable;
+//   }).error(function(res){
+//     alert(res.responseJSON.err);
+//   });
+// }
 
 function loadEnlManage(){
   document.getElementById("forumManage").style.display="none";
@@ -104,13 +145,13 @@ function loadEnlManage(){
   document.getElementById("enlManage").style.display="block";
 }
 
-function sortArticles(articlesList){
-  alert(JSON.stringify(articlesList));
-  var test=articlesList.sort(function(a, b) {
+function sortArticles(){
+  
+  articleList=articleList.sort(function(a, b) {
       return b.report.length-a.report.length;
   });
-  alert(JSON.stringify(test));
-  return test;
+  //alert("sort"+JSON.stringify(articleList));
+  loadForumList(articleList);
 }
 
 
