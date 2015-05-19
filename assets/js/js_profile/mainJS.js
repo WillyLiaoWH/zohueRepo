@@ -1,17 +1,26 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var board="";
 $(document).ready(function(){
-  setTimelinePage();
+  getPri(function(pri_account, pri_id){
+    setTimelinePage(pri_account, pri_id);
+  });
 
 
-  $(document).on("click","#TimelineCommentSend",function(e){
+  $(document).one("click","#TimelineCommentSend",function(e){
     postTimeline_comment(this.name);
   });
-  $(document).on("click",".event_del",function(e){
+  $(document).one("click",".event_del",function(e){
     delTimeline(this.name);
   });
 
-  $(document).on("click",".comment_del",function(e){
+  $(document).one("click","#TimelineNice",function(e){
+    Timeline_nice(this.name);
+  });
+  $(document).one("click","#TimelineCancelNice",function(e){
+    Timeline_cancel_nice(this.name);
+  });
+
+  $(document).one("click",".comment_del",function(e){
     delTimeline_comment(this.name);
   });
 
@@ -311,19 +320,23 @@ $(document).ready(function(){
 // }
 
 
+function getPri(cb){
+  var pri_account="";
+  var pri_id="";
+  $.get("/checkAuth", function(auth){
+    if(auth) {
+      pri_account=auth.account;
+      pri_id=auth.id;
+    }
+    cb(pri_account, pri_id);
+  });
+}
 
-
-function setTimelinePage(){
+function setTimelinePage(pri_account, pri_id){
   //alert(window.location.toString().split('?')[1]);
   // var regex = /profile\?(*)/gi;
   // match = regex.exec(window.location);
   // alert(match[0]);
-  var pri_account="";
-  $.get("/checkAuth", function(auth){
-    if(auth) {
-      pri_account=auth.account;
-    }
-  });
   
   var ori_author=window.location.toString().split('?')[1];
   showProfile(ori_author);
@@ -339,7 +352,7 @@ function setTimelinePage(){
       var timelinesID = res["timelinesList"][i].id;
       // var responseNum = res["timelinesList"][i].responseNum;
       // var clickNum = res["timelinesList"][i].clickNum;
-      // var nicer = res["timelinesList"][i].nicer;
+      var nicer = res["timelinesList"][i].nicer;
 
       // 預先處理每個 timeline event comment
       var append_element_comment = "";
@@ -422,6 +435,15 @@ function setTimelinePage(){
         var auth_option="";
       }
       if(contentImg){var display_img='block';}else{var display_img='none';}
+
+      // 判斷是否為 nicer
+      var result = $.grep(nicer, function(e){ return e.id == pri_id; });
+      if(result.length>0){ // 目前這個人是 nicer 之一
+        var display_nice='<button value="收回" class="n" name="'+timelinesID+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
+      }else{ // 不是 nicer
+        var display_nice='<button value="推薦" class="n" name="'+timelinesID+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
+      }
+
       var append_element ='<div class="container-fluid timeline_event" style="margin-top:30px;">\
                 <div class="row-fluid event_info">\
                   <table style="width:100%;">\
@@ -439,7 +461,7 @@ function setTimelinePage(){
                 <div class="row-fluid event_text">'+content+'</div>\
                 <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
                 <div class="row-fluid event_option btn-group">\
-                  <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                  '+display_nice+'\
                   <button value="留言" class="n" onclick="cancelNice();"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;留言</button>\
                   <div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
@@ -519,6 +541,25 @@ function delTimeline(id){
       alert(res.responseJSON.err);
     });
   }
+}
+
+function Timeline_nice(id){
+  $.post( "/TimelineNice", { id: id }, function(res){
+    alert(res.num);
+    window.location.replace(document.URL);
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+function Timeline_cancel_nice(id){
+  $.post( "/TimelineCancelNice", { id: id }, function(res){
+    alert(res.num);
+    window.location.replace(document.URL);
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
 }
 
 function postTimeline_comment(id){

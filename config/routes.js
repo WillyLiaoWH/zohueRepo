@@ -66,6 +66,8 @@ module.exports.routes = {
   'POST /postTimeline': 'TimelinesController.postTimeline',
   'POST /delTimeline': 'TimelinesController.delTimeline',
   'POST /setTimelinePage/:account': 'Timelines.setTimelinePage',
+  'POST /TimelineNice': 'Timelines.clickNice',
+  'POST /TimelineCancelNice': 'Timelines.cancelNice',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
   'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',

@@ -123,10 +123,90 @@ module.exports = {
 
         function findTimelineResponse(account, cb){
             // notes: 未來可能需要用到.skip(10).limit(10)
+            // var doctor=false;
+            // var friend=false;
+            // var self=false;
+            // var viewer = req.session.user.account;
+            // User.find({account:viewer}).populate('friends').exec(function(err,user){
+            //     if(err){
+            //         console.log("err3");
+            //     }
+            //     if (user[0].type=="D"){
+            //         doctor=true;
+            //     }
+            //     for (var i=0 ; i<user[0].friends.length;i=i+1){
+            //         if (user[0].friends[i].account==account)
+            //             friend=true;
+            //     }
+            // });
+
+            User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
+                if(err) {
+                    sails.log.error("ERR:", err);
+                    console.log("err1");
+                }
+                cb(user[0]);
+                // sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
+                //     if (err) {
+                //         sails.log.error("ERR:", err);
+                //         console.log("err2");
+                //     }else {
+                        // if (viewer==account){
+                        //     self=true;
+                        //     friend=true;
+                        //     doctor=true;
+                        // }
+                        // var len=result.timelinesPost.length;
+                        // for (var i=len-1;i>=0;i=i-1){
+                        //     if (result.timelinesPost[i].auth==="self"){
+                        //         if (!self){
+                        //             console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                        //             result.timelinesPost.splice(i,1);
+                        //         }
+                                
+                        //     } 
+                        //     else if (result.timelinesPost[i].auth==="doctor"){
+                        //         if (!doctor){
+                        //             console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                        //             result.timelinesPost.splice(i,1);
+                        //         }
+                        //     } 
+                        //     else if (result.timelinesPost[i].auth==="friend" ){
+                        //         if(!friend){
+                        //             console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                        //             result.timelinesPost.splice(i,1);
+                        //         }
+                        //     } 
+                            
+                        // }
+                        // cb(result);
+                //     }
+                // });
+            });
+        }
+
+        function getNicer(User, cb){
+            var async = require('async');
+            async.each(User.timelinesPost, function(timeline, callback) {
+                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').exec(function (err, result) {
+                    if(err) {
+                        console.log("err");
+                    }else{
+                        var i=User.timelinesPost.indexOf(timeline);
+                        User.timelinesPost[i]=result[0];
+                        if(User.timelinesPost.length==i+1){cb(User);}
+                    }
+                });
+            });
+        }
+
+        function addAuth(account,result,cb){
+            console.log("addAuth");
             var doctor=false;
             var friend=false;
             var self=false;
             var viewer = req.session.user.account;
+
             User.find({account:viewer}).populate('friends').exec(function(err,user){
                 if(err){
                     console.log("err3");
@@ -140,50 +220,34 @@ module.exports = {
                 }
             });
 
-            User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
-                if(err) {
-                    sails.log.error("ERR:", err);
-                    console.log("err1");
-                }
-                sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
-                    if (err) {
-                        sails.log.error("ERR:", err);
-                        console.log("err2");
-                    }else {
-                        if (viewer==account){
-                            self=true;
-                            friend=true;
-                            doctor=true;
-                        }
-                        var len=result.timelinesPost.length;
-                        for (var i=len-1;i>=0;i=i-1){
-                            if (result.timelinesPost[i].auth==="self"){
-                                if (!self){
-                                    console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
-                                    result.timelinesPost.splice(i,1);
-                                }
-                                
-                            } 
-                            else if (result.timelinesPost[i].auth==="doctor"){
-                                if (!doctor){
-                                    console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
-                                    result.timelinesPost.splice(i,1);
-                                }
-                            } 
-                            else if (result.timelinesPost[i].auth==="friend" ){
-                                if(!friend){
-                                    console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
-                                    result.timelinesPost.splice(i,1);
-                                }
-                            } 
-                            
-                        }
-                        
-                            cb(result);
-
+            if (viewer==account){
+                self=true;
+                friend=true;
+                doctor=true;
+            }
+            var len=result.timelinesPost.length;
+            for (var i=len-1;i>=0;i=i-1){
+                if (result.timelinesPost[i].auth==="self"){
+                    if (!self){
+                        console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                        result.timelinesPost.splice(i,1);
                     }
-                });
-            });
+                                
+                } 
+                else if (result.timelinesPost[i].auth==="doctor"){
+                    if (!doctor){
+                        console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                        result.timelinesPost.splice(i,1);
+                    }
+                } 
+                else if (result.timelinesPost[i].auth==="friend" ){
+                    if(!friend){
+                        console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                        result.timelinesPost.splice(i,1);
+                    }
+                }
+            }
+            cb(result);
         }
 
         function AuthorQuery(timelineRes, cb){
@@ -219,17 +283,55 @@ module.exports = {
             });
         }
         
+        // checkLogin(function(){
+        //     findAccount(function(account){
+        //         findTimelineResponse(account, function(Response){
+        //             findTimelineResponseAuthor(Response, function(Response2){
+        //                 //var n = new Date().getTime();
+        //                 //console.log(n-d);
+        //                 res.send({timelinesList: Response2.timelinesPost, avatar: Response.img, alias: Response.alias});
+        //             });
+        //         });
+        //     });
+        // });
+
         checkLogin(function(){
             findAccount(function(account){
                 findTimelineResponse(account, function(Response){
-                    findTimelineResponseAuthor(Response, function(Response2){
-                        //var n = new Date().getTime();
-                        //console.log(n-d);
-                        res.send({timelinesList: Response2.timelinesPost, avatar: Response.img, alias: Response.alias});
+                    getNicer(Response, function(Response2){
+                        addAuth(account, Response2, function(Response3){
+                            findTimelineResponseAuthor(Response3, function(Response4){
+                                res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias});
+                            });
+                        });
                     });
                 });
             });
         });
-	}
+	},
+    clickNice: function(req, res) {
+        if(typeof req.session.user == 'undefined'){
+            res.send(500,{err: "您沒有權限" });
+        }else{
+            var TimelineId = req.param("id");
+            var nicer = req.session.user;
+            Timelines.findOne(TimelineId).populate('nicer').exec(function (err, timeline) {
+                timeline.nicer.add(nicer);
+                timeline.save(function (err) { res.send({num:timeline.nicer.length+1}); });
+            });
+        }
+    },
+    cancelNice: function(req, res) {
+        if(typeof req.session.user == 'undefined'){
+            res.send(500,{err: "您沒有權限" });
+        }else{
+            var TimelineId = req.param("id");
+            var nicer = req.session.user.id;
+            Timelines.findOne(TimelineId).populate('nicer').exec(function (err, timeline) {
+                timeline.nicer.remove(nicer);
+                timeline.save(function (err) { res.send({num:timeline.nicer.length-1}); });
+            });
+        }
+    }
 };
 
