@@ -347,6 +347,7 @@ function setTimelinePage(pri_account, pri_id){
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     var author_avater = res["avatar"];
     var author = res["alias"];
+    var author_account = res["account"];
     var timeInMs = new Date().getTime();
     for(i in res["timelinesList"]){
       var content = res["timelinesList"][i].content;
@@ -372,7 +373,7 @@ function setTimelinePage(pri_account, pri_id){
         if(dif2 > 86400){var time=Math.round(dif2/86400)+"天前";
         }else if(dif2 > 3600){var time=Math.round(dif2/3600)+"小時前";
         }else if(dif2 > 60){var time=Math.round(dif2/60)+"分鐘前";
-        }else{var time=Math.round(dif2)+"秒前";}
+        }else{var time="剛剛";}
 
         // 預先處理 timeline event 中的圖片
         comment_contentImg = comment_contentImg.replace(/dummy href=/g, "a href=");
@@ -392,18 +393,16 @@ function setTimelinePage(pri_account, pri_id){
                         <image src="'+comment_author_avater+'" height="50" width="50">\
                       </div>\
                       <div id="content_timeline_res">\
-                        <div class="event_text_r">'+comment_author+' '+comment_content+'</div>\
+                        <div class="event_text_r"><a href="?'+comment_author_account+'">'+comment_author+'</a> '+comment_content+'</div>\
                         <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
                         <div class="row-fluid event_option btn-group">\
-                          <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a href=" " title="'+comment_updatedAt+'">'+time+'</a></div>\
-                          <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>\
+                          <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="'+comment_updatedAt+'">'+time+'</a></div>\
+                          <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png"></button>\
                           <div class="btn-group" style="float:none;">\
                             <button type="button" class="n" data-toggle="dropdown">\
                               <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
-                              &nbsp;其他\
-                              <span class="caret"></span>\
                             </button>\
-                            <ul class="dropdown-menu n" role="menu">\
+                            <ul class="dropdown-menu" role="menu">\
                               '+comment_option+'\
                             </ul>\
                           </div>\
@@ -425,9 +424,8 @@ function setTimelinePage(pri_account, pri_id){
                     <button type="button" class="n" data-toggle="dropdown">\
                       <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
                       &nbsp;權限\
-                      <span class="caret"></span>\
                     </button>\
-                    <ul class="dropdown-menu n" role="menu">\
+                    <ul class="dropdown-menu" role="menu">\
                      <li><a class="auth_set_all" name="'+timelinesID+'">每個人</a></li>\
                           <li><a class="auth_set_friend" name="'+timelinesID+'">好友</a></li>\
                           <li><a class="auth_set_doctor" name="'+timelinesID+'">醫生</a></li>\
@@ -455,7 +453,7 @@ function setTimelinePage(pri_account, pri_id){
                       <td rowspan="2" style="width:50px;padding-right:15px;">\
                         <image src="'+author_avater+'" height="50" width="50">\
                       </td>\
-                      <td><div id="event_author_name">'+author+'</div></td>\
+                      <td><div id="event_author_name"><a href="?'+author_account+'">'+author+'</a></div></td>\
                     </tr>\
                     <tr>\
                       <td><div id="event_time">'+updatedAt+'</div></td>\
@@ -467,17 +465,16 @@ function setTimelinePage(pri_account, pri_id){
                 <div class="row-fluid event_option btn-group">\
                   '+display_nice+'\
                   <button value="留言" class="n" onclick="cancelNice();"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;留言</button>\
+                  '+auth_option+'\
                   <div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
                       <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
                       &nbsp;其他\
-                      <span class="caret"></span>\
                     </button>\
-                    <ul class="dropdown-menu n" role="menu">\
+                    <ul class="dropdown-menu" role="menu">\
                       '+event_option+'\
                     </ul>\
                   </div>\
-                  '+auth_option+'\
                 </div>\
                 <div class="row-fluid event_commentlist">\
                   '+append_element_comment+'\
@@ -489,7 +486,7 @@ function setTimelinePage(pri_account, pri_id){
                         <image src="'+author_avater+'" height="50" width="50">\
                       </td>\
                       <td style="padding:5px">\
-                        <div id="timeline_comment_content'+timelinesID+'" contentEditable="true" class="s"></div>\
+                        <div id="timeline_comment_content'+timelinesID+'" contentEditable="true" class="edit_content"></div>\
                       </td>\
                     </tr>\
                     <tr>\
@@ -500,7 +497,7 @@ function setTimelinePage(pri_account, pri_id){
                       </td>\
                     </tr>\
                   </table>\
-                  <div contentEditable="false" class="s" id="timeline_comment_image'+timelinesID+'">\
+                  <div contentEditable="false" class="edit_content" id="timeline_comment_image'+timelinesID+'">\
                     <div class="clear" id="comment_clear"></div>\
                   </div>\
                 </div>\

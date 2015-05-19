@@ -175,7 +175,7 @@ button, input[type="button"], input[type="submit"]{
 	line-height:45px;
 }
 
-#setUp, #friends, #mobile_friends, #mobile_backend, #backend{
+#profile_page, #setUp, #friends, #mobile_profilepage, #mobile_friends, #mobile_backend, #backend{
 	display:none;
 }
 

@@ -140,6 +140,10 @@ function checkAuth() {
         post.style.display="block";
       }
 
+      var profile_page=document.getElementById("profile_page");
+      profile_page.style.display="block";
+      var mprofiles=document.getElementById("mobile_profilepage");
+      mprofiles.style.display="block";
 
       var setUp=document.getElementById("mobile_setUp");
       setUp.style.display="block";
