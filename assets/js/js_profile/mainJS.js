@@ -6,13 +6,10 @@ $(document).ready(function(){
   });
 
 
-  $(document).one("click","#TimelineCommentSend",function(e){
-    postTimeline_comment(this.name);
-  });
+  
   $(document).one("click",".event_del",function(e){
     delTimeline(this.name);
   });
-
   $(document).one("click","#TimelineNice",function(e){
     Timeline_nice(this.name);
   });
@@ -20,8 +17,17 @@ $(document).ready(function(){
     Timeline_cancel_nice(this.name);
   });
 
+  $(document).one("click","#TimelineCommentSend",function(e){
+    postTimeline_comment(this.name);
+  });
   $(document).one("click",".comment_del",function(e){
     delTimeline_comment(this.name);
+  });
+  $(document).one("click","#TimelineResponseNice",function(e){
+    Timeline_r_nice(this.name);
+  });
+  $(document).one("click","#TimelineResponseCancelNice",function(e){
+    Timeline_r_cancel_nice(this.name);
   });
 
   $(document).on("click",".auth_set_friend",function(e){
@@ -369,6 +375,7 @@ function setTimelinePage(pri_account, pri_id){
         var comment_contentImg=element_res.comment_image;
         var comment_ID = element_res.id;
         var comment_updatedAt = new Date(element_res.updatedAt).toLocaleString();
+        var comment_nicer = element_res.rnicer;
         var dif2 = (timeInMs-new Date(element_res.updatedAt).getTime())/1000;
         if(dif2 > 86400){var time=Math.round(dif2/86400)+"天前";
         }else if(dif2 > 3600){var time=Math.round(dif2/3600)+"小時前";
@@ -387,6 +394,15 @@ function setTimelinePage(pri_account, pri_id){
         }else{ // 非原作者
           var comment_option = '<li><a arget="_blank">檢舉</a></li>';
         }
+
+        // 判斷是否為 nicer
+        var innicer = $.grep(comment_nicer, function(e){ return e.id == pri_id; });
+        if(innicer.length>0){ // 目前這個人是 nicer 之一
+          var display_r_nice='<button class="n" name="'+comment_ID+'" id="TimelineResponseCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/></button>';
+        }else{ // 不是 nicer
+          var display_r_nice='<button class="n" name="'+comment_ID+'" id="TimelineResponseNice"><img src="/images/img_forum/good_icon.png"></button>';
+        } 
+
         if(comment_contentImg){var display_img='block';}else{var display_img='none';}
         append_element_comment = append_element_comment+'<div id="container_timeline_res container-fluid">\
                       <div id="sidebar_timeline_res">\
@@ -397,7 +413,7 @@ function setTimelinePage(pri_account, pri_id){
                         <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
                         <div class="row-fluid event_option btn-group">\
                           <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="'+comment_updatedAt+'">'+time+'</a></div>\
-                          <button value="推薦" class="n" onclick="clickNice()"><img src="/images/img_forum/good_icon.png"></button>\
+                          <div class="btn-group" id="RniceArticle'+comment_ID+'" style="float:none;">'+display_r_nice+'</div>\
                           <div class="btn-group" style="float:none;">\
                             <button type="button" class="n" data-toggle="dropdown">\
                               <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
@@ -405,6 +421,9 @@ function setTimelinePage(pri_account, pri_id){
                             <ul class="dropdown-menu" role="menu">\
                               '+comment_option+'\
                             </ul>\
+                          </div>\
+                          <div class="btn-group" style="float:none;min-height:30px;padding-top:10px;padding-right:10px;" id="RniceCount'+comment_ID+'">\
+                            有 '+comment_nicer.length+' 人推薦\
                           </div>\
                         </div>\
                       </div>\
@@ -553,7 +572,6 @@ function delTimeline(id){
     });
   }
 }
-
 function Timeline_nice(id){
   $.post( "/TimelineNice", { id: id }, function(res){
     document.getElementById("niceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
@@ -612,6 +630,30 @@ function delTimeline_comment(id){
       alert(res.responseJSON.err);
     });
   }
+}
+function Timeline_r_nice(id){
+  $.post( "/TimelineResponseNice", { id: id }, function(res){
+    document.getElementById("RniceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
+    document.getElementById("RniceArticle"+id).innerHTML = '<button class="n" name="'+id+'" id="TimelineResponseCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/></button>';
+    $(document).one("click","#TimelineResponseNice",function(e){ // 把 listener 加回去
+      Timeline_r_nice(this.name);
+    });
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+function Timeline_r_cancel_nice(id){
+  $.post( "/TimelineResponseCancelNice", { id: id }, function(res){
+    document.getElementById("RniceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
+    document.getElementById("RniceArticle"+id).innerHTML = '<button class="n" name="'+id+'" id="TimelineResponseNice"><img src="/images/img_forum/good_icon.png"></button>';
+    $(document).one("click","#TimelineResponseCancelNice",function(e){ // 把 listener 加回去
+      Timeline_r_cancel_nice(this.name);
+    });
+  })
+  .error(function(res){
+    alert(res.responseJSON.err);
+  });
 }
 
 function auth_set(id,target){

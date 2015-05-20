@@ -70,6 +70,8 @@ module.exports.routes = {
   'POST /TimelineCancelNice': 'Timelines.cancelNice',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
   'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
+  'POST /TimelineResponseNice': 'TimelineResponseController.clickNice',
+  'POST /TimelineResponseCancelNice': 'TimelineResponseController.cancelNice',
   'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',

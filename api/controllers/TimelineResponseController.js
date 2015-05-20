@@ -58,6 +58,30 @@ module.exports = {
         chechAtuh(TimelineId, function(isAuth){
             del(isAuth, TimelineId);
         });
+    },
+    clickNice: function(req, res) {
+        if(typeof req.session.user == 'undefined'){
+            res.send(500,{err: "您沒有權限" });
+        }else{
+            var TimelineId = req.param("id");
+            var nicer = req.session.user;
+            TimelineResponse.findOne(TimelineId).populate('nicer').exec(function (err, timeline) {
+                timeline.nicer.add(nicer);
+                timeline.save(function (err) { res.send({num:timeline.nicer.length+1}); });
+            });
+        }
+    },
+    cancelNice: function(req, res) {
+        if(typeof req.session.user == 'undefined'){
+            res.send(500,{err: "您沒有權限" });
+        }else{
+            var TimelineId = req.param("id");
+            var nicer = req.session.user.id;
+            TimelineResponse.findOne(TimelineId).populate('nicer').exec(function (err, timeline) {
+                timeline.nicer.remove(nicer);
+                timeline.save(function (err) { res.send({num:timeline.nicer.length-1}); });
+            });
+        }
     }
 };
 

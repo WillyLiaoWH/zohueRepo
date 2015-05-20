@@ -104,7 +104,7 @@ module.exports = {
         });
     },
 	setTimelinePage: function(req, res){
-        function checkLogin(cb){
+        function checkLogin(cb){ // 檢查是否登入
             if(req.session.user === 'undefined' & req.param("account") === 'undefined'){
                 res.send(500,{err: "DB Error" });
             }else{
@@ -112,7 +112,7 @@ module.exports = {
             }
         }
 
-        function findAccount(cb){
+        function findAccount(cb){ // 取出欲瀏覽 profile 頁面的作者帳號
             var account = req.param("account");
             if(account === 'undefined'){
                 var account = req.session.user.account;
@@ -120,7 +120,7 @@ module.exports = {
             cb(account);
         }
 
-        function findTimelineResponse(account, cb){
+        function findTimelineResponse(account, cb){ // 取得作者 user 資料
             // notes: 未來可能需要用到.skip(10).limit(10)
             User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
                 if(err) {
@@ -139,7 +139,7 @@ module.exports = {
             });
         }
 
-        function getNicer(User, cb){
+        function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response 與 nicer 資料
             var async = require('async');
             async.each(User.timelinesPost, function(timeline, callback) {
                 Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').exec(function (err, result) {
@@ -154,7 +154,7 @@ module.exports = {
             });
         }
 
-        function addAuth(account,result,cb){
+        function addAuth(account,result,cb){ // 阿波寫的 問他XD
             var doctor=false;
             var friend=false;
             var self=false;
@@ -204,16 +204,16 @@ module.exports = {
         }
 
         function AuthorQuery(timelineRes, cb){
-            TimelineResponse.find(timelineRes.id).populate('author').exec(function (err, result2) {
+            TimelineResponse.find(timelineRes.id).populate('author').populate('nicer', {select: ['id']}).exec(function (err, result2) {
                 if(err) {
                     console.log("err");
                 }else{
-                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account);
+                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account, result2[0].nicer);
                 }
             });
         }
 
-        function findTimelineResponseAuthor(Response, cb){
+        function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
             var async = require('async');
 
             setTimeout(function() { // 一秒後如果沒有 call back，表示最後一個 timeline 且無留言
@@ -222,12 +222,13 @@ module.exports = {
 
             async.each(Response.timelinesPost, function(timeline, callback) {
                 async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img, account){
+                    AuthorQuery(timelineRes, function(alias, img, account, nicer){
                         var i=Response.timelinesPost.indexOf(timeline);
                         var j=timeline.response.indexOf(timelineRes);
                         Response.timelinesPost[i].response[j].account=account;
                         Response.timelinesPost[i].response[j].alias=alias;
                         Response.timelinesPost[i].response[j].img=img;
+                        Response.timelinesPost[i].response[j].rnicer=nicer;
 
                         // 最後一個 timeline 且最後一個留言
                         if(Response.timelinesPost.length==i+1 & Response.timelinesPost[i].response.length==j+1){cb(Response);}
