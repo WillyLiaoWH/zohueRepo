@@ -67,6 +67,30 @@
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
 }
+.container_edit{
+	margin: 15px;
+	padding:0px;
+	display:none;
+}
+.edit_timeline{
+	word-break: break-all;
+	min-height: 200px;
+	color:#816C58;
+	font-size: 18px;
+	line-height: 22px;
+	background-color: rgba(102, 141, 60, 0.4);
+	padding: 8px 8px 8px 8px;
+	width:auto;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+.edit_img{
+	padding-bottom:0px;
+	display: none;
+	background-color: rgba(129, 108, 88, 0.6);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
 
 /* 動態時報留言區塊 */
 #container_timeline_res { /* 分左右兩塊 */
@@ -387,7 +411,7 @@ div.show-image input.delete {
 	outline: 1px solid rgb(180, 195, 163);
 	width: 100%;
 }
-.show-image a{
+.show-image a, dummy{
 	float: left;
 	margin: 10px;
 }

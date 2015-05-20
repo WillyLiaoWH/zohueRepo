@@ -7,6 +7,9 @@ $(document).ready(function(){
 
 
   
+  $(document).on("click",".event_edit",function(e){
+    editTimeline(this.name);
+  });
   $(document).one("click",".event_del",function(e){
     delTimeline(this.name);
   });
@@ -20,6 +23,9 @@ $(document).ready(function(){
   $(document).one("click","#TimelineCommentSend",function(e){
     postTimeline_comment(this.name);
   });
+  // $(document).one("click",".event_edit",function(e){
+  //   editTimeline_comment(this.name);
+  // });
   $(document).one("click",".comment_del",function(e){
     delTimeline_comment(this.name);
   });
@@ -389,7 +395,7 @@ function setTimelinePage(pri_account, pri_id){
         // 預先處理權限選單
         var comment_option = "";
         if(pri_account==comment_author_account){ // 原作者
-          var comment_option = '<li><a target="_blank">編輯</a></li>\
+          var comment_option = '<li><a class="comment_edit" name="'+comment_ID+'">編輯</a></li>\
                                 <li><a class="comment_del" name="'+comment_ID+'">刪除</a></li>';
         }else{ // 非原作者
           var comment_option = '<li><a arget="_blank">檢舉</a></li>';
@@ -430,14 +436,16 @@ function setTimelinePage(pri_account, pri_id){
                     </div>';
       }
 
-      // 預先處理 timeline event 中的圖片
-      contentImg = contentImg.replace(/dummy href=/g, "a href=");
-      contentImg = contentImg.replace(/\/dummy/g, "\/a");
-
       // 預先處理權限選單
       var event_option = "";
       if(pri_account==ori_author || !ori_author){ // 原作者
-        var event_option = '<li><a target="_blank">編輯</a></li>\
+        var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
+                  <div class="row-fluid edit_timeline" contenteditable="true">'+content+'</div>\
+                  <div class="row-fluid edit_img" style="display:block;">'+contentImg+'</div>\
+                  <button value="送出留言" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
+                  <button value="插入圖片" name="'+timelinesID+'" id="editImage" class="b"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
+                </div>';
+        var event_option = '<li><a class="event_edit" name="'+timelinesID+'">編輯</a></li>\
                               <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
         var auth_option='<div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
@@ -452,9 +460,14 @@ function setTimelinePage(pri_account, pri_id){
                     </ul>\
                   </div>'
       }else{ // 非原作者
+        var event_edit_div = "";
         var event_option = '<li><a target="_blank">檢舉</a></li>';
         var auth_option="";
       }
+
+      // 預先處理 timeline event 中的圖片
+      contentImg = contentImg.replace(/dummy href=/g, "a href=");
+      contentImg = contentImg.replace(/\/dummy/g, "\/a");
       if(contentImg){var display_img='block';}else{var display_img='none';}
 
       // 判斷是否為 nicer
@@ -479,6 +492,7 @@ function setTimelinePage(pri_account, pri_id){
                     </tr>\
                   </table>\
                 </div>\
+                '+event_edit_div+'\
                 <div class="row-fluid event_text">'+content+'</div>\
                 <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
                 <div class="row-fluid event_option btn-group">\
@@ -525,6 +539,7 @@ function setTimelinePage(pri_account, pri_id){
                 </div>\
               </div>';
       $( "#timeline" ).append( append_element );
+      $( ".edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
 
       if(pri_account==""){ // 沒登入
         $(".n").css("display", "none");
@@ -559,6 +574,11 @@ function postTimeline(){
       alert(res.responseJSON.err);
     });
   }
+}
+function editTimeline(id){
+  $("#container_edit"+id).css("display", "block");
+  $("#container_edit"+id).parent().children( ".event_text" ).css("display", "none");
+  $("#container_edit"+id).parent().children( ".event_img" ).css("display", "none");
 }
 function delTimeline(id){
   var r = confirm("確定要刪除文章嗎？");
