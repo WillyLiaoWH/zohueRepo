@@ -44,7 +44,7 @@
 	padding-bottom:0px;
 	word-wrap: break-word; /*自動換行*/
 }
-.event_text, .event_option  {
+.event_text, .event_option, div[id*="niceCount"] {
 	padding:15px;
 	padding-top:0px;
 	word-wrap: break-word; /*自動換行*/
@@ -136,6 +136,7 @@
 	background-color: rgba(102, 141, 60, 0.4);
 	color:#816C58;
 }
+
 
 .n{
 	border-radius: 10px;

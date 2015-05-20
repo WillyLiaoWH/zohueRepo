@@ -463,8 +463,8 @@ function setTimelinePage(pri_account, pri_id){
                 <div class="row-fluid event_text">'+content+'</div>\
                 <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
                 <div class="row-fluid event_option btn-group">\
-                  '+display_nice+'\
-                  <button value="留言" class="n" onclick="cancelNice();"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;留言</button>\
+                  <div class="btn-group" id="niceArticle'+timelinesID+'" style="float:none;">'+display_nice+'</div>\
+                  <button value="留言" class="n" onclick="cancelNice();"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;展開留言</button>\
                   '+auth_option+'\
                   <div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
@@ -475,6 +475,9 @@ function setTimelinePage(pri_account, pri_id){
                       '+event_option+'\
                     </ul>\
                   </div>\
+                </div>\
+                <div class="row-fluid" id="niceCount'+timelinesID+'">\
+                  有 '+nicer.length+' 人推薦\
                 </div>\
                 <div class="row-fluid event_commentlist">\
                   '+append_element_comment+'\
@@ -553,8 +556,11 @@ function delTimeline(id){
 
 function Timeline_nice(id){
   $.post( "/TimelineNice", { id: id }, function(res){
-    alert(res.num);
-    window.location.replace(document.URL);
+    document.getElementById("niceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
+    document.getElementById("niceArticle"+id).innerHTML = '<button value="收回" class="n" name="'+id+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
+    $(document).one("click","#TimelineNice",function(e){ // 把 listener 加回去
+      Timeline_nice(this.name);
+    });
   })
   .error(function(res){
     alert(res.responseJSON.err);
@@ -562,8 +568,11 @@ function Timeline_nice(id){
 }
 function Timeline_cancel_nice(id){
   $.post( "/TimelineCancelNice", { id: id }, function(res){
-    alert(res.num);
-    window.location.replace(document.URL);
+    document.getElementById("niceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
+    document.getElementById("niceArticle"+id).innerHTML = '<button value="推薦" class="n" name="'+id+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
+    $(document).one("click","#TimelineCancelNice",function(e){ // 把 listener 加回去
+      Timeline_cancel_nice(this.name);
+    });
   })
   .error(function(res){
     alert(res.responseJSON.err);
