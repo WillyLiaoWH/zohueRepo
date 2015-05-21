@@ -22,6 +22,9 @@ $(document).ready(function(){
   $(document).one("click","#TimelineCancelNice",function(e){
     Timeline_cancel_nice(this.name);
   });
+  $(document).on("click","#expandComment",function(e){
+    expandComment(this.name);
+  });
 
   $(document).one("click","#TimelineCommentSend",function(e){
     postTimeline_comment(this.name);
@@ -500,7 +503,7 @@ function setTimelinePage(pri_account, pri_id){
                 <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
                 <div class="row-fluid event_option btn-group">\
                   <div class="btn-group" id="niceArticle'+timelinesID+'" style="float:none;">'+display_nice+'</div>\
-                  <button value="留言" class="n" onclick="cancelNice();"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;展開留言</button>\
+                  <button class="n" id="expandComment" name="'+timelinesID+'"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;展開留言</button>\
                   '+auth_option+'\
                   <div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
@@ -515,7 +518,7 @@ function setTimelinePage(pri_account, pri_id){
                 <div class="row-fluid" id="niceCount'+timelinesID+'">\
                   有 '+nicer.length+' 人推薦\
                 </div>\
-                <div class="row-fluid event_commentlist">\
+                <div class="row-fluid event_commentlist" id="event_commentlist'+timelinesID+'">\
                   '+append_element_comment+'\
                 </div>\
                 <div class="row-fluid event_comment">\
@@ -635,6 +638,16 @@ function Timeline_cancel_nice(id){
   .error(function(res){
     alert(res.responseJSON.err);
   });
+}
+function expandComment(id){
+  var status = $("#event_commentlist"+id).css("display");
+  if(status=="block"){
+    $("#event_commentlist"+id).css("display", "none");
+    $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;展開留言');
+  }else{
+    $("#event_commentlist"+id).css("display", "block");
+    $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;收起留言');
+  }
 }
 
 function postTimeline_comment(id){

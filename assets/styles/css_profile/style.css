@@ -34,13 +34,13 @@
 	border-radius: 10px;
 	margin-top:-20px;
 	padding: 0px;
+	background-color: floralwhite;
 }
 .event_info, .event_comment {
 	padding:15px;
 	word-wrap: break-word; /*自動換行*/
 }
 .event_text_r{
-	font-weight: 700;
 	color: #533828;
 	padding:15px;
 	padding-bottom:0px;
@@ -51,19 +51,21 @@
 	font-size: 22px;
 }
 #event_time{
-	font-weight: 700;
 	color: #533828;
 }
-.event_text, .event_option, div[id*="niceCount"] {
-	font-weight: 700;
+.event_text, div[id*="niceCount"] {
 	color: #533828;
 	padding:15px;
 	padding-top:0px;
 	word-wrap: break-word; /*自動換行*/
 }
-.event_img{
+.event_option{
 	padding-left:15px;
-	padding-bottom:0px;
+	padding-right:15px;
+}
+.event_img{
+	padding:15px;
+	padding-top:0px;
 	display: none;
 }
 .dropdown-menu{
@@ -121,8 +123,12 @@ div[id*="div_edit_img"]{
     width:100%;
     border-left: 65px solid transparent;
 }
-.event_comment, .event_commentlist{
+.event_comment{
 	border-top: 1px solid rgba(102, 141, 60, 0.4);
+}
+.event_commentlist{
+	border-top: 1px solid rgba(102, 141, 60, 0.4);
+	display:none;
 }
 .edit_content{
 	word-break: break-all;
