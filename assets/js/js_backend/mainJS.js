@@ -9,6 +9,7 @@ function loadUserList(){
   document.getElementById("userManage").style.display="block";
   document.getElementById("forumManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
+  document.getElementById("subscriberManage").style.display="none";
 
   $.get("/getAllUsers", function(userList){
 
@@ -68,6 +69,7 @@ function loadForumList(articleList){
   document.getElementById("forumManage").style.display="block";
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
+  document.getElementById("subscriberManage").style.display="none";
 
   articleTable="<tr><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
   articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
@@ -105,7 +107,34 @@ function loadEnlManage(){
   document.getElementById("forumManage").style.display="none";
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="block";
+  document.getElementById("subscriberManage").style.display="none";
 }
+
+function loadsubscriberList(){
+  document.getElementById("forumManage").style.display="none";
+  document.getElementById("userManage").style.display="none";
+  document.getElementById("enlManage").style.display="none";
+  document.getElementById("subscriberManage").style.display="block";
+
+  $.get("/getAllSubscribers", function(res){
+    
+    subscribers=res;
+
+    subscriberTable="<tr><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除</th><tr>";
+
+    for(i=0; i<subscribers.length; i++){
+      createdAt=new Date(subscribers[i].createdAt).toLocaleString();
+      subscriberId=subscribers[i].id;
+      subscriberTable+="<tr><td>"+(i+1)+"</td><td>"+subscribers[i].email+"</td><td>"+createdAt+"</td>";
+      subscriberTable+="<td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteSubscriber("+subscriberId+");'></span></td></tr>";
+    }
+
+    document.getElementById("backend_subscriberList").innerHTML = subscriberTable;
+  }).error(function(res){
+    alert(res.responseJSON.err);
+  });
+}
+
 
 function sortArticles(){
   
@@ -157,4 +186,16 @@ function sendNewsLetter(){
       }
     });
   }
+}
+
+function deleteSubscriber(id) {
+  var r = confirm("確定要刪除該訂閱者嗎？");
+  if (r == true) {
+    $.post( "/deleteSubscriber", { id: id}, function(res){
+     alert("刪除成功！");
+     loadsubscriberList();
+    })
+    .error(function(res){
+      alert(res.responseJSON.err);
+  });} 
 }

@@ -111,6 +111,26 @@ module.exports = {
                 }); 
             }
         });
+    },
+    getAllSubscribers: function(req, res){
+        SubscribeEmail.find().exec(function(err, subscribers) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                res.send(subscribers);
+            }
+        });
+    },
+    deleteSubscriber: function(req, res){
+        var subscriberId = req.param("id");
+        SubscribeEmail.destroy({id: subscriberId}).exec(function(err){
+            if(err) {
+                res.send(500,{err: "DB Error" });
+            } else {
+                res.send('The record has been deleted');
+            }
+        });
     }
+
 };
 

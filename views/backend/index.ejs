@@ -18,6 +18,7 @@
             <li onclick="loadUserList()"><a>帳號管理</a></li>
             <li onclick="getart(loadForumList)"><a>論壇管理</a></li>
             <li onclick="loadEnlManage()"><a>發送電子報</a></li>
+            <li onclick="loadsubscriberList()"><a>訂閱管理</a></li>
           </ul>
           <div id="backend_content">
             <div id="userManage">
@@ -89,6 +90,17 @@
                     <button class="btn btn-default" onclick="sendNewsLetter()">發送電子報</button>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div id="subscriberManage">
+              <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h2>訂閱管理</h2></div>
+                <div class="panel-body">
+                  <!-- Table -->
+                  <table class="table" id="backend_subscriberList"></table>
+                </div>
+                
               </div>
             </div>
 

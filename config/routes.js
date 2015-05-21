@@ -79,6 +79,7 @@ module.exports.routes = {
   'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
   'POST /auth_setTimeline':'Timelines.auth_set',
+  'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
 
   'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
@@ -91,6 +92,7 @@ module.exports.routes = {
   'GET /showProfile':'User.showProfile',
   'GET /getProfile/:account':'User.getProfile',
   'GET /getAllUsers':'User.getAllUsers',
+  'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
   'GET /article/*': {
     view: 'article/index'

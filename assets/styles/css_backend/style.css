@@ -1,14 +1,4 @@
-#userManage{
-	display:none;
-	margin-top:20px;
-}
-
-#forumManage{
-	display:none;
-	margin-top:20px;
-}
-
-#enlManage{
+#userManage, #forumManage, #enlManage, #subscriberManage{
 	display:none;
 	margin-top:20px;
 }
@@ -109,3 +99,8 @@ th:hover{
   }
 }
 /********For spinners (end)********/
+
+.delSub:hover{
+  cursor:pointer;
+  color:#CE0000;
+}
