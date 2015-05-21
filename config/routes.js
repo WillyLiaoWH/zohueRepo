@@ -64,6 +64,7 @@ module.exports.routes = {
   'POST /removeFriend': 'User.removeFriend',
   'POST /removeAddFriend': 'User.removeAddFriend',
   'POST /postTimeline': 'TimelinesController.postTimeline',
+  'POST /editTimeline': 'TimelinesController.editTimeline',
   'POST /delTimeline': 'TimelinesController.delTimeline',
   'POST /setTimelinePage/:account': 'Timelines.setTimelinePage',
   'POST /TimelineNice': 'Timelines.clickNice',

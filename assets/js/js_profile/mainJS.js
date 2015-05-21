@@ -10,6 +10,9 @@ $(document).ready(function(){
   $(document).on("click",".event_edit",function(e){
     editTimeline(this.name);
   });
+  $(document).on("click","#editSend",function(e){
+    editTimelineSend(this.name);
+  });
   $(document).one("click",".event_del",function(e){
     delTimeline(this.name);
   });
@@ -440,10 +443,10 @@ function setTimelinePage(pri_account, pri_id){
       var event_option = "";
       if(pri_account==ori_author || !ori_author){ // 原作者
         var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
-                  <div class="row-fluid edit_timeline" contenteditable="true">'+content+'</div>\
-                  <div class="row-fluid edit_img" style="display:block;">'+contentImg+'</div>\
+                  <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true">'+content+'</div>\
+                  <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
                   <button value="送出留言" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
-                  <button value="插入圖片" name="'+timelinesID+'" id="editImage" class="b"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
+                  <button value="插入圖片" id="editImage" class="b" name="'+timelinesID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
                 </div>';
         var event_option = '<li><a class="event_edit" name="'+timelinesID+'">編輯</a></li>\
                               <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
@@ -539,7 +542,7 @@ function setTimelinePage(pri_account, pri_id){
                 </div>\
               </div>';
       $( "#timeline" ).append( append_element );
-      $( ".edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
+      $( ".div_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
 
       if(pri_account==""){ // 沒登入
         $(".n").css("display", "none");
@@ -579,6 +582,23 @@ function editTimeline(id){
   $("#container_edit"+id).css("display", "block");
   $("#container_edit"+id).parent().children( ".event_text" ).css("display", "none");
   $("#container_edit"+id).parent().children( ".event_img" ).css("display", "none");
+}
+function editTimelineSend(id){
+  if($("#div_edit_img"+id)){$("#div_edit_img"+id+" .delete").remove();} // 去除叉叉紐
+  //if($("#"+spec_div_img+" #comment_clear")){$("#"+spec_div_img+" .clear").remove();} // 去除clear
+
+  var edit_content=$("#div_edit_content"+id).html();
+  var edit_img=$("#div_edit_img"+id).html();
+
+  if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
+  else{
+    $.post( "/editTimeline", { edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
+      window.location.replace(document.URL);
+    })
+    .error(function(res){
+      alert(res.responseJSON.err);
+    });
+  }
 }
 function delTimeline(id){
   var r = confirm("確定要刪除文章嗎？");

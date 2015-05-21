@@ -59,7 +59,11 @@ function insertHtmlAtCursor(html) {
     $(document).on("click","#TimelineImage",function(e){
       $("#avatar-modal").modal("show");
       insert_ele = "timeline_comment_image"+this.name;
+    });
 
+    $(document).on("click","#editImage",function(e){
+      $("#avatar-modal").modal("show");
+      insert_ele = "div_edit_img"+this.name;
     });
   }
 

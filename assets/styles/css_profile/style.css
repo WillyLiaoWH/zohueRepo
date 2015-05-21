@@ -23,7 +23,7 @@
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
-#commentSend, #image, #TimelineCommentSend, #TimelineImage{
+#commentSend, #image, #TimelineCommentSend, #TimelineImage, #editSend, #editImage{
 	float:right;
 	margin-bottom:10px;
 }
@@ -72,7 +72,7 @@
 	padding:0px;
 	display:none;
 }
-.edit_timeline{
+div[id*="div_edit_content"]{
 	word-break: break-all;
 	min-height: 200px;
 	color:#816C58;
@@ -84,7 +84,7 @@
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 }
-.edit_img{
+div[id*="div_edit_img"]{
 	padding-bottom:0px;
 	display: none;
 	background-color: rgba(129, 108, 88, 0.6);
