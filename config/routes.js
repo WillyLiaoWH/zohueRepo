@@ -70,6 +70,7 @@ module.exports.routes = {
   'POST /TimelineNice': 'Timelines.clickNice',
   'POST /TimelineCancelNice': 'Timelines.cancelNice',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
+  'POST /editCommentTimeline': 'TimelineResponseController.editCommentTimeline',
   'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
   'POST /TimelineResponseNice': 'TimelineResponseController.clickNice',
   'POST /TimelineResponseCancelNice': 'TimelineResponseController.cancelNice',

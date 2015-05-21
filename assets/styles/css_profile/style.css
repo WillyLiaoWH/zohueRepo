@@ -23,7 +23,7 @@
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
-#commentSend, #image, #TimelineCommentSend, #TimelineImage, #editSend, #editImage{
+#commentSend, #image, #TimelineCommentSend, #TimelineImage, #editSend, #editImage, #editRSend, #editRImage{
 	float:right;
 	margin-bottom:10px;
 }
@@ -81,12 +81,12 @@
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
 }
-.container_edit{
+.container_edit, .container_r_edit{
 	margin: 15px;
 	padding:0px;
 	display:none;
 }
-div[id*="div_edit_content"]{
+div[id*="div_edit_content"], div[id*="div_r_edit_content"]{
 	word-break: break-all;
 	min-height: 200px;
 	color:#816C58;
@@ -98,12 +98,13 @@ div[id*="div_edit_content"]{
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 }
-div[id*="div_edit_img"]{
+div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	padding-bottom:0px;
 	display: none;
 	background-color: rgba(129, 108, 88, 0.6);
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
+	float:left;
 }
 
 /* 動態時報留言區塊 */

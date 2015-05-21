@@ -28,6 +28,37 @@ module.exports = {
             }
         });
 	},
+    editCommentTimeline: function(req, res){
+        function chechAtuh(id, cb){
+            TimelineResponse.find({id: id}).populate('author').exec(function(error, timeline) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                } else {
+                    if(req.session.user.account == timeline[0].author.account){
+                        cb();
+                    }else{res.send("No permission");}
+                }
+            });
+        }
+        function edit(TimelineId){
+            var edit_content = req.param("edit_content");
+            var edit_img = req.param("edit_img");
+            TimelineResponse.update({id: TimelineId},{ comment:edit_content, comment_image:edit_img }).exec(function(err, timeline) {
+                if(err) {
+                    res.send(500,{err: "DB Error" });
+                    console.log(err);
+                } else {
+                    //console.log(timeline);
+                    res.send(timeline);
+                }
+            });
+        }
+        var TimelineId = req.param("id");
+        // 用 call back 先檢查 session 是否有刪除 timeline 之權限
+        chechAtuh(TimelineId, function(){
+            edit(TimelineId);
+        });
+    },
     delCommentTimeline: function(req, res){
         function chechAtuh(id, cb){
             TimelineResponse.find({id: id}).populate('author').exec(function(error, timeline) {

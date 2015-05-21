@@ -29,9 +29,12 @@ $(document).ready(function(){
   $(document).one("click","#TimelineCommentSend",function(e){
     postTimeline_comment(this.name);
   });
-  // $(document).one("click",".event_edit",function(e){
-  //   editTimeline_comment(this.name);
-  // });
+  $(document).on("click",".comment_edit",function(e){
+    editRTimeline(this.name);
+  });
+  $(document).on("click","#editRSend",function(e){
+    editRTimelineSend(this.name);
+  });
   $(document).one("click",".comment_del",function(e){
     delTimeline_comment(this.name);
   });
@@ -423,6 +426,12 @@ function setTimelinePage(pri_account, pri_id){
                       <div id="content_timeline_res">\
                         <div class="event_text_r"><a href="?'+comment_author_account+'">'+comment_author+'</a> '+comment_content+'</div>\
                         <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
+                        <div class="container-fluid container_r_edit" id="container_r_edit'+comment_ID+'">\
+                          <div class="row-fluid" id="div_r_edit_content'+comment_ID+'" contenteditable="true">'+comment_content+'</div>\
+                          <div class="row-fluid div_r_edit_img" id="div_r_edit_img'+comment_ID+'" style="display:block;">'+comment_contentImg+'</div>\
+                          <button value="送出留言" id="editRSend" class="b" name="'+comment_ID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
+                          <button value="插入圖片" id="editRImage" class="b" name="'+comment_ID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
+                        </div>\
                         <div class="row-fluid event_option btn-group">\
                           <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="'+comment_updatedAt+'">'+time+'</a></div>\
                           <div class="btn-group" id="RniceArticle'+comment_ID+'" style="float:none;">'+display_r_nice+'</div>\
@@ -546,6 +555,7 @@ function setTimelinePage(pri_account, pri_id){
               </div>';
       $( "#timeline" ).append( append_element );
       $( ".div_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
+      $( ".div_r_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
 
       if(pri_account==""){ // 沒登入
         $(".n").css("display", "none");
@@ -665,6 +675,28 @@ function postTimeline_comment(id){
     $.post( "/leaveCommentTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image, timeline_id: id}, function(res){
       //alert("發佈成功！");
       alert(res);
+      window.location.replace(document.URL);
+    })
+    .error(function(res){
+      alert(res.responseJSON.err);
+    });
+  }
+}
+function editRTimeline(id){
+  $("#container_r_edit"+id).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "none");
+  $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+}
+function editRTimelineSend(id){
+  if($("#div_r_edit_img"+id)){$("#div_r_edit_img"+id+" .delete").remove();} // 去除叉叉紐
+  //if($("#"+spec_div_img+" #comment_clear")){$("#"+spec_div_img+" .clear").remove();} // 去除clear
+
+  var edit_content=$("#div_r_edit_content"+id).html();
+  var edit_img=$("#div_r_edit_img"+id).html();
+
+  if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
+  else{
+    $.post( "/editCommentTimeline", { edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
       window.location.replace(document.URL);
     })
     .error(function(res){

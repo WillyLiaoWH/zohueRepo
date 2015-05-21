@@ -65,6 +65,11 @@ function insertHtmlAtCursor(html) {
       $("#avatar-modal").modal("show");
       insert_ele = "div_edit_img"+this.name;
     });
+
+    $(document).on("click","#editRImage",function(e){
+      $("#avatar-modal").modal("show");
+      insert_ele = "div_r_edit_img"+this.name;
+    });
   }
 
   CropAvatar.prototype = {
