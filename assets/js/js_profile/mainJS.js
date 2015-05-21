@@ -418,7 +418,14 @@ function setTimelinePage(pri_account, pri_id){
           var display_r_nice='<button class="n" name="'+comment_ID+'" id="TimelineResponseNice"><img src="/images/img_forum/good_icon.png"></button>';
         } 
 
-        if(comment_contentImg){var display_img='block';}else{var display_img='none';}
+        // 判斷留言是否有圖
+        if(comment_contentImg){
+          var display_img='block';
+          var css_r_content='border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;';
+        }else{
+          var display_img='none';
+          var css_r_content="";
+        }
         append_element_comment = append_element_comment+'<div id="container_timeline_res container-fluid">\
                       <div id="sidebar_timeline_res">\
                         <image src="'+comment_author_avater+'" height="50" width="50">\
@@ -427,7 +434,7 @@ function setTimelinePage(pri_account, pri_id){
                         <div class="event_text_r"><a href="?'+comment_author_account+'">'+comment_author+'</a> '+comment_content+'</div>\
                         <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
                         <div class="container-fluid container_r_edit" id="container_r_edit'+comment_ID+'">\
-                          <div class="row-fluid" id="div_r_edit_content'+comment_ID+'" contenteditable="true">'+comment_content+'</div>\
+                          <div class="row-fluid" id="div_r_edit_content'+comment_ID+'" contenteditable="true" style="'+css_r_content+'">'+comment_content+'</div>\
                           <div class="row-fluid div_r_edit_img" id="div_r_edit_img'+comment_ID+'" style="display:block;">'+comment_contentImg+'</div>\
                           <button value="送出留言" id="editRSend" class="b" name="'+comment_ID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
                           <button value="插入圖片" id="editRImage" class="b" name="'+comment_ID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
@@ -451,11 +458,20 @@ function setTimelinePage(pri_account, pri_id){
                     </div>';
       }
 
+      // 判斷本文是否有圖
+      if(contentImg){
+        var display_img='block';
+        var css_content='border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;';
+      }else{
+        var display_img='none';
+        var css_content='';
+      }
+
       // 預先處理權限選單
       var event_option = "";
       if(pri_account==ori_author || !ori_author){ // 原作者
         var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
-                  <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true">'+content+'</div>\
+                  <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                   <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
                   <button value="送出留言" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
                   <button value="插入圖片" id="editImage" class="b" name="'+timelinesID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
@@ -483,7 +499,6 @@ function setTimelinePage(pri_account, pri_id){
       // 預先處理 timeline event 中的圖片
       contentImg = contentImg.replace(/dummy href=/g, "a href=");
       contentImg = contentImg.replace(/\/dummy/g, "\/a");
-      if(contentImg){var display_img='block';}else{var display_img='none';}
 
       // 判斷是否為 nicer
       var result = $.grep(nicer, function(e){ return e.id == pri_id; });
