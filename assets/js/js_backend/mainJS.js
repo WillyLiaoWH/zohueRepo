@@ -84,13 +84,18 @@ function loadForumList(articleList){
 
       articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
       articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
-      if(reportNum>=3){
-        reportobj=articleList[i].report;
-        var reasonHtml = reasonHtmlCreate(reportobj);
-        articleTable+="<td>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' onClick='showReason("+i+")'></span>";
-        articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td><tr>";
+      
+      reportobj=articleList[i].report;
+      var reasonHtml = reasonHtmlCreate(reportobj);
+
+      if(reportNum>0 && reportNum<3){
+        articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum;
+        articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+      }else if(reportNum>=3){
+        articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
+        articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
       }else{
-        articleTable+="<td>"+reportNum+"</td><tr>";
+        articleTable+="<td>"+reportNum+"</td></tr>";
       }
     }
   document.getElementById("backend_articleList").innerHTML = articleTable;

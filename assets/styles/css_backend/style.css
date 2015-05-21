@@ -32,15 +32,15 @@
 	margin-top:20px;
 }
 
-.glyphicon-exclamation-sign{
-	margin-left:5px; 
-	cursor:pointer;
-	color:#CE0000;
-	font-size: 25px;
+.reasonTd:hover{
+  background-color: #E0E0E0;
+  cursor:pointer;
 }
 
-.glyphicon-exclamation-sign:hover{
-	color:#FF5151;'
+.glyphicon-exclamation-sign{
+	margin-left:10px; 
+	color:#CE0000;
+	font-size: 25px;
 }
 
 .glyphicon-remove-circle{
