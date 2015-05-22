@@ -1,8 +1,15 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var board="";
 $(document).ready(function(){
+
   getPri(function(pri_account, pri_id){
-    setTimelinePage(pri_account, pri_id);
+    if(pri_account===""){
+      alert("請先登入才能查看個人頁面!");
+      window.history.back();
+    }
+    else{
+      setTimelinePage(pri_account, pri_id);
+    }
   });
 
 

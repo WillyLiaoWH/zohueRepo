@@ -185,7 +185,7 @@ module.exports = {
             });
         }
 
-        function addAuth(account,result,cb){ // 阿波寫的 問他XD
+        function addAuth(account,result,cb){ // 阿波寫的 問他XD  //大家好我是阿波，這是去把不該看到的刪掉
             var doctor=false;
             var friend=false;
             var self=false;
