@@ -31,8 +31,8 @@ $(document).ready(function(){
               authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
           }
           html+=authorIcon;
-          html+="<img src='"+allUser[i].img+"' style='margin-right:10px; height:50px; width:50px;'>";
-          html+=allUser[i].alias+"&nbsp&nbsp&nbsp&nbsp";
+          html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:50px; width:50px;'>";
+          html+="<div onclick='toProfile(\""+allUser[i].account+"\")'>"+allUser[i].alias+"</div>&nbsp&nbsp&nbsp&nbsp";
           switch(isFriend[i]) {
             case -1:
               html+="已封鎖"+"</div><div><button type='button' onclick='removeBlack("+allUser[i].id+")'>解除封鎖</button><br>";
@@ -178,8 +178,8 @@ function search() {
                   authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
               }
               html+=authorIcon;
-              html+="<img src='"+allUser[i].img+"' style='margin-right:10px; height:50px; width:50px;'>";
-              html+=allUser[i].alias+"&nbsp&nbsp&nbsp&nbsp";
+              html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:50px; width:50px;'>";
+              html+="<div onclick='toProfile(\""+allUser[i].account+"\")'>"+allUser[i].alias+"</div>&nbsp&nbsp&nbsp&nbsp";
 
               html+="來自</div>"
 
@@ -247,6 +247,9 @@ function search() {
   });
 }
 
+function toProfile(account) {
+  window.location.assign("/profile/?"+account);
+}
 /************************** 郵遞區號相關 **************************/
 function ShowAllCity(){
   $.get("/postallist/getall", function(res){
@@ -264,3 +267,4 @@ function HandleResponse_ShowAllCity(response){
     $("#place").append('<option value='+addressCity+'>'+addressCity+'</option>');
   }
 }
+
