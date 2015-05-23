@@ -581,7 +581,8 @@ function setTimelinePage(pri_account, pri_id){
       $( ".div_r_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
 
       if(pri_account==""){ // 沒登入
-        $(".n").css("display", "none");
+        $(".event_option").css("display", "none");
+        $(".event_comment").css("display", "none");
       }
     }
   })
