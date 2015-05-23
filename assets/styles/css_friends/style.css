@@ -71,7 +71,7 @@
 }
 
 .button{
-	height: 35%;
+	height: 100%;
 	font-size: 20px;
 	color:#533828;
 	/*margin-top:9px;*/
@@ -99,7 +99,7 @@
 .friend {
 	border: #AAAAAA 1px solid;
 	margin: 10px;
-	width: 800px;
+	width: 1000px;
 	height: 100px;
 	display: block;
 }
@@ -112,8 +112,15 @@
 	vertical-align: top;
 }
 
-.text {
+.friendMid {
+	vertical-align: top;
+	display: inline-block;
+	height: 100%;
+	width: 400px;
+}
+
+.friendRight {
 	display: inline-block;
 	height: 100px;
-	width: 400px;
+	width: 340px;
 }

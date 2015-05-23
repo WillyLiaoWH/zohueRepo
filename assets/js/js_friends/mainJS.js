@@ -169,7 +169,7 @@ function search() {
           var isFriend=res.isFriend;
           var html="";
           for(i=0; i<allUser.length; i++) {
-            if(isFriend[i]!=-2) {
+            if(isFriend[i]!=-2&&allUser[i].id!="10") {
               html+="<div class='friend'><div class='image'>";
               var picSize="100";
               switch(allUser[i].type) {
@@ -193,35 +193,9 @@ function search() {
               }
               html+=authorIcon;
               html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-              html+="<div class='text'><div style='margin-right: 0px; display: inline-block; height: 60%'><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a></div>&nbsp&nbsp&nbsp&nbsp";
+              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%' width: 100%><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a></div>";
 
-              html+="<div style='display:inline-block; font-size: 16px;'>";
-              if(allUser[i].addressCity&&allUser[i].addressCity!="") {
-                html+="來自"+allUser[i].addressCity+"&nbsp&nbsp";
-              }
-
-              if(allUser[i].primaryDisease&&allUser[i].primaryDisease!="") {
-
-                switch(allUser[i].type) {
-                  case "D":
-                    html+="主治"+diseaseList[allUser[i].primaryDisease];
-                    break;
-                  case "S":
-                    html+="主治"+diseaseList[allUser[i].primaryDisease];
-                    break;
-                  case "RN":
-                    html+="主治"+diseaseList[allUser[i].primaryDisease];
-                    break;
-                  case "P":
-                    html+="患有"+diseaseList[allUser[i].primaryDisease];
-                    break;
-                  case "F":
-                    html+="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
-                    break;
-                  default:
-                }
-              }
-              html+="</div><br><div style='display:inline-block;'>";
+              html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
               switch(isFriend[i]) {
                 case -1:
                   html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack("+allUser[i].id+")'>解除封鎖</button><br>";
@@ -243,7 +217,38 @@ function search() {
                   html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
                   break;
               }
-              html+="</div></div></div>";
+              html+="</div></div><div class='friendRight'>";
+              if(allUser[i].addressCity&&allUser[i].addressCity!="") {
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>來自"+allUser[i].addressCity+"</div><br>";
+              }
+
+              if(allUser[i].primaryDisease&&allUser[i].primaryDisease!="") {
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>";
+                switch(allUser[i].type) {
+                  case "D":
+                    html+="主治"+diseaseList[allUser[i].primaryDisease];
+                    break;
+                  case "S":
+                    html+="主治"+diseaseList[allUser[i].primaryDisease];
+                    break;
+                  case "RN":
+                    html+="主治"+diseaseList[allUser[i].primaryDisease];
+                    break;
+                  case "P":
+                    html+="患有"+diseaseList[allUser[i].primaryDisease];
+                    break;
+                  case "F":
+                    html+="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
+                    break;
+                  default:
+                }
+                html+="</div><br>";
+              }
+
+              if(res.age[i]!=-1) {
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+res.age[i]+"歲</div>";
+              }
+              html+="</div></div>";
             }
           }
           document.getElementById("searchList").innerHTML=html;

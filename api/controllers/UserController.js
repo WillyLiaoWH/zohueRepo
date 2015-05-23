@@ -660,6 +660,20 @@ module.exports = {
         var disease=req.param("disease");
         var place=req.param("place");
         var userType=req.param("userType");
+        var monthMap={
+            "Jan": 1,
+            "Feb": 2,
+            "Mar": 3,
+            "Apr": 4,
+            "May": 5,
+            "Jun": 6,
+            "Jul": 7,
+            "Aug": 8,
+            "Sep": 9,
+            "Oct": 10,
+            "Nov": 11,
+            "Dec": 12
+        };
         if(!req.session.user) {
             User.find({alias: {'contains': alias}}).exec(function(err, users) {
                 if(err) {
@@ -681,6 +695,7 @@ module.exports = {
                                 console.log(err);
                                 res.send({err: "DB error"});
                             } else {
+                                var ageList=[];
                                 for(i=0; i<allUser.length; i++) {
                                     if(allUser[i].id!=req.session.user.id) {
                                         if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
@@ -699,8 +714,23 @@ module.exports = {
                                     } else {
                                         isFriend.push(-2);
                                     }
+
+                                    if(allUser[i].birthday&&allUser[i].birthday!="") {
+                                        var now=new Date();
+                                        var birth=allUser[i].birthday.split(" ");
+                                        var y=parseInt(birth[3]);
+                                        var m=monthMap[birth[1]];
+                                        var d=parseInt(birth[2]);
+                                        var birthday=new Date(y, m, d);
+                                        var age=now.getFullYear()*10000+now.getMonth()*100+now.getDate()-birthday.getFullYear()*10000+birthday.getMonth()*100+birthday.getDate();
+                                        age=Math.floor(age/10000);
+                                        ageList.push(age);
+                                    } else {
+                                        ageList.push(-1);
+                                    }
+                                    
                                 }
-                                res.send({users: allUser, isFriend: isFriend})
+                                res.send({users: allUser, isFriend: isFriend, age: ageList})
                             }
                         });
                     }
@@ -716,6 +746,7 @@ module.exports = {
                                 console.log(err);
                                 res.send({err: "DB error"});
                             } else {
+                                var ageList=[];
                                 for(i=0; i<allUser.length; i++) {
                                     if(allUser[i].id!=req.session.user.id) {
                                         if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
@@ -734,8 +765,22 @@ module.exports = {
                                     } else {
                                         isFriend.push(-2);
                                     }
+
+                                    if(allUser[i].birthday&&allUser[i].birthday!="") {
+                                        var now=new Date();
+                                        var birth=allUser[i].birthday.split(" ");
+                                        var y=parseInt(birth[3]);
+                                        var m=monthMap[birth[1]];
+                                        var d=parseInt(birth[2]);
+                                        var birthday=new Date(y, m, d);
+                                        var age=now.getFullYear()*10000+now.getMonth()*100+now.getDate()-birthday.getFullYear()*10000+birthday.getMonth()*100+birthday.getDate();
+                                        age=Math.floor(age/10000);
+                                        ageList.push(age);
+                                    } else {
+                                        ageList.push(-1);
+                                    }
                                 }
-                                res.send({users: allUser, isFriend: isFriend})
+                                res.send({users: allUser, isFriend: isFriend, age: ageList})
                             }
                         });
                     }
