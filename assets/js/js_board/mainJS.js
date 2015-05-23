@@ -6,7 +6,6 @@ var page;
 var keyword="";
 var tab="";
 var maxReport=3;
-var category="";
 var board="";
 $(document).ready(function(){
   if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
@@ -60,23 +59,30 @@ $(document).ready(function(){
       while(boardSelect.length>0) {
         boardSelect.remove(0);
       }
-      var option=document.createElement('option');
-      option.text="請選擇";
-      option.value="";
-      option.disabled=true;
-      option.selected=true;
-      try {
+      var inCate=false;
+      for(var i=0; i<boards.length; i++) {
+        var option=document.createElement('option');
+        option.text=boards[i].title;
+        option.value=boards[i].id;
+        if(boards[i].id==board) {
+          option.selected=true;
+          inCate=true;
+        }
+        try {
           boardSelect.add(option, null);
         } catch(ex) {
           //for IE
           boardSelect.add(option);
         }
-      for(var i=0; i<boards.length; i++) {
+      }
+      if(!inCate) {
         var option=document.createElement('option');
-        option.text=boards[i].title;
-        option.value=boards[i].id;
+        option.text="請選擇";
+        option.value="";
+        option.disabled=true;
+        option.selected=true;
         try {
-          boardSelect.add(option, null);
+          boardSelect.add(option, 0);
         } catch(ex) {
           //for IE
           boardSelect.add(option);
@@ -85,7 +91,8 @@ $(document).ready(function(){
     });
   };
   document.getElementById("board").onchange=function() {
-    window.location.assign("/board-"+$("#board").val()+"/1?tab=all");
+    if($("#board").val()!=board)
+      window.location.assign("/board-"+$("#board").val()+"/1?tab=all");
   };
 });
 

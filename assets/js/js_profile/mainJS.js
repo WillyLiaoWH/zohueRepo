@@ -3,13 +3,14 @@ var board="";
 $(document).ready(function(){
 
   getPri(function(pri_account, pri_id){
-    if(pri_account===""){
-      alert("請先登入才能查看個人頁面!");
-      window.history.back();
-    }
-    else{
-      setTimelinePage(pri_account, pri_id);
-    }
+    setTimelinePage(pri_account, pri_id);
+    // if(pri_account===""){
+    //   alert("請先登入才能查看個人頁面!");
+    //   window.history.back();
+    // }
+    // else{
+    //   setTimelinePage(pri_account, pri_id);
+    // }
   });
 
 
@@ -580,11 +581,13 @@ function setTimelinePage(pri_account, pri_id){
       $( ".div_r_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
 
       if(pri_account==""){ // 沒登入
-        $(".n").css("display", "none");
+        $(".event_option").css("display", "none");
+        $(".event_comment").css("display", "none");
       }
     }
   })
   .error(function(res){
+    //alert(JSON.stringify(res));
     alert(res.responseJSON.err);
   });
 }
