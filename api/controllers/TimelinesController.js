@@ -50,26 +50,29 @@ module.exports = {
           
     },
 	postTimeline: function(req, res){
-		var author=req.session.user.id;
-		var content=req.param("timeline_post_content");
-		var contentImg=req.param("timeline_post_image");
-		if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "DB Error" });};
-
-		Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0"}).exec(function(error, timeline) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-            } else {
-                res.send(timeline);
-                // Timelines.update({id: timeline.id},{lastResponseTime: timeline.updatedAt}).exec(function(err, timeline) {
-                //     if(err) {
-                //         res.send(500,{err: "DB Error" });
-                //         console.log(err);
-                //     } else {
-                //         console.log(timeline);
-                //         res.send(timeline);
-                //     }
-                // });
+        function checkAtuh(cb){
+            if(typeof req.session.user === 'undefined'){
+                res.send(500,{err: "請先登入才能發表文章！" });
+            }else{
+                cb();
             }
+        }
+        function post(){
+            var author=req.session.user.id;
+            var content=req.param("timeline_post_content");
+            var contentImg=req.param("timeline_post_image");
+            if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });};
+
+            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0"}).exec(function(error, timeline) {
+                if(error) {
+                    res.send(500,{err: "發生錯誤了Q_Q" });
+                } else {
+                    res.send(timeline);
+                }
+            });
+        }
+        checkAtuh(function(){
+            post();
         });
 	},
     editTimeline: function(req, res){
@@ -136,8 +139,8 @@ module.exports = {
     },
 	setTimelinePage: function(req, res){
         function checkLogin(cb){ // 檢查是否登入
-            if(req.session.user === 'undefined' & req.param("account") === 'undefined'){
-                res.send(500,{err: "DB Error" });
+            if(typeof req.session.user === 'undefined' & req.param("account") === 'undefined'){
+                res.send(500,{err: "請先登入才能查看個人頁面！" });
             }else{
                 cb();
             }

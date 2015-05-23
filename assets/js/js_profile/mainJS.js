@@ -3,13 +3,14 @@ var board="";
 $(document).ready(function(){
 
   getPri(function(pri_account, pri_id){
-    if(pri_account===""){
-      alert("請先登入才能查看個人頁面!");
-      window.history.back();
-    }
-    else{
-      setTimelinePage(pri_account, pri_id);
-    }
+    setTimelinePage(pri_account, pri_id);
+    // if(pri_account===""){
+    //   alert("請先登入才能查看個人頁面!");
+    //   window.history.back();
+    // }
+    // else{
+    //   setTimelinePage(pri_account, pri_id);
+    // }
   });
 
 
@@ -585,6 +586,7 @@ function setTimelinePage(pri_account, pri_id){
     }
   })
   .error(function(res){
+    //alert(JSON.stringify(res));
     alert(res.responseJSON.err);
   });
 }
