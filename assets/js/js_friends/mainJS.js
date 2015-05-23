@@ -193,7 +193,7 @@ function search() {
               }
               html+=authorIcon;
               html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-              html+="<div class='text'><div style='width:180px; margin-right: 0px; display: inline-block; height: 60%'><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a></div>&nbsp&nbsp&nbsp&nbsp";
+              html+="<div class='text'><div style='margin-right: 0px; display: inline-block; height: 60%'><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a></div>&nbsp&nbsp&nbsp&nbsp";
 
               html+="<div style='display:inline-block; font-size: 16px;'>";
               if(allUser[i].addressCity&&allUser[i].addressCity!="") {
