@@ -189,52 +189,56 @@ module.exports = {
         }
 
         function addAuth(account,result,cb){ // 阿波寫的 問他XD  //大家好我是阿波，這是去把不該看到的刪掉
-            var doctor=false;
-            var friend=false;
-            var self=false;
-            var viewer = req.session.user.account;
+            if(typeof req.session.user === 'undefined'){
+                cb(result);
+            }else{
+                var doctor=false;
+                var friend=false;
+                var self=false;
+                var viewer = req.session.user.account;
 
-            User.find({account:viewer}).populate('friends').exec(function(err,user){
-                if(err){
-                    console.log("err3");
-                }
-                if (user[0].type=="D"){
+                User.find({account:viewer}).populate('friends').exec(function(err,user){
+                    if(err){
+                        console.log("err3");
+                    }
+                    if (user[0].type=="D"){
+                        doctor=true;
+                    }
+                    for (var i=0 ; i<user[0].friends.length;i=i+1){
+                        if (user[0].friends[i].account==account)
+                            friend=true;
+                    }
+                });
+
+                if (viewer==account){
+                    self=true;
+                    friend=true;
                     doctor=true;
                 }
-                for (var i=0 ; i<user[0].friends.length;i=i+1){
-                    if (user[0].friends[i].account==account)
-                        friend=true;
-                }
-            });
-
-            if (viewer==account){
-                self=true;
-                friend=true;
-                doctor=true;
-            }
-            var len=result.timelinesPost.length;
-            for (var i=len-1;i>=0;i=i-1){
-                if (result.timelinesPost[i].auth==="self"){
-                    if (!self){
-                        console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
-                        result.timelinesPost.splice(i,1);
-                    }
-                                
-                } 
-                else if (result.timelinesPost[i].auth==="doctor"){
-                    if (!doctor){
-                        console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
-                        result.timelinesPost.splice(i,1);
-                    }
-                } 
-                else if (result.timelinesPost[i].auth==="friend" ){
-                    if(!friend){
-                        console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
-                        result.timelinesPost.splice(i,1);
+                var len=result.timelinesPost.length;
+                for (var i=len-1;i>=0;i=i-1){
+                    if (result.timelinesPost[i].auth==="self"){
+                        if (!self){
+                            console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                            result.timelinesPost.splice(i,1);
+                        }
+                                    
+                    } 
+                    else if (result.timelinesPost[i].auth==="doctor"){
+                        if (!doctor){
+                            console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                            result.timelinesPost.splice(i,1);
+                        }
+                    } 
+                    else if (result.timelinesPost[i].auth==="friend" ){
+                        if(!friend){
+                            console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                            result.timelinesPost.splice(i,1);
+                        }
                     }
                 }
+                cb(result);
             }
-            cb(result);
         }
 
         function AuthorQuery(timelineRes, cb){
