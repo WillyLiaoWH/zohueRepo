@@ -14,21 +14,13 @@
 
     <div class="container-fluid">
     <h1 id="title" style="color:#D26900;"></h1>
-    <div><div style="display: inline;font-size: 150%; margin-right: 10px">看板跳轉</div>
-    <select id="boardCategory">
-    </select>
-    <select id="board">
-    </select>
-    </div>
     <div class="row-fluid">
       <div class="span10" id="forumContent">
       <div class="row-fluid">
-        <div class="span2">
-          <table id="page" cellspacing=8></table>
-        </div>
         <div class="span10">
           <div class="row-fluid">
-            <div class="span4 text-right">
+            <div class="span4 text-left">
+              <label style="font-size: 22px; color:#533828;">搜尋：</label>
               <input type="text" onkeypress="return enterSearch(event);" class="s" id="searchWord">
             </div>
             <div class="span3 text-left">
@@ -38,7 +30,7 @@
 <!--             <div class="span3 text-left">
               
             </div> -->
-            <div class="span5 text-left">
+            <div class="span5 text-left" style="float: right;">
               <label style="font-size: 22px; color:#533828;">排序：</label>
               <select id="sortAs" onchange="setPage(page, keyword, this.options[this.selectedIndex].value)">
                 <option value="0">最新回應時間</option>
@@ -52,15 +44,26 @@
         </div>
       </div>
       <div class="row-fluid">
-        <div id="hoho" class="span12">
-         <!-- <ul class="tabs"> -->
-         <ul class="nav nav-pills" id="tabs">
+        <div class="span2">
+          <table id="page" cellspacing=8></table>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div id="hoho" class="span12" style="width: 40%;">
+          <!-- <ul class="tabs"> -->
+          <ul class="nav nav-pills" id="tabs">
             <li id="all"><a href="?tab=all">所有分類</a></li>
             <li id="motion"><a href="?tab=motion">心情</a></li>
             <li id="share"><a href="?tab=share">分享</a></li>
             <li id="problem"><a href="?tab=problem">問題</a></li>
             <li id="others"><a href="?tab=others">其它</a></li>
           </ul>
+        </div>
+        <div class="span10" style="width: 40%; float: right;"><label style="display: inline;font-size: 22px; margin-right: 10px; color:#533828;">看板跳轉：</label>
+          <select id="boardCategory" style="width:150px;">
+          </select>
+          <select id="board" style="width:150px;">
+          </select>
         </div>
       </div>
       <div class="row-fluid" style="margin-top:10px;">
