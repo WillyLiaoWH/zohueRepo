@@ -82,7 +82,7 @@
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
-	width:20%;
+	width:150px;
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
@@ -101,7 +101,7 @@
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
-	width:20%;
+	width:150px;
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
@@ -157,7 +157,7 @@
 */
 /*#simpleSignUp{
 	margin:15px;
-	color:#816C5B;
+	color:#816C5B
 	font-size:18px;
 	font-weight: normal;
 }*/

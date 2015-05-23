@@ -11,27 +11,28 @@ $(document).ready(function(){
       for(i=0; i<allUser.length; i++) {
         if(isFriend[i]!=-2) {
           html+="<div style='margin: 30px;'><div>";
+          var picSize="75";
           switch(allUser[i].type) {
             case "D":
-              authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
+              authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               break;
             case "S":
-              authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+              authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               break;
             case "RN":
-              authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
+              authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               break;
             case "P":
-              authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
+              authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               break;
             case "F":
-              authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
+              authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               break;
             default:
-              authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
+              authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
           }
           html+=authorIcon;
-          html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:50px; width:50px;'>";
+          html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
           html+="<div onclick='toProfile(\""+allUser[i].account+"\")'>"+allUser[i].alias+"</div>&nbsp&nbsp&nbsp&nbsp";
           switch(isFriend[i]) {
             case -1:
@@ -158,31 +159,35 @@ function search() {
           for(i=0; i<allUser.length; i++) {
             if(isFriend[i]!=-2) {
               html+="<div style='margin: 30px;'><div>";
+              var picSize="75";
               switch(allUser[i].type) {
                 case "D":
-                  authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
+                  authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
                   break;
                 case "S":
-                  authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+                  authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
                   break;
                 case "RN":
-                  authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
+                  authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
                   break;
                 case "P":
-                  authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
+                  authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
                   break;
                 case "F":
-                  authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
+                  authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
                   break;
                 default:
-                  authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
+                  authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               }
               html+=authorIcon;
-              html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:50px; width:50px;'>";
-              html+="<div onclick='toProfile(\""+allUser[i].account+"\")'>"+allUser[i].alias+"</div>&nbsp&nbsp&nbsp&nbsp";
+              html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+              html+="<div style='width:350px; margin-right: 0px; display: inline;'><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 26px;'>"+allUser[i].alias+"</a></div>&nbsp&nbsp&nbsp&nbsp";
 
-              html+="來自</div>"
-
+              if(allUser[i].addressCity&&allUser[i].addressCity!="") {
+                html+="來自"+allUser[i].addressCity;
+              }
+              html+="</div>";
+              
               switch(isFriend[i]) {
                 case -1:
                   html+="<div>已封鎖<button type='button' onclick='removeBlack("+allUser[i].id+")'>解除封鎖</button><br>";
