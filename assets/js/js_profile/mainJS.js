@@ -851,7 +851,7 @@ function HandleResponse_showProfile(response){
   }
   $('#gender').text(gender);
   $('#phone').text(phone);
-  $("#bday").text((Y-1911).toString()+" 年 "+M.toString()+" 月 "+D.toString())
+  $("#bday").text((Y-1911).toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
 
 }
