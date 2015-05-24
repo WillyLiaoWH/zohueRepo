@@ -172,15 +172,19 @@ function search() {
             if(isFriend[i]!=-2&&allUser[i].id!="10") {
               html+="<div class='friend'><div class='image'>";
               var picSize="100";
+              var authorType="";
               switch(allUser[i].type) {
                 case "D":
                   authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  authorType="醫師";
                   break;
                 case "S":
                   authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  authorType="社工師";
                   break;
                 case "RN":
                   authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  authorType="護理師";
                   break;
                 case "P":
                   authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
@@ -193,7 +197,7 @@ function search() {
               }
               html+=authorIcon;
               html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%' width: 100%><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a></div>";
+              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
               html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
               switch(isFriend[i]) {
