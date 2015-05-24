@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/css_public/themes/alertify.core.css">
     <link rel="stylesheet" href="/styles/css_public/themes/alertify.default.css">
+    <link rel="stylesheet" href="/styles/css_friends/style.css">
 
     <script src="/js/js_public/modalBox.js-master/modalBox-min.js"></script>
     <script src="/js/js_public/alertify.js"></script>
@@ -18,11 +19,13 @@
         <!-- 正文 -->
         <h1 style="color:#D26900;">找人</h1>
         <div id="search" style="margin: 15px;">
-            搜尋：
-            暱稱<div id="inputAlias" style="display: inline;"><input type="text" name="alias" id="alias"></div>
-            疾病<div id="inputDisease" style="display: inline;">
+            <label style="font-size: 22px; color:#533828;">搜尋：</label>
+            <label style="font-size: 22px; color:#533828;">暱稱</label>
+            <div id="inputAlias" style="display: inline;"><input type="text" name="alias" id="alias"></div>
+            <label style="font-size: 22px; color:#533828;">疾病</label>
+            <div id="inputDisease" style="display: inline;">
                 <select id="disease">
-                    <option value="" selected="true">請選擇</option>
+                    <option value="" selected="true">所有疾病</option>
                     <option value='1'>鼻咽癌</option>
                     <option value='2'>鼻竇癌</option>
                     <option value='3'>副鼻竇癌</option>
@@ -35,15 +38,17 @@
                     <option value='999'>其它</option>
                 </select>
             </div>
-            居住地<div id="inputPlace" style="display: inline;">
+            <label style="font-size: 22px; color:#533828;">居住地</label>
+            <div id="inputPlace" style="display: inline;">
                 <select id="place">
-                    <option value="" selected="true">請選擇</option>
+                    <option value="" selected="true">所有地區</option>
                     <script>ShowAllCity();</script>
                 </select>
             </div>
-            身分<div id="inputUserType" style="display: inline;">
+            <label style="font-size: 22px; color:#533828;">身分</label>
+            <div id="inputUserType" style="display: inline;">
                 <select id="userType">
-                    <option value="" selected="true">請選擇</option>
+                    <option value="" selected="true">所有身分</option>
                     <option value='P'>病友</option>
                     <option value='F'>家屬</option>
                     <option value='S'>社工師</option>
@@ -52,9 +57,9 @@
                     <option value='N'>一般民眾</option>
                 </select>
             </div>
-            <input type="button" value="搜尋" onclick="search()"><br>
+            <input type="button" value="搜尋" onclick="search()" id="searchButton"><br>
         </div>
-        <div id="searchList" style="float: left; width: 600px; height: 100%">
+        <div id="searchList" style="float: left; width: 1000px; height: 100%">
         </div>
         <div id="friendsList" style="float: left; width: 600px; height: 100%">
         </div>

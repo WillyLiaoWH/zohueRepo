@@ -13,7 +13,7 @@ function loadUserList(){
 
   $.get("/getAllUsers", function(userList){
 
-    userTable="<tr><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
+    userTable="<tr class='tableHead'><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
     for(i=0; i<userList.length; i++) {
       fullName=userList[i].lname+" "+userList[i].fname;
@@ -71,7 +71,7 @@ function loadForumList(articleList){
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="none";
 
-  articleTable="<tr><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
+  articleTable="<tr class='tableHead'><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
   articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
     for(i=0; i<articleList.length; i++) {
       clickNum=articleList[i].clickNum;
@@ -120,7 +120,7 @@ function loadsubscriberList(){
     
     subscribers=res;
 
-    subscriberTable="<tr><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除</th><tr>";
+    subscriberTable="<tr class='tableHead'><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
 
     for(i=0; i<subscribers.length; i++){
       createdAt=new Date(subscribers[i].createdAt).toLocaleString();
@@ -163,28 +163,31 @@ function showReason(ulId){
 }
 
 function sendNewsLetter(){
+
   var mailSubject = document.getElementById("mailSubject").value;
   var mailContent = document.getElementById("mailContent").value;
   if (mailSubject=="" && mailContent==""){
     alert("尚未輸入主旨或內文!");
   }else{
-    document.getElementById("mailSpinner").style.display="block";
-    document.getElementById("mailEdit").style.display="none";
-    $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
-      if (res == "SEND"){
-        alert("電子報發送成功!");
-        document.getElementById("mailSubject").value="";
-        document.getElementById("mailContent").value="";
-        document.getElementById("mailEdit").style.display="block"; 
-        document.getElementById("mailSpinner").style.display="none";
-      }else{
-        alert("電子報發送失敗!");
-        document.getElementById("mailSubject").value="";
-        document.getElementById("mailContent").value="";
-        document.getElementById("mailEdit").style.display="block"; 
-        document.getElementById("mailSpinner").style.display="none";
-      }
-    });
+    if(confirm("確定要發送電子報嗎？")){
+      document.getElementById("mailSpinner").style.display="block";
+      document.getElementById("mailEdit").style.display="none";
+      $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
+        if (res == "SEND"){
+          alert("電子報發送成功!");
+          document.getElementById("mailSubject").value="";
+          document.getElementById("mailContent").value="";
+          document.getElementById("mailEdit").style.display="block"; 
+          document.getElementById("mailSpinner").style.display="none";
+        }else{
+          alert("電子報發送失敗!");
+          document.getElementById("mailSubject").value="";
+          document.getElementById("mailContent").value="";
+          document.getElementById("mailEdit").style.display="block"; 
+          document.getElementById("mailSpinner").style.display="none";
+        }
+      });
+    }
   }
 }
 
