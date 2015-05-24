@@ -2,8 +2,8 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var board="";
 $(document).ready(function(){
 
-  getPri(function(pri_account, pri_id){
-    setTimelinePage(pri_account, pri_id);
+  getPri(function(pri_account, pri_id, pri_avatar){
+    setTimelinePage(pri_account, pri_id, pri_avatar);
     // if(pri_account===""){
     //   alert("請先登入才能查看個人頁面!");
     //   window.history.back();
@@ -360,12 +360,13 @@ function getPri(cb){
     if(auth) {
       pri_account=auth.account;
       pri_id=auth.id;
+      pri_avatar=auth.img;
     }
-    cb(pri_account, pri_id);
+    cb(pri_account, pri_id, pri_avatar);
   });
 }
 
-function setTimelinePage(pri_account, pri_id){
+function setTimelinePage(pri_account, pri_id, pri_avatar){
   //alert(window.location.toString().split('?')[1]);
   // var regex = /profile\?(*)/gi;
   // match = regex.exec(window.location);
@@ -562,7 +563,7 @@ function setTimelinePage(pri_account, pri_id){
                   <table style="width:100%;">\
                     <tr>\
                       <td style="width:50px;">\
-                        <image src="'+author_avater+'" height="50" width="50">\
+                        <image src="'+pri_avatar+'" height="50" width="50">\
                       </td>\
                       <td style="padding:5px">\
                         <div id="timeline_comment_content'+timelinesID+'" contentEditable="true" class="edit_content"></div>\
