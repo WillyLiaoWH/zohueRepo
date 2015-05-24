@@ -2,8 +2,8 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 var board="";
 $(document).ready(function(){
 
-  getPri(function(pri_account, pri_id){
-    setTimelinePage(pri_account, pri_id);
+  getPri(function(pri_account, pri_id, pri_avatar){
+    setTimelinePage(pri_account, pri_id, pri_avatar);
     // if(pri_account===""){
     //   alert("請先登入才能查看個人頁面!");
     //   window.history.back();
