@@ -217,7 +217,7 @@ function search() {
                   html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
                   break;
                 case 3:
-                  html+="好友&nbsp&nbsp<button type='button' onclick='removeFriend("+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend("+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
                   html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
                   break;
               }
