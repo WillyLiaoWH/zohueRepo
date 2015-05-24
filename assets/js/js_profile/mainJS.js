@@ -360,6 +360,7 @@ function getPri(cb){
     if(auth) {
       pri_account=auth.account;
       pri_id=auth.id;
+      pri_avatar=auth.img;
     }
     cb(pri_account, pri_id);
   });
