@@ -197,7 +197,7 @@ function search() {
               }
               html+=authorIcon;
               html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?\""+allUser[i].account+"\"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
+              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].account+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
               html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
               switch(isFriend[i]) {
