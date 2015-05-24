@@ -18,7 +18,7 @@
 	height:45px;
 }
 
-#backend_articleList, #backend_userList{
+#backend_articleList, #backend_userList, #backend_subscriberList{
 	margin-top:20px;
 }
 
@@ -103,4 +103,12 @@ th:hover{
 .delSub:hover{
   cursor:pointer;
   color:#CE0000;
+}
+
+tr:hover{
+  background-color:#F0F0F0;
+}
+
+.tableHead{
+  background-color:#F0F0F0;
 }

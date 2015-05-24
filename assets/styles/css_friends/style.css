@@ -36,7 +36,7 @@
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
 	//margin: 8px 3px 0px 0px;
-	width:10%;
+	width:150px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
@@ -68,4 +68,59 @@
 
 #searchButton:hover{
 	background-color: rgba(232, 81, 0, 0.7);
+}
+
+.button{
+	height: 100%;
+	font-size: 20px;
+	color:#533828;
+	/*margin-top:9px;*/
+	background-color: rgba(102, 141, 60, 0.4);
+
+	//float:right;
+	/*background-color: rgba(232, 81, 0, 0.7);*/
+	color:#533828;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 18px;
+	border-radius: 7px;
+	padding: 5px 5px 5px 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
+.button:hover{
+	background-color: rgba(232, 81, 0, 0.7);
+}
+
+.friend {
+	border: #AAAAAA 1px solid;
+	margin: 10px;
+	width: 1000px;
+	height: 100px;
+	display: block;
+}
+
+.image {
+	display: inline-block; 
+	height: 100%;
+	width: 240px;
+	padding: 0px;
+	vertical-align: top;
+}
+
+.friendMid {
+	vertical-align: top;
+	display: inline-block;
+	height: 100%;
+	width: 400px;
+}
+
+.friendRight {
+	display: inline-block;
+	height: 100px;
+	width: 340px;
 }
