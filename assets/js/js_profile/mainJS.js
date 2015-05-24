@@ -387,6 +387,11 @@ function setTimelinePage(pri_account, pri_id){
       // var responseNum = res["timelinesList"][i].responseNum;
       // var clickNum = res["timelinesList"][i].clickNum;
       var nicer = res["timelinesList"][i].nicer;
+      var auth = res["timelinesList"][i].auth;
+      if(auth.length==0){
+        auth="all";
+      }
+      console.log(auth);
 
       // 預先處理每個 timeline event comment
       var append_element_comment = "";
@@ -488,14 +493,14 @@ function setTimelinePage(pri_account, pri_id){
                               <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
         var auth_option='<div class="btn-group" style="float:none;">\
                     <button type="button" class="n" data-toggle="dropdown">\
-                      <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
+                      <img src="/images/img_timeline/'+auth+'.png" height="20px" width="20px">\
                       &nbsp;權限\
                     </button>\
                     <ul class="dropdown-menu" role="menu">\
-                     <li><a class="auth_set_all" name="'+timelinesID+'">每個人</a></li>\
-                          <li><a class="auth_set_friend" name="'+timelinesID+'">好友</a></li>\
-                          <li><a class="auth_set_doctor" name="'+timelinesID+'">醫生</a></li>\
-                          <li><a class="auth_set_self" name="'+timelinesID+'">只有自己</a></li>\
+                     <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
+                          <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
+                          <li><a class="auth_set_doctor" name="'+timelinesID+'"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>\
+                          <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
                     </ul>\
                   </div>'
       }else{ // 非原作者
