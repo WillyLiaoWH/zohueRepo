@@ -13,6 +13,12 @@ var diseaseList={
 };
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
+  $.get("/checkAuth", function(auth){
+    if(!auth) {
+      alert("尚未登入");
+      window.location.replace("/home");
+    }
+  });
   // $.get("/setFriendPage", function(res){
   //   if(res.err) {
   //     alert(res.err);
@@ -257,35 +263,35 @@ function search() {
           }
           document.getElementById("searchList").innerHTML=html;
         } else {
-          var allUser=res.users;
-          var html="";
-          for(i=0; i<allUser.length; i++) {
-            html+="<div style='margin: 30px;'><div>";
-            switch(allUser[i].type) {
-              case "D":
-                authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
-                break;
-              case "S":
-                authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
-                break;
-              case "RN":
-                authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
-                break;
-              case "P":
-                authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
-                break;
-              case "F":
-                authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
-                break;
-              default:
-                authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
-            }
-            html+=authorIcon;
-            html+="<img src='"+allUser[i].img+"' style='margin-right:10px; height:50px; width:50px;'>";
-            html+=allUser[i].alias+"&nbsp&nbsp&nbsp&nbsp";
-            html+="</div></div>";
-          }
-          document.getElementById("searchList").innerHTML=html;
+          // var allUser=res.users;
+          // var html="";
+          // for(i=0; i<allUser.length; i++) {
+          //   html+="<div style='margin: 30px;'><div>";
+          //   switch(allUser[i].type) {
+          //     case "D":
+          //       authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
+          //       break;
+          //     case "S":
+          //       authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+          //       break;
+          //     case "RN":
+          //       authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
+          //       break;
+          //     case "P":
+          //       authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
+          //       break;
+          //     case "F":
+          //       authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
+          //       break;
+          //     default:
+          //       authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
+          //   }
+          //   html+=authorIcon;
+          //   html+="<img src='"+allUser[i].img+"' style='margin-right:10px; height:50px; width:50px;'>";
+          //   html+=allUser[i].alias+"&nbsp&nbsp&nbsp&nbsp";
+          //   html+="</div></div>";
+          // }
+          // document.getElementById("searchList").innerHTML=html;
         }
       } else {
         var html="找不到符合搜尋條件的人";
