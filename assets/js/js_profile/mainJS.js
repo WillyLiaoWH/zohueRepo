@@ -389,10 +389,10 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
       // var clickNum = res["timelinesList"][i].clickNum;
       var nicer = res["timelinesList"][i].nicer;
       var auth = res["timelinesList"][i].auth;
-      if(auth.length==0){
+      if(!auth){
         auth="all";
       }
-      console.log(auth);
+      
 
       // 預先處理每個 timeline event comment
       var append_element_comment = "";
@@ -820,7 +820,6 @@ function showProfile(ori_author){
   }
   else{
     var addr="/getProfile/"+ori_author;
-    console.log(addr);
     xmlHttp.open("GET", addr, true);
     $('.auth_btn').hide()
   }
