@@ -98,6 +98,7 @@ module.exports.routes = {
   'GET /getAllUsers':'User.getAllUsers',
   'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
+  'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /article/*': {
     view: 'article/index'
   },

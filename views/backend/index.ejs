@@ -16,7 +16,8 @@
         <div class="span10">
           <ul class="nav nav-pills">
             <li onclick="loadUserList()"><a>帳號管理</a></li>
-            <li onclick="getart(loadForumList)"><a>論壇管理</a></li>
+            <!-- <li onclick="getart(loadForumList)"><a>論壇管理</a></li> -->
+            <li onclick="loadForumList()"><a>論壇管理</a></li>
             <li onclick="loadEnlManage()"><a>發送電子報</a></li>
             <li onclick="loadsubscriberList()"><a>訂閱管理</a></li>
           </ul>
@@ -36,27 +37,22 @@
             <div id="forumManage">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading"><h2>論壇管理：所有文章</h2></div>
+                <div class="panel-heading"><h2 id="title_forumManage">論壇管理</h2></div>
                 <div class="panel-body">
-                  <!-- <div class="row-fluid">
+                  <div class="row-fluid">
                     <div class="span3">
                       <h3>看板類型</h3>
                       <select class="form-control" id="boardCategory">
-                        <option>病友照護</option>
-                        <option>生活機能</option>
+                        <option selected='selected'>請選擇</option>
                       </select>
                     </div>
                     <div class="span3">
                       <h3>看板名稱</h3>
                       <select class="form-control" id="board">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option selected='selected'>請選擇</option>
                       </select>
                     </div>
-                  </div> -->
+                  </div>
                   <!-- Table -->
                   <table class="table" id="backend_articleList"></table>
                 </div>

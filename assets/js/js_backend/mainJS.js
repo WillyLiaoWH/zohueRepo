@@ -5,6 +5,33 @@ var userTable="";
 var articleTable="";
 var articleList="";
 
+$(document).ready(function(){
+
+  $.get("/getBoardCategory", function(boardCategory){
+    for(c=0; c<boardCategory.length; c++) {
+      $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
+    }
+  }).error(function(res){
+    alert(res.responseJSON.err);
+  });
+
+  $("#boardCategory").change(function(){
+    $("#board").empty();
+    $.get("/getBoardsOfCategory/"+$(this).val(), function(boards) {
+      $("#board").append("<option selected='selected'>請選擇</option>")
+      for(b=0; b<boards.length; b++) {
+        $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
+      }
+    });
+  });
+
+  $("#board").change(function(){
+    board=$(this).val();
+    getart(loadForumList);
+  });
+
+});
+
 function loadUserList(){
   document.getElementById("userManage").style.display="block";
   document.getElementById("forumManage").style.display="none";
@@ -70,37 +97,39 @@ function loadForumList(articleList){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="none";
+  
+  if(typeof(articleList)!="undefined"){
+    articleTable="<tr class='tableHead'><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
+    articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
+      for(i=0; i<articleList.length; i++) {
+        clickNum=articleList[i].clickNum;
+        responseNum=articleList[i].responseNum;
+        niceNum=articleList[i].nicer.length;
+        lastTime=new Date(articleList[i].lastResponseTime).toLocaleString();
+        lastResponseTime=lastTime.slice(0, lastTime.length-3);
+        createdAt=new Date(articleList[i].createdAt).toLocaleString();
+        postTime=createdAt.slice(0,createdAt.length-3);
+        authorType=articleList[i].author.type;
+        reportNum=articleList[i].report.length;
 
-  articleTable="<tr class='tableHead'><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
-  articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
-    for(i=0; i<articleList.length; i++) {
-      clickNum=articleList[i].clickNum;
-      responseNum=articleList[i].responseNum;
-      niceNum=articleList[i].nicer.length;
-      lastTime=new Date(articleList[i].lastResponseTime).toLocaleString();
-      lastResponseTime=lastTime.slice(0, lastTime.length-3);
-      createdAt=new Date(articleList[i].createdAt).toLocaleString();
-      postTime=createdAt.slice(0,createdAt.length-3);
-      authorType=articleList[i].author.type;
-      reportNum=articleList[i].report.length;
+        articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
+        articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
+        
+        reportobj=articleList[i].report;
+        var reasonHtml = reasonHtmlCreate(reportobj);
 
-      articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
-      articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
-      
-      reportobj=articleList[i].report;
-      var reasonHtml = reasonHtmlCreate(reportobj);
-
-      if(reportNum>0 && reportNum<3){
-        articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum;
-        articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
-      }else if(reportNum>=3){
-        articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
-        articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
-      }else{
-        articleTable+="<td>"+reportNum+"</td></tr>";
+        if(reportNum>0 && reportNum<3){
+          articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum;
+          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+        }else if(reportNum>=3){
+          articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
+          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+        }else{
+          articleTable+="<td>"+reportNum+"</td></tr>";
+        }
       }
-    }
-  document.getElementById("backend_articleList").innerHTML = articleTable;
+    document.getElementById("backend_articleList").innerHTML = articleTable;
+  }
 }
 
 function loadEnlManage(){
@@ -147,7 +176,7 @@ function sortArticles(){
 
 
 function reasonHtmlCreate(reportobj){
-  var reportReasonHtml="檢舉理由：";
+  var reportReasonHtml="";
   for(k=0; k<reportobj.length; k++){
     reportReasonHtml+="<ul><li>"+reportobj[k].reason+"</li></ul>";
   }
@@ -202,3 +231,4 @@ function deleteSubscriber(id) {
       alert(res.responseJSON.err);
   });} 
 }
+
