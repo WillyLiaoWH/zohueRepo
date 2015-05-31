@@ -566,16 +566,14 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                   </div>'
       }else{ // 非原作者
         var event_edit_div = "";
-        var event_option = '<li><a class="report_event" name="'+timelinesID+'">檢舉</a></li>';
+        //var event_option = '<li><div id="report_event" name="'+timelinesID+'"><a class="report_event" name="'+timelinesID+'">檢舉</a></div></li>';
         var auth_option="";
         // 判斷是否為 reporter
         var result_reporter = $.grep(reporter, function(e){ return e.reporter == pri_id; });
         if(result_reporter.length>0){ // 目前這個人是 reporter 之一
-          //var display_report='<button value="收回" class="n" name="'+timelinesID+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
-          var event_option = '<li><a class="cancelReport_event" name="'+timelinesID+'">收回檢舉</a></li>';
+          var event_option = '<li id="cancelReport_event" name="'+timelinesID+'"><a class="cancelReport_event" name="'+timelinesID+'">收回檢舉</a></li>';
         }else{ // 不是 reporter
-          //var display_report='<button value="推薦" class="n" name="'+timelinesID+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
-          var event_option = '<li><a class="report_event" name="'+timelinesID+'">檢舉</a></li>';
+          var event_option = '<li id="report_event" name="'+timelinesID+'"><a class="report_event" name="'+timelinesID+'">檢舉</a></li>';
         }
       }
 
@@ -798,10 +796,10 @@ function report() {
   if(!reason) {
     alert("請選擇原因");
   } else {
-    //document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
     $.post(url, {id: activeId, reason: reason}, function(res){
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="cancelReport_event" name="'+activeId+'">收回檢舉</a>');
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", "cancelReport_event");
       alert(res.num);
-      //document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
       $("#reportDialog").dialog("close");
     }).error(function(res){
       alert(res.err);
@@ -809,7 +807,7 @@ function report() {
   }
 }
 function cancelReport() {
-  if(confirm("確定要取消檢舉嗎")) {
+  if(confirm("確定要收回檢舉嗎")) {
     switch(activeSource){
       case 'cancelReport_event':
         var url='/TimelineCancelReport';
@@ -821,12 +819,11 @@ function cancelReport() {
         return;
       break;
     }
-    //document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
     $.post(url, {id: activeId}, function(res){
-      //document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="report_event" name="'+activeId+'">檢舉</a>');
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", "report_event");
       alert(res.num);
     }).error(function(res){
-      //document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
       alert(res.responseJSON.err);
     });
   }
