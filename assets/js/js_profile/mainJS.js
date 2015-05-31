@@ -1,5 +1,5 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
-var board="";
+var source,activeSource;
 $(document).ready(function(){
 
   getPri(function(pri_account, pri_id, pri_avatar){
@@ -72,6 +72,66 @@ $(document).ready(function(){
   $(document).on("click",".profile_auth",function(e){
     profile_auth(this.name);
   });
+
+  // 圖片跳窗，使用 modalBox.js
+  $(document).on("click",".show-image a",function(event){
+    event.preventDefault();
+    if ($(window).width() < 768) {
+      window.open($(this).attr("href"),'_blank');
+    }else{
+      //var ss = '<img src="'+$(this).attr("href")+'">';
+      var ss = '<a href="'+$(this).attr("href")+'" target="_blank"><img src="'+$(this).attr("href")+'"></a>';
+      $( ".modalBox" ).empty();
+      $( ".modalBox" ).append(ss);
+      $('.modalBox').modalBox('open');
+    }
+  });
+
+  // 檢舉跳窗，使用 jquery UI
+  $(document).on("click","li a[class*=cancelReport]",function(e){
+    activeId=this.name;
+    activeSource=$(this).attr("class");
+    cancelReport();
+  });
+  $(document).on("click","li a[class*=report]",function(e){
+    $("#reportDialog").dialog("open");
+    activeId=this.name;
+    activeSource=$(this).attr("class");
+  });
+  var dialog = $("#reportDialog").dialog({
+    resizable: false,
+    autoOpen: false,
+    height: "auto",
+    width: '50%',
+    modal: true,
+    buttons: {
+        "檢舉": function() {
+          report();
+        },
+        "取消": function() {
+          $(this).dialog("close");
+        }
+    },
+    close: function() {
+      var form=document.getElementById('reportForm');
+      for (var i=0; i<form.reason.length; i++) {
+        if (form.reason[i].checked) {
+          form.reason[i].checked=false;
+          break;
+        }
+      }
+      document.getElementById('reasonInput').value="";
+      document.getElementById('reasonInput').style.display="none";
+    }
+  });
+  $('input[type=radio][name=reason]').change(function(){
+    if(this.value=='others') {
+      document.getElementById('reasonInput').style.display="inline";
+    } else {
+      document.getElementById('reasonInput').style.display="none";
+    }
+  });
+  
   
 
   
@@ -387,12 +447,12 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
       var timelinesID = res["timelinesList"][i].id;
       // var responseNum = res["timelinesList"][i].responseNum;
       // var clickNum = res["timelinesList"][i].clickNum;
+      var reporter = res["timelinesList"][i].report;
       var nicer = res["timelinesList"][i].nicer;
       var auth = res["timelinesList"][i].auth;
       if(!auth){
         auth="all";
       }
-      
 
       // 預先處理每個 timeline event comment
       var append_element_comment = "";
@@ -421,7 +481,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
           var comment_option = '<li><a class="comment_edit" name="'+comment_ID+'">編輯</a></li>\
                                 <li><a class="comment_del" name="'+comment_ID+'">刪除</a></li>';
         }else{ // 非原作者
-          var comment_option = '<li><a arget="_blank">檢舉</a></li>';
+          var comment_option = '<li><a class="report_comment" name="'+comment_ID+'">檢舉</a></li>';
         }
 
         // 判斷是否為 nicer
@@ -506,8 +566,17 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                   </div>'
       }else{ // 非原作者
         var event_edit_div = "";
-        var event_option = '<li><a target="_blank">檢舉</a></li>';
+        var event_option = '<li><a class="report_event" name="'+timelinesID+'">檢舉</a></li>';
         var auth_option="";
+        // 判斷是否為 reporter
+        var result_reporter = $.grep(reporter, function(e){ return e.reporter == pri_id; });
+        if(result_reporter.length>0){ // 目前這個人是 reporter 之一
+          //var display_report='<button value="收回" class="n" name="'+timelinesID+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
+          var event_option = '<li><a class="cancelReport_event" name="'+timelinesID+'">收回檢舉</a></li>';
+        }else{ // 不是 reporter
+          //var display_report='<button value="推薦" class="n" name="'+timelinesID+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
+          var event_option = '<li><a class="report_event" name="'+timelinesID+'">檢舉</a></li>';
+        }
       }
 
       // 預先處理 timeline event 中的圖片
@@ -515,11 +584,19 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
       contentImg = contentImg.replace(/\/dummy/g, "\/a");
 
       // 判斷是否為 nicer
-      var result = $.grep(nicer, function(e){ return e.id == pri_id; });
-      if(result.length>0){ // 目前這個人是 nicer 之一
+      var result_nicer = $.grep(nicer, function(e){ return e.id == pri_id; });
+      if(result_nicer.length>0){ // 目前這個人是 nicer 之一
         var display_nice='<button value="收回" class="n" name="'+timelinesID+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
       }else{ // 不是 nicer
         var display_nice='<button value="推薦" class="n" name="'+timelinesID+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
+      }
+
+      // 判斷是否為 reporter
+      var result_reporter = $.grep(reporter, function(e){ return e.reporter == pri_id; });
+      if(result_reporter.length>0){ // 目前這個人是 reporter 之一
+        var display_report='<button value="收回" class="n" name="'+timelinesID+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
+      }else{ // 不是 reporter
+        var display_report='<button value="推薦" class="n" name="'+timelinesID+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
       }
 
       var append_element ='<div class="container-fluid timeline_event" style="margin-top:30px;">\
@@ -688,6 +765,70 @@ function expandComment(id){
   }else{
     $("#event_commentlist"+id).css("display", "block");
     $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;收起留言');
+  }
+}
+function report() {
+  var form=document.getElementById('reportForm');
+  for (var i=0; i<form.reason.length; i++) {
+    if (form.reason[i].checked) {
+      var choose = form.reason[i].value;
+      break;
+    }
+  }
+
+  if(choose=='others') {
+    var reason=document.getElementById('reasonInput').value.trim();
+  } else {
+    var reason=choose;
+  }
+
+  switch(activeSource){
+    case 'report_event':
+      var url='/TimelineReport';
+    break;
+    case 'report_comment':
+      var url='/TimelineResponseReport';
+    break;
+    default:
+      alert('住手！');
+      return;
+    break;
+  }
+
+  if(!reason) {
+    alert("請選擇原因");
+  } else {
+    //document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
+    $.post(url, {id: activeId, reason: reason}, function(res){
+      alert(res.num);
+      //document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+      $("#reportDialog").dialog("close");
+    }).error(function(res){
+      alert(res.err);
+    });
+  }
+}
+function cancelReport() {
+  if(confirm("確定要取消檢舉嗎")) {
+    switch(activeSource){
+      case 'cancelReport_event':
+        var url='/TimelineCancelReport';
+      break;
+      // case 'report_cancel_comment':
+      // break;
+      default:
+        alert('住手！');
+        return;
+      break;
+    }
+    //document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
+    $.post(url, {id: activeId}, function(res){
+      //document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+      alert(res.num);
+    }).error(function(res){
+      //document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
+      alert(res.responseJSON.err);
+    });
   }
 }
 

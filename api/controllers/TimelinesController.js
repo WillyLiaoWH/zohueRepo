@@ -173,10 +173,10 @@ module.exports = {
             });
         }
 
-        function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response 與 nicer 資料
+        function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response、nicer 與 reporter 資料
             var async = require('async');
             async.each(User.timelinesPost, function(timeline, callback) {
-                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').exec(function (err, result) {
+                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).exec(function (err, result) {
                     if(err) {
                         console.log("err");
                     }else{
