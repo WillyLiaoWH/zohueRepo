@@ -23,14 +23,14 @@ module.exports = {
             res.send(500,{err: "您沒有權限" });
         }else{
             var TimelineId = req.param("id");
-            //var nicer = req.session.user.id;
+            var reporter = req.session.user.id;
             Timelines.findOne(TimelineId).populate('report').exec(function (err, timeline) {
-                timeline.report.remove({article: TimelineId, reporter: req.session.user.id});
-                console.log(timeline.report);
-                res.send({num:555});
-                //var key = timeline.report.find(article: TimelineId);
-                //delete timeline.report[key];
-                //timeline.save(function (err) { res.send({num:timeline.report.length-1}); });
+                for(i in timeline.report){
+                	if(timeline.report[i].article == TimelineId & timeline.report[i].reporter == reporter){
+                		delete timeline.report[i];
+                		timeline.save(function (err) { res.send({num:timeline.report.length-1}); });
+                	}
+                }
             });
         }
     }
