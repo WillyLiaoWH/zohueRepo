@@ -4,6 +4,7 @@ var tab="all";
 var userTable="";
 var articleTable="";
 var articleList="";
+var searchUser="";
 
 $(document).ready(function(){
 
@@ -38,7 +39,10 @@ function loadUserList(){
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="none";
 
-  $.get("/getAllUsers", function(userList){
+  alert(document.getElementById("searchUser").value);
+  searchUser=document.getElementById("searchUser").value;
+
+  $.get("/getAllUsers"+"?searchUser="+searchUser, function(userList){
 
     userTable="<tr class='tableHead'><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
@@ -83,8 +87,8 @@ function getart(callback){
   $.get("/setBoardPage/"+board+"/"+tab, function(res){
     
     articleList=res.articlesList;
-    var boardName=res.board.title;
-    var boardCate=res.board.category.title;
+    // var boardName=res.board.title;
+    // var boardCate=res.board.category.title;
 
     callback(articleList);
   }).error(function(res){

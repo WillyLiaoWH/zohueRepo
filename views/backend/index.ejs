@@ -27,6 +27,17 @@
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>帳號管理</h2></div>
                 <div class="panel-body">
+                  <div class="row">
+                    <div class="span4 offset8">
+                      <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="searchUser">
+                        </div>
+                        <button type="button" class="btn btn-default" onclick="loadUserList()">搜尋</button>
+                      </form>
+                    </div>
+                  </div>
+                  
                   <!-- Table -->
                   <table class="table" id="backend_userList"></table>
                 </div>
