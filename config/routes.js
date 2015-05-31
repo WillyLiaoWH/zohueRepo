@@ -63,6 +63,7 @@ module.exports.routes = {
   'POST /confirmFriend': 'User.confirmFriend',
   'POST /removeFriend': 'User.removeFriend',
   'POST /removeAddFriend': 'User.removeAddFriend',
+
   'POST /postTimeline': 'TimelinesController.postTimeline',
   'POST /editTimeline': 'TimelinesController.editTimeline',
   'POST /delTimeline': 'TimelinesController.delTimeline',
@@ -74,7 +75,10 @@ module.exports.routes = {
   'POST /delCommentTimeline': 'TimelineResponseController.delCommentTimeline',
   'POST /TimelineResponseNice': 'TimelineResponseController.clickNice',
   'POST /TimelineResponseCancelNice': 'TimelineResponseController.cancelNice',
-  'POST /updateResponseNumTimeline': 'TimelineResponseController.updateResponseNumTimeline',
+  'POST /TimelineReport': 'TimelineReport.clickReport',
+  'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
+  //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
+
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
