@@ -477,6 +477,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
           var comment_ID = element_res.id;
           var comment_updatedAt = new Date(element_res.updatedAt).toLocaleString();
           var comment_nicer = element_res.rnicer;
+          var comment_reporter = element_res.rreporter;
           var dif2 = (timeInMs-new Date(element_res.updatedAt).getTime())/1000;
           if(dif2 > 86400){var time=Math.round(dif2/86400)+"天前";
           }else if(dif2 > 3600){var time=Math.round(dif2/3600)+"小時前";
@@ -493,7 +494,14 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
             var comment_option = '<li><a class="comment_edit" name="'+comment_ID+'">編輯</a></li>\
                                   <li><a class="comment_del" name="'+comment_ID+'">刪除</a></li>';
           }else{ // 非原作者
-            var comment_option = '<li><a class="report_comment" name="'+comment_ID+'">檢舉</a></li>';
+            //var comment_option = '<li><a class="report_comment" name="'+comment_ID+'">檢舉</a></li>';
+            // 判斷是否為 reporter
+            var result_comment_reporter = $.grep(comment_reporter, function(e){ return e.reporter == pri_id; });
+            if(result_comment_reporter.length>0){ // 目前這個人是 reporter 之一
+              var comment_option = '<li id="cancelReport_comment" name="'+comment_ID+'"><a class="cancelReport_comment" name="'+comment_ID+'">收回檢舉</a></li>';
+            }else{ // 不是 reporter
+              var comment_option = '<li id="report_comment" name="'+comment_ID+'"><a class="report_comment" name="'+comment_ID+'">檢舉</a></li>';
+            }
           }
 
           // 判斷是否為 nicer
@@ -825,8 +833,9 @@ function cancelReport() {
       case 'cancelReport_event':
         var url='/TimelineCancelReport';
       break;
-      // case 'report_cancel_comment':
-      // break;
+      case 'cancelReport_comment':
+        var url='/TimelineResponseCancelReport';
+      break;
       default:
         alert('住手！');
         return;

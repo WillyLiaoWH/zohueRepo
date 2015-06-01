@@ -22,6 +22,10 @@ module.exports = {
     },
     nicer: {
       collection: 'user'
+    },
+    report: {
+      collection: 'TimelineResponseReport',
+      via: 'timelineResponse'
     }
   }
 };
