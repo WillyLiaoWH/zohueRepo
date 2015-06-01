@@ -13,7 +13,7 @@ module.exports = {
             var TimelineId = req.param("id");
             var reason = req.param("reason");
             Timelines.findOne(TimelineId).populate('report').exec(function (err, timeline) {
-                timeline.report.add({article: TimelineId, reporter: req.session.user.id, reason: reason});
+                timeline.report.add({timeline: TimelineId, reporter: req.session.user.id, reason: reason});
                 timeline.save(function (err) { res.send({num:timeline.report.length+1}); });
             });
         }
@@ -26,9 +26,19 @@ module.exports = {
             var reporter = req.session.user.id;
             Timelines.findOne(TimelineId).populate('report').exec(function (err, timeline) {
                 for(i in timeline.report){
-                	if(timeline.report[i].article == TimelineId & timeline.report[i].reporter == reporter){
+                	if(timeline.report[i].timeline == TimelineId & timeline.report[i].reporter == reporter){
+                        //var id = timeline.report[i].id;
                 		delete timeline.report[i];
-                		timeline.save(function (err) { res.send({num:timeline.report.length-1}); });
+                		timeline.save(function (err) {
+                            res.send({num:timeline.report.length-1});
+                            // TimelineResponseReport.destroy({id: id}).exec(function(err){
+                            //     if(err) {
+                            //         res.send(500,{err: "DB Error" });
+                            //     } else {
+                            //         res.send({num:timeline.report.length-1});
+                            //     }
+                            // });
+                        });
                 	}
                 }
             });

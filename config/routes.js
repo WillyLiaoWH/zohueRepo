@@ -77,7 +77,8 @@ module.exports.routes = {
   'POST /TimelineResponseCancelNice': 'TimelineResponseController.cancelNice',
   'POST /TimelineReport': 'TimelineReport.clickReport',
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
-  //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
+  'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
+  'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
 
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
