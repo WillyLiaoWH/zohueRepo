@@ -749,9 +749,12 @@ module.exports = {
         }
     },
     getAllUsers: function(req, res){
-        User.find().populate('articlesPost').exec(function(err, allUsers) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
+        //console.log(req.param("searchUser"));
+        var searchUser = req.param("searchUser");
+        User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
+            console.log(allUsers);
+            if (allUsers.length==0) {
+                res.send("查無結果！");
             } else {
                 sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
                     if (err) {
