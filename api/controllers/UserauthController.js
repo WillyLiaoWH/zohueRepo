@@ -27,7 +27,7 @@ module.exports = {
         	var auth_status=JSON.parse(str);
         	auth_status[item]=status;
             if(inTable){
-                Userauth.update({user:id},{city:auth_status["city"],gender:auth_status["gender"],phone:auth_status["phone"],bday:auth_status["bday"]}).exec(function(err,res){
+                Userauth.update({user:id},{city:auth_status["city"],gender:auth_status["gender"],phone:auth_status["phone"],bday:auth_status["bday"]}).exec(function(err,result){
                 	if (err){
                 		res.send(500,"DB error");
                 	}
