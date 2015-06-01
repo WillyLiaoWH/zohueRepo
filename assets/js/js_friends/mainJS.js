@@ -19,66 +19,6 @@ $(document).ready(function(){
       window.location.replace("/home");
     }
   });
-  // $.get("/setFriendPage", function(res){
-  //   if(res.err) {
-  //     alert(res.err);
-  //   } else {
-  //     var allUser=res.allUser;
-  //     var isFriend=res.isFriend;
-  //     var html="";
-  //     for(i=0; i<allUser.length; i++) {
-  //       if(isFriend[i]!=-2) {
-  //         html+="<div style='margin: 30px;'><div>";
-  //         var picSize="75";
-  //         switch(allUser[i].type) {
-  //           case "D":
-  //             authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //             break;
-  //           case "S":
-  //             authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //             break;
-  //           case "RN":
-  //             authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //             break;
-  //           case "P":
-  //             authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //             break;
-  //           case "F":
-  //             authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //             break;
-  //           default:
-  //             authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //         }
-  //         html+=authorIcon;
-  //         html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-  //         html+="<div onclick='toProfile(\""+allUser[i].account+"\")'>"+allUser[i].alias+"</div>&nbsp&nbsp&nbsp&nbsp";
-  //         switch(isFriend[i]) {
-  //           case -1:
-  //             html+="已封鎖"+"</div><div><button type='button' onclick='removeBlack("+allUser[i].id+")'>解除封鎖</button><br>";
-  //             break;
-  //           case 0:
-  //             html+="</div><div><button type='button' onclick='addFriend("+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-  //             html+="<button type='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
-  //             break;
-  //           case 1:
-  //             html+="要求加入好友"+"</div><div><button type='button' onclick='confirmFriend("+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
-  //             html+="<button type='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
-  //             break;
-  //           case 2:
-  //             html+="已送出好友邀請"+"</div><div><button type='button' onclick='removeAddFriend("+allUser[i].id+")'>收回好友邀請?</button>&nbsp&nbsp&nbsp&nbsp";
-  //             html+="<button type='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
-  //             break;
-  //           case 3:
-  //             html+="好友"+"</div><div><button type='button' onclick='removeFriend("+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
-  //             html+="<button type='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
-  //             break;
-  //         }
-  //         html+="</div></div>";
-  //       }
-  //     }
-  //     document.getElementById("friendsList").innerHTML=html;
-  //   }
-  // });
   
 });
 
@@ -160,6 +100,11 @@ function removeAddFriend(id) {
   });
 }
 
+var allUser;
+var isFriend;
+var pageNum;
+var thisPage;
+var age;
 function search() {
   var alias=document.getElementById("alias").value;
   var disease=$("#disease").val();
@@ -171,10 +116,21 @@ function search() {
     } else {
       if(res.users.length!=0) {
         if(res.isFriend) {
-          var allUser=res.users;
-          var isFriend=res.isFriend;
+          allUser=[];
+          isFriend=[];
+          age=[];
+          for(i=0; i<res.users.length; i++) {
+            if(res.isFriend[i]!=-2&&res.users[i].id!="10") {
+              allUser.push(res.users[i]);
+              isFriend.push(res.isFriend[i]);
+              age.push(res.age[i]);
+            }
+          }
+
+          pageNum=Math.ceil(allUser.length/5);
+          thisPage=1;
           var html="";
-          for(i=0; i<allUser.length; i++) {
+          for(i=0; i<thisPage*5&&i<allUser.length; i++) {
             if(isFriend[i]!=-2&&allUser[i].id!="10") {
               html+="<div class='friend'><div class='image'>";
               var picSize="100";
@@ -255,43 +211,19 @@ function search() {
                 html+="</div><br>";
               }
 
-              if(res.age[i]!=-1) {
+              if(age[i]!=-1) {
                 html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+res.age[i]+"歲</div>";
               }
               html+="</div></div>";
             }
           }
           document.getElementById("searchList").innerHTML=html;
+          if(thisPage!=pageNum) {
+            document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多</button>";
+          }
         } else {
-          // var allUser=res.users;
-          // var html="";
-          // for(i=0; i<allUser.length; i++) {
-          //   html+="<div style='margin: 30px;'><div>";
-          //   switch(allUser[i].type) {
-          //     case "D":
-          //       authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
-          //       break;
-          //     case "S":
-          //       authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
-          //       break;
-          //     case "RN":
-          //       authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
-          //       break;
-          //     case "P":
-          //       authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
-          //       break;
-          //     case "F":
-          //       authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
-          //       break;
-          //     default:
-          //       authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
-          //   }
-          //   html+=authorIcon;
-          //   html+="<img src='"+allUser[i].img+"' style='margin-right:10px; height:50px; width:50px;'>";
-          //   html+=allUser[i].alias+"&nbsp&nbsp&nbsp&nbsp";
-          //   html+="</div></div>";
-          // }
-          // document.getElementById("searchList").innerHTML=html;
+          alert("you haven't login");
+          window.location.assign("/home")
         }
       } else {
         var html="找不到符合搜尋條件的人";
@@ -322,3 +254,100 @@ function HandleResponse_ShowAllCity(response){
   }
 }
 
+function showMore(nextPage) {
+  var html="";
+  for(i=thisPage*5; i<nextPage*5&&i<allUser.length; i++) {
+    if(isFriend[i]!=-2&&allUser[i].id!="10") {
+      html+="<div class='friend'><div class='image'>";
+      var picSize="100";
+      var authorType="";
+      switch(allUser[i].type) {
+        case "D":
+          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+          authorType="醫師";
+          break;
+        case "S":
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+          authorType="社工師";
+          break;
+        case "RN":
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+          authorType="護理師";
+          break;
+        case "P":
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+          break;
+        case "F":
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+          break;
+        default:
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+      }
+      html+=authorIcon;
+      html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
+      html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].account+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
+
+      html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
+      switch(isFriend[i]) {
+        case -1:
+          html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack("+allUser[i].id+")'>解除封鎖</button><br>";
+          break;
+        case 0:
+          html+="<button type='button' class='button' onclick='addFriend("+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+          html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+          break;
+        case 1:
+          html+="要求加入好友&nbsp&nbsp<button type='button' class='button' onclick='confirmFriend("+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
+          html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+          break;
+        case 2:
+          html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend("+allUser[i].id+")'>收回好友邀請?</button>&nbsp&nbsp&nbsp&nbsp";
+          html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+          break;
+        case 3:
+          html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend("+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+          html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+          break;
+      }
+      html+="</div></div><div class='friendRight'>";
+      if(allUser[i].addressCity&&allUser[i].addressCity!="") {
+        html+="<div style='display:inline-block; font-size: 22px; width: 100%'>來自"+allUser[i].addressCity+"</div><br>";
+      }
+
+      if(allUser[i].primaryDisease&&allUser[i].primaryDisease!="") {
+        html+="<div style='display:inline-block; font-size: 22px; width: 100%'>";
+        switch(allUser[i].type) {
+          case "D":
+            html+="主治"+diseaseList[allUser[i].primaryDisease];
+            break;
+          case "S":
+            html+="主治"+diseaseList[allUser[i].primaryDisease];
+            break;
+          case "RN":
+            html+="主治"+diseaseList[allUser[i].primaryDisease];
+            break;
+          case "P":
+            html+="患有"+diseaseList[allUser[i].primaryDisease];
+            break;
+          case "F":
+            html+="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
+            break;
+          default:
+        }
+        html+="</div><br>";
+      }
+
+      if(age[i]!=-1) {
+        html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+age[i]+"歲</div>";
+      }
+      html+="</div></div>";
+    }
+  }
+  document.getElementById("searchList").innerHTML+=html;
+  thisPage++;
+  if(thisPage!=pageNum) {
+    document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多</button>";
+  } else {
+    document.getElementById("more").innerHTML="";
+  }
+}

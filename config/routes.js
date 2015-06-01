@@ -85,7 +85,6 @@ module.exports.routes = {
   'POST /auth_setTimeline':'Timelines.auth_set',
   'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
 
-  'GET /setFriendPage': 'User.setFriendPage',
   'GET /checkAuth': 'SessionController.checkAuth',
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
