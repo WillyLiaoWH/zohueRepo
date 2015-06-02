@@ -752,7 +752,6 @@ module.exports = {
         //console.log(req.param("searchUser"));
         var searchUser = req.param("searchUser");
         User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
-            console.log(allUsers);
             if (allUsers.length==0) {
                 res.send("查無結果！");
             } else {
