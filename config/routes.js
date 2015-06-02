@@ -78,6 +78,7 @@ module.exports.routes = {
   'POST /TimelineReport': 'TimelineReport.clickReport',
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
+  'GET /authCheck/:account': 'UserAuth.authCheck',
 
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
@@ -97,6 +98,7 @@ module.exports.routes = {
   'GET /getAllUsers':'User.getAllUsers',
   'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
+  'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /article/*': {
     view: 'article/index'

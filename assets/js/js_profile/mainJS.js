@@ -433,6 +433,9 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   // alert(match[0]);
   
   var ori_author=window.location.toString().split('?')[1];
+  if (pri_account!==ori_author){
+    //$('.auth_btn').hide()
+  }
   showProfile(ori_author);
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     var author_avater = res["avatar"];
@@ -674,6 +677,9 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
 }
 
 function profile_auth(route){
+  var item = route.split("/")[0];
+  var target = route.split("/")[1];
+  $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
   $.get("/setProfileAuth/"+route,function(res){
     alert(res);
   })
@@ -959,7 +965,6 @@ function showProfile(ori_author){
   else{
     var addr="/getProfile/"+ori_author;
     xmlHttp.open("GET", addr, true);
-    $('.auth_btn').hide()
   }
   
   xmlHttp.send(null);
@@ -967,7 +972,6 @@ function showProfile(ori_author){
 function HandleResponse_showProfile(response){
 
   obj = JSON.parse(response);
-
   var email=obj.email;
   var fname=obj.fname;
   var lname=obj.lname;
@@ -983,8 +987,35 @@ function HandleResponse_showProfile(response){
   var Y = b.getFullYear();
   var M = b.getMonth()+1;
   var D = b.getDate();
-  // var primaryDisease=obj.primaryDisease;
-  // var selfIntroduction=obj.selfIntroduction;
+
+  var owner=window.location.toString().split('?')[1];
+
+  $.get('/authCheck/'+owner,function(auth_status){
+    if (!auth_status["email"]){
+      $('#email_row').hide();
+    }
+    if (!auth_status["gender"]){
+      $('#gender_row').hide();
+    }
+   if (!auth_status["phone"]){
+      $('#phone_row').hide();
+    }
+    if (!auth_status["bday"]){
+      $('#bday_row').hide();
+    }
+    if (!auth_status["city"]){
+      $('#city_row').hide();
+    }
+  })
+
+  $.get('/auth_data',function(auth_status){
+    console.log(auth_status)
+    $('#email_pic').attr("src","/images/img_timeline/"+auth_status["email"]+".png");
+    $('#gender_pic').attr("src","/images/img_timeline/"+auth_status["gender"]+".png");
+    $('#phone_pic').attr("src","/images/img_timeline/"+auth_status["phone"]+".png");
+    $('#bday_pic').attr("src","/images/img_timeline/"+auth_status["bday"]+".png");
+    $('#city_pic').attr("src","/images/img_timeline/"+auth_status["city"]+".png");
+  })
 
   $('#email').text(email);
   $('#name').text(fname+lname);
