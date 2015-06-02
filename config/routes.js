@@ -77,6 +77,7 @@ module.exports.routes = {
   'POST /TimelineResponseCancelNice': 'TimelineResponseController.cancelNice',
   'POST /TimelineReport': 'TimelineReport.clickReport',
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
+  //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
   'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
   'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
 
@@ -86,7 +87,8 @@ module.exports.routes = {
   'POST /auth_setTimeline':'Timelines.auth_set',
   'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
 
-  'GET /checkAuth': 'SessionController.checkAuth',
+  'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
+  'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
   'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',
@@ -98,6 +100,7 @@ module.exports.routes = {
   'GET /getAllUsers':'User.getAllUsers',
   'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
+  'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /article/*': {
     view: 'article/index'
