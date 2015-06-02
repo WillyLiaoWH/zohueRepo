@@ -78,7 +78,8 @@ module.exports.routes = {
   'POST /TimelineReport': 'TimelineReport.clickReport',
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
-  'GET /authCheck/:account': 'UserAuth.authCheck',
+  'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
+  'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
 
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
@@ -86,7 +87,8 @@ module.exports.routes = {
   'POST /auth_setTimeline':'Timelines.auth_set',
   'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
 
-  'GET /checkAuth': 'SessionController.checkAuth',
+  'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
+  'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
   'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',

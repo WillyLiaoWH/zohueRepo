@@ -112,3 +112,7 @@ tr:hover{
 .tableHead{
   background-color:#F0F0F0;
 }
+
+.searchButton{
+  font-size:20px;
+}

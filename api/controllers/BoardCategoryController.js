@@ -6,18 +6,6 @@
  */
 
 module.exports = {
-	// getBoardCategory: function(req, res) {
-	// 	var category=req.param("category");
-	// 	Boards.find({category: category}).exec(function(err, boards) {
-	// 		if(err) {
-	// 			console.log(err);
-	// 			res.send(500, "DB error");
-	// 		} else {
-	// 			res.send(boards);
-	// 		}
-	// 	});
-	// }
-
 	getBoardCategory: function(req, res){
 		BoardCategory.find().exec(function(err, boardCategory) {
             //articlesList.sort('date ASC');

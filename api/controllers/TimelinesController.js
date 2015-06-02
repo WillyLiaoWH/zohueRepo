@@ -242,11 +242,11 @@ module.exports = {
         }
 
         function AuthorQuery(timelineRes, cb){
-            TimelineResponse.find(timelineRes.id).populate('author').populate('nicer', {select: ['id']}).exec(function (err, result2) {
+            TimelineResponse.find(timelineRes.id).populate('author').populate('nicer', {select: ['id']}).populate('report', {select: ['reporter']}).exec(function (err, result2) {
                 if(err) {
                     console.log("err");
                 }else{
-                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account, result2[0].nicer);
+                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account, result2[0].nicer, result2[0].report);
                 }
             });
         }
@@ -260,13 +260,14 @@ module.exports = {
 
             async.each(Response.timelinesPost, function(timeline, callback) {
                 async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img, account, nicer){
+                    AuthorQuery(timelineRes, function(alias, img, account, nicer, report){
                         var i=Response.timelinesPost.indexOf(timeline);
                         var j=timeline.response.indexOf(timelineRes);
                         Response.timelinesPost[i].response[j].account=account;
                         Response.timelinesPost[i].response[j].alias=alias;
                         Response.timelinesPost[i].response[j].img=img;
                         Response.timelinesPost[i].response[j].rnicer=nicer;
+                        Response.timelinesPost[i].response[j].rreporter=report;
 
                         // 最後一個 timeline 且最後一個留言
                         if(Response.timelinesPost.length==i+1 & Response.timelinesPost[i].response.length==j+1){cb(Response);}
