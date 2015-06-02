@@ -31,6 +31,17 @@ $(document).ready(function(){
     getart(loadForumList);
   });
 
+
+  $(document).on("click",".sortByChar",function(e){
+    sortByChar($(this).attr("value"));
+  });
+  $(document).on("click",".sortByLength",function(e){
+    sortByLength($(this).attr("value"));
+  });
+  // $(document).on("click",".sortByDate",function(e){
+  //   sortByDate($(this).attr("value"));
+  // });
+
 });
 
 function loadUserList(){
@@ -104,8 +115,8 @@ function loadForumList(articleList){
   document.getElementById("subscriberManage").style.display="none";
   
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th>文章類別</th><th style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
-    articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th>推薦數</th><th onclick='sortArticles()' style='width:200px;'>檢舉數</th><tr>";
+    articleTable="<tr class='tableHead'><th class='sortByChar' value='classification'>文章類別</th><th class='sortByChar' value='title' style='width:400px;'>文章標題</th><th class='sortByChar' value='' style='width:200px;'>發表人</th><th>身分別</th>";
+    articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th class='sortByLength' value='nicer'>推薦數</th><th class='sortByLength' value='report' style='width:200px;'>檢舉數</th><tr>";
       for(i=0; i<articleList.length; i++) {
         clickNum=articleList[i].clickNum;
         responseNum=articleList[i].responseNum;
@@ -169,15 +180,24 @@ function loadsubscriberList(){
   });
 }
 
-
-function sortArticles(){
-  
+function sortByChar(sortby){
   articleList=articleList.sort(function(a, b) {
-      return b.report.length-a.report.length;
+      return a[sortby].localeCompare(b[sortby])
   });
-  //alert("sort"+JSON.stringify(articleList));
   loadForumList(articleList);
 }
+function sortByLength(sortby){
+  articleList=articleList.sort(function(a, b) {
+      return b[sortby].length-a[sortby].length;
+  });
+  loadForumList(articleList);
+}
+// function sortByDate(sortby){
+//   articleList=articleList.sort(function(a, b) {
+//     return new Date(b.createdAt)-new Date(a.createdAt);
+//   });
+//   loadForumList(articleList);
+// }
 
 
 function reasonHtmlCreate(reportobj){
