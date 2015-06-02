@@ -132,8 +132,11 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	border-top: 1px solid rgba(102, 141, 60, 0.4);
 }
 .event_commentlist{
-	border-top: 1px solid rgba(102, 141, 60, 0.4);
+	//border-top: 1px solid rgba(102, 141, 60, 0.4);
 	display:none;
+}
+.default_event_commentlist{
+	border-top: 1px solid rgba(102, 141, 60, 0.4);
 }
 .edit_content{
 	word-break: break-all;

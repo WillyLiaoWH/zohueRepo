@@ -189,7 +189,10 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
 
         // 預先處理每個 timeline event comment
         var append_element_comment = "";
+        var append_default_element_comment = "";
+        var counter = 0;
         for(element_res of res["timelinesList"][i].response){
+          counter++;
           var comment_author_account=element_res.account;
           var comment_author_avater=element_res.img;
           var comment_author=element_res.alias;
@@ -241,7 +244,8 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
             var display_img='none';
             var css_r_content="";
           }
-          append_element_comment = append_element_comment+'<div id="container_timeline_res container-fluid">\
+          function combine(element){
+            element = element+'<div id="container_timeline_res container-fluid">\
                         <div id="sidebar_timeline_res">\
                           <image src="'+comment_author_avater+'" height="50" width="50">\
                         </div>\
@@ -271,6 +275,13 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                           </div>\
                         </div>\
                       </div>';
+            return element;
+          }
+          if(counter > 3){
+            append_element_comment=combine(append_element_comment);
+          }else{
+            append_default_element_comment=combine(append_default_element_comment);
+          }
         }
 
         // 判斷本文是否有圖
@@ -371,6 +382,9 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                   </div>\
                   <div class="row-fluid" id="niceCount'+timelinesID+'">\
                     有 '+nicer.length+' 人推薦\
+                  </div>\
+                  <div class="row-fluid default_event_commentlist" id="default_event_commentlist'+timelinesID+'">\
+                    '+append_default_element_comment+'\
                   </div>\
                   <div class="row-fluid event_commentlist" id="event_commentlist'+timelinesID+'">\
                     '+append_element_comment+'\
