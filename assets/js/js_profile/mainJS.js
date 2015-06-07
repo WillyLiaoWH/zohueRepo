@@ -18,6 +18,9 @@ $(document).ready(function(){
   $(document).on("click",".event_edit",function(e){
     editTimeline(this.name);
   });
+  $(document).on("click","#editCancel",function(e){
+    editTimelineCancel(this.name);
+  });
   $(document).on("click","#editSend",function(e){
     editTimelineSend(this.name);
   });
@@ -39,6 +42,9 @@ $(document).ready(function(){
   });
   $(document).on("click",".comment_edit",function(e){
     editRTimeline(this.name);
+  });
+  $(document).on("click","#editRCancel",function(e){
+    editRTimelineCancel(this.name);
   });
   $(document).on("click","#editRSend",function(e){
     editRTimelineSend(this.name);
@@ -260,13 +266,14 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                             <div class="row-fluid div_r_edit_img" id="div_r_edit_img'+comment_ID+'" style="display:block;">'+comment_contentImg+'</div>\
                             <button value="送出留言" id="editRSend" class="b" name="'+comment_ID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
                             <button value="插入圖片" id="editRImage" class="b" name="'+comment_ID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
+                            <button value="取消編輯" id="editRCancel" class="b" name="'+comment_ID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
                           </div>\
                           <div class="row-fluid event_option btn-group">\
                             <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="'+comment_updatedAt+'">'+time+'</a></div>\
                             <div class="btn-group" id="RniceArticle'+comment_ID+'" style="float:none;">'+display_r_nice+'</div>\
                             <div class="btn-group" style="float:none;">\
                               <button type="button" class="n" data-toggle="dropdown">\
-                                <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
+                                <span class="glyphicon glyphicon-menu-down" style="color:black;top:4px;" aria-hidden="true"></span>\
                               </button>\
                               <ul class="dropdown-menu" role="menu">\
                                 '+comment_option+'\
@@ -304,6 +311,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                     <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
                     <button value="送出留言" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
                     <button value="插入圖片" id="editImage" class="b" name="'+timelinesID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
+                    <button value="取消編輯" id="editCancel" class="b" name="'+timelinesID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
                   </div>';
           var event_option = '<li><a class="event_edit" name="'+timelinesID+'">編輯</a></li>\
                                 <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
@@ -371,11 +379,10 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                   <div class="row-fluid event_img" style="display:'+display_img+';">'+contentImg+'</div>\
                   <div class="row-fluid event_option btn-group">\
                     <div class="btn-group" id="niceArticle'+timelinesID+'" style="float:none;">'+display_nice+'</div>\
-                    <button class="n" id="expandComment" name="'+timelinesID+'"><span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;展開留言</button>\
                     '+auth_option+'\
                     <div class="btn-group" style="float:none;">\
                       <button type="button" class="n" data-toggle="dropdown">\
-                        <span class="glyphicon glyphicon-menu-down" style="color:black" aria-hidden="true"></span>\
+                        <span class="glyphicon glyphicon-menu-down" style="color:black;top:4px;" aria-hidden="true"></span>\
                         &nbsp;其他\
                       </button>\
                       <ul class="dropdown-menu" role="menu">\
@@ -391,6 +398,9 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                   </div>\
                   <div class="row-fluid event_commentlist" id="event_commentlist'+timelinesID+'">\
                     '+append_element_comment+'\
+                  </div>\
+                  <div class="row-fluid readMore" id="readMore'+timelinesID+'" style="text-align:center;margin-top:20px">\
+                    <button class="n" id="expandComment" name="'+timelinesID+'"><span class="glyphicon glyphicon-comment" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;展開留言</button>\
                   </div>\
                   <div class="row-fluid event_comment">\
                     <table style="width:100%;">\
@@ -422,6 +432,9 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         if(pri_account==""){ // 沒登入
           $(".event_option").css("display", "none");
           $(".event_comment").css("display", "none");
+        }
+        if(res["timelinesList"][i].response.length<4){
+          $(".readMore").css("display", "none");
         }
       }
     }
@@ -463,6 +476,14 @@ function editTimeline(id){
   $("#container_edit"+id).css("display", "block");
   $("#container_edit"+id).parent().children( ".event_text" ).css("display", "none");
   $("#container_edit"+id).parent().children( ".event_img" ).css("display", "none");
+}
+function editTimelineCancel(id){
+  $("#container_edit"+id).css("display", "none");
+  $("#container_edit"+id).parent().children( ".event_text" ).css("display", "block");
+  $("#container_edit"+id).parent().children( ".event_img" ).css("display", "block");
+  if($("#container_edit"+id).parent().children( ".event_img" ).html().trim()==""){
+    $("#container_edit"+id).parent().children( ".event_img" ).css("display", "none");
+  }
 }
 function editTimelineSend(id){
   if($("#div_edit_img"+id)){$("#div_edit_img"+id+" .delete").remove();} // 去除叉叉紐
@@ -521,10 +542,10 @@ function expandComment(id){
   var status = $("#event_commentlist"+id).css("display");
   if(status=="block"){
     $("#event_commentlist"+id).css("display", "none");
-    $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;展開留言');
+    $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;展開留言');
   }else{
     $("#event_commentlist"+id).css("display", "block");
-    $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black" aria-hidden="true"></span>&nbsp;收起留言');
+    $('[id="expandComment"][name="'+id+'"]').html('<span class="glyphicon glyphicon-comment" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;收起留言');
   }
 }
 function report() {
@@ -618,6 +639,14 @@ function editRTimeline(id){
   $("#container_r_edit"+id).css("display", "block");
   $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "none");
   $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+}
+function editRTimelineCancel(id){
+  $("#container_r_edit"+id).css("display", "none");
+  $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "block");
+  if($("#container_r_edit"+id).parent().children( ".event_img" ).html().trim()==""){
+    $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+  }
 }
 function editRTimelineSend(id){
   if($("#div_r_edit_img"+id)){$("#div_r_edit_img"+id+" .delete").remove();} // 去除叉叉紐

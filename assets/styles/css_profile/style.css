@@ -23,7 +23,7 @@
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
-#commentSend, #image, #TimelineCommentSend, #TimelineImage, #editSend, #editImage, #editRSend, #editRImage{
+#commentSend, #image, #TimelineCommentSend, #TimelineImage, #editSend, #editImage, #editCancel, #editRSend, #editRImage, #editRCancel{
 	float:right;
 	margin-bottom:10px;
 }
