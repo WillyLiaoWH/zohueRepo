@@ -72,20 +72,46 @@ module.exports = {
         var primaryDisease=req.param("primaryDisease");
         var selfIntroduction=req.param("selfIntroduction");
 
-        User.update({account: account}, {isFullSignup: true, fname: fname, lname: lname, img: img,
-            forgetQ: forgetQ, forgetA: forgetA, gender: gender, phone: phone, postalCode: postalCode,
-            addressCity: addressCity, addressDistrict: addressDistrict, address: address,
-            birthday: birthday, primaryDisease: primaryDisease, selfIntroduction: selfIntroduction
-        }).exec(function(error, user) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-            } else {
-                req.session.user = user[0];
-                req.session.authenticated=true;
-                console.log(user[0]);
-                res.send(user[0]);
-            }
-        });
+        if(typeof req.session.user == 'undefined'){
+            res.send(500,{err: "您沒有權限" });
+        }else{
+            User.findOne({account: account}).populate('Userauth').exec(function (err, user) {
+                user.isFullSignup = true;
+                user.fname = fname;
+                user.lname = lname;
+                user.img = img;
+                user.forgetQ = forgetQ;
+                user.forgetA = forgetA;
+                user.gender = gender;
+                user.phone = phone;
+                user.postalCode = postalCode;
+                user.addressCity = addressCity;
+                user.addressDistrict = addressDistrict;
+                user.address = address;
+                user.birthday = birthday;
+                user.primaryDisease = primaryDisease;
+                user.selfIntroduction = selfIntroduction;
+                user.Userauth.add( {
+                    "user": user.id,
+                    "city": "self",
+                    "gender": "self",
+                    "phone": "self",
+                    "bday": "self"} );
+
+                user.save(function (err) {
+                    Userauth.create({user:user.id,city:"self",gender:"self",phone:"self",bday:"self"}).exec(function(err,ret){
+                        if (err){
+                            res.send(500,{err:"DB error"});
+                        }else{
+                            req.session.user = user;
+                            req.session.authenticated=true;
+                            console.log(user);
+                            res.send(user);
+                        }
+                    });
+                });
+            });
+        }
     },
 
     change: function(req, res){

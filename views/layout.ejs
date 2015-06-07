@@ -51,10 +51,10 @@
 
    <body>
     <div class="row-fluid">
-      <div class="span3">
+      <div class="span4">
         <a href="/home"><img id="logo" src="/images/img_public/zohueLogo.png"/></a>
       </div>
-      <div class="span6 offset3  visible-desktop hidden-phone visible-tablet">
+      <div class="span8 visible-desktop hidden-phone visible-tablet">
         <div id="loginSection">
           帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
           &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
@@ -68,12 +68,13 @@
           <div class="span9">
             <div id="profile">
               <div class="row-fluid">  
-                <div class="span3 offset6 text-right">
+                <div id="userAlias" class="ff"></div>
+                <div class="text-right" style="float:right;">
                   <a href="/profile">
-                    <img id="userimg" src="https://dl.dropboxusercontent.com/u/134734866/images/1511350_10201201963605015_1047947590_n.jpg" alt="Smiley face" height="60px" width="60px">
+                    <img id="userimg" src="" alt="Smiley face" height="60px" width="60px">
                   </a>
                 </div>
-                <div id="userAlias" class="span3"></div>
+                
               </div>
             </div>
           </div>
