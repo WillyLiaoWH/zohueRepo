@@ -77,6 +77,10 @@ module.exports = {
     sendNewsLetter: function(req, res) {
         var mailSubject = req.param("mailSubject");
         var mailContent = req.param("mailContent");
+        var mailAttachment  = req.param("attachment"); 
+
+        console.log(mailAttachment);
+
         SubscribeEmail.find().exec(function(err, mailList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
@@ -101,20 +105,12 @@ module.exports = {
                     text: mailContent, 
                     attachments: [
                         {   // utf-8 string as an attachment
-                            filename: 'text1.txt',
-                            content: 'hello world!'
-                        },
-                        {   // file on disk as an attachment
-                            filename: 'HW-10.docx',
-                            path: 'C:/Users/Hoho/Desktop/HW-10.docx' // stream this file
+                            filename: 'lana.png',
+                            path: mailAttachment
                         },
                         {   // file on disk as an attachment
                             filename: '訂單成立 - Yahoo奇摩拍賣.pdf',
                             path: 'C:/Users/Hoho/Desktop/訂單成立 - Yahoo奇摩拍賣.pdf' // stream this file
-                        },
-                        {   // file on disk as an attachment
-                            filename: 'bootstrap.zip',
-                            path: 'C:/Users/Hoho/Desktop/bootstrap.zip' // stream this file
                         },
                         {
                             filename: 'lana.png',
