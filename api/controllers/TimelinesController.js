@@ -161,7 +161,11 @@ module.exports = {
                     sails.log.error("ERR:", err);
                     console.log("err1");
                 }
-                cb(user[0]);
+                if(!user[0].isFullSignup) {
+                    res.send({notfull: true});
+                } else {
+                    cb(user[0]);
+                }
                 // sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
                 //     if (err) {
                 //         sails.log.error("ERR:", err);
