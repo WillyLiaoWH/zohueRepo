@@ -80,8 +80,6 @@ $(document).ready(function(){
     }
   });
 
-
-
 });
 
 function loadUserList(){
@@ -201,20 +199,23 @@ function loadsubscriberList(){
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="block";
 
-  $.get("/getAllSubscribers", function(res){
+  searchEmail=document.getElementById("searchEmail").value;
+
+  $.get("/getAllSubscribers"+"?searchEmail="+searchEmail, function(subscribers){
     
-    subscribers=res;
-
-    subscriberTable="<tr class='tableHead'><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
-
-    for(i=0; i<subscribers.length; i++){
-      createdAt=new Date(subscribers[i].createdAt).toLocaleString();
-      subscriberId=subscribers[i].id;
-      subscriberTable+="<tr><td>"+(i+1)+"</td><td>"+subscribers[i].email+"</td><td>"+createdAt+"</td>";
-      subscriberTable+="<td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteSubscriber("+subscriberId+");'></span></td></tr>";
+    //subscribers=res;
+    if(typeof(subscribers)=="string"){
+      alert(subscribers);
+    }else{
+      subscriberTable="<tr class='tableHead'><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
+      for(i=0; i<subscribers.length; i++){
+        createdAt=new Date(subscribers[i].createdAt).toLocaleString();
+        subscriberId=subscribers[i].id;
+        subscriberTable+="<tr><td>"+(i+1)+"</td><td>"+subscribers[i].email+"</td><td>"+createdAt+"</td>";
+        subscriberTable+="<td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteSubscriber("+subscriberId+");'></span></td></tr>";
+      }
+      document.getElementById("backend_subscriberList").innerHTML = subscriberTable;
     }
-
-    document.getElementById("backend_subscriberList").innerHTML = subscriberTable;
   }).error(function(res){
     alert(res.responseJSON.err);
   });
@@ -297,13 +298,18 @@ function deleteSubscriber(id) {
   });} 
 }
 
-function cancelSearch(){
+function cancelUserSearch(){
   document.getElementById("searchUser").value="";
   loadUserList();
 }
 
+function cancelEmailSearch(){
+  document.getElementById("searchEmail").value="";
+  loadsubscriberList();
+}
+
 // 輸入要搜尋的字之後，按enter可以直接送出
-function enterLogin(e) {
+function userSearch(e) {
   var keynum;
   if(window.event) {
     keynum = e.keyCode;
@@ -312,6 +318,20 @@ function enterLogin(e) {
   }
   if(keynum=="13") {
     loadUserList();
+  } else {
+    return true;
+  }
+}
+
+function emailSearch(e) {
+  var keynum;
+  if(window.event) {
+    keynum = e.keyCode;
+  } else if(e.which) {
+    keynum = e.which;
+  }
+  if(keynum=="13") {
+    loadsubscriberList();
   } else {
     return true;
   }

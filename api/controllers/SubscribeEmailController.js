@@ -131,11 +131,16 @@ module.exports = {
         });
     },
     getAllSubscribers: function(req, res){
-        SubscribeEmail.find().exec(function(err, subscribers) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
+        var searchEmail = req.param("searchEmail");
+        SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
+            if (subscribers.length==0) {
+                res.send("查無結果！");
             } else {
-                res.send(subscribers);
+                if (err) {
+                    res.send(500, { err: "DB Error" });
+                } else {
+                    res.send(subscribers);
+                }
             }
         });
     },

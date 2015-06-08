@@ -29,11 +29,11 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-md-2" style="margin-left:15px; padding-right:0px;">
-                      <input type="text" class="form-control" id="searchUser" onkeypress="return enterLogin(event);" placeholder="搜尋帳號、姓名、暱稱">
+                      <input type="text" class="form-control" id="searchUser" onkeypress="return userSearch(event);" placeholder="搜尋帳號、姓名、暱稱">
                     </div>
                     <div class="col-md-2">
                       <button type="button" class="btn btn-default searchButton" onclick="loadUserList()">搜尋</button>
-                      <button type="button" class="btn btn-default searchButton" onclick="cancelSearch()">取消</button>
+                      <button type="button" class="btn btn-default searchButton" onclick="cancelUserSearch()">取消</button>
                     </div>
                   </div>
                   
@@ -105,6 +105,15 @@
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>訂閱管理</h2></div>
                 <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-2" style="margin-left:15px; padding-right:0px;">
+                      <input type="text" class="form-control" id="searchEmail" onkeypress="return emailSearch(event);" placeholder="搜尋E-mail">
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-default searchButton" onclick="loadsubscriberList()">搜尋</button>
+                      <button type="button" class="btn btn-default searchButton" onclick="cancelEmailSearch()">取消</button>
+                    </div>
+                  </div>
                   <!-- Table -->
                   <table class="table" id="backend_subscriberList"></table>
                 </div>
