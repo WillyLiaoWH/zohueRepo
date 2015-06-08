@@ -219,7 +219,7 @@ function search() {
           }
           document.getElementById("searchList").innerHTML=html;
           if(thisPage!=pageNum) {
-            document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多</button>";
+            document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多人</button>";
           }
         } else {
           alert("you haven't login");
@@ -346,7 +346,7 @@ function showMore(nextPage) {
   document.getElementById("searchList").innerHTML+=html;
   thisPage++;
   if(thisPage!=pageNum) {
-    document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多</button>";
+    document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多人</button>";
   } else {
     document.getElementById("more").innerHTML="";
   }

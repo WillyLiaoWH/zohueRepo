@@ -307,10 +307,18 @@ function setPage(page, keyword, sort) {
           responseNum=articleList[i+articleNum*(page-1)].responseNum;
           niceNum=articleList[i+articleNum*(page-1)].nicer.length;
           updateTime=new Date(articleList[i+articleNum*(page-1)].lastResponseTime).toLocaleString();
-          lastResponseTime=updateTime.slice(0, updateTime.length-3);
+          if(updateTime.indexOf("GMT")==-1) {
+            lastResponseTime=updateTime.slice(0, updateTime.length-3);
+          } else {
+            lastResponseTime=updateTime.slice(0, updateTime.indexOf("GMT"))+updateTime.slice(updateTime.indexOf("GMT")+5, updateTime.length-3);
+          }
+          
           createdAt=new Date(articleList[i].createdAt).toLocaleString();
-
-          postTime=createdAt.slice(0,createdAt.length-3);
+          if(createdAt.indexOf("GMT")==-1) {
+            postTime=createdAt.slice(0, createdAt.length-3);
+          } else {
+            postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
+          }
 
           /* 判斷發表人類別，決定稱謂與代表圖像 */
           authorType="";

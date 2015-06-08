@@ -166,11 +166,20 @@ function checkAuth() {
       document.getElementById("mobile_userimg").src = auth.img;
 
       $.get("/checkFull", function(full){
-        var fullSignup=document.getElementById("mobile_fullSignup");
+        var fullSignup1=document.getElementById("mobile_fullSignup");
+        var fullSignup2=document.getElementById("fullSignup");
+        var profile1=document.getElementById("profilePage");
+        var profile2=document.getElementById("mobile_profilepage");
         if(!full){
-          fullSignup.style.display="block";
+          fullSignup1.style.display="block";
+          fullSignup2.style.display="block";
+          profile1.style.display="none";
+          profile2.style.display="none";
         }else{
-          fullSignup.style.display="none";
+          fullSignup1.style.display="none";
+          fullSignup2.style.display="none";
+          profile1.style.display="block";
+          profile2.style.display="block";
         }
       });
 
@@ -184,15 +193,6 @@ function checkAuth() {
       if(postformmain) {
         postformmain.style.width="100%";
       }
-
-      $.get("/checkFull", function(full){
-        var fullSignup=document.getElementById("fullSignup");
-        if(!full){
-          fullSignup.style.display="block";
-        }else{
-          fullSignup.style.display="none";
-        }
-      });
     }else{
       var setUp=document.getElementById("setUp");
       setUp.style.display="none";
