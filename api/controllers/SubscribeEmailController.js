@@ -99,6 +99,28 @@ module.exports = {
                     bcc: receivers,    
                     subject: mailSubject,
                     text: mailContent, 
+                    attachments: [
+                        {   // utf-8 string as an attachment
+                            filename: 'text1.txt',
+                            content: 'hello world!'
+                        },
+                        {   // file on disk as an attachment
+                            filename: 'HW-10.docx',
+                            path: 'C:/Users/Hoho/Desktop/HW-10.docx' // stream this file
+                        },
+                        {   // file on disk as an attachment
+                            filename: '訂單成立 - Yahoo奇摩拍賣.pdf',
+                            path: 'C:/Users/Hoho/Desktop/訂單成立 - Yahoo奇摩拍賣.pdf' // stream this file
+                        },
+                        {   // file on disk as an attachment
+                            filename: 'bootstrap.zip',
+                            path: 'C:/Users/Hoho/Desktop/bootstrap.zip' // stream this file
+                        },
+                        {
+                            filename: 'lana.png',
+                            path: 'C:/Users/Hoho/Desktop/Desk/lana.png'
+                        }
+                    ],
                 };  
                 //發送信件方法  
                 transporter.sendMail(options, function(error, info){  

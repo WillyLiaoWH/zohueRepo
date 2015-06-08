@@ -262,6 +262,7 @@ function cancelSearch(){
   loadUserList();
 }
 
+// 輸入要搜尋的字之後，按enter可以直接送出
 function enterLogin(e) {
   var keynum;
   if(window.event) {
