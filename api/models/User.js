@@ -12,6 +12,9 @@ module.exports = {
       unique: true,
       required: true
     },
+    type: {
+      type: 'string',
+    },
     password: {
       type: 'string',
       required: true
