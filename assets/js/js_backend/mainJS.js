@@ -41,6 +41,46 @@ $(document).ready(function(){
   // $(document).on("click",".sortByDate",function(e){
   //   sortByDate($(this).attr("value"));
   // });
+  
+  $('input[type=file]').change(function () {
+    alert($(this).val().replace(/\\/g, '/').replace(/.*\//, ''));
+    alert($(this).val().replace(/\\/g, '/'));
+
+    alert($('input[type=file]').val().replace(/\\/g, '/'));
+  });
+
+
+  $(document).on("click","#sendNewsLetter",function(e){
+    var mailSubject = document.getElementById("mailSubject").value;
+    var mailContent = document.getElementById("mailContent").value;
+    if (mailSubject=="" && mailContent==""){
+      alert("尚未輸入主旨或內文!");
+    }else{
+      if(confirm("確定要發送電子報嗎？")){
+        document.getElementById("mailSpinner").style.display="block";
+        document.getElementById("mailEdit").style.display="none";
+        var attachment=$('input[type=file]').val().replace(/\\/g, '/');
+
+        $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachment: attachment}, function(res){
+          if (res == "SEND"){
+            alert("電子報發送成功!");
+            document.getElementById("mailSubject").value="";
+            document.getElementById("mailContent").value="";
+            document.getElementById("mailEdit").style.display="block"; 
+            document.getElementById("mailSpinner").style.display="none";
+          }else{
+            alert("電子報發送失敗!");
+            document.getElementById("mailSubject").value="";
+            document.getElementById("mailContent").value="";
+            document.getElementById("mailEdit").style.display="block"; 
+            document.getElementById("mailSpinner").style.display="none";
+          }
+        });
+      }
+    }
+  });
+
+
 
 });
 
