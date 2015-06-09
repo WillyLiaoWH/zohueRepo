@@ -152,8 +152,14 @@ module.exports.routes = {
     view: 'friends/index'
   },
   '/backend': {
-    view: 'backend/index'
+    //view: 'backend/index',
+    controller: 'backend'
   },
+  // '/backend': {
+  //   //view: 'backend/index',
+  //   controller: 'backend'
+  // },
+
 
   '/': '/home'
 

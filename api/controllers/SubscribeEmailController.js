@@ -135,6 +135,7 @@ module.exports = {
         SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
             if (subscribers.length==0) {
                 res.send("查無結果！");
+                //res.view('backend/index', {layout: null});
             } else {
                 if (err) {
                     res.send(500, { err: "DB Error" });
