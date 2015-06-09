@@ -330,7 +330,6 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                         <ul class="dropdown-menu" role="menu">\
                          <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
                               <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
-                              <li><a class="auth_set_doctor" name="'+timelinesID+'"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>\
                               <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
                         </ul>\
                       </div>'
@@ -457,6 +456,18 @@ function profile_auth(route){
   var item = route.split("/")[0];
   var target = route.split("/")[1];
   $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
+   if (target=="self"){
+        $('#'+item+'_btn_text').text("自己");
+      }
+      else if(target=="friend"){
+        $('#'+item+'_btn_text').text("朋友");
+      }
+      else if(target=="all"){
+        $('#'+item+'_btn_text').text("全部");
+      }
+      else if(target=="doctor"){
+        $('#'+item+'_btn_text').text("醫生");
+      }
   $.get("/setProfileAuth/"+route,function(res){
     alert(res);
   })
@@ -803,12 +814,23 @@ function HandleResponse_showProfile(response){
   })
 
   $.get('/auth_data',function(auth_status){
-    console.log(auth_status)
-    $('#email_pic').attr("src","/images/img_timeline/"+auth_status["email"]+".png");
-    $('#gender_pic').attr("src","/images/img_timeline/"+auth_status["gender"]+".png");
-    $('#phone_pic').attr("src","/images/img_timeline/"+auth_status["phone"]+".png");
-    $('#bday_pic').attr("src","/images/img_timeline/"+auth_status["bday"]+".png");
-    $('#city_pic').attr("src","/images/img_timeline/"+auth_status["city"]+".png");
+    var index = ["email","gender","phone","bday","city"];
+    for (var i in index){
+      console.log(auth_status[index[i]]);
+      $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
+      if (auth_status[index[i]]=="self"){
+        $('#'+index[i]+'_btn_text').text("自己");
+      }
+      else if(auth_status[index[i]]=="friend"){
+        $('#'+index[i]+'_btn_text').text("朋友");
+      }
+      else if(auth_status[index[i]]=="all"){
+        $('#'+index[i]+'_btn_text').text("全部");
+      }
+      else if(auth_status[index[i]]=="doctor"){
+        $('#'+index[i]+'_btn_text').text("醫生");
+      }
+    }
   })
 
   $('#email').text(email);
@@ -822,7 +844,7 @@ function HandleResponse_showProfile(response){
   }
   $('#gender').text(gender);
   $('#phone').text(phone);
-  $("#bday").text((Y-1911).toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
+  $("#bday").text("民國 "+(Y-1911).toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
 
 }

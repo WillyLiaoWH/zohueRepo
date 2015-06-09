@@ -192,115 +192,104 @@
           </div>
 
           <div class="tab-pane" id="about">
-
             <br>
             <div class="row">
-              <div class="col-md-3 col-md-offset-2"><img src="" id="avatar" height="70"></div>
+              <div class="col-md-3 "><img src="" id="avatar" height="100"></div>
+              <br>
               <h3  id="name"></h3> 
-            </div>
-            <div id="bday_row" class="row">
-              <div class="col-md-offset-2 col-md-2">
-                <h3>生日 : </h3>
-              </div>
-              <div class="col-md-5">
-                <h3 id="bday"></h3>
-              </div>
-              <div class="btn-group auth_btn" style="float:none;">
-                <button type="button" class="n" data-toggle="dropdown">
-                  <img id="bday_pic" src="" height="20px" width="20px">
-                  &nbsp;權限
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                 <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                  <li><a class="profile_auth" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                  <li><a class="profile_auth" name="bday/doctor"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>
-                  <li><a class="profile_auth" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
-                </ul>
-              </div>
-            </div>
-            <div id="city_row" class="row">
-              <div class="col-md-offset-2 col-md-2">
-                <h3>來自 : </h3>
-              </div>
-              <div class="col-md-5">
-                <h3 id="city"></h3>
-              </div>
-              <div class="btn-group auth_btn" style="float:none;">
-                <button type="button" class="n" data-toggle="dropdown">
-                  <img id="city_pic" src="" height="20px" width="20px">
-                  &nbsp;權限
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                  <li><a class="profile_auth" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                  <li><a class="profile_auth" name="city/doctor"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>
-                  <li><a class="profile_auth" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
-                </ul>
-              </div>
-            </div>
-            <div id="email_row" class="row">
-              <div class="col-md-offset-2 col-md-2">
-                <h3>E-MAIL : </h3>
-              </div>  
-              <div class="col-md-5">
-                <h3 id="email"></h3>
-              </div>
-             <div class="btn-group auth_btn" style="float:none;">
-                <button type="button" class="n" data-toggle="dropdown">
-                  <img id="email_pic" src="" height="20px" width="20px">
-                  &nbsp;權限
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                  <li><a class="profile_auth" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                  <li><a class="profile_auth" name="email/doctor"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>
-                  <li><a class="profile_auth" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
-                </ul>
-              </div>
-            </div>
-            <div id="gender_row" class="row">
-              <div class="col-md-offset-2 col-md-2">
-                <h3>性別 : </h3>
-              </div>  
-              <div class="col-md-5">
-                <h3 id="gender"></h3>
-              </div>
-              <div class="btn-group auth_btn" style="float:none;">
-                 <button type="button" class="n" data-toggle="dropdown">
-                   <img id="gender_pic" src="" height="20px" width="20px">
-                   &nbsp;權限
-                 </button>
+            </div> 
+           <table class="table">
+            <tr>
+              <th></th>
+              <th></th>
+              <th>權限設定</th>
+            </tr>
+             <tr>
+               <td>生日：</td>
+               <td id="bday"></td>
+               <td>
+                <div class="btn-group auth_btn" style="float:none;">
+                  <button type="button" class="n" data-toggle="dropdown">
+                    <img id="bday_pic" src="" height="20px" width="20px">
+                    <text id="bday_btn_text"></text>                  
+                  </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                    <li><a class="profile_auth" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                    <li><a class="profile_auth" name="gender/doctor"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>
-                    <li><a class="profile_auth" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
-                 </ul>
-               </div>
-            
-            </div>
-            <div id="phone_row" class="row">
-              <div class="col-md-offset-2 col-md-2">
-                <h3>電話 : </h3>
-              </div>  
-              <div class="col-md-5">
-                <h3 id="phone"></h3>
-              </div>
-              <div class="btn-group auth_btn" style="float:none;">
-               <button type="button" class="n" data-toggle="dropdown">
-                 <img id="phone_pic" src="" height="20px" width="20px">
-                 &nbsp;權限
-               </button>
-               <ul class="dropdown-menu" role="menu">
-                <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                <li><a class="profile_auth" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                <li><a class="profile_auth" name="phone/doctor"><img src="/images/img_timeline/doctor.png" height="20px">&nbsp;醫生</a></li>
-                <li><a class="profile_auth" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
-               </ul>
-             </div>
-            </div>
-            
-
+                   <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                    <li><a class="profile_auth" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
+                    <li><a class="profile_auth" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                  </ul>
+                </div>
+               </td>
+             </tr>
+             <tr>
+               <td>來自：</td>
+               <td id="city"></td>
+               <td>
+                 <div class="btn-group auth_btn" style="float:none;">
+                   <button type="button" class="n" data-toggle="dropdown">
+                     <img id="city_pic" src="" height="20px" width="20px">
+                     <text id="city_btn_text"></text>
+                   </button>
+                   <ul class="dropdown-menu" role="menu">
+                     <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
+                     <li><a class="profile_auth" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
+                     <li><a class="profile_auth" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                   </ul>
+                 </div>
+               </td>
+             </tr>
+             <tr>
+               <td>E-mail：</td>
+               <td id="email"></td>
+               <td>
+                 <div class="btn-group auth_btn" style="float:none;">
+                    <button type="button" class="n" data-toggle="dropdown">
+                      <img id="email_pic" src="" height="20px" width="20px">
+                      <text id="email_btn_text"></text>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
+                      <li><a class="profile_auth" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
+                      <li><a class="profile_auth" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                    </ul>
+                  </div>
+               </td>
+             </tr>
+             <tr>
+               <td>性別：</td>
+               <td id="gender"></td>
+               <td>
+                 <div class="btn-group auth_btn" style="float:none;">
+                    <button type="button" class="n" data-toggle="dropdown">
+                      <img id="gender_pic" src="" height="20px" width="20px">
+                      <text id="gender_btn_text"></text>
+                    </button>
+                     <ul class="dropdown-menu" role="menu">
+                       <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
+                       <li><a class="profile_auth" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
+                       <li><a class="profile_auth" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                    </ul>
+                  </div>
+               </td>
+             </tr>
+             <tr>
+               <td>電話：</td>
+               <td id="phone"></td>
+               <td>
+                  <div class="btn-group auth_btn" style="float:none;">
+                   <button type="button" class="n" data-toggle="dropdown" id="phone_btn">
+                     <img id="phone_pic" src="" height="20px" width="20px">
+                     <text id="phone_btn_text"></text>
+                   </button>
+                   <ul class="dropdown-menu" role="menu">
+                    <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
+                    <li><a class="profile_auth" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
+                    <li><a class="profile_auth" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                   </ul>
+                 </div>
+               </td>
+             </tr>
+           </table>
           </div>
           <div class="tab-pane" id="personal_friend">...friend</div>
           <div class="tab-pane" id="personal_photo">...Personal</div>

@@ -158,6 +158,9 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	cursor:pointer;
 }
 
+/*關於頁面*/
+
+
 /* 共用 */
 #account{ /* 很酷所以留著ㄏㄏ */
 	onkeyup:"(/[^-_A-Z0-9]/g,'')";
