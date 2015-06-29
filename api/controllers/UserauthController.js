@@ -12,7 +12,6 @@ module.exports = {
             if(err){
                 res.send(500,{err:"DB error"});
             }
-            console.log(result);
             if(result.length==0){
                 str='{"city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
                 res.send(JSON.parse(str));
@@ -42,10 +41,11 @@ module.exports = {
         }
 
         var id=req.session.user.id;
-        var account = req.param("account");
-        if (account.length){
+        var account="";
+        if (!req.param("account")){
             account=req.session.user.account
         }
+        console.log(account)
         checkAuth(id,function(inTable){
             if(inTable){                    //如果有的話，在去看，沒有就全部都可以
                 var doctor=false;
@@ -55,7 +55,7 @@ module.exports = {
 
                 User.find({account:viewer}).populate('friends').exec(function(err,user){
                     if(err){
-                        console.log("err3");
+
                     }
                     if (user[0].type=="D"){
                         doctor=true;
@@ -65,7 +65,6 @@ module.exports = {
                             friend=true;
                     }
                 });
-                console.log(viewer+account);
                 if (viewer==account){
                     self=true;
                     friend=true;
@@ -82,15 +81,19 @@ module.exports = {
                     for (var i =0;i<=4;i++){
                         var ind = index[i];
                         if (auth_set[ind]==="self" && self){
+                            console.log(ind+"self");
                             ret_status[ind]=true;
                         }
                         else if (auth_set[ind]==="friend" && friend){
+                            console.log(ind+"friend");
                             ret_status[ind]=true;
                         }
                         else if (auth_set[ind]==="doctor"&&doctor){
+                            console.log(ind+"doctor");
                             ret_status[ind]=true;
                         }
                         else if (auth_set[ind]==="all"){
+                            console.log(ind+"all");
                             ret_status[ind]=true;
                         }
                     }

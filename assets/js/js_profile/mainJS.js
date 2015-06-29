@@ -452,7 +452,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   });
 }
 
-function profile_auth(route){
+function profile_auth(route){   //去改按過權限按鈕之後的內容，只有前台
   var item = route.split("/")[0];
   var target = route.split("/")[1];
   $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
@@ -770,6 +770,7 @@ function showProfile(ori_author){
   else{
     var addr="/getProfile/"+ori_author;
     xmlHttp.open("GET", addr, true);
+    $('.auth_btn').hide();
   }
   
   xmlHttp.send(null);
@@ -796,6 +797,7 @@ function HandleResponse_showProfile(response){
   var owner=window.location.toString().split('?')[1];
 
   $.get('/authCheck/'+owner,function(auth_status){
+    console.log(auth_status)
     if (!auth_status["email"]){
       $('#email_row').hide();
     }
@@ -816,7 +818,6 @@ function HandleResponse_showProfile(response){
   $.get('/auth_data',function(auth_status){
     var index = ["email","gender","phone","bday","city"];
     for (var i in index){
-      console.log(auth_status[index[i]]);
       $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
       if (auth_status[index[i]]=="self"){
         $('#'+index[i]+'_btn_text').text("自己");
