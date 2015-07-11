@@ -271,7 +271,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                             <div class="container-fluid container_r_edit" id="container_r_edit'+comment_ID+'">\
                               <div class="row-fluid" id="div_r_edit_content'+comment_ID+'" contenteditable="true" style="'+css_r_content+'">'+comment_content+'</div>\
                               <div class="row-fluid div_r_edit_img" id="div_r_edit_img'+comment_ID+'" style="display:block;">'+comment_contentImg+'</div>\
-                              <button value="送出留言" id="editRSend" class="b" name="'+comment_ID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
+                              <button value="編輯完成" id="editRSend" class="b" name="'+comment_ID+'"><img src="/images/img_forum/check_icon.png">編輯完成</button>\
                               <button value="插入圖片" id="editRImage" class="b" name="'+comment_ID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
                               <button value="取消編輯" id="editRCancel" class="b" name="'+comment_ID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
                             </div>\
@@ -316,7 +316,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
             var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
                       <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                       <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
-                      <button value="送出留言" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">送出留言</button>\
+                      <button value="編輯完成" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">編輯完成</button>\
                       <button value="插入圖片" id="editImage" class="b" name="'+timelinesID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
                       <button value="取消編輯" id="editCancel" class="b" name="'+timelinesID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
                     </div>';
@@ -405,7 +405,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
                     <div class="row-fluid event_commentlist" id="event_commentlist'+timelinesID+'">\
                       '+append_element_comment+'\
                     </div>\
-                    <div class="row-fluid readMore" id="readMore'+timelinesID+'" style="text-align:center;margin-top:20px">\
+                    <div class="row-fluid readMore" id="readMore'+timelinesID+'" style="margin:15px">\
                       <button class="n" id="expandComment" name="'+timelinesID+'"><span class="glyphicon glyphicon-comment" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;展開留言</button>\
                     </div>\
                     <div class="row-fluid event_comment">\

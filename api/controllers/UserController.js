@@ -93,10 +93,10 @@ module.exports = {
                 user.selfIntroduction = selfIntroduction;
                 user.Userauth.add( {
                     "user": user.id,
-                    "city": "self",
-                    "gender": "self",
-                    "phone": "self",
-                    "bday": "self"} );
+                    "city": "friend",
+                    "gender": "friend",
+                    "phone": "friend",
+                    "bday": "friend"} );
 
                 user.save(function (err) {
                     Userauth.create({user:user.id,city:"self",gender:"self",phone:"self",bday:"self"}).exec(function(err,ret){
