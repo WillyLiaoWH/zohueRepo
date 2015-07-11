@@ -67,10 +67,18 @@ function setPage() {
 
     regex=/(.*)T(.*)\..*/
     createdAt=new Date(articleList[0].createdAt).toLocaleString();
-    postTime=createdAt.slice(0,createdAt.length-3);
+    if(createdAt.indexOf("GMT")==-1) {
+      postTime=createdAt.slice(0, createdAt.length-3);
+    } else {
+      postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
+    }
     lastResponseTime=new Date(articleList[0].lastResponseTime).toLocaleString();
-    updateTime=lastResponseTime.slice(0, lastResponseTime.length-3);
-    
+    if(lastResponseTime.indexOf("GMT")==-1) {
+      updateTime=lastResponseTime.slice(0, lastResponseTime.length-3);
+    } else {
+      updateTime=lastResponseTime.slice(0, lastResponseTime.indexOf("GMT"))+lastResponseTime.slice(lastResponseTime.indexOf("GMT")+5, lastResponseTime.length-3);
+    }
+
     if ($(window).width() < 768) {
       document.getElementById("adj_tr").innerHTML = "<td rowspan='2'><div id='articleAvatar_type' style='padding:0px'></div><div id='articleAvatar' style='padding:0px'></div><td id='articleTitle' colspan='2'></td></td><td></td> <td></td> <td ></td>";
       var ava_height = "50px";
