@@ -192,7 +192,13 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
           var content = res["timelinesList"][i].content;
           var contentImg = res["timelinesList"][i].contentImg;
           var dif = timeInMs-Date(updatedAt);
-          var updatedAt = new Date(res["timelinesList"][i].updatedAt).toLocaleString();
+          var temp = new Date(res["timelinesList"][i].updatedAt).toLocaleString();
+          var updatedAt;
+          if(temp.indexOf("GMT")==-1) {
+            updatedAt=temp.slice(0, temp.length-3);
+          } else {
+            updatedAt=temp.slice(0, temp.indexOf("GMT"))+temp.slice(temp.indexOf("GMT")+5, temp.length-3);
+          }
           var timelinesID = res["timelinesList"][i].id;
           // var responseNum = res["timelinesList"][i].responseNum;
           // var clickNum = res["timelinesList"][i].clickNum;
