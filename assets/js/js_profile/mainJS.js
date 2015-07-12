@@ -811,25 +811,27 @@ function HandleResponse_showProfile(response){
   var D = b.getDate();
 
   var owner=window.location.toString().split('?')[1];
-
-  $.get('/authCheck/'+owner,function(auth_status){
-    console.log(auth_status)
-    if (!auth_status["email"]){
-      $('#email_row').hide();
-    }
-    if (!auth_status["gender"]){
-      $('#gender_row').hide();
-    }
-   if (!auth_status["phone"]){
-      $('#phone_row').hide();
-    }
-    if (!auth_status["bday"]){
-      $('#bday_row').hide();
-    }
-    if (!auth_status["city"]){
-      $('#city_row').hide();
-    }
-  })
+  if (typeof owner != "undefined"){
+    $.get('/authCheck/'+owner,function(auth_status){
+      console.log(auth_status)
+      console.log(owner)
+      if (!auth_status["email"]){
+        $('#email_row').hide();
+      }
+      if (!auth_status["gender"]){
+        $('#gender_row').hide();
+      }
+     if (!auth_status["phone"]){
+        $('#phone_row').hide();
+      }
+      if (!auth_status["bday"]){
+        $('#bday_row').hide();
+      }
+      if (!auth_status["city"]){
+        $('#city_row').hide();
+      }
+    })
+  }
 
   $.get('/auth_data',function(auth_status){
     var index = ["email","gender","phone","bday","city"];

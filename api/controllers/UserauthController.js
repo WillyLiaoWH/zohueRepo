@@ -41,11 +41,8 @@ module.exports = {
         }
 
         var id=req.session.user.id;
-        var account="";
-        if (!req.param("account")){
-            account=req.session.user.account
-        }
-        console.log(account)
+        var account=req.param("account")
+        console.log("asdfasdf   "+account)
         checkAuth(id,function(inTable){
             if(inTable){                    //如果有的話，在去看，沒有就全部都可以
                 var doctor=false;
@@ -73,33 +70,39 @@ module.exports = {
                 str = '{"city":false,"email":false,"gender":false,"phone":false,"bday":false}';
                 var index = JSON.parse('{"0":"city","1":"email","2":"gender","3":"phone","4":"bday"}');
                 var ret_status=JSON.parse(str);
-                Userauth.find({user:id}).exec(function(err,auth){
-                    if (err){
-                        res.send(500,"DB error");
-                    }
-                    var auth_set = auth[0]
-                    for (var i =0;i<=4;i++){
-                        var ind = index[i];
-                        if (auth_set[ind]==="self" && self){
-                            console.log(ind+"self");
-                            ret_status[ind]=true;
+                User.find({account:account}).exec(function(err,user){
+                    var id=user[0].id;
+                    Userauth.find({user:id}).exec(function(err,auth){
+                        if (err){
+                            res.send(500,"DB error");
                         }
-                        else if (auth_set[ind]==="friend" && friend){
-                            console.log(ind+"friend");
-                            ret_status[ind]=true;
+                        var auth_set = auth[0]
+                        for (var i =0;i<=4;i++){
+                            var ind = index[i];
+                            console.log(auth_set[ind])
+                            if (auth_set[ind]==="self" && self){
+                                console.log(ind+"self");
+                                ret_status[ind]=true;
+                            }
+                            else if (auth_set[ind]==="friend" && friend){
+                                console.log(ind+"friend");
+                                ret_status[ind]=true;
+                            }
+                            else if (auth_set[ind]==="doctor"&&doctor){
+                                console.log(ind+"doctor");
+                                ret_status[ind]=true;
+                            }
+                            else if (auth_set[ind]==="all"){
+                                console.log(ind+"all");
+                                ret_status[ind]=true;
+                            }
                         }
-                        else if (auth_set[ind]==="doctor"&&doctor){
-                            console.log(ind+"doctor");
-                            ret_status[ind]=true;
-                        }
-                        else if (auth_set[ind]==="all"){
-                            console.log(ind+"all");
-                            ret_status[ind]=true;
-                        }
-                    }
 
-                    res.send(ret_status);
-                })
+                        res.send(ret_status);
+                    })
+                    
+                });
+                
             }
             else{
                 res.send(JSON.parse('{"city":true,"email":true,"gender":true,"phone":true,"bday":true}'));
