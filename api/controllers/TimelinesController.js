@@ -67,10 +67,11 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "發生錯誤了Q_Q" });
                 } else {
-                    res.send(timeline);
+                    res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
                 }
             });
         }
+
         checkAtuh(function(){
             post();
         });
