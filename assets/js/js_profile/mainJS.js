@@ -687,15 +687,18 @@ function editRTimelineCancel(id){
 }
 function editRTimelineSend(id){
   if($("#div_r_edit_img"+id)){$("#div_r_edit_img"+id+" .delete").remove();} // 去除叉叉紐
-  //if($("#"+spec_div_img+" #comment_clear")){$("#"+spec_div_img+" .clear").remove();} // 去除clear
 
   var edit_content=$("#div_r_edit_content"+id).html();
   var edit_img=$("#div_r_edit_img"+id).html();
+  var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
+  finish_edit_img = finish_edit_img.replace(/\/dummy/g, "\/a");
 
   if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
   else{
     $.post( "/editCommentTimeline", { edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
-      window.location.replace(document.URL);
+      $("#container_r_edit"+id).parent().children( ".event_text_r" ).html(edit_content);
+      $("#container_r_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
+      editRTimelineCancel(id);
     })
     .error(function(res){
       alert(res.responseJSON.err);
@@ -706,8 +709,7 @@ function delTimeline_comment(id){
   var r = confirm("確定要刪除留言嗎？");
   if (r == true) {
     $.post( "/delCommentTimeline", { id: id }, function(res){
-      alert(res);
-      window.location.replace(document.URL);
+      $("#container_r_edit"+id).parent().parent().remove();
     })
     .error(function(res){
       alert(res.responseJSON.err);
