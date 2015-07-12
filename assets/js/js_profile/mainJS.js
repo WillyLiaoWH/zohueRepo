@@ -24,7 +24,7 @@ $(document).ready(function(){
   $(document).on("click","#editSend",function(e){
     editTimelineSend(this.name);
   });
-  $(document).one("click",".event_del",function(e){
+  $(document).on("click",".event_del",function(e){
     delTimeline(this.name);
   });
   $(document).one("click","#TimelineNice",function(e){
@@ -522,15 +522,18 @@ function editTimelineCancel(id){
 }
 function editTimelineSend(id){
   if($("#div_edit_img"+id)){$("#div_edit_img"+id+" .delete").remove();} // 去除叉叉紐
-  //if($("#"+spec_div_img+" #comment_clear")){$("#"+spec_div_img+" .clear").remove();} // 去除clear
 
   var edit_content=$("#div_edit_content"+id).html();
   var edit_img=$("#div_edit_img"+id).html();
+  var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
+  finish_edit_img = finish_edit_img.replace(/\/dummy/g, "\/a");
 
   if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
   else{
     $.post( "/editTimeline", { edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
-      window.location.replace(document.URL);
+      $("#container_edit"+id).parent().children( ".event_text" ).html(edit_content);
+      $("#container_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
+      editTimelineCancel(id);
     })
     .error(function(res){
       alert(res.responseJSON.err);
@@ -541,8 +544,7 @@ function delTimeline(id){
   var r = confirm("確定要刪除文章嗎？");
   if (r == true) {
     $.post( "/delTimeline", { id: id }, function(res){
-      alert(res);
-      window.location.replace(document.URL);
+      $("#container_edit"+id).parent().remove();
     })
     .error(function(res){
       alert(res.responseJSON.err);
