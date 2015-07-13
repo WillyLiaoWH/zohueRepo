@@ -67,10 +67,11 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "發生錯誤了Q_Q" });
                 } else {
-                    res.send(timeline);
+                    res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
                 }
             });
         }
+
         checkAtuh(function(){
             post();
         });
@@ -223,20 +224,20 @@ module.exports = {
                 for (var i=len-1;i>=0;i=i-1){
                     if (result.timelinesPost[i].auth==="self"){
                         if (!self){
-                            console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                            //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
                             result.timelinesPost.splice(i,1);
                         }
                                     
                     } 
                     else if (result.timelinesPost[i].auth==="doctor"){
                         if (!doctor){
-                            console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                            //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
                             result.timelinesPost.splice(i,1);
                         }
                     } 
                     else if (result.timelinesPost[i].auth==="friend" ){
                         if(!friend){
-                            console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                            //console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
                             result.timelinesPost.splice(i,1);
                         }
                     }
