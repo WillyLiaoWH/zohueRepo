@@ -100,38 +100,31 @@ function removeAddFriend(id) {
   });
 }
 
-var allUser;
-var isFriend;
-var pageNum;
-var thisPage;
-var age;
-function search() {
+function search(page) {
   var alias=document.getElementById("alias").value;
   var disease=$("#disease").val();
   var place=$("#place").val();
   var userType=$("#userType").val();
-  $.post("/searchFriends", {alias: alias, disease: disease, place: place, userType: userType}, function(res) {
+  $.post("/searchFriends", {alias: alias, disease: disease, place: place, userType: userType, thisPage: page}, function(res) {
     if(res.err) {
       alert(res.err);
     } else {
       if(res.users.length!=0) {
         if(res.isFriend) {
-          allUser=[];
-          isFriend=[];
-          age=[];
+          var allUser=[];
+          var isFriend=[];
+          var age=[];
           for(i=0; i<res.users.length; i++) {
-            if(res.isFriend[i]!=-2&&res.users[i].id!="10") {
+            if(res.isFriend[i]!=-2) {
               allUser.push(res.users[i]);
               isFriend.push(res.isFriend[i]);
               age.push(res.age[i]);
             }
           }
 
-          pageNum=Math.ceil(allUser.length/5);
-          thisPage=1;
           var html="";
-          for(i=0; i<thisPage*5&&i<allUser.length; i++) {
-            if(isFriend[i]!=-2&&allUser[i].id!="10") {
+          for(i=0; i<allUser.length; i++) {
+            if(isFriend[i]!=-2) {
               html+="<div class='friend'><div class='image'>";
               var picSize="100";
               var authorType="";
@@ -217,9 +210,15 @@ function search() {
               html+="</div></div>";
             }
           }
-          document.getElementById("searchList").innerHTML=html;
-          if(thisPage!=pageNum) {
-            document.getElementById("more").innerHTML="<button type='button' class='button' onclick='showMore("+(thisPage+1)+")'>顯示更多人</button>";
+          if(page==0) {
+            document.getElementById("searchList").innerHTML=html;
+          } else {
+            document.getElementById("searchList").innerHTML+=html;
+          }
+          if(res.hasNext) {
+            document.getElementById("more").innerHTML="<button type='button' class='button' onclick='search("+(page+1)+")'>顯示更多人</button>";
+          } else {
+            document.getElementById("more").innerHTML="";
           }
         } else {
           alert("you haven't login");

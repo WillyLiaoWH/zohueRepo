@@ -171,7 +171,7 @@ button, input[type="button"], input[type="submit"]{
 	font-family: "微軟正黑體";
 	font-size:22px;
 	width: 12%;
-	height: 5500px;
+	//height: 5500px;
 	float:left;
 	line-height:45px;
 }

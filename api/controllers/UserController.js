@@ -660,6 +660,7 @@ module.exports = {
             "Nov": 11,
             "Dec": 12
         };
+        var page=parseInt(req.param("thisPage"));
         if(!req.session.user) {
             User.find({alias: {'contains': alias}}).exec(function(err, users) {
                 if(err) {
@@ -671,7 +672,7 @@ module.exports = {
             });
         } else {
             if(disease!=""||place!="") {
-                User.find({alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}}).populate("Userauth").exec(function(err, allUser){
+                User.find({where: {alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}}}).populate("Userauth").exec(function(err, allUser){
                     if(err) {
                         res.send(500, {err: "DB Error"});
                     } else {
@@ -686,7 +687,7 @@ module.exports = {
                                 var users=[];
                                 for(i=0; i<allUser.length; i++) {
                                     var push=false;
-                                    if(allUser[i].id!=req.session.user.id) {
+                                    if(allUser[i].id!=req.session.user.id&&allUser[i].id!=10) {
                                         if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
                                             // isFriend.push(-2);
                                         } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
@@ -774,13 +775,20 @@ module.exports = {
                                         }
                                     }
                                 }
-                                res.send({users: users, isFriend: isFriend, age: ageList})
+                                var hasNext;
+                                if(users.length<=(page+1)*5) {
+                                    hasNext=false;
+                                    res.send({users: users.slice(page*5), isFriend: isFriend, age: ageList, hasNext: hasNext});
+                                } else {
+                                    hasNext=true;
+                                    res.send({users: users.slice(page*5, page*5+5), isFriend: isFriend, age: ageList, hasNext: hasNext});
+                                }
                             }
                         });
                     }
                 });
             } else {
-                User.find({alias: {'contains': alias}, type: {'contains': userType}}).exec(function(err, allUser){
+                User.find({where: {alias: {'contains': alias}, type: {'contains': userType}}}).exec(function(err, allUser){
                     if(err) {
                         res.send(500, {err: "DB Error"});
                     } else {
@@ -794,7 +802,7 @@ module.exports = {
                                 var users=[];
                                 for(i=0; i<allUser.length; i++) {
                                     var push=false;
-                                    if(allUser[i].id!=req.session.user.id) {
+                                    if(allUser[i].id!=req.session.user.id&&allUser[i].id!=10) {
                                         if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
                                             // isFriend.push(-2);
                                         } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
@@ -874,7 +882,14 @@ module.exports = {
                                         }
                                     }
                                 }
-                                res.send({users: users, isFriend: isFriend, age: ageList})
+                                var hasNext;
+                                if(users.length<=(page+1)*5) {
+                                    hasNext=false;
+                                    res.send({users: users.slice(page*5), isFriend: isFriend, age: ageList, hasNext: hasNext});
+                                } else {
+                                    hasNext=true;
+                                    res.send({users: users.slice(page*5, page*5+5), isFriend: isFriend, age: ageList, hasNext: hasNext});
+                                }
                             }
                         });
                     }
