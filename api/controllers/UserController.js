@@ -901,6 +901,7 @@ module.exports = {
         //console.log(req.param("searchUser"));
         var searchUser = req.param("searchUser");
         console.log(typeof(searchUser));
+        console.log(searchUser);
 
         // function GetUsers(cb){
         //     User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
@@ -941,29 +942,25 @@ module.exports = {
         // });
 
         User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
+            
             if (allUsers.length==0) {
                 res.send("查無結果！");
             } else {
 
 
-                //console.log(allUsers);
                 sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
                     if (err) {
                         sails.log.error("ERR:", err);
                         console.log("err2");
                     }else {
-                        //console.log("lenggggggggggggggggggggggggggggg"+userList.length);
+                        console.log(userList);
                         if(userList.length>0){
                             res.send(userList);
                         }else{
-                            //res.send(allUsers);
                             console.log(allUsers);
                         }
-                        //res.send(typeof(userList));
-                        
                     }
                 });
-                //res.send(userList);
             }
         });
     },

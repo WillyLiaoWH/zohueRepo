@@ -14,7 +14,7 @@ function populateDeep2(parentModelName, parentModel, path, cb) {
     var parent = JSON.parse(JSON.stringify(parentModel));
     populateDeepInner(parentModelName, parent, path, cb);
     function populateDeepInner(parentModelName, parentInstance, path, cb) {
-        if(Array.isArray(parentInstance)) {
+        if(Array.isArray(parentInstance) & parentInstance.length>0) { // 這邊一定要加 > 0 這個條件，否則如果 list 長度為 0 會跑進無窮迴圈，傳不出結果
             count = count + parentInstance.length;
             parentInstance.map(function(value, index, origArray){
                 handle(value)
