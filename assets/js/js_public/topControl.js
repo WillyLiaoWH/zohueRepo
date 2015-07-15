@@ -407,3 +407,42 @@ function subscribe(){
     });
 }
 
+
+function fbLogin() {  
+      FB.login(function(response) {
+       if (response.session) {
+         if (response.perms) {
+          //使用者已登入Facebook成功，且已授權你的應用程式存取
+                FB.api('/me',function(response){
+        console.log(response);
+        
+        $.post('/checkFB',{FBmail:response.email},function(res){
+          if(res){
+            location.reload();
+          }else{
+
+            var password=response.id+Math.random();
+            document.getElementById('FBlogin').style.display='none';
+            document.getElementById('UserAccount').value=response.id;
+            document.getElementById('UserAlias').value=response.name;
+            document.getElementById('UserPwd').value=password;
+            document.getElementById('UserPwdConfirm').value=password;
+            document.getElementById('UserEmail').value=response.email;
+            document.getElementById('FBmail').value=response.email;            
+            document.getElementById('UserGender').value=response.gender;
+            document.getElementById('fname').value=response.first_name;
+            document.getElementById('lname').value=response.last_name;
+
+          }
+
+        });
+      });
+
+         } else {
+           //使用者已登入Facebook成功，但未授權你的應用程式存取
+         }
+       } else {
+         //使用者未登入成功
+       }
+     }, {perms:'publish_stream,offline_access'}); //設定需要授權的項目
+  }
