@@ -40,15 +40,25 @@ $(document).ready(function(){
   });
   // $(document).on("click",".sortByDate",function(e){
   //   sortByDate($(this).attr("value"));
-  // });
-  
-  $('input[type=file]').change(function () {
-    alert($(this).val().replace(/\\/g, '/').replace(/.*\//, ''));
-    alert($(this).val().replace(/\\/g, '/'));
+  // });s
 
-    alert($('input[type=file]').val().replace(/\\/g, '/'));
+  $("form#uploadForm").submit(function(){
+    var formData = new FormData($(this)[0]);
+    $.ajax({
+        url: '/fileUpload',
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            $("#sendNewsLetter").attr("value", data);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+    return false;
   });
-
 
   $(document).on("click","#sendNewsLetter",function(e){
     var mailSubject = document.getElementById("mailSubject").value;
@@ -59,7 +69,7 @@ $(document).ready(function(){
       if(confirm("確定要發送電子報嗎？")){
         document.getElementById("mailSpinner").style.display="block";
         document.getElementById("mailEdit").style.display="none";
-        var attachment=$('input[type=file]').val().replace(/\\/g, '/');
+        var attachment=$("#sendNewsLetter").attr("value");
 
         $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachment: attachment}, function(res){
           if (res == "SEND"){

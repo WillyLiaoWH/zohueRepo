@@ -74,10 +74,28 @@ module.exports = {
             });
         });
 	},
+    upload: function(req, res){
+        if(req.method === 'GET')
+            return res.json({'status':'GET not allowed'});
+
+        var uploadFile = req.file('uploadFile');
+        var originalFileName = uploadFile["_files"][0].stream.filename;
+        var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
+        var milliseconds = new Date().getTime();
+        var newFileName = milliseconds+fileType;
+
+        uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
+
+            if (err) return res.serverError(err);
+            console.log(files);
+            res.send(newFileName);
+        });
+    },
     sendNewsLetter: function(req, res) {
         var mailSubject = req.param("mailSubject");
         var mailContent = req.param("mailContent");
         var mailAttachment  = req.param("attachment"); 
+        var filePath = "D:/github/zohueRepo/assets/images/img_email/"+mailAttachment;
 
         console.log(mailAttachment);
 
@@ -105,16 +123,8 @@ module.exports = {
                     text: mailContent, 
                     attachments: [
                         {   // utf-8 string as an attachment
-                            filename: 'lana.png',
-                            path: mailAttachment
-                        },
-                        {   // file on disk as an attachment
-                            filename: '訂單成立 - Yahoo奇摩拍賣.pdf',
-                            path: 'C:/Users/Hoho/Desktop/訂單成立 - Yahoo奇摩拍賣.pdf' // stream this file
-                        },
-                        {
-                            filename: 'lana.png',
-                            path: 'C:/Users/Hoho/Desktop/Desk/lana.png'
+                            filename: mailAttachment,
+                            path: filePath
                         }
                     ],
                 };  
