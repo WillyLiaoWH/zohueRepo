@@ -133,6 +133,10 @@ button, input[type="button"], input[type="submit"]{
 	width: auto;
 }
 
+#UserType{
+	height: 48px;
+}
+
 #logout{
 	display: none;
 	margin-top:28px;
