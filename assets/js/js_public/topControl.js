@@ -444,5 +444,5 @@ function fbLogin() {
        } else {
          //使用者未登入成功
        }
-     }, {perms:'publish_stream,offline_access'}); //設定需要授權的項目
+     }); //設定需要授權的項目
   }
