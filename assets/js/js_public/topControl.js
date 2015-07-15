@@ -410,17 +410,16 @@ function subscribe(){
 
 function fbLogin() {  
       FB.login(function(response) {
-       if (response.session) {
-         if (response.perms) {
-          //使用者已登入Facebook成功，且已授權你的應用程式存取
-                FB.api('/me',function(response){
+        console.log(response)
+       if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      FB.api('/me',function(response){
         console.log(response);
         
         $.post('/checkFB',{FBmail:response.email},function(res){
-          if(res){
+          if(!res){
             location.reload();
           }else{
-
             var password=response.id+Math.random();
             document.getElementById('FBlogin').style.display='none';
             document.getElementById('UserAccount').value=response.id;
@@ -437,12 +436,15 @@ function fbLogin() {
 
         });
       });
-
-         } else {
-           //使用者已登入Facebook成功，但未授權你的應用程式存取
-         }
-       } else {
-         //使用者未登入成功
-       }
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
      }); //設定需要授權的項目
   }
