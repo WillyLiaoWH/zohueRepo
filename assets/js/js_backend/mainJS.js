@@ -5,6 +5,7 @@ var userTable="";
 var articleTable="";
 var articleList="";
 var searchUser="";
+var attachmentList=[];
 
 $(document).ready(function(){
 
@@ -51,12 +52,15 @@ $(document).ready(function(){
         async: false,
         success: function (data) {
             console.log(data);
-            $("#sendNewsLetter").attr("value", data);
+            //$("#sendNewsLetter").attr("value", data);
+            $("#attachmentList").append("<br><label>"+data+"</label>")
+            attachmentList.push(data);
         },
         cache: false,
         contentType: false,
         processData: false
     });
+
     return false;
   });
 
@@ -69,15 +73,16 @@ $(document).ready(function(){
       if(confirm("確定要發送電子報嗎？")){
         document.getElementById("mailSpinner").style.display="block";
         document.getElementById("mailEdit").style.display="none";
-        var attachment=$("#sendNewsLetter").attr("value");
 
-        $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachment: attachment}, function(res){
+        $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachmentList: attachmentList.toString()}, function(res){
           if (res == "SEND"){
-            alert("電子報發送成功!");
+            attachmentList=[];
+            alert("電子報發送成功rrrrrrr!");
             document.getElementById("mailSubject").value="";
             document.getElementById("mailContent").value="";
             document.getElementById("mailEdit").style.display="block"; 
             document.getElementById("mailSpinner").style.display="none";
+            $("#attachmentList").html("");
           }else{
             alert("電子報發送失敗!");
             document.getElementById("mailSubject").value="";
