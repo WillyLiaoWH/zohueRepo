@@ -105,7 +105,12 @@
                     </form>
                     <button class="btn btn-default" id="sendNewsLetter">發送電子報</button>
                     <!-- <button class="btn btn-default" onclick="attachedFile()">附加檔案</button> -->
-                    <span class="btn btn-default btn-file">附加檔案<input type="file"></span>
+                    <!--<span class="btn btn-default btn-file">附加檔案<input type="file"></span>-->
+                    <br><br>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data">
+                      <span class="btn btn-default btn-file">附加檔案<input type="file" name="uploadFile" /></span>
+                      <span class="btn btn-default btn-file">上傳<input type="submit" value="submit"/></span>
+                    </form>
                   </div>
                 </div>
               </div>

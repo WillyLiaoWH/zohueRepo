@@ -417,7 +417,7 @@ function fbLogin() {
         console.log(response);
         
         $.post('/checkFB',{FBmail:response.email},function(res){
-          if(!res){
+          if(res){
             location.reload();
           }else{
             var password=response.id+Math.random();
