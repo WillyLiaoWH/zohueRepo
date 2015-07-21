@@ -93,6 +93,7 @@ module.exports.routes = {
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
   'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',
+  'GET /setAllBoardPage/:board/:tab': 'Articles.setAllBoardPage',
   'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',

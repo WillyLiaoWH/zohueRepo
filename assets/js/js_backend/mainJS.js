@@ -24,6 +24,7 @@ $(document).ready(function(){
       for(b=0; b<boards.length; b++) {
         $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
       }
+      $("#board").append("<option value='allBoards'>選擇全部</option>")
     });
   });
 
@@ -149,15 +150,16 @@ function loadUserList(){
 }
 
 function getart(callback){
+
   $.get("/setBoardPage/"+board+"/"+tab, function(res){
     
-    articleList=res.articlesList;
-    // var boardName=res.board.title;
-    // var boardCate=res.board.category.title;
+      articleList=res.articlesList;
+      // var boardName=res.board.title;
+      // var boardCate=res.board.category.title;
 
-    callback(articleList);
+      callback(articleList);
   }).error(function(res){
-    alert(res.responseJSON.err);
+      alert(res.responseJSON.err);
   });
 }
 
