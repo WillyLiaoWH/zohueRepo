@@ -156,3 +156,7 @@ tr:hover{
     cursor: inherit;
     display: block;
 }
+
+#uploadForm{
+  margin-left:15px;
+}

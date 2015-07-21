@@ -82,22 +82,31 @@ module.exports = {
         var originalFileName = uploadFile["_files"][0].stream.filename;
         var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
         var milliseconds = new Date().getTime();
-        var newFileName = milliseconds+fileType;
+        var newFileName = milliseconds+originalFileName;
+
+        //console.log(newFileName);
 
         uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
 
             if (err) return res.serverError(err);
-            console.log(files);
+            //console.log(files);
             res.send(newFileName);
         });
     },
     sendNewsLetter: function(req, res) {
         var mailSubject = req.param("mailSubject");
         var mailContent = req.param("mailContent");
-        var mailAttachment  = req.param("attachment"); 
-        var filePath = "D:/github/zohueRepo/assets/images/img_email/"+mailAttachment;
-
+        var mailAttachment  = req.param("attachmentList");
+        var attachmentObj = mailAttachment.split(',');
         console.log(mailAttachment);
+
+        var test = [];
+        for(i=0; i<attachmentObj.length; i++){
+            test.push({
+                filename: attachmentObj[i],
+                path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
+            });
+        }
 
         SubscribeEmail.find().exec(function(err, mailList) {
             if (err) {
@@ -121,12 +130,7 @@ module.exports = {
                     bcc: receivers,    
                     subject: mailSubject,
                     text: mailContent, 
-                    attachments: [
-                        {   // utf-8 string as an attachment
-                            filename: mailAttachment,
-                            path: filePath
-                        }
-                    ],
+                    attachments: test
                 };  
                 //發送信件方法  
                 transporter.sendMail(options, function(error, info){  
