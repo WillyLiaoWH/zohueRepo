@@ -192,6 +192,7 @@
 	background-repeat: no-repeat;
 }
 #forgetQ, #forgetQ-other{
+	-webkit-appearance:none;
 	background-image: url(../../../images/img_signup/forgetQ.png);
 	background-size: 30px 30px;
 	background-position: 10px,right;
@@ -207,6 +208,7 @@
 	background-repeat: no-repeat;
 }
 #gender{
+	-webkit-appearance:none;
 	background-image: url(../../../images/img_signup/gender.png);
 	background-size: 30px 30px;
 	background-position: 10px,right;
@@ -225,12 +227,14 @@
 	background-repeat: no-repeat;
 }
 #addressCity{
+	-webkit-appearance:none;
 	background-image: url(../../../images/img_signup/addressCity.png);
 	background-size: 30px 30px;
 	background-position: 10px,right;
 	background-repeat: no-repeat;
 }
 #addressDistrict{
+	-webkit-appearance:none;
 	background-image: url(../../../images/img_signup/addressDistrict.png);
 	background-size: 30px 30px;
 	background-position: 10px,right;
@@ -246,12 +250,14 @@
 	margin: 0 0 0px;
 }
 #birthday_Y,#birthday_M,#birthday_D{
+	-webkit-appearance:none;
 	background-image: url(../../../images/img_signup/birthday.png);
 	background-size: 30px 30px;
 	background-position: 10px,right;
 	background-repeat: no-repeat;
 }
 #type{
+	-webkit-appearance:none;
 	background-image: url(../../../images/img_signup/selfIntroduction.png);
 	background-size: 30px 30px;
 	background-position: 10px 8px,right;
