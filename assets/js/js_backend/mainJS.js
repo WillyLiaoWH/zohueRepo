@@ -1,5 +1,6 @@
 var page;
 var board=1;
+var category="";
 var tab="all";
 var userTable="";
 var articleTable="";
@@ -13,24 +14,37 @@ $(document).ready(function(){
     for(c=0; c<boardCategory.length; c++) {
       $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
     }
+    $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
   }).error(function(res){
     alert(res.responseJSON.err);
   });
 
   $("#boardCategory").change(function(){
-    $("#board").empty();
-    $.get("/getBoardsOfCategory/"+$(this).val(), function(boards) {
-      $("#board").append("<option selected='selected'>請選擇</option>")
-      for(b=0; b<boards.length; b++) {
-        $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
-      }
-      $("#board").append("<option value='allBoards'>選擇全部</option>")
-    });
+    category=$(this).val();
+    if(category=="allCategory"){
+      $("#board").empty();
+      $("#board").append("<option>選擇全部</option>")
+      board="allCategory";
+      getart(loadForumList);
+    }else{
+      $("#board").empty();
+      $.get("/getBoardsOfCategory/"+category, function(boards) {
+        $("#board").append("<option selected='selected'>請選擇</option>")
+        for(b=0; b<boards.length; b++) {
+          $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
+        }
+        $("#board").append("<option value='allBoards'>選擇全部</option>")
+      });
+    }
   });
 
   $("#board").change(function(){
-    board=$(this).val();
-    getart(loadForumList);
+    if($(this).val()=="allBoards"){
+      getart(loadForumList, 1);
+    }else{
+      board=$(this).val();
+      getart(loadForumList, 0);
+    }   
   });
 
 
@@ -53,7 +67,6 @@ $(document).ready(function(){
         async: false,
         success: function (data) {
             console.log(data);
-            //$("#sendNewsLetter").attr("value", data);
             $("#attachmentList").append("<br><label>"+data+"</label>")
             attachmentList.push(data);
         },
@@ -95,7 +108,6 @@ $(document).ready(function(){
       }
     }
   });
-
 });
 
 function loadUserList(){
@@ -149,18 +161,22 @@ function loadUserList(){
   });
 }
 
-function getart(callback){
-
-  $.get("/setBoardPage/"+board+"/"+tab, function(res){
-    
+function getart(callback, showAllBoards){
+  if(showAllBoards==1){
+    $.get("/setAllBoardPage/"+category, function(res){
       articleList=res.articlesList;
-      // var boardName=res.board.title;
-      // var boardCate=res.board.category.title;
-
       callback(articleList);
-  }).error(function(res){
-      alert(res.responseJSON.err);
-  });
+    }).error(function(res){
+        alert(res.responseJSON.err);
+    });
+  }else{
+    $.get("/setBoardPage/"+board+"/"+tab, function(res){
+      articleList=res.articlesList;
+      callback(articleList);
+    }).error(function(res){
+        alert(res.responseJSON.err);
+    });
+  }
 }
 
 function loadForumList(articleList){
@@ -256,7 +272,6 @@ function sortByLength(sortby){
 //   });
 //   loadForumList(articleList);
 // }
-
 
 function reasonHtmlCreate(reportobj){
   var reportReasonHtml="";

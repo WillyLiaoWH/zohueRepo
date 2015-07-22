@@ -34,8 +34,7 @@ module.exports = {
         BoardCategory.find().exec(function(err, boardCateList) {
             boardCate=boardCateList;
         });
-        if (board=="allBoards"){
-            console.log("shitttttttttttt");
+        if (board=="allCategory"){
             Articles.find({classification: {'contains': classification}}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
                 if (err) {
                     res.send(500, { err: "DB Error" });
@@ -44,10 +43,6 @@ module.exports = {
                 }
             });
         }else{
-            // BoardCategory.find({title: keyword}).exec(function(err, boards) {
-                
-            // });
-
             Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
                 if (err) {
                     res.send(500, { err: "DB Error" });
@@ -66,6 +61,32 @@ module.exports = {
             });
         }
 	},
+
+    setAllBoardPage: function(req, res){
+        var boards;
+        var category=req.param("category");
+
+        Boards.find({category: category}).exec(function(err, boards) {
+            if(err) {
+                console.log(err);
+            } else {
+                var boardsArray=[];
+                boards=boards;
+                
+                for(i=0;i<boards.length;i++){
+                    boardsArray.push(boards[i].id.toString());
+                }
+
+                Articles.find({board : boardsArray}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
+                    if (err) {
+                        res.send(500, { err: "DB Error" });
+                    } else {
+                        res.send({articlesList: articlesList});
+                    }
+                });
+            }
+        });
+    },
     
     setArticlePage: function(req, res){
         response=[];
