@@ -99,7 +99,7 @@ module.exports = {
                     "bday": "friend"} );
 
                 user.save(function (err) {
-                    Userauth.create({user:user.id,city:"self",gender:"self",phone:"self",bday:"self"}).exec(function(err,ret){
+                    Userauth.create({user:user.id,city:"friend",gender:"friend",phone:"friend",bday:"friend"}).exec(function(err,ret){
                         if (err){
                             res.send(500,{err:"DB error"});
                         }else{
