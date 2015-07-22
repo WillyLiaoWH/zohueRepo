@@ -26,6 +26,7 @@
 
 #searchWord{
 	//width:350px;
+	width:50%;
 	margin: 8px 0px 0px 0px;
 }
 
@@ -63,7 +64,7 @@
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
-	width:60%;
+	width:170px;
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
@@ -183,7 +184,11 @@
 }
 
 .b{
+	//margin: -20px 5px 10px 0px;
+	margin:3px;
+	//display: none;
 	//float:right;
+	//width: 125px;
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
@@ -292,7 +297,7 @@ div.tab_container .tab_content h2 {
 	color:white;
 }
 
-.hoho{
+.tabDiv{
 	margin-top:20px;
 }
 
