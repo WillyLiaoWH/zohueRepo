@@ -96,7 +96,9 @@ module.exports = {
                     "city": "friend",
                     "gender": "friend",
                     "phone": "friend",
-                    "bday": "friend"} );
+                    "bday": "friend",
+                    "email" : "friend"
+                } );
 
                 user.save(function (err) {
                     Userauth.create({user:user.id,city:"friend",gender:"friend",phone:"friend",bday:"friend"}).exec(function(err,ret){
