@@ -13,7 +13,13 @@ $(document).ready(function(){
     // }
   });
 
+  $(function(){
 
+    $("#postTilmelineAuth .dropdown-menu li a").click(function(){
+      $("#postTilmelineAuth button").html($(this).html());
+   });
+
+});
   
   $(document).on("click",".event_edit",function(e){
     editTimeline(this.name);
@@ -487,10 +493,11 @@ function postTimeline(){
   if($("#timeline_post_image #comment_clear")){$("#timeline_post_image .clear").remove();} // 去除clear
   var timeline_post_content = $("#timeline_post_content").html();
   var timeline_post_image = $("#timeline_post_image").html().trim();
+  var timeline_post_auth = $("#postTilmelineAuth button img").attr("value");
 
   if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
   else{
-    $.post( "/postTimeline", { timeline_post_content: timeline_post_content, timeline_post_image: timeline_post_image}, function(res){
+    $.post( "/postTimeline", { timeline_post_content: timeline_post_content, timeline_post_image: timeline_post_image, timeline_post_auth: timeline_post_auth}, function(res){
       alert("發佈成功！");
       $("#timeline_post_content").empty();
       $("#timeline_post_image").empty();

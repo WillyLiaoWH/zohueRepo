@@ -61,9 +61,10 @@ module.exports = {
             var author=req.session.user.id;
             var content=req.param("timeline_post_content");
             var contentImg=req.param("timeline_post_image");
+            var auth=req.param("timeline_post_auth");
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });};
 
-            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0"}).exec(function(error, timeline) {
+            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
                 if(error) {
                     res.send(500,{err: "發生錯誤了Q_Q" });
                 } else {
