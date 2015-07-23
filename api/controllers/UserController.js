@@ -14,7 +14,7 @@ module.exports = {
         var password=req.param("password");
         var alias=req.param("alias");
         var email=req.param("email");
-        var FBmail=req.param("FBmail");
+        var FB_id=req.param("FB_id");
         var gender=req.param("gender");
         var type=req.param("type");
         var lname=req.param("lname");
@@ -27,7 +27,7 @@ module.exports = {
         else if (gender=="female"){
             gender="F";
         }
-        if (FBmail.length>2){
+        if (FB_id.length>2){
             img="http://graph.facebook.com/"+account+"/picture";
 
         }
@@ -41,7 +41,7 @@ module.exports = {
                 // var hasher = require("password-hash");
                 // password = hasher.generate(password);
                 User.create({account: account, password: password, alias: alias, email: email, type: type
-                            , isFullSignup: isFullSignup, img: img , FBmail:FBmail,gender:gender,fname:fname,lname:lname}).exec(function(error, user) {
+                            , isFullSignup: isFullSignup, img: img , FB_id:FB_id,gender:gender,fname:fname,lname:lname}).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
@@ -361,13 +361,13 @@ module.exports = {
 
     },
     checkFB :function(req,res){
-        var FBmail=req.param("FBmail");
-        User.findByFBmail(FBmail).exec(function(err,usr){
+        var FB_id=req.param("FB_id");
+        User.findByFB_id(FB_id).exec(function(err,usr){
             if (err){
                 res.send(500,{err:"DB Error"});
             } else{
-                console.log(JSON.stringify(usr))
-                console.log(usr.length);
+               // console.log(JSON.stringify(usr))
+                //console.log(usr.length);
                 if (usr.length>0){
                     req.session.user = usr[0];
                     req.session.authenticated=true;

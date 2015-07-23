@@ -26,59 +26,6 @@ $(document).ready(function(){
 });
 
   // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      FB.api('/me',function(response){
-        console.log(response);
-        
-        $.post('/checkFB',{FBmail:response.email},function(res){
-          if(res){
-            location.reload();
-          }else{
-
-            var password=response.id+Math.random();
-            document.getElementById('FBlogin').style.display='none';
-            document.getElementById('UserAccount').value=response.id;
-            document.getElementById('UserAlias').value=response.name;
-            document.getElementById('UserPwd').value=password;
-            document.getElementById('UserPwdConfirm').value=password;
-            document.getElementById('UserEmail').value=response.email;
-            document.getElementById('FBmail').value=response.email;            
-            document.getElementById('UserGender').value=response.gender;
-            document.getElementById('fname').value=response.first_name;
-            document.getElementById('lname').value=response.last_name;
-
-          }
-
-        });
-      });
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
-
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
-
 function FB_API(){
  window.fbAsyncInit = function() {
     FB.init({
@@ -307,12 +254,11 @@ function Submit(){
   var password = $("#UserPwd").val();
   var email = $("#UserEmail").val();
   var type = $("#UserType").val();
-  var FBmail = $("#FBmail").val();
+  var FB_id = $("#FB_id").val();
   var gender = $("#UserGender").val();
   var fname = $("#fname").val();
   var lname = $("#lname").val();
-  console.log(gender);
-  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FBmail:FBmail,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, function(res){
+  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, function(res){
     alert("註冊成功！");
     loginWithAccount(account, password);
   })
@@ -407,13 +353,13 @@ function subscribe(){
 
 function fbLogin() {  
       FB.login(function(response) {
-        console.log(response)
+        //console.log(response)
        if (response.status === 'connected') {
       // Logged into your app and Facebook.
       FB.api('/me',function(response){
         console.log(response);
         
-        $.post('/checkFB',{FBmail:response.email},function(res){
+        $.post('/checkFB',{FB_id:response.id},function(res){
           if(res){
             location.reload();
           }else{
@@ -423,12 +369,14 @@ function fbLogin() {
             document.getElementById('UserAlias').value=response.name;
             document.getElementById('UserPwd').value=password;
             document.getElementById('UserPwdConfirm').value=password;
-            document.getElementById('UserEmail').value=response.email;
-            document.getElementById('FBmail').value=response.email;            
+            document.getElementById('FB_id').value=response.id;            
             document.getElementById('UserGender').value=response.gender;
             document.getElementById('fname').value=response.first_name;
             document.getElementById('lname').value=response.last_name;
-
+            console.log(typeof response.email)
+            if (typeof response.email != 'undifined'){
+              document.getElementById('UserEmail').value= response.email;
+            }
           }
 
         });

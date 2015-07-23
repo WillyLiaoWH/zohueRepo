@@ -89,7 +89,7 @@ module.exports = {
       collection:'Userauth',
       via: 'user'
     },
-    FBmail:{
+    FB_id:{
       type:'string'
     },
     friends:{
