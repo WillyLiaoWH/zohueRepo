@@ -365,8 +365,8 @@ function showProfile(){
 }
 function HandleResponse_showProfile(response){
   obj = JSON.parse(response);
-  var FBmail=obj.FBmail;
-  if (FBmail.length>2){
+  var FB_id=obj.FB_id;
+  if (FB_id.length>2){
     var account=obj.account;
     var password=obj.password;
     var alias=obj.alias;
