@@ -900,56 +900,15 @@ module.exports = {
         }
     },
     getAllUsers: function(req, res){
-        //console.log(req.param("searchUser"));
         var searchUser = req.param("searchUser");
         console.log(typeof(searchUser));
         console.log(searchUser);
-
-        // function GetUsers(cb){
-        //     User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
-        //         if (allUsers.length==0) {
-        //             res.send("查無結果！");
-        //         } else {
-        //             //console.log(allUsers[0].articlesPost);
-        //             cb(allUsers);
-        //         }
-        //     });
-        // }
-
-        // function GetReports(Users, cb){
-        //     var async = require('async');
-        //     //console.log(User.articlesPost);
-        //     async.each(Users, function(User, callback) {
-        //         async.each(User.articlesPost, function(article, callback) {
-        //             Articles.find(article.id).populate('report').exec(function (err, result) {
-        //                 if(err) {
-        //                     console.log("err");
-        //                 }else{
-        //                     var i=User.articlesPost.indexOf(article);
-        //                     var j=Users.indexOf(User);
-        //                     console.log(i);
-        //                     console.log(j);
-        //                     Users[j].articlesPost[i]=result[0];
-        //                     if(User.articlesPost.length==i+1 && User.length==j+1){cb(Users);}
-        //                 }
-        //             });
-        //         });
-        //     });
-        // }
-
-        // GetUsers(function(users){
-        //     GetReports(users, function(User){
-        //         console.log(User);
-        //     });
-        // });
 
         User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
             
             if (allUsers.length==0) {
                 res.send("查無結果！");
             } else {
-
-
                 sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
                     if (err) {
                         sails.log.error("ERR:", err);

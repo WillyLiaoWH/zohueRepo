@@ -34,35 +34,27 @@ module.exports = {
         BoardCategory.find().exec(function(err, boardCateList) {
             boardCate=boardCateList;
         });
-        if (board=="allCategory"){
-            Articles.find({classification: {'contains': classification}}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
-                if (err) {
-                    res.send(500, { err: "DB Error" });
-                } else {
-                    res.send({articlesList: articlesList});
-                }
-            });
-        }else{
-            Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
-                if (err) {
-                    res.send(500, { err: "DB Error" });
-                } else {
-                    Boards.find({id: board}).populate('category').exec(function(err, board) {
-                        if(err) {
-                            res.send(500, { err: "DB Error" });
-                        } else {
-                            Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-                                boards=boardsList;
-                                res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
-                            });
-                        }
-                    });
-                }
-            });
-        }
+
+        Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                Boards.find({id: board}).populate('category').exec(function(err, board) {
+                    if(err) {
+                        res.send(500, { err: "DB Error" });
+                    } else {
+                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                            boards=boardsList;
+                            res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
+                        });
+                    }
+                });
+            }
+        });    
+        
 	},
 
-    setAllBoardPage: function(req, res){
+    setAllBoardPage: function(req, res){ // 在後台使用，可以根據board category撈文章。
         var boards;
         var category=req.param("category");
 

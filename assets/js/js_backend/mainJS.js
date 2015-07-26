@@ -1,17 +1,15 @@
-var page;
-var board=1;
-var category="";
-var tab="all";
 var userTable="";
 var articleTable="";
 var articleList="";
 var searchUser="";
 var attachmentList=[];
+var categoryList={};
 
 $(document).ready(function(){
 
   $.get("/getBoardCategory", function(boardCategory){
     for(c=0; c<boardCategory.length; c++) {
+      categoryList[boardCategory[c].id]=boardCategory[c].title;      
       $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
     }
     $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
@@ -20,12 +18,14 @@ $(document).ready(function(){
   });
 
   $("#boardCategory").change(function(){
-    category=$(this).val();
+    var category = $("#boardCategory").val();
+    var board = $("#board").val();
+
     if(category=="allCategory"){
       $("#board").empty();
       $("#board").append("<option>選擇全部</option>")
-      board="allCategory";
-      getart(loadForumList);
+      //board="allCategory";
+      getart(loadForumList, 2);
     }else{
       $("#board").empty();
       $.get("/getBoardsOfCategory/"+category, function(boards) {
@@ -161,21 +161,36 @@ function loadUserList(){
   });
 }
 
-function getart(callback, showAllBoards){
-  if(showAllBoards==1){
-    $.get("/setAllBoardPage/"+category, function(res){
-      articleList=res.articlesList;
-      callback(articleList);
-    }).error(function(res){
+function getart(callback, action){
+  var category = $("#boardCategory").val();
+  var board = $("#board").val();
+  var categoryName = $("#boardCategory").val();
+
+  switch(action) {
+    case 0: // 根據board及category撈文章。
+      $.get("/getArticles/"+board, function(res){ 
+        articleList=res.articlesList;
+        callback(articleList);
+      }).error(function(res){
+          alert(res.responseJSON.err);
+      });  
+      break;
+    case 1: // 根據category撈文章。
+      $.get("/getArticlesByCategory/"+category, function(res){
+        articleList=res.articlesList;
+        callback(articleList);
+      }).error(function(res){
+          alert(res.responseJSON.err);
+      });
+      break;
+    case 2: // 根據board撈文章。
+      $.get("/getArticlesByBoards", function(res){
+        articleList=res.articlesList;
+        callback(articleList);
+      }).error(function(res){
         alert(res.responseJSON.err);
-    });
-  }else{
-    $.get("/setBoardPage/"+board+"/"+tab, function(res){
-      articleList=res.articlesList;
-      callback(articleList);
-    }).error(function(res){
-        alert(res.responseJSON.err);
-    });
+      });
+      break;
   }
 }
 
@@ -186,8 +201,9 @@ function loadForumList(articleList){
   document.getElementById("subscriberManage").style.display="none";
   
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th class='sortByChar' value='classification'>文章類別</th><th class='sortByChar' value='title' style='width:400px;'>文章標題</th><th class='sortByChar' value='' style='width:200px;'>發表人</th><th>身分別</th>";
+    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortByChar' value='classification'>文章類別</th><th class='sortByChar' value='title' style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
     articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th class='sortByLength' value='nicer'>推薦數</th><th class='sortByLength' value='report' style='width:200px;'>檢舉數</th><tr>";
+
       for(i=0; i<articleList.length; i++) {
         clickNum=articleList[i].clickNum;
         responseNum=articleList[i].responseNum;
@@ -198,8 +214,10 @@ function loadForumList(articleList){
         postTime=createdAt.slice(0,createdAt.length-3);
         authorType=articleList[i].author.type;
         reportNum=articleList[i].report.length;
+        var boardName=articleList[i].board.title;
 
-        articleTable+="<tr><td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
+        articleTable+="<tr><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+        articleTable+="<td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
         articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
         
         reportobj=articleList[i].report;
