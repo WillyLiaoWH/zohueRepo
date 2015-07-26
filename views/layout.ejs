@@ -49,13 +49,14 @@
     <link rel="stylesheet" href="/styles/css_public/jquery-ui.css">
   </head>
 
-   <body>
+   <body id="body">
    <div class="fb-root"></div>
     <div class="row-fluid">
       <div class="span4">
+      <!-- <div class="col-md-4 col-sm-12 col-xs-12"> -->
         <a href="/home"><img id="logo" src="/images/img_public/zohueLogo.png"/></a>
       </div>
-      <div class="span8 visible-desktop hidden-phone visible-tablet">
+      <div class="span8 visible-desktop hidden-phone hidden-tablet">
         <div id="loginSection">
           帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
           &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
@@ -89,7 +90,7 @@
     </div>
 
     <!-- 登入部份的mobile版 -->
-    <div class="row-fluid hidden-desktop visible-phone hidden-tablet visible-xs">   
+    <div class="row-fluid hidden-desktop visible-phone visible-tablet visible-xs">   
     <div id="mobile_loginSection">
       <div class="row-fluid">
         帳號&nbsp<br><input type="text" name="mLoginAccount" class="mobile_l" id="mLoginAccount">
@@ -99,7 +100,7 @@
       </div>
       <div class="row-fluid">
         <button value="登入" id="mobile_login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
-        <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="true" data-auto-logout-link="false"></div>
+        <button value="臉書登入" id="mobile_fblogin" onclick="fbLogin()"><img style="width:24px; height:24px;" src="/images/img_forum/facebook.png" >&nbspFB登入</button>
       </div>
     </div>
     <div id="mobile_profile" class="row-fluid text-center">
@@ -115,6 +116,7 @@
 
     <hr id="hr" class="visible-desktop hidden-phone hidden-tablet">
 
+    <!-- menu部份的desktop版 -->
     <div class="visible-desktop hidden-phone hidden-tablet">
     <div id="menu" class="col-md-2">
       <div id="profilePage">
@@ -233,8 +235,8 @@
         <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
       </div>
     </div> -->
-    <%- body %>
 
+    <%- body %>
 
 
     <!--
@@ -313,6 +315,19 @@
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <!--SCRIPTS END-->
+    
+    <!-- Loop through all scripts and stylesheets that passed from routes -->
+    <% if (scripts) { %>
+        <% for (i = 0; i < scripts.length; i++) { %>
+            <script src="<%- scripts[i] %>"></script>
+        <% } %>
+    <% } %>
+
+    <% if (stylesheets) { %>
+        <% for (i = 0; i < stylesheets.length; i++) { %>
+            <link rel="stylesheet" href="<%- stylesheets[i] %>">
+        <% } %>
+    <% } %>
     
   </body>
 </html>

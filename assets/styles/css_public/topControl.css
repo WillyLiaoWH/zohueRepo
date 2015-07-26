@@ -232,9 +232,7 @@ button, input[type="button"], input[type="submit"]{
 	margin:20px 5px 20px 5px;
 	border-radius: 5px;
 	float:left;
-	width:66%;
 	height: 550px;
-	//color:#668D3C;
 	color:#D26900;
 	font-family: "微軟正黑體";
 	font-size:35px;
@@ -347,7 +345,7 @@ button, input[type="button"], input[type="submit"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 
-#mobile_login{
+#mobile_login, #mobile_fblogin{
 	cursor: pointer;
 	background-color: rgba(232, 81, 0, 0.6);
 	margin-top:10px;
