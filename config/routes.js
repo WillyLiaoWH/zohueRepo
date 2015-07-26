@@ -111,7 +111,24 @@ module.exports.routes = {
   },
 
   'GET /profile': {
-    view: 'profile/index'
+    view: 'profile/index',
+    locals: {
+      scripts: [
+        '/js/js_public/modalBox.js-master/modalBox-min.js',
+        '/js/js_public/alertify.js',
+        '/js/js_profile/mainJS.js',
+        '/js/js_post/cropper.min.js',
+        '/js/js_profile/crop-avatar.js?ver=1'
+      ],
+      stylesheets: [
+        '/styles/css_profile/style.css',
+        '/styles/css_post/crop-avatar.css',
+        '/styles/css_post/cropper.min.css',
+        '/styles/importer.css',
+        '/styles/css_public/themes/alertify.core.css',
+        '/styles/css_public/themes/alertify.default.css'
+      ]
+    }
   },
 
   'GET /editArticle/*': {
@@ -124,6 +141,15 @@ module.exports.routes = {
 
   '/home': {
     view: 'home/index',
+    locals: {
+      scripts: [
+        '/js/js_home/mainJS.js'
+      ],
+      stylesheets: [
+        '/styles/css_home/style.css',
+        '/styles/importer.css'],
+      welcome: '歡迎光臨'
+    }
   },
 
   '/changePassword': {

@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="/styles/css_public/jquery-ui.css">
   </head>
 
-   <body>
+   <body id="body">
    <div class="fb-root"></div>
     <div class="row-fluid">
       <div class="span4">
@@ -235,8 +235,8 @@
         <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
       </div>
     </div> -->
-    <%- body %>
 
+    <%- body %>
 
 
     <!--
@@ -315,6 +315,19 @@
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <!--SCRIPTS END-->
+    
+    <!-- Loop through all scripts and stylesheets that passed from routes -->
+    <% if (scripts) { %>
+        <% for (i = 0; i < scripts.length; i++) { %>
+            <script src="<%- scripts[i] %>"></script>
+        <% } %>
+    <% } %>
+
+    <% if (stylesheets) { %>
+        <% for (i = 0; i < stylesheets.length; i++) { %>
+            <link rel="stylesheet" href="<%- stylesheets[i] %>">
+        <% } %>
+    <% } %>
     
   </body>
 </html>

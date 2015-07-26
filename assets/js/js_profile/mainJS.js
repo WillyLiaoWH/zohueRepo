@@ -147,8 +147,9 @@ $(document).ready(function(){
 
 
 function getPri(cb){
-  var pri_account="";
-  var pri_id="";
+  pri_account="";
+  pri_id="";
+  pri_avatar="";
   $.get("/checkAuth", function(auth){
     if(auth) {
       pri_account=auth.account;
@@ -276,7 +277,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // è
         var css_r_content="";
       }
       function combine(element){
-        element = element+'<div id="container_timeline_res container-fluid">\
+        element = element+'<div id="container_timeline_res container-fluid" style="overflow:hidden;">\
                     <div id="sidebar_timeline_res">\
                       <image src="'+comment_author_avater+'" height="50" width="50">\
                     </div>\
