@@ -276,7 +276,7 @@ function Login(){
       var password=arguments[1];
     break;
     default:
-      if ($(window).width() <= 768){
+      if ($(window).width() <= 979){
         var account=$("#mLoginAccount").val();
         var password=$("#mLoginPwd").val();
       }else{
@@ -365,6 +365,7 @@ function fbLogin() {
           }else{
             var password=response.id+Math.random();
             document.getElementById('FBlogin').style.display='none';
+            document.getElementById('mobile_fblogin').style.display='none';
             document.getElementById('UserAccount').value=response.id;
             document.getElementById('UserAlias').value=response.name;
             document.getElementById('UserPwd').value=password;
