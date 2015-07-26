@@ -4,6 +4,7 @@ var articleList="";
 var searchUser="";
 var attachmentList=[];
 var categoryList={};
+var formNum;
 
 $(document).ready(function(){
 
@@ -47,19 +48,33 @@ $(document).ready(function(){
     }   
   });
 
-
   $(document).on("click",".sortByChar",function(e){
     sortByChar($(this).attr("value"));
   });
   $(document).on("click",".sortByLength",function(e){
     sortByLength($(this).attr("value"));
   });
-  // $(document).on("click",".sortByDate",function(e){
-  //   sortByDate($(this).attr("value"));
-  // });s
 
+  $("input[name='uploadFile']").change(function(){
+    var fullPath = $(this).val();
+    if (fullPath) {
+      var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+      var filename = fullPath.substring(startIndex);
+      if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+        filename = filename.substring(1);
+      }
+    }
+    $("form#uploadForm").submit();
+    $("#attachmentEdit label").css("display", "block");
+    $("#attachmentList").append("<tr><td>"+filename+"</td></tr>");
+  });
+
+  
   $("form#uploadForm").submit(function(){
+
     var formData = new FormData($(this)[0]);
+    $("[name=uploadFile]").val("");
+
     $.ajax({
         url: '/fileUpload',
         type: 'POST',
@@ -67,7 +82,6 @@ $(document).ready(function(){
         async: false,
         success: function (data) {
             console.log(data);
-            $("#attachmentList").append("<br><label>"+data+"</label>")
             attachmentList.push(data);
         },
         cache: false,
@@ -87,15 +101,20 @@ $(document).ready(function(){
       if(confirm("確定要發送電子報嗎？")){
         document.getElementById("mailSpinner").style.display="block";
         document.getElementById("mailEdit").style.display="none";
+        document.getElementById("attachmentEdit").style.display="none";
+        document.getElementById("emailButtonGroups").style.display="none";
 
         $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachmentList: attachmentList.toString()}, function(res){
           if (res == "SEND"){
             attachmentList=[];
-            alert("電子報發送成功rrrrrrr!");
+            alert("電子報發送成功!");
             document.getElementById("mailSubject").value="";
             document.getElementById("mailContent").value="";
             document.getElementById("mailEdit").style.display="block"; 
             document.getElementById("mailSpinner").style.display="none";
+            document.getElementById("attachmentEdit").style.display="block";
+            document.getElementById("emailButtonGroups").style.display="block";
+            $("#attachmentEdit label").css("display", "none");
             $("#attachmentList").html("");
           }else{
             alert("電子報發送失敗!");
@@ -103,6 +122,8 @@ $(document).ready(function(){
             document.getElementById("mailContent").value="";
             document.getElementById("mailEdit").style.display="block"; 
             document.getElementById("mailSpinner").style.display="none";
+            document.getElementById("attachmentEdit").style.display="block";
+            document.getElementById("emailButtonGroups").style.display="block";
           }
         });
       }

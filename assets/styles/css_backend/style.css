@@ -157,6 +157,14 @@ tr:hover{
     display: block;
 }
 
-#uploadForm{
-  margin-left:15px;
+#attachmentList{
+  margin-top:10px;
+}
+
+#upload{
+  display:none;
+}
+
+#uploadArea{
+  margin-left:-25px;
 }
