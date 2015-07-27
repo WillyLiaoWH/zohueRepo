@@ -473,13 +473,13 @@ function profile_auth(route){   //去改按過權限按鈕之後的內容，只�
   var target = route.split("/")[1];
   $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
    if (target=="self"){
-        $('#'+item+'_btn_text').text("自己");
+        $('#'+item+'_btn_text').text("自己才看得到");
       }
       else if(target=="friend"){
-        $('#'+item+'_btn_text').text("朋友");
+        $('#'+item+'_btn_text').text("朋友才看得到");
       }
       else if(target=="all"){
-        $('#'+item+'_btn_text').text("全部");
+        $('#'+item+'_btn_text').text("人人都看得到");
       }
       else if(target=="doctor"){
         $('#'+item+'_btn_text').text("醫生");
@@ -806,7 +806,9 @@ function showProfile(ori_author){
 function HandleResponse_showProfile(response){
 
   obj = JSON.parse(response);
+  console.log(obj);
   var email=obj.email;
+  var alias=obj.alias;
   var fname=obj.fname;
   var lname=obj.lname;
   var img=obj.img;
@@ -825,15 +827,16 @@ function HandleResponse_showProfile(response){
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
     $.get('/authCheck/'+owner,function(auth_status){
-      console.log(auth_status)
-      console.log(owner)
+      if(!auth_status["name"]){
+        $('name_row').hide();
+      }
       if (!auth_status["email"]){
         $('#email_row').hide();
       }
       if (!auth_status["gender"]){
         $('#gender_row').hide();
       }
-     if (!auth_status["phone"]){
+      if (!auth_status["phone"]){
         $('#phone_row').hide();
       }
       if (!auth_status["bday"]){
@@ -846,17 +849,17 @@ function HandleResponse_showProfile(response){
   }
 
   $.get('/auth_data',function(auth_status){
-    var index = ["email","gender","phone","bday","city"];
+    var index = ["name","email","gender","phone","bday","city"];
     for (var i in index){
       $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
       if (auth_status[index[i]]=="self"){
-        $('#'+index[i]+'_btn_text').text("自己");
+        $('#'+index[i]+'_btn_text').text("自己才看得到");
       }
       else if(auth_status[index[i]]=="friend"){
-        $('#'+index[i]+'_btn_text').text("朋友");
+        $('#'+index[i]+'_btn_text').text("朋友才看得到");
       }
       else if(auth_status[index[i]]=="all"){
-        $('#'+index[i]+'_btn_text').text("全部");
+        $('#'+index[i]+'_btn_text').text("人人都看得到");
       }
       else if(auth_status[index[i]]=="doctor"){
         $('#'+index[i]+'_btn_text').text("醫生");
@@ -866,6 +869,7 @@ function HandleResponse_showProfile(response){
 
   $('#email').text(email);
   $('#name').text(fname+lname);
+  $('#alias').text(alias);
   $('#avatar').attr('src',img);
   if (gender=='M'){
     gender="男";

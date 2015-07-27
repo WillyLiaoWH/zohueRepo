@@ -206,13 +206,30 @@
             <div class="row">
               <div class="col-md-3 "><img src="" id="avatar" height="100"></div>
               <br>
-              <h3  id="name"></h3> 
+              <h3  id="alias"></h3> 
             </div> 
            <table class="table">
             <tr class="auth_btn">
               <th></th>
               <th></th>
               <th>權限設定</th>
+            </tr>
+            <tr id="name_row">
+              <td>姓名：</td>
+              <td id="name"></td>
+              <td>
+                <div class="btn-group auth_btn" style="float:none;">
+                  <button type="button" class="n" data-toggle="dropdown">
+                    <img id="name_pic" src="" height="20px" width="20px">
+                    <text id="name_btn_text"></text>                  
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                   <li><a class="profile_auth" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
+                    <li><a class="profile_auth" name="name/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
+                    <li><a class="profile_auth" name="name/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                  </ul>
+                </div>
+              </td>
             </tr>
              <tr id="bday_row">
                <td>生日：</td>
@@ -224,9 +241,9 @@
                     <text id="bday_btn_text"></text>                  
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                   <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
-                    <li><a class="profile_auth" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                    <li><a class="profile_auth" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                   <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
+                    <li><a class="profile_auth" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
+                    <li><a class="profile_auth" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
                   </ul>
                 </div>
                </td>
@@ -241,9 +258,9 @@
                      <text id="city_btn_text"></text>
                    </button>
                    <ul class="dropdown-menu" role="menu">
-                     <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                     <li><a class="profile_auth" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                     <li><a class="profile_auth" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                     <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
+                     <li><a class="profile_auth" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
+                     <li><a class="profile_auth" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
                    </ul>
                  </div>
                </td>
@@ -258,9 +275,9 @@
                       <text id="email_btn_text"></text>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                      <li><a class="profile_auth" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                      <li><a class="profile_auth" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                      <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
+                      <li><a class="profile_auth" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
+                      <li><a class="profile_auth" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
                     </ul>
                   </div>
                </td>
@@ -275,9 +292,9 @@
                       <text id="gender_btn_text"></text>
                     </button>
                      <ul class="dropdown-menu" role="menu">
-                       <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                       <li><a class="profile_auth" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                       <li><a class="profile_auth" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                       <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
+                       <li><a class="profile_auth" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
+                       <li><a class="profile_auth" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
                     </ul>
                   </div>
                </td>
@@ -292,9 +309,9 @@
                      <text id="phone_btn_text"></text>
                    </button>
                    <ul class="dropdown-menu" role="menu">
-                    <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>
-                    <li><a class="profile_auth" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>
-                    <li><a class="profile_auth" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>
+                    <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
+                    <li><a class="profile_auth" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
+                    <li><a class="profile_auth" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
                    </ul>
                  </div>
                </td>

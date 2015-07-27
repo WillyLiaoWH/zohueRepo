@@ -13,7 +13,7 @@ module.exports = {
                 res.send(500,{err:"DB error"});
             }
             if(result.length==0){
-                str='{"city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
+                str='{"name":"all","city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
                 res.send(JSON.parse(str));
             }
             else{
@@ -42,7 +42,6 @@ module.exports = {
 
         var id=req.session.user.id;
         var account=req.param("account")
-        console.log("asdfasdf   "+account)
         checkAuth(id,function(inTable){
             if(inTable){                    //如果有的話，在去看，沒有就全部都可以
                 var doctor=false;
@@ -67,8 +66,8 @@ module.exports = {
                     friend=true;
                     doctor=true;
                 }
-                str = '{"city":false,"email":false,"gender":false,"phone":false,"bday":false}';
-                var index = JSON.parse('{"0":"city","1":"email","2":"gender","3":"phone","4":"bday"}');
+                str = '{"name":false,"city":false,"email":false,"gender":false,"phone":false,"bday":false}';
+                var index = JSON.parse('{"0":"city","1":"email","2":"gender","3":"phone","4":"bday","5":"name"}');
                 var ret_status=JSON.parse(str);
                 User.find({account:account}).exec(function(err,user){
                     var id=user[0].id;
@@ -105,7 +104,7 @@ module.exports = {
                 
             }
             else{
-                res.send(JSON.parse('{"city":true,"email":true,"gender":true,"phone":true,"bday":true}'));
+                res.send(JSON.parse('{"name":"true","city":true,"email":true,"gender":true,"phone":true,"bday":true}'));
             }
         });
     },
@@ -129,7 +128,14 @@ module.exports = {
             if(inTable){
                 var auth_status=inTable
                 auth_status[item]=status;
-                Userauth.update({user:id},{city:auth_status["city"],gender:auth_status["gender"],phone:auth_status["phone"],bday:auth_status["bday"],email:auth_status["email"]}).exec(function(err,result){
+                Userauth.update(
+                    {user:id},
+                    {name:auth_status["name"],
+                    city:auth_status["city"],
+                    gender:auth_status["gender"],
+                    phone:auth_status["phone"],
+                    bday:auth_status["bday"],
+                    email:auth_status["email"]}).exec(function(err,result){
                 	if (err){
                 		res.send(500,"DB error");
                 	}
@@ -157,10 +163,15 @@ module.exports = {
                 });
             }
             else{
-                var str='{"city":"self","email":"self","gender":"self","phone":"self","bday":"self"}';
+                var str='{"name":"self","city":"self","email":"self","gender":"self","phone":"self","bday":"self"}';
                 var auth_status=JSON.parse(str);
                 auth_status[item]=status;
-            	Userauth.create({user:id,city:auth_status["city"],gender:auth_status["gender"],phone:auth_status["phone"],bday:auth_status["bday"]}).exec(function(err,ret){
+            	Userauth.create({
+                    user:id,name:auth_status["name"],
+                    city:auth_status["city"],
+                    gender:auth_status["gender"],
+                    phone:auth_status["phone"],
+                    bday:auth_status["bday"]}).exec(function(err,ret){
             		if (err){
                 		res.send(500,{err:"DB error"});
                 	}

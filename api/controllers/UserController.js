@@ -91,17 +91,25 @@ module.exports = {
                 user.birthday = birthday;
                 user.primaryDisease = primaryDisease;
                 user.selfIntroduction = selfIntroduction;
-                user.Userauth.add( {
-                    "user": user.id,
-                    "city": "friend",
-                    "gender": "friend",
-                    "phone": "friend",
-                    "bday": "friend",
-                    "email" : "friend"
-                } );
+                // user.Userauth.add( {
+                //     "user": user.id,
+                //     "name": "friend",
+                //     "city": "friend",
+                //     "gender": "friend",
+                //     "phone": "friend",
+                //     "bday": "friend",
+                //     "email" : "friend"
+                // } );
 
                 user.save(function (err) {
-                    Userauth.create({user:user.id,city:"friend",gender:"friend",phone:"friend",bday:"friend"}).exec(function(err,ret){
+                    Userauth.create({
+                        user:user.id,
+                        name:"friend",
+                        city:"friend",
+                        gender:"friend",
+                        email:"friedn",
+                        phone:"friend",
+                        bday:"friend"}).exec(function(err,ret){
                         if (err){
                             res.send(500,{err:"DB error"});
                         }else{
