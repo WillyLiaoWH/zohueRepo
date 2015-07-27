@@ -167,6 +167,8 @@ module.exports.routes = {
   '/proInfo/*': {
     view: 'proInfo/index'
   },
+  'GET /proInfodestroyAll': 'ProInfo.destroyAll',
+  'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
 
   '/post/*': {
     view: 'post/index'
