@@ -124,9 +124,9 @@ module.exports = {
                 cb(Response);
             }, 500);
 
-            async.each(Response.timelinesPost, function(timeline, callback) {
-                async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img){
+            async.each(Response.timelinesPost, function (timeline, callback) {
+                async.each(timeline.response, function (timelineRes, callback2) {
+                    AuthorQuery(timelineRes, function (alias, img){
                         var i=Response.timelinesPost.indexOf(timeline);
                         var j=timeline.response.indexOf(timelineRes);
                         Response.timelinesPost[i].response[j].alias=alias;
@@ -142,11 +142,15 @@ module.exports = {
         checkLogin(function(){
             findAccount(function(account){
                 findTimeline(account, function(Timeline){
-                    findTimelineResponse(Timeline, function(TimelineResponse){
-                        findTimelineResponseAuthor(TimelineResponse, function(TimelineResponseAuthor){
+                    findTimelineResponse(Timeline, function (TimelineResponse){
+                        findTimelineResponseAuthor(TimelineResponse, function (TimelineResponseAuthor){
                             var n = new Date().getTime();
                             console.log(n-d);
-                            res.send({timelinesList: TimelineResponseAuthor.timelinesPost, avatar: Response.img, alias: Response.alias});
+                            res.send({
+                                timelinesList: TimelineResponseAuthor.timelinesPost, 
+                                avatar: Response.img, 
+                                alias: Response.alias
+                            });
                         });
                     });
                 });
