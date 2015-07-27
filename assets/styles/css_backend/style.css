@@ -159,6 +159,7 @@ tr:hover{
 
 #attachmentList{
   margin-top:10px;
+  width:80%;
 }
 
 #upload{
@@ -167,4 +168,9 @@ tr:hover{
 
 #uploadArea{
   margin-left:-25px;
+}
+
+.removeFile:hover{
+  color:#CE0000;
+  cursor:pointer;
 }

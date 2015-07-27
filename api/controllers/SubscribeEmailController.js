@@ -74,10 +74,9 @@ module.exports = {
             });
         });
 	},
-    upload: function(req, res){
+    upload: function(req, res){ //上傳附加檔案
         if(req.method === 'GET')
             return res.json({'status':'GET not allowed'});
-
         var uploadFile = req.file('uploadFile');
         var originalFileName = uploadFile["_files"][0].stream.filename;
         var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
@@ -85,52 +84,21 @@ module.exports = {
         var newFileName = milliseconds+originalFileName;
 
         uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
-
             if (err) return res.serverError(err);
             res.send(newFileName);
         });
-    //     var uploadFile = req.file('uploadFile');
-    //     var uploadFile2 = req.file('uploadFile2');
-
-    //     console.log("aaa");
-    //     console.log(req);
-
-    //     console.log("bbb");
-    //     console.log(uploadFile);
-
-    //     console.log("ccc");
-    //     console.log(uploadFile2);
-
-    //     console.log(req.file('uploadFile3'));
-
-
-
-    //     if(req.method === 'GET')
-    //         return res.json({'status':'GET not allowed'});
-
-    //     var uploadFile = req.file('uploadFile');
-    //     var originalFileName = uploadFile["_files"][0].stream.filename;
-    //     var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
-    //     var milliseconds = new Date().getTime();
-    //     var newFileName = milliseconds+originalFileName;
-
-    //     uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
-    //         if (err) return res.serverError(err);
-    //         res.send(newFileName);
-    //     });
     },
-    
+
     sendNewsLetter: function(req, res) {
         var mailSubject = req.param("mailSubject");
         var mailContent = req.param("mailContent");
-        var mailAttachment  = req.param("attachmentList");
-        var attachmentObj = mailAttachment.split(',');
-        console.log(mailAttachment);
+        var attachmentObj  = req.param("attachmentList").split(',');
+        var attachmentNameObj = req.param("attachmentNameList").split(',');
 
         var attachmentList = [];
         for(i=0; i<attachmentObj.length; i++){
             attachmentList.push({
-                filename: attachmentObj[i],
+                filename: attachmentNameObj[i],
                 //path: "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[i]
                 path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
@@ -152,26 +120,66 @@ module.exports = {
                         user: 'ntu.cpcp@gmail.com',  
                         pass: 'lckung413'  
                     }  
-                });  
-                var options = {  
-                    from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
-                    bcc: receivers,    
-                    subject: mailSubject,
-                    text: mailContent, 
-                    attachments: attachmentList
-                };  
+                });
+                if(req.param("attachmentList").length==0){
+                    var options = {  
+                        from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                        bcc: receivers,    
+                        subject: mailSubject,
+                        text: mailContent
+                    }
+                }else{
+                    var options = {  
+                        from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                        bcc: receivers,    
+                        subject: mailSubject,
+                        text: mailContent, 
+                        attachments: attachmentList
+                    };  
+                }
+
                 //發送信件方法  
                 transporter.sendMail(options, function(error, info){  
                     if(error){  
                         console.log(error);  
                     }else{  
-                        console.log('訊息發送: ' + info.response);  
+                        console.log('訊息發送: ' + info.response);
                         res.send("SEND"); 
+                        if(req.param("attachmentList")!=0){ //送出郵件後要刪除附加檔案
+                            for(k=0;k<attachmentObj.length;k++){ 
+                                var fs = require('fs');
+                                var path = "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
+                                fs.unlink(path, function (err) {
+                                    if (err){
+                                         throw err;
+                                         console.log(err);
+                                    }else{
+                                        res.send("SEND"); 
+                                    }
+                                });
+                            }
+                        }
                     }  
                 }); 
             }
         });
     },
+
+    deleteFile: function(req, res) { //刪除檔案
+        var fileName = req.param("fileName");
+        var fs = require('fs');
+        var path = "C:/github/zohueRepo/assets/images/img_email/"+fileName;
+        //var path = "C:/Users/User/zohueRepo/assets/images/img_email/"+fileName;
+        fs.unlink(path, function (err) {
+            if (err){
+                throw err;
+                console.log(err);
+            }else{
+                res.send("SEND"); 
+            }
+        });
+    },
+
     getAllSubscribers: function(req, res){
         var searchEmail = req.param("searchEmail");
         SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
@@ -187,6 +195,7 @@ module.exports = {
             }
         });
     },
+
     deleteSubscriber: function(req, res){
         var subscriberId = req.param("id");
         SubscribeEmail.destroy({id: subscriberId}).exec(function(err){
