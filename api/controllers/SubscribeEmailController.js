@@ -84,15 +84,42 @@ module.exports = {
         var milliseconds = new Date().getTime();
         var newFileName = milliseconds+originalFileName;
 
-        //console.log(newFileName);
-
         uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
 
             if (err) return res.serverError(err);
-            //console.log(files);
             res.send(newFileName);
         });
+    //     var uploadFile = req.file('uploadFile');
+    //     var uploadFile2 = req.file('uploadFile2');
+
+    //     console.log("aaa");
+    //     console.log(req);
+
+    //     console.log("bbb");
+    //     console.log(uploadFile);
+
+    //     console.log("ccc");
+    //     console.log(uploadFile2);
+
+    //     console.log(req.file('uploadFile3'));
+
+
+
+    //     if(req.method === 'GET')
+    //         return res.json({'status':'GET not allowed'});
+
+    //     var uploadFile = req.file('uploadFile');
+    //     var originalFileName = uploadFile["_files"][0].stream.filename;
+    //     var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
+    //     var milliseconds = new Date().getTime();
+    //     var newFileName = milliseconds+originalFileName;
+
+    //     uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
+    //         if (err) return res.serverError(err);
+    //         res.send(newFileName);
+    //     });
     },
+    
     sendNewsLetter: function(req, res) {
         var mailSubject = req.param("mailSubject");
         var mailContent = req.param("mailContent");
@@ -100,11 +127,12 @@ module.exports = {
         var attachmentObj = mailAttachment.split(',');
         console.log(mailAttachment);
 
-        var test = [];
+        var attachmentList = [];
         for(i=0; i<attachmentObj.length; i++){
-            test.push({
+            attachmentList.push({
                 filename: attachmentObj[i],
-                path: "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[i]
+                //path: "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[i]
+                path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
         }
 
@@ -130,7 +158,7 @@ module.exports = {
                     bcc: receivers,    
                     subject: mailSubject,
                     text: mailContent, 
-                    attachments: test
+                    attachments: attachmentList
                 };  
                 //發送信件方法  
                 transporter.sendMail(options, function(error, info){  
