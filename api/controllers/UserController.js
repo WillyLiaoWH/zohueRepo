@@ -909,11 +909,7 @@ module.exports = {
     },
     getAllUsers: function(req, res){
         var searchUser = req.param("searchUser");
-        console.log(typeof(searchUser));
-        console.log(searchUser);
-
         User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
-            
             if (allUsers.length==0) {
                 res.send("查無結果！");
             } else {
@@ -922,7 +918,6 @@ module.exports = {
                         sails.log.error("ERR:", err);
                         console.log("err2");
                     }else {
-                        console.log(userList);
                         if(userList.length>0){
                             res.send(userList);
                         }else{

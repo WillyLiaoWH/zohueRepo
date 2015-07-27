@@ -23,7 +23,7 @@ module.exports = {
 
 	    res.view({
 	    	//_layoutFile: '',
-	    	//view: 'backend/adminPage',
+	    	//view: 'backend/adminLoginPage',
 	    	layout: false
 		      // partials: {
 		      //   head: 'partials/head',
@@ -46,78 +46,14 @@ module.exports = {
         });    
     },
 
-  	getArticlesByBoards: function(req, res){ // 根據board撈文章。
-
-        //var board=req.param("board");
-        // var boards;
-        // var boardCate;
-        
-        // BoardCategory.find().exec(function(err, boardCateList) {
-        //     boardCate=boardCateList;
-        // });
-        
+  	getArticlesByBoards: function(req, res){ // 根據board撈文章。   
         Articles.find().populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
-                    // Boards.find().populate('category').exec(function(err, board) {
-                    //     if(err) {
-                    //         res.send(500, { err: "DB Error" });
-                    //     } else {
-                    //         //Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-                    //             //boards=boardsList;
-                    //             res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
-                    //         //});
-                    //     }
-                    // });
-                    res.send({articlesList: articlesList});
+                res.send({articlesList: articlesList});
             }
-        });
-
-
-
-
-        	// Boards.find(board).populate('articles').populate('category').exec(function(err, articlesList) {
-        	// 	if (articlesList.length==0) {
-         //        res.send("查無結果！");
-	        //     } else {
-	        //     	console.log(articlesList);
-	        //         sails.services['util'].populateDeep('boards', articlesList[0], 'articles.author', function (err, articlesList2) {
-	        //             sails.services['util'].populateDeep('boards', articlesList2, 'articles.nicer', function (err, articlesList3) {
-	        //             	sails.services['util'].populateDeep('boards', articlesList3, 'articles.report', function (err, articlesList4) {
-	        //             		console.log(articlesList4);
-	        //             		//console.log(articlesList4);
-	        //             	});
-	        //             });
-	        //         });
-	        //     }
-        	// });
-
-            // Articles.find({board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
-            //     if (err) {
-            //         res.send(500, { err: "DB Error" });
-            //     } else {
-            //     	var bid = articlesList[0]['board']['category'];
-            //     	console.log(articlesList[0]);
-            //     	BoardCategory.find(bid).exec(function(err, result){
-            //     		console.log(result);
-            //     	});
-
-
-
-            //         // Boards.find({id: board}).populate('category').exec(function(err, board) {
-            //         //     if(err) {
-            //         //         res.send(500, { err: "DB Error" });
-            //         //     } else {
-            //         //         Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-            //         //             boards=boardsList;
-            //         //             res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
-            //         //         });
-            //         //     }
-            //         // });
-            //     }
-            // });
-        
+        });        
 	},
 
     getArticlesByCategory: function(req, res){ // 根據category撈文章。

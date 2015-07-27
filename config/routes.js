@@ -185,7 +185,7 @@ module.exports.routes = {
     view: 'friends/index'
   },
   '/backend': {
-    //view: 'backend/index',
+    //view: 'backend/adminLoginPage',
     controller: 'backend'
   },
   // '/backend': {

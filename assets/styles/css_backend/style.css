@@ -174,3 +174,12 @@ tr:hover{
   color:#CE0000;
   cursor:pointer;
 }
+
+#adminLoginArea .panel-body{
+  padding:35px;
+}
+
+#adminLoginArea{
+  margin-top:150px;
+  display: none
+}
