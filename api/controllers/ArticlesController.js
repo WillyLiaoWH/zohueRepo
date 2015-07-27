@@ -455,6 +455,11 @@ module.exports = {
               break;
         }
 
+        var boardCate;
+        BoardCategory.find().exec(function(err, boardCateList) {
+            boardCate=boardCateList;
+        });
+
         //Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
         Articles.find({classification: {'contains': classification}}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
             if (err){
@@ -487,7 +492,10 @@ module.exports = {
                                     if(err) {
                                         res.send(500, { err: "DB Error" });
                                     } else {
-                                        res.send({articlesList: found, board: board[0]});
+                                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                                            res.send({articlesList: found, board: board[0], boards: boardsList, boardCate: boardCate});
+                                        });
+                                        //res.send({articlesList: found, board: board[0]});
                                     }
                                 });
                             }else{
