@@ -3,6 +3,7 @@ var articleTable="";
 var articleList="";
 var searchUser="";
 var attachmentList=[];
+var attachmentNameList=[];
 var categoryList={};
 var formNum;
 
@@ -65,13 +66,12 @@ $(document).ready(function(){
       }
     }
     $("form#uploadForm").submit();
+    attachmentNameList.push(filename);
     $("#attachmentEdit label").css("display", "block");
-    $("#attachmentList").append("<tr><td>"+filename+"</td></tr>");
+    $("#attachmentList").append("<tr><td>"+filename+"</td><td class='text-right'><span class='glyphicon glyphicon-remove removeFile' value='"+filename+"' aria-hidden='true'></span></td></tr>");
   });
 
-  
   $("form#uploadForm").submit(function(){
-
     var formData = new FormData($(this)[0]);
     $("[name=uploadFile]").val("");
 
@@ -88,8 +88,21 @@ $(document).ready(function(){
         contentType: false,
         processData: false
     });
-
     return false;
+  });
+
+  $(document).on("click",".removeFile",function(e){
+    var index = attachmentNameList.indexOf($(this).attr("value"));
+
+    $.post("/deleteFile",{fileName: attachmentList[index]}, function(res){
+      if (res != "SEND"){
+        console.log("刪除失敗");
+      }
+    });
+
+    attachmentNameList.splice(index, 1);
+    attachmentList.splice(index, 1);
+    $(this).parent().parent().remove();
   });
 
   $(document).on("click","#sendNewsLetter",function(e){
@@ -104,9 +117,10 @@ $(document).ready(function(){
         document.getElementById("attachmentEdit").style.display="none";
         document.getElementById("emailButtonGroups").style.display="none";
 
-        $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachmentList: attachmentList.toString()}, function(res){
+        $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachmentList: attachmentList.toString(), attachmentNameList: attachmentNameList.toString()}, function(res){
           if (res == "SEND"){
             attachmentList=[];
+            attachmentNameList=[];
             alert("電子報發送成功!");
             document.getElementById("mailSubject").value="";
             document.getElementById("mailContent").value="";
@@ -117,6 +131,8 @@ $(document).ready(function(){
             $("#attachmentEdit label").css("display", "none");
             $("#attachmentList").html("");
           }else{
+            attachmentList=[];
+            attachmentNameList=[];
             alert("電子報發送失敗!");
             document.getElementById("mailSubject").value="";
             document.getElementById("mailContent").value="";

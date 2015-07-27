@@ -84,6 +84,7 @@ module.exports.routes = {
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
+  'POST /deleteFile' : 'SubscribeEmailController.deleteFile',
   'POST /auth_setTimeline':'Timelines.auth_set',
   'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
   'POST /fileUpload': 'SubscribeEmailController.upload',
