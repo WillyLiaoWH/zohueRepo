@@ -1,13 +1,12 @@
-var allow_create;
+//var allow_create;
 var searched;
-var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
-var loaded=false;
+//var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
+//var loaded=false;
 $(document).ready(function(){
   var url = document.URL;
   var regex = /.*proInfo\/+(.*)/;
   var page = url.replace(regex,"$1");
   setPage(page);
-
 
   $.get("/checkAuth", function(auth){
     if(auth) {
@@ -17,22 +16,20 @@ $(document).ready(function(){
     }
   });
 
-  $("#searchWord")
-  .on("keyup mouseup", function(){
-    try{
-      if($("#searchWord").val().trim()!=""){
-        $("#search").css("background-color", "rgba(232, 81, 0, 0.7)");
-      }else{$("#search").css("background-color", "rgba(102, 141, 60, 0.4)");}
+  // $("#searchWord").on("keyup mouseup", function(){
+  //   try{
+  //     if($("#searchWord").val().trim()!=""){
+  //       $("#search").css("background-color", "rgba(232, 81, 0, 0.7)");
+  //     }else{$("#search").css("background-color", "rgba(102, 141, 60, 0.4)");}
         
-      if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
-        this.appendChild(document.createChild("br"));
-      }
-    }catch(err){}
-  });
+  //     if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
+  //       this.appendChild(document.createChild("br"));
+  //     }
+  //   }catch(err){}
+  // });
 });
 
 function setPage(page) {
-
   $.get("/setProInfoPage", function(articleList){
     test="";
     for(i=0; i<articleList.length; i++) {
@@ -99,7 +96,6 @@ function setPage(page) {
       }
     }
     else {
-
       for(i=0; i<lastPageArticlesNum; i++) {
         if(i%2==0){
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
@@ -131,36 +127,6 @@ function setPage(page) {
   });
 }
 
-function check(){
-  allow_create = 1;
-  if($("#UserAlias").val() == ""){
-    $("label[id = checkAlias]").text("  *這裡也要填喔！");allow_create = 0;
-  }else{$("label[id = checkAlias]").text("");}
-
-  if($("#UserAccount").val() == ""){
-    $("label[id = checkAccount]").text("  *這裡也要填喔！");allow_create = 0;
-  }else{$("label[id = checkAccount]").text("");}
-
-  if($("#UserPwd").val() == ""){
-    $("label[id = checkPwd]").text("  *這裡也要填喔！");allow_create = 0;
-  }else{$("label[id = checkPwd]").text("");}
-
-  if($("#UserPwdConfirm").val() == ""){
-    $("label[id = checkPwdConfirm]").text("  *這裡也要填喔！");allow_create = 0;
-  }else{$("label[id = checkPwdConfirm]").text("");}
-
-  if(allow_create==1 && $("#UserEmail").val() != "") {
-    checkEmail();
-  }
-  if(allow_create==1) {
-    checkPwd();
-  }
-
-  if(allow_create==1){
-    Submit();
-  }
-}
-
 function searchArticle() {
   var searchWord = document.getElementById('searchWord');
   var search = document.getElementById('search');
@@ -187,14 +153,11 @@ function searchArticle() {
 }
 
 function cancleSearch(){
-  
   document.getElementById("searchWord").value = "";
   window.location.assign("/proInfo/1");
-  
 }
 
 function setSearchResult(articleList){
-
     myTable="<tr style='background-color: #1D3521; color:white;'>";
     myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
     myTable+="<td style='width:9%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
