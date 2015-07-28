@@ -8,6 +8,33 @@ var categoryList={};
 var formNum;
 
 $(document).ready(function(){
+  checkAuth();
+
+  $(document).on("click","#adminLogin",function(e){
+    var adminAccount = $("#adminAccount").val();
+    var adminPassword = $("#adminPassword").val();
+    var url = document.URL;
+
+    $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
+      if (res == "success"){
+        alert("登入成功！");
+        location.replace(url);
+      }else{
+        alert(res);
+      }
+    });
+  });
+
+  function checkAuth() {
+    $.get("/checkAdmin", function(res){
+      if(res=="true") {
+        alert("Admin desu.");
+        $("#backendContent").css("display","block");
+      }else{
+        alert("Not admin.");
+      }
+    });
+  }
 
   $.get("/getBoardCategory", function(boardCategory){
     for(c=0; c<boardCategory.length; c++) {

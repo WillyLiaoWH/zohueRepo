@@ -181,5 +181,13 @@ tr:hover{
 
 #adminLoginArea{
   margin-top:150px;
+/*  display: none;*/
+}
+
+#adminLogin{
+  font-size:20px;
+}
+
+#backendContent{
   display: none;
 }

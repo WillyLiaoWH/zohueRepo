@@ -88,7 +88,9 @@ module.exports.routes = {
   'POST /auth_setTimeline':'Timelines.auth_set',
   'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
   'POST /fileUpload': 'SubscribeEmailController.upload',
-
+  'POST /createAdmin': 'BackendController.createAdmin',
+  'POST /adminLogin': 'BackendController.adminLogin',
+  
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
@@ -107,6 +109,7 @@ module.exports.routes = {
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
   'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
+  'GET /checkAdmin': 'Backend.checkAdmin',
   'GET /article/*': {
     view: 'article/index'
   },

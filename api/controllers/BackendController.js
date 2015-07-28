@@ -34,6 +34,58 @@ module.exports = {
 
   	},
 
+    adminLogin: function(req, res) {
+        var adminAccount = req.param("adminAccount");
+        var adminPassword = req.param("adminPassword");
+
+        console.log(adminAccount+"+"+adminPassword);
+        Admins.find({account: adminAccount}).exec(function(error, admin) {
+            if(error) {
+                res.send(500,{err: "DB Error" });
+                console.log(error);
+            }else{
+                if (admin.length!=0) {
+                    if (adminPassword==admin[0].password) {
+                        req.session.admin = adminAccount;
+                        res.send("success");
+                    } else {
+                        res.send("密碼錯誤！");
+                    }
+                } else {
+                    res.send("此帳號不存在！");
+                }
+            } 
+        });
+    },
+
+
+    checkAdmin: function(req, res) {
+        var adminAccount=req.session.admin;
+        Admins.find({account: adminAccount}).exec(function(error, admin){
+            if(error){
+                console.log(error);
+            }else{
+                if (admin.length!=0) {
+                    res.send("true");
+                }else{
+                    res.send("false");
+                }
+            }
+        });
+    },
+
+    createAdmin: function(req, res) {
+        var adminAccount = req.param("adminAccount");
+        var adminPassword = req.param("adminPassword");
+
+        Admins.create({account: adminAccount, password: adminPassword}).exec(function(error, article) {
+            if(error) {
+                res.send(500,{err: "DB Error" });
+                console.log(error);
+            } 
+        });
+    },
+
     getArticles: function(req, res){ // 根據board及category撈文章。
         var board=req.param("board");
 
