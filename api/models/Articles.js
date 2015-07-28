@@ -52,6 +52,10 @@ module.exports = {
     }, 
     board: {
       model: 'boards'
+    },
+    deleted: {
+      type: 'string',
+      defaultsTo : 'false'
     }
   }
 };

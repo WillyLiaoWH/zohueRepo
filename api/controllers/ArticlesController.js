@@ -35,7 +35,7 @@ module.exports = {
             boardCate=boardCateList;
         });
 
-        Articles.find({classification: {'contains': classification}, board: board}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
+        Articles.find({classification: {'contains': classification}, board: board, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -271,18 +271,15 @@ module.exports = {
     deleteArticle: function(req, res) {
         var articleId = req.param("id");
         
-        Articles.destroy({id: articleId}).exec(function deleteCB(err){
+        Articles.update({id: articleId}, {deleted: "true"}).exec(function(err) {
             if(err) {
-                console.log("aaaaa");
                 console.log(error);
                 res.send(500,{err: "DB Error" });
-
             } else {
                 console.log('The record has been deleted');
                 res.end();
             }
         });
-
     },
 
     clickNice: function(req, res) {
@@ -461,7 +458,7 @@ module.exports = {
         });
 
         //Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
-        Articles.find({classification: {'contains': classification}}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
+        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
             if (err){
                 res.send(500, { err: "DB Error" });
             } else{
@@ -474,7 +471,7 @@ module.exports = {
                             obj.push(found[f]);
                         }
                     }
-                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
+                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{
