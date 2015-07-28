@@ -129,7 +129,7 @@ function setPage(page, keyword, sort) {
     $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML=boardCate+"-"+boardName;
+      document.getElementById('title').innerHTML="癌病友論壇-"+boardCate+"-"+boardName;
 
       var res_search=res.articlesList
       temp_result=res_search;
@@ -145,6 +145,9 @@ function setPage(page, keyword, sort) {
     });
   } else {
     $.get("/setBoardPage/"+board+"/"+tab, function(res){
+      var boardName=res.board.title;
+      var boardCate=res.board.category.title;
+      document.getElementById('title').innerHTML="癌病友論壇-"+boardCate+"-"+boardName;
       var res_search=res.articlesList;
       setBoardCategory(res.boards, res.boardCate, res.board.category.id);
       setSearchResult(res_search, page);
@@ -226,26 +229,26 @@ function setSearchResult(articleList, page){
         authorType="";
         if(articleList[i].author.type=="D"){
           authorType="&nbsp醫師";
-          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="S"){
           authorType="&nbsp社工師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="RN"){
           authorType="&nbsp護理師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="P"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="F"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else{
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }
 
         if(i%2==0){
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
   
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
+          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='margin-right: 10px;float:left;display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.account+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
 
@@ -257,7 +260,7 @@ function setSearchResult(articleList, page){
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
           
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
+          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='margin-right: 10px;float:left;display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.account+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
 
@@ -291,26 +294,26 @@ function setSearchResult(articleList, page){
         authorType="";
         if(articleList[i].author.type=="D"){
           authorType="&nbsp醫師";
-          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="S"){
           authorType="&nbsp社工師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="RN"){
           authorType="&nbsp護理師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="P"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else if(articleList[i].author.type=="F"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }else{
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:50px; width:50px;'>";
+          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='float:left;margin-right:10px; height:50px; width:50px;'>";
         }
 
         if(i%2==0){
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
+          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='margin-right: 10px;float:left;display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.account+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
 
@@ -320,7 +323,7 @@ function setSearchResult(articleList, page){
         }else{
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'><a href=\"/article/"+articleList[i+articleNum*(page-1)].id+"\" style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
+          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<label style='margin-right: 10px;float:left;display: inline-block;height:50px;width:50px;background-image:url("+articleList[i+articleNum*(page-1)].author.img+");background-size: 50px 50px;'></label></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.account+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
 
