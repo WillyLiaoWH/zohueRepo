@@ -374,8 +374,7 @@ function fbLogin() {
             document.getElementById('UserGender').value=response.gender;
             document.getElementById('fname').value=response.first_name;
             document.getElementById('lname').value=response.last_name;
-            console.log(typeof response.email)
-            if (typeof response.email != 'undifined'){
+            if (typeof response.email != "undefined"){
               document.getElementById('UserEmail').value= response.email;
             }
           }
