@@ -115,7 +115,7 @@ module.exports = {
                         }else{
                             req.session.user = user;
                             req.session.authenticated=true;
-                            console.log(user);
+                            //console.log(user);
                             res.send(user);
                         }
                     });
@@ -149,13 +149,13 @@ module.exports = {
             addressCity: addressCity, addressDistrict: addressDistrict, address: address,
             birthday: birthday, primaryDisease: primaryDisease, selfIntroduction: selfIntroduction
         }).exec(function(error, user) {
-            console.log(req.param());
+            //console.log(req.param());
             if(error) {
                 res.send(500,{err: "DB Error" });
             } else {
                 req.session.user = user[0];
                 req.session.authenticated=true;
-                console.log(user[0]);
+                //console.log(user[0]);
                 res.send(user[0]);
             }
         });
@@ -173,7 +173,7 @@ module.exports = {
             } else {
                 req.session.user = user[0];
                 req.session.authenticated=true;
-                console.log(user[0]);
+                //console.log(user[0]);
                 res.send(user[0]);
             }
         });
@@ -225,8 +225,8 @@ module.exports = {
         var reNewPassword = req.param("reNewPassword");
         theUser=req.session.user
         if(theUser.password!=oldPassword) {
-            console.log(theUser.password);
-            console.log(oldPassword);
+            // console.log(theUser.password);
+            // console.log(oldPassword);
             res.send(400, {err: "Password Incorrect"})
         } else {
             theUser.password=newPassword;
@@ -276,10 +276,12 @@ module.exports = {
     },
 
     showProfile: function(req, res) {
-        console.log(req.session.user);
+        //console.log(req.session.user);
         res.send(JSON.stringify(req.session.user));
     },
     getProfile: function(req, res){
+        //gets only the photo, alias, name, birthday, city,email,gender,phone
+        //only the first two are required
         pri_account = req.session.user.account;
         var account=req.param("account");
         
@@ -292,7 +294,36 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 if (usr.length!=0) {
-                    res.send(JSON.stringify(usr[0]));
+                    var ret= new Object();
+                    ret.alias = usr[0].alias;
+                    ret.img = usr[0].img;
+                    var authcheck=require("../services/authcheck.js");
+                    authcheck.authCheck(req,function(auth){
+                        console.log(auth)
+                        if (auth.name===true){
+                            ret.lname = usr[0].lname;
+                            ret.fname = usr[0].fname 
+                        }
+                        if (auth.bday===true){
+                            ret.birthday = usr[0].birthday;
+                        }
+                        if (auth.city === true){
+                            ret.addressCity = usr[0].addressCity;
+                        }
+                        if (auth.email === true){
+                            ret.email = usr[0].email
+                        }
+                        if (auth.gender === true){
+                            ret.gender = usr[0].gender
+                        }
+                        if (auth.phone === true){
+                            ret.phone = usr[0].phone
+                        } 
+                        res.send(ret);
+                    });
+                    
+                        
+                    
                 } else {
                     res.send(404, { err: "User not Found" });
                 }
@@ -321,7 +352,7 @@ module.exports = {
                 var regex = /.*assets\\+(.*)/;
                 var match = files[0].fd.match(regex);
                 var result = match[1].replace(/\\/g, "\/");
-                console.log(result);
+                //console.log(result);
 
                 //http://stackoverflow.com/questions/26130914/not-able-to-resize-image-using-imagemagick-node-js
                 //var gm = require('gm').subClass({ imageMagick : true });

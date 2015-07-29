@@ -827,8 +827,9 @@ function HandleResponse_showProfile(response){
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
     $.get('/authCheck/'+owner,function(auth_status){
+      console.log(auth_status)
       if(!auth_status["name"]){
-        $('name_row').hide();
+        $('#name_row').hide();
       }
       if (!auth_status["email"]){
         $('#email_row').hide();
