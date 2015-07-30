@@ -463,7 +463,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // è
       $(".event_comment").css("display", "none");
     }
     if(res["timelinesList"][i].response.length<4){
-      $(".readMore").css("display", "none");
+      $("#readMore"+timelinesID).css("display", "none");
     }
   }
 }
