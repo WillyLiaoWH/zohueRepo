@@ -210,8 +210,9 @@ module.exports = {
         var responseNum=req.param("responseNum");
         var clickNum=req.param("clickNum");
         var board=req.param("board");
+        var follower=[req.session.user.id];
 
-		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board}).exec(function(error, article) {
+		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
             if(error) {
                 console.log(title);console.log(author);console.log(content);
                 res.send(500,{err: "DB Error" });
@@ -302,13 +303,27 @@ module.exports = {
                 }
                 newNiceList.push(req.session.user);
 
-                Articles.update({id: articleId}, {nicer: newNiceList}).exec(function(error, updated) {
+                var follower=article[0].follower;
+                if(follower.indexOf(req.session.user.id)==-1) {
+                    follower.push(req.session.user.id);
+                }
+                Articles.update({id: articleId}, {nicer: newNiceList, follower: follower}).exec(function(error, updated) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log("error2"+error);
                     } else {
                         console.log("no error");
                         console.log(updated[0].nicer.length);
+                        for(var i=0; i<updated[0].follower.length; i++) {
+                            if(updated[0].follower[i]!=req.session.user.id) {
+                                Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                                    if(err) {
+                                        console.log(err);
+                                        res.send({err:"DB error"});
+                                    }
+                                });
+                            }
+                        }
                         res.send({num:updated[0].nicer.length});
                     }
                 });
@@ -398,6 +413,14 @@ module.exports = {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
                     } else {
+                        if(updated[0].author!=req.session.user.id) {
+                            Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                                if(err) {
+                                    console.log(err);
+                                    res.send({err:"DB error"});
+                                }
+                            });
+                        }
                         res.send(updated);
                     }
                 });

@@ -41,10 +41,10 @@ module.exports = {
     },
     auth:{
       type:'string',
-    }
-    // lastResponseTime: {
-    //   type: 'datetime'
-    // }
+    },
+    follower: {
+      collection: 'user',
+    },
   }
 };
 

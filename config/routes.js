@@ -143,6 +143,8 @@ module.exports.routes = {
     view: 'signup/index'
   },
 
+  'GET /nots': 'Notification.getNotification',
+
   '/home': {
     view: 'home/index',
     locals: {

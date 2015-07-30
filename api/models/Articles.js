@@ -56,7 +56,10 @@ module.exports = {
     deleted: {
       type: 'string',
       defaultsTo : 'false'
-    }
+    },
+    follower: {
+      collection: 'user',
+    },
   }
 };
 

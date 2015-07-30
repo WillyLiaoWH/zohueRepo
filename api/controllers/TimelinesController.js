@@ -302,8 +302,16 @@ module.exports = {
         }else{
             var TimelineId = req.param("id");
             var nicer = req.session.user;
-            Timelines.findOne(TimelineId).populate('nicer').exec(function (err, timeline) {
+            Timelines.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
+                if(timeline.author.id!=req.session.user.id) {
+                    Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                        if(err) {
+                            console.log(err);
+                            res.send({err:"DB error"});
+                        }
+                    });
+                }
                 timeline.save(function (err) { res.send({num:timeline.nicer.length+1}); });
             });
         }

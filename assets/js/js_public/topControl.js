@@ -393,3 +393,11 @@ function fbLogin() {
     }
      }); //設定需要授權的項目
   }
+
+function notification() {
+  $.get('/nots',function(res){
+    if(res){
+      alert(JSON.stringify(res));
+    }
+  });
+}

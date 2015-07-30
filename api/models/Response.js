@@ -22,7 +22,10 @@ module.exports = {
     },
     nicer: {
       collection: 'user'
-    }
+    },
+    follower: {
+      collection: 'user',
+    },
   }
 };
 

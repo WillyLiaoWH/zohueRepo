@@ -106,6 +106,10 @@ module.exports = {
     }, 
     blackerList: {
       collection: 'user'
+    },
+    notifications: {
+      collection: 'notification',
+      via: 'user',
     }
   }
 };

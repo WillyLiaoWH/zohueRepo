@@ -26,7 +26,10 @@ module.exports = {
     report: {
       collection: 'TimelineResponseReport',
       via: 'timelineResponse'
-    }
+    },
+    follower: {
+      collection: 'user',
+    },
   }
 };
 
