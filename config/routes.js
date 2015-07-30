@@ -110,9 +110,6 @@ module.exports.routes = {
   'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /checkAdmin': 'Backend.checkAdmin',
-  'GET /article/*': {
-    view: 'article/index'
-  },
 
   'GET /profile': {
     view: 'profile/index',
@@ -136,11 +133,39 @@ module.exports.routes = {
   },
 
   'GET /editArticle/*': {
-    view: 'editArticle/index'
+    view: 'editArticle/index',
+    locals: {
+      scripts: [
+        '/js/js_editArticle/mainJS.js',
+        '/js/js_post/bootstrap.min.js',
+        '/js/js_post/cropper.min.js',
+        '/js/js_editArticle/crop-avatar.js'
+      ],
+      stylesheets: [
+        '/styles/css_editArticle/style.css',
+        '/styles/css_post/crop-avatar.css',
+        '/styles/css_post/bootstrap.min.css',
+        '/styles/css_post/cropper.min.css',
+        '/styles/importer.css'
+      ]
+    }
   },
 
   'get /signup': {
-    view: 'signup/index'
+    view: 'signup/index',
+    locals: {
+      scripts: [
+        'js/js_public/bootstrap.min.js',
+        'js/js_signup/cropper.min.js',
+        'js/js_signup/crop-avatar.js',
+        'js/js_signup/joinus.js'
+      ],
+      stylesheets: [
+        'styles/css_signup/crop-avatar.css',
+        'styles/css_signup/cropper.min.css',
+        'styles/css_signup/style_signup.css'
+      ]
+    }
   },
 
   'GET /nots': 'Notification.getNotification',
@@ -160,38 +185,137 @@ module.exports.routes = {
 
   '/changePassword': {
     view: 'changePassword/index',
+    locals: {
+      scripts: [
+        '/js/js_changePassword/mainJS.js'
+      ],
+      stylesheets: [
+        '/styles/css_changePassword/style.css',
+        '/styles/importer.css'
+      ]
+    }
   },
 
   '/change': {
-    view: 'change/index'
+    view: 'change/index',
+    locals: {
+      scripts: [
+        'js/js_public/bootstrap.min.js',
+        'js/js_change/cropper.min.js',
+        'js/js_change/crop-avatar.js',
+        'js/js_change/joinus.js'
+      ],
+      stylesheets: [
+        'styles/css_change/crop-avatar.css',
+        'styles/css_change/cropper.min.css',
+        'styles/css_change/style_signup.css'
+      ]
+    }
   },
 
   '/forum': {
-    view: 'forum/index'
+    view: 'forum/index',
+    locals: {
+      scripts: [
+      ],
+      stylesheets: [
+        '/styles/importer.css'
+      ]
+    }
   },
 
   '/proInfo/*': {
-    view: 'proInfo/index'
+    view: 'proInfo/index',
+    locals: {
+      scripts: [
+        '/js/js_ProInfo/mainJS.js',
+        '/js/js_ProInfo/bootstrap.min.js'
+      ],
+      stylesheets: [
+        '/styles/css_ProInfo/style.css',
+        '/styles/importer.css'
+      ]
+    }
   },
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
 
   '/post/*': {
-    view: 'post/index'
+    view: 'post/index',
+    locals: {
+      scripts: [
+        '/js/js_post/mainJS.js',
+        '/js/js_post/bootstrap.min.js',
+        '/js/js_post/cropper.min.js',
+        '/js/js_post/crop-avatar.js'
+      ],
+      stylesheets: [
+        '/styles/css_post/style.css',
+        '/styles/css_post/crop-avatar.css',
+        '/styles/css_post/bootstrap.min.css',
+        '/styles/css_post/cropper.min.css',
+        '/styles/importer.css'
+      ]
+    }
   },
 
   '/article/:id': {
-    view: 'article/index'
+    view: 'article/index',
+    locals: {
+      scripts: [
+        '/js/js_public/modalBox.js-master/modalBox-min.js',
+        '/js/js_public/alertify.js',
+        '/js/js_article/mainJS.js',
+        '/js/js_post/cropper.min.js',
+        '/js/js_article/crop-avatar.js'
+      ],
+      stylesheets: [
+        '/styles/css_article/style.css',
+        '/styles/css_post/crop-avatar.css',
+        '/styles/css_post/cropper.min.css',
+        '/styles/importer.css',
+        '/styles/css_public/themes/alertify.core.css',
+        '/styles/css_public/themes/alertify.default.css'
+      ]
+    }
   },
   '/board-*': {
-    view: 'board/index'
+    view: 'board/index',
+    locals: {
+      scripts: [
+        '/js/js_board/mainJS.js'
+      ],
+      stylesheets: [
+        '/styles/css_board/style.css',
+        '/styles/importer.css'
+      ]
+    }
   },
   '/friends': {
-    view: 'friends/index'
+    view: 'friends/index',
+    locals: {
+      scripts: [
+        '/js/js_public/modalBox.js-master/modalBox-min.js',
+        '/js/js_public/alertify.js',
+        '/js/js_friends/mainJS.js'
+      ],
+      stylesheets: [
+        '/styles/importer.css',
+        '/styles/css_public/themes/alertify.core.css',
+        '/styles/css_public/themes/alertify.default.css',
+        '/styles/css_friends/style.css'
+      ]
+    }
   },
   '/backend': {
     //view: 'backend/adminLoginPage',
-    controller: 'backend'
+    controller: 'backend',
+    locals: {
+      scripts: [
+      ],
+      stylesheets: [
+      ]
+    }
   },
   // '/backend': {
   //   //view: 'backend/index',
