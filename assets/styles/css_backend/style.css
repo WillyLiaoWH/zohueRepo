@@ -47,7 +47,7 @@ body{
 	font-size: 20px
 }
 
-th:hover{
+.sortable:hover{
   color:#337ab7;
   cursor:pointer;
 }

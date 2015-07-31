@@ -82,6 +82,13 @@ $(document).ready(function(){
   $(document).on("click",".sortByLength",function(e){
     sortByLength($(this).attr("value"));
   });
+  $(document).on("click",".sortByCreatedAt",function(e){
+    sortByCreatedAt();
+  });
+    $(document).on("click",".sortByUpdatedAt",function(e){
+    sortByUpdatedAt();
+  });
+
 
   $("input[name='uploadFile']").change(function(){
     var fullPath = $(this).val();
@@ -200,7 +207,7 @@ function loadUserList(){
         if(postNum==0){
           avgReportNum = 0
         }else{
-          avgReportNum = totalReport/postNum;
+          avgReportNum = formatFloat(totalReport/postNum);
         }
         
         userTable+="<tr><td>"+userList[i].account+"</td><td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+userList[i].gender+"</td>";
@@ -265,8 +272,8 @@ function loadForumList(articleList){
   document.getElementById("subscriberManage").style.display="none";
   
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortByChar' value='classification'>文章類別</th><th class='sortByChar' value='title' style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
-    articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th class='sortByLength' value='nicer'>推薦數</th><th class='sortByLength' value='report' style='width:200px;'>檢舉數</th><tr>";
+    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>文章類別</th><th class='sortable sortByChar' value='title' style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
+    articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱數／回覆數</th><th class='sortable sortByLength' value='nicer'>推薦數</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉數</th><tr>";
 
       for(i=0; i<articleList.length; i++) {
         clickNum=articleList[i].clickNum;
@@ -348,12 +355,20 @@ function sortByLength(sortby){
   });
   loadForumList(articleList);
 }
-// function sortByDate(sortby){
-//   articleList=articleList.sort(function(a, b) {
-//     return new Date(b.createdAt)-new Date(a.createdAt);
-//   });
-//   loadForumList(articleList);
-// }
+
+function sortByCreatedAt(){
+  articleList=articleList.sort(function(a, b) {
+    return new Date(b.createdAt)-new Date(a.createdAt);
+  });
+  loadForumList(articleList);
+}
+
+function sortByUpdatedAt(){
+  articleList=articleList.sort(function(a, b) {
+    return new Date(b.updatedAt)-new Date(a.updatedAt);
+   });
+  loadForumList(articleList);
+}
 
 function reasonHtmlCreate(reportobj){
   var reportReasonHtml="";
@@ -449,4 +464,8 @@ function emailSearch(e) {
   } else {
     return true;
   }
+}
+
+function formatFloat(num){ // 小數點第2位四捨五入
+  return Math.round(num * 100) / 100;
 }
