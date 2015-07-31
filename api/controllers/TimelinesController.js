@@ -159,14 +159,17 @@ module.exports = {
         function findTimelineResponse(account, cb){ // 取得作者 user 資料
             // notes: 未來可能需要用到.skip(10).limit(10)
             User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
-                if(err) {
-                    sails.log.error("ERR:", err);
-                    console.log("err1");
-                }
-                if(!user[0].isFullSignup) {
-                    res.send({notfull: true});
-                } else {
-                    cb(user[0]);
+                if(user.length < 1 ){
+                    res.send(500,{err: "查無此人" });
+                }else{
+                    if(err) {
+                        sails.log.error("ERR:", err);
+                    }
+                    if(!user[0].isFullSignup) {
+                        res.send({notfull: true});
+                    } else {
+                        cb(user[0]);
+                    }
                 }
                 // sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
                 //     if (err) {

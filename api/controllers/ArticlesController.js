@@ -494,7 +494,7 @@ module.exports = {
                             obj.push(found[f]);
                         }
                     }
-                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').exec(function(err,found){
+                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{
