@@ -17,65 +17,79 @@ $(document).ready(function(){
 
     $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
       if (res == "success"){
-        alert("登入成功！");
         location.replace(url);
       }else{
-        alert(res);
+        alert(res); // 這裡alert的內容在backend controller定義
       }
+    });
+  });
+
+  $(document).on("click","#adminLogout",function(e){
+    var url = document.URL;
+    var posting = $.post( "/adminLogout", {}, function(res){
+      if(res=="success"){
+        location.replace(url);
+      }      
+    }).error(function(res){
+      alert(res.responseJSON.err);
     });
   });
 
   function checkAuth() {
     $.get("/checkAdmin", function(res){
       if(res=="true") {
-        alert("Admin desu.");
+        //alert("Admin desu.");
         $("#backendContent").css("display","block");
+        $("#backendMenu").css("display","block");
+
+        // 初始化論壇管理的selector內容
+        $.get("/getBoardCategory", function(boardCategory){
+          for(c=0; c<boardCategory.length; c++) {
+            categoryList[boardCategory[c].id]=boardCategory[c].title;      
+            $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
+          }
+          $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
+        }).error(function(res){
+          alert(res.responseJSON.err);
+        });
+
+        $("#boardCategory").change(function(){
+          var category = $("#boardCategory").val();
+          var board = $("#board").val();
+
+          if(category=="allCategory"){
+            $("#board").empty();
+            $("#board").append("<option>選擇全部</option>")
+            getart(loadForumList, 2);
+          }else{
+            $("#board").empty();
+            $.get("/getBoardsOfCategory/"+category, function(boards) {
+              $("#board").append("<option selected='selected'>請選擇</option>")
+              for(b=0; b<boards.length; b++) {
+                $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
+              }
+              $("#board").append("<option value='allBoards'>選擇全部</option>")
+            });
+          }
+        });
+
+        $("#board").change(function(){
+          if($(this).val()=="allBoards"){
+            getart(loadForumList, 1);
+          }else{
+            board=$(this).val();
+            getart(loadForumList, 0);
+          }   
+        });
+
       }else{
-        alert("Not admin.");
+        $("#adminLoginArea").css("display", "block");
+        //alert("Not admin.");
       }
     });
   }
 
-  $.get("/getBoardCategory", function(boardCategory){
-    for(c=0; c<boardCategory.length; c++) {
-      categoryList[boardCategory[c].id]=boardCategory[c].title;      
-      $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
-    }
-    $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
-  }).error(function(res){
-    alert(res.responseJSON.err);
-  });
-
-  $("#boardCategory").change(function(){
-    var category = $("#boardCategory").val();
-    var board = $("#board").val();
-
-    if(category=="allCategory"){
-      $("#board").empty();
-      $("#board").append("<option>選擇全部</option>")
-      //board="allCategory";
-      getart(loadForumList, 2);
-    }else{
-      $("#board").empty();
-      $.get("/getBoardsOfCategory/"+category, function(boards) {
-        $("#board").append("<option selected='selected'>請選擇</option>")
-        for(b=0; b<boards.length; b++) {
-          $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
-        }
-        $("#board").append("<option value='allBoards'>選擇全部</option>")
-      });
-    }
-  });
-
-  $("#board").change(function(){
-    if($(this).val()=="allBoards"){
-      getart(loadForumList, 1);
-    }else{
-      board=$(this).val();
-      getart(loadForumList, 0);
-    }   
-  });
-
+  // 論壇管理排序文章
   $(document).on("click",".sortByChar",function(e){
     sortByChar($(this).attr("value"));
   });
@@ -85,11 +99,11 @@ $(document).ready(function(){
   $(document).on("click",".sortByCreatedAt",function(e){
     sortByCreatedAt();
   });
-    $(document).on("click",".sortByUpdatedAt",function(e){
+  $(document).on("click",".sortByUpdatedAt",function(e){
     sortByUpdatedAt();
   });
 
-
+  // 發送電子報的上傳檔案功能
   $("input[name='uploadFile']").change(function(){
     var fullPath = $(this).val();
     if (fullPath) {
@@ -104,7 +118,6 @@ $(document).ready(function(){
     $("#attachmentEdit label").css("display", "block");
     $("#attachmentList").append("<tr><td>"+filename+"</td><td class='text-right'><span class='glyphicon glyphicon-remove removeFile' value='"+filename+"' aria-hidden='true'></span></td></tr>");
   });
-
   $("form#uploadForm").submit(function(){
     var formData = new FormData($(this)[0]);
     $("[name=uploadFile]").val("");
@@ -124,7 +137,6 @@ $(document).ready(function(){
     });
     return false;
   });
-
   $(document).on("click",".removeFile",function(e){
     var index = attachmentNameList.indexOf($(this).attr("value"));
 
@@ -133,12 +145,12 @@ $(document).ready(function(){
         console.log("刪除失敗");
       }
     });
-
     attachmentNameList.splice(index, 1);
     attachmentList.splice(index, 1);
     $(this).parent().parent().remove();
   });
 
+  // 寄送電子報
   $(document).on("click","#sendNewsLetter",function(e){
     var mailSubject = document.getElementById("mailSubject").value;
     var mailContent = document.getElementById("mailContent").value;
@@ -167,13 +179,15 @@ $(document).ready(function(){
           }else{
             attachmentList=[];
             attachmentNameList=[];
-            alert("電子報發送失敗!");
+            alert(res);
             document.getElementById("mailSubject").value="";
             document.getElementById("mailContent").value="";
             document.getElementById("mailEdit").style.display="block"; 
             document.getElementById("mailSpinner").style.display="none";
             document.getElementById("attachmentEdit").style.display="block";
             document.getElementById("emailButtonGroups").style.display="block";
+            $("#attachmentEdit label").css("display", "none");
+            $("#attachmentList").html("");
           }
         });
       }
@@ -320,12 +334,9 @@ function loadsubscriberList(){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="block";
-
   searchEmail=document.getElementById("searchEmail").value;
 
   $.get("/getAllSubscribers"+"?searchEmail="+searchEmail, function(subscribers){
-    
-    //subscribers=res;
     if(typeof(subscribers)=="string"){
       alert(subscribers);
     }else{
@@ -386,35 +397,6 @@ function showReason(ulId){
    }
 }
 
-function sendNewsLetter(){
-
-  var mailSubject = document.getElementById("mailSubject").value;
-  var mailContent = document.getElementById("mailContent").value;
-  if (mailSubject=="" && mailContent==""){
-    alert("尚未輸入主旨或內文!");
-  }else{
-    if(confirm("確定要發送電子報嗎？")){
-      document.getElementById("mailSpinner").style.display="block";
-      document.getElementById("mailEdit").style.display="none";
-      $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
-        if (res == "SEND"){
-          alert("電子報發送成功!");
-          document.getElementById("mailSubject").value="";
-          document.getElementById("mailContent").value="";
-          document.getElementById("mailEdit").style.display="block"; 
-          document.getElementById("mailSpinner").style.display="none";
-        }else{
-          alert("電子報發送失敗!");
-          document.getElementById("mailSubject").value="";
-          document.getElementById("mailContent").value="";
-          document.getElementById("mailEdit").style.display="block"; 
-          document.getElementById("mailSpinner").style.display="none";
-        }
-      });
-    }
-  }
-}
-
 function deleteSubscriber(id) {
   var r = confirm("確定要刪除該訂閱者嗎？");
   if (r == true) {
@@ -437,7 +419,21 @@ function cancelEmailSearch(){
   loadsubscriberList();
 }
 
-// 輸入要搜尋的字之後，按enter可以直接送出
+// 輸入input之後，按enter可以直接送出
+function adminLogin(e) {
+  var keynum;
+  if(window.event) {
+    keynum = e.keyCode;
+  } else if(e.which) {
+    keynum = e.which;
+  }
+  if(keynum=="13") {
+    $("#adminLogin").click();
+  } else {
+    return true;
+  }
+}
+
 function userSearch(e) {
   var keynum;
   if(window.event) {

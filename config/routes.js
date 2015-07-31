@@ -90,6 +90,7 @@ module.exports.routes = {
   'POST /fileUpload': 'SubscribeEmailController.upload',
   'POST /createAdmin': 'BackendController.createAdmin',
   'POST /adminLogin': 'BackendController.adminLogin',
+  'POST /adminLogout': 'BackendController.adminLogout',
   
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
@@ -104,7 +105,7 @@ module.exports.routes = {
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /showProfile':'User.showProfile',
   'GET /getProfile/:account':'User.getProfile',
-  'GET /getAllUsers':'User.getAllUsers',
+  'GET /getAllUsers':'Backend.getAllUsers',
   'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
   'GET /Auth_data':'UserAuth.authGet',

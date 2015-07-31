@@ -188,6 +188,26 @@ tr:hover{
   font-size:20px;
 }
 
-#backendContent{
+#backendContent, #adminLoginArea, #backendMenu{
   display: none;
+}
+
+.navbar-default .navbar-brand {
+    color: #D26900;
+    font-size:30px;
+}
+.navbar-default .navbar-brand:hover {
+    color: rgba(102, 141, 60, 0.8);
+}
+
+.navbar{
+  font-size:24px;
+}
+
+.navbar{
+  padding:10px;
+}
+
+.navbar li a{
+  cursor:pointer;
 }
