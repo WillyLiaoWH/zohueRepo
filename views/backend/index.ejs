@@ -40,7 +40,7 @@
             <li onclick="loadsubscriberList()" ><a>訂閱管理</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a id="adminLogout">登出</a></li>
+            <li><a id="adminLogout">管理員登出</a></li>
           </ul>
 
         </div>
@@ -63,7 +63,7 @@
                   <input id="adminPassword" type="password" class="form-control" placeholder="密碼" onkeypress="return adminLogin(event);" >
                 </div>
               </form>
-              <button class="btn btn-default pull-right" id="adminLogin">管理者登入</button>
+              <button class="btn btn-default pull-right" id="adminLogin">管理員登入</button>
             </div>
           </div>
         </div>
@@ -71,15 +71,8 @@
     </div>
 
     <div class="container-fluid" id="backendContent">
-      <!-- <h1 style="color:#D26900;">後台管理</h1> -->
       <div class="row-fluid">
         <div class="span12">
-          <!-- <ul class="nav nav-pills">
-            <li onclick="loadUserList()"><a>帳號管理</a></li>
-            <li onclick="loadForumList()" id="forumTab"><a>論壇管理</a></li>
-            <li onclick="loadEnlManage()"><a>發送電子報</a></li>
-            <li onclick="loadsubscriberList()"><a>訂閱管理</a></li>
-          </ul> -->
           <div id="backend_content">
             <div id="userManage">
               <div class="panel panel-default">
@@ -95,7 +88,6 @@
                       <button type="button" class="btn btn-default searchButton" onclick="cancelUserSearch()">取消</button>
                     </div>
                   </div>
-                  
                   <!-- Table -->
                   <table class="table" id="backend_userList"></table>
                 </div>
@@ -120,6 +112,16 @@
                       <select class="form-control" id="board">
                         <option selected='selected'>請選擇</option>
                       </select>
+                    </div>
+                    <div class="span6">
+                      <h3>文章顯示</h3>
+                      <div class="btn-group">
+                        <select class="form-control" id="artShowStatus">
+                          <option selected='selected' value="unDeletedArt">未被刪除的文章</option>
+                          <option value="deletedArt">已被刪除的文章</option>
+                          <option value="allArt">所有文章</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                   <!-- Table -->

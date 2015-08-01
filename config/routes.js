@@ -91,6 +91,7 @@ module.exports.routes = {
   'POST /createAdmin': 'BackendController.createAdmin',
   'POST /adminLogin': 'BackendController.adminLogin',
   'POST /adminLogout': 'BackendController.adminLogout',
+  'POST /recoverArticle': 'BackendController.recoverArticle',
   
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入

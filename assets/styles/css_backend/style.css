@@ -7,7 +7,7 @@ body{
 	margin-top:20px;
 }
 
-.nav-pills li a:hover{
+/*.nav-pills li a:hover{
 	cursor:pointer;
 	color: #D26900;
 	background-color: transparent;
@@ -16,7 +16,7 @@ body{
 .nav-pills li a{
 	font-size:22px;
 }
-
+*/
 .form-control{
 	font-size: 20px;
 	height:45px;
@@ -27,7 +27,7 @@ body{
 }
 
 .reasonTd:hover{
-  background-color: #E0E0E0;
+  //background-color: #E0E0E0;
   cursor:pointer;
 }
 
@@ -104,9 +104,14 @@ body{
 }
 /********For spinners (end)********/
 
-.delSub:hover{
+.delSub:hover, .delArticle{
   cursor:pointer;
   color:#CE0000;
+}
+
+.unDelArticle{
+  cursor:pointer;
+  color:#467500;
 }
 
 tr:hover{
@@ -193,19 +198,17 @@ tr:hover{
 }
 
 .navbar-default .navbar-brand {
-    color: #D26900;
-    font-size:30px;
+  color: #D26900;
+  font-size:30px;
 }
 .navbar-default .navbar-brand:hover {
-    color: rgba(102, 141, 60, 0.8);
+  color: rgba(102, 141, 60, 0.8);
 }
 
 .navbar{
   font-size:24px;
-}
-
-.navbar{
   padding:10px;
+  margin-bottom: 0px;
 }
 
 .navbar li a{

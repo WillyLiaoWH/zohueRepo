@@ -168,6 +168,19 @@ module.exports = {
                 });
             }
         });
-    }
+    },
+
+    recoverArticle: function(req, res) {
+        var articleId = req.param("id");
+        Articles.update({id: articleId}, {deleted: "false"}).exec(function(err) {
+            if(err) {
+                console.log(error);
+                res.send(500,{err: "DB Error" });
+            } else {
+                console.log('The record has been recovered.');
+                res.end();
+            }
+        });
+    },
 };
 

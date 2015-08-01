@@ -6,6 +6,8 @@ var attachmentList=[];
 var attachmentNameList=[];
 var categoryList={};
 var formNum;
+var delArtId=[];
+var unDelArtId=[];
 
 $(document).ready(function(){
   checkAuth();
@@ -193,6 +195,42 @@ $(document).ready(function(){
       }
     }
   });
+
+  $(document).one("click",".unDelArticle",function(e){
+    var articleID = $(this).parent().parent().attr("value");
+    $.post( "/deleteArticle", { id: articleID}, function(res){
+      $("#backend_articleList tr[value="+articleID+"]").css("display","none");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-eye-open","glyphicon-eye-close");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("unDelArticle","delArticle");
+      delArtId.push(articleID);
+      unDelArtId.splice(unDelArtId.indexOf(parseInt(articleID)), 1);
+    }); 
+  });
+
+  $(document).on("click",".delArticle",function(e){
+    var articleID = $(this).parent().parent().attr("value");
+    $.post( "/recoverArticle", { id: articleID}, function(res){
+      $("#backend_articleList tr[value="+articleID+"]").css("display","none");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-eye-close","glyphicon-eye-open");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("delArticle","unDelArticle");
+      delArtId.splice(delArtId.indexOf(parseInt(articleID)), 1);
+      unDelArtId.push(articleID);
+    }); 
+  });
+
+  $("#artShowStatus").change(function(){
+    if($(this).val()=="unDeletedArt"){
+      for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display","none"); }
+      for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display",""); }
+    }else if($(this).val()=="deletedArt"){
+      for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display",""); }
+      for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display","none"); }
+    }else{
+      for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display",""); }
+      for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display",""); }
+    }
+  });
+
 });
 
 function loadUserList(){
@@ -286,10 +324,12 @@ function loadForumList(articleList){
   document.getElementById("subscriberManage").style.display="none";
   
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>文章類別</th><th class='sortable sortByChar' value='title' style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
-    articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱數／回覆數</th><th class='sortable sortByLength' value='nicer'>推薦數</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉數</th><tr>";
+    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
+    articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
+    articleTable+="<th></th></tr>";
 
       for(i=0; i<articleList.length; i++) {
+        articleID=articleList[i].id;
         clickNum=articleList[i].clickNum;
         responseNum=articleList[i].responseNum;
         niceNum=articleList[i].nicer.length;
@@ -300,8 +340,32 @@ function loadForumList(articleList){
         authorType=articleList[i].author.type;
         reportNum=articleList[i].report.length;
         var boardName=articleList[i].board.title;
+        var deleted=articleList[i].deleted;
+        
+        var status=$("#artShowStatus").val();
 
-        articleTable+="<tr><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+        if(status=="unDeletedArt"){
+          if(deleted=="false"){
+            articleTable+="<tr value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }else{
+            articleTable+="<tr style='display:none;' value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }
+        }else if(status=="deletedArt"){
+          if(deleted=="false"){
+            articleTable+="<tr style='display:none;' value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }else{
+            articleTable+="<tr value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }
+        }else{
+          articleTable+="<tr value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+        }
+
+        if(deleted=="false"){
+          unDelArtId.push(articleID);
+        }else{
+          delArtId.push(articleID);
+        }
+        
         articleTable+="<td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
         articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
         
@@ -310,13 +374,19 @@ function loadForumList(articleList){
 
         if(reportNum>0 && reportNum<3){
           articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum;
-          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td>";
         }else if(reportNum>=3){
-          articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
-          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+          articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
+          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td>";
         }else{
-          articleTable+="<td>"+reportNum+"</td></tr>";
+          articleTable+="<td>"+reportNum+"</td>";
         }
+
+        if(deleted=="false"){
+          articleTable+="<td><span class='glyphicon glyphicon-eye-open unDelArticle' aria-hidden='true'></span></td></tr>";
+        }else{
+          articleTable+="<td><span class='glyphicon glyphicon-eye-close delArticle' aria-hidden='true'></span></td></tr>";
+        }   
       }
     document.getElementById("backend_articleList").innerHTML = articleTable;
   }
