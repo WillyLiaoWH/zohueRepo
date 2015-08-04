@@ -33,6 +33,9 @@ module.exports = {
   	alreadyRead: {
   		type: 'boolean',
   	},
+    link: {
+      type: 'string',
+    },
   }
 };
 

@@ -1,0 +1,52 @@
+#body{
+	font-family: "微軟正黑體";
+}
+.not {
+	border: #AAAAAA 1px solid;
+	margin: 10px;
+	width: 850px;
+	height: 80px;
+	display: block;
+}
+.image {
+	display: inline-block; 
+	height: 100%;
+	width: 180px;
+	padding: 0px;
+	vertical-align: top;
+}
+.message {
+	vertical-align: top;
+	display: inline-block;
+	height: 100%;
+	width: 440px;
+
+	font-size: 24px;
+	color: black;
+}
+.go {
+	vertical-align: top;
+	display: inline-block;
+	height: 100%;
+	width: 200px;
+
+	font-size: 24px;
+	color: black;
+}
+.button{
+	cursor: pointer;
+	margin-left:10px;
+	background-color: rgba(232, 81, 0, 0.6);
+	color:#533828;
+	margin-top: 1px;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}

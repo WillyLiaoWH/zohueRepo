@@ -609,6 +609,12 @@ module.exports = {
                                                     res.send({err:"DB error"});
                                                 }
                                             });
+                                            Notification.destroy({user: req.session.user.id, notType: "7", from: req.param("id")}).exec(function(err, not) {
+                                                if(err) {
+                                                    console.log(err);
+                                                    res.send({err:"DB error"});
+                                                }
+                                            });
                                             res.send({user: user});
                                         }
                                     });

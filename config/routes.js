@@ -309,6 +309,22 @@ module.exports.routes = {
       ]
     }
   },
+  '/notifications': {
+    view: 'notifications/index',
+    locals: {
+      scripts: [
+        '/js/js_public/modalBox.js-master/modalBox-min.js',
+        '/js/js_public/alertify.js',
+        '/js/js_notifications/mainJS.js'
+      ],
+      stylesheets: [
+        '/styles/importer.css',
+        '/styles/css_public/themes/alertify.core.css',
+        '/styles/css_public/themes/alertify.default.css',
+        '/styles/css_notifications/style.css'
+      ]
+    }
+  },
   '/backend': {
     //view: 'backend/adminLoginPage',
     controller: 'backend',
