@@ -6,7 +6,7 @@
  */
 
 var bcrypt = require('bcrypt-nodejs');
-
+var passwordHash = require('password-hash');
 module.exports = {
 
     signup: function(req, res) {
@@ -20,7 +20,9 @@ module.exports = {
         var lname=req.param("lname");
         var fname=req.param("fname");
         var isFullSignup=req.param("isFullSignup");
+        var hashedPassword = passwordHash.generate(password);
         var img="../images/img_avatar/upload/default.png";
+
         if (gender=="male"){
             gender="M";
         }
@@ -38,9 +40,7 @@ module.exports = {
             } else if(usr.length!=0) {
                 res.send(400,{err:"Account already taken"});
             } else {
-                // var hasher = require("password-hash");
-                // password = hasher.generate(password);
-                User.create({account: account, password: password, alias: alias, email: email, type: type
+                User.create({account: account, password: hashedPassword, alias: alias, email: email, type: type
                             , isFullSignup: isFullSignup, img: img , FB_id:FB_id,gender:gender,fname:fname,lname:lname}).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
@@ -91,15 +91,6 @@ module.exports = {
                 user.birthday = birthday;
                 user.primaryDisease = primaryDisease;
                 user.selfIntroduction = selfIntroduction;
-                // user.Userauth.add( {
-                //     "user": user.id,
-                //     "name": "friend",
-                //     "city": "friend",
-                //     "gender": "friend",
-                //     "phone": "friend",
-                //     "bday": "friend",
-                //     "email" : "friend"
-                // } );
 
                 user.save(function (err) {
                     Userauth.create({
@@ -115,7 +106,6 @@ module.exports = {
                         }else{
                             req.session.user = user;
                             req.session.authenticated=true;
-                            //console.log(user);
                             res.send(user);
                         }
                     });
@@ -188,9 +178,8 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 if (usr.length!=0) {
-                    // var hasher = require("password-hash");
-                    // if (hasher.verify(password, usr.password)) {
-                    if (password==usr[0].password) {
+                    if (passwordHash.verify(password, usr[0].password)) {
+                    //if (password==usr[0].password) {
                         req.session.user = usr[0];
                         req.session.authenticated=true;
                         res.send(usr[0]);
@@ -224,13 +213,15 @@ module.exports = {
         var newPassword = req.param("newPassword");
         var reNewPassword = req.param("reNewPassword");
         theUser=req.session.user
-        if(theUser.password!=oldPassword) {
-            // console.log(theUser.password);
-            // console.log(oldPassword);
+        
+        if(!passwordHash.verify(oldPassword,theUser.password)) {
             res.send(400, {err: "Password Incorrect"})
         } else {
-            theUser.password=newPassword;
-            User.update({account: theUser.account}, {password: newPassword}).exec(function(err, updated) {
+            if (newPassword != reNewPassword){
+                res.send(400,{err:"Password don't match"})
+            }
+            theUser.password=passwordHash.generate(newPassword);
+            User.update({account: theUser.account}, {password: theUser.password}).exec(function(err, updated) {
                 if(err) {
                     res.send("DB error");
                 } else {
