@@ -47,6 +47,17 @@
     <link rel="stylesheet" href="/styles/css_public/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/css_public/bootstrap-responsive.css">
     <link rel="stylesheet" href="/styles/css_public/jquery-ui.css">
+    <!-- Loop through all scripts and stylesheets that passed from routes -->
+    <% if (scripts) { %>
+        <% for (i = 0; i < scripts.length; i++) { %>
+            <script src="<%- scripts[i] %>"></script>
+        <% } %>
+    <% } %>
+    <% if (stylesheets) { %>
+        <% for (i = 0; i < stylesheets.length; i++) { %>
+            <link rel="stylesheet" href="<%- stylesheets[i] %>">
+        <% } %>
+    <% } %>
   </head>
 
    <body id="body">
@@ -92,26 +103,22 @@
 
     <!-- 登入部份的mobile版 -->
     <div class="row-fluid hidden-desktop visible-phone visible-tablet visible-xs">   
-    <div id="mobile_loginSection">
-      <div class="row-fluid">
-        帳號&nbsp<br><input type="text" name="mLoginAccount" class="mobile_l" id="mLoginAccount">
+      <div id="mobile_loginSection">
+        <div class="row-fluid">
+          帳號&nbsp<br><input type="text" name="mLoginAccount" class="mobile_l" id="mLoginAccount">
+        </div>
+        <div class="row-fluid">
+          密碼&nbsp<br><input type="password" onkeypress="return enterLogin(event);" name="mLoginPwd" class="mobile_l" id="mLoginPwd">
+        </div>
+        <div class="row-fluid">
+          <button value="登入" id="mobile_login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
+          <button value="臉書登入" id="mobile_fblogin" onclick="fbLogin()"><img style="width:24px; height:24px;" src="/images/img_forum/facebook.png" >&nbspFB登入</button>
+        </div>
       </div>
-      <div class="row-fluid">
-        密碼&nbsp<br><input type="password" onkeypress="return enterLogin(event);" name="mLoginPwd" class="mobile_l" id="mLoginPwd">
+      <div id="mobile_profile" class="row-fluid text-center">
+        <img id="mobile_userimg" src="" alt="Smiley face" height="30px" width="30px">
+        <label id="mobile_userAlias" class="col-sm-7"></label>
       </div>
-      <div class="row-fluid">
-        <button value="登入" id="mobile_login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
-        <button value="臉書登入" id="mobile_fblogin" onclick="fbLogin()"><img style="width:24px; height:24px;" src="/images/img_forum/facebook.png" >&nbspFB登入</button>
-      </div>
-    </div>
-    <div id="mobile_profile" class="row-fluid text-center">
-      <img id="mobile_userimg" src="" alt="Smiley face" height="30px" width="30px">
-      <label id="mobile_userAlias" class="col-sm-7"></label>
-    </div>
-
-    <!-- <div class="row-fluid text-left"> 
-      <button value="登出" id="mobile_logout" onclick="Logout();"><img style="width:24px; height:24px;" src="/images/img_public/logout_icon.png"/>登出</button>
-    </div> -->      
     </div>
     <!-- 登入部份的mobile版 -->
 
@@ -119,49 +126,49 @@
 
     <!-- menu部份的desktop版 -->
     <div class="visible-desktop hidden-phone hidden-tablet">
-    <div id="menu" class="col-md-2">
-      <div id="profilePage">
-        <a href="/profile" class="item" id="profile_page"><label><span class="glyphicon glyphicon-user" style="color:rgb(211, 106, 1)" aria-hidden="true"></span>&nbsp個人頁面</label></a>
+      <div id="menu" class="col-md-2">
+        <div id="profilePage">
+          <a href="/profile" class="item" id="profile_page"><label><span class="glyphicon glyphicon-user" style="color:rgb(211, 106, 1)" aria-hidden="true"></span>&nbsp個人頁面</label></a>
+        </div>
+        <a href="/forum" class="item" id="forum"><label><span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp論壇</label></a><br>
+        <a href="/proInfo/1" class="item" id="proInfo"><label><span class="glyphicon glyphicon-eye-open" style="color:rgb(102, 141, 60)" aria-hidden="true"></span>&nbsp專業知識</label></a><br>
+        <a href="/friends" class="item" id="friends"><label><span class="glyphicon glyphicon-globe" style="color:rgb(1, 151, 172)" aria-hidden="true"></span>&nbsp找人</label></a>
+        <a class="item" id="setUp"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp設定</label></a><br>
+        <div id="setUpMenu">
+          <a href="/change" class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
+          <a href="/changePassword" class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
+          <a href="" class="setUpItem"><label>隱私權設定</label></a><br>
+          <a class="setUpItem" onclick="subscribe();"><label>訂閱/取消訂閱電子報</label></a><br>
+        </div>
+        <a href="/backend" class="item" id="backend"><label><span class="glyphicon glyphicon-wrench" style="color:#CE0000" aria-hidden="true"></span>&nbsp後台管理</label></a>
+        <div id="fullSignup">
+          <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
+        </div>
       </div>
-      <a href="/forum" class="item" id="forum"><label><span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp論壇</label></a><br>
-      <a href="/proInfo/1" class="item" id="proInfo"><label><span class="glyphicon glyphicon-eye-open" style="color:rgb(102, 141, 60)" aria-hidden="true"></span>&nbsp專業知識</label></a><br>
-      <a href="/friends" class="item" id="friends"><label><span class="glyphicon glyphicon-globe" style="color:rgb(1, 151, 172)" aria-hidden="true"></span>&nbsp找人</label></a>
-      <a class="item" id="setUp"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp設定</label></a><br>
-      <div id="setUpMenu">
-        <a href="/change" class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
-        <a href="/changePassword" class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
-        <a href="" class="setUpItem"><label>隱私權設定</label></a><br>
-        <a class="setUpItem" onclick="subscribe();"><label>訂閱/取消訂閱電子報</label></a><br>
-      </div>
-      <a href="/backend" class="item" id="backend"><label><span class="glyphicon glyphicon-wrench" style="color:#CE0000" aria-hidden="true"></span>&nbsp後台管理</label></a>
-      <div id="fullSignup">
-        <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
-      </div>
-    </div>
     </div>
 
     <!-- menu部份的mobile版 -->
     <div id="mobile_menu" class="row-fluid hidden-desktop visible-phone visible-tablet" style="margin-top:15px;">
-    <ul class="nav nav-tabs nav-stacked">
-      <li id="mobile_profilepage"><a href="/profile">個人頁面</a></li>
-      <li><a href="/forum">論壇</a></li>
-      <li><a href="/proInfo/1">專業知識</a></li>
-      <li id="mobile_friends"><a href="/friends">找人</a></li>
-      <li id="mobile_setUp" class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">設定
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="/change">修改會員資料</a></li>
-          <li><a href="/changePassword">更換密碼</a></li>
-          <li><a href="">隱私權設定</a></li>
-          <li><a onclick="subscribe();">訂閱/取消訂閱電子報</a></li>
-          <li><a onclick="Logout();">登出</a></li>
-        </ul>
-      </li>
-      <li id="mobile_backend"><a href="/backend">後台管理</a></li>
-      <li id="mobile_fullSignup"><a href="/signup">完整註冊</a></li>
-    </ul>
+      <ul class="nav nav-tabs nav-stacked">
+        <li id="mobile_profilepage"><a href="/profile">個人頁面</a></li>
+        <li><a href="/forum">論壇</a></li>
+        <li><a href="/proInfo/1">專業知識</a></li>
+        <li id="mobile_friends"><a href="/friends">找人</a></li>
+        <li id="mobile_setUp" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">設定
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="/change">修改會員資料</a></li>
+            <li><a href="/changePassword">更換密碼</a></li>
+            <li><a href="">隱私權設定</a></li>
+            <li><a onclick="subscribe();">訂閱/取消訂閱電子報</a></li>
+            <li><a onclick="Logout();">登出</a></li>
+          </ul>
+        </li>
+        <li id="mobile_backend"><a href="/backend">後台管理</a></li>
+        <li id="mobile_fullSignup"><a href="/signup">完整註冊</a></li>
+      </ul>
     </div>
     <!-- menu部份的mobile版 -->
 
@@ -204,41 +211,7 @@
         </div>
     </div>
 
-<!--     <div id="header">
-      <a id="z" class="title" href="/home">Z</a>
-      <a id="o" class="title" href="/home">O</a>
-      <a id="h" class="title" href="/home">H</a>
-      <a id="u" class="title" href="/home">U</a>
-      <a id="e" class="title" href="/home">E</a>
-      <div id="loginSection">
-        帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
-        &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
-        <button value="登入" id="login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
-      </div>
-      <button value="登出" id="logout" onclick="Logout();"><img style="width:24px; height:24px;" src="/images/img_public/logout_icon.png"/>登出</button>
-      <div id="profile">
-        <img id="userimg" src="http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/durchschnittsgesichter/m(01-32)_gr.jpg" alt="Smiley face" height="50" width="50">
-        <div id="userAlias"></div></div>
-    </div>
-    <hr id="hr"> -->
-
-
-<!--     <div id="menu">
-      <a class="item" id="forum"><label><img src="/images/img_public/forum_icon.png"/>&nbsp論壇</label></a><br>
-      <a class="item" id="proInfo"><label><img style='height:32px; width:30px;' src="/images/img_public/pro_icon.png"/>&nbsp專業知識</label></a><br>
-      <a class="item" id="setUp"><label><img src="/images/img_public/setting_icon.png"/>&nbsp設定</label></a><br>
-      <div id="setUpMenu">
-        <a class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
-        <a class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
-        <a class="setUpItem"><label>隱私權設定</label></a><br>
-      </div>
-      <div id="fullSignup">
-        <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
-      </div>
-    </div> -->
-
     <%- body %>
-
 
     <!--
         Client-side Templates
@@ -265,9 +238,7 @@
     
     <!--TEMPLATES END-->
 
-
     <!--
-
       Client-side Javascript
       ========================
 
@@ -286,49 +257,10 @@
           + Change the order of your scripts
           + Import scripts from other directories
           + Use a different preprocessor, like TypeScript
-
     -->
-
-<!--     <div id="signup">&nbsp簡易註冊
-        <form id="simpleSignUp">
-          暱稱<label id="checkAlias" class="check"></label><br>
-          <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
-          帳號<label id="checkAccount" class="check"></label><br>
-          <input type="text" name="UserAccount" class="s" id="UserAccount"><br>
-          密碼<label id="checkPwd" class="check"></label><br>
-          <input type="password" name="UserPwd" class="s" id="UserPwd"><br>
-          確認密碼<label id="checkPwdConfirm" class="check"></label><br>
-          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm"><br>
-          身分<label id="checkType" class="check"></label><br>
-          <select name="UserType" class="s" id="UserType">
-            <option value='P'>病友</option>
-            <option value='F'>家屬</option>
-            <option value='S'>社工師</option>
-            <option value='D'>醫生</option>
-            <option value='RN'>護理師</option>
-            <option value='N'>一般民眾</option>
-          </select><br>
-          E-mail<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
-          <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
-        </form>
-    </div> -->
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <!--SCRIPTS END-->
-    
-    <!-- Loop through all scripts and stylesheets that passed from routes -->
-    <% if (scripts) { %>
-        <% for (i = 0; i < scripts.length; i++) { %>
-            <script src="<%- scripts[i] %>"></script>
-        <% } %>
-    <% } %>
-
-    <% if (stylesheets) { %>
-        <% for (i = 0; i < stylesheets.length; i++) { %>
-            <link rel="stylesheet" href="<%- stylesheets[i] %>">
-        <% } %>
-    <% } %>
-    
   </body>
 </html>

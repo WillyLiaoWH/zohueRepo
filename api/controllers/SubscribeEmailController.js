@@ -21,7 +21,6 @@ module.exports = {
                 cb();
             }
         }
-
 		function checkSpec(cb){
 			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
 			if(re.test(email)){
@@ -65,7 +64,6 @@ module.exports = {
             	}
         	});   
         }
-
         getEmail(function(){
             checkSpec(function(){
                 checkExist(function(){
@@ -74,18 +72,30 @@ module.exports = {
             });
         });
 	},
-    upload: function(req, res){ //上傳附加檔案
-        if(req.method === 'GET')
-            return res.json({'status':'GET not allowed'});
-        var uploadFile = req.file('uploadFile');
-        var originalFileName = uploadFile["_files"][0].stream.filename;
-        var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
-        var milliseconds = new Date().getTime();
-        var newFileName = milliseconds+originalFileName;
 
-        uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
-            if (err) return res.serverError(err);
-            res.send(newFileName);
+    upload: function(req, res){ //上傳附加檔案
+        var adminAccount=req.session.admin;
+        Admins.find({account: adminAccount}).exec(function(error, admin){
+            if(error){
+                console.log(error);
+            }else{
+                if (admin.length!=0) {
+                    if(req.method === 'GET')
+                        return res.json({'status':'GET not allowed'});
+                    var uploadFile = req.file('uploadFile');
+                    var originalFileName = uploadFile["_files"][0].stream.filename;
+                    var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
+                    var milliseconds = new Date().getTime();
+                    var newFileName = milliseconds+originalFileName;
+
+                    uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
+                        if (err) return res.serverError(err);
+                        res.send(newFileName);
+                    });
+                }else{
+                    res.send("false");
+                }
+            }
         });
     },
 
@@ -104,65 +114,79 @@ module.exports = {
             });
         }
 
-        SubscribeEmail.find().exec(function(err, mailList) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
-            } else {
-                var receivers = "";
-                for(i=0; i<mailList.length; i++){
-                    receivers += mailList[i].email;
-                    receivers +=",";
-                }
-                var nodemailer = require('nodemailer');  
-                var transporter = nodemailer.createTransport({  
-                    service: 'Gmail',  
-                    auth: {  
-                        user: 'ntu.cpcp@gmail.com',  
-                        pass: 'lckung413'  
-                    }  
-                });
-                if(req.param("attachmentList").length==0){
-                    var options = {  
-                        from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
-                        bcc: receivers,    
-                        subject: mailSubject,
-                        text: mailContent
-                    }
-                }else{
-                    var options = {  
-                        from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
-                        bcc: receivers,    
-                        subject: mailSubject,
-                        text: mailContent, 
-                        attachments: attachmentList
-                    };  
-                }
-
-                //發送信件方法  
-                transporter.sendMail(options, function(error, info){  
-                    if(error){  
-                        console.log(error);  
-                    }else{  
-                        console.log('訊息發送: ' + info.response);
-                        res.send("SEND"); 
-                        if(req.param("attachmentList")!=0){ //送出郵件後要刪除附加檔案
-                            for(k=0;k<attachmentObj.length;k++){ 
-                                var fs = require('fs');
-                                var path = "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
-                                fs.unlink(path, function (err) {
-                                    if (err){
-                                         throw err;
-                                         console.log(err);
-                                    }else{
-                                        res.send("SEND"); 
-                                    }
-                                });
+        var adminAccount=req.session.admin;
+        Admins.find({account: adminAccount}).exec(function(error, admin){
+            if(error){
+                console.log(error);
+            }else{
+                if (admin.length!=0) {
+                    SubscribeEmail.find().exec(function(err, mailList) {
+                        if (err) {
+                            res.send(500, { err: "DB Error" });
+                        } else {
+                            var receivers = "";
+                            for(i=0; i<mailList.length; i++){
+                                receivers += mailList[i].email;
+                                receivers +=",";
                             }
+                            var nodemailer = require('nodemailer');  
+                            var transporter = nodemailer.createTransport({  
+                                service: 'Gmail',  
+                                auth: {  
+                                    user: 'ntu.cpcp@gmail.com',  
+                                    pass: 'lckung413'  
+                                }  
+                            });
+                            if(req.param("attachmentList").length==0){
+                                var options = {  
+                                    from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                                    bcc: receivers,    
+                                    subject: mailSubject,
+                                    text: mailContent
+                                }
+                            }else{
+                                var options = {  
+                                    from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                                    bcc: receivers,    
+                                    subject: mailSubject,
+                                    text: mailContent, 
+                                    attachments: attachmentList
+                                };  
+                            }
+
+                            //發送信件方法  
+                            transporter.sendMail(options, function(error, info){  
+                                if(error){  
+                                    console.log(error);  
+                                    res.send("電子報發送失敗！");
+                                }else{  
+                                    console.log('訊息發送: ' + info.response);
+                                    res.send("SEND"); 
+                                    if(req.param("attachmentList")!=0){ //送出郵件後要刪除附加檔案
+                                        for(k=0;k<attachmentObj.length;k++){ 
+                                            var fs = require('fs');
+                                            var path = "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
+                                            fs.unlink(path, function (err) {
+                                                if (err){
+                                                    throw err;
+                                                    console.log(err);
+                                                }else{
+                                                    console.log("File deleted."); 
+                                                }
+                                            });
+                                        }
+                                    }
+                                }  
+                            }); 
                         }
-                    }  
-                }); 
+                    });
+                }else{
+                    res.send("你不是管理員喔！");
+                }
             }
         });
+
+        
     },
 
     deleteFile: function(req, res) { //刪除檔案
@@ -182,15 +206,26 @@ module.exports = {
 
     getAllSubscribers: function(req, res){
         var searchEmail = req.param("searchEmail");
-        SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
-            if (subscribers.length==0) {
-                res.send("查無結果！");
-                //res.view('backend/index', {layout: null});
-            } else {
-                if (err) {
-                    res.send(500, { err: "DB Error" });
-                } else {
-                    res.send(subscribers);
+        var adminAccount=req.session.admin;
+        Admins.find({account: adminAccount}).exec(function(error, admin){
+            if(error){
+                console.log(error);
+            }else{
+                if (admin.length!=0) {
+                    SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
+                        if (subscribers.length==0) {
+                            res.send("查無結果！");
+                            //res.view('backend/index', {layout: null});
+                        } else {
+                            if (err) {
+                                res.send(500, { err: "DB Error" });
+                            } else {
+                                res.send(subscribers);
+                            }
+                        }
+                    });
+                }else{
+                    res.send("你不是管理員喔！");
                 }
             }
         });

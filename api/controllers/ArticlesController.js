@@ -316,7 +316,7 @@ module.exports = {
                         console.log(updated[0].nicer.length);
                         for(var i=0; i<updated[0].follower.length; i++) {
                             if(updated[0].follower[i]!=req.session.user.id) {
-                                Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                                Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false, link: "/article/"+articleId, content: updated[0].title}).exec(function(err, not) {
                                     if(err) {
                                         console.log(err);
                                         res.send({err:"DB error"});
@@ -414,7 +414,7 @@ module.exports = {
                         console.log(error);
                     } else {
                         if(updated[0].author!=req.session.user.id) {
-                            Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                            Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false, link: "/article/"+updated[0].article, content: updated[0].comment}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});
@@ -494,7 +494,7 @@ module.exports = {
                             obj.push(found[f]);
                         }
                     }
-                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').exec(function(err,found){
+                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{

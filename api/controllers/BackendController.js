@@ -38,7 +38,6 @@ module.exports = {
         var adminAccount = req.param("adminAccount");
         var adminPassword = req.param("adminPassword");
 
-        console.log(adminAccount+"+"+adminPassword);
         Admins.find({account: adminAccount}).exec(function(error, admin) {
             if(error) {
                 res.send(500,{err: "DB Error" });
@@ -57,7 +56,11 @@ module.exports = {
             } 
         });
     },
-
+    
+    adminLogout: function (req, res) {
+        req.session.destroy();
+        res.send("success");
+    },
 
     checkAdmin: function(req, res) {
         var adminAccount=req.session.admin;
@@ -83,6 +86,39 @@ module.exports = {
                 res.send(500,{err: "DB Error" });
                 console.log(error);
             } 
+        });
+    },
+
+    getAllUsers: function(req, res){
+        var searchUser = req.param("searchUser");
+        var adminAccount=req.session.admin;
+        Admins.find({account: adminAccount}).exec(function(error, admin){
+            if(error){
+                console.log(error);
+            }else{
+                if (admin.length!=0) {
+                    User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
+                        if (allUsers.length==0) {
+                            res.send("查無結果！");
+                        } else {
+                            sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
+                                if (err) {
+                                    sails.log.error("ERR:", err);
+                                    console.log("err2");
+                                }else {
+                                    if(userList.length>0){
+                                        res.send(userList);
+                                    }else{
+                                        console.log(allUsers);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }else{
+                    res.send("你不是管理員喔！");
+                }
+            }
         });
     },
 
@@ -132,6 +168,19 @@ module.exports = {
                 });
             }
         });
-    }
+    },
+
+    recoverArticle: function(req, res) {
+        var articleId = req.param("id");
+        Articles.update({id: articleId}, {deleted: "false"}).exec(function(err) {
+            if(err) {
+                console.log(error);
+                res.send(500,{err: "DB Error" });
+            } else {
+                console.log('The record has been recovered.');
+                res.end();
+            }
+        });
+    },
 };
 

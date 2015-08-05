@@ -6,6 +6,8 @@ var attachmentList=[];
 var attachmentNameList=[];
 var categoryList={};
 var formNum;
+var delArtId=[];
+var unDelArtId=[];
 
 $(document).ready(function(){
   checkAuth();
@@ -17,72 +19,93 @@ $(document).ready(function(){
 
     $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
       if (res == "success"){
-        alert("登入成功！");
         location.replace(url);
       }else{
-        alert(res);
+        alert(res); // 這裡alert的內容在backend controller定義
       }
+    });
+  });
+
+  $(document).on("click","#adminLogout",function(e){
+    var url = document.URL;
+    var posting = $.post( "/adminLogout", {}, function(res){
+      if(res=="success"){
+        location.replace(url);
+      }      
+    }).error(function(res){
+      alert(res.responseJSON.err);
     });
   });
 
   function checkAuth() {
     $.get("/checkAdmin", function(res){
       if(res=="true") {
-        alert("Admin desu.");
+        //alert("Admin desu.");
         $("#backendContent").css("display","block");
+        $("#backendMenu").css("display","block");
+
+        // 初始化論壇管理的selector內容
+        $.get("/getBoardCategory", function(boardCategory){
+          for(c=0; c<boardCategory.length; c++) {
+            categoryList[boardCategory[c].id]=boardCategory[c].title;      
+            $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
+          }
+          $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
+        }).error(function(res){
+          alert(res.responseJSON.err);
+        });
+
+        $("#boardCategory").change(function(){
+          var category = $("#boardCategory").val();
+          var board = $("#board").val();
+
+          if(category=="allCategory"){
+            $("#board").empty();
+            $("#board").append("<option>選擇全部</option>")
+            getart(loadForumList, 2);
+          }else{
+            $("#board").empty();
+            $.get("/getBoardsOfCategory/"+category, function(boards) {
+              $("#board").append("<option selected='selected'>請選擇</option>")
+              for(b=0; b<boards.length; b++) {
+                $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
+              }
+              $("#board").append("<option value='allBoards'>選擇全部</option>")
+            });
+          }
+        });
+
+        $("#board").change(function(){
+          if($(this).val()=="allBoards"){
+            getart(loadForumList, 1);
+          }else{
+            board=$(this).val();
+            getart(loadForumList, 0);
+          }   
+        });
+
       }else{
-        alert("Not admin.");
+        $("#adminLoginArea").css("display", "block");
+        //alert("Not admin.");
       }
     });
   }
 
-  $.get("/getBoardCategory", function(boardCategory){
-    for(c=0; c<boardCategory.length; c++) {
-      categoryList[boardCategory[c].id]=boardCategory[c].title;      
-      $("#boardCategory").append("<option value='"+boardCategory[c].id+"''>"+boardCategory[c].title+"</option>");
-    }
-    $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
-  }).error(function(res){
-    alert(res.responseJSON.err);
-  });
-
-  $("#boardCategory").change(function(){
-    var category = $("#boardCategory").val();
-    var board = $("#board").val();
-
-    if(category=="allCategory"){
-      $("#board").empty();
-      $("#board").append("<option>選擇全部</option>")
-      //board="allCategory";
-      getart(loadForumList, 2);
-    }else{
-      $("#board").empty();
-      $.get("/getBoardsOfCategory/"+category, function(boards) {
-        $("#board").append("<option selected='selected'>請選擇</option>")
-        for(b=0; b<boards.length; b++) {
-          $("#board").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
-        }
-        $("#board").append("<option value='allBoards'>選擇全部</option>")
-      });
-    }
-  });
-
-  $("#board").change(function(){
-    if($(this).val()=="allBoards"){
-      getart(loadForumList, 1);
-    }else{
-      board=$(this).val();
-      getart(loadForumList, 0);
-    }   
-  });
-
+  // 論壇管理排序文章
   $(document).on("click",".sortByChar",function(e){
     sortByChar($(this).attr("value"));
   });
   $(document).on("click",".sortByLength",function(e){
     sortByLength($(this).attr("value"));
   });
+  $(document).on("click",".sortByCreatedAt",function(e){
+    sortByCreatedAt();
+  });
+  $(document).on("click",".sortByUpdatedAt",function(e){
+    sortByUpdatedAt();
+  });
 
+  // 發送電子報的上傳檔案功能
   $("input[name='uploadFile']").change(function(){
     var fullPath = $(this).val();
     if (fullPath) {
@@ -97,7 +120,6 @@ $(document).ready(function(){
     $("#attachmentEdit label").css("display", "block");
     $("#attachmentList").append("<tr><td>"+filename+"</td><td class='text-right'><span class='glyphicon glyphicon-remove removeFile' value='"+filename+"' aria-hidden='true'></span></td></tr>");
   });
-
   $("form#uploadForm").submit(function(){
     var formData = new FormData($(this)[0]);
     $("[name=uploadFile]").val("");
@@ -117,7 +139,6 @@ $(document).ready(function(){
     });
     return false;
   });
-
   $(document).on("click",".removeFile",function(e){
     var index = attachmentNameList.indexOf($(this).attr("value"));
 
@@ -126,12 +147,12 @@ $(document).ready(function(){
         console.log("刪除失敗");
       }
     });
-
     attachmentNameList.splice(index, 1);
     attachmentList.splice(index, 1);
     $(this).parent().parent().remove();
   });
 
+  // 寄送電子報
   $(document).on("click","#sendNewsLetter",function(e){
     var mailSubject = document.getElementById("mailSubject").value;
     var mailContent = document.getElementById("mailContent").value;
@@ -160,18 +181,56 @@ $(document).ready(function(){
           }else{
             attachmentList=[];
             attachmentNameList=[];
-            alert("電子報發送失敗!");
+            alert(res);
             document.getElementById("mailSubject").value="";
             document.getElementById("mailContent").value="";
             document.getElementById("mailEdit").style.display="block"; 
             document.getElementById("mailSpinner").style.display="none";
             document.getElementById("attachmentEdit").style.display="block";
             document.getElementById("emailButtonGroups").style.display="block";
+            $("#attachmentEdit label").css("display", "none");
+            $("#attachmentList").html("");
           }
         });
       }
     }
   });
+
+  $(document).one("click",".unDelArticle",function(e){
+    var articleID = $(this).parent().parent().attr("value");
+    $.post( "/deleteArticle", { id: articleID}, function(res){
+      $("#backend_articleList tr[value="+articleID+"]").css("display","none");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-eye-open","glyphicon-eye-close");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("unDelArticle","delArticle");
+      delArtId.push(articleID);
+      unDelArtId.splice(unDelArtId.indexOf(parseInt(articleID)), 1);
+    }); 
+  });
+
+  $(document).on("click",".delArticle",function(e){
+    var articleID = $(this).parent().parent().attr("value");
+    $.post( "/recoverArticle", { id: articleID}, function(res){
+      $("#backend_articleList tr[value="+articleID+"]").css("display","none");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-eye-close","glyphicon-eye-open");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("delArticle","unDelArticle");
+      delArtId.splice(delArtId.indexOf(parseInt(articleID)), 1);
+      unDelArtId.push(articleID);
+    }); 
+  });
+
+  $("#artShowStatus").change(function(){
+    if($(this).val()=="unDeletedArt"){
+      for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display","none"); }
+      for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display",""); }
+    }else if($(this).val()=="deletedArt"){
+      for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display",""); }
+      for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display","none"); }
+    }else{
+      for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display",""); }
+      for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display",""); }
+    }
+  });
+
 });
 
 function loadUserList(){
@@ -200,7 +259,7 @@ function loadUserList(){
         if(postNum==0){
           avgReportNum = 0
         }else{
-          avgReportNum = totalReport/postNum;
+          avgReportNum = formatFloat(totalReport/postNum);
         }
         
         userTable+="<tr><td>"+userList[i].account+"</td><td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+userList[i].gender+"</td>";
@@ -265,10 +324,12 @@ function loadForumList(articleList){
   document.getElementById("subscriberManage").style.display="none";
   
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortByChar' value='classification'>文章類別</th><th class='sortByChar' value='title' style='width:400px;'>文章標題</th><th style='width:200px;'>發表人</th><th>身分別</th>";
-    articleTable+="<th>發表時間</th><th>最新回應時間</th><th>點閱數／回覆數</th><th class='sortByLength' value='nicer'>推薦數</th><th class='sortByLength' value='report' style='width:200px;'>檢舉數</th><tr>";
+    articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
+    articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
+    articleTable+="<th></th></tr>";
 
       for(i=0; i<articleList.length; i++) {
+        articleID=articleList[i].id;
         clickNum=articleList[i].clickNum;
         responseNum=articleList[i].responseNum;
         niceNum=articleList[i].nicer.length;
@@ -279,8 +340,32 @@ function loadForumList(articleList){
         authorType=articleList[i].author.type;
         reportNum=articleList[i].report.length;
         var boardName=articleList[i].board.title;
+        var deleted=articleList[i].deleted;
+        
+        var status=$("#artShowStatus").val();
 
-        articleTable+="<tr><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+        if(status=="unDeletedArt"){
+          if(deleted=="false"){
+            articleTable+="<tr value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }else{
+            articleTable+="<tr style='display:none;' value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }
+        }else if(status=="deletedArt"){
+          if(deleted=="false"){
+            articleTable+="<tr style='display:none;' value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }else{
+            articleTable+="<tr value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+          }
+        }else{
+          articleTable+="<tr value='"+articleID+"'><td>"+categoryList[articleList[i].board.category]+"："+boardName+"</td>";
+        }
+
+        if(deleted=="false"){
+          unDelArtId.push(articleID);
+        }else{
+          delArtId.push(articleID);
+        }
+        
         articleTable+="<td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
         articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
         
@@ -289,13 +374,19 @@ function loadForumList(articleList){
 
         if(reportNum>0 && reportNum<3){
           articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum;
-          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td>";
         }else if(reportNum>=3){
-          articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
-          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td></tr>";
+          articleTable+="<td class='reasonTd' onClick='showReason("+i+")'>"+reportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' title='該篇文章檢舉次數超過3'></span>";
+          articleTable+="<div id='reportReason_"+i+"' style='display:none;'>"+reasonHtml+"</div></td>";
         }else{
-          articleTable+="<td>"+reportNum+"</td></tr>";
+          articleTable+="<td>"+reportNum+"</td>";
         }
+
+        if(deleted=="false"){
+          articleTable+="<td><span class='glyphicon glyphicon-eye-open unDelArticle' aria-hidden='true'></span></td></tr>";
+        }else{
+          articleTable+="<td><span class='glyphicon glyphicon-eye-close delArticle' aria-hidden='true'></span></td></tr>";
+        }   
       }
     document.getElementById("backend_articleList").innerHTML = articleTable;
   }
@@ -313,12 +404,9 @@ function loadsubscriberList(){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="block";
-
   searchEmail=document.getElementById("searchEmail").value;
 
   $.get("/getAllSubscribers"+"?searchEmail="+searchEmail, function(subscribers){
-    
-    //subscribers=res;
     if(typeof(subscribers)=="string"){
       alert(subscribers);
     }else{
@@ -348,12 +436,20 @@ function sortByLength(sortby){
   });
   loadForumList(articleList);
 }
-// function sortByDate(sortby){
-//   articleList=articleList.sort(function(a, b) {
-//     return new Date(b.createdAt)-new Date(a.createdAt);
-//   });
-//   loadForumList(articleList);
-// }
+
+function sortByCreatedAt(){
+  articleList=articleList.sort(function(a, b) {
+    return new Date(b.createdAt)-new Date(a.createdAt);
+  });
+  loadForumList(articleList);
+}
+
+function sortByUpdatedAt(){
+  articleList=articleList.sort(function(a, b) {
+    return new Date(b.updatedAt)-new Date(a.updatedAt);
+   });
+  loadForumList(articleList);
+}
 
 function reasonHtmlCreate(reportobj){
   var reportReasonHtml="";
@@ -369,35 +465,6 @@ function showReason(ulId){
    }else{
      document.getElementById("reportReason_"+ulId).style.display="none";
    }
-}
-
-function sendNewsLetter(){
-
-  var mailSubject = document.getElementById("mailSubject").value;
-  var mailContent = document.getElementById("mailContent").value;
-  if (mailSubject=="" && mailContent==""){
-    alert("尚未輸入主旨或內文!");
-  }else{
-    if(confirm("確定要發送電子報嗎？")){
-      document.getElementById("mailSpinner").style.display="block";
-      document.getElementById("mailEdit").style.display="none";
-      $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent}, function(res){
-        if (res == "SEND"){
-          alert("電子報發送成功!");
-          document.getElementById("mailSubject").value="";
-          document.getElementById("mailContent").value="";
-          document.getElementById("mailEdit").style.display="block"; 
-          document.getElementById("mailSpinner").style.display="none";
-        }else{
-          alert("電子報發送失敗!");
-          document.getElementById("mailSubject").value="";
-          document.getElementById("mailContent").value="";
-          document.getElementById("mailEdit").style.display="block"; 
-          document.getElementById("mailSpinner").style.display="none";
-        }
-      });
-    }
-  }
 }
 
 function deleteSubscriber(id) {
@@ -422,7 +489,21 @@ function cancelEmailSearch(){
   loadsubscriberList();
 }
 
-// 輸入要搜尋的字之後，按enter可以直接送出
+// 輸入input之後，按enter可以直接送出
+function adminLogin(e) {
+  var keynum;
+  if(window.event) {
+    keynum = e.keyCode;
+  } else if(e.which) {
+    keynum = e.which;
+  }
+  if(keynum=="13") {
+    $("#adminLogin").click();
+  } else {
+    return true;
+  }
+}
+
 function userSearch(e) {
   var keynum;
   if(window.event) {
@@ -449,4 +530,8 @@ function emailSearch(e) {
   } else {
     return true;
   }
+}
+
+function formatFloat(num){ // 小數點第2位四捨五入
+  return Math.round(num * 100) / 100;
 }

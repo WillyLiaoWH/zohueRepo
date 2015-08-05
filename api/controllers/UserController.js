@@ -609,6 +609,12 @@ module.exports = {
                                                     res.send({err:"DB error"});
                                                 }
                                             });
+                                            Notification.destroy({user: req.session.user.id, notType: "7", from: req.param("id")}).exec(function(err, not) {
+                                                if(err) {
+                                                    console.log(err);
+                                                    res.send({err:"DB error"});
+                                                }
+                                            });
                                             res.send({user: user});
                                         }
                                     });
@@ -957,27 +963,7 @@ module.exports = {
             }
         }
     },
-    getAllUsers: function(req, res){
-        var searchUser = req.param("searchUser");
-        User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
-            if (allUsers.length==0) {
-                res.send("查無結果！");
-            } else {
-                sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
-                    if (err) {
-                        sails.log.error("ERR:", err);
-                        console.log("err2");
-                    }else {
-                        if(userList.length>0){
-                            res.send(userList);
-                        }else{
-                            console.log(allUsers);
-                        }
-                    }
-                });
-            }
-        });
-    },
+    
 
 
 

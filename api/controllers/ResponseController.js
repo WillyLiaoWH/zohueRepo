@@ -28,7 +28,7 @@ module.exports = {
                         } else {
                             for(var i=0; i<article[0].follower.length; i++) {
                                 if(article[0].follower[i]!=req.session.user.id) {
-                                    Notification.create({user: article[0].follower[i], notType: "1", from: req.session.user.id, content: comment, alreadyRead: false}).exec(function(err, not) {
+                                    Notification.create({user: article[0].follower[i], notType: "1", from: req.session.user.id, content: comment, alreadyRead: false, link: "/article/"+article_id}).exec(function(err, not) {
                                         if(err) {
                                             console.log(err);
                                             res.send({err:"DB error"});

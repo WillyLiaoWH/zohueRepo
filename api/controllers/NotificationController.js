@@ -8,17 +8,17 @@
 module.exports = {
 	getNotification: function(req, res) {
         var user=req.session.user.id;
-        Notification.find({user: user}).exec(function(err, not){
+        Notification.find({user: user}).populate("from").exec(function(err, not){
         	if(err) {
         		console.log(err);
         		res.send(500, {err: "DB error"});
         	} else {
-        		not.sort(function(a, b){return b.updatedAt-a.updatedAt})
-        		if(not.length>=10) {
-        			res.send(not.slice(0, 10));
-        		} else {
+                not.sort(function(a, b){return new Date(b.createdAt)-new Date(a.createdAt);});
+        		// if(not.length>=10) {
+        		// 	res.send(not.slice(0, 10));
+        		// } else {
         			res.send(not);
-        		}
+        		// }
         		
         	}
         });
