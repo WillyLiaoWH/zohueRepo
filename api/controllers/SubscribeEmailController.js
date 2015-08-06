@@ -109,8 +109,8 @@ module.exports = {
         for(i=0; i<attachmentObj.length; i++){
             attachmentList.push({
                 filename: attachmentNameObj[i],
-                //path: "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[i]
-                path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
+                path: "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[i]
+                //path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
         }
 
