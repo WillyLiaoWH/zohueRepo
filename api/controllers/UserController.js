@@ -40,14 +40,25 @@ module.exports = {
             } else if(usr.length!=0) {
                 res.send(400,{err:"Account already taken"});
             } else {
-                User.create({account: account, password: hashedPassword, alias: alias, email: email, type: type
-                            , isFullSignup: isFullSignup, img: img , FB_id:FB_id,gender:gender,fname:fname,lname:lname}).exec(function(error, user) {
+                User.create({
+                    account: account, 
+                    password: hashedPassword, 
+                    alias: alias, 
+                    email: email, 
+                    type: type, 
+                    isFullSignup: isFullSignup, 
+                    img: img,
+                    FB_id:FB_id,
+                    gender:gender,
+                    fname:fname,
+                    lname:lname
+                    }).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
                     } else {
 
-                        req.session.user = user;
+                        //req.session.user = user;
                         res.send(user);
                     }
                 });

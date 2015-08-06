@@ -47,7 +47,6 @@ function FB_API(){
 
 
 function checkAuth() {
-
   $.get("/checkAuth", function(auth){
     if(auth) {
 
@@ -258,9 +257,10 @@ function Submit(){
   var gender = $("#UserGender").val();
   var fname = $("#fname").val();
   var lname = $("#lname").val();
-  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, function(res){
-    alert("註冊成功！");
-    loginWithAccount(account, password);
+  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
+    function(res){
+      alert("註冊成功！");
+      loginWithAccount(account, password);
   })
     .error(function(res){
       alert(res.responseJSON.err);
