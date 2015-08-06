@@ -26,7 +26,7 @@
  * For more information, check out:
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.local.html
  */
-
+  var fs=require('fs');
 module.exports = {
 
   /***************************************************************************
@@ -60,9 +60,13 @@ module.exports = {
    * to 80 (http://) or 443 (https://) if you have an SSL certificate        *
    ***************************************************************************/
 
-  // port: process.env.PORT || 1337,
-  port: 80,
 
+    ssl:  {
+      key: fs.readFileSync('ssl/key.pem'),
+      cert: fs.readFileSync('ssl/cert.pem')
+  },
+  port: process.env.PORT || 443,
+  environment: process.env.NODE_ENV || 'development'
   /***************************************************************************
    * The runtime "environment" of your Sails app is either typically         *
    * 'development' or 'production'.                                          *

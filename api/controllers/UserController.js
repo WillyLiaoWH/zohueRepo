@@ -232,6 +232,7 @@ module.exports = {
     },
 
     create: function(req, res, next){
+        //似乎是沒用了但先不要刪掉好了 by Po
         console.log(req.param('email'));
         console.log(req.param('password'));
         if(!req.param('email') || !req.param('password')) {

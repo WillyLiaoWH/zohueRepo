@@ -1,3 +1,4 @@
 *.db
 .tmp
 assets/images/
+*.pem
