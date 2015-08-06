@@ -64,13 +64,25 @@ module.exports = {
             var auth=req.param("timeline_post_auth");
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });};
 
-            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
-                if(error) {
-                    res.send(500,{err: "發生錯誤了Q_Q" });
-                } else {
-                    res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
-                }
-            });
+            if(req.session.user.account == req.session.stay){
+                Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
+                    if(error) {
+                        res.send(500,{err: "發生錯誤了Q_Q" });
+                    } else {
+                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
+                    }
+                });
+            }else{
+                User.find({account: req.session.stay}).exec(function(error, owner) {
+                    Timelines.create({author: owner[0].id, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, owner: author}).exec(function(error, timeline) {
+                        if(error) {
+                            res.send(500,{err: "發生錯誤了Q_Q" });
+                        } else {
+                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
+                        }
+                    });
+                });
+            }
         }
 
         checkAtuh(function(){
@@ -110,11 +122,11 @@ module.exports = {
     },
     delTimeline: function(req, res){
         function chechAtuh(id, cb){
-            Timelines.find({id: id}).populate('author').exec(function(error, timeline) {
+            Timelines.find({id: id}).populate('author').populate('owner').exec(function(error, timeline) {
                 if(error) {
                     res.send(500,{err: "DB Error" });
                 } else {
-                    if(req.session.user.account == timeline[0].author.account){
+                    if(req.session.user.account == timeline[0].author.account || req.session.user.account == timeline[0].owner.account){
                         cb(true);
                     }else{cb(false);}
                 }
@@ -185,7 +197,7 @@ module.exports = {
         function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response、nicer 與 reporter 資料
             var async = require('async');
             async.each(User.timelinesPost, function(timeline, callback) {
-                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).exec(function (err, result) {
+                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).populate('owner', {select: ['img', 'alias', 'account']}).exec(function (err, result) {
                     if(err) {
                         console.log("err");
                     }else{
@@ -287,10 +299,12 @@ module.exports = {
 
         checkLogin(function(){
             findAccount(function(account){
+                req.session.stay = account;
                 findTimelineResponse(account, function(Response){
                     getNicer(Response, function(Response2){
                         addAuth(account, Response2, function(Response3){
                             findTimelineResponseAuthor(Response3, function(Response4){
+                                console.log(Response4.timelinesPost);
                                 res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias, account: Response.account});
                             });
                         });
