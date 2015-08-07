@@ -167,6 +167,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   showProfile(ori_author);
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
+    //alert(JSON.stringify(res));
     if(res.notfull) {
       alert("他還沒完整註冊所以沒有個人頁面喔");
       if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)

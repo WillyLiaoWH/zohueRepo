@@ -64,11 +64,18 @@ module.exports = {
             var auth=req.param("timeline_post_auth");
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });};
 
+            console.log("gogogo");
+            console.log(req.session.user.account);
+            console.log(req.session.stay);
+            console.log(req.session.user.account == req.session.stay);
             if(req.session.user.account == req.session.stay){
+                console.log("go post");
                 Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
+                    console.log("end post");
                     if(error) {
                         res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
+                        console.log("successful post");
                         res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
                     }
                 });
@@ -91,11 +98,11 @@ module.exports = {
 	},
     editTimeline: function(req, res){
         function chechAtuh(id, cb){
-            Timelines.find({id: id}).populate('author').exec(function(error, timeline) {
+            Timelines.find({id: id}).populate('author').populate('owner').exec(function(error, timeline) {
                 if(error) {
                     res.send(500,{err: "DB Error" });
                 } else {
-                    if(req.session.user.account == timeline[0].author.account){
+                    if((timeline[0].author == null && req.session.user.account == timeline[0].author.account) || req.session.user.account == timeline[0].owner.account){
                         cb();
                     }else{res.send("No permission");}
                 }
@@ -180,7 +187,12 @@ module.exports = {
                     if(!user[0].isFullSignup) {
                         res.send({notfull: true});
                     } else {
-                        cb(user[0]);
+                        console.log(user[0].timelinesPost.length);
+                        if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
+                            res.send({notfull: false});
+                        }else{
+                            cb(user[0]);
+                        }
                     }
                 }
                 // sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
@@ -300,11 +312,12 @@ module.exports = {
         checkLogin(function(){
             findAccount(function(account){
                 req.session.stay = account;
+                console.log("check stay id");
+                console.log(req.session.stay);
                 findTimelineResponse(account, function(Response){
                     getNicer(Response, function(Response2){
                         addAuth(account, Response2, function(Response3){
                             findTimelineResponseAuthor(Response3, function(Response4){
-                                console.log(Response4.timelinesPost);
                                 res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias, account: Response.account});
                             });
                         });
