@@ -167,6 +167,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   showProfile(ori_author);
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
+    //alert(JSON.stringify(res));
     if(res.notfull) {
       alert("他還沒完整註冊所以沒有個人頁面喔");
       if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
@@ -277,7 +278,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
         var css_r_content="";
       }
       function combine(element){
-        element = element+'<div id="container_timeline_res container-fluid" style="overflow:hidden;">\
+        element = element+'<div id="container_timeline_res container-fluid" style="/*overflow:hidden;*/">\
                     <div id="sidebar_timeline_res">\
                       <image src="'+comment_author_avater+'" height="50" width="50">\
                     </div>\
@@ -326,9 +327,35 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
       var css_content='';
     }
 
-    // 預先處理權限選單
+    // 預先處理權限選單, 預先處理是否是別人在本塗鴉牆上之文章
     var event_option = "";
-    if(pri_account==ori_author || !ori_author){ // 原作者
+    var owner = res["timelinesList"][i].owner;
+    var owner_div = "";
+    var event_avatar = author_avater;
+    if(owner && pri_account==owner.account){ // 在別人塗鴉牆上 自己是文章所有者
+      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.account+'">'+owner.alias+'</a> > </div>';
+      event_avatar = owner.img;
+      var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
+                <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
+                <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
+                <button value="編輯完成" id="editSend" class="b" name="'+timelinesID+'"><img src="/images/img_forum/check_icon.png">編輯完成</button>\
+                <button value="插入圖片" id="editImage" class="b" name="'+timelinesID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
+                <button value="取消編輯" id="editCancel" class="b" name="'+timelinesID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
+              </div>';
+      var event_option = '<li><a class="event_edit" name="'+timelinesID+'">編輯</a></li>\
+                          <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
+      var auth_option='<div class="btn-group" style="float:none;">\
+                  <button type="button" class="n" data-toggle="dropdown">\
+                    <img src="/images/img_timeline/'+auth+'.png" height="20px" width="20px">\
+                    &nbsp;權限\
+                  </button>\
+                  <ul class="dropdown-menu" role="menu">\
+                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
+                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
+                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
+                  </ul>\
+                </div>'
+    }else if(pri_account==ori_author || !ori_author){ // 原作者
       var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
                 <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                 <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
@@ -387,9 +414,9 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                 <table style="width:100%;">\
                   <tr>\
                     <td rowspan="2" style="width:50px;padding-right:15px;">\
-                      <image src="'+author_avater+'" height="50" width="50">\
+                      <image src="'+event_avatar+'" height="50" width="50">\
                     </td>\
-                    <td><div id="event_author_name"><a href="?'+author_account+'">'+author+'</a></div></td>\
+                    <td>'+owner_div+'<div id="event_author_name" style="float:left;"><a href="?'+author_account+'">'+author+'</a></div></td>\
                   </tr>\
                   <tr>\
                     <td><div id="event_time">'+updatedAt+'</div></td>\

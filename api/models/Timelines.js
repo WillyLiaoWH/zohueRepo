@@ -45,6 +45,9 @@ module.exports = {
     follower: {
       collection: 'user',
     },
+    owner: {
+      model: 'user',
+    }
   }
 };
 
