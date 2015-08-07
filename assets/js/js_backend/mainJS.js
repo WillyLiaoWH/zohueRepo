@@ -196,36 +196,42 @@ $(document).ready(function(){
     }
   });
 
-  $(document).one("click",".unDelArticle",function(e){
+  // 刪除文章
+  $(document).on("click",".unDelArticle",function(e){
     var articleID = $(this).parent().parent().attr("value");
     $.post( "/deleteArticle", { id: articleID}, function(res){
       $("#backend_articleList tr[value="+articleID+"]").css("display","none");
-      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-eye-open","glyphicon-eye-close");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-trash","glyphicon-repeat");
       $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("unDelArticle","delArticle");
       delArtId.push(articleID);
       unDelArtId.splice(unDelArtId.indexOf(parseInt(articleID)), 1);
     }); 
   });
 
+  // 回復刪除的文章
   $(document).on("click",".delArticle",function(e){
     var articleID = $(this).parent().parent().attr("value");
     $.post( "/recoverArticle", { id: articleID}, function(res){
       $("#backend_articleList tr[value="+articleID+"]").css("display","none");
-      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-eye-close","glyphicon-eye-open");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-repeat","glyphicon-trash");
       $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("delArticle","unDelArticle");
       delArtId.splice(delArtId.indexOf(parseInt(articleID)), 1);
       unDelArtId.push(articleID);
     }); 
   });
 
+  // 處理文章顯示selector
   $("#artShowStatus").change(function(){
     if($(this).val()=="unDeletedArt"){
+      $("#backend_articleList th").last().text("刪除");
       for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display","none"); }
       for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display",""); }
     }else if($(this).val()=="deletedArt"){
+      $("#backend_articleList th").last().text("回復");
       for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display",""); }
       for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display","none"); }
     }else{
+      $("#backend_articleList th").last().text("刪除/回復");
       for(i=0; i<delArtId.length; i++){ $("#backend_articleList tr[value="+delArtId[i]+"]").css("display",""); }
       for(j=0; j<unDelArtId.length; j++){ $("#backend_articleList tr[value="+unDelArtId[j]+"]").css("display",""); }
     }
@@ -326,7 +332,7 @@ function loadForumList(articleList){
   if(typeof(articleList)!="undefined"){
     articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
     articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
-    articleTable+="<th></th></tr>";
+    articleTable+="<th>刪除</th></tr>";
 
       for(i=0; i<articleList.length; i++) {
         articleID=articleList[i].id;
@@ -341,6 +347,7 @@ function loadForumList(articleList){
         reportNum=articleList[i].report.length;
         var boardName=articleList[i].board.title;
         var deleted=articleList[i].deleted;
+        var link = "href=\"/article/" + articleID + "\"";
         
         var status=$("#artShowStatus").val();
 
@@ -366,7 +373,7 @@ function loadForumList(articleList){
           delArtId.push(articleID);
         }
         
-        articleTable+="<td>"+articleList[i].classification+"</td><td>"+articleList[i].title+"</td><td>"+articleList[i].author.alias+"</td>";
+        articleTable+="<td>"+articleList[i].classification+"</td><td><a "+link+" target='_blank'>"+articleList[i].title+"</a></td><td>"+articleList[i].author.alias+"</td>";
         articleTable+="<td>"+authorType+"</td><td>"+postTime+"</td><td>"+lastResponseTime+"</td><td>"+clickNum+"／"+responseNum+"</td><td>"+niceNum+"</td>";
         
         reportobj=articleList[i].report;
@@ -383,9 +390,9 @@ function loadForumList(articleList){
         }
 
         if(deleted=="false"){
-          articleTable+="<td><span class='glyphicon glyphicon-eye-open unDelArticle' aria-hidden='true'></span></td></tr>";
+          articleTable+="<td><span class='glyphicon glyphicon-trash unDelArticle' aria-hidden='true'></span></td></tr>";
         }else{
-          articleTable+="<td><span class='glyphicon glyphicon-eye-close delArticle' aria-hidden='true'></span></td></tr>";
+          articleTable+="<td><span class='glyphicon glyphicon-repeat delArticle' aria-hidden='true'></span></td></tr>";
         }   
       }
     document.getElementById("backend_articleList").innerHTML = articleTable;

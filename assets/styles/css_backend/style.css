@@ -104,12 +104,12 @@ body{
 }
 /********For spinners (end)********/
 
-.delSub:hover, .delArticle{
+.delSub:hover, .unDelArticle:hover{
   cursor:pointer;
   color:#CE0000;
 }
 
-.unDelArticle{
+.delArticle:hover{
   cursor:pointer;
   color:#467500;
 }
