@@ -65,8 +65,8 @@ module.exports = {
   //     key: fs.readFileSync('ssl/key.pem'),
   //     cert: fs.readFileSync('ssl/cert.pem')
   // },
-   port: process.env.PORT || 443,
-  // environment: process.env.NODE_ENV || 'development'
+  // port: process.env.PORT || 443,
+   environment: process.env.NODE_ENV || 'development'
   /***************************************************************************
    * The runtime "environment" of your Sails app is either typically         *
    * 'development' or 'production'.                                          *
