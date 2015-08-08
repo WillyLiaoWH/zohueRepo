@@ -62,20 +62,12 @@ module.exports = {
             var content=req.param("timeline_post_content");
             var contentImg=req.param("timeline_post_image");
             var auth=req.param("timeline_post_auth");
-            if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });};
-
-            console.log("gogogo");
-            console.log(req.session.user.account);
-            console.log(req.session.stay);
-            console.log(req.session.user.account == req.session.stay);
+            if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });}
             if(req.session.user.account == req.session.stay){
-                console.log("go post");
                 Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
-                    console.log("end post");
                     if(error) {
                         res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
-                        console.log("successful post");
                         res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
                     }
                 });
@@ -85,7 +77,9 @@ module.exports = {
                         if(error) {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
-                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
+                            Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'account']}).populate('author', {select: ['img', 'alias', 'account']}).exec(function(error, timeline2) {
+                                res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, account: timeline2[0].author.account});
+                            });
                         }
                     });
                 });
@@ -102,7 +96,7 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "DB Error" });
                 } else {
-                    if((timeline[0].author == null && req.session.user.account == timeline[0].author.account) || req.session.user.account == timeline[0].owner.account){
+                    if((timeline[0].owner != null && req.session.user.account == timeline[0].owner.account) || (timeline[0].author != null && req.session.user.account == timeline[0].author.account)){ // 有 owner 且 owner 是自己時，或是沒有 owner 但 author 是自己時
                         cb();
                     }else{res.send("No permission");}
                 }
@@ -133,7 +127,7 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "DB Error" });
                 } else {
-                    if(req.session.user.account == timeline[0].author.account || req.session.user.account == timeline[0].owner.account){
+                    if((timeline[0].author != null && req.session.user.account == timeline[0].author.account) || (timeline[0].owner!=null&&(req.session.user.account == timeline[0].owner.account))){
                         cb(true);
                     }else{cb(false);}
                 }
@@ -187,7 +181,6 @@ module.exports = {
                     if(!user[0].isFullSignup) {
                         res.send({notfull: true});
                     } else {
-                        console.log(user[0].timelinesPost.length);
                         if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
                             res.send({notfull: false});
                         }else{
@@ -312,8 +305,6 @@ module.exports = {
         checkLogin(function(){
             findAccount(function(account){
                 req.session.stay = account;
-                console.log("check stay id");
-                console.log(req.session.stay);
                 findTimelineResponse(account, function(Response){
                     getNicer(Response, function(Response2){
                         addAuth(account, Response2, function(Response3){
