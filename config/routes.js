@@ -92,6 +92,7 @@ module.exports.routes = {
   'POST /adminLogin': 'BackendController.adminLogin',
   'POST /adminLogout': 'BackendController.adminLogout',
   'POST /recoverArticle': 'BackendController.recoverArticle',
+  'POST /setRead': 'NotificationController.checkNotification',
   
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
@@ -170,6 +171,8 @@ module.exports.routes = {
   },
 
   'GET /nots': 'Notification.getNotification',
+  'GET /countNot': 'Notification.countNotification',
+  'GET /seeNot': 'Notification.seeNotification',
 
   '/home': {
     view: 'home/index',

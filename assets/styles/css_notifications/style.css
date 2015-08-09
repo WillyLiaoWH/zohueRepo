@@ -4,8 +4,8 @@
 .not {
 	border: #AAAAAA 1px solid;
 	margin: 10px;
-	width: 850px;
-	height: 80px;
+	width: 1000px;
+	/*height: 80px;*/
 	display: block;
 }
 .image {
@@ -25,7 +25,6 @@
 	color: black;
 }
 .go {
-	vertical-align: top;
 	display: inline-block;
 	height: 100%;
 	width: 200px;
@@ -49,4 +48,14 @@
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
+}
+.read {
+	background-image: url(../../../images/img_home/shl.png);
+}
+.unread {
+	background-color: #D8D8D8;
+}
+.setRead{
+	width: 150px;
+	display: inline-block;
 }

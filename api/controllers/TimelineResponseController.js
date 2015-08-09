@@ -18,7 +18,7 @@ module.exports = {
             } else {
                 Timelines.find({id: timeline_id}).populate("author").exec(function(err, timeline) {
                     if(timeline[0].author!=req.session.user.id) {
-                        Notification.create({user: timeline[0].author, notType: "3", from: req.session.user.id, content: comment, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account}).exec(function(err, not) {
+                        Notification.create({user: timeline[0].author, notType: "3", from: req.session.user.id, content: comment, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
                             if(err) {
                                 console.log(err);
                                 res.send({err:"DB error"});
@@ -110,7 +110,7 @@ module.exports = {
             TimelineResponse.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
                 if(timeline.author.id!=req.session.user.id) {
-                    Notification.create({user: timeline.author.id, notType: "6", from: req.session.user.id, alreadyRead: false, content: timeline.comment, link: "/profile?"+timeline.author.account}).exec(function(err, not) {
+                    Notification.create({user: timeline.author.id, notType: "6", from: req.session.user.id, alreadyRead: false, content: timeline.comment, link: "/profile?"+timeline.author.account, alreadySeen: false}).exec(function(err, not) {
                         if(err) {
                             console.log(err);
                             res.send({err:"DB error"});

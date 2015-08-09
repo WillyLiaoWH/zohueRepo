@@ -490,7 +490,7 @@ module.exports = {
                                         console.log(err);
                                         res.send({err:"DB error"});
                                     } else {
-                                        Notification.create({user: req.param("id"), notType: "7", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                                        Notification.create({user: req.param("id"), notType: "7", from: req.session.user.id, alreadyRead: false, alreadySeen: false}).exec(function(err, not) {
                                             if(err) {
                                                 console.log(err);
                                                 res.send({err:"DB error"});
@@ -600,13 +600,13 @@ module.exports = {
                                             console.log(err);
                                             res.send({err:"DB error"});
                                         } else {
-                                            Notification.create({user: req.param("id"), notType: "8", from: req.session.user.id, alreadyRead: false}).exec(function(err, not) {
+                                            Notification.create({user: req.param("id"), notType: "8", from: req.session.user.id, alreadyRead: false, alreadySeen: false}).exec(function(err, not) {
                                                 if(err) {
                                                     console.log(err);
                                                     res.send({err:"DB error"});
                                                 }
                                             });
-                                            Notification.create({user: req.session.user.id, notType: "8", from: req.param("id"), alreadyRead: false}).exec(function(err, not) {
+                                            Notification.create({user: req.session.user.id, notType: "8", from: req.param("id"), alreadyRead: false, alreadySeen: false}).exec(function(err, not) {
                                                 if(err) {
                                                     console.log(err);
                                                     res.send({err:"DB error"});
