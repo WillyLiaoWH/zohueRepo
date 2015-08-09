@@ -33,6 +33,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   'POST /simpleSignup': 'UserController.signup',
+  'POST /simpleSignupAccountCheck': 'UserController.signupAccountCheck',
   'POST /fullSignup': 'UserController.fullSignup',
   'POST /change': 'UserController.change',
   'POST /ez_change': 'UserController.ez_change',
