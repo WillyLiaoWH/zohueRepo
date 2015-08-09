@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing timelines
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-
+var async = require('async');
 module.exports = {
     auth_set:function(req,res){
         function chechAtuh(id, cb){
@@ -98,7 +98,7 @@ module.exports = {
                 } else {
                     if((timeline[0].owner != null && req.session.user.account == timeline[0].owner.account) || (timeline[0].author != null && req.session.user.account == timeline[0].author.account)){ // 有 owner 且 owner 是自己時，或是沒有 owner 但 author 是自己時
                         cb();
-                    }else{res.send("No permission");}
+                    }else{res.send("沒有權限喔!");}
                 }
             });
         }
@@ -143,7 +143,7 @@ module.exports = {
                     }
                 });
             }else{
-                res.send("No permission");
+                res.send("沒有權限喔!");
             }
         }
         var TimelineId = req.param("id");
@@ -231,39 +231,42 @@ module.exports = {
                         doctor=true;
                     }
                     for (var i=0 ; i<user[0].friends.length;i=i+1){
-                        if (user[0].friends[i].account==account)
+                        if (user[0].friends[i].account===account){
                             friend=true;
+                        }
                     }
-                });
 
-                if (viewer==account){
-                    self=true;
-                    friend=true;
-                    doctor=true;
-                }
-                var len=result.timelinesPost.length;
-                for (var i=len-1;i>=0;i=i-1){
-                    if (result.timelinesPost[i].auth==="self"){
-                        if (!self){
-                            //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
-                            result.timelinesPost.splice(i,1);
-                        }
-                                    
-                    } 
-                    else if (result.timelinesPost[i].auth==="doctor"){
-                        if (!doctor){
-                            //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
-                            result.timelinesPost.splice(i,1);
-                        }
-                    } 
-                    else if (result.timelinesPost[i].auth==="friend" ){
-                        if(!friend){
-                            //console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
-                            result.timelinesPost.splice(i,1);
+                    if (viewer==account){
+                        self=true;
+                        friend=true;
+                        doctor=true;
+                    }
+                    var len=result.timelinesPost.length;
+                    for (var i=len-1;i>=0;i=i-1){
+                        if (result.timelinesPost[i].auth==="self"){
+                            if (!self){
+                                //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
+                                        
+                        } 
+                        else if (result.timelinesPost[i].auth==="doctor"){
+                            if (!doctor){
+                                //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
+                        } 
+                        else if (result.timelinesPost[i].auth==="friend" ){
+                            if(!friend){
+                               // console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
                         }
                     }
-                }
                 cb(result);
+                
+                });
+                
             }
         }
 
@@ -278,7 +281,7 @@ module.exports = {
         }
 
         function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
-            var async = require('async');
+            
 
             setTimeout(function() { // 一秒後如果沒有 call back，表示最後一個 timeline 且無留言
                 cb(Response);

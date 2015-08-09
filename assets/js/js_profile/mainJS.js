@@ -167,15 +167,12 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   showProfile(ori_author);
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
-    //alert(JSON.stringify(res));
     if(res.notfull) {
       alert("他還沒完整註冊所以沒有個人頁面喔");
       if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
         window.location.replace(document.referrer);
       else
         window.location.replace("/home");
-    }else if(res.notfull==false){
-      alert("此用戶目前尚未有任何文章");
     } else {
       sortTimelineList(function(){
         displayTimelineList(res, pri_account, pri_id, pri_avatar, 0);
@@ -330,18 +327,13 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
     }
 
     // 預先處理權限選單, 預先處理是否是別人在本塗鴉牆上之文章
+    var event_option = "";
     var owner = res["timelinesList"][i].owner;
     var owner_div = "";
-
-    // 有 owner 則更換顯示圖像
     var event_avatar = author_avater;
-    if(owner){
-      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.account+'">'+owner.alias+'</a> <span class="glyphicon glyphicon-play" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;</div>';
+    if(owner && pri_account==owner.account){ // 在別人塗鴉牆上 自己是文章所有者
+      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.account+'">'+owner.alias+'</a> > </div>';
       event_avatar = owner.img;
-    }
-
-    var event_option = "";
-    if((owner && pri_account==owner.account) || (!owner && (pri_account==ori_author || !ori_author))){ // 有全部權限
       var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
                 <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                 <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
@@ -357,12 +349,12 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                     &nbsp;權限\
                   </button>\
                   <ul class="dropdown-menu" role="menu">\
-                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
-                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
-                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
+                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>\
+                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得奧</a></li>\
+                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>\
                   </ul>\
                 </div>'
-    }else if(owner && pri_account!=owner.account && (pri_account==ori_author || !ori_author)){ // 原作者
+    }else if(pri_account==ori_author || !ori_author){ // 原作者
       var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
                 <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                 <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
@@ -370,20 +362,22 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                 <button value="插入圖片" id="editImage" class="b" name="'+timelinesID+'"><img src="/images/img_forum/images_icon.png">插入圖片</button>\
                 <button value="取消編輯" id="editCancel" class="b" name="'+timelinesID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
               </div>';
-      var event_option = '<li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
+      var event_option = '<li><a class="event_edit" name="'+timelinesID+'">編輯</a></li>\
+                          <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
       var auth_option='<div class="btn-group" style="float:none;">\
                   <button type="button" class="n" data-toggle="dropdown">\
                     <img src="/images/img_timeline/'+auth+'.png" height="20px" width="20px">\
                     &nbsp;權限\
                   </button>\
                   <ul class="dropdown-menu" role="menu">\
-                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
-                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
-                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
+                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>\
+                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到</a></li>\
+                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>\
                   </ul>\
                 </div>'
     }else{ // 非原作者
       var event_edit_div = "";
+      //var event_option = '<li><div id="report_event" name="'+timelinesID+'"><a class="report_event" name="'+timelinesID+'">檢舉</a></div></li>';
       var auth_option="";
       // 判斷是否為 reporter
       var result_reporter = $.grep(reporter, function(e){ return e.reporter == pri_id; });
@@ -836,7 +830,9 @@ function showProfile(ori_author){
   xmlHttp.send(null);
 }
 function HandleResponse_showProfile(response){
+
   obj = JSON.parse(response);
+  console.log(obj);
   var email=obj.email;
   var alias=obj.alias;
   var fname=obj.fname;
@@ -857,6 +853,7 @@ function HandleResponse_showProfile(response){
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
     $.get('/authCheck/'+owner,function(auth_status){
+      console.log(auth_status)
       if(!auth_status["name"]){
         $('#name_row').hide();
       }
@@ -904,8 +901,10 @@ function HandleResponse_showProfile(response){
   if (gender=='M'){
     gender="男";
   }
-  else{
+  else if(gender=='F'){
     gender="女";
+  }else{
+    gender="其他";
   }
   $('#gender').text(gender);
   $('#phone').text(phone);

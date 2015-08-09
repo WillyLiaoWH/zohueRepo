@@ -9,6 +9,21 @@ var bcrypt = require('bcrypt-nodejs');
 var passwordHash = require('password-hash');
 module.exports = {
 
+    signupAccountCheck: function(req, res) {
+        var account=req.param("account");
+        if(account.length>0){
+            User.findByAccount(account).exec(function(err, usr) {
+            if(err){
+                res.send(500,{err: "DB Error" });
+            } else if(usr.length!=0) {
+                res.send(400,{err:"Account already taken"});
+            }else{
+                res.send(200,{msg:"Account not been used"});
+            }
+            }); 
+        }
+    },
+
     signup: function(req, res) {
         var account=req.param("account");
         var password=req.param("password");
@@ -82,7 +97,7 @@ module.exports = {
         var birthday=req.param("birthday");
         var primaryDisease=req.param("primaryDisease");
         var selfIntroduction=req.param("selfIntroduction");
-
+console.log(img);
         if(typeof req.session.user == 'undefined'){
             res.send(500,{err: "您沒有權限" });
         }else{
@@ -109,7 +124,7 @@ module.exports = {
                         name:"friend",
                         city:"friend",
                         gender:"friend",
-                        email:"friedn",
+                        email:"friend",
                         phone:"friend",
                         bday:"friend"}).exec(function(err,ret){
                         if (err){
