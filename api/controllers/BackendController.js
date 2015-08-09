@@ -46,7 +46,7 @@ module.exports = {
                 if (admin.length!=0) {
                     if (adminPassword==admin[0].password) {
                         req.session.admin = adminAccount;
-                        res.send("success");
+                        res.send("登入成功");
                     } else {
                         res.send("密碼錯誤！");
                     }

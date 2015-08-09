@@ -47,7 +47,7 @@ module.exports = {
                 } else {
                     if(req.session.user.account == timeline[0].author.account){
                         cb();
-                    }else{res.send("No permission");}
+                    }else{res.send("您沒有權限");}
                 }
             });
         }
@@ -92,7 +92,7 @@ module.exports = {
                     }
                 });
             }else{
-                res.send("No permission");
+                res.send("您沒有權限");
             }
         }
         var TimelineId = req.param("id");

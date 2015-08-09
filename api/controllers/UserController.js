@@ -16,9 +16,9 @@ module.exports = {
             if(err){
                 res.send(500,{err: "DB Error" });
             } else if(usr.length!=0) {
-                res.send(400,{err:"Account already taken"});
+                res.send(400,{err:"帳號已有人使用"});
             }else{
-                res.send(200,{msg:"Account not been used"});
+                res.send(200,{msg:"帳號可使用"});
             }
             }); 
         }
@@ -53,7 +53,7 @@ module.exports = {
             if(err){
                 res.send(500,{err: "DB Error" });
             } else if(usr.length!=0) {
-                res.send(400,{err:"Account already taken"});
+                res.send(400,{err:"帳號已有人使用"});
             } else {
                 User.create({
                     account: account, 
@@ -210,10 +210,10 @@ console.log(img);
                         req.session.authenticated=true;
                         res.send(usr[0]);
                     } else {
-                        res.send(400, { err: "Wrong Password~~~~~~~~" });
+                        res.send(400, { err: "密碼錯誤" });
                     }
                 } else {
-                    res.send(404, { err: "User not Found" });
+                    res.send(404, { err: "查無此帳號" });
                 }
             }
         });
@@ -241,17 +241,17 @@ console.log(img);
         theUser=req.session.user
         
         if(!passwordHash.verify(oldPassword,theUser.password)) {
-            res.send(400, {err: "Password Incorrect"})
+            res.send(400, {err: "密碼錯誤"})
         } else {
             if (newPassword != reNewPassword){
-                res.send(400,{err:"Password don't match"})
+                res.send(400,{err:"兩次密碼設定的內容不同，請重新輸入！"})
             }
             theUser.password=passwordHash.generate(newPassword);
             User.update({account: theUser.account}, {password: theUser.password}).exec(function(err, updated) {
                 if(err) {
                     res.send("DB error");
                 } else {
-                    res.send("update complete");
+                    res.send("密碼更新");
                 }
             });
         }
@@ -262,7 +262,7 @@ console.log(img);
         console.log(req.param('email'));
         console.log(req.param('password'));
         if(!req.param('email') || !req.param('password')) {
-            console.log(req.param("no empty!!!!!!"));
+            console.log(req.param("不可以空白"));
         }
         User.findOneByEmail(req.param('email'), function foundUser(err, user){
             if (err) return next(err);
@@ -343,7 +343,7 @@ console.log(img);
                         
                     
                 } else {
-                    res.send(404, { err: "User not Found" });
+                    res.send(404, { err: "查無此帳號" });
                 }
             }
         });
@@ -413,7 +413,7 @@ console.log(img);
                 if (usr.length!=0) {
                     res.send(usr[0].email);
                 } else {
-                    res.send(404, { err: "User not Found" });
+                    res.send(404, { err: "查無此帳號" });
                 }
             }
         });
@@ -440,7 +440,7 @@ console.log(img);
 
     removeBlack: function(req, res) {
         if(!req.session.user) {
-            res.send({err: "haven't login"});
+            res.send({err: "尚未登入"});
         } else {
             User.find({id: req.session.user.id}).exec(function(err, user) {
                 if(err) {
@@ -525,7 +525,7 @@ console.log(img);
 
     addBlack: function(req, res) {
         if(!req.session.user) {
-            res.send({err: "haven't login"});
+            res.send({err: "尚未登入"});
         } else {
             User.find({id: req.session.user.id}).exec(function(err, user) {
                 if(err) {
@@ -584,7 +584,7 @@ console.log(img);
 
     confirmFriend: function(req, res) {
         if(!req.session.user) {
-            res.send({err: "haven't login"});
+            res.send({err: "尚未登入"});
         } else {
             User.find({id: req.session.user.id}).exec(function(err, user) {
                 if(err) {
@@ -647,7 +647,7 @@ console.log(img);
 
     removeFriend: function(req, res) {
         if(!req.session.user) {
-            res.send({err: "haven't login"});
+            res.send({err: "尚未登入"});
         } else {
             User.find({id: req.session.user.id}).exec(function(err, user) {
                 if(err) {
@@ -687,7 +687,7 @@ console.log(img);
 
     removeAddFriend: function(req, res) {
         if(!req.session.user) {
-            res.send({err: "haven't login"});
+            res.send({err: "尚未登入"});
         } else {
             User.find({id: req.session.user.id}).exec(function(err, user) {
                 if(err) {

@@ -32,7 +32,7 @@ module.exports = {
                 console.log(err);
                 res.send(500, {err: "DB error"});
             } else {
-                res.send("success");
+                res.send("成功");
             }
         });
     },
@@ -56,7 +56,7 @@ module.exports = {
                 console.log(err);
                 res.send(500, {err: "DB error"});
             } else {
-                res.send("success");
+                res.send("成功");
             }
         });
     }
