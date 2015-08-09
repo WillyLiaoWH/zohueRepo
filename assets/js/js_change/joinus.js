@@ -275,7 +275,8 @@ function Submit(){
     var alias = document.getElementById("alias").value;
     var fname = document.getElementById("fname_reg").value;
     var lname = document.getElementById("lname_reg").value;
-    var img = document.getElementById("avatar").src;
+    var img_temp = document.getElementById("avatar").src;
+    var img = img_temp.substring(img_temp.indexOf("/images/"));
     var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;
     if(forgetQ==999){forgetQ='[otherQ]'+document.getElementById("forgetQ-other").value;}
     var forgetA = document.getElementById("forgetA").value;
