@@ -98,7 +98,7 @@ module.exports = {
                 } else {
                     if((timeline[0].owner != null && req.session.user.account == timeline[0].owner.account) || (timeline[0].author != null && req.session.user.account == timeline[0].author.account)){ // 有 owner 且 owner 是自己時，或是沒有 owner 但 author 是自己時
                         cb();
-                    }else{res.send("No permission");}
+                    }else{res.send("沒有權限喔!");}
                 }
             });
         }
@@ -143,7 +143,7 @@ module.exports = {
                     }
                 });
             }else{
-                res.send("No permission");
+                res.send("沒有權限喔!");
             }
         }
         var TimelineId = req.param("id");

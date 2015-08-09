@@ -357,9 +357,9 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                     &nbsp;權限\
                   </button>\
                   <ul class="dropdown-menu" role="menu">\
-                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
-                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
-                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
+                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>\
+                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得奧</a></li>\
+                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>\
                   </ul>\
                 </div>'
     }else if(owner && pri_account!=owner.account && (pri_account==ori_author || !ori_author)){ // 原作者
@@ -377,9 +377,9 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                     &nbsp;權限\
                   </button>\
                   <ul class="dropdown-menu" role="menu">\
-                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人</a></li>\
-                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;好友</a></li>\
-                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己</a></li>\
+                    <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>\
+                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到</a></li>\
+                    <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>\
                   </ul>\
                 </div>'
     }else{ // 非原作者
