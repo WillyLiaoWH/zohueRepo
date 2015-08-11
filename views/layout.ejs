@@ -179,7 +179,7 @@
           <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
           <div id="FBlogin">
           帳號<label id="checkAccount" class="check"></label><br>
-          <input type="text" name="UserAccount" class="s" id="UserAccount"><br>
+          <input type="text" name="UserAccount" class="s" id="UserAccount" onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();"><br>
           密碼<label id="checkPwd" class="check"></label><br>
           <input type="password" name="UserPwd" class="s" id="UserPwd"><br>
           確認密碼<label id="checkPwdConfirm" class="check"></label><br>

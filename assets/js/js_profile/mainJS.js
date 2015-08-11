@@ -879,6 +879,7 @@ function HandleResponse_showProfile(response){
   $.get('/auth_data',function(auth_status){
     var index = ["name","email","gender","phone","bday","city"];
     for (var i in index){
+      console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
       $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
       if (auth_status[index[i]]=="self"){
         $('#'+index[i]+'_btn_text').text("自己才看得到");
@@ -900,10 +901,11 @@ function HandleResponse_showProfile(response){
   $('#alias').text(alias);
   $('#avatar').attr('src',img);
   if (gender=='M'){
-    gender="男";
-  }
-  else{
-    gender="女";
+    gender="男性";
+  }else if(gender=='F'){
+    gender="女性";
+  }else{
+    gender="其他";
   }
   $('#gender').text(gender);
   $('#phone').text(phone);

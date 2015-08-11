@@ -57,14 +57,14 @@ module.exports = {
 	                    var auth_set = auth[0]
 	                    for (var i =0;i<=5;i++){
 	                        var ind = index[i];
-	                        //console.log(auth_set[ind])
+	                        console.log(auth_set[ind])
 	                        if (auth_set[ind]==="self" && self){
 	                            ret_status[ind]=true;
 	                        }
 	                        else if (auth_set[ind]==="friend" && friend){
 	                            ret_status[ind]=true;
 	                        }
-	                        else if (auth_set[ind]==="doctor"&&doctor){
+	                        else if (auth_set[ind]==="doctor"&& doctor){
 	                            ret_status[ind]=true;
 	                        }
 	                        else if (auth_set[ind]==="all"){

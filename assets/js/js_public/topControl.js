@@ -228,6 +228,17 @@ function check(){
   }
 }
 
+function checkIfAccountExist(){
+  var account = $("#UserAccount").val();
+  var posting = $.post( "/simpleSignupAccountCheck", { account: account}, 
+    function(res){
+      $("label[id = checkAccount]").text(""); //alert(res.responseJSON);
+  })
+    .error(function(res){
+      $("label[id = checkAccount]").text("  *此帳號已有人使用囉！"); //alert(res.responseJSON.err);
+    });
+}
+
 function checkEmail(){
   if($("#UserEmail").val().search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)== -1){
     $("label[id = checkEmail]").text("  *E-mail格式錯誤！");
