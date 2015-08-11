@@ -19,11 +19,11 @@ function checkLogin() {
 
 var notMessage=[
   "在你追蹤的文章留言",
-  "覺得你追蹤的文章很讚",
+  "覺得你追蹤的文章",
   "在你的動態留言",
-  "覺得你的動態很讚",
-  "覺得你的回應很讚",
-  "覺得你的留言很讚",
+  "覺得你的動態",
+  "覺得你的回應",
+  "覺得你的留言",
   "邀請你成為他的好友",
   "已經和你成為好友了",
 ]
@@ -32,8 +32,11 @@ function setPage() {
     if(res){
       var table="";
       for(var i=0; i<res.length; i++) {
-        table+="<div class='not'>";
-
+        if(res[i].alreadyRead) {
+          table+="<div class='not read' id='"+res[i].id+"'>";
+        } else {
+          table+="<div class='not unread' id='"+res[i].id+"'>";
+        }
         table+="<div class='image'>";
         var picSize="80";
         var authorIcon="", authorType="";
@@ -64,38 +67,44 @@ function setPage() {
         table+="</div>";
 
         table+="<div class='message'>";
-        
         table+="<a href='/profile/?"+res[i].from.account+"'>"+res[i].from.alias+"</a>"+authorType+"&nbsp"
         table+=notMessage[parseInt(res[i].notType)-1];
         if(res[i].content) {
-          table+="&nbsp"+res[i].content;
+          table+="&nbsp\""+res[i].content+'"';
+        }
+        switch(res[i].notType) {
+          case "2":
+          case "4":
+          case "5":
+          case "6":
+            table+="&nbsp很讚";
         }
         table+="</div>";
         
         switch(res[i].notType) {
-          case "1":
           case "2":
           case "5":
             table+="<div class='go'>";
-            table+='<button value="查看文章" class="button" onclick="go(\''+res[i].link+'\');">&nbsp查看文章</button>'
+            table+="<button value='查看文章' class='button' onclick='check(\""+res[i].link+"\", \""+res[i].id+"\");'>&nbsp查看文章</button>";
             table+="</div>";
             break;
           case "3":
           case "4":
           case "6":
             table+="<div class='go'>";
-            table+='<button value="查看動態時報" class="button" onclick="go(\''+res[i].link+'\');">&nbsp查看動態時報</button>'
+            table+="<button value='查看動態時報' class='button' onclick='check(\""+res[i].link+"\", \""+res[i].id+"\");'>&nbsp查看動態時報</button>";
             table+="</div>";
             break;
           case "7":
             table+="<div class='go'>";
-            table+='<button value="確認好友" class="button" onclick="confirmFriend('+res[i].from.id+');">&nbsp確認好友</button>'
+            table+='<button value="確認好友" class="button" onclick="confirmFriend('+res[i].from.id+', '+res[i].id+');">&nbsp確認好友</button>';
             table+="</div>";
             break;
           case "8":
             break;
         }
         
+        table+="<div class='setRead'><button value='設為已讀' class='button' onclick='setRead(\""+res[i].id+"\");'>&nbsp設為已讀</button></div>";
 
         table+="</div>";
       }
@@ -107,19 +116,37 @@ function setPage() {
 function toProfile(account) {
   window.location.assign("/profile/?"+account);
 }
-function go(link) {
-  window.location.assign(link);
+function check(link, id) {
+  $.post("/setRead", {id: id}, function(res) {
+    if(res.err) {
+      alert(res.err);
+    } else {
+      window.location.assign(link);
+    }
+  });
 }
-function confirmFriend(id) {
+function confirmFriend(id, notId) {
   $.post("/confirmFriend", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='removeFriend("+id+")'>解除好友?</button><br>";
-      // html+="<button type='button' onclick='addBlack("+id+")'>封鎖?</button><br>";
-      // document.getElementById(id).innerHTML=html;
+      $.post("/setRead", {id: notId}, function(res) {
+        if(res.err) {
+          alert(res.err);
+        } else {
+          document.getElementById(notId).className="not read";
+        }
+      });
       location.reload();
     }
   })
+}
+function setRead(id) {
+  $.post("/setRead", {id: id}, function(res) {
+    if(res.err) {
+      alert(res.err);
+    } else {
+      document.getElementById(id).className="not read";
+    }
+  });
 }

@@ -47,7 +47,8 @@ module.exports = {
 	            var ret_status=JSON.parse(str);
 	            User.find({account:account}).exec(function(err,user){
 	            	if(user.length < 1){
-	            		res.send(500,"查無此人");
+	            		cb(JSON.parse('{"err":"找不到使用者"}'));
+	            		return 0;
 	            	}
 	                var id=user[0].id;
 	                Userauth.find({user:id}).exec(function(err,auth){

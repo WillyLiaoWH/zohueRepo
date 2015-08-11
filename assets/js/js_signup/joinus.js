@@ -200,7 +200,6 @@ function Submit(){
   if(pass_signup==1){
     var fname = document.getElementById("fname_reg").value;
     var lname = document.getElementById("lname_reg").value;
-    //var img = document.getElementById("avatar").src;
     var img_temp = document.getElementById("avatar").src;
     var img = img_temp.substring(img_temp.indexOf("/images/"));
     var forgetQ = document.getElementById("forgetQ").options[document.getElementById("forgetQ").selectedIndex].value;

@@ -23,5 +23,42 @@ module.exports = {
         	}
         });
     },
+
+    checkNotification: function(req, res) {
+        var id=req.param("id");
+        console.log(id);
+        Notification.update({user: id}, {alreadyRead: true}).exec(function(err, not) {
+            if(err) {
+                console.log(err);
+                res.send(500, {err: "DB error"});
+            } else {
+                res.send("成功");
+            }
+        });
+    },
+
+    countNotification: function(req, res) {
+        var id=req.session.user.id;
+        Notification.find({user: id, alreadySeen: false}).exec(function(err, not){
+            if(err) {
+                console.log(err);
+                res.send(500, {err: "DB error"});
+            } else {
+                res.send({num: not.length});
+            }
+        });
+    },
+
+    seeNotification: function(req, res) {
+        var id=req.session.user.id;
+        Notification.update({alreadySeen: false, user:id}, {alreadySeen: true}).exec(function(err, not){
+            if(err) {
+                console.log(err);
+                res.send(500, {err: "DB error"});
+            } else {
+                res.send("成功");
+            }
+        });
+    }
 };
 

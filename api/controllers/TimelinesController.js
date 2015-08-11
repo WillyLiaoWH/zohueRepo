@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing timelines
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-
+var async = require('async');
 module.exports = {
     auth_set:function(req,res){
         function chechAtuh(id, cb){
@@ -62,20 +62,12 @@ module.exports = {
             var content=req.param("timeline_post_content");
             var contentImg=req.param("timeline_post_image");
             var auth=req.param("timeline_post_auth");
-            if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });};
-
-            console.log("gogogo");
-            console.log(req.session.user.account);
-            console.log(req.session.stay);
-            console.log(req.session.user.account == req.session.stay);
+            if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });}
             if(req.session.user.account == req.session.stay){
-                console.log("go post");
                 Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
-                    console.log("end post");
                     if(error) {
                         res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
-                        console.log("successful post");
                         res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
                     }
                 });
@@ -85,7 +77,9 @@ module.exports = {
                         if(error) {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
-                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
+                            Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'account']}).populate('author', {select: ['img', 'alias', 'account']}).exec(function(error, timeline2) {
+                                res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, account: timeline2[0].author.account});
+                            });
                         }
                     });
                 });
@@ -102,9 +96,9 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "DB Error" });
                 } else {
-                    if((timeline[0].author == null && req.session.user.account == timeline[0].author.account) || req.session.user.account == timeline[0].owner.account){
+                    if((timeline[0].owner != null && req.session.user.account == timeline[0].owner.account) || (timeline[0].author != null && req.session.user.account == timeline[0].author.account)){ // 有 owner 且 owner 是自己時，或是沒有 owner 但 author 是自己時
                         cb();
-                    }else{res.send("No permission");}
+                    }else{res.send("沒有權限喔!");}
                 }
             });
         }
@@ -133,7 +127,7 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "DB Error" });
                 } else {
-                    if(req.session.user.account == timeline[0].author.account || req.session.user.account == timeline[0].owner.account){
+                    if((timeline[0].author != null && req.session.user.account == timeline[0].author.account) || (timeline[0].owner!=null&&(req.session.user.account == timeline[0].owner.account))){
                         cb(true);
                     }else{cb(false);}
                 }
@@ -149,7 +143,7 @@ module.exports = {
                     }
                 });
             }else{
-                res.send("No permission");
+                res.send("沒有權限喔!");
             }
         }
         var TimelineId = req.param("id");
@@ -187,7 +181,6 @@ module.exports = {
                     if(!user[0].isFullSignup) {
                         res.send({notfull: true});
                     } else {
-                        console.log(user[0].timelinesPost.length);
                         if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
                             res.send({notfull: false});
                         }else{
@@ -238,39 +231,42 @@ module.exports = {
                         doctor=true;
                     }
                     for (var i=0 ; i<user[0].friends.length;i=i+1){
-                        if (user[0].friends[i].account==account)
+                        if (user[0].friends[i].account===account){
                             friend=true;
+                        }
                     }
-                });
 
-                if (viewer==account){
-                    self=true;
-                    friend=true;
-                    doctor=true;
-                }
-                var len=result.timelinesPost.length;
-                for (var i=len-1;i>=0;i=i-1){
-                    if (result.timelinesPost[i].auth==="self"){
-                        if (!self){
-                            //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
-                            result.timelinesPost.splice(i,1);
-                        }
-                                    
-                    } 
-                    else if (result.timelinesPost[i].auth==="doctor"){
-                        if (!doctor){
-                            //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
-                            result.timelinesPost.splice(i,1);
-                        }
-                    } 
-                    else if (result.timelinesPost[i].auth==="friend" ){
-                        if(!friend){
-                            //console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
-                            result.timelinesPost.splice(i,1);
+                    if (viewer==account){
+                        self=true;
+                        friend=true;
+                        doctor=true;
+                    }
+                    var len=result.timelinesPost.length;
+                    for (var i=len-1;i>=0;i=i-1){
+                        if (result.timelinesPost[i].auth==="self"){
+                            if (!self){
+                                //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
+                                        
+                        } 
+                        else if (result.timelinesPost[i].auth==="doctor"){
+                            if (!doctor){
+                                //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
+                        } 
+                        else if (result.timelinesPost[i].auth==="friend" ){
+                            if(!friend){
+                               // console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
                         }
                     }
-                }
                 cb(result);
+                
+                });
+                
             }
         }
 
@@ -285,7 +281,7 @@ module.exports = {
         }
 
         function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
-            var async = require('async');
+            
 
             setTimeout(function() { // 一秒後如果沒有 call back，表示最後一個 timeline 且無留言
                 cb(Response);
@@ -312,8 +308,6 @@ module.exports = {
         checkLogin(function(){
             findAccount(function(account){
                 req.session.stay = account;
-                console.log("check stay id");
-                console.log(req.session.stay);
                 findTimelineResponse(account, function(Response){
                     getNicer(Response, function(Response2){
                         addAuth(account, Response2, function(Response3){
@@ -335,7 +329,7 @@ module.exports = {
             Timelines.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
                 if(timeline.author.id!=req.session.user.id) {
-                    Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.account}).exec(function(err, not) {
+                    Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.account, alreadySeen: false}).exec(function(err, not) {
                         if(err) {
                             console.log(err);
                             res.send({err:"DB error"});
