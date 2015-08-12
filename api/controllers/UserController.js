@@ -8,6 +8,53 @@
 var bcrypt = require('bcrypt-nodejs');
 var passwordHash = require('password-hash');
 module.exports = {
+    forgetA: function(req,res){
+        var answer = req.param("ans");
+        var account = req.param("account");
+        var password = req.param("password")
+        User.findByAccount(account).exec(function(err,usr){
+            if(err){
+                res.send(500,"DB Error");
+            }
+            else{
+                if (answer === usr[0].forgetA){
+                    User.update({account:account},{password:passwordHash.generate(password)},function(err,usr){
+                        if (err){
+                            res.send(500,"DB error");
+                        }
+                        else{
+                            req.session.user = usr[0];
+                            req.session.authenticated=true;
+                            res.send("OK");
+                        }
+                    });
+                }
+                else{
+                    res.send("NO");
+                }
+            }
+        });
+    },
+
+    getQ: function(req,res){
+        var account=req.param("account");
+        if (account.length>=0){
+            User.findByAccount(account).exec(function(err,usr){
+                if(err){
+                    res.send(500,{err:"DB Error"});
+                }
+                else if (usr.length==0){
+                    res.send({typ:"err",msg:"沒有這個使用者"});
+                }
+                // else if (usr[0].email.length!==0){
+                //     res.send({typ:"email",msg:"emailed"});
+                // }
+                else{
+                    res.send({typ:"ok",msg:usr[0].forgetQ});
+                }
+            });
+        }
+    },
 
     signupAccountCheck: function(req, res) {
         var account=req.param("account");
