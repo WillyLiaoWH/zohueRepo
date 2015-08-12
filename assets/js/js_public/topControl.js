@@ -49,7 +49,6 @@ function FB_API(){
 function checkAuth() {
   $.get("/checkAuth", function(auth){
     if(auth) {
-
       if(auth.account == 'zohueadmin'){
         document.getElementById("backend").style.display="block";
         document.getElementById("mobile_backend").style.display="block";
@@ -108,6 +107,8 @@ function checkAuth() {
       document.getElementById("mobile_userAlias").innerHTML = "嗨！ "+auth.alias;
       document.getElementById("mobile_userimg").src = auth.img;
 
+      checkNot();
+
       $.get("/checkFull", function(full){
         var fullSignup1=document.getElementById("mobile_fullSignup");
         var fullSignup2=document.getElementById("fullSignup");
@@ -136,6 +137,7 @@ function checkAuth() {
       if(postformmain) {
         postformmain.style.width="100%";
       }
+      
     }else{
       var setUp=document.getElementById("setUp");
       setUp.style.display="none";
@@ -227,7 +229,6 @@ function check(){
     Submit();
   }
 }
-
 
 function checkIfAccountExist(){
   var account = $("#UserAccount").val();
@@ -399,5 +400,20 @@ function fbLogin() {
      }); //設定需要授權的項目
   }
 function notification() {
-  window.location.assign("/notifications");
+  $.get('/seeNot',function(res){
+    if(res.err) {
+      alert(res.err);
+    } else {
+      window.location.assign("/notifications");
+    }
+  });
+}
+function checkNot() {
+  $.get('/countNot',function(res){
+    if(res.err) {
+      alert(res.err);
+    } else {
+      document.getElementById('notification').innerHTML="&nbsp通知 ("+res.num+")";
+    }
+  });
 }

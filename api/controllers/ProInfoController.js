@@ -32,7 +32,7 @@ module.exports = {
     },
     destroyAll: function(req, res) {
         ProInfo.destroy({}).exec(function deleteCB(err){
-            console.log('The record has been deleted');
+            console.log('紀錄已刪除');
             res.send("OK!");
         });
     },

@@ -237,7 +237,7 @@ module.exports = {
             if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
-                res.send('The record has been deleted');
+                res.send('紀錄已刪除');
             }
         });
     }
