@@ -18,12 +18,12 @@ module.exports = {
             }
             else{
                 if (answer === usr[0].forgetA){
-                    User.update({account:account},{password:passwordHash.generate(password)},function(err,usr){
+                    User.update({account:account},{password:passwordHash.generate(password)},function(err,user){
                         if (err){
                             res.send(500,"DB error");
                         }
                         else{
-                            req.session.user = usr[0];
+                            req.session.user = user[0];
                             req.session.authenticated=true;
                             res.send("OK");
                         }
@@ -38,6 +38,8 @@ module.exports = {
 
     getQ: function(req,res){
         var account=req.param("account");
+        var url = req.param("url");
+        var url=url.replace("forget","");
         if (account.length>=0){
             User.findByAccount(account).exec(function(err,usr){
                 if(err){
@@ -46,9 +48,51 @@ module.exports = {
                 else if (usr.length==0){
                     res.send({typ:"err",msg:"沒有這個使用者"});
                 }
-                // else if (usr[0].email.length!==0){
-                //     res.send({typ:"email",msg:"emailed"});
-                // }
+                else if (usr[0].email.length!==0){
+                    //產生一個random number,然後存入User內，接著發信
+                    var uuid = require('node-uuid');
+                    var buffer = new Array(32);
+                    uuid.v4(null,buffer);
+                    var random = uuid.unparse(buffer)
+                    
+
+                    User.update({account:account},{random:random},function(err,user){
+                        //開始寫信
+                        var nodemailer = require('nodemailer');  
+                        var transporter = nodemailer.createTransport({  
+                            service: 'Gmail',  
+                            auth: {  
+                             user: 'ntu.cpcp@gmail.com',  
+                             pass: 'lckung413'  
+                            }  
+                        });  
+                        var options = {  
+                            //寄件者  
+                            from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                            //收件者  
+                            to: user[0].email,   
+                            
+                            //主旨  
+                            subject: "[癌友加油站] 忘記密碼更新", // Subject line  
+                            
+                            //嵌入 html 的內文  
+                            html: "你好，請點擊以下連結更新密碼。如果你並沒有使用ZOHEU平台或是沒有使用忘記密碼功能請直接忽略此信，感謝<br><a href=" +url+ "getPassword/+" +random+ ">請點擊這裡</a>",   
+                               
+                        };  
+                        
+                        //發送信件方法  
+                        transporter.sendMail(options, function(error, info){  
+                            if(error){  
+                                console.log(error);  
+                            }else{  
+                                console.log('訊息發送: ' + info.response);  
+                            }  
+                        });  
+                    });
+
+
+                    res.send({typ:"email",email:usr[0].email});
+                }
                 else{
                     res.send({typ:"ok",msg:usr[0].forgetQ});
                 }

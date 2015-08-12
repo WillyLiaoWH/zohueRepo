@@ -1,12 +1,12 @@
 function accountSubmit(){
 	var account = $("#account").val()
-	$.get('/getQ/'+account,function(ret){
+	$.post('/getQ/',{account:account,url:window.location.toString()},function(ret){
 		if(ret.typ=="err"){
 			alert(ret.msg);
 			location.reload();
 		}
 		else if(ret.typ=="email"){
-
+			alert("確認信已發至"+ret.email+"，請依照信中指示更改密碼");
 		}
 		else{
 			var message;

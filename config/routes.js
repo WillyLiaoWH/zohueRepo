@@ -95,9 +95,7 @@ module.exports.routes = {
   'POST /recoverArticle': 'BackendController.recoverArticle',
   'POST /forgetAnswer' : 'UserController.forgetA',
   'POST /setRead': 'NotificationController.checkNotification',
-
-  
-  'GET /getQ/:account':'UserController.getQ', 
+  'POST /getQ':'UserController.getQ', 
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',

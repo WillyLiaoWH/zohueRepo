@@ -110,6 +110,10 @@ module.exports = {
     notifications: {
       collection: 'notification',
       via: 'user',
+    },
+    randNum:{
+      //找回密碼用的
+      type: 'string'
     }
   }
 };
