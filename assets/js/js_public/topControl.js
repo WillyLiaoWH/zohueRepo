@@ -230,7 +230,6 @@ function check(){
   }
 }
 
-
 function checkIfAccountExist(){
   var account = $("#UserAccount").val();
   var posting = $.post( "/simpleSignupAccountCheck", { account: account}, 
@@ -282,24 +281,15 @@ function Submit(){
 }
 
 function Login(){
-  var args = arguments;
   var url = document.URL;
-  switch (arguments.length) {
-    case 2:
-      var account=arguments[0];
-      var password=arguments[1];
-    break;
-    default:
-      if ($(window).width() <= 979){
-        var account=$("#mLoginAccount").val();
-        var password=$("#mLoginPwd").val();
-      }else{
-        var account=$("#LoginAccount").val();
-        var password=$("#LoginPwd").val();
-      }
-      
-    break;
+  if ($(window).width() <= 979){
+    var account=$("#mLoginAccount").val();
+    var password=$("#mLoginPwd").val();
+  }else{
+    var account=$("#LoginAccount").val();
+    var password=$("#LoginPwd").val();
   }
+      
   
   if(account == ""|| password == ""){
     alert("帳號密碼都要輸入唷！");

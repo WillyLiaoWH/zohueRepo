@@ -93,8 +93,9 @@ module.exports.routes = {
   'POST /adminLogin': 'BackendController.adminLogin',
   'POST /adminLogout': 'BackendController.adminLogout',
   'POST /recoverArticle': 'BackendController.recoverArticle',
+  'POST /forgetAnswer' : 'UserController.forgetA',
   'POST /setRead': 'NotificationController.checkNotification',
-  
+  'POST /getQ':'UserController.getQ', 
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
@@ -338,6 +339,19 @@ module.exports.routes = {
       ]
     }
   },
+  '/forget':{
+    view:'forget/index',
+    locals:{
+      scripts:[
+        '/js/js_forget/mainJS.js'
+      ],
+      stylesheets:[
+        '/styles/css_forget/style.css',
+        '/styles/importer.css'
+      ]
+    }
+  },
+
   // '/backend': {
   //   //view: 'backend/index',
   //   controller: 'backend'
