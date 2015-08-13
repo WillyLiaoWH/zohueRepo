@@ -8,6 +8,37 @@
 var bcrypt = require('bcrypt-nodejs');
 var passwordHash = require('password-hash');
 module.exports = {
+    getPassword: function(req,res){
+        var account = req.param("account");
+        var password = req.param("password");
+        var random = req.param("random");
+        User.findByAccount(account).exec(function(err,usr){
+            if (err){
+                res.send(500,"DB Error1");
+            }
+            else{
+                if (usr.length==0){
+                    res.send("NO");
+                }
+                else if (usr[0].random == random){
+                    User.update({account:account},{password:passwordHash.generate(password),random:"1"}).exec(function(err,user){
+                        if (err){
+                            res.send(500,"DB Error2");
+                        }
+                        else{
+                            req.session.user = user[0];
+                            req.session.authenticated=true;
+                            res.send("OK");
+                        }
+                    });
+                }
+                else{
+                    res.send("dif");
+                }
+            }
+        });
+    },
+
     forgetA: function(req,res){
         var answer = req.param("ans");
         var account = req.param("account");
@@ -76,7 +107,7 @@ module.exports = {
                             subject: "[癌友加油站] 忘記密碼更新", // Subject line  
                             
                             //嵌入 html 的內文  
-                            html: "你好，請點擊以下連結更新密碼。如果你並沒有使用ZOHEU平台或是沒有使用忘記密碼功能請直接忽略此信，感謝<br><a href=" +url+ "getPassword/+" +random+ ">請點擊這裡</a>",   
+                            html: "你好，請點擊以下連結更新密碼。如果你並沒有使用ZOHEU平台或是沒有使用忘記密碼功能請直接忽略此信，感謝<br><a href=" +url+ "getPassword/" +random+ ">請點擊這裡</a>",   
                                
                         };  
                         

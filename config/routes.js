@@ -81,7 +81,6 @@ module.exports.routes = {
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
   'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
   'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
-
   'POST /subscribe': 'SubscribeEmailController.subscribe',
   'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
@@ -96,6 +95,8 @@ module.exports.routes = {
   'POST /forgetAnswer' : 'UserController.forgetA',
   'POST /setRead': 'NotificationController.checkNotification',
   'POST /getQ':'UserController.getQ', 
+  'POST /getPassword':'UserController.getPassword',
+
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
@@ -282,6 +283,18 @@ module.exports.routes = {
         '/styles/importer.css',
         '/styles/css_public/themes/alertify.core.css',
         '/styles/css_public/themes/alertify.default.css'
+      ]
+    }
+  },
+  '/getPassword/*':{
+    view: 'forget/getPassword',
+    locals:{
+      scripts:[
+      '/js/js_forget/forget.js'
+      ],
+      stylesheets:[
+        '/styles/css_forget/style.css',
+        '/styles/importer.css'
       ]
     }
   },
