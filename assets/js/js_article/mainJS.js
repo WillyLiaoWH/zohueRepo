@@ -134,7 +134,11 @@ function setPage() {
     if(response.length!=0) {
       for(i=0; i<response.length; i++) {
         commentTime=new Date(response[i].createdAt).toLocaleString();
-
+        if(commentTime.indexOf("GMT")==-1) {
+        commentTime=commentTime.slice(0, commentTime.length-3);
+      } else {
+        commentTime=commentTime.slice(0, commentTime.indexOf("GMT"))+commentTime.slice(commentTime.indexOf("GMT")+5, commentTime.length-3);
+      }
         switch(response[i].author.type){
           case "D":
             var type_avatar_img = "src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
