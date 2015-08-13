@@ -43,10 +43,14 @@
     <script src="/js/js_public/jquery.scrollzer.min.js"></script>
     <script src="/js/js_public/topControl.js"></script>
     <script src="/js/js_public/bootstrap.min.js"></script>
+    <script type="text/javascript"src="/js/js_home/jquery.jcarousel.min.js"></script>
+    <script type="text/javascript"src="/js/js_home/jcarousel.basic.js"></script>
+    <script type="text/javascript" src="/js/js_home/jquery.jcarousel.min.js"></script>
     <link rel="stylesheet" href="/styles/css_public/topControl.css">
     <link rel="stylesheet" href="/styles/css_public/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/css_public/bootstrap-responsive.css">
     <link rel="stylesheet" href="/styles/css_public/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/styles/css_home/jcarousel.basic.css">
     <!-- Loop through all scripts and stylesheets that passed from routes -->
     <% if (scripts) { %>
         <% for (i = 0; i < scripts.length; i++) { %>
@@ -145,6 +149,52 @@
         <div id="fullSignup">
           <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
         </div>
+        <div>
+              <table width="70%" border="0" align="center" cellpadding="2" cellspacing="10" style="
+    margin-left: -15px;">
+                  <tr>
+                      <td><div align="center">
+                        <a href="http://www.cancer.org/docroot/home/index.asp" target="_blank">
+                         <img src="http://www.ecancer.org.tw/images/banner_acs20090313.jpg" alt="美國癌症協會"  title="美國癌症協會" border="0" /> </td>
+                  </tr>
+
+
+                   <tr>
+                    <td>
+                        <a href="http://www.cancerptf.org.tw" target="_blank">
+                        <img src="http://www.ecancer.org.tw/images/banners/cancerptf_180_60.jpg" alt="癌症防治基金會"  border="0" title="癌症防治基金會（另開啟視窗）" /></a>
+                      </td>
+                    </tr>   
+
+                  <tr>
+                    <td><div align="center">
+                      <a href="http://www.crm.org.tw" target="_blank">
+                      <img src="http://www.ecancer.org.tw/banner/180_CRM_BANNER.gif"  alt="癌症資源網" title="癌症資源網" border="0" />
+                      </a></td>
+                  </tr>
+                    <tr>
+                      <td>
+                        <a href="http://www.ecancer.org.tw/4GOOD_HOPE/" target="_blank">
+                        <img src="http://www.ecancer.org.tw/banner/4good_180_60.jpg" alt="4good 是的我會更健康的活著"  title="4good 是的我會更健康的活著" border="0" />
+                      </td>
+                    </tr>                                                                           
+                    <tr>
+                      <td>
+                        <a href="http://www.uicc.org/" target="_blank">
+                        <img src="http://www.ecancer.org.tw/banner/GlobalCancerControl_banner.gif" alt="globe cencer control" title="globe cencer control"  border="0" /></a></td>
+                    </tr>
+
+                    <tr>
+                    <td><div align="center"><a href="ads_url.asp?Ser_No=55" target="_blank"><img src="http://www.tbca-npo.org.tw/upload/%7B3B0ACF39-FDFA-4FC0-9BC4-AD9120A8FA96%7D_%E6%9C%AA%E5%91%BD%E5%90%8D-1.jpg" border="0" alt="活得漂亮 過得精彩～ABC繪本故事徵文" width="180" /></a></div></td>
+                  </tr>
+                  <tr>
+                    <td><div align="center"><a href="ads_url.asp?Ser_No=43" target="_blank"><img src="http://www.tbca-npo.org.tw/upload/S_{A42D3FD0-2379-4A57-A84B-FB7073348C09}_blog_banner.jpg" border="0" alt="TBCA粉紅湧腳馬" width="180" /></a></div></td>
+                  </tr>
+                  <tr>
+                    <td><div align="center"><a href="ads_url.asp?Ser_No=52" target="_blank"><img src="http://www.tbca-npo.org.tw/upload/S_{791BB8DB-9224-439F-9F68-443C7FFB9DB4}_000.jpg" border="0" alt="愛的骨勵" width="180" /></a></div></td>
+                  </tr>
+                </table>
+            </div>
       </div>
     </div>
 
@@ -173,8 +223,8 @@
     </div>
     <!-- menu部份的mobile版 -->
 
-    <div id="signup" class="col-md-3 col-sm-12 col-xs-12">
-        <h1>簡易註冊</h1>
+    <div id="signup" class="col-md-3 col-sm-12 col-xs-12" style="font-size:30px;">
+        <h1 style="font-size:30px;" >簡易註冊</h1>
         <form id="simpleSignUp">
           暱稱<label id="checkAlias" class="check"></label><br>
           <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
@@ -203,8 +253,8 @@
           <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
         </form>
         <br>        
-        <div id="e-newsletter">
-          <h1>訂閱電子報</h1>
+        <div id="e-newsletter" >
+          <h1 style="font-size:30px;">訂閱電子報</h1>
           <div style="margin:15px;">
             <input class="s" id="subscribeEmail" placeholder="請輸入您的電子郵件地址">
             <button type="button" class="b" id="subscribe" onclick="subscribe();"><img src="/images/img_forum/check_icon.png"/>訂閱</button>

@@ -76,6 +76,10 @@ button, input[type="button"], input[type="submit"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 
+
+
+
+
 .l{
 	height: 48px;
 	color:#816C5B;
@@ -114,6 +118,7 @@ button, input[type="button"], input[type="submit"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 
+
 #forget{
 	cursor: pointer;
 	margin-left:10px;
@@ -131,6 +136,7 @@ button, input[type="button"], input[type="submit"]{
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
 }
+
 
 #notification{
 	cursor: pointer;
@@ -283,7 +289,7 @@ button, input[type="button"], input[type="submit"]{
 	/*color:#668D3C;*/
 	color:#D26900;
 	font-family: "微軟正黑體";
-	font-size:35px;
+	font-size:30px;
 	display: none;
 }
 
@@ -313,6 +319,7 @@ button, input[type="button"], input[type="submit"]{
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
 }
+
 
 .b{
 	/*margin: -20px 5px 10px 0px;*/

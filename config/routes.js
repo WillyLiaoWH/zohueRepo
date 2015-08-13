@@ -186,7 +186,7 @@ module.exports.routes = {
       stylesheets: [
         '/styles/css_home/style.css',
         '/styles/importer.css'],
-      welcome: '歡迎光臨'
+      welcome: '歡迎光臨ZOHUE!'
     }
   },
 

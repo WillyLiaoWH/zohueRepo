@@ -1,0 +1,701 @@
+﻿/*=============================    
+barousel_demo.css
+v.0.1
+Julien Decaudin - 04/2010
+www.juliendecaudin.com
+=============================*/
+
+html, body
+{
+    margin:0;
+    padding:0;
+}
+
+body
+{
+    font-size: 100%;
+    font-family:Arial, Sans-Serif;
+    line-height: 0.94em; /* 15px */
+    color:#000;
+    background:#000; 
+    margin:3px 0 0 3px;   
+}
+
+/*--------------------------------------------------=> HEADERS */
+/* H1 */
+h1
+{
+    font-size:1.88em; /* 30px */   
+    line-height:normal;
+    margin-bottom:10px;
+    background:#fff55b;    
+}
+
+h1 a
+{
+    display:block;
+    color:#000;   
+    padding:5px 5px 5px 15px; 
+}
+
+#page_thslide h1
+{
+    background-color:#6ec1dd;
+}
+
+#page_barouselthslide h1
+{
+    background-color:#8ae04e;
+}
+
+/* H2 */
+h2
+{        
+    font-size:1.56em; /* 25px */    
+    line-height:normal;
+    color:#000;   
+    margin-bottom:15px;
+}
+
+/* H3 */
+h3
+{
+    display:inline-block;
+    font-size:1.25em; /* 20px */    
+    font-weight:normal;            
+    color:#ccc;
+    background:#000;
+    margin:0;
+    padding:8px 8px 7px 8px;
+}
+
+/*--------------------------------------------------=> CONTENT ELEMENTS */
+/*-------------> Global */
+.content_holder
+{
+    padding:15px;
+}
+
+.hr
+{
+    border-bottom:2px solid #99cc00;    
+    margin-bottom:2px;
+}
+
+.hr_thin
+{
+    border-bottom:1px solid #cfe580;    
+    margin:5px 0 10px 0;
+}
+
+.hr_hashed
+{
+    background:url(../images/hr_hashed.gif) repeat-x 0 0;
+    width:100%;
+    height:4px;
+    margin:5px 0 15px 0;
+}
+
+/*-------------> Paragraph */
+p
+{    
+    margin:0;
+    padding:0 0 10px 0;        
+    font-size:0.75em;
+}
+
+p.intro
+{
+    font-size:0.88em;
+    line-height:18px;
+    padding-bottom:25px;
+}
+
+p.intro strong
+{
+    font-weight:normal;
+}
+
+#page_barousel p.intro strong
+{
+    background-color:#fff55b;
+}
+
+#page_thslide p.intro strong
+{
+    background-color:#6ec1dd;
+}
+
+#page_barouselthslide p.intro strong
+{
+    background-color:#8ae04e;
+}
+
+p.heading
+{
+    line-height:normal;
+}
+
+#footer p
+{
+	color:#fff;
+	padding-bottom:5px;
+}
+
+pre
+{
+    background-color:#fff;
+    padding:10px;
+    margin-bottom:30px;    
+    font-size:12px;
+}
+
+/*-------------> Links */
+a, a:hover
+{
+    color:#000;
+    text-decoration:underline;
+}
+
+#page_barousel a:hover
+{
+    background-color:#fff55b;
+}
+
+#page_thslide a:hover
+{
+    background-color:#6ec1dd;
+}
+
+h1 a
+{
+    text-decoration:none;
+}
+
+h1 a:hover
+{    
+    text-decoration:none;
+}
+
+#footer a
+{
+	color:#fff;
+}
+
+/*-------------> Images */
+img
+{
+    border:none;
+}
+
+/*-------------> Lists */
+ul li
+{    
+    
+    font-size:0.75em; 
+    line-height:16px;
+}
+
+/* anchor list */
+ul.anchor_list
+{
+    margin-bottom:40px;
+}
+
+ul.anchor_list li
+{
+    display:inline;
+    padding-right:20px;
+    font-size:0.92em;
+}
+
+ul.anchor_list li a
+{
+    
+}
+
+/* bullet list */
+ul.bullet_list
+{
+    list-style-type:disc;
+    margin:0 0 15px 15px;
+    padding:0 0 10px 0;    
+}
+
+/*-------------> Table */
+table
+{
+    font-size:0.75em;
+    border-collapse:collapse;
+    margin-bottom:25px;
+}
+
+td
+{
+    padding:5px 5px 5px 5px;
+}
+
+td strong
+{
+    font-weight:normal;
+}
+
+thead td
+{
+    font-weight:bold;
+}
+
+#page_barousel td strong,
+#page_barousel tbody tr:hover td
+{
+    background-color:#fff55b;
+}
+
+#page_thslide td strong,
+#page_thslide tbody tr:hover td
+{
+    background-color:#6ec1dd;
+}
+
+/*-------------> BAROUSEL */
+.barousel
+{
+    position:relative;
+    margin-bottom:0px;
+    background:url(../images/bg_banner.gif) repeat 0 0;
+    width:500px;
+    height:401px;
+    border-top:3px solid #000;
+}
+
+.barousel_image
+{
+    position:absolute;
+    z-index:10;
+    width:500px;
+    height:375px;
+}
+
+.barousel_image img
+{
+    position:absolute;
+    display:none;
+}
+
+.barousel_image img.default
+{    
+    display:block;
+}
+
+.barousel_image img.current
+{
+    z-index:10;
+}
+
+.barousel_image img.previous
+{
+    z-index:5;
+}
+
+.barousel_content
+{
+    position:absolute;
+    padding:15px 18px 0 18px;    
+    z-index:50;
+    background:url(../images/bg_barousel_content.png) repeat 0 0;
+    color:#fff;
+    width:247px;
+    bottom:36px;
+    left:10px;
+}
+
+.barousel_content div
+{
+    display:none;    
+}
+
+.barousel_content div.default
+{
+    display:block;    
+}
+
+.barousel_content p
+{
+    font-size:13px;
+    font-weight:normal; 
+    line-height:17px;   
+}
+
+.barousel_content p.header
+{
+    font-size:28px;
+    font-weight:normal;
+    line-height:28px;
+    color:#fff55b;
+}
+
+.barousel_content a,
+.barousel_content a:hover
+{
+    color:#fff55b;
+    background-color:transparent !important;
+}
+
+.barousel_nav
+{
+    position:absolute;
+    padding:3px 3px 0px 0;
+    height:23px;    
+    background:#000;
+    bottom:0;
+    z-index:20;
+    width:497px;
+}
+
+.barousel_nav .counter
+{    
+    float:right;
+    font-size:0.75em;
+    color:#fff;
+    margin:3px 5px 0 0;
+}
+
+.barousel_nav ul
+{
+    float:right;
+    padding:0;
+    margin:0;
+}
+
+.barousel_nav li
+{
+    float:left;
+    padding-left:3px;
+    font-size:0;
+    line-height:0;
+    list-style:none;
+}
+
+.barousel_nav li a
+{
+    display:block;
+    width:25px;
+    height:20px;
+    background-color:#4d4d4d;
+    font-size:0;
+    line-height:0;
+    text-decoration:none;
+}
+
+.barousel_nav li a:hover
+{
+    background-color:#6e6e6e;
+}
+
+.barousel_nav li a.current
+{
+    background-color:#fff55b;
+}
+
+.barousel_nav li.prev a
+{
+    background-image:url(../images/barousel_link_previous.gif);
+    background-repeat:no-repeat;
+    background-position:0 0;
+}
+
+.barousel_nav li.next a
+{
+    background-image:url(../images/barousel_link_next.gif);
+    background-repeat:no-repeat;
+    background-position:0 0;
+}
+
+.barousel img.ajax_loader
+{
+    display:none;
+    position:absolute;
+    z-index:99;
+    top:70px;
+    left:135px;
+}
+
+/*-------------> THSLIDE */
+.thslide
+{    
+    background:#000;
+    width:500px;
+    height:68px;
+    border-top:3px solid #000;
+}
+
+.thslide_nav_previous
+{
+    float:left;    
+}
+
+.thslide_nav_next
+{
+    float:right;    
+}
+
+.thslide_nav_previous a,
+.thslide_nav_next a
+{
+    display:block;
+    width:19px;
+    height:68px;     
+    text-decoration:none;  
+    background-color:#4d4d4d;
+    background-repeat:no-repeat;    
+}
+
+.thslide_nav_previous a
+{
+    background-image:url(../images/thslide_link_previous.gif);    
+    background-position:0 0;
+}
+
+.thslide_nav_next a
+{
+    background-image:url(../images/thslide_link_next.gif);    
+    background-position:100% 0;
+}
+
+.thslide_nav_previous a:hover,
+.thslide_nav_next a:hover
+{
+    background-color:#6e6e6e;
+}
+
+.thslide_list
+{
+    float:left;
+    overflow:hidden;   
+    position:relative; 
+    width:462px;
+    height:68px;    
+}
+
+.thslide_list ul
+{
+    float:left;
+    width:9000px;
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+.thslide_list li
+{
+    float:left;
+    margin-right:3px;
+}
+
+.thslide_list li a
+{
+    display:block;
+    position:relative;
+    width:90px;
+    height:68px;    
+    text-decoration:none;
+}
+
+.thslide_list li a img
+{
+    position:absolute;
+}
+
+.thslide_list li a span
+{
+    position:absolute;
+    display:block;
+    width:84px;
+    height:62px;    
+}
+
+.thslide_list li a:hover span,
+.thslide_list li a.current span
+{    
+    border:3px solid #fff55b;
+}
+
+/* Specific implementation */
+#barousel_thslide
+{
+    height:446px;
+}
+
+#barousel_thslide .barousel_content
+{
+    bottom:81px;
+}
+
+#thslide_barousel_nav
+{
+    position:absolute;
+    bottom:0;
+}
+
+/*--------------------------------------------------=> CONTENT LAYOUT */
+/* unique */
+
+/* utilities */
+.column_half_left
+{
+    float: left;
+    width: 48.5%;
+}
+
+.column_half_right
+{
+    float: right;
+    width: 48.5%;
+}
+
+.column_third
+{
+    float: left;
+    width: 32.1%;
+}
+
+.column_fourth
+{
+    float: left;
+    width: 25%;
+}
+
+.column_last
+{
+    padding-right: 0 !important;
+}
+
+/*--------------------------------------------------=> MASTER LAYOUT */
+.page
+{
+    width:530px;    
+    background-color:#ccc;
+    margin:0 3px 3px 0;
+}
+
+#nav
+{
+	position:fixed;
+	top:3px;
+	left:537px;
+	width:250px;
+}
+
+#nav li
+{	
+	font-size:0.88em;
+	font-weight:bold;
+}
+
+#nav li a
+{
+	display:block;	
+	text-decoration:none;
+	padding:7px 10px;
+}
+
+#nav li a:hover
+{
+	background-color:#000;
+	color:#fff;
+}
+
+#nav_barousel
+{
+	background-color:#fff55b;
+}
+    
+#nav_thslide
+{
+    background-color:#6ec1dd;
+}
+
+#nav_barouselthslide
+{
+    background-color:#8ae04e;
+}
+
+#footer
+{
+	margin:10px 5px 0 5px;
+}
+
+/*--------------------------------------------------=> UTILITY CLASSES */
+.floatLeft
+{
+    float: left;
+}
+
+.floatRight
+{
+    float: right;
+}
+
+.halfwidth
+{
+    float: left;
+    width: 50%;
+}
+
+.halfwidth_right
+{
+    float: right;
+    width: 50%;
+}
+
+.thirdwidth
+{
+    float: left;
+    width: 33%;
+    padding: 3px 0 10px 0;
+}
+
+.nodisplay
+{
+    display: none;
+}
+
+.nopadding_top
+{
+    padding-top: 0;
+}
+
+.nopadding_bottom
+{
+    padding-bottom: 0;
+}
+
+.nopadding_vertical
+{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.clearmargin
+{
+    margin: 0;
+    padding: 0;
+}
+
+.clearer
+{
+    clear: both;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    font-size:0;
+    line-height:0;
+}
+
+.spacer
+{
+    clear: both;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+}
