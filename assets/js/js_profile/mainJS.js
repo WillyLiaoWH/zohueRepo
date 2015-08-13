@@ -350,14 +350,15 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
               </div>';
       var event_option = '<li><a class="event_edit" name="'+timelinesID+'">編輯</a></li>\
                           <li><a class="event_del" name="'+timelinesID+'">刪除</a></li>';
+      var auth_name = {"self":"只有自己看得到","friend":"只有好友看得到","all":"每個人都看得到"};
       var auth_option='<div class="btn-group" style="float:none;">\
                   <button type="button" class="n" data-toggle="dropdown">\
                     <img src="/images/img_timeline/'+auth+'.png" height="20px" width="20px">\
-                    &nbsp;權限\
+                    &nbsp;'+auth_name[auth]+'\
                   </button>\
                   <ul class="dropdown-menu" role="menu">\
                     <li><a class="auth_set_all" name="'+timelinesID+'"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>\
-                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得奧</a></li>\
+                    <li><a class="auth_set_friend" name="'+timelinesID+'"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到</a></li>\
                     <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>\
                   </ul>\
                 </div>'
