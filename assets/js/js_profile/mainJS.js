@@ -174,6 +174,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         window.location.replace("/home");
     }else if(res.notfull==false){
       alert("此用戶目前尚未有任何文章");
+      showProfile(ori_author);
     } else {
        showProfile(ori_author);
       sortTimelineList(function(){
