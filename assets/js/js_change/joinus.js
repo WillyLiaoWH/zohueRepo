@@ -289,7 +289,8 @@ function Submit(){
     var birthday_Y = parseInt(document.getElementById("birthday_Y").value)+1911;
     var birthday_M = document.getElementById("birthday_M").value;
     var birthday_D = document.getElementById("birthday_D").value;
-    var birthday = (new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D)).toString();
+    var birthday = (new Date(birthday_Y, (birthday_M-1), birthday_D)).toString();
+    //var birthday = (new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D)).toString();
     var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
     var selfIntroduction = document.getElementById("selfIntroduction").value;
     var posting = $.post( "/change", { email: email, alias: alias,
