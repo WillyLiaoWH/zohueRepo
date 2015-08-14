@@ -265,7 +265,7 @@ function checkPwd(){
     $("label[id = checkPwdConfirm]").text("  *原密碼與確認密碼不同！");allow_create = 0;
   }
   else if($("#UserPwd").val().length > 0 && $("#UserPwdConfirm").val().length > 0 && $("#UserPwd").val() == $("#UserPwdConfirm").val()){
-    $("label[id = checkPwdConfirm]").removeClass("checkOK").addClass("check");
+    $("label[id = checkPwdConfirm]").removeClass("check").addClass("checkOK");
     $("label[id = checkPwdConfirm]").text("  *已完成確認密碼！");allow_create = 0;
   }
   else{
