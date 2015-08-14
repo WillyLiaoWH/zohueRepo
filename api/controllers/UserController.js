@@ -219,7 +219,6 @@ module.exports = {
         var birthday=req.param("birthday");
         var primaryDisease=req.param("primaryDisease");
         var selfIntroduction=req.param("selfIntroduction");
-console.log(img);
         if(typeof req.session.user == 'undefined'){
             res.send(500,{err: "您沒有權限" });
         }else{
@@ -381,8 +380,7 @@ console.log(img);
 
     create: function(req, res, next){
         //似乎是沒用了但先不要刪掉好了 by Po
-        console.log(req.param('email'));
-        console.log(req.param('password'));
+    
         if(!req.param('email') || !req.param('password')) {
             console.log(req.param("不可以空白"));
         }
@@ -439,7 +437,7 @@ console.log(img);
                     ret.img = usr[0].img;
                     var authcheck=require("../services/authcheck.js");
                     authcheck.authCheck(req,function(auth){
-                        console.log(auth)
+                        //console.log(auth)
                         if (auth.name===true){
                             ret.lname = usr[0].lname;
                             ret.fname = usr[0].fname 

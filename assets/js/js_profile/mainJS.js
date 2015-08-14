@@ -165,7 +165,6 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   if (pri_account!==ori_author){
     //$('.auth_btn').hide()
   }
-  showProfile(ori_author);
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
       alert("他還沒完整註冊所以沒有個人頁面喔");
@@ -176,6 +175,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
     }else if(res.notfull==false){
       alert("此用戶目前尚未有任何文章");
     } else {
+       showProfile(ori_author);
       sortTimelineList(function(){
         displayTimelineList(res, pri_account, pri_id, pri_avatar, 0);
       });
@@ -191,6 +191,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   .error(function(res){
     alert(res.responseJSON.err);
   });
+ 
 }
 
 function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // 輸入 object, 登入者 account, 登入者 id, 登入者 avatar, append 方式
@@ -881,7 +882,7 @@ function HandleResponse_showProfile(response){
   $.get('/auth_data',function(auth_status){
     var index = ["name","email","gender","phone","bday","city"];
     for (var i in index){
-      console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
+      //console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
       $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
       if (auth_status[index[i]]=="self"){
         $('#'+index[i]+'_btn_text').text("自己才看得到");
