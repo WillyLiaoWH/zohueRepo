@@ -347,8 +347,15 @@ button, input[type="button"], input[type="submit"]{
 }
 
 .check{
-	color:#D26900;
+	color: #D26900;
 	font-size: 15px;
+	white-space: pre;
+}
+
+.checkOK{
+	color: #669947;
+	font-size: 15px;
+	white-space: pre;
 }
 
 #submit{

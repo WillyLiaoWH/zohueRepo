@@ -231,14 +231,22 @@ function check(){
 }
 
 function checkIfAccountExist(){
-  var account = $("#UserAccount").val();
-  var posting = $.post( "/simpleSignupAccountCheck", { account: account}, 
+  if($("#UserAccount").val().trim().length > 0){
+    var account = $("#UserAccount").val();
+    var posting = $.post( "/simpleSignupAccountCheck", { account: account}, 
     function(res){
-      $("label[id = checkAccount]").text(""); //alert(res.responseJSON);
-  })
+      if($("#UserAccount").val().trim().length > 0 ){
+        $("label[id = checkAccount]").removeClass("check").addClass("checkOK");
+        $("label[id = checkAccount]").text("  *您可以使用此帳號！"); //alert(res.responseJSON);
+      }
+    })
     .error(function(res){
-      $("label[id = checkAccount]").text("  *此帳號已有人使用囉！"); //alert(res.responseJSON.err);
+      $("label[id = checkAccount]").removeClass("checkOK").addClass("check");
+      $("label[id = checkAccount]").text("  *此帳號已經有人使用囉！"); //alert(res.responseJSON.err);
     });
+  }else{
+    $("label[id = checkAccount]").text("");
+  }
 }
 
 function checkEmail(){
@@ -252,8 +260,13 @@ function checkEmail(){
 }
 
 function checkPwd(){
-  if($("#UserPwd").val() != $("#UserPwdConfirm").val()){
-    $("label[id = checkPwdConfirm]").text("  *確認密碼和原設密碼不相同！");allow_create = 0;
+  if($("#UserPwdConfirm").val().trim().length > 0 && $("#UserPwd").val().trim() != $("#UserPwdConfirm").val().trim()){
+    $("label[id = checkPwdConfirm]").removeClass("checkOK").addClass("check");
+    $("label[id = checkPwdConfirm]").text("  *原密碼與確認密碼不同！");allow_create = 0;
+  }
+  else if($("#UserPwdConfirm").val().trim().length > 0 && $("#UserPwd").val().trim().length > 0 && $("#UserPwd").val() == $("#UserPwdConfirm").val()){
+    $("label[id = checkPwdConfirm]").removeClass("check").addClass("checkOK");
+    $("label[id = checkPwdConfirm]").text("  *確認密碼完成！");
   }
   else{
     $("label[id = checkPwdConfirm]").text("");

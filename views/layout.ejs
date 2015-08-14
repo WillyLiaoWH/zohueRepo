@@ -232,9 +232,9 @@
           帳號<label id="checkAccount" class="check"></label><br>
           <input type="text" name="UserAccount" class="s" id="UserAccount" onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();"><br>
           密碼<label id="checkPwd" class="check"></label><br>
-          <input type="password" name="UserPwd" class="s" id="UserPwd"><br>
+          <input type="password" name="UserPwd" class="s" id="UserPwd" onchange="checkPwd();" onkeyup="checkPwd();"><br>
           確認密碼<label id="checkPwdConfirm" class="check"></label><br>
-          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm"><br>
+          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm" onchange="checkPwd();" onkeyup="checkPwd();"><br>
           </div>
           E-mail（建議填寫）<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
           <input type="hidden" name="FB_id" id="FB_id" value="1">

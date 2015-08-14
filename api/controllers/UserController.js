@@ -133,7 +133,7 @@ module.exports = {
 
     signupAccountCheck: function(req, res) {
         var account=req.param("account");
-        if(account.length>0){
+        if(account!=null && account.length>0){
             User.findByAccount(account).exec(function(err, usr) {
                 if(err){
                     res.send(500,{err: "DB Error" });
