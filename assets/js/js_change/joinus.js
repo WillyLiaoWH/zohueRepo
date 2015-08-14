@@ -371,7 +371,7 @@ function HandleResponse_showProfile(response){
   var address=obj.address;
   var birthday = obj.birthday;
   var b = new Date(birthday)
-  var Y = b.getFullYear();
+  var Y = b.getFullYear().toString() == "NaN" ? "" : b.getFullYear()-1911;
   var M = b.getMonth()+1;
   var D = b.getDate();
   var primaryDisease=obj.primaryDisease;
@@ -395,7 +395,7 @@ function HandleResponse_showProfile(response){
   document.getElementById("postalCode").value = postalCode;
   getCity(document.getElementById("postalCode").value);
   document.getElementById("address").value = address;
-  document.getElementById("birthday_Y").value = Y-1911;
+  document.getElementById("birthday_Y").value = Y;
   document.getElementById("birthday_M").value = M;
   ShowDate(M, Y)
   document.getElementById("birthday_D").value = D;
