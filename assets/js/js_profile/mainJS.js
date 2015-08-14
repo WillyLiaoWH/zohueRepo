@@ -852,9 +852,9 @@ function HandleResponse_showProfile(response){
   var address=obj.address;
   var birthday = obj.birthday;
   var b = new Date(birthday)
-  var Y = b.getFullYear();
-  var M = b.getMonth()+1;
-  var D = b.getDate();
+  var Y = (b.getFullYear().toString() == "NaN") ? "  " : b.getFullYear()-1911;
+  var M = (b.getMonth().toString() == "NaN") ? "  " : b.getMonth()+1;
+  var D = (b.getDate().toString() == "NaN") ? "  " : b.getDate();
 
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
@@ -913,7 +913,7 @@ function HandleResponse_showProfile(response){
   }
   $('#gender').text(gender);
   $('#phone').text(phone);
-  $("#bday").text("民國 "+(Y-1911).toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
+  $("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
 
 }
