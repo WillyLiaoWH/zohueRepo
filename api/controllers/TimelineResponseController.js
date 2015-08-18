@@ -17,7 +17,7 @@ module.exports = {
                 console.log(error);
             } else {
                 Timelines.find({id: timeline_id}).populate("author").exec(function(err, timeline) {
-                    if(timeline[0].author!=req.session.user.id) {
+                    if(timeline[0].author.id!=req.session.user.id) {
                         Notification.create({user: timeline[0].author, notType: "3", from: req.session.user.id, content: comment, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
                             if(err) {
                                 console.log(err);

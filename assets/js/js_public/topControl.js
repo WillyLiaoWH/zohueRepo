@@ -427,6 +427,11 @@ function checkNot() {
       alert(res.err);
     } else {
       document.getElementById('notification').innerHTML="&nbsp通知 ("+res.num+")";
+      if(res.num==0) {
+        $("#notification").removeClass("orange").addClass("gray");
+      } else {
+        $("#notification").removeClass("gray").addClass("orange");
+      }
     }
   });
 }

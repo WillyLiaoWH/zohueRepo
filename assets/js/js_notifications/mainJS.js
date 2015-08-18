@@ -70,14 +70,14 @@ function setPage() {
         table+="<a href='/profile/?"+res[i].from.account+"'>"+res[i].from.alias+"</a>"+authorType+"&nbsp"
         table+=notMessage[parseInt(res[i].notType)-1];
         if(res[i].content) {
-          table+="&nbsp\""+res[i].content+'"';
+          table+="「"+res[i].content+'」';
         }
         switch(res[i].notType) {
           case "2":
           case "4":
           case "5":
           case "6":
-            table+="&nbsp很讚";
+            table+="很讚";
         }
         table+="</div>";
         
@@ -91,6 +91,7 @@ function setPage() {
           case "3":
           case "4":
           case "6":
+          case "8":
             table+="<div class='go'>";
             table+="<button value='查看動態時報' class='button' onclick='check(\""+res[i].link+"\", \""+res[i].id+"\");'>&nbsp查看動態時報</button>";
             table+="</div>";
@@ -100,11 +101,10 @@ function setPage() {
             table+='<button value="確認好友" class="button" onclick="confirmFriend('+res[i].from.id+', '+res[i].id+');">&nbsp確認好友</button>';
             table+="</div>";
             break;
-          case "8":
-            break;
         }
-        
-        table+="<div class='setRead'><button value='設為已讀' class='button' onclick='setRead(\""+res[i].id+"\");'>&nbsp設為已讀</button></div>";
+        if(res[i].alreadyRead==false) {
+          table+="<div class='setRead'><button value='設為已讀' class='button' onclick='setRead(\""+res[i].id+"\", this);'>&nbsp設為已讀</button></div>";
+        }
 
         table+="</div>";
       }
@@ -141,12 +141,13 @@ function confirmFriend(id, notId) {
     }
   })
 }
-function setRead(id) {
+function setRead(id, obj) {
   $.post("/setRead", {id: id}, function(res) {
     if(res.err) {
       alert(res.err);
     } else {
       document.getElementById(id).className="not read";
+      obj.parentNode.removeChild(obj);
     }
   });
 }

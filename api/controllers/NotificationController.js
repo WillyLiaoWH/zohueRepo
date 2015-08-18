@@ -27,7 +27,7 @@ module.exports = {
     checkNotification: function(req, res) {
         var id=req.param("id");
         console.log(id);
-        Notification.update({user: id}, {alreadyRead: true}).exec(function(err, not) {
+        Notification.update({id: id}, {alreadyRead: true}).exec(function(err, not) {
             if(err) {
                 console.log(err);
                 res.send(500, {err: "DB error"});
