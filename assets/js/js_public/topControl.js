@@ -266,7 +266,7 @@ function checkPwd(){
   }
   else if($("#UserPwd").val().length > 0 && $("#UserPwdConfirm").val().length > 0 && $("#UserPwd").val() == $("#UserPwdConfirm").val()){
     $("label[id = checkPwdConfirm]").removeClass("check").addClass("checkOK");
-    $("label[id = checkPwdConfirm]").text("  *已完成確認密碼！");allow_create = 0;
+    $("label[id = checkPwdConfirm]").text("  *已完成確認密碼！");
   }
   else{
     $("label[id = checkPwdConfirm]").text("");
