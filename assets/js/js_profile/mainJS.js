@@ -235,6 +235,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // è
       var comment_content=element_res.comment;
       var comment_contentImg=element_res.comment_image;
       var comment_ID = element_res.id;
+      console.log(element_res);
       var comment_updatedAt = new Date(element_res.updatedAt).toLocaleString();
       var comment_nicer = element_res.rnicer;
       var comment_reporter = element_res.rreporter;

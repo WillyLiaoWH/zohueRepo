@@ -1,6 +1,7 @@
 function accountSubmit(){
 	var account = $("#account").val()
 	$.post('/getQ/',{account:account,url:window.location.toString()},function(ret){
+		console.log(ret)
 		if(ret.typ=="err"){
 			alert(ret.msg);
 			location.reload();
@@ -8,15 +9,16 @@ function accountSubmit(){
 		else if(ret.typ=="email"){
 			alert("確認信已發至"+ret.email+"，請依照信中指示更改密碼");
 		}
+
 		else{
 			var message;
 			$("#getQuestion").hide();
 			switch(ret.msg){
-				case 1 : message="您父親出生的城市"; break;
-				case 2 : message="您第一個寵物的名字"; break;
-				case 3 : message="您最喜歡的一本書"; break;
-				case 4 : message="您最欣賞的藝人"; break;
-				case 5 : message="您的結婚紀念日"; break;
+				case "1" : message="您父親出生的城市"; break;
+				case "2" : message="您第一個寵物的名字"; break;
+				case "3" : message="您最喜歡的一本書"; break;
+				case "4" : message="您最欣賞的藝人"; break;
+				case "5" : message="您的結婚紀念日"; break;
 				default : message=ret.msg.slice(8);
 			}
 			$('#question').text(message);

@@ -21,7 +21,12 @@ module.exports = {
                     res.send("NO");
                 }
                 else if (usr[0].random == random){
-                    User.update({account:account},{password:passwordHash.generate(password),random:"1"}).exec(function(err,user){
+                    var uuid = require('node-uuid');
+                    var buffer = new Array(32);
+                    uuid.v4(null,buffer);
+                    var new_random=uuid.unparse(buffer)
+
+                    User.update({account:account},{password:passwordHash.generate(password),random:new_random}).exec(function(err,user){
                         if (err){
                             res.send(500,"DB Error2");
                         }
@@ -79,13 +84,15 @@ module.exports = {
                 else if (usr.length==0){
                     res.send({typ:"err",msg:"沒有這個使用者"});
                 }
+                else if(!usr[0].isFullSignup){
+                    res.send({typ:"err",msg:"沒有完整註冊，無法找回密碼"})
+                }
                 else if (usr[0].email.length!==0){
                     //產生一個random number,然後存入User內，接著發信
                     var uuid = require('node-uuid');
                     var buffer = new Array(32);
                     uuid.v4(null,buffer);
                     var random = uuid.unparse(buffer)
-                    
 
                     User.update({account:account},{random:random},function(err,user){
                         //開始寫信
@@ -107,7 +114,7 @@ module.exports = {
                             subject: "[癌友加油站] 忘記密碼更新", // Subject line  
                             
                             //嵌入 html 的內文  
-                            html: "你好，請點擊以下連結更新密碼。如果你並沒有使用ZOHEU平台或是沒有使用忘記密碼功能請直接忽略此信，感謝<br><a href=" +url+ "getPassword/" +random+ ">請點擊這裡</a>",   
+                            html: "您好，請點擊以下連結更新密碼。如果您並沒有使用ZOHUE平台或是沒有使用忘記密碼功能請直接忽略此信，感謝<br><a href=" +url+ "getPassword/" +random+ ">請點擊這裡</a><br><br>      癌友加油站 工作團隊",   
                                
                         };  
                         
