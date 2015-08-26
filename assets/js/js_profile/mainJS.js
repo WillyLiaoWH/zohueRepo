@@ -200,6 +200,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
   var author_avater = res["avatar"];
   var author = res["alias"];
   var author_account = res["account"];
+  var author_id=res["id"];
   var timeInMs = new Date().getTime();
 
   for(i in res["timelinesList"]){
@@ -230,8 +231,10 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
     for(element_res of res["timelinesList"][i].response){
       counter++;
       var comment_author_account=element_res.account;
+      var comment_author_id=element_res.author;
       var comment_author_avater=element_res.img;
       var comment_author=element_res.alias;
+      console.log(element_res);
       var comment_content=element_res.comment;
       var comment_contentImg=element_res.comment_image;
       var comment_ID = element_res.id;
@@ -251,7 +254,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
 
       // 預先處理權限選單
       var comment_option = "";
-      if(pri_account==comment_author_account){ // 原作者
+      if(pri_id==comment_author_id){ // 原作者
         var comment_option = '<li><a class="comment_edit" name="'+comment_ID+'">編輯</a></li>\
                               <li><a class="comment_del" name="'+comment_ID+'">刪除</a></li>';
       }else{ // 非原作者
@@ -287,7 +290,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                       <image src="'+comment_author_avater+'" height="50" width="50">\
                     </div>\
                     <div id="content_timeline_res">\
-                      <div class="event_text_r"><a href="?'+comment_author_account+'">'+comment_author+'</a> '+comment_content+'</div>\
+                      <div class="event_text_r"><a href="?'+comment_author_id+'">'+comment_author+'</a> '+comment_content+'</div>\
                       <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
                       <div class="container-fluid container_r_edit" id="container_r_edit'+comment_ID+'">\
                         <div class="row-fluid" id="div_r_edit_content'+comment_ID+'" contenteditable="true" style="'+css_r_content+'">'+comment_content+'</div>\
@@ -338,12 +341,12 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
     // 有 owner 則更換顯示圖像
     var event_avatar = author_avater;
     if(owner){
-      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.account+'">'+owner.alias+'</a> <span class="glyphicon glyphicon-play" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;</div>';
+      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.id+'">'+owner.alias+'</a> <span class="glyphicon glyphicon-play" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;</div>';
       event_avatar = owner.img;
     }
 
     var event_option = "";
-    if((owner && pri_account==owner.account) || (!owner && (pri_account==ori_author || !ori_author))){ // 有全部權限
+    if((owner && pri_id==owner.id) || (!owner && (pri_account==ori_author || !ori_author))){ // 有全部權限
       var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
                 <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                 <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
@@ -365,7 +368,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                     <li><a class="auth_set_self" name="'+timelinesID+'"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>\
                   </ul>\
                 </div>'
-    }else if(owner && pri_account!=owner.account && (pri_account==ori_author || !ori_author)){ // 原作者
+    }else if(owner && pri_id!=owner.id && (pri_account==ori_author || !ori_author)){ // 原作者
       var event_edit_div = '<div class="container-fluid container_edit" id="container_edit'+timelinesID+'">\
                 <div class="row-fluid" id="div_edit_content'+timelinesID+'" contenteditable="true" style="'+css_content+'">'+content+'</div>\
                 <div class="row-fluid div_edit_img" id="div_edit_img'+timelinesID+'" style="display:block;">'+contentImg+'</div>\
@@ -424,7 +427,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                     <td rowspan="2" style="width:50px;padding-right:15px;">\
                       <image src="'+event_avatar+'" height="50" width="50">\
                     </td>\
-                    <td>'+owner_div+'<div id="event_author_name" style="float:left;"><a href="?'+author_account+'">'+author+'</a></div></td>\
+                    <td>'+owner_div+'<div id="event_author_name" style="float:left;"><a href="?'+author_id+'">'+author+'</a></div></td>\
                   </tr>\
                   <tr>\
                     <td><div id="event_time">'+updatedAt+'</div></td>\
