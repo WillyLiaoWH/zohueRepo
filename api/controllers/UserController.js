@@ -420,14 +420,14 @@ module.exports = {
     getProfile: function(req, res){
         //gets only the photo, alias, name, birthday, city,email,gender,phone
         //only the first two are required
-        pri_account = req.session.user.account;
-        var account=req.param("account");
+        pri_id = req.session.user.id;
+        var id=req.param("id");
         
-        if (pri_account === account){
+        if (pri_id === id){
             res.send(JSON.stringify(req.session.user))
         }
         else{
-            User.findByAccount(account).exec(function(err, usr) {
+            User.findById (id).exec(function(err, usr) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {

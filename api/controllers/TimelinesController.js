@@ -49,7 +49,7 @@ module.exports = {
         });
           
     },
-	postTimeline: function(req, res){
+    postTimeline: function(req, res){
         function checkAtuh(cb){
             if(typeof req.session.user === 'undefined'){
                 res.send(500,{err: "請先登入才能發表文章！" });
@@ -63,22 +63,22 @@ module.exports = {
             var contentImg=req.param("timeline_post_image");
             var auth=req.param("timeline_post_auth");
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });}
-            if(req.session.user.account == req.session.stay){
+            if(req.session.user.id == req.session.stay){
                 Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
                     if(error) {
                         res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
-                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, account: req.session.user.account});
+                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
                     }
                 });
             }else{
-                User.find({account: req.session.stay}).exec(function(error, owner) {
+                User.find({id: req.session.stay}).exec(function(error, owner) {
                     Timelines.create({author: owner[0].id, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, owner: author}).exec(function(error, timeline) {
                         if(error) {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
-                            Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'account']}).populate('author', {select: ['img', 'alias', 'account']}).exec(function(error, timeline2) {
-                                res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, account: timeline2[0].author.account});
+                            Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'id']}).populate('author', {select: ['img', 'alias', 'id']}).exec(function(error, timeline2) {
+                                res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, id: timeline2[0].author.id});
                             });
                         }
                     });
@@ -89,7 +89,7 @@ module.exports = {
         checkAtuh(function(){
             post();
         });
-	},
+    },
     editTimeline: function(req, res){
         function chechAtuh(id, cb){
             Timelines.find({id: id}).populate('author').populate('owner').exec(function(error, timeline) {
@@ -152,9 +152,9 @@ module.exports = {
             del(isAuth, TimelineId);
         });
     },
-	setTimelinePage: function(req, res){
+    setTimelinePage: function(req, res){
         function checkLogin(cb){ // 檢查是否登入
-            if(typeof req.session.user === 'undefined' & req.param("account") === 'undefined'){
+            if(typeof req.session.user === 'undefined' & req.param("id") === 'undefined'){
                 res.send(500,{err: "請先登入才能查看個人頁面！" });
             }else{
                 cb();
@@ -169,9 +169,17 @@ module.exports = {
             cb(account);
         }
 
-        function findTimelineResponse(account, cb){ // 取得作者 user 資料
+        function findId(cb){
+            var id =req.param("id");
+            if(id === 'undefined'){
+                var id = req.session.user.id;
+            }
+            cb(id);
+        }
+
+        function findTimelineResponse(id, cb){ // 取得作者 user 資料
             // notes: 未來可能需要用到.skip(10).limit(10)
-            User.find({account: account}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
+            User.find({id: id}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
                 if(user.length < 1 ){
                     res.send(500,{err: "查無此人" });
                 }else{
@@ -202,7 +210,7 @@ module.exports = {
         function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response、nicer 與 reporter 資料
             var async = require('async');
             async.each(User.timelinesPost, function(timeline, callback) {
-                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).populate('owner', {select: ['img', 'alias', 'account']}).exec(function (err, result) {
+                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).populate('owner', {select: ['img', 'alias', 'account','id']}).exec(function (err, result) {
                     if(err) {
                         console.log("err");
                     }else{
@@ -214,16 +222,16 @@ module.exports = {
             });
         }
 
-        function addAuth(account,result,cb){ // 阿波寫的 問他XD  //大家好我是阿波，這是去把不該看到的刪掉
+        function addAuth(id,result,cb){ // 阿波寫的 問他XD  //大家好我是阿波，這是去把不該看到的刪掉
             if(typeof req.session.user === 'undefined'){
                 cb(result);
             }else{
                 var doctor=false;
                 var friend=false;
                 var self=false;
-                var viewer = req.session.user.account;
+                var viewer = req.session.user.id;
 
-                User.find({account:viewer}).populate('friends').exec(function(err,user){
+                User.find({id:viewer}).populate('friends').exec(function(err,user){
                     if(err){
                         console.log("err3");
                     }
@@ -231,12 +239,12 @@ module.exports = {
                         doctor=true;
                     }
                     for (var i=0 ; i<user[0].friends.length;i=i+1){
-                        if (user[0].friends[i].account===account){
+                        if (user[0].friends[i].id===id){
                             friend=true;
                         }
                     }
 
-                    if (viewer==account){
+                    if (viewer==id){
                         self=true;
                         friend=true;
                         doctor=true;
@@ -275,7 +283,7 @@ module.exports = {
                 if(err) {
                     console.log("err");
                 }else{
-                    cb(result2[0].author.alias, result2[0].author.img, result2[0].author.account, result2[0].nicer, result2[0].report);
+                    cb(result2[0].author.alias, result2[0].author.img, result2[0].id, result2[0].nicer, result2[0].report);
                 }
             });
         }
@@ -289,10 +297,10 @@ module.exports = {
 
             async.each(Response.timelinesPost, function(timeline, callback) {
                 async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img, account, nicer, report){
+                    AuthorQuery(timelineRes, function(alias, img, id, nicer, report){
                         var i=Response.timelinesPost.indexOf(timeline);
                         var j=timeline.response.indexOf(timelineRes);
-                        Response.timelinesPost[i].response[j].account=account;
+                        Response.timelinesPost[i].response[j].id=id;
                         Response.timelinesPost[i].response[j].alias=alias;
                         Response.timelinesPost[i].response[j].img=img;
                         Response.timelinesPost[i].response[j].rnicer=nicer;
@@ -306,20 +314,20 @@ module.exports = {
         }
 
         checkLogin(function(){
-            findAccount(function(account){
-                req.session.stay = account;
-                findTimelineResponse(account, function(Response){
+            findId(function(id){
+                req.session.stay = id;
+                findTimelineResponse(id, function(Response){
                     getNicer(Response, function(Response2){
-                        addAuth(account, Response2, function(Response3){
+                        addAuth(id, Response2, function(Response3){
                             findTimelineResponseAuthor(Response3, function(Response4){
-                                res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias, account: Response.account});
+                                res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias, id: Response.id});
                             });
                         });
                     });
                 });
             });
         });
-	},
+    },
     clickNice: function(req, res) {
         if(typeof req.session.user == 'undefined'){
             res.send(500,{err: "您沒有權限" });
@@ -329,7 +337,7 @@ module.exports = {
             Timelines.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
                 if(timeline.author.id!=req.session.user.id) {
-                    Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.account, alreadySeen: false}).exec(function(err, not) {
+                    Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.id, alreadySeen: false}).exec(function(err, not) {
                         if(err) {
                             console.log(err);
                             res.send({err:"DB error"});

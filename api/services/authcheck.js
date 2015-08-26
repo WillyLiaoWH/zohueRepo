@@ -1,14 +1,15 @@
 module.exports = {
 authCheck: function (req,cb){      //看這兩個人關係能看到什麼
 
-    var id=req.session.user.id;
-    var account=req.param("account")
+    // var id=req.session.user.id;
+    var searchId=req.param("id");
     var doctor=false;
     var friend=false;
     var self=false;
     var viewer = req.session.user.account;
+    var viewerId=req.session.user.id;
 
-    User.find({account:viewer}).populate('friends').exec(function(err,user){
+    User.find({id:viewerId}).populate('friends').exec(function(err,user){
         if(err){
 
         }
@@ -16,11 +17,11 @@ authCheck: function (req,cb){      //看這兩個人關係能看到什麼
             doctor=true;
         }
         for (var i=0 ; i<user[0].friends.length;i=i+1){
-            if (user[0].friends[i].account==account)
+            if (user[0].friends[i].id==searchId)
                 friend=true;
         }
     });
-    if (viewer==account){
+    if (viewerId==searchId){
         self=true;
         friend=true;
         doctor=true;
@@ -28,7 +29,7 @@ authCheck: function (req,cb){      //看這兩個人關係能看到什麼
     str = '{"name":false,"city":false,"email":false,"gender":false,"phone":false,"bday":false}';
     var index = JSON.parse('{"0":"city","1":"email","2":"gender","3":"phone","4":"bday","5":"name"}');
     var ret_status=JSON.parse(str);
-    User.find({account:account}).exec(function(err,user){
+    User.find({id:searchId}).exec(function(err,user){
     	if(user.length < 1){
     		cb(JSON.parse('{"err":"找不到使用者"}'));
     		return 0;
