@@ -63,11 +63,11 @@ function setPage() {
             authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
         }
         table+=authorIcon;
-        table+="<img src='"+res[i].from.img+"' onclick='toProfile(\""+res[i].from.account+"\")' style='margin-right:10px; cursor: pointer; height:"+picSize+"px; width:"+picSize+"px;'>";
+        table+="<img src='"+res[i].from.img+"' onclick='toProfile(\""+res[i].from.id+"\")' style='margin-right:10px; cursor: pointer; height:"+picSize+"px; width:"+picSize+"px;'>";
         table+="</div>";
 
         table+="<div class='message'>";
-        table+="<a href='/profile/?"+res[i].from.account+"'>"+res[i].from.alias+"</a>"+authorType+"&nbsp"
+        table+="<a href='/profile/?"+res[i].from.id+"'>"+res[i].from.alias+"</a>"+authorType+"&nbsp"
         table+=notMessage[parseInt(res[i].notType)-1];
         if(res[i].content) {
           table+="「"+res[i].content+'」';
@@ -113,8 +113,8 @@ function setPage() {
   });
 }
 
-function toProfile(account) {
-  window.location.assign("/profile/?"+account);
+function toProfile(id) {
+  window.location.assign("/profile/?"+id);
 }
 function check(link, id) {
   $.post("/setRead", {id: id}, function(res) {

@@ -34,7 +34,7 @@ module.exports = {
                             name="朋友";
                         else
                             name="自己";
-                        res.send("已經改為"+target+"看得到");
+                        res.send("已經改為"+name+"看得到");
                     }
                 });
             }
