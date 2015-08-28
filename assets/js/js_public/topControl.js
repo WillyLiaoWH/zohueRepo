@@ -173,7 +173,7 @@ function checkAuth() {
 
       var simpleS=document.getElementById("signup");
       if(simpleS){
-        simpleS.style.display="block";
+        simpleS.style.display="none"; //simpleS.style.display="block";
       }
 
       var login=document.getElementById("loginSection");

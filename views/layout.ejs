@@ -46,11 +46,23 @@
     <script type="text/javascript"src="/js/js_home/jquery.jcarousel.min.js"></script>
     <script type="text/javascript"src="/js/js_home/jcarousel.basic.js"></script>
     <script type="text/javascript" src="/js/js_home/jquery.jcarousel.min.js"></script>
-    <link rel="stylesheet" href="/styles/css_public/topControl.css">
     <link rel="stylesheet" href="/styles/css_public/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/css_public/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/styles/css_public/topControl.css">
     <link rel="stylesheet" href="/styles/css_public/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/styles/css_home/jcarousel.basic.css">
+    <style>
+    @media screen and (max-width: 400px) {
+    .nav-tabs.nav-stacked > li > a {
+      border: 1px solid #DDD;
+      background-color: #eeeddd;
+    }
+    .nav-tabs.nav-stacked > li > a:hover,
+    .nav-tabs.nav-stacked > li > a:focus {
+      border-color: #ddd;
+      background-color: #eeebbb;
+    }}
+    </style>
     <!-- Loop through all scripts and stylesheets that passed from routes -->
     <% if (scripts) { %>
         <% for (i = 0; i < scripts.length; i++) { %>
@@ -106,6 +118,31 @@
       </div>
     </div>
 
+    <!-- menu部份的mobile版 -->
+    <div id="mobile_menu" class="row-fluid hidden-desktop visible-phone visible-tablet" style="margin-top: 15px; text-align: center; font-weight: bold;">
+      <ul class="nav nav-tabs nav-stacked">
+        <li id="mobile_profilepage"><a href="/profile">個人頁面</a></li>
+        <li><a href="/forum">作夥論壇</a></li>
+        <li><a href="/proInfo/1">專業知識</a></li>
+        <li id="mobile_friends"><a href="/friends">作夥找人</a></li>
+        <li id="mobile_setUp" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">個人設定
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="/change">修改會員資料</a></li>
+            <li><a href="/changePassword">更換密碼</a></li>
+            <li><a href="">隱私權設定</a></li>
+            <li><a onclick="subscribe();">訂閱電子報</a></li>
+            <li><a onclick="Logout();">登出</a></li>
+          </ul>
+        </li>
+        <li id="mobile_backend"><a href="/backend">後台管理</a></li>
+        <li id="mobile_fullSignup"><a href="/signup">完整註冊</a></li>
+      </ul>
+    </div>
+    <!-- menu部份的mobile版 -->
+    
     <!-- 登入部份的mobile版 -->
     <div class="row-fluid hidden-desktop visible-phone visible-tablet visible-xs">   
       <div id="mobile_loginSection">
@@ -135,10 +172,10 @@
         <div id="profilePage">
           <a href="/profile" class="item" id="profile_page"><label><span class="glyphicon glyphicon-user" style="color:rgb(211, 106, 1)" aria-hidden="true"></span>&nbsp個人頁面</label></a>
         </div>
-        <a href="/forum" class="item" id="forum"><label><span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp論壇</label></a><br>
+        <a href="/forum" class="item" id="forum"><label><span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp作夥論壇</label></a><br>
         <a href="/proInfo/1" class="item" id="proInfo"><label><span class="glyphicon glyphicon-eye-open" style="color:rgb(102, 141, 60)" aria-hidden="true"></span>&nbsp專業知識</label></a><br>
-        <a href="/friends" class="item" id="friends"><label><span class="glyphicon glyphicon-globe" style="color:rgb(1, 151, 172)" aria-hidden="true"></span>&nbsp找人</label></a>
-        <a class="item" id="setUp"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp設定</label></a><br>
+        <a href="/friends" class="item" id="friends"><label><span class="glyphicon glyphicon-globe" style="color:rgb(1, 151, 172)" aria-hidden="true"></span>&nbsp作夥找人</label></a>
+        <a class="item" id="setUp"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp個人設定</label></a><br>
         <div id="setUpMenu">
           <a href="/change" class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
           <a href="/changePassword" class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
@@ -198,32 +235,7 @@
       </div>
     </div>
 
-    <!-- menu部份的mobile版 -->
-    <div id="mobile_menu" class="row-fluid hidden-desktop visible-phone visible-tablet" style="margin-top:15px;">
-      <ul class="nav nav-tabs nav-stacked">
-        <li id="mobile_profilepage"><a href="/profile">個人頁面</a></li>
-        <li><a href="/forum">論壇</a></li>
-        <li><a href="/proInfo/1">專業知識</a></li>
-        <li id="mobile_friends"><a href="/friends">找人</a></li>
-        <li id="mobile_setUp" class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">設定
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li><a href="/change">修改會員資料</a></li>
-            <li><a href="/changePassword">更換密碼</a></li>
-            <li><a href="">隱私權設定</a></li>
-            <li><a onclick="subscribe();">訂閱電子報</a></li>
-            <li><a onclick="Logout();">登出</a></li>
-          </ul>
-        </li>
-        <li id="mobile_backend"><a href="/backend">後台管理</a></li>
-        <li id="mobile_fullSignup"><a href="/signup">完整註冊</a></li>
-      </ul>
-    </div>
-    <!-- menu部份的mobile版 -->
-
-    <div id="signup" class="col-md-3 col-sm-12 col-xs-12" style="font-size:30px;">
+    <div id="signup" class="col-md-3 col-sm-12 col-xs-12 hidden-phone" style="font-size:30px;">
         <h1 style="font-size:30px;" >簡易註冊</h1>
         <form id="simpleSignUp">
           暱稱<label id="checkAlias" class="check"></label><br>

@@ -64,9 +64,36 @@
 	padding:10px;
 	color:#533828;
 	font-size: 23px;
-
+	table-layout: fixed;
+	width:100%;
 }
 
+@media all and (max-width: 1024px) {
+	#page{
+		display: none !important;
+	}
+	td:nth-child(1){
+		width: 125px !important;
+	}
+	td:nth-child(2){
+		width: 150px !important;
+	}
+	td:nth-child(3){
+		width: 300px !important;
+	}
+	td:nth-child(4){
+		width: 120px !important;
+	}
+	td:nth-child(5){
+		width: 220px !important;
+	}
+	td:nth-child(6){
+		width: 220px !important;
+	}
+	td:nth-child(7){
+		width: 260px !important;
+	}
+}
 .s{
 	height:48px;
 	color:#816C58;
