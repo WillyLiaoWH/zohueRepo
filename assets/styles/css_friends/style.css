@@ -1,7 +1,7 @@
 #body{
 	font-family: "微軟正黑體";
 }
-#disease, #place, #userType{
+#disease, .place, #userType{
 	height:48px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
@@ -42,6 +42,19 @@
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
+}
+
+#mobile_search{
+	display: none !important;
+}
+
+@media all and (max-width: 1127px){
+	#search{
+		display: none !important;
+	}
+	#mobile_search{
+		display: block !important;
+	}
 }
 
 #searchButton{
