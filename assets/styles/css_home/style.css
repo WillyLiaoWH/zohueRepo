@@ -61,11 +61,14 @@ body {
 	width: 100%;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 1127px) {
 	#content {
 		width: 100% !important;
 		margin: 0 !important;
 		padding: 0 !important;
+	}
+	#signup{
+		display: none !important;
 	}
 	table {
 		font-size: 18px !important;

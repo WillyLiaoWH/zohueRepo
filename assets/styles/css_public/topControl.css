@@ -296,7 +296,6 @@ button, input[type="button"], input[type="submit"]{
 	color:#D26900;
 	font-family: "微軟正黑體";
 	font-size:30px;
-	display: none;
 }
 
 #simpleSignUp{
@@ -304,6 +303,19 @@ button, input[type="button"], input[type="submit"]{
 	color:#533828;
 	font-size:20px;
 	font-weight: normal;
+}
+
+#sideBanner{
+	margin-top: 50px;
+}
+
+@media all and (max-width: 1127px){
+	#sideBanner{
+		display: none;
+	}
+	#menu{
+		font-size: 20px !important;
+	}
 }
 
 .s{

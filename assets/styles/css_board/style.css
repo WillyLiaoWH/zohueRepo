@@ -18,6 +18,10 @@
 	
 }
 
+#signup{
+	display: none !important;
+}
+
 #searchPanel{
 	margin-right: 150px;
 	float:right;
