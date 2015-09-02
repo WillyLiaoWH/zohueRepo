@@ -59,6 +59,10 @@
 
 }
 
+#sideBanner{
+	display: none !important ;
+}
+
 #article{
 	/*margin: 26px 0px 0px 15px;*/
 	margin: 70px 0px 0px 15px;
@@ -72,7 +76,7 @@
 	width:100%;
 }
 
-@media all and (max-width: 1127px) {
+@media all and (max-width: 1300px) {
 	#page{
 		display: none !important;
 	}
@@ -83,10 +87,10 @@
 		width: 150px !important;
 	}
 	td:nth-child(3){
-		width: 300px !important;
+		width: 260px !important;
 	}
 	td:nth-child(4){
-		width: 120px !important;
+		width: 240px !important;
 	}
 	td:nth-child(5){
 		width: 220px !important;
