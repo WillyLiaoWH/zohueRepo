@@ -84,7 +84,7 @@
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 18px;
+	font-size: 23px;
 	border-radius: 10px;
 	line-height: 22px;
 	width:150px;
@@ -133,6 +133,10 @@
 
 }
 
+#sideBanner{
+	display: none !important ;
+}
+
 #article{
 	/*margin: 26px 0px 0px 15px;*/
 	margin: 70px 0px 0px 15px;
@@ -145,30 +149,33 @@
 	table-layout: fixed;
 	width:100%;
 }
-@media all and (max-width: 1127px) {
-	#page{
-		display: none !important;
-	}
-	#goToBoard{
-		display: none !important;
-	}
+@media all and (max-width: 1023px) {
 	#tabs{
 		display: none !important;
 	}
 	#mobile_tabs{
 		display: block !important;
 	}
+}
+
+@media all and (max-width: 1300px) {
+	#page{
+		display: none !important;
+	}
+	#goToBoard{
+		display: none !important;
+	}
 	#post{
 		display: none !important;
 	}
 	td:nth-child(1){
-		width: 113px !important;
+		width: 125px !important;
 	}
 	td:nth-child(2){
-		width: 300px !important;
+		width: 260px !important;
 	}
 	td:nth-child(3){
-		width: 230px !important;
+		width: 210px !important;
 	}
 	td:nth-child(4){
 		width: 120px !important;
@@ -177,7 +184,7 @@
 		width: 80px !important;
 	}
 	td:nth-child(6){
-		width: 240px !important;
+		width: 150px !important;
 	}
 }
 
