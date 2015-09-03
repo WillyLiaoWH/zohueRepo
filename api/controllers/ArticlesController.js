@@ -211,26 +211,29 @@ module.exports = {
         var clickNum=req.param("clickNum");
         var board=req.param("board");
         var follower=[req.session.user.id];
-
-		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
-            if(error) {
-                console.log(title);console.log(author);console.log(content);
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } else {
-                console.log(article);
-                Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article) {
-                    if(err) {
-                        res.send(500,{err: "DB Error" });
-                        console.log(err);
-                    } else {
-                        console.log(article);
-                        res.send(article);
-                    }
-                });
-            }
-        });
-
+        
+        // if(!req.session.user) {
+        //     res.send({err: "尚未登入"});
+        // } else {
+    		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
+                if(error) {
+                    console.log(title);console.log(author);console.log(content);
+                    res.send(500,{err: "DB Error" });
+                    console.log(error);
+                } else {
+                    console.log(article);
+                    Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article) {
+                        if(err) {
+                            res.send(500,{err: "DB Error" });
+                            console.log(err);
+                        } else {
+                            console.log(article);
+                            res.send(article);
+                        }
+                    });
+                }
+            });
+        // }
 	},
 
     changeArticle: function(req, res) {

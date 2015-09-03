@@ -72,15 +72,15 @@ function checkAuth() {
       var logout=document.getElementById("logout");
       logout.style.display="block";
 
-      var post=document.getElementById("post");
-      if(post){
-        post.style.display="block";
-      }
+      // var post=document.getElementById("post");
+      // if(post){
+      //   post.style.display="block";
+      // }
 
-      var post=document.getElementById("post");
-      if(post){
-        post.style.display="block";
-      }
+      // var post=document.getElementById("post");
+      // if(post){
+      //   post.style.display="block";
+      // }
 
       var profile_page=document.getElementById("profile_page");
       profile_page.style.display="block";
@@ -156,10 +156,10 @@ function checkAuth() {
 
 
 
-      var post=document.getElementById("post");
-      if(post){
-        post.style.display="none";
-      }
+      // var post=document.getElementById("post");
+      // if(post){
+      //   post.style.display="none";
+      // }
 
       var leaveMessage=document.getElementById("leaveMessage");
       if(leaveMessage) {

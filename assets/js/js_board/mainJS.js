@@ -161,8 +161,25 @@ function readConfirm(articleid){
   }
 }
 
+// function postArticle() {
+//   $.post("/post/",{board:board},function(res){
+//     alert(res);
+//   })
+//   .error(function(res){
+//     alert(res.responseJSON.err);
+//   });
+// }
+
 function postArticle() {
-  location.assign("/post/"+board);
+  $.get("/checkAuth", function(auth){
+    if(!auth) {
+      alert("你尚未登入，不能發表文章喔");
+      // window.location.replace("/home");
+    }else{
+       window.location.assign("/post/"+board);
+    }
+  });
+ 
 }
 
 function cancleSearch(){
