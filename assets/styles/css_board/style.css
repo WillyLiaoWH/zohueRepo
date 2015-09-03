@@ -30,8 +30,9 @@
 
 #searchWord{
 	//width:350px;
-	width:50%;
+	width:100%;
 	margin: 8px 0px 0px 0px;
+	display: inline !important;
 }
 
 #search{
@@ -103,7 +104,7 @@
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 18px;
+	font-size: 23px;
 	border-radius: 10px;
 	line-height: 22px;
 	width:150px;
@@ -133,8 +134,12 @@
 
 }
 
+#goToBoard{
+	padding-bottom: 30px; 
+}
+
 #sideBanner{
-	display: none !important ;
+	//display: none !important ;
 }
 
 #article{
@@ -155,17 +160,21 @@
 	}
 	#mobile_tabs{
 		display: block !important;
+		text-align: center !important ;
+	}
+	#searchDiv{
+		display: none !important;
+	}
+	#post{
+		display: none !important;
 	}
 }
 
-@media all and (max-width: 1300px) {
+@media all and (max-width: 1279px) {
 	#page{
 		display: none !important;
 	}
 	#goToBoard{
-		display: none !important;
-	}
-	#post{
 		display: none !important;
 	}
 	td:nth-child(1){

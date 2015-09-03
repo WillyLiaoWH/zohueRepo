@@ -10,7 +10,7 @@
 
 #searchWord{
 	//width:350px;
-	margin: 8px 0px 0px 0px;
+	margin: 8px 0px 0px -15px;
 }
 
 #signup{
@@ -45,7 +45,7 @@
 
 #page{
 	float:left;
-	margin: 15px 0px 0px 20px;
+	margin: 15px 0px 0px 0px;
 	font-size: 22px;
 	color:#533828;
 
@@ -60,7 +60,7 @@
 }
 
 #sideBanner{
-	display: none !important ;
+	//display: none !important ;
 }
 
 #article{
@@ -76,10 +76,15 @@
 	width:100%;
 }
 
-@media all and (max-width: 1300px) {
+
+@media all and (max-width: 1023px){
 	#page{
 		display: none !important;
 	}
+}
+
+@media all and (max-width: 1300px) {
+	
 	td:nth-child(1){
 		width: 125px !important;
 	}
