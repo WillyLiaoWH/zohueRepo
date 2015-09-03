@@ -38,7 +38,7 @@ button, input[type="button"], input[type="submit"]{
 	margin-left:20px;
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-width: 1024px) {
 	#logo{
 		width:100%;
 		height: auto;
@@ -222,16 +222,6 @@ button, input[type="button"], input[type="submit"]{
 	border-top:1px solid gray;
 }
 
-#menu{
-	margin:30px 30px 0px 20px;
-	font-family: "微軟正黑體";
-	font-size:22px;
-	width: 12%;
-	//height: 5500px;
-	float:left;
-	line-height:45px;
-}
-
 #profile_page, #setUp, #friends, #mobile_profilepage, #mobile_friends, #mobile_backend, #backend, #profilePage{
 	display:none;
 }
@@ -295,7 +285,6 @@ button, input[type="button"], input[type="submit"]{
 	color:#D26900;
 	font-family: "微軟正黑體";
 	font-size:30px;
-	display: none;
 }
 
 #simpleSignUp{
@@ -303,6 +292,30 @@ button, input[type="button"], input[type="submit"]{
 	color:#533828;
 	font-size:20px;
 	font-weight: normal;
+}
+
+#sideBanner{
+	margin-top: 50px;
+}
+
+#menu{
+	margin:30px 30px 0px 20px;
+	font-family: "微軟正黑體";
+	font-size:22px;
+	width: 15%;
+	//width: 12%;
+	//height: 5500px;
+	float:left;
+	line-height:45px;
+}
+
+@media all and (max-width: 1023px){
+	#sideBanner{
+		display: none;
+	}
+	#menu{
+		font-size: 20px !important;
+	}
 }
 
 .s{
@@ -457,8 +470,8 @@ button, input[type="button"], input[type="submit"]{
 }
 
 #mobile_menu{
-	border:1px solid rgba(102, 141, 60, 0.4);
-	border-radius:5px;
+	//border:1px solid rgba(102, 141, 60, 0.4);
+	//border-radius:5px;
 }
 
 #mobile_setUp{

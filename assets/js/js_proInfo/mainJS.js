@@ -13,6 +13,8 @@ $(document).ready(function(){
       //document.getElementById("content").style.width = "80%";
       document.getElementById("infoContent").className = "span10";
       //document.getElementById("articleList").style.width = "100%";
+    }else{
+      document.getElementById("infoContent").className = "span10";
     }
   });
 
@@ -38,8 +40,8 @@ function setPage(page) {
     }
 
     myTable="<tr style='background-color: #1D3521; color:white;'>";
-    myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
-    myTable+="<td style='width:9%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
+    myTable+="<td style='width:12%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
+    myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
     myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'>文章標題</td>";
     myTable+="<td style='text-align:center;'>作者</td>";
     myTable+="<td style='text-align:center;'>發表時間</td>";
@@ -159,8 +161,8 @@ function cancleSearch(){
 
 function setSearchResult(articleList){
     myTable="<tr style='background-color: #1D3521; color:white;'>";
-    myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
-    myTable+="<td style='width:9%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
+    myTable+="<td style='width:12%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>";
+    myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
     myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'>文章標題</td>";
     myTable+="<td style='text-align:center;'>作者</td>";
     myTable+="<td style='text-align:center;'>發表時間</td>";

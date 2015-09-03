@@ -56,9 +56,32 @@ body {
 	overflow-x: hidden;
 }
 
-
 .table{
 	font-size: 16px;
 	width: 100%;
 }
 
+#myCarousel{
+	max-width: 90%;
+}
+
+@media screen and (max-width: 1023px) {
+	#content {
+		width: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	#myCarousel{
+		display: none;
+	}
+	#signup{
+		display: none !important;
+	}
+	table {
+		font-size: 18px !important;
+	}
+	th{
+		font-size: 20px !important;
+		text-align: center !important;
+	}
+}

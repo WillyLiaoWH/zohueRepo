@@ -18,10 +18,13 @@
     <div class="container-fluid"  style="height: 100%">
         <!-- 正文 -->
         <h1 style="color:#D26900;">找人</h1>
+        
+        <!--For desktop-->
         <div id="search" style="margin: 15px;">
-            <label style="font-size: 22px; color:#533828;">搜尋：</label>
+            <!-- <label style="font-size: 22px; color:#533828;">搜尋：</label>-->
             <label style="font-size: 22px; color:#533828;">暱稱</label>
             <div id="inputAlias" style="display: inline;"><input type="text" name="alias" id="alias"></div>
+
             <label style="font-size: 22px; color:#533828;">疾病</label>
             <div id="inputDisease" style="display: inline;">
                 <select id="disease">
@@ -38,13 +41,15 @@
                     <option value='999'>其它</option>
                 </select>
             </div>
+
             <label style="font-size: 22px; color:#533828;">居住地</label>
             <div id="inputPlace" style="display: inline;">
-                <select id="place">
+                <select class="place">
                     <option value="" selected="true">所有地區</option>
                     <script>ShowAllCity();</script>
                 </select>
             </div>
+
             <label style="font-size: 22px; color:#533828;">身分</label>
             <div id="inputUserType" style="display: inline;">
                 <select id="userType">
@@ -57,8 +62,70 @@
                     <option value='N'>一般民眾</option>
                 </select>
             </div>
-            <input type="button" value="搜尋" onclick="search(0)" id="searchButton"><br>
+
+            <button value="搜尋" onclick="search(0)" id="searchButton">
+                <img src="/images/img_forum/search_icon.png">搜尋
+            </button>
+            <br>
         </div>
+
+        <!--For mobile-->
+        <div id="mobile_search" class="col-md-6 col-sm-10 col-xs-10 col-md-offset-1">
+            <!-- <label style="font-size: 22px; color:#533828;">搜尋：</label>-->
+            <div id="inputAlias" style="width: 100%;">
+                <label style="font-size: 22px; color:#533828;">暱稱</label>
+                <input type="text" name="alias" id="alias" style="width: 80%;"/>
+            </div>
+            <br/>
+
+            <div id="inputDisease" style="width: 100%;">
+                <label style="font-size: 22px; color:#533828;">病因</label>
+                <select id="disease" style="width: 80%;">
+                    <option value="" selected="true">所有疾病</option>
+                    <option value='1'>鼻咽癌</option>
+                    <option value='2'>鼻竇癌</option>
+                    <option value='3'>副鼻竇癌</option>
+                    <option value='4'>口腔癌</option>
+                    <option value='5'>口咽癌</option>
+                    <option value='6'>下咽癌</option>
+                    <option value='7'>喉癌</option>
+                    <option value='8'>唾液腺癌</option>
+                    <option value='9'>甲狀腺癌</option>
+                    <option value='999'>其它</option>
+                </select>
+            </div>
+            <br/>
+            
+            <div id="inputPlace" style="width: 100%;">
+                <label style="font-size: 22px; color:#533828;">地區</label>
+                <select class="place" style="width: 80%;">
+                    <option value="" selected="true">所有地區</option>
+                    <script>ShowAllCity();</script>
+                </select>
+            </div>
+            <br/>
+
+            <div id="inputUserType" style="width: 100%;">
+                <label style="font-size: 22px; color:#533828;">身分</label>
+                <select id="userType" style="width: 80%;">
+                    <option value="" selected="true">所有身分</option>
+                    <option value='P'>病友</option>
+                    <option value='F'>家屬</option>
+                    <option value='S'>社工師</option>
+                    <option value='D'>醫生</option>
+                    <option value='RN'>護理師</option>
+                    <option value='N'>一般民眾</option>
+                </select>
+            </div>
+            <br/>
+            <button onclick="search(0)" id="searchButton" style="width: 100%;">
+                <img src="/images/img_forum/search_icon.png">搜尋
+            </button>
+            <br/>
+        </div>
+        
+
+
         <div id="searchResult" style="float: left; width: 1000px; height: 100%;">
             <div id="searchList" style="float: left; width: 1000px;">
             </div>

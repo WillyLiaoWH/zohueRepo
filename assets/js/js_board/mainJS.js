@@ -40,7 +40,8 @@ $(document).ready(function(){
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
     if(!auth) {
-      document.getElementById("forumContent").className = "span7";
+      document.getElementById("forumContent").className = "span10";
+      //document.getElementById("forumContent").className = "span7";
     }
   });
 
@@ -194,11 +195,11 @@ function setSearchResult(articleList, page){
     });
 
     myTable="<tr style='background-color: #1D3521; color:white;'>"
-    myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>"
-    myTable+="<td style='width:35%; padding:10px 15px 10px 15px;'>文章標題</td>"
-    myTable+="<td style='text-align:center;'>發表人/發表時間</td>";
-    myTable+="<td style='text-align:center;'>點閱/回覆</td>";
-    myTable+="<td style='text-align:center;'>推薦</td>";
+    myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center;'>文章類別</td>"
+    myTable+="<td style='width:34%; padding:10px 15px 10px 15px;'>文章標題</td>"
+    myTable+="<td style='width:22%; text-align:center;'>發表人/發表時間</td>";
+    myTable+="<td style='width:12%; text-align:center;'>點閱/回覆</td>";
+    myTable+="<td style='width:6%; text-align:center;'>推薦</td>";
     myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
 
     articleNum=20;

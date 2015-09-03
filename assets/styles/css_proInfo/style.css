@@ -13,6 +13,10 @@
 	margin: 8px 0px 0px 0px;
 }
 
+#signup{
+	display: none !important;
+}
+
 #search{
 	//width:90px;
 	font-size: 20px;
@@ -55,6 +59,10 @@
 
 }
 
+#sideBanner{
+	display: none !important ;
+}
+
 #article{
 	/*margin: 26px 0px 0px 15px;*/
 	margin: 70px 0px 0px 15px;
@@ -64,9 +72,36 @@
 	padding:10px;
 	color:#533828;
 	font-size: 23px;
-
+	table-layout: fixed;
+	width:100%;
 }
 
+@media all and (max-width: 1300px) {
+	#page{
+		display: none !important;
+	}
+	td:nth-child(1){
+		width: 125px !important;
+	}
+	td:nth-child(2){
+		width: 150px !important;
+	}
+	td:nth-child(3){
+		width: 260px !important;
+	}
+	td:nth-child(4){
+		width: 240px !important;
+	}
+	td:nth-child(5){
+		width: 220px !important;
+	}
+	td:nth-child(6){
+		width: 220px !important;
+	}
+	td:nth-child(7){
+		width: 260px !important;
+	}
+}
 .s{
 	height:48px;
 	color:#816C58;
