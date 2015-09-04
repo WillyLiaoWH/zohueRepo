@@ -18,7 +18,8 @@ $(document).ready(function(){
     var url = document.URL;
 
     $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
-      if (res == "success"){
+      if (res == "登入成功"){
+        alert(res);
         location.replace(url);
       }else{
         alert(res); // 這裡alert的內容在backend controller定義
@@ -178,6 +179,7 @@ $(document).ready(function(){
             document.getElementById("emailButtonGroups").style.display="block";
             $("#attachmentEdit label").css("display", "none");
             $("#attachmentList").html("");
+            loadsubscriberList();
           }else{
             attachmentList=[];
             attachmentNameList=[];
