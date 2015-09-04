@@ -168,9 +168,6 @@
 	#post{
 		display: none !important;
 	}
-	#tabDiv{
-		width: 68% !important;
-	}
 }
 
 @media all and (max-width: 1279px) {
@@ -179,6 +176,9 @@
 	}
 	#goToBoard{
 		display: none !important;
+	}
+	#tabDiv{
+		width: 78% !important;
 	}
 }
 
