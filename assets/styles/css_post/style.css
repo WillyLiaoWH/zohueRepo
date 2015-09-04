@@ -27,11 +27,14 @@ div.show-image input.delete {
     right:0;
 }
 
+#sideBanner{
+    //display: none !important;
+}
 
 
 #post-form-main{
 	//float:left;
-	//width:54%;
+	width:70% !important;
 }
 
 #content{
