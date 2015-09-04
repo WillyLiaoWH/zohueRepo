@@ -502,19 +502,19 @@ function cancelEmailSearch(){
 }
 
 // 輸入input之後，按enter可以直接送出
-function adminLogin(e) {
-  var keynum;
-  if(window.event) {
-    keynum = e.keyCode;
-  } else if(e.which) {
-    keynum = e.which;
-  }
-  if(keynum=="13") {
-    $("#adminLogin").click();
-  } else {
-    return true;
-  }
-}
+// function adminLogin(e) {
+//   var keynum;
+//   if(window.event) {
+//     keynum = e.keyCode;
+//   } else if(e.which) {
+//     keynum = e.which;
+//   }
+//   if(keynum=="13") {
+//     $("#adminLogin").click();
+//   } else {
+//     return true;
+//   }
+// }
 
 function userSearch(e) {
   var keynum;
