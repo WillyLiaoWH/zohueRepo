@@ -74,30 +74,23 @@ module.exports = {
 	},
 
     upload: function(req, res){ //上傳附加檔案
-        var adminAccount=req.session.user.account;
         var isAdmin=req.session.admin;
-        Admins.find({account: adminAccount}).exec(function(error, admin){
-            if(error){
-                console.log(error);
-            }else{
-                if (isAdmin="true") {
-                    if(req.method === 'GET')
-                        return res.json({'status':'GET not allowed'});
-                    var uploadFile = req.file('uploadFile');
-                    var originalFileName = uploadFile["_files"][0].stream.filename;
-                    var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
-                    var milliseconds = new Date().getTime();
-                    var newFileName = milliseconds+originalFileName;
+        if (isAdmin="true") {
+            if(req.method === 'GET')
+                return res.json({'status':'GET not allowed'});
+            var uploadFile = req.file('uploadFile');
+            var originalFileName = uploadFile["_files"][0].stream.filename;
+            var fileType = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length);
+            var milliseconds = new Date().getTime();
+            var newFileName = milliseconds+originalFileName;
 
-                    uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
-                        if (err) return res.serverError(err);
-                        res.send(newFileName);
-                    });
-                }else{
-                    res.send("false");
-                }
-            }
-        });
+            uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
+                if (err) return res.serverError(err);
+                    res.send(newFileName);
+                });
+        }else{
+            res.send("false");
+        }
     },
 
     sendNewsLetter: function(req, res) {
@@ -114,81 +107,72 @@ module.exports = {
                 //path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
         }
-        var adminAccount=req.session.user.account;
         var isAdmin=req.session.admin;
-        Admins.find({account: adminAccount}).exec(function(error, admin){
-            if(error){
-                console.log(error);
-            }else{
-                if (isAdmin="true") {
-                    SubscribeEmail.find().exec(function(err, mailList) {
-                        if (err) {
-                            res.send(500, { err: "DB Error" });
-                        } else {
-                            var receivers = "";
-                            for(i=0; i<mailList.length; i++){
-                                receivers += mailList[i].email;
-                                receivers +=",";
-                            }
-                            var nodemailer = require('nodemailer');  
-                            var transporter = nodemailer.createTransport({  
-                                service: 'Gmail',  
-                                auth: {  
-                                    user: 'ntu.cpcp@gmail.com',  
-                                    pass: 'lckung413'  
-                                }  
-                            });
-                            if(req.param("attachmentList").length==0){
-                                var options = {  
-                                    from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
-                                    bcc: receivers,    
-                                    subject: mailSubject,
-                                    text: mailContent
-                                }
-                            }else{
-                                var options = {  
-                                    from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
-                                    bcc: receivers,    
-                                    subject: mailSubject,
-                                    text: mailContent, 
-                                    attachments: attachmentList
-                                };  
-                            }
-
-                            //發送信件方法  
-                            transporter.sendMail(options, function(error, info){  
-                                if(error){  
-                                    console.log(error);  
-                                    res.send("電子報發送失敗！");
-                                }else{  
-                                    console.log('訊息發送: ' + info.response);
-                                    res.send("SEND"); 
-                                    if(req.param("attachmentList")!=0){ //送出郵件後要刪除附加檔案
-                                        for(k=0;k<attachmentObj.length;k++){ 
-                                            var fs = require('fs');
-                                            //var path = "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
-                                            var path = "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[k];
-                                            fs.unlink(path, function (err) {
-                                                if (err){
-                                                    throw err;
-                                                    console.log(err);
-                                                }else{
-                                                    console.log("File deleted."); 
-                                                }
-                                            });
-                                        }
-                                    }
-                                }  
-                            }); 
-                        }
+        if (isAdmin="true") {
+            SubscribeEmail.find().exec(function(err, mailList) {
+                if (err) {
+                    res.send(500, { err: "DB Error" });
+                } else {
+                    var receivers = "";
+                    for(i=0; i<mailList.length; i++){
+                        receivers += mailList[i].email;
+                        receivers +=",";
+                    }
+                    var nodemailer = require('nodemailer');  
+                    var transporter = nodemailer.createTransport({  
+                        service: 'Gmail',  
+                        auth: {  
+                            user: 'ntu.cpcp@gmail.com',  
+                            pass: 'lckung413'  
+                        }  
                     });
-                }else{
-                    res.send("你不是管理員喔！");
-                }
-            }
-        });
+                    if(req.param("attachmentList").length==0){
+                        var options = {  
+                            from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                            bcc: receivers,    
+                            subject: mailSubject,
+                            text: mailContent
+                        }
+                    }else{
+                        var options = {  
+                            from: "ZOHUE-頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                            bcc: receivers,    
+                            subject: mailSubject,
+                            text: mailContent, 
+                            attachments: attachmentList
+                        };  
+                    }
 
-        
+                    //發送信件方法  
+                    transporter.sendMail(options, function(error, info){  
+                        if(error){  
+                            console.log(error);  
+                            res.send("電子報發送失敗！");
+                        }else{  
+                            console.log('訊息發送: ' + info.response);
+                            res.send("SEND"); 
+                            if(req.param("attachmentList")!=0){ //送出郵件後要刪除附加檔案
+                                for(k=0;k<attachmentObj.length;k++){ 
+                                    var fs = require('fs');
+                                    //var path = "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
+                                    var path = "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[k];
+                                    fs.unlink(path, function (err) {
+                                        if (err){
+                                            throw err;
+                                            console.log(err);
+                                        }else{
+                                            console.log("File deleted."); 
+                                        }
+                                    });
+                                }
+                            }
+                        }  
+                    }); 
+                }
+            });
+        }else{
+            res.send("你不是管理員喔！");
+        } 
     },
 
     deleteFile: function(req, res) { //刪除檔案
@@ -208,41 +192,36 @@ module.exports = {
 
     getAllSubscribers: function(req, res){
         var searchEmail = req.param("searchEmail");
-        var adminAccount=req.session.user.account;
-        Admins.find({account: adminAccount}).exec(function(error, admin){
-            if(error){
-                console.log(error);
-            }else{
-                if (admin.length!=0) {
-                    SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
-                        if (subscribers.length==0) {
-                            res.send("查無結果！");
-                            //res.view('backend/index', {layout: null});
-                        } else {
-                            if (err) {
-                                res.send(500, { err: "DB Error" });
-                            } else {
-                                res.send(subscribers);
-                            }
-                        }
-                    });
-                }else{
-                    res.send("你不是管理員喔！");
+        var isAdmin=req.session.admin;
+        if (isAdmin=="true") {
+            SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
+                if (subscribers.length==0) {
+                    res.send("查無結果！");
+                } else {
+                    if (err) {
+                        res.send(500, { err: "DB Error" });
+                    } else {
+                        res.send(subscribers);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            res.send("你不是管理員喔！");
+        }
     },
 
     deleteSubscriber: function(req, res){
         var subscriberId = req.param("id");
-        SubscribeEmail.destroy({id: subscriberId}).exec(function(err){
-            if(err) {
-                res.send(500,{err: "DB Error" });
-            } else {
-                res.send('紀錄已刪除');
-            }
-        });
+        var isAdmin=req.session.admin;
+        if (isAdmin=="true") {
+            SubscribeEmail.destroy({id: subscriberId}).exec(function(err){
+                if(err) {
+                    res.send(500,{err: "DB Error" });
+                } else {
+                    res.send('紀錄已刪除');
+                }
+            });
+        }
     }
-
 };
 

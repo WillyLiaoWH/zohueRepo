@@ -85,6 +85,9 @@
 
 @media all and (max-width: 1300px) {
 	
+}
+
+
 	td:nth-child(1){
 		width: 125px !important;
 	}
@@ -106,7 +109,7 @@
 	td:nth-child(7){
 		width: 260px !important;
 	}
-}
+
 .s{
 	height:48px;
 	color:#816C58;

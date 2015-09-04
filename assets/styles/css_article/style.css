@@ -51,9 +51,16 @@ div.show-image input.delete {
 	//height:48px;
 }
 
+#post-form-main{
+	width: 
+}
+
+
+
 #article{
 	//margin: 20px 0px 0px 15px;
 	border: solid rgba(102, 141, 60, 0.4);
+	background-color: rgba(102, 141, 60, 0.4);
 	border-width:1px;
 	border-radius: 10px;
 	width: 100%;
@@ -163,6 +170,14 @@ div.show-image input.delete {
 	padding:10px 20px 10px 20px;
 
 }*/
+
+#post-form-main{
+	width: 80% !important;
+}
+
+#signup{
+	display: none !important;
+}
 
 /*#signup{
 	margin:20px 20px 20px 5px;

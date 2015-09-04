@@ -168,6 +168,9 @@
 	#post{
 		display: none !important;
 	}
+	#tabDiv{
+		width: 68% !important;
+	}
 }
 
 @media all and (max-width: 1279px) {
@@ -177,6 +180,9 @@
 	#goToBoard{
 		display: none !important;
 	}
+}
+
+
 	td:nth-child(1){
 		width: 125px !important;
 	}
@@ -195,7 +201,6 @@
 	td:nth-child(6){
 		width: 150px !important;
 	}
-}
 
 /*#signup{
 	margin:20px 20px 20px 5px;
@@ -352,10 +357,6 @@ div.tab_container .tab_content h2 {
 .nav-pills li a:hover{
 	background-color: rgba(102, 141, 60, 0.4);
 	color:white;
-}
-
-.tabDiv{
-	margin-top:20px;
 }
 
 @media all and (max-width: 768px) {
