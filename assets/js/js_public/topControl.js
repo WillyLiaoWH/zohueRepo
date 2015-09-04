@@ -119,6 +119,7 @@ function checkAuth() {
           fullSignup2.style.display="block";
           profile1.style.display="none";
           profile2.style.display="none";
+          // alert("你尚未完整註冊喔");
         }else{
           fullSignup1.style.display="none";
           fullSignup2.style.display="none";
@@ -308,7 +309,15 @@ function Login(){
     alert("帳號密碼都要輸入唷！");
   } else {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
-    alert("登入成功！");
+    if(res.isFullSignup==true){
+    //     alert("你尚未完整註冊喔!完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友!<a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a>");
+    // }
+      alert(res.alias+"，歡迎回來作夥!");
+     }else{
+      alert(res.alias+"，歡迎回來作夥!\n\n你尚未完整註冊喔!完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友!快填寫資料加入大家的行列吧!");
+     }
+
+
     location.replace(url);
   }).error(function(res){
       alert(res.responseJSON.err);
@@ -318,7 +327,7 @@ function Login(){
 
 function loginWithAccount(account, password) {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
-      alert("登入成功！");
+      alert("登入成功！hahahah");
     location.reload();
   })
     .error(function(res){

@@ -172,12 +172,30 @@ function readConfirm(articleid){
 // }
 
 function postArticle() {
+  // $.get("/checkFull", function(full){
+  //   if(!full) {
+  //     alert("你尚未完整註冊，不能發表文章喔");
+  //     // window.location.replace("/home");
+  //   }
+  //   else{
+  //      window.location.assign("/post/"+board);
+  //   }
+  // });
+
   $.get("/checkAuth", function(auth){
     if(!auth) {
       alert("你尚未登入，不能發表文章喔");
       // window.location.replace("/home");
     }else{
-       window.location.assign("/post/"+board);
+        $.get("/checkFull", function(full){
+          if(!full) {
+            alert("你尚未完整註冊，不能發表文章喔");
+            // window.location.replace("/home");
+          }
+          else{
+             window.location.assign("/post/"+board);
+          }
+        });       
     }
   });
  
