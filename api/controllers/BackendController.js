@@ -34,28 +34,36 @@ module.exports = {
 
   	},
 
-    adminLogin: function(req, res) {
-        var adminAccount = req.param("adminAccount");
-        var adminPassword = req.param("adminPassword");
+    // adminLogin: function(req, res) {
+    //     var adminAccount = req.param("adminAccount");
+    //     var adminPassword = req.param("adminPassword");
 
-        Admins.find({account: adminAccount}).exec(function(error, admin) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            }else{
-                if (admin.length!=0) {
-                    if (adminPassword==admin[0].password) {
-                        req.session.admin = adminAccount;
-                        res.send("登入成功");
-                    } else {
-                        res.send("密碼錯誤！");
-                    }
-                } else {
-                    res.send("此帳號不存在！");
-                }
-            } 
-        });
-    },
+    //     // Admins.create({account: adminAccount}).exec(function(err){
+    //     //     if(err) {
+    //     //         res.send(500,{err: "DB Error" });
+    //     //     } else {
+    //     //         res.send('s');
+    //     //     }
+    //     // });                   
+
+    //     Admins.find({account: adminAccount}).exec(function(error, admin) {
+    //         if(error) {
+    //             res.send(500,{err: "DB Error" });
+    //             console.log(error);
+    //         }else{
+    //             if (admin.length!=0) {
+    //                 if (adminPassword==admin[0].password) {
+    //                     req.session.admin = adminAccount;
+    //                     res.send("登入成功");
+    //                 } else {
+    //                     res.send("密碼錯誤！");
+    //                 }
+    //             } else {
+    //                 res.send("此帳號不存在！");
+    //             }
+    //         } 
+    //     });
+    // },
     
     adminLogout: function (req, res) {
         req.session.destroy();
@@ -63,40 +71,36 @@ module.exports = {
     },
 
     checkAdmin: function(req, res) {
-        var adminAccount=req.session.admin;
-        Admins.find({account: adminAccount}).exec(function(error, admin){
-            if(error){
-                console.log(error);
-            }else{
-                if (admin.length!=0) {
-                    res.send("true");
+        if(typeof req.session.user != 'undefined'){
+            var adminAccount=req.session.user.account;
+            Admins.find({account: adminAccount}).exec(function(error, admin){
+                if(error){
+                    console.log(error);
                 }else{
-                    res.send("false");
+                    if (admin.length!=0) {
+                        req.session.admin="true";
+                        res.send("true");
+                    }else{
+                        req.session.admin="false";
+                        res.send("false");
+                    }
                 }
-            }
-        });
-    },
-
-    createAdmin: function(req, res) {
-        var adminAccount = req.param("adminAccount");
-        var adminPassword = req.param("adminPassword");
-
-        Admins.create({account: adminAccount, password: adminPassword}).exec(function(error, article) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } 
-        });
+            });
+        } else {
+          res.send("false");
+        }
+        
     },
 
     getAllUsers: function(req, res){
         var searchUser = req.param("searchUser");
-        var adminAccount=req.session.admin;
+        var isAdmin=req.session.admin;
+        var adminAccount=req.session.user.account;
         Admins.find({account: adminAccount}).exec(function(error, admin){
             if(error){
                 console.log(error);
             }else{
-                if (admin.length!=0) {
+                if (isAdmin=="true") {
                     User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
                         if (allUsers.length==0) {
                             res.send("查無結果！");

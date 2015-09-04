@@ -12,26 +12,27 @@ var unDelArtId=[];
 $(document).ready(function(){
   checkAuth();
 
-  $(document).on("click","#adminLogin",function(e){
-    var adminAccount = $("#adminAccount").val();
-    var adminPassword = $("#adminPassword").val();
-    var url = document.URL;
+  // $(document).on("click","#adminLogin",function(e){
+  //   var adminAccount = $("#adminAccount").val();
+  //   var adminPassword = $("#adminPassword").val();
+  //   var url = document.URL;
 
-    $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
-      if (res == "登入成功"){
-        alert(res);
-        location.replace(url);
-      }else{
-        alert(res); // 這裡alert的內容在backend controller定義
-      }
-    });
-  });
+  //   $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
+  //     if (res == "登入成功"){
+  //       alert(res);
+  //       location.replace(url);
+  //     }else{
+  //       alert(res); // 這裡alert的內容在backend controller定義
+  //     }
+  //   });
+  // });
 
   $(document).on("click","#adminLogout",function(e){
-    var url = document.URL;
+    //var url = document.URL;
     var posting = $.post( "/adminLogout", {}, function(res){
       if(res=="success"){
-        location.replace(url);
+        //location.replace(url);
+        window.location.assign("/home");
       }      
     }).error(function(res){
       alert(res.responseJSON.err);
@@ -87,6 +88,8 @@ $(document).ready(function(){
 
       }else{
         $("#adminLoginArea").css("display", "block");
+        alert("你不是管理員喔！");
+        window.location.assign("/home");
         //alert("Not admin.");
       }
     });

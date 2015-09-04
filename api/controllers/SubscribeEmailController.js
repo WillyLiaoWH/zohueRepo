@@ -74,12 +74,13 @@ module.exports = {
 	},
 
     upload: function(req, res){ //上傳附加檔案
-        var adminAccount=req.session.admin;
+        var adminAccount=req.session.user.account;
+        var isAdmin=req.session.admin;
         Admins.find({account: adminAccount}).exec(function(error, admin){
             if(error){
                 console.log(error);
             }else{
-                if (admin.length!=0) {
+                if (isAdmin="true") {
                     if(req.method === 'GET')
                         return res.json({'status':'GET not allowed'});
                     var uploadFile = req.file('uploadFile');
@@ -113,13 +114,13 @@ module.exports = {
                 //path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
         }
-
-        var adminAccount=req.session.admin;
+        var adminAccount=req.session.user.account;
+        var isAdmin=req.session.admin;
         Admins.find({account: adminAccount}).exec(function(error, admin){
             if(error){
                 console.log(error);
             }else{
-                if (admin.length!=0) {
+                if (isAdmin="true") {
                     SubscribeEmail.find().exec(function(err, mailList) {
                         if (err) {
                             res.send(500, { err: "DB Error" });
@@ -207,7 +208,7 @@ module.exports = {
 
     getAllSubscribers: function(req, res){
         var searchEmail = req.param("searchEmail");
-        var adminAccount=req.session.admin;
+        var adminAccount=req.session.user.account;
         Admins.find({account: adminAccount}).exec(function(error, admin){
             if(error){
                 console.log(error);

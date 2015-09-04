@@ -10,9 +10,6 @@ module.exports = {
   attributes: {
     account : { 
     	type: 'string' 
-    },
-	password : { 
-		type: 'string' 
-	}
+    }
   }
 };

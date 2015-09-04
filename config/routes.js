@@ -88,7 +88,6 @@ module.exports.routes = {
   'POST /auth_setTimeline':'Timelines.auth_set',
   'POST /deleteSubscriber': 'SubscribeEmailController.deleteSubscriber',
   'POST /fileUpload': 'SubscribeEmailController.upload',
-  'POST /createAdmin': 'BackendController.createAdmin',
   'POST /adminLogin': 'BackendController.adminLogin',
   'POST /adminLogout': 'BackendController.adminLogout',
   'POST /recoverArticle': 'BackendController.recoverArticle',
