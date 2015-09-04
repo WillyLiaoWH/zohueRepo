@@ -122,15 +122,13 @@ module.exports.routes = {
         '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_public/alertify.js',
         '/js/js_profile/mainJS.js',
-        '/js/js_profile/cropper.min.js',
-        '/js/js_profile/crop-avatar.js'
+        '/js/js_post/cropper.min.js',
+        '/js/js_profile/crop-avatar.js?ver=1'
       ],
       stylesheets: [
         '/styles/css_profile/style.css',
-        '/styles/css_profile/crop-avatar.css',
         '/styles/css_post/crop-avatar.css',
-        '/styles/css_profile/cropper.min.css',
-        '/styles/css_post/bootstrap.min.css',
+        '/styles/css_post/cropper.min.css',
         '/styles/importer.css',
         '/styles/css_public/themes/alertify.core.css',
         '/styles/css_public/themes/alertify.default.css'
