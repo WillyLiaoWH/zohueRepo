@@ -21,6 +21,16 @@ module.exports = {
         if(req.method === 'GET')
             return res.json({'status':'GET not allowed'});                      //  Call to /upload via GET is error
 
+        function createDir(dir, cb){
+            var fs = require('fs');
+            if (!fs.exists(dir)){
+                //fs.mkdirSync(dir);
+                fs.mkdir(dir, function (err) {
+                    cb();
+                });
+            }else{cb();}
+        }
+
         function upload(cb){
             var uploadFile = req.file('avatar_file');
             uploadFile.upload({ dirname: '../../assets/images/img_avatar'}, function onUploadComplete (err, files) {              //  Files will be uploaded to .tmp/uploads
@@ -62,10 +72,12 @@ module.exports = {
             });
         }
 
-        upload(function(a) {
-            setTimeout(function(){
-                res.ok(JSON.stringify({state:200,message:null,result:a}));
-            }, 2000);
+        createDir('assets/images/img_avatar/upload', function(){
+            upload(function(a) {
+                setTimeout(function(){
+                    res.ok(JSON.stringify({state:200,message:null,result:a}));
+                }, 2000);
+            });
         });
     },
 
@@ -86,10 +98,20 @@ module.exports = {
         if(req.method === 'GET')
             return res.json({'status':'GET not allowed'});                      //  Call to /upload via GET is error
 
+        function createDir(dir, cb){
+            var fs = require('fs');
+            if (!fs.exists(dir)){
+                //fs.mkdirSync(dir);
+                fs.mkdir(dir, function (err) {
+                    cb();
+                });
+            }else{cb();}
+        }
+
         function upload(uni_fn, cb){
             var uploadFile = req.file('avatar_file');
             
-            uploadFile.upload({ dirname: '../../assets/images/img_post', saveAs: uni_fn+'.jpg'}, function onUploadComplete (err, files) {              //  Files will be uploaded to .tmp/uploads
+            uploadFile.upload({ dirname: 'assets/images/img_post', saveAs: uni_fn+'.jpg'}, function onUploadComplete (err, files) {              //  Files will be uploaded to .tmp/uploads
                 if (err) return res.serverError(err);                               //  IF ERROR Return and send 500 error with error
                 var regex = /.*assets\\+(.*)/;
                 var match = files[0].fd.match(regex);
@@ -147,30 +169,32 @@ module.exports = {
         }
 
         var uni_fn = new Date().getTime();
-        upload(uni_fn, function(a) {
-            res_upload(uni_fn, a, function(b) {
-                var fs = require('fs');
-                var id = setInterval(function(){
-                    console.log('assets/'+b);
-                    // if (fs.existsSync('assets/'+b)) {
-                        // res.ok(JSON.stringify({state:200,message:null,result:b}));
-                        // clearInterval(id);
-                    //}
-                    fs.stat('assets/'+b, function(err, stat) {
-                        if(err == null) {
-                            res.ok(JSON.stringify({state:200,message:null,result:b}));
-                            clearInterval(id);
-                        } else if(err.code == 'ENOENT') {
-                            //fs.writeFile('log.txt', 'Some log\n');
-                        } else {
-                            console.log('Some other error: ', err.code);
-                        }
+        createDir('assets/images/img_post/upload', function(){
+            createDir('assets/images/img_post/resize', function(){
+                upload(uni_fn, function(a) {
+                    res_upload(uni_fn, a, function(b) {
+                        var fs = require('fs');
+                        var id = setInterval(function(){
+                            console.log('assets/'+b);
+                            // if (fs.existsSync('assets/'+b)) {
+                                // res.ok(JSON.stringify({state:200,message:null,result:b}));
+                                // clearInterval(id);
+                            //}
+                            fs.stat('assets/'+b, function(err, stat) {
+                                if(err == null) {
+                                    res.ok(JSON.stringify({state:200,message:null,result:b}));
+                                    clearInterval(id);
+                                } else if(err.code == 'ENOENT') {
+                                    //fs.writeFile('log.txt', 'Some log\n');
+                                } else {
+                                    console.log('Some other error: ', err.code);
+                                }
+                            });
+                        }, 2000);
                     });
-                }, 2000);
+                });
             });
         });
-
-
     },
 };
 
