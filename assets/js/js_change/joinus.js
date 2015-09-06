@@ -264,10 +264,16 @@ function getXMLHttp(){
 
 function Submit(){
   var pass_signup = 1;
+  var missingInfo = [];
   $(".feedback-input[must='t']").each(function( index ) {
     if( $(this).val()=="" || $(this).val()==null ){
       pass_signup = 0;
+      missingInfo.push( $(this).attr("placeholder") ); // 將沒填的欄位一一放置於 array 中
     }else{}
+  });
+  var uniqueMissingInfo = [];
+  $.each(missingInfo, function(i, el){ // 將沒填欄位之 array 去除重複
+    if($.inArray(el, uniqueMissingInfo) === -1) uniqueMissingInfo.push(el);
   });
 
   if(pass_signup==1){
@@ -306,7 +312,25 @@ function Submit(){
     }).error(function(res){
       alert(res.responseJSON.err);
     });
-  }else{alert("你是不是少填了什麼呢！");}
+  }else{ // 若有欄位沒填將產生警告視窗，並顯示缺少哪些欄位
+    var missingInfoMessage = uniqueMissingInfo.shift();
+    for(var i in uniqueMissingInfo){
+      missingInfoMessage=missingInfoMessage+"、"+uniqueMissingInfo[i];
+    }
+    bootbox.dialog({
+      //message: "您忘記輸入以下資訊囉：<br>" + missingInfoMessage,
+      message: missingInfoMessage,
+      title: "你是不是少填了什麼呢！",
+      buttons: {
+        main: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+          }
+        }
+      }
+    });
+  }
 }
 function Submit_ez(){
   var email = document.getElementById("email_ez").value;

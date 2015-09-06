@@ -207,6 +207,7 @@ module.exports.routes = {
     locals: {
       scripts: [
         'js/js_public/bootstrap.min.js',
+        'js/js_public/bootbox.min.js',
         'js/js_change/cropper.min.js',
         'js/js_change/crop-avatar.js',
         'js/js_change/joinus.js'
