@@ -233,6 +233,7 @@ module.exports.routes = {
     view: 'proInfo/index',
     locals: {
       scripts: [
+      '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_ProInfo/mainJS.js',
         '/js/js_ProInfo/bootstrap.min.js'
       ],
