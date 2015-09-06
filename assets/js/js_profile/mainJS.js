@@ -234,11 +234,11 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
       var comment_author_id=element_res.author;
       var comment_author_avater=element_res.img;
       var comment_author=element_res.alias;
-      console.log(element_res);
+      //console.log(element_res);
       var comment_content=element_res.comment;
       var comment_contentImg=element_res.comment_image;
       var comment_ID = element_res.id;
-      console.log(element_res);
+      //console.log(element_res);
       var comment_updatedAt = new Date(element_res.updatedAt).toLocaleString();
       var comment_nicer = element_res.rnicer;
       var comment_reporter = element_res.rreporter;
@@ -290,7 +290,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                       <image src="'+comment_author_avater+'" height="50" width="50">\
                     </div>\
                     <div id="content_timeline_res">\
-                      <div class="event_text_r"><a href="?'+comment_author_id+'">'+comment_author+'</a> '+comment_content+'</div>\
+                      <div class="event_text_r"><a class="name" href="?'+comment_author_id+'">'+comment_author+'</a> '+comment_content+'</div>\
                       <div class="row-fluid event_img" style="display:'+display_img+';">'+comment_contentImg+'</div>\
                       <div class="container-fluid container_r_edit" id="container_r_edit'+comment_ID+'">\
                         <div class="row-fluid" id="div_r_edit_content'+comment_ID+'" contenteditable="true" style="'+css_r_content+'">'+comment_content+'</div>\
@@ -733,7 +733,7 @@ function editRTimelineCancel(id){
 }
 function editRTimelineSend(id){
   if($("#div_r_edit_img"+id)){$("#div_r_edit_img"+id+" .delete").remove();} // 去除叉叉紐
-
+  var name = $("#container_r_edit"+id).parent().children(".event_text_r").children("a.name").html()
   var edit_content=$("#div_r_edit_content"+id).html();
   var edit_img=$("#div_r_edit_img"+id).html();
   var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
@@ -741,9 +741,10 @@ function editRTimelineSend(id){
 
   if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
   else{
-    $.post( "/editCommentTimeline", { edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
-      $("#container_r_edit"+id).parent().children( ".event_text_r" ).html(edit_content);
+    $.post( "/editCommentTimeline", {edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
+      $("#container_r_edit"+id).parent().children( ".event_text_r" ).html("<a class='name' href='?"+id+"'>"+name+"</a>"+edit_content);
       $("#container_r_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
+
       editRTimelineCancel(id);
     })
     .error(function(res){
