@@ -161,3 +161,15 @@
 #account{
 	onkeyup:"(/[^-_A-Z0-9]/g,'')";
 }
+
+.modalBox{
+	padding:5px;
+	border:1px solid #CCC;
+	background:#FFF;
+	height:90%;
+	width:90%;
+	display:none;
+	margin-top:0; margin-right:auto; margin-bottom:0; margin-left:auto;
+	overflow:auto;
+	border-radius: 10px;
+}

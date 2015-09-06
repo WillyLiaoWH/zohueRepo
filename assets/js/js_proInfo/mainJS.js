@@ -2,6 +2,8 @@
 var searched;
 //var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 //var loaded=false;
+
+
 $(document).ready(function(){
   var url = document.URL;
   var regex = /.*proInfo\/+(.*)/;
@@ -74,25 +76,42 @@ function setPage(page) {
     if(page!=pageNum) {
       for(i=0; i<articleNum; i++) {
         if(i%2==0){
+          //文章類別
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+
+          //癌症類別
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
+          //標題
           myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><ifram src="+articleList[i+articleNum*(page-1)].link+"></iframe></td>";
 
+          //作者
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
+
+          //發表時間
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
+
+          //出處
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
+
+
           myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>"; 
          
         }else{
+          //文章類別
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+          //癌症類別
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
-
+          //標題
           myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-
+          //作者
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
+          //發表時間
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
+          //出處
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
+
           myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>"; 
         }
       }
@@ -103,7 +122,8 @@ function setPage(page) {
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
-          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a target='_blank' class='show-info' title="+articleList[i+articleNum*(page-1)].link+">"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
@@ -114,7 +134,8 @@ function setPage(page) {
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
-          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a target='_blank' class='show-info' title="+articleList[i+articleNum*(page-1)].link+">"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
@@ -210,7 +231,8 @@ function setSearchResult(articleList){
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
-          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a target='_blank' class='show-info' title="+articleList[i+articleNum*(page-1)].link+">"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
@@ -227,7 +249,8 @@ function setSearchResult(articleList){
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
-          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a target='_blank' class='show-info' title="+articleList[i+articleNum*(page-1)].link+">"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
@@ -262,3 +285,19 @@ function enterSearch(e) {
     searchArticle();
   }
 }
+
+$(document).on("click","a.show-info",function(event){
+//$(".show-info").on("click",function(event){
+  console.log("!!");
+  //event.preventDefault();
+  if ($(window).width() < 768) {
+    window.open($(this).attr("title"),'_blank');
+  }else{
+    //var ss = '<img src="'+$(this).attr("href")+'">';
+    var ss = "<embed src="+$(this).attr("title")+" height='100%' width='100%'></embed>";
+    //var ss =$(this).attr("href")
+    $( ".modalBox" ).empty();
+    $( ".modalBox" ).append(ss);
+    $( ".modalBox" ).modalBox('open');
+  }
+});
