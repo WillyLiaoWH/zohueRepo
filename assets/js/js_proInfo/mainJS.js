@@ -123,7 +123,7 @@ function setPage(page) {
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
           //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a class='show-info' href="+articleList[i+articleNum*(page-1)].link+">"+"asdf"+"</a></td>";
+          myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a target='_blank' class='show-info' title="+articleList[i+articleNum*(page-1)].link+">"+"asdf"+"</a></td>";
 
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
@@ -286,12 +286,12 @@ function enterSearch(e) {
 $(document).on("click","a.show-info",function(event){
 //$(".show-info").on("click",function(event){
   console.log("!!");
-  event.preventDefault();
+  //event.preventDefault();
   if ($(window).width() < 768) {
-    window.open($(this).attr("href"),'_blank');
+    window.open($(this).attr("title"),'_blank');
   }else{
     //var ss = '<img src="'+$(this).attr("href")+'">';
-    var ss = "<embed src="+$(this).attr("href")+"></embed>";
+    var ss = "<embed src="+$(this).attr("title")+"></embed>";
     //var ss =$(this).attr("href")
     $( ".modalBox" ).empty();
     $( ".modalBox" ).append(ss);
