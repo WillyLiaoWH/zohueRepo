@@ -191,10 +191,16 @@ function getXMLHttp(){
 
 function Submit(){
   var pass_signup = 1;
+  var missingInfo = [];
   $(".feedback-input[must='t']").each(function( index ) {
     if( $(this).val()=="" || $(this).val()==null ){
       pass_signup = 0;
+      missingInfo.push( $(this).attr("placeholder") ); // 將沒填的欄位一一放置於 array 中
     }else{}
+  });
+  var uniqueMissingInfo = [];
+  $.each(missingInfo, function(i, el){ // 將沒填欄位之 array 去除重複
+    if($.inArray(el, uniqueMissingInfo) === -1) uniqueMissingInfo.push(el);
   });
 
   if(pass_signup==1){
@@ -230,7 +236,25 @@ function Submit(){
     }).error(function(res){
       alert(res.responseJSON.err);
     });
-  }else{alert("你是不是少填了什麼呢！");}
+  }else{ // 若有欄位沒填將產生警告視窗，並顯示缺少哪些欄位
+    var missingInfoMessage = uniqueMissingInfo.shift();
+    for(var i in uniqueMissingInfo){
+      missingInfoMessage=missingInfoMessage+"、"+uniqueMissingInfo[i];
+    }
+    bootbox.dialog({
+      //message: "您忘記輸入以下資訊囉：<br>" + missingInfoMessage,
+      message: missingInfoMessage,
+      title: "你是不是少填了什麼呢！",
+      buttons: {
+        main: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+          }
+        }
+      }
+    });
+  }
 }
 
 function ShowAllQ(){
@@ -367,8 +391,9 @@ function showProfile(){
 }
 function HandleResponse_showProfile(response){
   obj = JSON.parse(response);
+  console.log(obj);
   var FB_id=obj.FB_id;
-  if (FB_id.length>2){
+  //if (FB_id.length>2){
     var account=obj.account;
     var password=obj.password;
     var alias=obj.alias;
@@ -376,60 +401,23 @@ function HandleResponse_showProfile(response){
     var fname=obj.fname;
     var lname=obj.lname;
     var img=obj.img;
-    //var forgetQ=obj.forgetQ;
-    //var forgetA=obj.forgetA;
     var gender=obj.gender;
-    //var phone=obj.phone;
-    //var postalCode=obj.postalCode;
-    //var addressCity=obj.addressCity;
-    //var addressDistrict=obj.addressDistrict;
-    //var address=obj.address;
-    //var birthday = obj.birthday;
-    // var b = new Date(birthday)
-    // var Y = b.getFullYear();
-    // var M = b.getMonth()+1;
-    // var D = b.getDate();
-    // var primaryDisease=obj.primaryDisease;
-    // var selfIntroduction=obj.selfIntroduction;
     document.getElementById("fname_reg").value = lname;
     document.getElementById("lname_reg").value = fname;
     document.getElementById("avatar").src = img;
-    // try{
-    //   if(forgetQ.search('[otherQ]')==1){ // 其他
-    //     document.querySelector('#forgetQ [value="999"]').selected = true;
-    //     document.getElementById("forgetQ-other").style.display="block";
-    //     document.getElementById("forgetQ-other").value=forgetQ.substr(8);
-    //   }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;}
-    // }catch(e){/*window.location.reload();*/}
-    // document.getElementById("forgetA").value = forgetA;
 
     if(gender=="M" || gender=="F"){
       document.querySelector('#gender [value="' + gender + '"]').selected = true;
     }
-    
-    // document.getElementById("phone").value = phone;
-    // document.getElementById("postalCode").value = postalCode;
-    // getCity(document.getElementById("postalCode").value);
-    // document.getElementById("address").value = address;
-    // document.getElementById("birthday_Y").value = Y-1911;
-    // document.getElementById("birthday_M").value = M;
-    // ShowDate(M, Y)
-    // document.getElementById("birthday_D").value = D;
-    // document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
-    // document.getElementById("selfIntroduction").value = selfIntroduction;
+  //}
 
-  }
-
-
-
-    // 預設必填
-    $(".feedback-input[must='t']").each(function( index ) {
-      var id = ($(this).attr("id"));
-      if( $(this).val()=="" || $(this).val()==null ){
-        statusIMG(this,"M");
-      }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
-        statusIMG(this,"O");
-      }
-    });
-  
+  // 預設必填
+  $(".feedback-input[must='t']").each(function( index ) {
+    var id = ($(this).attr("id"));
+    if( $(this).val()=="" || $(this).val()==null ){
+      statusIMG(this,"M");
+    }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
+      statusIMG(this,"O");
+    }
+  });
 }

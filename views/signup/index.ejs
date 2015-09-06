@@ -19,6 +19,7 @@
 	<body id="body"> -->
 		<div id="form-main" class="col-md-7">
       <h1 style="color:#D26900;">完整註冊，成為正式會員！</h1>
+      <span class="label label-default">星號表示必填欄位～</span>
   			<div id="form-div">
     			<form class="form" id="form1">
       			<div>
@@ -51,7 +52,7 @@
 
             <div>
               <h class="input_title">找回密碼問題</h>
-              <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t">
+              <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t" placeholder="找回密碼問題">
                 <option value="" disabled selected>找回密碼問題</option>
                 <script>ShowAllQ();</script>
               </select>
@@ -77,7 +78,7 @@
 
             <div>
               <h class="input_title">性別</h>
-              <select id="gender" class="validate[required,custom[gender]] feedback-input" must="t">
+              <select id="gender" class="validate[required,custom[gender]] feedback-input" must="t" placeholder="性別">
                 <option value="" disabled selected>性別</option>
                 <option value='M'>男性</option>
                 <option value='F'>女性</option>
@@ -110,7 +111,7 @@
             <div>
               <div id="fname-div">
                 <h class="input_title">居住縣市</h>
-                <select id="addressCity" class="validate[required,custom[postalCode]] feedback-input" must="t"> 
+                <select id="addressCity" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="居住縣市"> 
                   <option value="" disabled selected>縣市</option>
                   <script>ShowAllCity();</script>
                 </select>
@@ -121,7 +122,7 @@
               </div>
               <div id="lname-div">
                 <h class="input_title">居住區</h>
-                <select id="addressDistrict" class="validate[required,custom[postalCode]] feedback-input" must="t">
+                <select id="addressDistrict" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="居住區">
                   <option value="" disabled selected>居住區</option>
                 </select>
                 <div class="tooltip fade bottom in" role="tooltip" id="addressDistrict-tooltip">
@@ -150,7 +151,7 @@
                 <div class="tooltip-inner" id="birthday_Y-inner"></div>
               </div>
               <div id="birthday_M-div">
-                <select id="birthday_M" class="validate[required,custom[postalCode]] feedback-input" must="t">
+                <select id="birthday_M" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="月">
                   <option value="" disabled selected>月</option>
                   <script>ShowMonth();</script>
                 </select>
@@ -160,7 +161,7 @@
                 </div>
               </div>
               <div id="birthday_D-div">
-                <select id="birthday_D" class="validate[required,custom[postalCode]] feedback-input" must="t">
+                <select id="birthday_D" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="日">
                   <option value="" disabled selected>日</option>
                 </select>
                 <div class="tooltip fade bottom in" role="tooltip" id="birthday_D-tooltip">
