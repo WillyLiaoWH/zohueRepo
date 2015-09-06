@@ -22,80 +22,75 @@ $(document).ready(function(){
   
 });
 
-function removeBlack(id) {
+function removeBlack(parent, id) {
   $.post("/removeBlack", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='addFriend("+id+")'>加好友?</button><br>";
-      // html+="<button type='button' onclick='addBlack("+id+")'>封鎖?</button><br>";
-      // document.getElementById(id).innerHTML=html;
-      location.reload();
+      var html="";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
     }
   })
 }
-function addFriend(id) {
+function addFriend(parent, id) {
   $.post("/addFriend", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='removeAddFriend("+id+")'>收回好友邀請?</button><br>";
-      // html+="<button type='button' onclick='addBlack("+id+")'>封鎖?</button><br>";
-      // document.getElementById("friend-"+toString(id)).innerHTML=html;
-      location.reload();
+
+      var html="";
+      html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
     }
   })
 }
-function addBlack(id) {
+function addBlack(parent, id) {
   $.post("/addBlack", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='removeBlack("+id+")'>解除封鎖?</button><br>";
-      // document.getElementById(id).innerHTML=html;
-      location.reload();
+      var html="";
+      html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack(this.parentNode, "+id+")'>解除封鎖</button><br>";
+      parent.innerHTML=html;
     }
   })
 }
-function confirmFriend(id) {
+function confirmFriend(parent, id) {
   $.post("/confirmFriend", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='removeFriend("+id+")'>解除好友?</button><br>";
-      // html+="<button type='button' onclick='addBlack("+id+")'>封鎖?</button><br>";
-      // document.getElementById(id).innerHTML=html;
-      location.reload();
+      var html="";
+      html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
     }
   })
 }
-function removeFriend(id) {
+function removeFriend(parent, id) {
   $.post("/removeFriend", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='addFriend("+id+")'>加好友?</button><br>";
-      // html+="<button type='button' onclick='addBlack("+id+")'>封鎖?</button><br>";
-      // document.getElementById(id).innerHTML=html;
-      location.reload();
+      var html="";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
     }
   })
 }
-function removeAddFriend(id) {
+function removeAddFriend(parent, id) {
   $.post("/removeAddFriend", {id: id}, function(res){
     if(res.err) {
       alert(res.err);
     } else {
-      // var html="";
-      // html+="<button type='button' onclick='addFriend("+id+")'>加好友?</button><br>";
-      // html+="<button type='button' onclick='addBlack("+id+")'>封鎖?</button><br>";
-      // document.getElementById(id).innerHTML=html;
-      location.reload();
+      var html="";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
     }
   });
 }
@@ -157,23 +152,23 @@ function search(page) {
               html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
               switch(isFriend[i]) {
                 case -1:
-                  html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack("+allUser[i].id+")'>解除封鎖</button><br>";
+                  html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
                   break;
                 case 0:
-                  html+="<button type='button' class='button' onclick='addFriend("+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-                  html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+                  html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                   break;
                 case 1:
-                  html+="要求加入好友&nbsp&nbsp<button type='button' class='button' onclick='confirmFriend("+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
-                  html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+                  html+="要求加入好友&nbsp&nbsp<button type='button' class='button' onclick='confirmFriend(this.parentNode, "+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                   break;
                 case 2:
-                  html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend("+allUser[i].id+")'>收回好友邀請?</button>&nbsp&nbsp&nbsp&nbsp";
-                  html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+                  html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                   break;
                 case 3:
-                  html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend("+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
-                  html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
+                  html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                   break;
               }
               html+="</div></div><div class='friendRight'>";
@@ -300,7 +295,7 @@ function showMore(nextPage) {
           html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
           break;
         case 2:
-          html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend("+allUser[i].id+")'>收回好友邀請?</button>&nbsp&nbsp&nbsp&nbsp";
+          html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend("+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
           html+="<button type='button' class='button' onclick='addBlack("+allUser[i].id+")'>封鎖</button><br>";
           break;
         case 3:
