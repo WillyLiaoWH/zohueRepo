@@ -313,6 +313,7 @@ function Submit(){
       alert(res.responseJSON.err);
     });
   }else{ // 若有欄位沒填將產生警告視窗，並顯示缺少哪些欄位
+    if(uniqueMissingInfo.indexOf("民國年") != -1){uniqueMissingInfo[uniqueMissingInfo.indexOf("民國年")]="生日";}
     var missingInfoMessage = uniqueMissingInfo.shift();
     for(var i in uniqueMissingInfo){
       missingInfoMessage=missingInfoMessage+"、"+uniqueMissingInfo[i];
