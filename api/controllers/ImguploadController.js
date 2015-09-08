@@ -46,29 +46,33 @@ module.exports = {
                 var recall_url = 'images/img_avatar/upload/'+time+'.jpg';
 
                 var easyimg = require('easyimage');
-                easyimg.crop({
-                    src:files[0].fd, dst:'assets/'+recall_url,
-                    // width:200, height:200,
-                    cropwidth:data2.width, cropheight:data2.height,
-                    // width:data2.width, height:data2.height,
-                    // cropwidth:200, cropheight:200,
-                    gravity:'NorthWest',
-                    x:data2.x, y:data2.y
-                }).then(
-                function(image) {
-                    console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-                },
-                function (err) {
-                    console.log(err);
-                });
-
+                try {
+                    easyimg.crop({
+                        src:files[0].fd, dst:'assets/'+recall_url,
+                        // width:200, height:200,
+                        cropwidth:data2.width, cropheight:data2.height,
+                        // width:data2.width, height:data2.height,
+                        // cropwidth:200, cropheight:200,
+                        gravity:'NorthWest',
+                        x:data2.x, y:data2.y
+                    }).then(
+                    function(image) {
+                        console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
+                    },
+                    function (err) {
+                        console.log(err);
+                    });
+                    cb(recall_url);
+                } catch (e) {
+                    res.ok("載入錯誤，請重新上傳！");
+                }
                 // var url = document.URL;
                 // var regex = /.*article\/+(.*)/;
                 // var match = url.replace(regex,"$1");
 
                 //res.json({state:200,file:files,message:null,result:result});
                 //res.JSON.stringify(json({state:200,message:null,result:result}));
-                cb(recall_url);
+                
             });
         }
 
@@ -140,7 +144,7 @@ module.exports = {
                         console.log(err);
                     });
                 } catch (e) {
-                    res.ok("不能上傳圖片以外的檔案！");
+                    res.ok("載入錯誤，請重新上傳！");
                 }
             });
         }

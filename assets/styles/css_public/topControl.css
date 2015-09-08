@@ -38,12 +38,21 @@ button, input[type="button"], input[type="submit"]{
 	margin-left:20px;
 }
 
-@media all and (max-width: 1024px) {
+@media all and (max-width: 1023px) {
 	#logo{
 		width:100%;
 		height: auto;
 		margin-top: 10px;
 		margin-left:0px;
+	}
+	#sideBanner{
+		display: none;
+	}
+	#menu{
+		font-size: 20px !important;
+	}
+	#logoDiv{
+		width: 100% !important;
 	}
 }
 
@@ -307,15 +316,6 @@ button, input[type="button"], input[type="submit"]{
 	//height: 5500px;
 	float:left;
 	line-height:45px;
-}
-
-@media all and (max-width: 1023px){
-	#sideBanner{
-		display: none;
-	}
-	#menu{
-		font-size: 20px !important;
-	}
 }
 
 .s{

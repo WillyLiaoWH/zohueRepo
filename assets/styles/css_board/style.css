@@ -158,6 +158,9 @@
 	#tabs{
 		display: none !important;
 	}
+	#tabDiv{
+		display: none !important;
+	}
 	#mobile_tabs{
 		display: block !important;
 		text-align: center !important ;

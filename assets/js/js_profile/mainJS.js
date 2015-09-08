@@ -649,9 +649,11 @@ function report() {
   switch(activeSource){
     case 'report_event':
       var url='/TimelineReport';
+      var className = 'cancelReport_event';
     break;
     case 'report_comment':
       var url='/TimelineResponseReport';
+      var className = 'cancelReport_comment';
     break;
     default:
       alert('住手！');
@@ -663,8 +665,9 @@ function report() {
     alert("請選擇原因");
   } else {
     $.post(url, {id: activeId, reason: reason}, function(res){
-      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="cancelReport_event" name="'+activeId+'">收回檢舉</a>');
-      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", "cancelReport_event");
+
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">收回檢舉</a>');
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
       alert("謝謝您的回饋，我們會盡快處理。");
       $("#reportDialog").dialog("close");
     }).error(function(res){
@@ -677,9 +680,11 @@ function cancelReport() {
     switch(activeSource){
       case 'cancelReport_event':
         var url='/TimelineCancelReport';
+        var className = 'report_event';
       break;
       case 'cancelReport_comment':
         var url='/TimelineResponseCancelReport';
+        var className = 'report_comment';
       break;
       default:
         alert('住手！');
@@ -687,9 +692,11 @@ function cancelReport() {
       break;
     }
     $.post(url, {id: activeId}, function(res){
-      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="report_event" name="'+activeId+'">檢舉</a>');
-      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", "report_event");
+
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">檢舉</a>');
+      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
       alert("已收回檢舉");
+
     }).error(function(res){
       alert(res.responseJSON.err);
     });

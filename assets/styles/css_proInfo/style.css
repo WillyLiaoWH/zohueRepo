@@ -9,7 +9,7 @@
 }
 
 #searchWord{
-	//width:350px;
+	width: 100%;
 	margin: 8px 0px 0px -15px;
 }
 
@@ -46,7 +46,7 @@
 #page{
 	float:left;
 	margin: 15px 0px 0px 0px;
-	font-size: 22px;
+	font-size: 20px;
 	color:#533828;
 
 }
@@ -54,7 +54,7 @@
 #pageDown{
 	float:left;
 	margin: 5px 0px 10px 20px;
-	font-size: 22px;
+	font-size: 20px;
 	color:#533828;
 
 }
@@ -71,7 +71,7 @@
 #articleList{
 	padding:10px;
 	color:#533828;
-	font-size: 23px;
+	font-size: 20px;
 	table-layout: fixed;
 	width:100%;
 }
@@ -89,25 +89,25 @@
 
 
 	td:nth-child(1){
-		width: 125px !important;
+		width: 90px !important;
 	}
 	td:nth-child(2){
-		width: 150px !important;
+		width: 100px !important;
 	}
 	td:nth-child(3){
 		width: 260px !important;
 	}
 	td:nth-child(4){
-		width: 240px !important;
+		width: 130px !important;
 	}
 	td:nth-child(5){
-		width: 220px !important;
+		width: 130px !important;
 	}
 	td:nth-child(6){
-		width: 220px !important;
+		width: 130px !important;
 	}
 	td:nth-child(7){
-		width: 260px !important;
+		width: 160px !important;
 	}
 
 .s{
