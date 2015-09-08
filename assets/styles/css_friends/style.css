@@ -1,7 +1,7 @@
 #body{
 	font-family: "微軟正黑體";
 }
-#disease, .place, #userType{
+.disease, .place, .userType{
 	height:48px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
@@ -24,7 +24,7 @@
 	margin: 7px 15px 0px 5px;
 }
 
-#alias{
+.alias{
 	height:48px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
