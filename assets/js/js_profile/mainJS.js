@@ -1,4 +1,16 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
+var diseaseList={
+  '1':"鼻咽癌",
+  '2':"鼻竇癌",
+  '3':"副鼻竇癌",
+  '4':"口腔癌",
+  '5':"口咽癌",
+  '6':"下咽癌",
+  '7':"喉癌",
+  '8':"唾液腺癌",
+  '9':"甲狀腺癌",
+  '999':"其它"
+};
 var source,activeSource;
 $(document).ready(function(){
 
@@ -868,6 +880,8 @@ function HandleResponse_showProfile(response){
   var M = (b.getMonth().toString() == "NaN") ? "  " : b.getMonth()+1;
   var D = (b.getDate().toString() == "NaN") ? "  " : b.getDate();
   var type=obj.type;
+  var primaryDisease=obj.primaryDisease;
+  var primaryDiseaseHtml;
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
     $.get('/authCheck/'+owner,function(auth_status){
@@ -877,9 +891,9 @@ function HandleResponse_showProfile(response){
       if (!auth_status["email"]){
         $('#email_row').hide();
       }
-      if (!auth_status["type"]){
-        $('#type_row').hide();
-      }
+      // if (!auth_status["type"]){
+      //   $('#type_row').hide();
+      // }
       if (!auth_status["gender"]){
         $('#gender_row').hide();
       }
@@ -916,19 +930,31 @@ function HandleResponse_showProfile(response){
   })
 
   if (type=='S'){
+    if(primaryDisease!=""){
+      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
+    }
     type="社工師";
+
   }else if(type=='P'){
-    type="病友";
+
+    type="";
   }else if(type=='F'){
-    type="家屬";
+    type="";
   }else if(type=='D'){
+    if(primaryDisease!=""){
+      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
+    }
     type="醫生";
   }else if(type=='RN'){
+    if(primaryDisease!=""){
+      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
+    }
     type="護理師";
   }else if(type=='N'){
-    type="一般民眾";
+    type="";
   }
 
+  $('#primaryDisease').text(primaryDiseaseHtml);
   $('#type').text(type);
   $('#email').text(email);
   $('#name').text(fname+lname);
@@ -945,5 +971,8 @@ function HandleResponse_showProfile(response){
   $('#phone').text(phone);
   $("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
+
+
+
 
 }

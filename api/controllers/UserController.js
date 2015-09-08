@@ -466,6 +466,9 @@ module.exports = {
                         }
                         if (auth.type === true){
                             ret.type = usr[0].type
+                        }
+                        if (auth.primaryDisease === true){
+                            ret.primaryDisease = usr[0].primaryDisease
                         }  
                         res.send(ret);
                     });
