@@ -442,6 +442,8 @@ module.exports = {
                     var ret= new Object();
                     ret.alias = usr[0].alias;
                     ret.img = usr[0].img;
+                    ret.type = usr[0].type;
+                    ret.primaryDisease = usr[0].primaryDisease;
                     var authcheck=require("../services/authcheck.js");
                     authcheck.authCheck(req,function(auth){
                         //console.log(auth)

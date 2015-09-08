@@ -884,6 +884,8 @@ function HandleResponse_showProfile(response){
   var primaryDiseaseHtml;
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
+
+    //檢查兩個人的關係
     $.get('/authCheck/'+owner,function(auth_status){
       if(!auth_status["name"]){
         $('#name_row').hide();
@@ -908,7 +910,7 @@ function HandleResponse_showProfile(response){
       }
     })
   }
-
+  //檢查拿得到什麼
   $.get('/auth_data',function(auth_status){
     var index = ["name","email","gender","phone","bday","city","type"];
     for (var i in index){
