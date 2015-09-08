@@ -9,6 +9,16 @@
   display: block; /* For Firefox */
 }
 
+#timeline_profile{
+	border-radius: 10px;
+	/*background-color: #FFFFFF;*/
+
+}
+
+#friend{
+	float: right;
+}
+
 /* PO 文區塊 */
 #timeline_post_content{
 	min-height: 100px;

@@ -146,8 +146,8 @@ function search(page) {
                   authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
               }
               html+=authorIcon;
-              html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].account+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
+              html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].id+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
+              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].id+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
               html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
               switch(isFriend[i]) {
@@ -227,8 +227,8 @@ function search(page) {
   });
 }
 
-function toProfile(account) {
-  window.location.assign("/profile/?"+account);
+function toProfile(id) {
+  window.location.assign("/profile/?"+id);
 }
 /************************** 郵遞區號相關 **************************/
 function ShowAllCity(){
@@ -278,8 +278,8 @@ function showMore(nextPage) {
           authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
       }
       html+=authorIcon;
-      html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].account+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-      html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].account+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
+      html+="<img src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i]+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
+      html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i]+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
       html+="<br><div style='display:inline-block; height: 40%; width: 100%;'>";
       switch(isFriend[i]) {

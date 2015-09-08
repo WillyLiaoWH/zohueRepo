@@ -167,7 +167,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
-      alert("他還沒完整註冊所以沒有個人頁面喔");
+      alert("此用戶還沒完整註冊，所以沒有個人頁面喔");
       if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
         window.location.replace(document.referrer);
       else
@@ -665,7 +665,7 @@ function report() {
     $.post(url, {id: activeId, reason: reason}, function(res){
       $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="cancelReport_event" name="'+activeId+'">收回檢舉</a>');
       $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", "cancelReport_event");
-      alert(res.num);
+      alert("謝謝您的回饋，我們會盡快處理。");
       $("#reportDialog").dialog("close");
     }).error(function(res){
       alert(res.err);
@@ -689,7 +689,7 @@ function cancelReport() {
     $.post(url, {id: activeId}, function(res){
       $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="report_event" name="'+activeId+'">檢舉</a>');
       $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", "report_event");
-      alert(res.num);
+      alert("已收回檢舉");
     }).error(function(res){
       alert(res.responseJSON.err);
     });
@@ -860,7 +860,7 @@ function HandleResponse_showProfile(response){
   var Y = (b.getFullYear().toString() == "NaN") ? "  " : b.getFullYear()-1911;
   var M = (b.getMonth().toString() == "NaN") ? "  " : b.getMonth()+1;
   var D = (b.getDate().toString() == "NaN") ? "  " : b.getDate();
-
+  var type=obj.type;
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
     $.get('/authCheck/'+owner,function(auth_status){
@@ -869,6 +869,9 @@ function HandleResponse_showProfile(response){
       }
       if (!auth_status["email"]){
         $('#email_row').hide();
+      }
+      if (!auth_status["type"]){
+        $('#type_row').hide();
       }
       if (!auth_status["gender"]){
         $('#gender_row').hide();
@@ -886,7 +889,7 @@ function HandleResponse_showProfile(response){
   }
 
   $.get('/auth_data',function(auth_status){
-    var index = ["name","email","gender","phone","bday","city"];
+    var index = ["name","email","gender","phone","bday","city","type"];
     for (var i in index){
       //console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
       $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
@@ -905,6 +908,21 @@ function HandleResponse_showProfile(response){
     }
   })
 
+  if (type=='S'){
+    type="社工師";
+  }else if(type=='P'){
+    type="病友";
+  }else if(type=='F'){
+    type="家屬";
+  }else if(type=='D'){
+    type="醫生";
+  }else if(type=='RN'){
+    type="護理師";
+  }else if(type=='N'){
+    type="一般民眾";
+  }
+
+  $('#type').text(type);
   $('#email').text(email);
   $('#name').text(fname+lname);
   $('#alias').text(alias);

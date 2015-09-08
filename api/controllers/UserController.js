@@ -463,7 +463,10 @@ module.exports = {
                         }
                         if (auth.phone === true){
                             ret.phone = usr[0].phone
-                        } 
+                        }
+                        if (auth.type === true){
+                            ret.type = usr[0].type
+                        }  
                         res.send(ret);
                     });
                     

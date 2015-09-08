@@ -286,7 +286,20 @@ function Submit(){
   var lname = $("#lname").val();
   var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
     function(res){
-      alert("註冊成功！");
+      // alert("註冊成功！");
+      bootbox.dialog({
+        //message: "您忘記輸入以下資訊囉：<br>" + missingInfoMessage,
+        message: 註冊,
+        title: "註冊成功",
+        buttons: {
+          main: {
+            label: "確認",
+            className: "btn-primary",
+            callback: function() {
+            }
+          }
+        }
+      });
       loginWithAccount(account, password);
   })
     .error(function(res){
@@ -310,11 +323,10 @@ function Login(){
   } else {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
     if(res.isFullSignup==true){
-    //     alert("你尚未完整註冊喔!完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友!<a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a>");
-    // }
+
       alert(res.alias+"，歡迎回來作夥!");
      }else{
-      alert(res.alias+"，歡迎回來作夥!\n\n你尚未完整註冊喔!完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友!快填寫資料加入大家的行列吧!");
+      alert(res.alias+"，歡迎回來作夥!\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！");
      }
 
 
@@ -327,7 +339,7 @@ function Login(){
 
 function loginWithAccount(account, password) {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
-      alert("登入成功！hahahah");
+      alert("首次登入成功，歡迎來作夥！");
     location.reload();
   })
     .error(function(res){
