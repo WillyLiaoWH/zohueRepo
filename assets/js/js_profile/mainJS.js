@@ -1,4 +1,16 @@
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
+var diseaseList={
+  '1':"鼻咽癌",
+  '2':"鼻竇癌",
+  '3':"副鼻竇癌",
+  '4':"口腔癌",
+  '5':"口咽癌",
+  '6':"下咽癌",
+  '7':"喉癌",
+  '8':"唾液腺癌",
+  '9':"甲狀腺癌",
+  '999':"其它"
+};
 var source,activeSource;
 $(document).ready(function(){
 
@@ -167,7 +179,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
-      alert("他還沒完整註冊所以沒有個人頁面喔");
+      alert("此用戶還沒完整註冊，所以沒有個人頁面喔");
       if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
         window.location.replace(document.referrer);
       else
@@ -665,9 +677,10 @@ function report() {
     alert("請選擇原因");
   } else {
     $.post(url, {id: activeId, reason: reason}, function(res){
+
       $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">收回檢舉</a>');
       $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
-      alert(res.num);
+      alert("謝謝您的回饋，我們會盡快處理。");
       $("#reportDialog").dialog("close");
     }).error(function(res){
       alert(res.err);
@@ -691,9 +704,11 @@ function cancelReport() {
       break;
     }
     $.post(url, {id: activeId}, function(res){
+
       $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">檢舉</a>');
       $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
-      alert(res.num);
+      alert("已收回檢舉");
+
     }).error(function(res){
       alert(res.responseJSON.err);
     });
@@ -864,9 +879,13 @@ function HandleResponse_showProfile(response){
   var Y = (b.getFullYear().toString() == "NaN") ? "  " : b.getFullYear()-1911;
   var M = (b.getMonth().toString() == "NaN") ? "  " : b.getMonth()+1;
   var D = (b.getDate().toString() == "NaN") ? "  " : b.getDate();
-
+  var type=obj.type;
+  var primaryDisease=obj.primaryDisease;
+  var primaryDiseaseHtml;
   var owner=window.location.toString().split('?')[1];
   if (typeof owner != "undefined"){
+
+    //檢查兩個人的關係
     $.get('/authCheck/'+owner,function(auth_status){
       if(!auth_status["name"]){
         $('#name_row').hide();
@@ -874,6 +893,9 @@ function HandleResponse_showProfile(response){
       if (!auth_status["email"]){
         $('#email_row').hide();
       }
+      // if (!auth_status["type"]){
+      //   $('#type_row').hide();
+      // }
       if (!auth_status["gender"]){
         $('#gender_row').hide();
       }
@@ -888,9 +910,9 @@ function HandleResponse_showProfile(response){
       }
     })
   }
-
+  //檢查拿得到什麼
   $.get('/auth_data',function(auth_status){
-    var index = ["name","email","gender","phone","bday","city"];
+    var index = ["name","email","gender","phone","bday","city","type"];
     for (var i in index){
       //console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
       $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
@@ -909,6 +931,33 @@ function HandleResponse_showProfile(response){
     }
   })
 
+  if (type=='S'){
+    if(primaryDisease!=""){
+      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
+    }
+    type="社工師";
+
+  }else if(type=='P'){
+
+    type="";
+  }else if(type=='F'){
+    type="";
+  }else if(type=='D'){
+    if(primaryDisease!=""){
+      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
+    }
+    type="醫生";
+  }else if(type=='RN'){
+    if(primaryDisease!=""){
+      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
+    }
+    type="護理師";
+  }else if(type=='N'){
+    type="";
+  }
+
+  $('#primaryDisease').text(primaryDiseaseHtml);
+  $('#type').text(type);
   $('#email').text(email);
   $('#name').text(fname+lname);
   $('#alias').text(alias);
@@ -924,5 +973,8 @@ function HandleResponse_showProfile(response){
   $('#phone').text(phone);
   $("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
+
+
+
 
 }

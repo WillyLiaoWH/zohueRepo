@@ -20,25 +20,41 @@
     <script src="/js/js_post/cropper.min.js"></script>
     <script src="/js/js_profile/crop-avatar.js?ver=1"></script>
 	</head>
-	<body id="body"> -->
+	<body id="body"> --> 
     <!-- 正文 -->
     <div class="container container-fluid" id="post-form-main">
 
     <div class="row-fluid">
       <div class="col-md-7 col-sm-12 col-xs-12" id="artContent">
+        <div class="row-fluid" id="timeline_profile">
+          <div class="col-md-3 "><img src="" id="avatar" height="100"></div>
+          <div class="col-md-9 ">
+              <div class="row">
+                <text id="alias"></text> <b id="type"></b>
+                
+              </div>
+              <div class="row">
+                 <text id="primaryDisease"></text>
+              </div>
 
+        </div>
+      </div>
         <div class="row-fluid" style="margin-top:10px;">
-          <div id="hoho" class="span12">
+          <div id="hoho" class="col-md-6">
           <!-- <ul class="tabs"> -->
             <ul class="nav nav-pills" id="tabs">
               <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
               <li><a href="#about" data-toggle="pill">關於</a></li>
-              <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
+<!--               <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
               <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
               <li><a href="#personal_others" data-toggle="pill">更多</a></li>
-
+ -->
             </ul>
           </div>
+          <div id="friend" class="col-md-3">
+              <button type='button' class='btn btn-default btn-lg' onclick='confirmFriend("id")'>加好友</button>
+          </div>
+
         </div>
 
         <div class="tab-content">

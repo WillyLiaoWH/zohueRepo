@@ -442,6 +442,8 @@ module.exports = {
                     var ret= new Object();
                     ret.alias = usr[0].alias;
                     ret.img = usr[0].img;
+                    ret.type = usr[0].type;
+                    ret.primaryDisease = usr[0].primaryDisease;
                     var authcheck=require("../services/authcheck.js");
                     authcheck.authCheck(req,function(auth){
                         //console.log(auth)
@@ -463,7 +465,13 @@ module.exports = {
                         }
                         if (auth.phone === true){
                             ret.phone = usr[0].phone
-                        } 
+                        }
+                        if (auth.type === true){
+                            ret.type = usr[0].type
+                        }
+                        if (auth.primaryDisease === true){
+                            ret.primaryDisease = usr[0].primaryDisease
+                        }  
                         res.send(ret);
                     });
                     

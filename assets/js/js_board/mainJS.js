@@ -184,12 +184,12 @@ function postArticle() {
 
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      alert("你尚未登入，不能發表文章喔");
+      alert("您尚未登入，不能發表文章喔！快登入加入大家的討論吧！");
       // window.location.replace("/home");
     }else{
         $.get("/checkFull", function(full){
           if(!full) {
-            alert("你尚未完整註冊，不能發表文章喔");
+            alert("您尚未完整註冊，不能發表文章喔，快登入加入大家的討論吧！");
             // window.location.replace("/home");
           }
           else{
