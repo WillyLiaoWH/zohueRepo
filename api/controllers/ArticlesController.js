@@ -233,8 +233,25 @@ module.exports = {
                     });
                 }
             });
-        // }
 	},
+    syncArticleToTimeline: function(req, res){
+        var author=req.session.user.id;
+        var content=req.param("timeline_post_content");
+        var contentImg=req.param("timeline_post_image");
+        var auth=req.param("timeline_post_auth");
+        var board = req.param("timeline_post_board");
+        var isAdmin = req.session.user.isAdmin;
+
+        if( isAdmin == true && board == "17"){
+            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
+                if(error) {
+                    res.send(500,{err: "發生錯誤了Q_Q" });
+                } else {
+                    res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
+                }
+            });
+        }
+    },
 
     changeArticle: function(req, res) {
         var articleId = req.param("id");

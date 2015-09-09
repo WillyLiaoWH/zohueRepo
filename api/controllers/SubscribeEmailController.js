@@ -74,8 +74,8 @@ module.exports = {
 	},
 
     upload: function(req, res){ //上傳附加檔案
-        var isAdmin=req.session.admin;
-        if (isAdmin="true") {
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin == true) {
             if(req.method === 'GET')
                 return res.json({'status':'GET not allowed'});
             var uploadFile = req.file('uploadFile');
@@ -107,8 +107,8 @@ module.exports = {
                 //path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
         }
-        var isAdmin=req.session.admin;
-        if (isAdmin="true") {
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin == true) {
             SubscribeEmail.find().exec(function(err, mailList) {
                 if (err) {
                     res.send(500, { err: "DB Error" });
@@ -192,8 +192,8 @@ module.exports = {
 
     getAllSubscribers: function(req, res){
         var searchEmail = req.param("searchEmail");
-        var isAdmin=req.session.admin;
-        if (isAdmin=="true") {
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin == true) {
             SubscribeEmail.find({or:[{email : {'contains' : searchEmail}}]}).exec(function(err, subscribers) {
                 if (subscribers.length==0) {
                     res.send("查無結果！");
@@ -212,8 +212,8 @@ module.exports = {
 
     deleteSubscriber: function(req, res){
         var subscriberId = req.param("id");
-        var isAdmin=req.session.admin;
-        if (isAdmin=="true") {
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin == true) {
             SubscribeEmail.destroy({id: subscriberId}).exec(function(err){
                 if(err) {
                     res.send(500,{err: "DB Error" });
