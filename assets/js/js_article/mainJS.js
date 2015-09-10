@@ -60,7 +60,6 @@ function setPage() {
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
     board=articleList[0].board;
-    // alert(JSON.stringify(articleList[0]));
     updateClickNum();
 
     response=res.responseList;
@@ -237,7 +236,7 @@ function setPage() {
     }
 
   }).error(function(err){
-    alert(err);
+    showDialog("錯誤訊息",err);
   });
 
 }
@@ -262,23 +261,37 @@ function editArticle() {
 }
 
 function deleteArticle() {
-  var r = confirm("確定要刪除文章嗎？");
-  if (r == true) {
-    var url = document.URL;
-    var regex = /.*article\/+(.*)/;
-    var id = url.replace(regex,"$1");
-    $.post( "/deleteArticle", { id: id}, function(res){
-     alert("文章刪除成功！");
-      // window.location.replace("/board-"+board+"/1#all");
-      if(document.referrer.search("board")!=-1)
-        window.location.assign(document.referrer);
-      else
-        window.location.assign("/board-"+board+"/1?tab=all")
-    })
-    .error(function(res){
-    alert(res.responseJSON.err);
-  });} 
-  else {}
+  bootbox.dialog({
+    message: "確定要刪除文章嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          var url = document.URL;
+          var regex = /.*article\/+(.*)/;
+          var id = url.replace(regex,"$1");
+          $.post( "/deleteArticle", { id: id}, function(res){
+           showDialog("一般訊息","文章刪除成功！");
+            // window.location.replace("/board-"+board+"/1#all");
+            if(document.referrer.search("board")!=-1)
+              window.location.assign(document.referrer);
+            else
+              window.location.assign("/board-"+board+"/1?tab=all")
+          }).error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
 
 function leaveComment(){
@@ -291,13 +304,13 @@ function leaveComment(){
   var comment_image = $("#comment_image").html();
   
 
-  if(comment.trim()=="" & comment_image.trim()==""){alert("留言失敗！");}
+  if(comment.trim()=="" & comment_image.trim()==""){showDialog("錯誤訊息","留言失敗！");}
   else{
     $.post( "/leaveComment", { comment: comment, comment_image: comment_image, article_id: article_id}, function(res){
       window.location.replace(url);
     })
     .error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
@@ -309,9 +322,8 @@ function updateResponseNum(){
   var responseNum = parseInt(response.length)+1;
   $.post( "/updateResponseNum", { id: id, responseNum: responseNum}, function(res){
     window.location.reload(true);
-  })
-    .error(function(res){
-      alert(res.responseJSON.err);
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -321,10 +333,9 @@ function updateClickNum(){
   var id = url.replace(regex,"$1");
   var clickNum=parseInt(articleList[0].clickNum)+1;
   $.post( "/updateClickNum", { id: id, clickNum: clickNum}, function(res){
-  })
-    .error(function(res){
-      alert(res.err);
-    });
+  }).error(function(res){
+    showDialog("錯誤訊息",res.err);
+  });
 }
 
 function clickNice() {
@@ -335,7 +346,7 @@ function clickNice() {
   $.post("/clickNice", {article_id: id}, function(res){
     document.getElementById("niceCount").innerHTML = "有 "+res.num+" 人推薦";
   }).error(function(res){
-    alert(res.err);
+    showDialog("錯誤訊息",res.err);
   });
 }
 
@@ -348,7 +359,7 @@ function cancelNice() {
     document.getElementById("niceCount").innerHTML = "有 "+res.num+" 人推薦";
   }).error(function(res){
     document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;'src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>"; 
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -360,7 +371,7 @@ function niceResponse(response_id) {
 
     document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse("+response_id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
   }).error(function(res){
-      alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -371,7 +382,7 @@ function notNiceResponse(response_id) {
     N_res_nicer = parseInt(N_res_nicer)-1;
     document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;' value='推薦' class='n' onclick='niceResponse("+response_id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
   }).error(function(res){
-      alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -393,7 +404,7 @@ function report() {
     var reason=choose;
   }
   if(!reason) {
-    alert("請選擇原因");
+    showDialog("一般訊息","請選擇原因");
   } else {
     var url = document.URL;
     var regex = /.*article\/+(.*)/;
@@ -403,24 +414,40 @@ function report() {
       document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
       $("#reportDialog").dialog("close");
     }).error(function(res){
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     });
   }
 }
 
 function cancelReport() {
-  if(confirm("確定要取消檢舉嗎")) {
-    var url = document.URL;
-    var regex = /.*article\/+(.*)/;
-    var id = url.replace(regex,"$1");
-    document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
-    $.post("/cancelReport", {article_id: id}, function(res){
-      document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
-    }).error(function(res){
-      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
-      alert(res.responseJSON.err);
-    });
-  }
+  bootbox.dialog({
+    message: "確定要取消檢舉嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          var url = document.URL;
+          var regex = /.*article\/+(.*)/;
+          var id = url.replace(regex,"$1");
+          document.getElementById("report").innerHTML = "<button value='推薦' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";  
+          $.post("/cancelReport", {article_id: id}, function(res){
+            document.getElementById("reportCount").innerHTML = "有 "+res.num+" 人檢舉";
+          }).error(function(res){
+            document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport();'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>"; 
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
 
 function editProfile(){
@@ -477,7 +504,7 @@ function sendEmail(){
         var article_id = url.replace(regex,"$1");
         $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
           if (res == "SEND"){
-            alert("已經送出信件至"+mailaddress); 
+            showDialog("一般訊息","已經送出信件至"+mailaddress);
           }
         });
       }
@@ -491,4 +518,19 @@ function shareFB(){
   t=document.title;
   window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');
   return false;
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }

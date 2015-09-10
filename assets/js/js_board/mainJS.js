@@ -136,13 +136,13 @@ function setPage(page, keyword, sort) {
       temp_result=res_search;
       if(res_search.length==0){
         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
-        alert("查無資料！");
+        showDialog("錯誤訊息","查無資料！");
       }else{
         setBoardCategory(res.boards, res.boardCate, res.board.category.id);
         setSearchResult(res_search, page);
       }
     }).error(function(res_search){
-      alert("not found");
+      showDialog("錯誤訊息","查無資料！");
     });
   } else {
     $.get("/setBoardPage/"+board+"/"+tab, function(res){
@@ -184,21 +184,18 @@ function postArticle() {
 
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      alert("您尚未登入，不能發表文章喔！快登入加入大家的討論吧！");
-      // window.location.replace("/home");
+      showDialog("一般訊息","您尚未登入，不能發表文章喔！快登入加入大家的討論吧！");
     }else{
-        $.get("/checkFull", function(full){
-          if(!full) {
-            alert("您尚未完整註冊，不能發表文章喔，快登入加入大家的討論吧！");
-            // window.location.replace("/home");
-          }
-          else{
-             window.location.assign("/post/"+board);
-          }
-        });       
+      $.get("/checkFull", function(full){
+        if(!full) {
+          showDialog("一般訊息","您尚未完整註冊，不能發表文章喔，快登入加入大家的討論吧！");
+        }
+        else{
+          window.location.assign("/post/"+board);
+        }
+      });       
     }
   });
- 
 }
 
 function cancleSearch(){
@@ -443,4 +440,19 @@ function setSearchResult(articleList, page){
         boardSelect.add(option);
       }
     }
+  }
+
+  function showDialog(title, message){
+    bootbox.dialog({
+      message: message,
+      title: title,
+      buttons: {
+        main: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+          }
+        }
+      }
+    });
   }
