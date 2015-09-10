@@ -181,7 +181,7 @@ function getXMLHttp(){
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
-        alert("Your browser does not support AJAX!");
+        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～");
         return false;
       }
     }
@@ -231,10 +231,10 @@ function Submit(){
                                           addressDistrict: addressDistrict, address: address, 
                                           birthday: birthday, selfIntroduction: selfIntroduction,
                                           postalCode: postalCode, primaryDisease: primaryDisease}, function(res){
-      alert("完整註冊成功！");
+      showDialog("一般訊息","完整註冊成功！");
       window.location = "/home";
     }).error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }else{ // 若有欄位沒填將產生警告視窗，並顯示缺少哪些欄位
     if(uniqueMissingInfo.indexOf("民國年") != -1){uniqueMissingInfo[uniqueMissingInfo.indexOf("民國年")]="生日";}
@@ -242,19 +242,7 @@ function Submit(){
     for(var i in uniqueMissingInfo){
       missingInfoMessage=missingInfoMessage+"、"+uniqueMissingInfo[i];
     }
-    bootbox.dialog({
-      //message: "您忘記輸入以下資訊囉：<br>" + missingInfoMessage,
-      message: missingInfoMessage,
-      title: "你是不是少填了什麼呢！",
-      buttons: {
-        main: {
-          label: "確認",
-          className: "btn-primary",
-          callback: function() {
-          }
-        }
-      }
-    });
+    showDialog("你是不是少填了什麼呢！",missingInfoMessage);
   }
 }
 
@@ -419,6 +407,21 @@ function HandleResponse_showProfile(response){
       statusIMG(this,"M");
     }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
       statusIMG(this,"O");
+    }
+  });
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
     }
   });
 }

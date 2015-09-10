@@ -94,7 +94,6 @@ $(document).ready(function(){
   // 預設必填
   $(".feedback-input[must='t']").each(function( index ) {
     var id = ($(this).attr("id"));
-    //alert($(this).val()!="");
     if( $(this).val()!="" || $(this).val()!=null ){
       statusIMG(this,"O");
     }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
@@ -254,7 +253,7 @@ function getXMLHttp(){
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
-        alert("Your browser does not support AJAX!");
+        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～");
         return false;
       }
     }
@@ -306,11 +305,10 @@ function Submit(){
                                           addressCity: addressCity, addressDistrict: addressDistrict,
                                           address: address, birthday: birthday, selfIntroduction: selfIntroduction,
                                           primaryDisease: primaryDisease}, function(res){
-      // alert(JSON.stringify(res));
-      alert("修改會員資料成功！");
+      showDialog("一般訊息","修改會員資料成功！");
       window.location = "/home";
     }).error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }else{ // 若有欄位沒填將產生警告視窗，並顯示缺少哪些欄位
     if(uniqueMissingInfo.indexOf("民國年") != -1){uniqueMissingInfo[uniqueMissingInfo.indexOf("民國年")]="生日";}
@@ -337,11 +335,10 @@ function Submit_ez(){
   var email = document.getElementById("email_ez").value;
   var alias = document.getElementById("alias_ez").value;
   var posting = $.post( "/ez_change", { email: email, alias: alias }, function(res){
-    // alert(JSON.stringify(res));
-    alert("修改會員資料成功！");
+    showDialog("一般訊息","修改會員資料成功！");
     window.location = "/home";
   }).error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
 }
 
@@ -376,7 +373,6 @@ function showProfile(){
   xmlHttp.send(null);
 }
 function HandleResponse_showProfile(response){
-  //alert(response);
   obj = JSON.parse(response);
 
   var account=obj.account;
@@ -549,3 +545,18 @@ function ShowDate(month, year){
   }
 }
 function daysInMonth(month,year) { return new Date(year, month, 0).getDate(); }
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
+}
