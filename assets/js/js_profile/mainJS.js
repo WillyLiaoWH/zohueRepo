@@ -279,6 +279,9 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
   var author_id=res["id"];
   var timeInMs = new Date().getTime();
 
+  if(ori_author==undefined || pri_id==ori_author) $("#postTimelineLabel").html("在想什麼呢？"); 
+  else $("#postTimelineLabel").html("留個言吧！");
+
   for(i in res["timelinesList"]){
     var content = res["timelinesList"][i].content;
     var contentImg = res["timelinesList"][i].contentImg;
