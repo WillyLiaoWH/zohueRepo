@@ -8,11 +8,10 @@ function Submit(){
   }
   else {
     var posting = $.post( "/changePassword", {oldPassword: oldPassword, newPassword: newPassword, reNewPassword: reNewPassword}, function(res){
-    showDialog("一般訊息","更換密碼成功！");
-    location.replace("/home");
-  })
-    .error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("一般訊息","更換密碼成功！");
+      location.replace("/home");
+    }).error(function(res){
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }

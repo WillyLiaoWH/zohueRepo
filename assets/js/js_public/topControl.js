@@ -119,7 +119,6 @@ function checkAuth() {
           fullSignup2.style.display="block";
           profile1.style.display="none";
           profile2.style.display="none";
-          // alert("你尚未完整註冊喔");
         }else{
           fullSignup1.style.display="none";
           fullSignup2.style.display="none";
@@ -286,25 +285,11 @@ function Submit(){
   var lname = $("#lname").val();
   var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
     function(res){
-      // alert("註冊成功！");
-      bootbox.dialog({
-        //message: "您忘記輸入以下資訊囉：<br>" + missingInfoMessage,
-        message: "註冊",
-        title: "註冊成功",
-        buttons: {
-          main: {
-            label: "確認",
-            className: "btn-primary",
-            callback: function() {
-            }
-          }
-        }
-      });
+      showDialog("一般訊息","註冊成功");
       loginWithAccount(account, password);
-  })
-    .error(function(res){
-      alert(res.responseJSON.err);
-    });
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
 }
 
 function Login(){
@@ -316,44 +301,41 @@ function Login(){
     var account=$("#LoginAccount").val();
     var password=$("#LoginPwd").val();
   }
-      
-  
+
   if(account == ""|| password == ""){
-    alert("帳號密碼都要輸入唷！");
+    showDialog("錯誤訊息","帳號與密碼都要輸入喔！");
   } else {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
     if(res.isFullSignup==true){
-
-      alert(res.alias+"，歡迎回來作夥!");
-     }else{
-      alert(res.alias+"，歡迎回來作夥!\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！");
-     }
+      showDialog("一般訊息",res.alias+"，歡迎回來作夥！");
+    }else{
+      showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！");
+    }
 
 
     location.replace(url);
   }).error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
 
 function loginWithAccount(account, password) {
-    var posting = $.post( "/login", { account: account, password: password}, function(res){
-      alert("首次登入成功，歡迎來作夥！");
+  var posting = $.post( "/login", { account: account, password: password}, function(res){
+    showDialog("一般訊息","首次登入成功，歡迎來作夥！");
     location.reload();
-  })
-    .error(function(res){
-      alert(res.responseJSON.err);
-    });
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
 }
 
 function Logout(){
   var url = document.URL;
   var posting = $.post( "/logout", {}, function(res){
-    alert("登出成功！");
+    showDialog("一般訊息","登出成功！");
     window.location.assign("/home");
   }).error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -379,15 +361,13 @@ function enterLogin(e) {
 
 function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
-    $.post( "/subscribe", { email: subscribeEmail}, function(res){
-      alert(res);
-      document.getElementById("mailSubject").value="";
-      document.getElementById("mailContent").value="";
-
-    })
-    .error(function(res){
-      alert(res.responseJSON.err);
-    });
+  $.post( "/subscribe", { email: subscribeEmail}, function(res){
+    //alert(res);
+    document.getElementById("mailSubject").value="";
+    document.getElementById("mailContent").value="";
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
 }
 
 
@@ -436,7 +416,7 @@ function fbLogin() {
 function notification() {
   $.get('/seeNot',function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       window.location.assign("/notifications");
     }
@@ -445,13 +425,28 @@ function notification() {
 function checkNot() {
   $.get('/countNot',function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       document.getElementById('notification').innerHTML="&nbsp通知 ("+res.num+")";
       if(res.num==0) {
         $("#notification").removeClass("orange").addClass("gray");
       } else {
         $("#notification").removeClass("gray").addClass("orange");
+      }
+    }
+  });
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
       }
     }
   });
