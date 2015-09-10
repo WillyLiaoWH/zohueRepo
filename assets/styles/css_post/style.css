@@ -31,10 +31,17 @@ div.show-image input.delete {
     //display: none !important;
 }
 
+@media all and (max-width: 800px){
+	#post-form-main{
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+}
 
 #post-form-main{
 	//float:left;
-	width:70% !important;
+	width: auto;
+	max-width: 70%;
 }
 
 #content{

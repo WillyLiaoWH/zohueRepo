@@ -122,13 +122,16 @@
 	.imgAuthorType{
 		display: none !important;
 	}
+	.btnForbbiden{
+		display: none !important;
+	}
 	.image{
-		width: 130px !important;
+		width: 110px !important;
 	}.friendRight{
 		display: none !important;
 	}
 	.friendMid{
-		width: 60% !important;
+		width: 55% !important;
 	}
 }
 
@@ -154,6 +157,7 @@
 	display: inline-block;
 	height: 100%;
 	width: 380px;
+	padding-bottom: 5px;
 }
 
 .friendRight {

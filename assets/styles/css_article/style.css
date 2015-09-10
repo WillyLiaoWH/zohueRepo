@@ -51,12 +51,6 @@ div.show-image input.delete {
 	//height:48px;
 }
 
-#post-form-main{
-	width: 
-}
-
-
-
 #article{
 	//margin: 20px 0px 0px 15px;
 	border: solid rgba(102, 141, 60, 0.4);
@@ -172,7 +166,16 @@ div.show-image input.delete {
 }*/
 
 #post-form-main{
-	width: 80% !important;
+	width: auto;
+	max-width: 70%;
+}
+
+
+@media all and (max-width: 800px){
+	#post-form-main{
+		width: 100% !important;
+		max-width: 100% !important;
+	}
 }
 
 #signup{

@@ -29,7 +29,7 @@ function removeBlack(parent, id) {
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
   })
@@ -42,7 +42,7 @@ function addFriend(parent, id) {
 
       var html="";
       html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
   })
@@ -65,7 +65,7 @@ function confirmFriend(parent, id) {
     } else {
       var html="";
       html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
   })
@@ -77,7 +77,7 @@ function removeFriend(parent, id) {
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
   })
@@ -89,7 +89,7 @@ function removeAddFriend(parent, id) {
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
   });
@@ -168,19 +168,19 @@ function search(page, mobile) {
                     break;
                   case 0:
                     html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                   case 1:
                     html+="要求加入好友&nbsp&nbsp<button type='button' class='button' onclick='confirmFriend(this.parentNode, "+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                   case 2:
                     html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                   case 3:
                     html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                 }
                 html+="</div></div><div class='friendRight'>";

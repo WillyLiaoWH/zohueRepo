@@ -154,6 +154,20 @@
 	table-layout: fixed;
 	width:100%;
 }
+
+#mobile_post{
+	display: none !important;
+}
+
+@media all and (max-width: 800px) {
+	#post{
+		display: none !important;
+	}
+	#mobile_post{
+		display: inline-block !important;
+	}
+}
+
 @media all and (max-width: 1023px) {
 	#tabs{
 		display: none !important;
