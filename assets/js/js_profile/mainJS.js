@@ -172,10 +172,74 @@ function getPri(cb){
   });
 }
 
+function addFriend(parent, id) {
+  $.post("/addFriend", {id: id}, function(res){
+    if(res.err) {
+      alert(res.err);
+    } else {
+
+      var html="";
+      html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
+    }
+  })
+}
+function confirmFriend(parent, id) {
+  $.post("/confirmFriend", {id: id}, function(res){
+    if(res.err) {
+      alert(res.err);
+    } else {
+      var html="";
+      html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
+    }
+  })
+}
+function removeFriend(parent, id) {
+  $.post("/removeFriend", {id: id}, function(res){
+    if(res.err) {
+      alert(res.err);
+    } else {
+      var html="";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
+    }
+  })
+}
+function removeAddFriend(parent, id) {
+  $.post("/removeAddFriend", {id: id}, function(res){
+    if(res.err) {
+      alert(res.err);
+    } else {
+      var html="";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
+    }
+  });
+}
+
 function setTimelinePage(pri_account, pri_id, pri_avatar){
   var ori_author=window.location.toString().split('?')[1];
-  if (pri_account!==ori_author){
-    //$('.auth_btn').hide()
+  if (typeof ori_author != 'undefined'){
+    var id = ori_author
+    $.get( "/friendStatus/"+ori_author,function(res){
+      if (res === "friend"){
+        $("#friend").html("好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>");
+      }
+      else if (res === "unconfirmed"){
+        $("#friend").html("尚未確認好友邀請&nbsp&nbsp<button type='button' class='button' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>")
+      }
+      else if (res === "sent"){
+        $("#friend").html("已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>");
+      }
+      else {
+        $("#friend").html("<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp");
+      }
+    });
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
@@ -188,7 +252,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
       alert("此用戶目前尚未有任何文章");
       showProfile(ori_author);
     } else {
-       showProfile(ori_author);
+      showProfile(ori_author);
       sortTimelineList(function(){
         displayTimelineList(res, pri_account, pri_id, pri_avatar, 0);
       });
