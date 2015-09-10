@@ -175,7 +175,7 @@ function getPri(cb){
 function addFriend(parent, id) {
   $.post("/addFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
 
       var html="";
@@ -188,7 +188,7 @@ function addFriend(parent, id) {
 function confirmFriend(parent, id) {
   $.post("/confirmFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -200,7 +200,7 @@ function confirmFriend(parent, id) {
 function removeFriend(parent, id) {
   $.post("/removeFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -212,7 +212,7 @@ function removeFriend(parent, id) {
 function removeAddFriend(parent, id) {
   $.post("/removeAddFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -243,13 +243,13 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
-      alert("此用戶還沒完整註冊，所以沒有個人頁面喔");
+      showDialog("一般訊息","此用戶還沒完整註冊，所以沒有個人頁面喔！");
       if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
         window.location.replace(document.referrer);
       else
         window.location.replace("/home");
     }else if(res.notfull==false){
-      alert("此用戶目前尚未有任何文章");
+      showDialog("一般訊息","此用戶目前尚未有任何文章！");
       showProfile(ori_author);
     } else {
       showProfile(ori_author);
@@ -266,7 +266,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
     }
   })
   .error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
  
 }
@@ -278,9 +278,6 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
   var author_account = res["account"];
   var author_id=res["id"];
   var timeInMs = new Date().getTime();
-
-  if(ori_author==undefined || pri_id==ori_author) $("#postTimelineLabel").html("在想什麼呢？"); 
-  else $("#postTimelineLabel").html("留個言吧！");
 
   for(i in res["timelinesList"]){
     var content = res["timelinesList"][i].content;
@@ -602,7 +599,7 @@ function profile_auth(route){   //去改按過權限按鈕之後的內容，只�
         $('#'+item+'_btn_text').text("醫生");
       }
   $.get("/setProfileAuth/"+route,function(res){
-    alert(res);
+    showDialog("一般訊息",res);
   })
 }
 
@@ -613,10 +610,9 @@ function postTimeline(){
   var timeline_post_image = $("#timeline_post_image").html().trim();
   var timeline_post_auth = $("#postTilmelineAuth button img").attr("value");
 
-  if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){alert("發佈失敗！");}
+  if(timeline_post_content.trim()=="" & timeline_post_image.trim()==""){showDialog("錯誤訊息","發佈失敗！");}
   else{
     $.post( "/postTimeline", { timeline_post_content: timeline_post_content, timeline_post_image: timeline_post_image, timeline_post_auth: timeline_post_auth}, function(res){
-      alert("發佈成功！");
       $("#timeline_post_content").empty();
       $("#timeline_post_image").empty();
       $("#timeline_post_image").css("display", "none");
@@ -628,7 +624,7 @@ function postTimeline(){
       });
     })
     .error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
@@ -653,7 +649,7 @@ function editTimelineSend(id){
   var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
   finish_edit_img = finish_edit_img.replace(/\/dummy/g, "\/a");
 
-  if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
+  if(edit_content.trim()=="" & edit_img.trim()==""){showDialog("錯誤訊息","發佈失敗！");}
   else{
     $.post( "/editTimeline", { edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
       $("#container_edit"+id).parent().children( ".event_text" ).html(edit_content);
@@ -661,20 +657,35 @@ function editTimelineSend(id){
       editTimelineCancel(id);
     })
     .error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
 function delTimeline(id){
-  var r = confirm("確定要刪除文章嗎？");
-  if (r == true) {
-    $.post( "/delTimeline", { id: id }, function(res){
-      $("#container_edit"+id).parent().remove();
-    })
-    .error(function(res){
-      alert(res.responseJSON.err);
-    });
-  }
+  bootbox.dialog({
+    message: "確定要刪除文章嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          $.post( "/delTimeline", { id: id }, function(res){
+            $("#container_edit"+id).parent().remove();
+          })
+          .error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
 function Timeline_nice(id){
   $.post( "/TimelineNice", { id: id }, function(res){
@@ -685,7 +696,7 @@ function Timeline_nice(id){
     });
   })
   .error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 function Timeline_cancel_nice(id){
@@ -697,7 +708,7 @@ function Timeline_cancel_nice(id){
     });
   })
   .error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 function expandComment(id){
@@ -735,51 +746,65 @@ function report() {
       var className = 'cancelReport_comment';
     break;
     default:
-      alert('住手！');
+      showDialog("錯誤訊息","住手！");
       return;
     break;
   }
 
   if(!reason) {
-    alert("請選擇原因");
+    showDialog("一般訊息","請選擇原因。");
   } else {
     $.post(url, {id: activeId, reason: reason}, function(res){
 
       $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">收回檢舉</a>');
       $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
-      alert("謝謝您的回饋，我們會盡快處理。");
+      showDialog("一般訊息","謝謝您的回饋，我們會盡快處理。");
       $("#reportDialog").dialog("close");
     }).error(function(res){
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     });
   }
 }
 function cancelReport() {
-  if(confirm("確定要收回檢舉嗎")) {
-    switch(activeSource){
-      case 'cancelReport_event':
-        var url='/TimelineCancelReport';
-        var className = 'report_event';
-      break;
-      case 'cancelReport_comment':
-        var url='/TimelineResponseCancelReport';
-        var className = 'report_comment';
-      break;
-      default:
-        alert('住手！');
-        return;
-      break;
+  bootbox.dialog({
+    message: "確定要收回檢舉嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          switch(activeSource){
+            case 'cancelReport_event':
+              var url='/TimelineCancelReport';
+              var className = 'report_event';
+            break;
+            case 'cancelReport_comment':
+              var url='/TimelineResponseCancelReport';
+              var className = 'report_comment';
+            break;
+            default:
+              showDialog("錯誤訊息","住手！");
+              return;
+            break;
+          }
+          $.post(url, {id: activeId}, function(res){
+            $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">檢舉</a>');
+            $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
+            showDialog("一般訊息","已收回此檢舉！");
+          }).error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
     }
-    $.post(url, {id: activeId}, function(res){
-
-      $('[id="'+activeSource+'"][name="'+activeId+'"]').html('<a class="'+className+'" name="'+activeId+'">檢舉</a>');
-      $('[id="'+activeSource+'"][name="'+activeId+'"]').attr("id", className);
-      alert("已收回檢舉");
-
-    }).error(function(res){
-      alert(res.responseJSON.err);
-    });
-  }
+  });
 }
 
 function postTimeline_comment(id){
@@ -792,15 +817,13 @@ function postTimeline_comment(id){
   var timeline_comment_content = $("#"+spec_div_content).html();
   var timeline_comment_image = $("#"+spec_div_img).html().trim();
 
-  if(timeline_comment_content.trim()=="" & timeline_comment_image.trim()==""){alert("發佈失敗！");}
+  if(timeline_comment_content.trim()=="" & timeline_comment_image.trim()==""){showDialog("錯誤訊息","發佈失敗！");}
   else{
     $.post( "/leaveCommentTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image, timeline_id: id}, function(res){
-      //alert("發佈成功！");
-      alert(res);
       window.location.replace(document.URL);
     })
     .error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
@@ -825,7 +848,7 @@ function editRTimelineSend(id){
   var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
   finish_edit_img = finish_edit_img.replace(/\/dummy/g, "\/a");
 
-  if(edit_content.trim()=="" & edit_img.trim()==""){alert("發佈失敗！");}
+  if(edit_content.trim()=="" & edit_img.trim()==""){showDialog("錯誤訊息","發佈失敗！");}
   else{
     $.post( "/editCommentTimeline", {edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
       $("#container_r_edit"+id).parent().children( ".event_text_r" ).html("<a class='name' href='?"+id+"'>"+name+"</a>"+edit_content);
@@ -834,20 +857,35 @@ function editRTimelineSend(id){
       editRTimelineCancel(id);
     })
     .error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
 function delTimeline_comment(id){
-  var r = confirm("確定要刪除留言嗎？");
-  if (r == true) {
-    $.post( "/delCommentTimeline", { id: id }, function(res){
-      $("#container_r_edit"+id).parent().parent().remove();
-    })
-    .error(function(res){
-      alert(res.responseJSON.err);
-    });
-  }
+  bootbox.dialog({
+    message: "確定要刪除留言嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          $.post( "/delCommentTimeline", { id: id }, function(res){
+            $("#container_r_edit"+id).parent().parent().remove();
+          })
+          .error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
 function Timeline_r_nice(id){
   $.post( "/TimelineResponseNice", { id: id }, function(res){
@@ -858,7 +896,7 @@ function Timeline_r_nice(id){
     });
   })
   .error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 function Timeline_r_cancel_nice(id){
@@ -870,16 +908,16 @@ function Timeline_r_cancel_nice(id){
     });
   })
   .error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
 function auth_set(id,target){
   $.post("/auth_setTimeline",{id:id , target:target},function(res){
-    alert(res);
+    showDialog("一般訊息",res);
   })
   .error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -901,7 +939,7 @@ function getXMLHttp(){
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
-        alert("Your browser does not support AJAX!");
+        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～");
         return false;
       }
     }
@@ -1040,8 +1078,19 @@ function HandleResponse_showProfile(response){
   $('#phone').text(phone);
   $("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
+}
 
-
-
-
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
