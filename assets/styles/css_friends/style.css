@@ -113,6 +113,11 @@
 	width: 100%;
 }
 
+@media all and (min-width: 901px) and (max-width: 1023px){
+	.friendRight{
+		width: 8% !important;
+	}
+}
 @media all and (max-width: 900px){
 	.imgAuthorType{
 		display: none !important;
@@ -123,7 +128,7 @@
 		display: none !important;
 	}
 	.friendMid{
-		width: 50% !important;
+		width: 60% !important;
 	}
 }
 
