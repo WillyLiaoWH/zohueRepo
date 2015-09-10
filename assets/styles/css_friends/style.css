@@ -113,7 +113,7 @@
 	width: 100%;
 }
 
-@media all and (min-width: 901px) and (max-width: 1023px){
+@media all and (min-width: 901px) and (max-width: 1123px){
 	.friendRight{
 		width: 8% !important;
 	}
