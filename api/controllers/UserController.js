@@ -1116,6 +1116,38 @@ module.exports = {
             }
         }
     },
+    friendStatus : function (req,res){
+        
+        var my_id = req.session.user.id;
+        var target_id = req.param("target_id");
+        
+        User.findById(my_id).exec(function(err,usr){
+            if (err){
+                console.log(err);
+                res.send(500)
+            }
+            friendlist = usr[0].friends;
+            unconfirmedFriends = usr[0].unconfirmedFriends;
+            sentAddFriends= usr[0].sentAddFriends;
+            
+            if (friendlist.indexOf(parseInt(target_id))!=-1){
+                //是好友
+                
+                res.send("friend");
+            }
+            else if (unconfirmedFriends.indexOf(parseInt(target_id))!=-1){
+                
+                res.send("unconfirmed");
+            }
+            else if (sentAddFriends.indexOf(parseInt(target_id))!=-1){
+                res.send("sent");
+            }
+            else{
+                res.send("no");
+            }
+
+        })
+    },
     
 
 
