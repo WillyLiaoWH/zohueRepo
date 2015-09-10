@@ -41,6 +41,7 @@ module.exports.routes = {
   'POST /logout': 'UserController.logout',
   'POST /changePassword': 'UserController.changePassword',
   'POST /postArticle': 'ArticlesController.postArticle',
+  'POST /syncArticleToTimeline': 'ArticlesController.syncArticleToTimeline',
   'POST /changeArticle': 'ArticlesController.changeArticle',
   'POST /deleteArticle': 'ArticlesController.deleteArticle',
   'POST /leaveComment': 'ResponseController.leaveComment',

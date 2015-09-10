@@ -25,6 +25,8 @@ module.exports = {
             var TimelineId = req.param("id");
             var reporter = req.session.user.id;
             Timelines.findOne(TimelineId).populate('report').exec(function (err, timeline) {
+                console.log(TimelineId);
+                console.log(timeline);
                 for(i in timeline.report){
                 	if(timeline.report[i].timeline == TimelineId & timeline.report[i].reporter == reporter){
                         //var id = timeline.report[i].id;

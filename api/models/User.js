@@ -114,6 +114,10 @@ module.exports = {
     randNum:{
       //找回密碼用的
       type: 'string'
+    },
+    isAdmin: {
+      type: 'boolean',
+      defaultsTo: false
     }
   }
 };

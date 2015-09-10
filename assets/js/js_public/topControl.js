@@ -289,7 +289,7 @@ function Submit(){
       // alert("註冊成功！");
       bootbox.dialog({
         //message: "您忘記輸入以下資訊囉：<br>" + missingInfoMessage,
-        message: 註冊,
+        message: "註冊",
         title: "註冊成功",
         buttons: {
           main: {

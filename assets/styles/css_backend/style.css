@@ -216,5 +216,9 @@ tr:hover{
 }
 
 #enlSend{
-  margin-left:20px;
+  //margin-left:20px;
+}
+
+#searchEmail{
+  margin-left:15px;
 }

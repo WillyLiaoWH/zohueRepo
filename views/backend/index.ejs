@@ -182,12 +182,14 @@
                 <div class="panel-heading"><h2>電子報管理</h2></div>
                 <div class="panel-body">
                   <div class="row">
-                    <div class="col-md-3" style="margin-left:15px; padding-right:0px;">
+                    <div class="col-md-3">
                       <input type="text" class="form-control" id="searchEmail" onkeypress="return emailSearch(event);" placeholder="搜尋E-mail">
                     </div>
                     <div class="col-md-5">
                       <button type="button" class="btn btn-default searchButton" onclick="loadsubscriberList()">搜尋</button>
                       <button type="button" class="btn btn-default searchButton" onclick="cancelEmailSearch()">取消</button>
+                    </div>
+                    <div class="col-md-4 text-right">
                       <button id="enlSend" type="button" onclick="loadEnlManage()" class="btn btn-default searchButton">發送電子報</button>
                     </div>
                   </div>
