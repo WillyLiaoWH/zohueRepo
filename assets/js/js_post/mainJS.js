@@ -65,7 +65,7 @@ function post() {
   var timelineContent = $("#postContent").html();
   var postContent_image = $("#postContent_image").html();
   if(!postTitle||postTitle.trim()=="") {
-    alert("文章標題不能空白喔");
+    showDialog("錯誤訊息","文章標題不能空白喔！");
     allowed=false;
   }
 
@@ -97,7 +97,7 @@ function post() {
     var temp = postContent.trim().replace(regex," ");
     if(temp.trim()=="") {
       allowed=false;
-      alert("文章內容不能空白喔");
+      showDialog("錯誤訊息","文章內容不能空白喔！");
     }
   }
 
@@ -109,16 +109,15 @@ function post() {
       post 
     }
     var posting = $.post( "/postArticle", { title: postTitle, content: postContent, classification: postClass, responseNum: responseNum, clickNum: clickNum, board: board}, function(res){
-      alert("文章發表成功！");
+      showDialog("一般訊息","文章發表成功！");
       window.location.replace("/article/"+res[0].id);
-    })
-    .error(function(res){
-      alert(res.responseJSON.err);
+    }).error(function(res){
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
 
     $.post( "/syncArticleToTimeline", { timeline_post_content: timelineContent, timeline_post_image: postContent_image, timeline_post_auth: "all", timeline_post_board: board}, function(res){
     }).error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
 
   }
@@ -156,4 +155,19 @@ function load() {
       $("#postContent_image").css("display", "block");
     }
   } 
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }

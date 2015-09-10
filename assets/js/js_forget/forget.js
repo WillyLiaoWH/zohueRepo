@@ -9,21 +9,31 @@ function passwordSubmit(){
 	if (password1===password2 && account.length!=0 && password1.length!=0){
 		$.post('/getPassword',{account:account,password:password1,random:random},function(ret){
 			if (ret==="OK"){
-				alert("新密碼更改成功");
+				showDialog("一般訊息", "新密碼更改成功！");
 				location.replace("/");
-			}
-			else{
-				alert("帳號輸入錯誤，請檢查");
+			}else{
+				showDialog("錯誤訊息", "帳號輸入錯誤，請檢查！");
 				location.reload();
 			}
-
 		});
-
-	}
-	else{
-		alert("輸入的密碼不一樣");
+	}else{
+		showDialog("錯誤訊息", "您輸入的密碼不同喔！");
 		$("password1").val()="";
 		$("password2").val()="";
 	}
+}
 
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }

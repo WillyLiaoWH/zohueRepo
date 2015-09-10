@@ -3,14 +3,11 @@ function accountSubmit(){
 	$.post('/getQ/',{account:account,url:window.location.toString()},function(ret){
 		console.log(ret)
 		if(ret.typ=="err"){
-			alert(ret.msg);
+			showDialog("錯誤訊息", ret.msg);
 			location.reload();
-		}
-		else if(ret.typ=="email"){
-			alert("確認信已發至"+ret.email+"，請依照信中指示更改密碼");
-		}
-
-		else{
+		}else if(ret.typ=="email"){
+			showDialog("一般訊息", "確認信已發至"+ret.email+"，請依照信中指示更改密碼");
+		}else{
 			var message;
 			$("#getQuestion").hide();
 			switch(ret.msg){
@@ -35,16 +32,28 @@ function ansSubmit(){
 	if (password1 === password2){
 		$.post('/forgetAnswer',{account:account,ans:answer,password:password1},function(ret){
 			if (ret==="OK"){
-				alert("新密碼設定完成");
+				showDialog("一般訊息", "新密碼設定完成！");
 				location.replace("/")
-			}
-			else{
-				alert("輸入的答案錯誤");
+			}else{
+				showDialog("錯誤訊息", "您輸入的答案錯誤喔！");
 			}
 		});
+	}else{
+		showDialog("錯誤訊息", "您輸入的密碼不同喔！");
 	}
-	else{
-		alert("輸入的密碼不同");
-	}
+}
 
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
