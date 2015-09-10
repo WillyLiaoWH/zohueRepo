@@ -35,7 +35,7 @@ $(document).ready(function(){
         window.location.assign("/home");
       }      
     }).error(function(res){
-      alert(res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err);
     });
   });
 
@@ -54,7 +54,7 @@ $(document).ready(function(){
           }
           $("#boardCategory").append("<option value='allCategory'>選擇全部</option>")
         }).error(function(res){
-          alert(res.responseJSON.err);
+          showDialog("錯誤訊息",res.responseJSON.err);
         });
 
         $("#boardCategory").change(function(){
@@ -88,7 +88,7 @@ $(document).ready(function(){
 
       }else{
         $("#adminLoginArea").css("display", "block");
-        alert("你不是管理員喔！");
+        showDialog("錯誤訊息","你不是管理員喔！");
         window.location.assign("/home");
         //alert("Not admin.");
       }
@@ -161,43 +161,59 @@ $(document).ready(function(){
     var mailSubject = document.getElementById("mailSubject").value;
     var mailContent = document.getElementById("mailContent").value;
     if (mailSubject=="" && mailContent==""){
-      alert("尚未輸入主旨或內文!");
+      showDialog("錯誤訊息","尚未輸入主旨或內文！");
     }else{
-      if(confirm("確定要發送電子報嗎？")){
-        document.getElementById("mailSpinner").style.display="block";
-        document.getElementById("mailEdit").style.display="none";
-        document.getElementById("attachmentEdit").style.display="none";
-        document.getElementById("emailButtonGroups").style.display="none";
+      bootbox.dialog({
+        message: "確定要發送電子報嗎？",
+        title: "再次確認",
+        buttons: {
+          yes: {
+            label: "確認",
+            className: "btn-primary",
+            callback: function() {
+              document.getElementById("mailSpinner").style.display="block";
+              document.getElementById("mailEdit").style.display="none";
+              document.getElementById("attachmentEdit").style.display="none";
+              document.getElementById("emailButtonGroups").style.display="none";
 
-        $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachmentList: attachmentList.toString(), attachmentNameList: attachmentNameList.toString()}, function(res){
-          if (res == "SEND"){
-            attachmentList=[];
-            attachmentNameList=[];
-            alert("電子報發送成功!");
-            document.getElementById("mailSubject").value="";
-            document.getElementById("mailContent").value="";
-            document.getElementById("mailEdit").style.display="block"; 
-            document.getElementById("mailSpinner").style.display="none";
-            document.getElementById("attachmentEdit").style.display="block";
-            document.getElementById("emailButtonGroups").style.display="block";
-            $("#attachmentEdit label").css("display", "none");
-            $("#attachmentList").html("");
-            loadsubscriberList();
-          }else{
-            attachmentList=[];
-            attachmentNameList=[];
-            alert(res);
-            document.getElementById("mailSubject").value="";
-            document.getElementById("mailContent").value="";
-            document.getElementById("mailEdit").style.display="block"; 
-            document.getElementById("mailSpinner").style.display="none";
-            document.getElementById("attachmentEdit").style.display="block";
-            document.getElementById("emailButtonGroups").style.display="block";
-            $("#attachmentEdit label").css("display", "none");
-            $("#attachmentList").html("");
+              $.post("/sendNewsLetter",{mailSubject: mailSubject,mailContent: mailContent, attachmentList: attachmentList.toString(), attachmentNameList: attachmentNameList.toString()}, function(res){
+                if (res == "SEND"){
+                  attachmentList=[];
+                  attachmentNameList=[];
+                  showDialog("一般訊息","電子報發送成功！");
+                  document.getElementById("mailSubject").value="";
+                  document.getElementById("mailContent").value="";
+                  document.getElementById("mailEdit").style.display="block"; 
+                  document.getElementById("mailSpinner").style.display="none";
+                  document.getElementById("attachmentEdit").style.display="block";
+                  document.getElementById("emailButtonGroups").style.display="block";
+                  $("#attachmentEdit label").css("display", "none");
+                  $("#attachmentList").html("");
+                  loadsubscriberList();
+                }else{
+                  attachmentList=[];
+                  attachmentNameList=[];
+                  showDialog("一般訊息",res);
+                  document.getElementById("mailSubject").value="";
+                  document.getElementById("mailContent").value="";
+                  document.getElementById("mailEdit").style.display="block"; 
+                  document.getElementById("mailSpinner").style.display="none";
+                  document.getElementById("attachmentEdit").style.display="block";
+                  document.getElementById("emailButtonGroups").style.display="block";
+                  $("#attachmentEdit label").css("display", "none");
+                  $("#attachmentList").html("");
+                }
+              });
+            }
+          },
+          no: {
+            label: "取消",
+            className: "btn-primary",
+            callback: function() {
+            }
           }
-        });
-      }
+        }
+      });
     }
   });
 
@@ -253,9 +269,8 @@ function loadUserList(){
   searchUser=document.getElementById("searchUser").value;
 
   $.get("/getAllUsers"+"?searchUser="+searchUser, function(userList){
-
     if(typeof(userList)=="string"){
-      alert(userList);
+      showDialog("一般訊息",userList);
     }else{
       userTable="<tr class='tableHead'><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
@@ -291,7 +306,7 @@ function loadUserList(){
       document.getElementById("backend_userList").innerHTML = userTable;
     }    
   }).error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -306,7 +321,7 @@ function getart(callback, action){
         articleList=res.articlesList;
         callback(articleList);
       }).error(function(res){
-          alert(res.responseJSON.err);
+        showDialog("錯誤訊息",res.responseJSON.err);
       });  
       break;
     case 1: // 根據category撈文章。
@@ -314,7 +329,7 @@ function getart(callback, action){
         articleList=res.articlesList;
         callback(articleList);
       }).error(function(res){
-          alert(res.responseJSON.err);
+        showDialog("錯誤訊息",res.responseJSON.err);
       });
       break;
     case 2: // 根據board撈文章。
@@ -322,7 +337,7 @@ function getart(callback, action){
         articleList=res.articlesList;
         callback(articleList);
       }).error(function(res){
-        alert(res.responseJSON.err);
+        showDialog("錯誤訊息",res.responseJSON.err);
       });
       break;
   }
@@ -420,7 +435,7 @@ function loadsubscriberList(){
 
   $.get("/getAllSubscribers"+"?searchEmail="+searchEmail, function(subscribers){
     if(typeof(subscribers)=="string"){
-      alert(subscribers);
+      showDialog("一般訊息",subscribers);
     }else{
       subscriberTable="<tr class='tableHead'><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
       for(i=0; i<subscribers.length; i++){
@@ -432,7 +447,7 @@ function loadsubscriberList(){
       document.getElementById("backend_subscriberList").innerHTML = subscriberTable;
     }
   }).error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -480,15 +495,30 @@ function showReason(ulId){
 }
 
 function deleteSubscriber(id) {
-  var r = confirm("確定要刪除該訂閱者嗎？");
-  if (r == true) {
-    $.post( "/deleteSubscriber", { id: id}, function(res){
-     alert("刪除成功！");
-     loadsubscriberList();
-    })
-    .error(function(res){
-      alert(res.responseJSON.err);
-  });} 
+  bootbox.dialog({
+    message: "確定要刪除該訂閱者嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          $.post( "/deleteSubscriber", { id: id}, function(res){
+            showDialog("一般訊息","刪除成功！");
+            loadsubscriberList();
+          }).error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
 
 function cancelUserSearch(){
@@ -546,4 +576,19 @@ function emailSearch(e) {
 
 function formatFloat(num){ // 小數點第2位四捨五入
   return Math.round(num * 100) / 100;
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
