@@ -157,9 +157,25 @@ function setPage(page, keyword, sort) {
 }
 
 function readConfirm(articleid){
-  if(confirm("這篇文章已經被檢舉超過三次以上囉！確定要觀看嗎？")){
-    window.location = "/article/"+articleid;
-  }
+  bootbox.dialog({
+    message: "這篇文章已經被檢舉超過三次以上囉！確定要觀看嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          window.location = "/article/"+articleid;
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }
 
 // function postArticle() {

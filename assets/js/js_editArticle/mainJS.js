@@ -140,13 +140,32 @@ function save() {
   }
 }
 function load() {
-  if(saveContent!=""&&confirm("會覆蓋現有文章，確定嗎?")) {
-    document.getElementById("postContent").innerHTML=saveContent;
-    document.getElementById("postContent_image").innerHTML=saveContent_image;
+  if(saveContent!="") {
 
-    if(saveContent_image.indexOf("img") != -1){ // div 內有圖片
-      $("#postContent_image").css("display", "block");
-    }
+    bootbox.dialog({
+      message: "會覆蓋現有文章，確定嗎？",
+      title: "再次確認",
+      buttons: {
+        yes: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+            document.getElementById("postContent").innerHTML=saveContent;
+            document.getElementById("postContent_image").innerHTML=saveContent_image;
+
+            if(saveContent_image.indexOf("img") != -1){ // div 內有圖片
+              $("#postContent_image").css("display", "block");
+            }
+          }
+        },
+        no: {
+          label: "取消",
+          className: "btn-primary",
+          callback: function() {
+          }
+        }
+      }
+    });
   } 
 }
 

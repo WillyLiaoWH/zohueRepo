@@ -84,12 +84,27 @@ function post() {
     }
   }
   if(allowed && !postClass) {
-    if(confirm("要幫您把文章分類為「其它」嗎？")) {
-      form.classification[3].checked=true;
-      postClass="其它";
-    } else {
-      allowed=false;
-    }
+    allowed=false;
+    bootbox.dialog({
+      message: "要幫您把文章分類為「其它」嗎？",
+      title: "再次確認",
+      buttons: {
+        yes: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+            form.classification[3].checked=true;
+            postClass="其它";
+          }
+        },
+        no: {
+          label: "取消",
+          className: "btn-primary",
+          callback: function() {
+          }
+        }
+      }
+    });
   }
 
   if(allowed) {
@@ -145,15 +160,33 @@ function save() {
   }
 }
 function load() {
-  if(saveContent!=""&&confirm("會覆蓋現有文章，確定嗎?")) {
-    document.getElementById("postContent").innerHTML=saveContent;
-    document.getElementById("postContent_image").innerHTML=saveContent_image;
-    document.getElementById("loadedText").style.display="inline";
-    $("#loadedText").fadeOut(1500);
+  if(saveContent!="") {
+    bootbox.dialog({
+      message: "會覆蓋現有文章，確定嗎？",
+      title: "再次確認",
+      buttons: {
+        yes: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+            document.getElementById("postContent").innerHTML=saveContent;
+            document.getElementById("postContent_image").innerHTML=saveContent_image;
+            document.getElementById("loadedText").style.display="inline";
+            $("#loadedText").fadeOut(1500);
 
-    if(saveContent_image.indexOf("img") != -1){ // div 內有圖片
-      $("#postContent_image").css("display", "block");
-    }
+            if(saveContent_image.indexOf("img") != -1){ // div 內有圖片
+              $("#postContent_image").css("display", "block");
+            }
+          }
+        },
+        no: {
+          label: "取消",
+          className: "btn-primary",
+          callback: function() {
+          }
+        }
+      }
+    });
   } 
 }
 
