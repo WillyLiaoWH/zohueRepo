@@ -74,7 +74,7 @@ function setPage() {
 
     $( ".show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
   }).error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -85,12 +85,12 @@ function post() {
   var postContent = $("#postContent").html();
   var postContent_image = $("#postContent_image").html();
   if(!postTitle||postTitle.trim()=="") {
-    alert("文章標題不能空白喔");
+    showDialog("錯誤訊息","文章標題不能空白喔！");
     allowed=false;
   }
   if(!postContent||postContent=="") {
     allowed=false;
-    alert("文章內容不能空白喔");
+    showDialog("錯誤訊息","文章內容不能空白喔！");
   }
 
   postContent = postContent+"<div id='postContent_image'>\n"+postContent_image+"\n        </div>";
@@ -106,13 +106,12 @@ function post() {
 
   if(allowed) {
     var posting = $.post( "/changeArticle", { id: id, newTitle: newTitle, newContent: newContent}, function(res){
-      alert("文章編輯成功！");
+      showDialog("一般訊息","文章編輯成功！");
       //window.location.replace("/forum/1");
       window.location.replace("/article/"+id);
-    })
-      .error(function(res){
-        alert(res.responseJSON.err);
-      });
+    }).error(function(res){
+      showDialog("錯誤訊息",res.responseJSON.err);
+    });
   }
 }
 
@@ -149,4 +148,19 @@ function load() {
       $("#postContent_image").css("display", "block");
     }
   } 
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }

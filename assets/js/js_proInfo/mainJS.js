@@ -146,7 +146,7 @@ function setPage(page) {
     } 
     document.getElementById("articleList").innerHTML = myTable;
   }).error(function(res){
-    alert(res.responseJSON.err);
+    showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
 
@@ -158,19 +158,18 @@ function searchArticle() {
   searched = 1;
 
   if($("#searchWord").val().replace(/^\s+$/m,'') == ""){
-    alert("搜尋不能搜空白唷！");
+    showDialog("錯誤訊息","搜尋欄位不能空白喔！");
   }
   else{
     $.post( "/searchProInfo", { keyword: keyword}, function(res){
-
       if(res.length==0){
-        alert("查無資料！");
+        showDialog("錯誤訊息","查無資料！");
       }else{
         setSearchResult(res);
         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
       }
     }).error(function(res){
-      alert("not found");
+      showDialog("錯誤訊息","查無資料！");
     });
   }
 }
@@ -301,3 +300,18 @@ $(document).on("click","a.show-info",function(event){
     $( ".modalBox" ).modalBox('open');
   }
 });
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
+}

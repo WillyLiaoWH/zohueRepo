@@ -15,7 +15,7 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 $(document).ready(function(){
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      alert("尚未登入");
+      showDialog("錯誤訊息","您尚未登入喔！");
       window.location.replace("/home");
     }
   });
@@ -25,7 +25,7 @@ $(document).ready(function(){
 function removeBlack(parent, id) {
   $.post("/removeBlack", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -37,9 +37,8 @@ function removeBlack(parent, id) {
 function addFriend(parent, id) {
   $.post("/addFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
-
       var html="";
       html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
@@ -50,7 +49,7 @@ function addFriend(parent, id) {
 function addBlack(parent, id) {
   $.post("/addBlack", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack(this.parentNode, "+id+")'>解除封鎖</button><br>";
@@ -61,7 +60,7 @@ function addBlack(parent, id) {
 function confirmFriend(parent, id) {
   $.post("/confirmFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -73,7 +72,7 @@ function confirmFriend(parent, id) {
 function removeFriend(parent, id) {
   $.post("/removeFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -85,7 +84,7 @@ function removeFriend(parent, id) {
 function removeAddFriend(parent, id) {
   $.post("/removeAddFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       var html="";
       html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
@@ -113,7 +112,7 @@ function search(page, mobile) {
   var userType=$("#userType"+index).val();
   $.post("/searchFriends", {alias: alias, disease: disease, place: place, userType: userType, thisPage: page}, function(res) {
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       setTimeout(function(){
         if(res.users.length!=0) {
@@ -228,7 +227,7 @@ function search(page, mobile) {
               document.getElementById("more").innerHTML="";
             }
           } else {
-            alert("you haven't login");
+            showDialog("錯誤訊息","您尚未登入喔！");
             window.location.assign("/home")
           }
         } else {
@@ -247,7 +246,7 @@ function toProfile(id) {
 function ShowAllCity(){
   $.get("/postallist/getall", function(res){
       if(res.err) {
-        alert(res.err);
+        showDialog("錯誤訊息",res.err);
       } else {
         HandleResponse_ShowAllCity(res);
       }
@@ -259,4 +258,19 @@ function HandleResponse_ShowAllCity(response){
     var addressCity = obj_postal[r].addressCity;
     $(".place").append('<option value='+addressCity+'>'+addressCity+'</option>');
   }
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
 }

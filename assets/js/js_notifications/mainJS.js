@@ -9,7 +9,7 @@ $(document).ready(function(){
 function checkLogin() {
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      alert("需先登入才能查看通知");
+      showDialog("錯誤訊息","需先登入才能查看通知喔！");
       document.location.replace("/home");
     } else {
       setPage();
@@ -119,7 +119,7 @@ function toProfile(id) {
 function check(link, id) {
   $.post("/setRead", {id: id}, function(res) {
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       window.location.assign(link);
     }
@@ -128,11 +128,11 @@ function check(link, id) {
 function confirmFriend(id, notId) {
   $.post("/confirmFriend", {id: id}, function(res){
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       $.post("/setRead", {id: notId}, function(res) {
         if(res.err) {
-          alert(res.err);
+          showDialog("錯誤訊息",res.err);
         } else {
           document.getElementById(notId).className="not read";
         }
@@ -144,10 +144,25 @@ function confirmFriend(id, notId) {
 function setRead(id, obj) {
   $.post("/setRead", {id: id}, function(res) {
     if(res.err) {
-      alert(res.err);
+      showDialog("錯誤訊息",res.err);
     } else {
       document.getElementById(id).className="not read";
       obj.parentNode.removeChild(obj);
+    }
+  });
+}
+
+function showDialog(title, message){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
     }
   });
 }

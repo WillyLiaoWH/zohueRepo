@@ -126,7 +126,6 @@ module.exports.routes = {
         '/js/js_public/alertify.js',
         '/js/js_profile/mainJS.js',
         '/js/js_post/cropper.min.js',
-        '/js/js_public/bootbox.min.js',
         '/js/js_profile/crop-avatar.js?ver=1'
       ],
       stylesheets: [
@@ -147,8 +146,7 @@ module.exports.routes = {
         '/js/js_editArticle/mainJS.js',
         '/js/js_post/bootstrap.min.js',
         '/js/js_post/cropper.min.js',
-        '/js/js_editArticle/crop-avatar.js',
-        '/js/js_public/bootbox.min.js',
+        '/js/js_editArticle/crop-avatar.js'
       ],
       stylesheets: [
         '/styles/css_editArticle/style.css',
@@ -165,7 +163,6 @@ module.exports.routes = {
     locals: {
       scripts: [
         'js/js_public/bootstrap.min.js',
-        'js/js_public/bootbox.min.js',
         'js/js_signup/cropper.min.js',
         'js/js_signup/crop-avatar.js',
         'js/js_signup/joinus.js'
@@ -186,8 +183,7 @@ module.exports.routes = {
     view: 'home/index',
     locals: {
       scripts: [
-        '/js/js_home/mainJS.js',
-        '/js/js_public/bootbox.min.js',
+        '/js/js_home/mainJS.js'
       ],
       stylesheets: [
         '/styles/css_home/style.css',
@@ -200,8 +196,7 @@ module.exports.routes = {
     view: 'changePassword/index',
     locals: {
       scripts: [
-        '/js/js_changePassword/mainJS.js',
-        '/js/js_public/bootbox.min.js',
+        '/js/js_changePassword/mainJS.js'
       ],
       stylesheets: [
         '/styles/css_changePassword/style.css',
@@ -215,7 +210,6 @@ module.exports.routes = {
     locals: {
       scripts: [
         'js/js_public/bootstrap.min.js',
-        'js/js_public/bootbox.min.js',
         'js/js_change/cropper.min.js',
         'js/js_change/crop-avatar.js',
         'js/js_change/joinus.js'
@@ -232,7 +226,6 @@ module.exports.routes = {
     view: 'forum/index',
     locals: {
       scripts: [
-      '/js/js_public/bootbox.min.js'
       ],
       stylesheets: [
         '/styles/importer.css'
@@ -246,8 +239,7 @@ module.exports.routes = {
       scripts: [
       '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_ProInfo/mainJS.js',
-        '/js/js_ProInfo/bootstrap.min.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_ProInfo/bootstrap.min.js'
       ],
       stylesheets: [
         '/styles/css_ProInfo/style.css',
@@ -265,8 +257,7 @@ module.exports.routes = {
         '/js/js_post/mainJS.js',
         '/js/js_post/bootstrap.min.js',
         '/js/js_post/cropper.min.js',
-        '/js/js_post/crop-avatar.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_post/crop-avatar.js'
       ],
       stylesheets: [
         '/styles/css_post/style.css',
@@ -286,8 +277,7 @@ module.exports.routes = {
         '/js/js_public/alertify.js',
         '/js/js_article/mainJS.js',
         '/js/js_post/cropper.min.js',
-        '/js/js_article/crop-avatar.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_article/crop-avatar.js'
       ],
       stylesheets: [
         '/styles/css_article/style.css',
@@ -303,8 +293,7 @@ module.exports.routes = {
     view: 'forget/getPassword',
     locals:{
       scripts:[
-      '/js/js_forget/forget.js',
-      '/js/js_public/bootbox.min.js'
+      '/js/js_forget/forget.js'
       ],
       stylesheets:[
         '/styles/css_forget/style.css',
@@ -316,8 +305,7 @@ module.exports.routes = {
     view: 'board/index',
     locals: {
       scripts: [
-        '/js/js_board/mainJS.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_board/mainJS.js'
       ],
       stylesheets: [
         '/styles/css_board/style.css',
@@ -331,8 +319,7 @@ module.exports.routes = {
       scripts: [
         '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_public/alertify.js',
-        '/js/js_friends/mainJS.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_friends/mainJS.js'
       ],
       stylesheets: [
         '/styles/importer.css',
@@ -348,8 +335,7 @@ module.exports.routes = {
       scripts: [
         '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_public/alertify.js',
-        '/js/js_notifications/mainJS.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_notifications/mainJS.js'
       ],
       stylesheets: [
         '/styles/importer.css',
@@ -373,8 +359,7 @@ module.exports.routes = {
     view:'forget/index',
     locals:{
       scripts:[
-        '/js/js_forget/mainJS.js',
-        '/js/js_public/bootbox.min.js'
+        '/js/js_forget/mainJS.js'
       ],
       stylesheets:[
         '/styles/css_forget/style.css',
