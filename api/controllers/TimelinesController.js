@@ -64,7 +64,7 @@ module.exports = {
             var auth=req.param("timeline_post_auth");
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });}
             if(req.session.user.id == req.session.stay){
-                Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
+                Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, follower: [req.session.user.id]}).exec(function(error, timeline) {
                     if(error) {
                         res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
@@ -73,12 +73,18 @@ module.exports = {
                 });
             }else{
                 User.find({id: req.session.stay}).exec(function(error, owner) {
-                    Timelines.create({author: owner[0].id, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, owner: author}).exec(function(error, timeline) {
+                    Timelines.create({author: owner[0].id, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, owner: author, follower: [req.session.user.id, owner[0].id]}).exec(function(error, timeline) {
                         if(error) {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
                             Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'id']}).populate('author', {select: ['img', 'alias', 'id']}).exec(function(error, timeline2) {
                                 res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, id: timeline2[0].author.id});
+                            });
+                            Notification.create({user: owner[0].id, notType: "9", from: req.session.user.id, alreadyRead: false, content: content, link: "/profile?"+owner[0].id, alreadySeen: false}).exec(function(err, not) {
+                                if(err) {
+                                    console.log(err);
+                                    res.send({err:"DB error"});
+                                }
                             });
                         }
                     });
@@ -336,13 +342,16 @@ module.exports = {
             var nicer = req.session.user;
             Timelines.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
-                if(timeline.author.id!=req.session.user.id) {
-                    Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.id, alreadySeen: false}).exec(function(err, not) {
-                        if(err) {
-                            console.log(err);
-                            res.send({err:"DB error"});
-                        }
-                    });
+                timeline.follower.add(nicer);
+                for(var i=0; i<timeline.follower.length; i++) {
+                    if(timeline.follower!=req.session.user.id) {
+                        Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.id, alreadySeen: false}).exec(function(err, not) {
+                            if(err) {
+                                console.log(err);
+                                res.send({err:"DB error"});
+                            }
+                        });
+                    }
                 }
                 timeline.save(function (err) { res.send({num:timeline.nicer.length+1}); });
             });
