@@ -735,14 +735,14 @@ module.exports = {
                             console.log(err);
                             res.send({err:"DB error"});
                         } else {
-                            User.find({id: req.param("id")}).exec(function(err, user) {
+                            User.find({id: req.param("id")}).exec(function(err, user1) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err: "DB error"});
                                 } else {
-                                    var sentAddFriendsList=user[0].sentAddFriends;
+                                    var sentAddFriendsList=user1[0].sentAddFriends;
                                     sentAddFriendsList.splice(sentAddFriendsList.indexOf(req.session.user.id), 1);
-                                    var friendsList=user[0].friends;
+                                    var friendsList=user1[0].friends;
                                     friendsList.push(req.session.user.id);
 
                                     User.update({id: req.param("id")}, {sentAddFriends: sentAddFriendsList, friends: friendsList}).exec(function(err, user) {
@@ -906,7 +906,7 @@ module.exports = {
                                 var users=[];
                                 for(i=0; i<allUser.length; i++) {
                                     var push=false;
-                                    if(allUser[i].id!=req.session.user.id&&allUser[i].id!=10) {
+                                    if(allUser[i].id!=req.session.user.id) {
                                         if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
                                             // isFriend.push(-2);
                                         } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
@@ -1021,7 +1021,7 @@ module.exports = {
                                 var users=[];
                                 for(i=0; i<allUser.length; i++) {
                                     var push=false;
-                                    if(allUser[i].id!=req.session.user.id&&allUser[i].id!=10) {
+                                    if(allUser[i].id!=req.session.user.id) {
                                         if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
                                             // isFriend.push(-2);
                                         } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {

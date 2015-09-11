@@ -17,17 +17,29 @@ module.exports = {
                 console.log(error);
             } else {
                 Timelines.find({id: timeline_id}).populate("author").exec(function(err, timeline) {
-                    if(timeline[0].author.id!=req.session.user.id) {
-                        Notification.create({user: timeline[0].author, notType: "3", from: req.session.user.id, content: comment, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
-                            if(err) {
-                                console.log(err);
-                                res.send({err:"DB error"});
-                            }
-                        });
+                    for(var i=0; i<timeline[0].follower.length; i++) {
+                        if(timeline[0].follower[i]!=req.session.user.id) {
+                            Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: comment, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
+                                if(err) {
+                                    console.log(err);
+                                    res.send({err:"DB error"});
+                                }
+                            });
+                        }
                     }
+                    var follower=timeline[0].follower;
+                    if(follower.indexOf(author)==-1) {
+                        follower.push(author);
+                    }
+                    Timelines.update({id: timeline_id}, {follower: follower}).exec(function(err, timelines) {
+                        if(err) {
+                            console.log(err);
+                            res.send({err: "DB error"});
+                        } else {
+                            res.send('留言成功！');
+                        }
+                    });
                 });
-                
-            	res.send('留言成功！');
                 // Articles.update({id: article_id},{lastResponseTime: response.createdAt}).exec(function(err, article) {
                 //     if(err) {
                 //         res.send(500,{err: "DB Error" });

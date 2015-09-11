@@ -20,12 +20,13 @@ function checkLogin() {
 var notMessage=[
   "在您追蹤的文章留言",
   "覺得您追蹤的文章",
-  "在您的動態留言",
-  "覺得您的動態",
+  "在您追蹤的動態留言",
+  "覺得您追蹤的動態",
   "覺得您的回應",
   "覺得您的留言",
   "邀請您成為他的好友",
   "已經和您成為好友了",
+  "在您的牆上留下動態",
 ]
 function setPage() {
   $.get('/nots',function(res){
@@ -92,6 +93,7 @@ function setPage() {
           case "4":
           case "6":
           case "8":
+          case "9":
             table+="<div class='go'>";
             table+="<button value='查看動態時報' class='button' onclick='check(\""+res[i].link+"\", \""+res[i].id+"\");'>&nbsp查看動態時報</button>";
             table+="</div>";
@@ -101,6 +103,7 @@ function setPage() {
             table+='<button value="確認好友" class="button" onclick="confirmFriend('+res[i].from.id+', '+res[i].id+');">&nbsp確認好友</button>';
             table+="</div>";
             break;
+
         }
         if(res[i].alreadyRead==false) {
           table+="<div class='setRead'><button value='設為已讀' class='button' onclick='setRead(\""+res[i].id+"\", this);'>&nbsp設為已讀</button></div>";
