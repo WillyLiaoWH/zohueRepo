@@ -141,6 +141,7 @@
         </li>
         <li id="mobile_backend"><a href="/backend">後台管理</a></li>
         <li id="mobile_fullSignup"><a href="/signup">完整註冊</a></li>
+        <li><a href="/gettingStarted">新手上路</a></li>
       </ul>
     </div>
     <!-- menu部份的mobile版 -->
@@ -177,14 +178,15 @@
         <a href="/forum" class="item" id="forum"><label><span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp作夥論壇</label></a><br>
         <a href="/proInfo/1" class="item" id="proInfo"><label><span class="glyphicon glyphicon-eye-open" style="color:rgb(102, 141, 60)" aria-hidden="true"></span>&nbsp專業知識</label></a><br>
         <a href="/friends" class="item" id="friends"><label><span class="glyphicon glyphicon-globe" style="color:rgb(1, 151, 172)" aria-hidden="true"></span>&nbsp作夥找人</label></a>
-        <a class="item" id="setUp"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp個人設定</label></a><br>
-        <div id="setUpMenu">
+        <a class="item" id="setUp" data-toggle="collapse" href="#setUpMenu"><label><span class="glyphicon glyphicon-cog" style="color:rgb(0, 121, 150)" aria-hidden="true"></span>&nbsp個人設定</label></a>
+        <div id="setUpMenu" class="collapse">
           <a href="/change" class="setUpItem" id="editProfile" href="/change"> <label> 修改會員資料 </label> </a><br>
           <a href="/changePassword" class="setUpItem" id="editPW" href="/changePassword"><label>更換密碼</label></a><br>
           <a href="" class="setUpItem"><label>隱私權設定</label></a><br>
           <a class="setUpItem" onclick="subscribe();"><label>訂閱電子報</label></a><br>
         </div>
         <a href="/backend" class="item" id="backend"><label><span class="glyphicon glyphicon-wrench" style="color:#CE0000" aria-hidden="true"></span>&nbsp後台管理</label></a>
+        <a href="/gettingStarted" class="item" id="gettingStarted"><label><span class="glyphicon glyphicon-info-sign" style="color:rgb(211, 106, 1)" aria-hidden="true"></span>&nbsp新手上路</label></a>
         <div id="fullSignup">
           <a class="item"  href="/signup" id="label_complete_signup"><label><img src="/images/img_public/complete_icon.png"/>&nbsp完整註冊</label></a><br>
         </div>

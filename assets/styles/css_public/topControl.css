@@ -238,7 +238,7 @@ button, input[type="button"], input[type="submit"]{
 
 #setUpMenu{
 	text-decoration:none;
-	display:none;
+	//display:none;
 	font-family: "微軟正黑體";
 	margin-left: 20px;
 	font-size: 18px;

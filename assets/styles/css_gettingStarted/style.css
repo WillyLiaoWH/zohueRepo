@@ -1,0 +1,62 @@
+.gs_image{
+  height:300px;
+}
+
+#gs_pageInfo{
+  background-color: rgba(102, 141, 60, 0.4);
+  font-size:20px;
+  border-radius: 10px;
+  padding:15px;
+}
+
+.gs_heading{
+  font-weight: bold;
+}
+
+.gs_text{
+  margin-top:20px;
+  font-size:20px;
+
+}
+
+.media{
+  border:1px solid rgba(102, 141, 60, 0.4);
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:20px;
+  margin-top:0px;
+}
+
+.gs_qa{
+  font-size:20px;
+}
+
+.gs_imageAlign{
+  height:25px;
+  vertical-align: top;
+}
+
+#gs_menu{
+  //width:50%;
+  //margin-bottom:10px;
+}
+
+#gs_menu li a{
+  font-size: 20px;
+  color:#333;
+  border-left:1px solid rgba(102, 141, 60, 0.4);
+}
+
+#gs_menu li a:hover{
+  border-left:3px solid rgba(102, 141, 60, 0.4);
+  color:rgb(102, 141, 60);
+  background-color:transparent;
+  cursor:pointer;
+}
+
+#gs_menu li a:focus, #gs_menu li[class="active"] a{
+  border-left:3px solid rgba(102, 141, 60, 0.8);
+  color:rgb(102, 141, 60);
+  background-color:transparent;
+  font-weight: bold;
+}

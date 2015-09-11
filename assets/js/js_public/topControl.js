@@ -16,13 +16,13 @@ $(document).ready(function(){
   checkAuth();
 
   $('.dropdown-toggle').dropdown(); //For bootstrap dropdown menu
-  $( "#setUp" ).click(function() {
-    if(setUpMenu.style.display=="block"){
-      setUpMenu.style.display="none";
-    }else{
-      setUpMenu.style.display="block";
-    }
-  });
+  // $( "#setUp" ).click(function() {
+  //   if(setUpMenu.style.display=="block"){
+  //     setUpMenu.style.display="none";
+  //   }else{
+  //     setUpMenu.style.display="block";
+  //   }
+  // });
 });
 
   // This is called with the results from from FB.getLoginStatus().
@@ -59,6 +59,11 @@ function checkAuth() {
 
       var login=document.getElementById("loginSection");
       login.style.display="none";
+
+      var gs_content = document.getElementById("gs_content");
+      if(gs_content){
+        gs_content.className = "container-fluid col-md-9";
+      }
 
       var simpleS=document.getElementById("signup");
       if(simpleS){
@@ -141,12 +146,15 @@ function checkAuth() {
     }else{
       var setUp=document.getElementById("setUp");
       setUp.style.display="none";
+      document.getElementById("setUpMenu").style.display="none"
 
       var logout=document.getElementById("logout");
       logout.style.display="none";
 
-
-
+      var gs_content = document.getElementById("gs_content");
+      if(gs_content){
+        gs_content.className = "container-fluid col-md-6";
+      }
       // var mlogout=document.getElementById("mobile_logout");
       // mlogout.style.display="none";
      
@@ -358,13 +366,11 @@ function enterLogin(e) {
 }
 
 
-
 function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
   $.post( "/subscribe", { email: subscribeEmail}, function(res){
-    //alert(res);
-    document.getElementById("mailSubject").value="";
-    document.getElementById("mailContent").value="";
+    alert(res);
+    $("#subscribeEmail").val("");
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });

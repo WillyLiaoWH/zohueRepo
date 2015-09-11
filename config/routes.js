@@ -367,6 +367,27 @@ module.exports.routes = {
       ]
     }
   },
+  '/gettingStarted':{
+    view:'gettingStarted/index',
+    locals:{
+      scripts: [
+      ],
+      stylesheets:[
+        '/styles/css_gettingStarted/style.css',
+        '/styles/importer.css'
+      ]
+    }
+  },
+
+  // '/forum': {
+  //   view: 'forum/index',
+  //   locals: {
+      
+  //     stylesheets: [
+  //       '/styles/importer.css'
+  //     ]
+  //   }
+  // },
 
   // '/backend': {
   //   //view: 'backend/index',
