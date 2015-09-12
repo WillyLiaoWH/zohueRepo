@@ -2,6 +2,12 @@
   height:300px;
 }
 
+@media all and (max-width: 768px){
+  #img_signup{
+    display: none !important;
+  }
+}
+
 #gs_pageInfo{
   background-color: rgba(102, 141, 60, 0.4);
   font-size:20px;

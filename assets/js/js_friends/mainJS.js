@@ -160,7 +160,7 @@ function search(page, mobile) {
                 html+="<img  class='imgUser' src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].id+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
                 html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].id+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
-                html+="<br><div style='display:inline-block; height: 40%; width: 130%;'>";
+                html+="<br><span style='display:inline-block; height: 40%; width: 130%;'>";
                 switch(isFriend[i]) {
                   case -1:
                     html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
@@ -182,7 +182,7 @@ function search(page, mobile) {
                     html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                 }
-                html+="</div></div><div class='friendRight'>";
+                html+="</span></div><div class='friendRight'>";
                 if(allUser[i].addressCity&&allUser[i].addressCity!="") {
                   html+="<div style='display:inline-block; font-size: 22px; width: 100%'>來自"+allUser[i].addressCity+"</div><br>";
                 }

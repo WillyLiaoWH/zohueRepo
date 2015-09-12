@@ -133,6 +133,18 @@
 	.friendMid{
 		width: 55% !important;
 	}
+	.friendMid div, a {
+		font-size: 24px !important;
+	}
+	.friendMid button{
+		font-size: 16px !important;
+	}
+	.friendMid div > div {
+		font-size: 16px !important;
+	}
+	#search_result{
+		padding-left:0px !important;
+	}
 }
 
 .friend {

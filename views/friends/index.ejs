@@ -70,15 +70,15 @@
         </div>
 
         <!--For mobile-->
-        <div id="mobile_search" class="col-md-6 col-sm-10 col-xs-10 col-md-offset-1">
+        <div id="mobile_search" class="">
             <div id="inputAlias" style="width: 100%;">
-                <label style="font-size: 22px; color:#533828;">暱稱</label>
-                <input type="text" name="alias" id="alias2" style="width: 80%;" class="alias">
+                <!--<label style="font-size: 22px; color:#533828;">暱稱</label>-->
+                <input type="text" name="alias" id="alias2" style="width: 80%;" class="alias" placeholder="暱稱">
             </div>
             <br/>
 
             <div id="inputDisease" style="width: 100%;">
-                <label style="font-size: 22px; color:#533828;">病因</label>
+                <!--<label style="font-size: 22px; color:#533828;">病因</label>-->
                 <select id="disease2" style="width: 80%;" class="disease">
                     <option value="" selected="true">所有疾病</option>
                     <option value='1'>鼻咽癌</option>
@@ -96,7 +96,7 @@
             <br/>
             
             <div id="inputPlace" style="width: 100%;">
-                <label style="font-size: 22px; color:#533828;">地區</label>
+                <!--<label style="font-size: 22px; color:#533828;">地區</label>-->
                 <select id="place2" style="width: 80%;" class="place">
                     <option value="" selected="true">所有地區</option>
                     <script>ShowAllCity();</script>
@@ -105,7 +105,7 @@
             <br/>
 
             <div id="inputUserType" style="width: 100%;">
-                <label style="font-size: 22px; color:#533828;">身分</label>
+                <!--<label style="font-size: 22px; color:#533828;">身分</label>-->
                 <select id="userType2" style="width: 80%;" class="userType">
                     <option value="" selected="true">所有身分</option>
                     <option value='P'>病友</option>
@@ -117,8 +117,7 @@
                 </select>
             </div>
             <br/>
-            <div style="width: 100%;">
-                <label style="font-size: 22px; color:#533828;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <div style="width: 100%; margin: 7px 15px 0px 5px;">
                 <button onclick="search(0, true)" id="searchButton" style="width: 80%;">
                     <img src="/images/img_forum/search_icon.png">搜尋
                 </button>

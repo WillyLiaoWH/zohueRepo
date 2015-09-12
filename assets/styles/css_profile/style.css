@@ -9,6 +9,10 @@
   display: block; /* For Firefox */
 }
 
+#mobile_profile{
+	display: none !important;
+}
+
 #timeline_profile{
 	border-radius: 10px;
 	/*background-color: #FFFFFF;*/
