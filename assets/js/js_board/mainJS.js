@@ -207,7 +207,14 @@ function postArticle() {
           showDialog("一般訊息","您尚未完整註冊，不能發表文章喔，快登入加入大家的討論吧！");
         }
         else{
-          window.location.assign("/post/"+board);
+          if(auth.isAdmin==true && board=="17"){
+            window.location.assign("/post/"+board);  
+          }else if(auth.isAdmin==false && board=="17"){
+            showDialog("一般訊息","您不是管理員，不能在最新消息看板中發表文章喔！");
+          }else if(board!="17"){
+            window.location.assign("/post/"+board);
+          } 
+          
         }
       });       
     }
