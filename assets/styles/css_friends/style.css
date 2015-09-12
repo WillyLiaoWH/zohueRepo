@@ -133,8 +133,13 @@
 	.friendMid{
 		width: 55% !important;
 	}
-	.friendMid div, a {
+	.friendMid a, div {
 		font-size: 24px !important;
+		height: auto !important;
+	}
+	.friendMid span {
+		width: 100% !important;
+		font-size: 14px !important;
 	}
 	.friendMid button{
 		font-size: 16px !important;
@@ -170,6 +175,7 @@
 	height: 100%;
 	width: 380px;
 	padding-bottom: 5px;
+	text-align: left;
 }
 
 .friendRight {
