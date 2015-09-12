@@ -235,6 +235,9 @@ function search(page, mobile) {
           document.getElementById("searchList").innerHTML=html;
         } 
       }, 1000);
+      if(index==2){
+        $("html, body").animate({ scrollTop: ($("#searchResult").scrollTop() + 950) + "px"} , 2000, "swing");
+      }
     }
   });
 }
