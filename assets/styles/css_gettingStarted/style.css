@@ -1,12 +1,29 @@
-.gs_image{
-  height:30vh;
-  max-height:40vh;
-  margin-top:15px;
+.gs_imageH{
+  margin:15px 10px;
+  width:40vw;
+}
+
+.gs_imageV{
+  margin:15px 10px;
+  width:15vw;
+}
+
+.gs_imageDiv{
+  text-align: center;
+}
+
+.gs_juxtaposeImage{
+  margin:15px 10px;
+  width:20vw;
 }
 
 @media all and (max-width: 768px){
   .gs_imageDiv{
     display: none !important;
+  }
+
+  .gs_image{
+    width:80vw;
   }
 }
 
@@ -19,18 +36,18 @@
 
 .gs_heading{
   font-weight: bold;
-  margin-top:20px;
+  margin:20px 20px 0px 20px;
 }
 
 .gs_text{
-  margin-top:20px;
+  margin:20px;
   font-size:20px;
 }
 
 .media{
   border:1px solid rgba(102, 141, 60, 0.4);
   border-radius:10px;
-  padding:0px 15px 15px 15px;
+  //padding:0px 15px 15px 15px;
   margin-bottom:20px;
   margin-top:0px;
 }
@@ -42,11 +59,6 @@
 .gs_imageAlign{
   height:25px;
   vertical-align: top;
-}
-
-#gs_menu{
-  //width:50%;
-  //margin-bottom:10px;
 }
 
 #gs_menu li a{

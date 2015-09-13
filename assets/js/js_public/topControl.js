@@ -293,7 +293,7 @@ function Submit(){
   var lname = $("#lname").val();
   var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
     function(res){
-      showDialog("一般訊息","註冊成功");
+      showDialog("一般訊息","註冊成功！如果在網站操作上有任何問題，可以參考左邊選單的「新手上路」喔！");
       loginWithAccount(account, password);
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
