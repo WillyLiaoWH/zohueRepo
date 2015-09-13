@@ -11,8 +11,10 @@
 	</head>
 	<body id="body"> -->
     <script>
-      $( document ).ready(function() {
-        $("html, body").animate({ scrollTop: "450px"} , 2000, "swing");
+     $( document ).ready(function() {
+        if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "440px"} , 2000, "swing");
+        }
       });
     </script>
     <div class="container-fluid">

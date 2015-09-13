@@ -10,8 +10,10 @@
 	<body id="body"> -->
 <script>
 $( document ).ready(function() {
-  $("html, body").animate({ scrollTop: ($("#forumDiv").scrollTop() + 430) + "px"} , 2000, "swing");
-});
+        if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "440px"} , 2000, "swing");
+        }
+      });
 </script>
     <div id="forumDiv" class="container-fluid">
       <h1 style="color:#D26900;">癌病友論壇</h1>

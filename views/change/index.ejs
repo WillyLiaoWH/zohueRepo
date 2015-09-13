@@ -18,8 +18,10 @@
 	</head>
 	<body id="body"> -->
     <script>
-      $( document ).ready(function() {
-        $("html, body").animate({ scrollTop: "430px"} , 2000, "swing");
+     $( document ).ready(function() {
+        if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "440px"} , 2000, "swing");
+        }
       });
     </script>
     <div id="form-main_ez" class="col-md-7">

@@ -11,8 +11,13 @@
     <script src="/js/js_board/mainJS.js"></script>
   </head>
   <body id="body"> -->
-
- 
+    <script>
+      $( document ).ready(function() {
+        if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "450px"} , 2000, "swing");
+        }
+      });
+    </script>
 
     <div class="container-fluid col-md-8">
     <div class="">

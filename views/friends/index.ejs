@@ -15,7 +15,9 @@
     <script src="/js/js_friends/mainJS.js"></script>
     <script>
       $( document ).ready(function() {
-        $("html, body").animate({ scrollTop: "450px"} , 2000, "swing");
+        if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "450px"} , 2000, "swing");
+        }
       });
     </script>
 	</head>

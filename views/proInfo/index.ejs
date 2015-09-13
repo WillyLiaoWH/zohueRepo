@@ -14,9 +14,11 @@
 	<body id="body"> -->
     <script>
       $( document ).ready(function() {
-        $("html, body").animate({ scrollTop: ($("#infoContent").scrollTop() + 440) + "px"} , 2000, "swing");
+        if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "450px"} , 2000, "swing");
+        }
       });
-  </script>
+    </script>
   <div class="container-fluid col-md-8">
     <div class="" id="infoContent">
    <div class="row-fluid">
