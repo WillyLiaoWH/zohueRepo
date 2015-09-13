@@ -316,6 +316,10 @@ button, input[type="button"], input[type="submit"]{
 	line-height:45px;
 }
 
+#menu a label:hover{
+	cursor: pointer;
+}
+
 .s{
 	min-height: 48px;
 	color:#816C58;
