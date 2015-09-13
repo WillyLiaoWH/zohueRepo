@@ -114,23 +114,14 @@ function search(page, mobile) {
     if(res.err) {
       showDialog("錯誤訊息",res.err);
     } else {
+      console.log(res);
       setTimeout(function(){
         if(res.users.length!=0) {
           if(res.isFriend) {
-            var allUser=[];
-            var isFriend=[];
-            var age=[];
-            for(i=0; i<res.users.length; i++) {
-              if(res.isFriend[i]!=-2) {
-                allUser.push(res.users[i]);
-                isFriend.push(res.isFriend[i]);
-                age.push(res.age[i]);
-              }
-            }
-
+            var allUser=res.users;
             var html="";
             for(i=0; i<allUser.length; i++) {
-              if(isFriend[i]!=-2) {
+              if(allUser[i].isFriend!=-2) {
                 html+="<div class='friend'><div class='image'>";
                 var picSize="100";
                 var authorType="";
@@ -161,7 +152,7 @@ function search(page, mobile) {
                 html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].id+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
                 html+="<br><span style='display:inline-block; height: 40%; width: 130%;'>";
-                switch(isFriend[i]) {
+                switch(allUser[i].isFriend) {
                   case -1:
                     html+="<div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
                     break;
@@ -210,8 +201,8 @@ function search(page, mobile) {
                   html+="</div><br>";
                 }
 
-                if(age[i]!=-1) {
-                  html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+res.age[i]+"歲</div>";
+                if(allUser[i].age!=-1) {
+                  html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+allUser[i].age+"歲</div>";
                 }
                 html+="</div></div>";
               }

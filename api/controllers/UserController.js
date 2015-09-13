@@ -861,6 +861,144 @@ module.exports = {
     },
 
     searchFriends: function(req, res) {
+        function sendback(allUser) {
+            var isFriend=[];
+            var place=req.param("place");
+            User.find({account: req.session.user.account}).exec(function(err, user) {
+                if(err) {
+                    console.log(err);
+                    res.send({err: "DB error"});
+                } else {
+                    var ageList=[];
+                    var users=[];
+                    for(i=0; i<allUser.length; i++) {
+                        var push=false;
+                        if(allUser[i].id!=req.session.user.id) {
+                            if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
+                                // isFriend.push(-2);
+                            } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
+                                allUser[i].isFriend=3;
+                                users.push(allUser[i]);
+                                push=true;
+                            } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
+                                allUser[i].isFriend=2;
+                                users.push(allUser[i]);
+                                push=true;
+                            } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
+                                allUser[i].isFriend=-1;
+                                users.push(allUser[i]);
+                                push=true;
+                            } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
+                                allUser[i].isFriend=1;
+                                users.push(allUser[i]);
+                                push=true;
+                            } else {
+                                allUser[i].isFriend=0;
+                                users.push(allUser[i]);
+                                push=true;
+                            }
+                        } else {
+                            // isFriend.push(-2);
+                        }
+                        if(push) {
+                            var defaultAuth="friend";
+                            var ageAuth;
+                            var cityAuth;
+                            if(allUser[i].Userauth.length==0) {
+                                ageAuth=defaultAuth;
+                                cityAuth=defaultAuth;
+                            } else {
+                                ageAuth=allUser[i].Userauth[0].bday;
+                                cityAuth=allUser[i].Userauth[0].city;
+                            }
+                            if(allUser[i].birthday&&allUser[i].birthday!="") {
+                                var now=new Date();
+                                var birth=allUser[i].birthday.split(" ");
+                                var y=parseInt(birth[3]);
+                                var m=monthMap[birth[1]];
+                                var d=parseInt(birth[2]);
+                                var birthday=new Date(y, m, d);
+                                var age=now.getFullYear()*10000+now.getMonth()*100+now.getDate()-birthday.getFullYear()*10000+birthday.getMonth()*100+birthday.getDate();
+                                age=Math.floor(age/10000);
+                                switch(ageAuth) {
+                                    case "all":
+                                        users[users.length-1].age=age;
+                                        break;
+                                    case "friend":
+                                        if(users[users.length-1].isFriend==3) {
+                                            users[users.length-1].age=age;
+                                        } else {
+                                            users[users.length-1].age=-1;
+                                        }
+                                        break;
+                                    case "self":
+                                        users[users.length-1].age=-1;
+                                        break;
+                                }
+                            } else {
+                                users[users.length-1].age=-1;
+                            }
+
+                            switch(cityAuth) {
+                                case "all":
+                                    break;
+                                case "friend":
+                                    if(users[users.length-1].isFriend!=3) {
+                                        if(place!=""&&users[users.length-1].addressCity.indexOf(place)!=-1) {
+                                            users.pop();
+                                        } else {
+                                            users[users.length-1].addressCity="";
+                                        }
+                                    }
+                                    break;
+                                case "self":
+                                    if(place!=""&&users[users.length-1].addressCity.indexOf(place)!=-1) {
+                                        users.pop();
+                                    } else {
+                                        users[users.length-1].addressCity="";
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                    users.sort(function(a, b) {
+                        if(a.isFriend==3) {
+                            var aValue=0;
+                        } else if(a.type=="D") {
+                            var aValue=1;
+                        } else if(a.type=="RN") {
+                            var aValue=2;
+                        } else if(a.type=="S") {
+                            var aValue=3;
+                        } else {
+                            var aValue=4;
+                        }
+
+                        if(b.isFriend==3) {
+                            var bValue=0;
+                        } else if(b.type=="D") {
+                            var bValue=1;
+                        } else if(b.type=="RN") {
+                            var bValue=2;
+                        } else if(b.type=="S") {
+                            var bValue=3;
+                        } else {
+                            var bValue=4;
+                        }
+
+                        return aValue-bValue;
+                    })
+                    var hasNext;
+                    if(users.length<=(page+1)*5) {
+                        hasNext=false;
+                        res.send({users: users.slice(page*5), isFriend: isFriend.slice(page*5), age: ageList.slice(page*5), hasNext: hasNext});
+                    } else {
+                        hasNext=true;
+                        res.send({users: users.slice(page*5, page*5+5), isFriend: isFriend.slice(page*5, page*5+5), age: ageList.slice(page*5, page*5+5), hasNext: hasNext});
+                    }
+                }
+            });
+        }
         var alias=req.param("alias");
         var disease=req.param("disease");
         var place=req.param("place");
@@ -895,115 +1033,7 @@ module.exports = {
                     if(err) {
                         res.send(500, {err: "DB Error"});
                     } else {
-                        var isFriend=[];
-                        var users=[];
-                        User.find({account: req.session.user.account}).exec(function(err, user) {
-                            if(err) {
-                                console.log(err);
-                                res.send({err: "DB error"});
-                            } else {
-                                var ageList=[];
-                                var users=[];
-                                for(i=0; i<allUser.length; i++) {
-                                    var push=false;
-                                    if(allUser[i].id!=req.session.user.id) {
-                                        if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
-                                            // isFriend.push(-2);
-                                        } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(3);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(2);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(-1);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(1);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else {
-                                            isFriend.push(0);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        }
-                                    } else {
-                                        // isFriend.push(-2);
-                                    }
-                                    if(push) {
-                                        var defaultAuth="friend";
-                                        var ageAuth;
-                                        var cityAuth;
-                                        if(allUser[i].Userauth.length==0) {
-                                            ageAuth=defaultAuth;
-                                            cityAuth=defaultAuth;
-                                        } else {
-                                            ageAuth=allUser[i].Userauth[0].bday;
-                                            cityAuth=allUser[i].Userauth[0].city;
-                                        }
-                                        if(allUser[i].birthday&&allUser[i].birthday!="") {
-                                            var now=new Date();
-                                            var birth=allUser[i].birthday.split(" ");
-                                            var y=parseInt(birth[3]);
-                                            var m=monthMap[birth[1]];
-                                            var d=parseInt(birth[2]);
-                                            var birthday=new Date(y, m, d);
-                                            var age=now.getFullYear()*10000+now.getMonth()*100+now.getDate()-birthday.getFullYear()*10000+birthday.getMonth()*100+birthday.getDate();
-                                            age=Math.floor(age/10000);
-                                            switch(ageAuth) {
-                                                case "all":
-                                                    ageList.push(age);
-                                                    break;
-                                                case "friend":
-                                                    if(isFriend[isFriend.length-1]==3) {
-                                                        ageList.push(age);
-                                                    } else {
-                                                        ageList.push(-1);
-                                                    }
-                                                    break;
-                                                case "self":
-                                                    ageList.push(-1);
-                                                    break;
-                                            }
-                                        } else {
-                                            ageList.push(-1);
-                                        }
-
-                                        switch(cityAuth) {
-                                            case "all":
-                                                break;
-                                            case "friend":
-                                                if(isFriend[isFriend.length-1]!=3) {
-                                                    if(place!=""&&users[users.length-1].addressCity.indexOf(place)!=-1) {
-                                                        users.pop();
-                                                    } else {
-                                                        users[users.length-1].addressCity="";
-                                                    }
-                                                }
-                                                break;
-                                            case "self":
-                                                if(place!=""&&users[users.length-1].addressCity.indexOf(place)!=-1) {
-                                                    users.pop();
-                                                } else {
-                                                    users[users.length-1].addressCity="";
-                                                }
-                                                break;
-                                        }
-                                    }
-                                }
-                                var hasNext;
-                                if(users.length<=(page+1)*5) {
-                                    hasNext=false;
-                                    res.send({users: users.slice(page*5), isFriend: isFriend, age: ageList, hasNext: hasNext});
-                                } else {
-                                    hasNext=true;
-                                    res.send({users: users.slice(page*5, page*5+5), isFriend: isFriend, age: ageList, hasNext: hasNext});
-                                }
-                            }
-                        });
+                        sendback(allUser);
                     }
                 });
             } else {
@@ -1011,106 +1041,7 @@ module.exports = {
                     if(err) {
                         res.send(500, {err: "DB Error"});
                     } else {
-                        var isFriend=[];
-                        User.find({account: req.session.user.account}).exec(function(err, user) {
-                            if(err) {
-                                console.log(err);
-                                res.send({err: "DB error"});
-                            } else {
-                                var ageList=[];
-                                var users=[];
-                                for(i=0; i<allUser.length; i++) {
-                                    var push=false;
-                                    if(allUser[i].id!=req.session.user.id) {
-                                        if(user[0].blackerList.indexOf(allUser[i].id)!=-1) {
-                                            // isFriend.push(-2);
-                                        } else if(user[0].friends.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(3);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else if(user[0].sentAddFriends.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(2);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else if(user[0].blackList.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(-1);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else if(user[0].unconfirmedFriends.indexOf(allUser[i].id)!=-1) {
-                                            isFriend.push(1);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        } else {
-                                            isFriend.push(0);
-                                            users.push(allUser[i]);
-                                            push=true;
-                                        }
-                                    } else {
-                                        // isFriend.push(-2);
-                                    }
-                                    if(push) {
-                                        var defaultAuth="friend";
-                                        var ageAuth;
-                                        var cityAuth;
-                                        if(allUser[i].Userauth.length==0) {
-                                            ageAuth=defaultAuth;
-                                            cityAuth=defaultAuth;
-                                        } else {
-                                            ageAuth=allUser[i].Userauth[0].bday;
-                                            cityAuth=allUser[i].Userauth[0].city;
-                                        }
-                                        if(allUser[i].birthday&&allUser[i].birthday!="") {
-                                            var now=new Date();
-                                            var birth=allUser[i].birthday.split(" ");
-                                            var y=parseInt(birth[3]);
-                                            var m=monthMap[birth[1]];
-                                            var d=parseInt(birth[2]);
-                                            var birthday=new Date(y, m, d);
-                                            var age=now.getFullYear()*10000+now.getMonth()*100+now.getDate()-birthday.getFullYear()*10000+birthday.getMonth()*100+birthday.getDate();
-                                            age=Math.floor(age/10000);
-                                            switch(ageAuth) {
-                                                case "all":
-                                                    ageList.push(age);
-                                                    break;
-                                                case "friend":
-                                                    if(isFriend[isFriend.length-1]==3) {
-                                                        ageList.push(age);
-                                                    } else {
-                                                        ageList.push(-1);
-                                                    }
-                                                    break;
-                                                case "self":
-                                                    ageList.push(-1);
-                                                    break;
-                                            }
-                                        } else {
-                                            ageList.push(-1);
-                                        }
-
-                                        switch(cityAuth) {
-                                            case "all":
-                                                break;
-                                            case "friend":
-                                                if(isFriend[isFriend.length-1]!=3) {
-                                                    users[users.length-1].addressCity="";
-                                                }
-                                                break;
-                                            case "self":
-                                                users[users.length-1].addressCity="";
-                                                break;
-                                        }
-                                    }
-                                }
-                                var hasNext;
-                                if(users.length<=(page+1)*5) {
-                                    hasNext=false;
-                                    res.send({users: users.slice(page*5), isFriend: isFriend, age: ageList, hasNext: hasNext});
-                                } else {
-                                    hasNext=true;
-                                    res.send({users: users.slice(page*5, page*5+5), isFriend: isFriend, age: ageList, hasNext: hasNext});
-                                }
-                            }
-                        });
+                        sendback(allUser);
                     }
                 });
             }
