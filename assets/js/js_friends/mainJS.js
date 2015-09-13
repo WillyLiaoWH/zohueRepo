@@ -163,22 +163,22 @@ function search(page, mobile) {
                 html+="<br><span style='display:inline-block; height: 40%; width: 130%;'>";
                 switch(isFriend[i]) {
                   case -1:
-                    html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
+                    html+="<div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
                     break;
                   case 0:
                     html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
                     html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                   case 1:
-                    html+="要求加入好友&nbsp&nbsp<button type='button' class='button' onclick='confirmFriend(this.parentNode, "+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
+                    html+="<div class='status'>要求加入好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
                     html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                   case 2:
-                    html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+                    html+="<div class='status'>已送出好友邀請&nbsp&nbsp</div><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
                     html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                   case 3:
-                    html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+                    html+="<div class='status'>好友&nbsp&nbsp</div><button type='button' class='button' onclick='removeFriend(this.parentNode, "+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
                     html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
                     break;
                 }
