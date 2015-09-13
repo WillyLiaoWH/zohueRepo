@@ -12,26 +12,9 @@ var unDelArtId=[];
 $(document).ready(function(){
   checkAuth();
 
-  // $(document).on("click","#adminLogin",function(e){
-  //   var adminAccount = $("#adminAccount").val();
-  //   var adminPassword = $("#adminPassword").val();
-  //   var url = document.URL;
-
-  //   $.post("/adminLogin",{adminAccount: adminAccount, adminPassword: adminPassword}, function(res){
-  //     if (res == "登入成功"){
-  //       alert(res);
-  //       location.replace(url);
-  //     }else{
-  //       alert(res); // 這裡alert的內容在backend controller定義
-  //     }
-  //   });
-  // });
-
   $(document).on("click","#adminLogout",function(e){
-    //var url = document.URL;
     var posting = $.post( "/adminLogout", {}, function(res){
       if(res=="success"){
-        //location.replace(url);
         window.location.assign("/home");
       }      
     }).error(function(res){
@@ -42,7 +25,6 @@ $(document).ready(function(){
   function checkAuth() {
     $.get("/checkAdmin", function(res){
       if(res=="true") {
-        //alert("Admin desu.");
         $("#backendContent").css("display","block");
         $("#backendMenu").css("display","block");
 
@@ -142,18 +124,6 @@ $(document).ready(function(){
         processData: false
     });
     return false;
-  });
-  $(document).on("click",".removeFile",function(e){
-    var index = attachmentNameList.indexOf($(this).attr("value"));
-
-    $.post("/deleteFile",{fileName: attachmentList[index]}, function(res){
-      if (res != "SEND"){
-        console.log("刪除失敗");
-      }
-    });
-    attachmentNameList.splice(index, 1);
-    attachmentList.splice(index, 1);
-    $(this).parent().parent().remove();
   });
 
   // 寄送電子報

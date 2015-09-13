@@ -18,11 +18,10 @@
 }
 
 @media all and (max-width: 768px){
-  .gs_imageDiv{
+  .gs_imageV{
     display: none !important;
   }
-
-  .gs_image{
+  .gs_imageH{
     width:80vw;
   }
 }
@@ -47,7 +46,6 @@
 .media{
   border:1px solid rgba(102, 141, 60, 0.4);
   border-radius:10px;
-  //padding:0px 15px 15px 15px;
   margin-bottom:20px;
   margin-top:0px;
 }
@@ -80,4 +78,15 @@
   background-color:rgba(102, 141, 60, 0.2);
   font-weight: bold;
   border-radius: 0px 10px 10px 0px;
+}
+
+.gs_pager a{
+  font-size: 18px;
+  color:#1D3521;
+  background-color:rgba(102, 141, 60, 0.2);
+}
+
+.gs_pager li:not(.disabled) a:hover{
+  background-color:rgba(232, 81, 0, 0.7);
+  cursor:pointer;
 }
