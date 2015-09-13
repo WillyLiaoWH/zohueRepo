@@ -54,6 +54,9 @@ function checkAuth() {
         document.getElementById("mobile_backend").style.display="block";
       }
 
+      checkNot();
+      setInterval("checkNot()", 5000);
+
       var setUp=document.getElementById("setUp");
       setUp.style.display="inline";
 
@@ -111,8 +114,6 @@ function checkAuth() {
       profile.style.display="block";
       document.getElementById("mobile_userAlias").innerHTML = "嗨！ "+auth.alias;
       document.getElementById("mobile_userimg").src = auth.img;
-
-      checkNot();
 
       $.get("/checkFull", function(full){
         var fullSignup1=document.getElementById("mobile_fullSignup");
