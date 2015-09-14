@@ -474,7 +474,8 @@ function setSearchResult(articleList, page){
           label: "確認",
           className: "btn-primary",
           callback: function() {
-            cb();
+            if(typeof cb == "function")
+              cb();
           }
         }
       }
