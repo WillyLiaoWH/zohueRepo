@@ -122,8 +122,8 @@ module.exports = {
                 var result = match[1].replace(/\\/g, "\/");
                 console.log(result);
 
-                var time = new Date().getTime();
-                var recall_url = 'images/img_post/upload/'+time+'.jpg';
+                //var time = new Date().getTime();
+                var recall_url = 'images/img_post/upload/'+uni_fn+'.jpg';
                 var easyimg = require('easyimage');
 
                 try {
