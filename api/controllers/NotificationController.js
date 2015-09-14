@@ -38,15 +38,17 @@ module.exports = {
     },
 
     countNotification: function(req, res) {
-        var id=req.session.user.id;
-        Notification.find({user: id, alreadySeen: false}).exec(function(err, not){
-            if(err) {
-                console.log(err);
-                res.send(500, {err: "DB error"});
-            } else {
-                res.send({num: not.length});
-            }
-        });
+        if(req.session.user.id) {
+            var id=req.session.user.id;
+            Notification.find({user: id, alreadySeen: false}).exec(function(err, not){
+                if(err) {
+                    console.log(err);
+                    res.send(500, {err: "DB error"});
+                } else {
+                    res.send({num: not.length});
+                }
+            });
+        }
     },
 
     seeNotification: function(req, res) {
