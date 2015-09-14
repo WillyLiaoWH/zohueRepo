@@ -85,8 +85,9 @@ function post() {
   var postContent = $("#postContent").html();
   var postContent_image = $("#postContent_image").html();
   if(!postTitle||postTitle.trim()=="") {
-    showDialog("錯誤訊息","文章標題不能空白喔！");
-    allowed=false;
+    showDialog("錯誤訊息","文章標題不能空白喔！",function(){
+      allowed=false;
+    });
   }
   if(!postContent||postContent=="") {
     allowed=false;
@@ -106,9 +107,9 @@ function post() {
 
   if(allowed) {
     var posting = $.post( "/changeArticle", { id: id, newTitle: newTitle, newContent: newContent}, function(res){
-      showDialog("一般訊息","文章編輯成功！");
-      //window.location.replace("/forum/1");
-      window.location.replace("/article/"+id);
+      showDialog("一般訊息","文章編輯成功！",function(){
+        window.location.replace("/article/"+id);
+      });
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
@@ -169,7 +170,7 @@ function load() {
   } 
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -178,6 +179,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

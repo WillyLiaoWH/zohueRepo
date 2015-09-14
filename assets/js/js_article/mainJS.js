@@ -273,12 +273,12 @@ function deleteArticle() {
           var regex = /.*article\/+(.*)/;
           var id = url.replace(regex,"$1");
           $.post( "/deleteArticle", { id: id}, function(res){
-           showDialog("一般訊息","文章刪除成功！");
-            // window.location.replace("/board-"+board+"/1#all");
-            if(document.referrer.search("board")!=-1)
-              window.location.assign(document.referrer);
-            else
-              window.location.assign("/board-"+board+"/1?tab=all")
+            showDialog("一般訊息","文章刪除成功！",function(){
+              if(document.referrer.search("board")!=-1)
+                window.location.assign(document.referrer);
+              else
+                window.location.assign("/board-"+board+"/1?tab=all");
+            });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
           });
@@ -520,7 +520,7 @@ function shareFB(){
   return false;
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -529,6 +529,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

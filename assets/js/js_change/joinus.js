@@ -253,8 +253,9 @@ function getXMLHttp(){
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
-        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～");
-        return false;
+        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
+          return false;
+        });
       }
     }
   }
@@ -305,8 +306,9 @@ function Submit(){
                                           addressCity: addressCity, addressDistrict: addressDistrict,
                                           address: address, birthday: birthday, selfIntroduction: selfIntroduction,
                                           primaryDisease: primaryDisease}, function(res){
-      showDialog("一般訊息","修改會員資料成功！");
-      window.location = "/home";
+      showDialog("一般訊息","修改會員資料成功！",function(){
+        window.location = "/home";
+      });
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
@@ -335,11 +337,12 @@ function Submit_ez(){
   var email = document.getElementById("email_ez").value;
   var alias = document.getElementById("alias_ez").value;
   var posting = $.post( "/ez_change", { email: email, alias: alias }, function(res){
-    showDialog("一般訊息","修改會員資料成功！");
-    window.location = "/home";
-  }).error(function(res){
-      showDialog("錯誤訊息",res.responseJSON.err);
+    showDialog("一般訊息","修改會員資料成功！",function(){
+      window.location = "/home";
     });
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
 }
 
 function ShowAllQ(){
@@ -546,7 +549,7 @@ function ShowDate(month, year){
 }
 function daysInMonth(month,year) { return new Date(year, month, 0).getDate(); }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -555,6 +558,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

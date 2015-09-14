@@ -9,8 +9,9 @@ $(document).ready(function(){
 function checkLogin() {
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      showDialog("錯誤訊息","需先登入才能查看通知喔！");
-      document.location.replace("/home");
+      showDialog("錯誤訊息","需先登入才能查看通知喔！",function(){
+        document.location.replace("/home");
+      });
     } else {
       setPage();
     }
@@ -155,7 +156,7 @@ function setRead(id, obj) {
   });
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -164,6 +165,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

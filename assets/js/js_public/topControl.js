@@ -294,8 +294,9 @@ function Submit(){
   var lname = $("#lname").val();
   var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
     function(res){
-      showDialog("一般訊息","註冊成功！如果在網站操作上有任何問題，可以參考左邊選單的「新手上路」喔！");
-      loginWithAccount(account, password);
+      showDialog("一般訊息","註冊成功！如果在網站操作上有任何問題，可以參考左邊選單的「新手上路」喔！",function(){
+        loginWithAccount(account, password);
+      });
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
@@ -316,13 +317,14 @@ function Login(){
   } else {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
     if(res.isFullSignup==true){
-      showDialog("一般訊息",res.alias+"，歡迎回來作夥！");
+      showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
+        location.replace(url);
+      });
     }else{
-      showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！");
+      showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！",function(){
+        location.replace(url);
+      });
     }
-
-
-    location.replace(url);
   }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
@@ -331,8 +333,9 @@ function Login(){
 
 function loginWithAccount(account, password) {
   var posting = $.post( "/login", { account: account, password: password}, function(res){
-    showDialog("一般訊息","首次登入成功，歡迎來作夥！");
-    location.reload();
+    showDialog("一般訊息","首次登入成功，歡迎來作夥！",function(){
+      location.reload();
+    });
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
@@ -341,8 +344,9 @@ function loginWithAccount(account, password) {
 function Logout(){
   var url = document.URL;
   var posting = $.post( "/logout", {}, function(res){
-    showDialog("一般訊息","登出成功！");
-    window.location.assign("/home");
+    showDialog("一般訊息","登出成功！",function(){
+      window.location.assign("/home");
+    });
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
@@ -444,7 +448,7 @@ function checkNot() {
   });
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -453,6 +457,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

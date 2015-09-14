@@ -465,7 +465,7 @@ function setSearchResult(articleList, page){
     }
   }
 
-  function showDialog(title, message){
+  function showDialog(title, message, cb){
     bootbox.dialog({
       message: message,
       title: title,
@@ -474,6 +474,8 @@ function setSearchResult(articleList, page){
           label: "確認",
           className: "btn-primary",
           callback: function() {
+            if(typeof cb == "function")
+              cb();
           }
         }
       }

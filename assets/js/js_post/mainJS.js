@@ -65,8 +65,9 @@ function post() {
   var timelineContent = $("#postContent").html();
   var postContent_image = $("#postContent_image").html();
   if(!postTitle||postTitle.trim()=="") {
-    showDialog("錯誤訊息","文章標題不能空白喔！");
-    allowed=false;
+    showDialog("錯誤訊息","文章標題不能空白喔！",function(){
+      allowed=false;
+    });
   }
 
   postContent = postContent+"<div id='postContent_image'>"+postContent_image+"</div>";
@@ -124,8 +125,9 @@ function post() {
       post 
     }
     var posting = $.post( "/postArticle", { title: postTitle, content: postContent, classification: postClass, responseNum: responseNum, clickNum: clickNum, board: board}, function(res){
-      showDialog("一般訊息","文章發表成功！");
-      window.location.replace("/article/"+res[0].id);
+      showDialog("一般訊息","文章發表成功！",function(){
+        window.location.replace("/article/"+res[0].id);
+      });
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
@@ -190,7 +192,7 @@ function load() {
   } 
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -199,6 +201,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

@@ -8,15 +8,16 @@ function Submit(){
   }
   else {
     var posting = $.post( "/changePassword", {oldPassword: oldPassword, newPassword: newPassword, reNewPassword: reNewPassword}, function(res){
-      showDialog("一般訊息","更換密碼成功！");
-      location.replace("/home");
+      showDialog("一般訊息","更換密碼成功！",function(){
+        location.replace("/home");
+      });
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -25,6 +26,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

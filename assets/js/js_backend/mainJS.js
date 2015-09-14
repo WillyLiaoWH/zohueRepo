@@ -70,9 +70,9 @@ $(document).ready(function(){
 
       }else{
         $("#adminLoginArea").css("display", "block");
-        showDialog("錯誤訊息","你不是管理員喔！");
-        window.location.assign("/home");
-        //alert("Not admin.");
+        showDialog("錯誤訊息","你不是管理員喔！",function(){
+          window.location.assign("/home");
+        });
       }
     });
   }
@@ -150,28 +150,30 @@ $(document).ready(function(){
                 if (res == "SEND"){
                   attachmentList=[];
                   attachmentNameList=[];
-                  showDialog("一般訊息","電子報發送成功！");
-                  document.getElementById("mailSubject").value="";
-                  document.getElementById("mailContent").value="";
-                  document.getElementById("mailEdit").style.display="block"; 
-                  document.getElementById("mailSpinner").style.display="none";
-                  document.getElementById("attachmentEdit").style.display="block";
-                  document.getElementById("emailButtonGroups").style.display="block";
-                  $("#attachmentEdit label").css("display", "none");
-                  $("#attachmentList").html("");
-                  loadsubscriberList();
+                  showDialog("一般訊息","電子報發送成功！",function(){
+                    document.getElementById("mailSubject").value="";
+                    document.getElementById("mailContent").value="";
+                    document.getElementById("mailEdit").style.display="block"; 
+                    document.getElementById("mailSpinner").style.display="none";
+                    document.getElementById("attachmentEdit").style.display="block";
+                    document.getElementById("emailButtonGroups").style.display="block";
+                    $("#attachmentEdit label").css("display", "none");
+                    $("#attachmentList").html("");
+                    loadsubscriberList();
+                  });
                 }else{
                   attachmentList=[];
                   attachmentNameList=[];
-                  showDialog("一般訊息",res);
-                  document.getElementById("mailSubject").value="";
-                  document.getElementById("mailContent").value="";
-                  document.getElementById("mailEdit").style.display="block"; 
-                  document.getElementById("mailSpinner").style.display="none";
-                  document.getElementById("attachmentEdit").style.display="block";
-                  document.getElementById("emailButtonGroups").style.display="block";
-                  $("#attachmentEdit label").css("display", "none");
-                  $("#attachmentList").html("");
+                  showDialog("一般訊息",res,function(){
+                    document.getElementById("mailSubject").value="";
+                    document.getElementById("mailContent").value="";
+                    document.getElementById("mailEdit").style.display="block"; 
+                    document.getElementById("mailSpinner").style.display="none";
+                    document.getElementById("attachmentEdit").style.display="block";
+                    document.getElementById("emailButtonGroups").style.display="block";
+                    $("#attachmentEdit label").css("display", "none");
+                    $("#attachmentList").html("");
+                  });
                 }
               });
             }
@@ -474,8 +476,9 @@ function deleteSubscriber(id) {
         className: "btn-primary",
         callback: function() {
           $.post( "/deleteSubscriber", { id: id}, function(res){
-            showDialog("一般訊息","刪除成功！");
-            loadsubscriberList();
+            showDialog("一般訊息","刪除成功！",function(){
+              loadsubscriberList();
+            });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
           });
@@ -548,7 +551,7 @@ function formatFloat(num){ // 小數點第2位四捨五入
   return Math.round(num * 100) / 100;
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -557,6 +560,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }

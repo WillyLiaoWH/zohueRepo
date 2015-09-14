@@ -1,22 +1,22 @@
 var allow_create;
 var diseaseList={
   '1':"鼻咽癌",
-  '2':"鼻竇癌",
-  '3':"副鼻竇癌",
-  '4':"口腔癌",
-  '5':"口咽癌",
-  '6':"下咽癌",
-  '7':"喉癌",
-  '8':"唾液腺癌",
-  '9':"甲狀腺癌",
+  '2':"鼻腔/副鼻竇癌",
+  '3':"口腔癌",
+  '4':"口咽癌",
+  '5':"下咽癌",
+  '6':"喉癌",
+  '7':"唾液腺癌",
+  '8':"甲狀腺癌",
   '999':"其它"
 };
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      showDialog("錯誤訊息","您尚未登入喔！");
-      window.location.replace("/home");
+      showDialog("錯誤訊息","您尚未登入喔！", function(){
+        window.location.replace("/home");
+      });
     }
   });
   
@@ -218,8 +218,9 @@ function search(page, mobile) {
               document.getElementById("more").innerHTML="";
             }
           } else {
-            showDialog("錯誤訊息","您尚未登入喔！");
-            window.location.assign("/home")
+            showDialog("錯誤訊息","您尚未登入喔！", function(){
+              window.location.assign("/home");
+            });
           }
         } else {
           var html="找不到符合搜尋條件的人";
@@ -254,7 +255,7 @@ function HandleResponse_ShowAllCity(response){
   }
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -263,6 +264,8 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
     }
