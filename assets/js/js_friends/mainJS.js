@@ -1,14 +1,13 @@
 var allow_create;
 var diseaseList={
   '1':"鼻咽癌",
-  '2':"鼻竇癌",
-  '3':"副鼻竇癌",
-  '4':"口腔癌",
-  '5':"口咽癌",
-  '6':"下咽癌",
-  '7':"喉癌",
-  '8':"唾液腺癌",
-  '9':"甲狀腺癌",
+  '2':"鼻腔/副鼻竇癌",
+  '3':"口腔癌",
+  '4':"口咽癌",
+  '5':"下咽癌",
+  '6':"喉癌",
+  '7':"唾液腺癌",
+  '8':"甲狀腺癌",
   '999':"其它"
 };
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
