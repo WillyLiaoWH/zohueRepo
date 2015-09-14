@@ -3,8 +3,9 @@ function accountSubmit(){
 	$.post('/getQ/',{account:account,url:window.location.toString()},function(ret){
 		console.log(ret)
 		if(ret.typ=="err"){
-			showDialog("錯誤訊息", ret.msg);
-			location.reload();
+			showDialog("錯誤訊息", ret.msg, function(){
+				location.reload();
+			});
 		}else if(ret.typ=="email"){
 			showDialog("一般訊息", "確認信已發至"+ret.email+"，請依照信中指示更改密碼");
 		}else{
@@ -32,8 +33,9 @@ function ansSubmit(){
 	if (password1 === password2){
 		$.post('/forgetAnswer',{account:account,ans:answer,password:password1},function(ret){
 			if (ret==="OK"){
-				showDialog("一般訊息", "新密碼設定完成！");
-				location.replace("/")
+				showDialog("一般訊息", "新密碼設定完成！", function(){
+					location.replace("/");
+				});
 			}else{
 				showDialog("錯誤訊息", "您輸入的答案錯誤喔！");
 			}
@@ -43,7 +45,7 @@ function ansSubmit(){
 	}
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -52,6 +54,7 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+        	cb();
         }
       }
     }

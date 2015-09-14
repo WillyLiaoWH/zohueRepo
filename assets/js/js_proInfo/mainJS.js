@@ -301,7 +301,7 @@ $(document).on("click","a.show-info",function(event){
   }
 });
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -310,6 +310,7 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          cb();
         }
       }
     }

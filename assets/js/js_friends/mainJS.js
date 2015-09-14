@@ -15,8 +15,9 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 $(document).ready(function(){
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      showDialog("錯誤訊息","您尚未登入喔！");
-      window.location.replace("/home");
+      showDialog("錯誤訊息","您尚未登入喔！", function(){
+        window.location.replace("/home");
+      });
     }
   });
   
@@ -218,8 +219,9 @@ function search(page, mobile) {
               document.getElementById("more").innerHTML="";
             }
           } else {
-            showDialog("錯誤訊息","您尚未登入喔！");
-            window.location.assign("/home")
+            showDialog("錯誤訊息","您尚未登入喔！", function(){
+              window.location.assign("/home");
+            });
           }
         } else {
           var html="找不到符合搜尋條件的人";
@@ -254,7 +256,7 @@ function HandleResponse_ShowAllCity(response){
   }
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -263,6 +265,7 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          cb();
         }
       }
     }

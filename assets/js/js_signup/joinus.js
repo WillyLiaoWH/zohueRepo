@@ -181,8 +181,9 @@ function getXMLHttp(){
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
-        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～");
-        return false;
+        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
+          return false;
+        });
       }
     }
   }
@@ -231,8 +232,9 @@ function Submit(){
                                           addressDistrict: addressDistrict, address: address, 
                                           birthday: birthday, selfIntroduction: selfIntroduction,
                                           postalCode: postalCode, primaryDisease: primaryDisease}, function(res){
-      showDialog("一般訊息","完整註冊成功！");
-      window.location = "/home";
+      showDialog("一般訊息","完整註冊成功！",function(){
+        window.location = "/home";
+      });
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
@@ -411,7 +413,7 @@ function HandleResponse_showProfile(response){
   });
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -420,6 +422,7 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          cb();
         }
       }
     }

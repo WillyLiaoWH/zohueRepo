@@ -177,7 +177,6 @@ function addFriend(parent, id) {
     if(res.err) {
       showDialog("錯誤訊息",res.err);
     } else {
-
       var html="";
       html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
@@ -243,14 +242,16 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
-      showDialog("一般訊息","此用戶還沒完整註冊，所以沒有個人頁面喔！");
-      if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
-        window.location.replace(document.referrer);
-      else
-        window.location.replace("/home");
+      showDialog("一般訊息","此用戶還沒完整註冊，所以沒有個人頁面喔！",function(){
+        if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
+          window.location.replace(document.referrer);
+        else
+          window.location.replace("/home");
+      });
     }else if(res.notfull==false){
-      showDialog("一般訊息","此用戶目前尚未有任何文章！");
-      showProfile(ori_author);
+      showDialog("一般訊息","此用戶目前尚未有任何文章！",function(){
+        showProfile(ori_author);
+      });
     } else {
       showProfile(ori_author);
       sortTimelineList(function(){
@@ -268,7 +269,6 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   .error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
- 
 }
 
 function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // 輸入 object, 登入者 account, 登入者 id, 登入者 avatar, append 方式
@@ -600,7 +600,7 @@ function profile_auth(route){   //去改按過權限按鈕之後的內容，只�
       }
   $.get("/setProfileAuth/"+route,function(res){
     showDialog("一般訊息",res);
-  })
+  });
 }
 
 function postTimeline(){
@@ -622,8 +622,7 @@ function postTimeline(){
       getPri(function(pri_account, pri_id, pri_avatar){
         displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
       });
-    })
-    .error(function(res){
+    }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
@@ -655,8 +654,7 @@ function editTimelineSend(id){
       $("#container_edit"+id).parent().children( ".event_text" ).html(edit_content);
       $("#container_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
       editTimelineCancel(id);
-    })
-    .error(function(res){
+    }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
@@ -672,8 +670,7 @@ function delTimeline(id){
         callback: function() {
           $.post( "/delTimeline", { id: id }, function(res){
             $("#container_edit"+id).parent().remove();
-          })
-          .error(function(res){
+          }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
           });
         }
@@ -694,8 +691,7 @@ function Timeline_nice(id){
     $(document).one("click","#TimelineNice",function(e){ // 把 listener 加回去
       Timeline_nice(this.name);
     });
-  })
-  .error(function(res){
+  }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
@@ -706,8 +702,7 @@ function Timeline_cancel_nice(id){
     $(document).one("click","#TimelineCancelNice",function(e){ // 把 listener 加回去
       Timeline_cancel_nice(this.name);
     });
-  })
-  .error(function(res){
+  }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
@@ -746,8 +741,9 @@ function report() {
       var className = 'cancelReport_comment';
     break;
     default:
-      showDialog("錯誤訊息","住手！");
-      return;
+      showDialog("錯誤訊息","住手！",function(){
+        return;
+      });
     break;
   }
 
@@ -784,8 +780,9 @@ function cancelReport() {
               var className = 'report_comment';
             break;
             default:
-              showDialog("錯誤訊息","住手！");
-              return;
+              showDialog("錯誤訊息","住手！",function(){
+                return;
+              });
             break;
           }
           $.post(url, {id: activeId}, function(res){
@@ -821,8 +818,7 @@ function postTimeline_comment(id){
   else{
     $.post( "/leaveCommentTimeline", { timeline_comment_content: timeline_comment_content, timeline_comment_image: timeline_comment_image, timeline_id: id}, function(res){
       window.location.replace(document.URL);
-    })
-    .error(function(res){
+    }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
@@ -855,8 +851,7 @@ function editRTimelineSend(id){
       $("#container_r_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
 
       editRTimelineCancel(id);
-    })
-    .error(function(res){
+    }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
   }
@@ -872,8 +867,7 @@ function delTimeline_comment(id){
         callback: function() {
           $.post( "/delCommentTimeline", { id: id }, function(res){
             $("#container_r_edit"+id).parent().parent().remove();
-          })
-          .error(function(res){
+          }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
           });
         }
@@ -894,8 +888,7 @@ function Timeline_r_nice(id){
     $(document).one("click","#TimelineResponseNice",function(e){ // 把 listener 加回去
       Timeline_r_nice(this.name);
     });
-  })
-  .error(function(res){
+  }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
@@ -906,8 +899,7 @@ function Timeline_r_cancel_nice(id){
     $(document).one("click","#TimelineResponseCancelNice",function(e){ // 把 listener 加回去
       Timeline_r_cancel_nice(this.name);
     });
-  })
-  .error(function(res){
+  }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
@@ -915,8 +907,7 @@ function Timeline_r_cancel_nice(id){
 function auth_set(id,target){
   $.post("/auth_setTimeline",{id:id , target:target},function(res){
     showDialog("一般訊息",res);
-  })
-  .error(function(res){
+  }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
 }
@@ -939,8 +930,9 @@ function getXMLHttp(){
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
-        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～");
-        return false;
+        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
+          return false;
+        });
       }
     }
   }
@@ -1080,7 +1072,7 @@ function HandleResponse_showProfile(response){
   $('#city').text(addressCity);
 }
 
-function showDialog(title, message){
+function showDialog(title, message, cb){
   bootbox.dialog({
     message: message,
     title: title,
@@ -1089,6 +1081,7 @@ function showDialog(title, message){
         label: "確認",
         className: "btn-primary",
         callback: function() {
+          cb();
         }
       }
     }
