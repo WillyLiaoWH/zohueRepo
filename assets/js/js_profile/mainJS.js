@@ -171,13 +171,38 @@ function getPri(cb){
   });
 }
 
+function removeBlack(parent, id) {
+  $.post("/removeBlack", {id: id}, function(res){
+    if(res.err) {
+      showDialog("錯誤訊息",res.err);
+    } else {
+      var html="";
+      html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='b btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+      parent.innerHTML=html;
+    }
+  })
+}
+
+function addBlack(parent, id) {
+  $.post("/addBlack", {id: id}, function(res){
+    if(res.err) {
+      showDialog("錯誤訊息",res.err);
+    } else {
+      var html="";
+      html+="已封鎖&nbsp&nbsp<button type='button' class='b' onclick='removeBlack(this.parentNode, "+id+")'>解除封鎖</button><br>";
+      parent.innerHTML=html;
+    }
+  })
+}
+
 function addFriend(parent, id) {
   $.post("/addFriend", {id: id}, function(res){
     if(res.err) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="已送出好友邀請&nbsp&nbsp<button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="&nbsp<button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回邀請</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
@@ -189,7 +214,7 @@ function confirmFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="好友&nbsp&nbsp<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="&nbsp<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
@@ -226,16 +251,16 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
     var id = ori_author
     $.get( "/friendStatus/"+ori_author,function(res){
       if (res === "friend"){
-        $("#status").text("好友");
+        $("#status").html("好友");
         $("#friend").html("<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
       }
       else if (res === "unconfirmed"){
-        $("#status").text("尚未確認好友邀請");
-        $("#friend").html("尚未確認好友邀請&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
+        $("#status").html("尚未確認好友邀請");
+        $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
       }
       else if (res === "sent"){
-        $("#status").text("已送出好友邀請");
-        $("#friend").html("已送出好友邀請&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
+        $("#status").html("已送出好友邀請");
+        $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
       }
       else {
 
