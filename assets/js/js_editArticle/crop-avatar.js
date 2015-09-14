@@ -296,7 +296,7 @@ function insertHtmlAtCursor(html) {
         if (data.result) {
           this.url = data.result;
           var href_img = '../'+this.url;
-          href_img = href_img.replace("resize\/" ,'');
+          href_img = href_img.replace("resize\/" ,'upload/');
           //insertHtmlAtCursor('<a href="'+href_img+'"><img src="..\/' + this.url + '">');
 
           //insertHtmlAtCursor('<img src="..\/' + this.url + '">');
