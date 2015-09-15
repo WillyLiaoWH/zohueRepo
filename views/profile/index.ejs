@@ -33,37 +33,37 @@
 
     <div class="row-fluid">
       <div class="col-md-7 col-sm-12 col-xs-12" id="artContent">
-        <div class="row" id="timeline_profile">
-         <div class="col-md-3 ">
+        <div class="row" id="timeline_profile" style="position: relative;">
+          <div class="col-md-3" style="position: absolute; bottom: 0px;">
             <img src="" id="avatar" height="150px">
           </div>
-          <div class="col-md-8 ">
+          <div class="col-md-offset-3 col-md-9">
             <div class="row">
-              <div class="col-md-6">
-                <h3 id="alias"></h3> 
-                <b id="type"></b>
-                <text id="primaryDisease"></text>
-              </div>
-              <br> 
-                <div id="friend" class="col-md-6">
-                  <p id="status"></p>
+              <div class="col-md-12 ">
+                <div class="col-md-6">
+                  <h3 id="alias"></h3> 
+                  <b id="type"></b>
+                  <text id="primaryDisease"></text>
                 </div>
+                <br> 
+                <div id="friend" class="col-md-6" style="text-align:right">
+                  <p id="status"></text>
+                </div>
+              </div>
+              <div class="col-md-12">
+                  
+                <!-- <ul class="tabs"> -->
+                  <ul class="nav nav-pills" id="tabs">
+                    <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
+                    <li><a href="#about" data-toggle="pill">關於</a></li>
+      <!--           <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
+                    <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
+                    <li><a href="#personal_others" data-toggle="pill">更多</a></li>
+       -->
+                  </ul>
+              </div>
             </div>
           </div>
-          
-          <div class="col-md-9">
-              
-            <!-- <ul class="tabs"> -->
-              <ul class="nav nav-pills" id="tabs">
-                <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
-                <li><a href="#about" data-toggle="pill">關於</a></li>
-  <!--           <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
-                <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
-                <li><a href="#personal_others" data-toggle="pill">更多</a></li>
-   -->
-              </ul>
-          </div>
-          
         </div>
 
         <div class="tab-content">

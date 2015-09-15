@@ -12,7 +12,7 @@ var diseaseList={
 };
 var source,activeSource;
 $(document).ready(function(){
-
+  placeholder()
   getPri(function(pri_account, pri_id, pri_avatar){
     setTimelinePage(pri_account, pri_id, pri_avatar);
     // if(pri_account===""){
@@ -157,6 +157,29 @@ $(document).ready(function(){
 });
 
 
+function placeholder(){
+  $('div#timeline_post_content').on('activate', function() {
+      $(this).empty();
+      var range, sel;
+      if ( (sel = document.selection) && document.body.createTextRange) {
+          range = document.body.createTextRange();
+          range.moveToElementText(this);
+          range.select();
+      }
+  });
+
+  $('div#timeline_post_content').focus(function() {
+      if (this.hasChildNodes() && document.createRange && window.getSelection) {
+          $(this).empty();
+          var range = document.createRange();
+          range.selectNodeContents(this);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+      }
+  });
+}
+
 function getPri(cb){
   pri_account="";
   pri_id="";
@@ -249,24 +272,28 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
   var ori_author=window.location.toString().split('?')[1];
   if (typeof ori_author != 'undefined'){
     var id = ori_author
+    $("div#timeline_post_content").html("<em>想對他說什麼呢？</em>")
     $.get( "/friendStatus/"+ori_author,function(res){
-      if (res === "friend"){
+      console.log(res)
+      if (res == "friend"){
         $("#status").html("好友");
         $("#friend").html("<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
       }
-      else if (res === "unconfirmed"){
+      else if (res == "unconfirmed"){
         $("#status").html("尚未確認好友邀請");
         $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
       }
-      else if (res === "sent"){
+      else if (res == "sent"){
         $("#status").html("已送出好友邀請");
         $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
       }
       else {
-
         $("#friend").html("<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>&nbsp&nbsp&nbsp&nbsp");
       }
     });
+  }
+  else{
+    $("div#timeline_post_content").html("<em>在想什麼呢？</em>")
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
