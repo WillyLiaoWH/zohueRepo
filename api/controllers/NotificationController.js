@@ -38,7 +38,7 @@ module.exports = {
     },
 
     countNotification: function(req, res) {
-        if(req.session.user.id) {
+        if(req.session.user) {
             var id=req.session.user.id;
             Notification.find({user: id, alreadySeen: false}).exec(function(err, not){
                 if(err) {
