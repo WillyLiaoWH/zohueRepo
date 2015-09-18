@@ -113,121 +113,114 @@ function search(page, mobile) {
   $.post("/searchFriends", {alias: alias, disease: disease, place: place, userType: userType, thisPage: page}, function(res) {
     if(res.err) {
       showDialog("錯誤訊息",res.err);
+      window.assign("/home");
     } else {
-      console.log(res);
       setTimeout(function(){
         if(res.users.length!=0) {
-          if(res.isFriend) {
-            var allUser=res.users;
-            var html="";
-            for(i=0; i<allUser.length; i++) {
-              if(allUser[i].isFriend!=-2) {
-                html+="<div class='friend'><div class='image'>";
-                var picSize="100";
-                var authorType="";
+          var allUser=res.users;
+          var html="";
+          for(i=0; i<allUser.length; i++) {
+            if(allUser[i].isFriend!=-2) {
+              html+="<div class='friend'><div class='image'>";
+              var picSize="100";
+              var authorType="";
+              switch(allUser[i].type) {
+                case "D":
+                  authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  authorType="醫師";
+                  break;
+                case "S":
+                  authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  authorType="社工師";
+                  break;
+                case "RN":
+                  authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  authorType="護理師";
+                  break;
+                case "P":
+                  authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  break;
+                case "F":
+                  authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                  break;
+                default:
+                  authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+              }
+              html+=authorIcon;
+              html+="<img  class='imgUser' src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].id+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
+              html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].id+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
+
+              html+="<br><span style='display:inline-block; height: 40%; width: 130%;'>";
+              switch(allUser[i].isFriend) {
+                case -1:
+                  html+="<div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
+                  break;
+                case 0:
+                  html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                  break;
+                case 1:
+                  html+="<div class='status'>要求加入好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                  break;
+                case 2:
+                  html+="<div class='status'>已送出好友邀請&nbsp&nbsp</div><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                  break;
+                case 3:
+                  html+="<div class='status'>好友&nbsp&nbsp</div><button type='button' class='button' onclick='removeFriend(this.parentNode, "+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+                  html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
+                  break;
+              }
+              html+="</span></div><div class='friendRight'>";
+              if(allUser[i].addressCity&&allUser[i].addressCity!="") {
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>來自"+allUser[i].addressCity+"</div><br>";
+              }
+
+              if(allUser[i].primaryDisease&&allUser[i].primaryDisease!="") {
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>";
                 switch(allUser[i].type) {
                   case "D":
-                    authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-                    authorType="醫師";
+                    html+="主治"+diseaseList[allUser[i].primaryDisease];
                     break;
                   case "S":
-                    authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-                    authorType="社工師";
+                    html+="主治"+diseaseList[allUser[i].primaryDisease];
                     break;
                   case "RN":
-                    authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
-                    authorType="護理師";
+                    html+="主治"+diseaseList[allUser[i].primaryDisease];
                     break;
                   case "P":
-                    authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                    html+="患有"+diseaseList[allUser[i].primaryDisease];
                     break;
                   case "F":
-                    authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                    html+="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
                     break;
                   default:
-                    authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
                 }
-                html+=authorIcon;
-                html+="<img  class='imgUser' src='"+allUser[i].img+"' onclick='toProfile(\""+allUser[i].id+"\")' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'></div>";
-                html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].id+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
-
-                html+="<br><span style='display:inline-block; height: 40%; width: 130%;'>";
-                switch(allUser[i].isFriend) {
-                  case -1:
-                    html+="<div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
-                    break;
-                  case 0:
-                    html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+allUser[i].id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
-                    break;
-                  case 1:
-                    html+="<div class='status'>要求加入好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "+allUser[i].id+")'>確認好友</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
-                    break;
-                  case 2:
-                    html+="<div class='status'>已送出好友邀請&nbsp&nbsp</div><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+allUser[i].id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
-                    break;
-                  case 3:
-                    html+="<div class='status'>好友&nbsp&nbsp</div><button type='button' class='button' onclick='removeFriend(this.parentNode, "+allUser[i].id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
-                    html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+allUser[i].id+")'>封鎖</button><br>";
-                    break;
-                }
-                html+="</span></div><div class='friendRight'>";
-                if(allUser[i].addressCity&&allUser[i].addressCity!="") {
-                  html+="<div style='display:inline-block; font-size: 22px; width: 100%'>來自"+allUser[i].addressCity+"</div><br>";
-                }
-
-                if(allUser[i].primaryDisease&&allUser[i].primaryDisease!="") {
-                  html+="<div style='display:inline-block; font-size: 22px; width: 100%'>";
-                  switch(allUser[i].type) {
-                    case "D":
-                      html+="主治"+diseaseList[allUser[i].primaryDisease];
-                      break;
-                    case "S":
-                      html+="主治"+diseaseList[allUser[i].primaryDisease];
-                      break;
-                    case "RN":
-                      html+="主治"+diseaseList[allUser[i].primaryDisease];
-                      break;
-                    case "P":
-                      html+="患有"+diseaseList[allUser[i].primaryDisease];
-                      break;
-                    case "F":
-                      html+="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
-                      break;
-                    default:
-                  }
-                  html+="</div><br>";
-                }
-
-                if(allUser[i].age!=-1) {
-                  html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+allUser[i].age+"歲</div>";
-                }
-                html+="</div></div>";
+                html+="</div><br>";
               }
+
+              if(allUser[i].age!=-1) {
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+res.age[i]+"歲</div>";
+              }
+              html+="</div></div>";
             }
-            if(page==0) {
-              document.getElementById("searchList").innerHTML=html;
-            } else {
-              document.getElementById("searchList").innerHTML=curHtml+html;
-            }
-            if(res.hasNext) {
-              document.getElementById("more").innerHTML="<button type='button' class='button' onclick='search("+(page+1)+")'>顯示更多人</button>";
-            } else {
-              document.getElementById("more").innerHTML="";
-            }
+          }
+          if(page==0) {
+            document.getElementById("searchList").innerHTML=html;
           } else {
-            showDialog("錯誤訊息","您尚未登入喔！", function(){
-              window.location.assign("/home");
-            });
+            document.getElementById("searchList").innerHTML=curHtml+html;
+          }
+          if(res.hasNext) {
+            document.getElementById("more").innerHTML="<button type='button' class='button' onclick='search("+(page+1)+")'>顯示更多人</button>";
+          } else {
+            document.getElementById("more").innerHTML="";
           }
         } else {
           var html="找不到符合搜尋條件的人";
           document.getElementById("searchList").innerHTML=html;
         } 
       }, 1000);
-      //animate reponse
     }
   });
 }

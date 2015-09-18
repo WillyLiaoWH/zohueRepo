@@ -862,7 +862,7 @@ module.exports = {
 
     searchFriends: function(req, res) {
         function sendback(allUser) {
-            var isFriend=[];
+            var unit=10;
             var place=req.param("place");
             User.find({account: req.session.user.account}).exec(function(err, user) {
                 if(err) {
@@ -989,12 +989,12 @@ module.exports = {
                         return aValue-bValue;
                     })
                     var hasNext;
-                    if(users.length<=(page+1)*5) {
+                    if(users.length<=(page+1)*unit) {
                         hasNext=false;
-                        res.send({users: users.slice(page*5), isFriend: isFriend.slice(page*5), age: ageList.slice(page*5), hasNext: hasNext});
+                        res.send({users: users.slice(page*unit), hasNext: hasNext});
                     } else {
                         hasNext=true;
-                        res.send({users: users.slice(page*5, page*5+5), isFriend: isFriend.slice(page*5, page*5+5), age: ageList.slice(page*5, page*5+5), hasNext: hasNext});
+                        res.send({users: users.slice(page*unit, page*unit+unit), hasNext: hasNext});
                     }
                 }
             });
@@ -1024,7 +1024,7 @@ module.exports = {
                     console.log(err);
                     res.send(500, {err: "DB Error"});
                 } else {
-                    res.send({users: users});
+                    res.send(404, {err: "你尚未登入喔"});
                 }
             });
         } else {
