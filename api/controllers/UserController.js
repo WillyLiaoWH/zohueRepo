@@ -195,7 +195,8 @@ module.exports = {
                     FB_id:FB_id,
                     gender:gender,
                     fname:fname,
-                    lname:lname
+                    lname:lname,
+                    friends: [45]
                     }).exec(function(error, user) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
