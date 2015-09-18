@@ -900,6 +900,17 @@ module.exports = {
                         } else {
                             // isFriend.push(-2);
                         }
+                        users[users.length-1].FBmail=undefined;
+                        users[users.length-1].account=undefined;
+                        users[users.length-1].email=undefined;
+                        users[users.length-1].fname=undefined;
+                        users[users.length-1].forgetQ=undefined;
+                        users[users.length-1].forgetA=undefined;
+                        users[users.length-1].lname=undefined;
+                        users[users.length-1].password=undefined;
+                        users[users.length-1].phone=undefined;
+                        users[users.length-1].postalCode=undefined;
+                        users[users.length-1].selfIntroduction=undefined;
                         if(push) {
                             var defaultAuth="friend";
                             var ageAuth;
@@ -961,32 +972,27 @@ module.exports = {
                             }
                         }
                     }
-                    users.sort(function(a, b) {
+                    function forSort(a) {
                         if(a.isFriend==3) {
-                            var aValue=0;
+                            return 0;
                         } else if(a.type=="D") {
-                            var aValue=1;
+                            return 1;
                         } else if(a.type=="RN") {
-                            var aValue=2;
+                            return 2;
                         } else if(a.type=="S") {
-                            var aValue=3;
+                            return 3;
+                        } else if(a.type=="P") {
+                            return 4;
+                        } else if(a.type=="F") {
+                            return 5;
+                        } else if(a.type=="N") {
+                            return 6;
                         } else {
-                            var aValue=4;
+                            return 7;
                         }
-
-                        if(b.isFriend==3) {
-                            var bValue=0;
-                        } else if(b.type=="D") {
-                            var bValue=1;
-                        } else if(b.type=="RN") {
-                            var bValue=2;
-                        } else if(b.type=="S") {
-                            var bValue=3;
-                        } else {
-                            var bValue=4;
-                        }
-
-                        return aValue-bValue;
+                    }
+                    users.sort(function(a, b) {
+                        return forSort(a)-forSort(b);
                     })
                     var hasNext;
                     if(users.length<=(page+1)*unit) {

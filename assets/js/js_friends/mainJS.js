@@ -19,7 +19,6 @@ $(document).ready(function(){
       });
     }
   });
-  
 });
 
 function removeBlack(parent, id) {
@@ -115,6 +114,7 @@ function search(page, mobile) {
       showDialog("錯誤訊息",res.err);
       window.assign("/home");
     } else {
+      console.log(res);
       setTimeout(function(){
         if(res.users.length!=0) {
           var allUser=res.users;
@@ -201,7 +201,7 @@ function search(page, mobile) {
               }
 
               if(allUser[i].age!=-1) {
-                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+res.age[i]+"歲</div>";
+                html+="<div style='display:inline-block; font-size: 22px; width: 100%'>"+allUser[i].age+"歲</div>";
               }
               html+="</div></div>";
             }
