@@ -114,7 +114,6 @@ function search(page, mobile) {
       showDialog("錯誤訊息",res.err);
       window.assign("/home");
     } else {
-      console.log(res);
       setTimeout(function(){
         if(res.users.length!=0) {
           var allUser=res.users;

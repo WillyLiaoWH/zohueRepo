@@ -28,6 +28,7 @@ var notMessage=[
   "邀請您成為他的好友",
   "已經和您成為好友了",
   "在您的牆上留下動態",
+  "管理員發了一則動態"
 ]
 function setPage() {
   $.get('/nots',function(res){
@@ -95,6 +96,7 @@ function setPage() {
           case "6":
           case "8":
           case "9":
+          case "10":
             table+="<div class='go'>";
             table+="<button value='查看動態時報' class='button' onclick='check(\""+res[i].link+"\", \""+res[i].id+"\");'>&nbsp查看動態時報</button>";
             table+="</div>";

@@ -355,8 +355,12 @@ module.exports = {
     },
 
     checkFull:function(req, res, next){
-        if(req.session.user.isFullSignup){
-            res.send(true);
+        if(req.session.user) {
+            if(req.session.user.isFullSignup){
+                res.send(true);
+            } else {
+                res.send(false);
+            }
         } else {
             res.send(false);
         }
@@ -1054,36 +1058,37 @@ module.exports = {
         }
     },
     friendStatus : function (req,res){
-        
-        var my_id = req.session.user.id;
-        var target_id = req.param("target_id");
-        
-        User.findById(my_id).exec(function(err,usr){
-            if (err){
-                console.log(err);
-                res.send(500)
-            }
-            friendlist = usr[0].friends;
-            unconfirmedFriends = usr[0].unconfirmedFriends;
-            sentAddFriends= usr[0].sentAddFriends;
+        if(req.session.user) {
+            var my_id = req.session.user.id;
+            var target_id = req.param("target_id");
             
-            if (friendlist.indexOf(parseInt(target_id))!=-1){
-                //是好友
+            User.findById(my_id).exec(function(err,usr){
+                if (err){
+                    console.log(err);
+                    res.send(500)
+                }
+                friendlist = usr[0].friends;
+                unconfirmedFriends = usr[0].unconfirmedFriends;
+                sentAddFriends= usr[0].sentAddFriends;
                 
-                res.send("friend");
-            }
-            else if (unconfirmedFriends.indexOf(parseInt(target_id))!=-1){
-                
-                res.send("unconfirmed");
-            }
-            else if (sentAddFriends.indexOf(parseInt(target_id))!=-1){
-                res.send("sent");
-            }
-            else{
-                res.send("no");
-            }
+                if (friendlist.indexOf(parseInt(target_id))!=-1){
+                    //是好友
+                    
+                    res.send("friend");
+                }
+                else if (unconfirmedFriends.indexOf(parseInt(target_id))!=-1){
+                    
+                    res.send("unconfirmed");
+                }
+                else if (sentAddFriends.indexOf(parseInt(target_id))!=-1){
+                    res.send("sent");
+                }
+                else{
+                    res.send("no");
+                }
 
-        })
+            });
+        }
     },
     
 

@@ -247,7 +247,20 @@ module.exports = {
                 if(error) {
                     res.send(500,{err: "發生錯誤了Q_Q" });
                 } else {
-                    res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
+                    User.find({id: req.session.user.id}).exec(function(err, admin) {
+                        if(err) {
+                            res.send(500,{err: "發生錯誤了Q_Q" });
+                        } else {
+                            for(var i=0; i<admin[0].friends.length; i++) {
+                                Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: content, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
+                                    if(err) {
+                                        console.log(err);
+                                    }
+                                });
+                            }
+                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
+                        }
+                    });
                 }
             });
         }
