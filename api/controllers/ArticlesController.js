@@ -222,13 +222,21 @@ module.exports = {
                     console.log(error);
                 } else {
                     console.log(article);
-                    Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article) {
+                    Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article2) {
                         if(err) {
                             res.send(500,{err: "DB Error" });
                             console.log(err);
                         } else {
                             console.log(article);
-                            res.send(article);
+                            if(article2[0].board==19||article2[0].board==20) {
+                                Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: title, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
+                                    if(err) {
+                                        console.log(err);
+                                    } else {
+                                        res.send(article2);
+                                    }
+                                });
+                            }
                         }
                     });
                 }
