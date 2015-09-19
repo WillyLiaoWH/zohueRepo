@@ -15,6 +15,13 @@ $(document).ready(function(){
   FB_API();
   checkAuth();
 
+  // 強制貼上純文字
+  $( "div[contenteditable='true'], .edit_content" ).on("paste", function(e) {
+    e.preventDefault();
+    var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+  });
+
   $('.dropdown-toggle').dropdown(); //For bootstrap dropdown menu
   // $( "#setUp" ).click(function() {
   //   if(setUpMenu.style.display=="block"){
