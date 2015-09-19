@@ -472,7 +472,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
     // 有 owner 則更換顯示圖像
     var event_avatar = author_avater;
     if(owner){
-      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.id+'">'+owner.alias+'</a> <span class="glyphicon glyphicon-play" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;</div>';
+      owner_div = '<div id="event_owner_name" style="float:left;"><a href="?'+owner.id+'" style="font-weight: bold;">'+owner.alias+'</a> <span class="glyphicon glyphicon-play" style="color:black;top:4px;" aria-hidden="true"></span>&nbsp;</div>';
       event_avatar = owner.img;
     }
 
