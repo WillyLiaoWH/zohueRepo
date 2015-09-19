@@ -16,7 +16,7 @@ $(document).ready(function(){
   checkAuth();
 
   // 強制貼上純文字
-  $( "div[contenteditable='true'], .edit_content" ).on("paste", function(e) {
+  $(document).on("paste", "div[contenteditable='true']" ,function(e) {
     e.preventDefault();
     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
     document.execCommand('insertText', false, text);
