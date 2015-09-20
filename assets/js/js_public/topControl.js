@@ -299,13 +299,35 @@ function Submit(){
   var gender = $("#UserGender").val();
   var fname = $("#fname").val();
   var lname = $("#lname").val();
-  var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
-    function(res){
-      showDialog("一般訊息","註冊成功！如果在網站操作上有任何問題，可以參考左邊選單的「新手上路」喔！",function(){
-        loginWithAccount(account, password);
-      });
-  }).error(function(res){
-    showDialog("錯誤訊息",res.responseJSON.err);
+  bootbox.dialog({
+    message: "在您同意加入「作夥 ZOHUE 台灣頭頸部癌病友加油站」前，請先仔細閱讀本使用者同意書。\
+    我們會保護您所提供的一切個人資料，以及在作夥網站上所產生之資訊，這些資料僅會在去除個人識別後，\
+    做為學術研究與平臺改進之用。如果您選擇同意，您將會成功地加入作夥，\
+    若您選擇不同意，註冊不會生效，我們亦不會將您方才所輸入資訊做任何形式之使用。",
+    title: "使用者同意書",
+    buttons: {
+      danger: {
+        label: "不同意",
+        className: "btn-danger",
+        callback: function() {
+          window.location.assign("/home");
+        }
+      },
+      main: {
+        label: "同意",
+        className: "btn-primary",
+        callback: function() {
+          var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
+          function(res){
+              showDialog("一般訊息","註冊成功！如果在網站操作上有任何問題，可以參考左邊選單的「新手上路」喔！",function(){
+                loginWithAccount(account, password);
+              });
+          }).error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      }
+    }
   });
 }
 
