@@ -292,12 +292,21 @@ $(document).on("click","a.show-info",function(event){
   if ($(window).width() < 768) {
     window.open($(this).attr("title"),'_blank');
   }else{
+    //$(".modalBox").css("display", "block");
     //var ss = '<img src="'+$(this).attr("href")+'">';
     var ss = "<embed src="+$(this).attr("title")+" height='100%' width='100%'></embed>";
     //var ss =$(this).attr("href")
     $( ".modalBox" ).empty();
     $( ".modalBox" ).append(ss);
-    $( ".modalBox" ).modalBox('open');
+    //$( ".modalBox" ).modalBox('open');
+    $(".modalBox").modalBox({
+        width:"90%",
+        height:"90%",
+        top:"5%",
+        left:"5%",
+        iconImg:'/images/img_forum/cancelBlack_icon.png',
+        iconClose:true,
+    });
   }
 });
 
