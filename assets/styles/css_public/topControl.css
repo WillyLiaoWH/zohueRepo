@@ -1,5 +1,5 @@
 #body{
-	background-image: url(../../../images/img_home/shl.png);
+	//background-image: url(../../../images/img_home/shl.png);
 	font-family: "微軟正黑體";
 }
 
@@ -84,30 +84,6 @@ button, input[type="button"], input[type="submit"]{
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
 }
-
-
-
-
-
-.l{
-	height: 48px;
-	color:#816C5B;
-	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-	font-size: 20px;
-	border-radius: 10px;
-	line-height: 22px;
-	/*background-color: rgba(195, 183, 172, 0.5);*/
-	background-color: rgba(102, 141, 60, 0.4);
-	padding: 8px 8px 8px 8px;
-	margin-bottom: 10px;
-	width:22%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);]
-}
-
 
 #login{
 	cursor: pointer;
@@ -329,7 +305,7 @@ button, input[type="button"], input[type="submit"]{
 	border-radius: 10px;
 	line-height: 22px;
 	/*background-color: rgba(195, 183, 172, 0.5);*/
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: rgba(102, 141, 60, 0.3);
 	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
 	width:100%;
@@ -340,6 +316,25 @@ button, input[type="button"], input[type="submit"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 
+
+.l{
+	height: 48px;
+	color:#816C5B;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+	font-size: 20px;
+	border-radius: 10px;
+	line-height: 22px;
+	/*background-color: rgba(195, 183, 172, 0.5);*/
+	background-color: rgba(102, 141, 60, 0.3);
+	padding: 8px 8px 8px 8px;
+	margin-bottom: 10px;
+	width:22%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
 
 .b{
 	/*margin: -20px 5px 10px 0px;*/
@@ -397,6 +392,11 @@ button, input[type="button"], input[type="submit"]{
 	onkeyup:"(/[^-_A-Z0-9]/g,'')";
 }
 
+@media screen and (max-width: 768px) {
+#signup button{
+		width: 100% !important;
+	}
+}
 .mobile_l{
 	height: 48px;
 	color:#816C5B;
@@ -415,7 +415,7 @@ button, input[type="button"], input[type="submit"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 
-#mobile_login, #mobile_fblogin{
+#mobile_login, #mobile_fblogin, #mobile_simpleSignup{
 	cursor: pointer;
 	background-color: rgba(232, 81, 0, 0.6);
 	margin-top:10px;

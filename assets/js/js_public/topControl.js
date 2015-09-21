@@ -493,3 +493,8 @@ function showDialog(title, message, cb){
     }
   });
 }
+
+function showSimpleSignup() {
+  $("#signup").removeClass("hidden-phone");
+  $("#signup").show();
+}

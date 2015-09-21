@@ -75,7 +75,10 @@ body {
 		display: none;
 	}
 	#signup{
-		display: none !important;
+		display: none;
+	}
+	#signup h1{
+		text-align: center;
 	}
 	table {
 		font-size: 18px !important;

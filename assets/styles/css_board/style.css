@@ -82,14 +82,14 @@
 
 #board{
 	height:48px;
-	color:#816C58;
+	color:#5A4838;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
 	font-size: 23px;
 	border-radius: 10px;
 	line-height: 22px;
 	width:150px;
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: rgba(102, 141, 60, 0.3);
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -103,14 +103,14 @@
 
 #boardCategory{
 	height:48px;
-	color:#816C58;
+	color:#5A4838;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
 	font-size: 23px;
 	border-radius: 10px;
 	line-height: 22px;
 	width:170px;
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: rgba(102, 141, 60, 0.3);
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -243,57 +243,10 @@
 	font-weight: normal;
 }*/
 
-.s{
-	height:48px;
-	color:#816C58;
-	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-  	font-weight:500;
-	font-size: 18px;
-	border-radius: 10px;
-	line-height: 22px;
-	//background-color: rgba(195, 183, 172, 0.5);
-	background-color: rgba(102, 141, 60, 0.4);
-	padding: 8px 8px 8px 8px;
-	//margin: 8px 3px 0px 0px;
-	width:80%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);
-}
-
-.b{
-	//margin: -20px 5px 10px 0px;
-	margin:3px;
-	//display: none;
-	//float:right;
-	//width: 125px;
-	background-color: rgba(232, 81, 0, 0.7);
-	color:#533828;
-	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-  	font-weight:500;
-	font-size: 20px;
-	border-radius: 10px;
-	padding: 8px 8px 8px 8px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);
-}
-
-.b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
-}
-
 .check{
 	color:#D26900;
 	font-size: 15px;
 }
-
-
 
 #account{
 	onkeyup:"(/[^-_A-Z0-9]/g,'')";
