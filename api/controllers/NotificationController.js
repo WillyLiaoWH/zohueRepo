@@ -52,15 +52,17 @@ module.exports = {
     },
 
     seeNotification: function(req, res) {
-        var id=req.session.user.id;
-        Notification.update({alreadySeen: false, user:id}, {alreadySeen: true}).exec(function(err, not){
-            if(err) {
-                console.log(err);
-                res.send(500, {err: "DB error"});
-            } else {
-                res.send("成功");
-            }
-        });
+        if(req.session.user) {
+            var id=req.session.user.id;
+            Notification.update({alreadySeen: false, user:id}, {alreadySeen: true}).exec(function(err, not){
+                if(err) {
+                    console.log(err);
+                    res.send(500, {err: "DB error"});
+                } else {
+                    res.send("成功");
+                }
+            });
+        }
     }
 };
 
