@@ -252,10 +252,10 @@ module.exports = {
                         user:user.id,
                         name:"friend",
                         city:"friend",
-                        gender:"friend",
+                        gender:"all",
                         email:"friend",
                         phone:"friend",
-                        bday:"friend"}).exec(function(err,ret){
+                        bday:"all"}).exec(function(err,ret){
                         if (err){
                             res.send(500,{err:"DB error"});
                         }else{

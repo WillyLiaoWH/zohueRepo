@@ -236,7 +236,47 @@ module.exports = {
                                         res.send(article2);
                                     }
                                 });
-                            }
+                                //寄信給管理者
+                                //引用 nodemailer  
+                                var list
+                                if (article2[0].board==19){
+                                    var list = ["r03725041@ntu.edu.tw","r03725042@ntu.edu.tw","r03725035@ntu.edu.tw"]
+
+                                }
+                                else if (article2[0].board==20){
+                                    var list = ["r04725020@ntu.edu.tw","r04725019@ntu.edu.tw","jeffweilee@gmail.com"]
+                                }
+                                var nodemailer = require('nodemailer');  
+                                var transporter = nodemailer.createTransport({  
+                                    service: 'Gmail',  
+                                    auth: {  
+                                     user: 'ntu.cpcp@gmail.com',  
+                                     pass: 'lckung413'  
+                                    }  
+                                });  
+                                var options = {  
+                                    //寄件者  
+                                    from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                                    //收件者  
+                                    to: list[ article2[0].id % 3],   
+                                    
+                                    //主旨  
+                                    subject: "[系統訊息] 使用者發問", // Subject line  
+                                    
+                                    //嵌入 html 的內文  
+                                    html: article2[0].content+"<br><br><a href=http://zohue.im.ntu.edu.tw/article/"+article2[0].id+">link</a>",   
+                                       
+                                };  
+                                
+                                //發送信件方法  
+                                transporter.sendMail(options, function(error, info){  
+                                    if(error){  
+                                        console.log(error);  
+                                    }else{  
+                                        console.log('訊息發送: ' + info.response);  
+                                    }  
+                                });  
+                            }   
                         }
                     });
                 }
@@ -583,7 +623,7 @@ module.exports = {
             else{
                 var regex = /href=\".+?\">/g;
                 var author = "作者："+article[0].author.alias;
-                var orginurl=url+"article/"+articleId+"<br><br>";
+                var orginurl=url+"article/"+articleId;
                 var link = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
                 var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
                 var arr=content.match(regex);
@@ -593,7 +633,7 @@ module.exports = {
                     pic_addr=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
                     content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
                 }
-                content=content+"<br><br>"
+                content=content+"<br><br><hr>網友留言：<br>"
                 var async = require('async');
                 async.each(article[0].response, function(val, callback) {
                     //每次要做的
