@@ -1027,7 +1027,9 @@ function HandleResponse_showProfile(response){
   var addressDistrict=obj.addressDistrict;
   var address=obj.address;
   var birthday = obj.birthday;
+  var now = new Date()
   var b = new Date(birthday)
+  var age = now.getTime() - b.getTime()
   var Y = (b.getFullYear().toString() == "NaN") ? "  " : b.getFullYear()-1911;
   var M = (b.getMonth().toString() == "NaN") ? "  " : b.getMonth()+1;
   var D = (b.getDate().toString() == "NaN") ? "  " : b.getDate();
@@ -1123,7 +1125,9 @@ function HandleResponse_showProfile(response){
   }
   $('#gender').text(gender);
   $('#phone').text(phone);
-  $("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
+  
+  $("#bday").text(Math.floor(age/(86400000*365)).toString()+" 歲");
+  //$("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
 }
 

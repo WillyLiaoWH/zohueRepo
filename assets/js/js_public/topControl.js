@@ -230,20 +230,41 @@ function check(){
     if($("#UserEmail").val() != "") {
       checkEmail();
     } else {
-      if(confirm("是否真的不要輸入 e-mail？")) {
-      } else {
-        allow_create=0;
-      }
+      bootbox.dialog({
+        message: "是否真的不要輸入E-mail？",
+        title: "再次確認",
+        buttons: {
+          yes: {
+            label: "確認",
+            className: "btn-primary",
+            callback: function() {
+              allow_create=1;
+              checkPwd();
+              Submit();
+            }
+          },
+          no: {
+            label: "取消",
+            className: "btn-primary",
+            callback: function() {
+              allow_create=0;
+            }
+          }
+        }
+      });
+      // if(confirm("是否真的不要輸入 e-mail？")) {
+      // } else {
+      //   allow_create=0;
+      // }
     }
-    
   }
-  if(allow_create==1) {
-    checkPwd();
-  }
+  // if(allow_create==1) {
+  //   checkPwd();
+  // }
 
-  if(allow_create==1){
-    Submit();
-  }
+  // if(allow_create==1){
+  //   Submit();
+  // }
 }
 
 function checkIfAccountExist(){
@@ -300,15 +321,15 @@ function Submit(){
   var fname = $("#fname").val();
   var lname = $("#lname").val();
   bootbox.dialog({
-    message: "在您同意加入「作夥 ZOHUE 台灣頭頸部癌病友加油站」前，請先仔細閱讀本使用者同意書。\
-    我們會保護您所提供的一切個人資料，以及在作夥網站上所產生之資訊，這些資料僅會在去除個人識別後，\
-    做為學術研究與平臺改進之用。如果您選擇同意，您將會成功地加入作夥，\
+    message: "在您同意加入「作夥 ZOHUE 台灣頭頸部癌病友加油站」後，\
+    我們會保護您所提供的一切個人資料，以及在本網站上所產生之資訊，這些資料僅會在去除個人識別後，\
+    做為學術研究與平臺改進之用，並且絕對不會用於任何商業用途。如果您選擇同意，您將會成功地加入作夥，\
     若您選擇不同意，註冊不會生效，我們亦不會將您方才所輸入資訊做任何形式之使用。",
     title: "使用者同意書",
     buttons: {
       danger: {
         label: "不同意",
-        className: "btn-danger",
+        className: "btn-default",
         callback: function() {
           window.location.assign("/home");
         }
@@ -403,7 +424,8 @@ function enterLogin(e) {
 function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
   $.post( "/subscribe", { email: subscribeEmail}, function(res){
-    alert(res);
+    //alert(res);
+    showDialog("錯誤訊息",res);
     $("#subscribeEmail").val("");
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
