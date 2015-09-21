@@ -230,20 +230,41 @@ function check(){
     if($("#UserEmail").val() != "") {
       checkEmail();
     } else {
-      if(confirm("是否真的不要輸入 e-mail？")) {
-      } else {
-        allow_create=0;
-      }
+      bootbox.dialog({
+        message: "是否真的不要輸入E-mail？",
+        title: "再次確認",
+        buttons: {
+          yes: {
+            label: "確認",
+            className: "btn-primary",
+            callback: function() {
+              allow_create=1;
+              checkPwd();
+              Submit();
+            }
+          },
+          no: {
+            label: "取消",
+            className: "btn-primary",
+            callback: function() {
+              allow_create=0;
+            }
+          }
+        }
+      });
+      // if(confirm("是否真的不要輸入 e-mail？")) {
+      // } else {
+      //   allow_create=0;
+      // }
     }
-    
   }
-  if(allow_create==1) {
-    checkPwd();
-  }
+  // if(allow_create==1) {
+  //   checkPwd();
+  // }
 
-  if(allow_create==1){
-    Submit();
-  }
+  // if(allow_create==1){
+  //   Submit();
+  // }
 }
 
 function checkIfAccountExist(){
@@ -381,7 +402,8 @@ function enterLogin(e) {
 function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
   $.post( "/subscribe", { email: subscribeEmail}, function(res){
-    alert(res);
+    //alert(res);
+    showDialog("錯誤訊息",res);
     $("#subscribeEmail").val("");
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
