@@ -519,4 +519,7 @@ function showDialog(title, message, cb){
 function showSimpleSignup() {
   $("#signup").removeClass("hidden-phone");
   $("#signup").show();
+  if($( window ).width() < 768){
+          $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+        }
 }
