@@ -326,7 +326,7 @@ function loadForumList(articleList){
     articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
     articleTable+="<th>刪除</th></tr>";
 
-      for(i=0; i<articleList.length; i++) {
+      for(i=articleList.length-1; i>=0; i--) {
         articleID=articleList[i].id;
         clickNum=articleList[i].clickNum;
         responseNum=articleList[i].responseNum;
