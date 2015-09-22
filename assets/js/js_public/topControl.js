@@ -425,10 +425,10 @@ function subscribe(){
   var subscribeEmail = $("#subscribeEmail").val();
   $.post( "/subscribe", { email: subscribeEmail}, function(res){
     //alert(res);
-    showDialog("錯誤訊息",res);
+    showDialog("訂閱訊息",res);
     $("#subscribeEmail").val("");
   }).error(function(res){
-    showDialog("錯誤訊息",res.responseJSON.err);
+    showDialog("訂閱訊息",res.responseJSON.err);
   });
 }
 
