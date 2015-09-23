@@ -203,7 +203,7 @@ function checkAuth() {
 
 
 function check(){
-
+  console.log("check");
   allow_create = 1;
   if($("#UserAlias").val() == ""){
     $("label[id = checkAlias]").text("  *這裡也要填喔！");allow_create = 0;
@@ -258,13 +258,13 @@ function check(){
       // }
     }
   }
-  // if(allow_create==1) {
-  //   checkPwd();
-  // }
+  if(allow_create==1) {
+    checkPwd();
+  }
 
-  // if(allow_create==1){
-  //   Submit();
-  // }
+  if(allow_create==1){
+    Submit();
+  }
 }
 
 function checkIfAccountExist(){
@@ -287,6 +287,7 @@ function checkIfAccountExist(){
 }
 
 function checkEmail(){
+  console.log("checkEmail");
   if($("#UserEmail").val().search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)== -1){
     $("label[id = checkEmail]").text("  *E-mail格式錯誤！");
     allow_create = 0;
@@ -311,6 +312,7 @@ function checkPwd(){
 }
 
 function Submit(){
+  console.log("sumbmit");
   var alias = $("#UserAlias").val();
   var account = $("#UserAccount").val();
   var password = $("#UserPwd").val();
