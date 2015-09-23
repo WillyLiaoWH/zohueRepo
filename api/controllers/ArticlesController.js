@@ -232,8 +232,6 @@ module.exports = {
                                 Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: title, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
                                     if(err) {
                                         console.log(err);
-                                    } else {
-                                        res.send(article2);
                                     }
                                 });
                                 //寄信給管理者
@@ -276,7 +274,8 @@ module.exports = {
                                         console.log('訊息發送: ' + info.response);  
                                     }  
                                 });  
-                            }   
+                            }
+                            res.send(article2);
                         }
                     });
                 }
