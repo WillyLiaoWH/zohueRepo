@@ -51,6 +51,23 @@
   	margin-bottom:20px;
 }
 
+@media all and (max-width: 500px){
+	#fname_reg-div{
+		width: 100% !important;
+	}
+	#lname_reg-div{
+		width: 100% !important;
+		margin-left: 0px !important;
+	}
+	#birthday_M-div{
+		width: 100% !important;
+	}
+	#birthday_D-div{
+		width: 100% !important;
+		margin-left: 0px !important;
+	}
+}
+
 #fname_reg-div{
 	width:48%;
 	float:left;
