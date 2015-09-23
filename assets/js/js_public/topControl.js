@@ -56,7 +56,7 @@ function FB_API(){
 function checkAuth() {
   $.get("/checkAuth", function(auth){
     if(auth) {
-      if(auth.account == 'zohueadmin'){
+      if(auth.isAdmin==true){
         document.getElementById("backend").style.display="block";
         document.getElementById("mobile_backend").style.display="block";
       }
@@ -203,7 +203,6 @@ function checkAuth() {
 
 
 function check(){
-  console.log("check");
   allow_create = 1;
   if($("#UserAlias").val() == ""){
     $("label[id = checkAlias]").text("  *這裡也要填喔！");allow_create = 0;
@@ -228,7 +227,9 @@ function check(){
 
   if(allow_create==1) {
     if($("#UserEmail").val() != "") {
-      checkEmail();
+      if(checkEmail()&&checkPwd()) {
+        Submit();
+      }
     } else {
       bootbox.dialog({
         message: "是否真的不要輸入E-mail？",
@@ -258,13 +259,13 @@ function check(){
       // }
     }
   }
-  if(allow_create==1) {
-    checkPwd();
-  }
+  // if(checkPwd()&&checkEmail) {
+  //   checkPwd();
+  // }
 
-  if(allow_create==1){
-    Submit();
-  }
+  // if(allow_create==1){
+  //   Submit();
+  // }
 }
 
 function checkIfAccountExist(){
@@ -287,13 +288,14 @@ function checkIfAccountExist(){
 }
 
 function checkEmail(){
-  console.log("checkEmail");
   if($("#UserEmail").val().search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)== -1){
     $("label[id = checkEmail]").text("  *E-mail格式錯誤！");
     allow_create = 0;
+    return false;
   }
   else {
     $("label[id = checkEmail]").text("");
+    return true;
   }
 }
 
@@ -301,13 +303,16 @@ function checkPwd(){
   if($("#UserPwdConfirm").val().length > 0 && $("#UserPwd").val() != $("#UserPwdConfirm").val()){
     $("label[id = checkPwdConfirm]").removeClass("checkOK").addClass("check");
     $("label[id = checkPwdConfirm]").text("  *原密碼與確認密碼不同！");allow_create = 0;
+    return 0;
   }
   else if($("#UserPwd").val().length > 0 && $("#UserPwdConfirm").val().length > 0 && $("#UserPwd").val() == $("#UserPwdConfirm").val()){
     $("label[id = checkPwdConfirm]").removeClass("check").addClass("checkOK");
     $("label[id = checkPwdConfirm]").text("  *已完成確認密碼！");
+    return 1;
   }
   else{
     $("label[id = checkPwdConfirm]").text("");
+    return 0;
   }
 }
 
