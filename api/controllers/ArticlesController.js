@@ -276,7 +276,7 @@ module.exports = {
                                         console.log('訊息發送: ' + info.response);  
                                     }  
                                 });  
-                            }   
+                            }console.log("=============");   
                         }
                     });
                 }
