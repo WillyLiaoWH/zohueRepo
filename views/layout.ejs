@@ -86,9 +86,9 @@
       <!--   <div style="text-align:center; font-size:22px; font-weight: bold; color:#d78961;">台灣頭頸部癌病友作夥加油站！</div> -->
       </div>
       <div class="span8 visible-desktop hidden-phone hidden-tablet">
-        <div id="loginSection">
-          帳號&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount">
-          &nbsp密碼&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd">
+        <div id="loginSection" style="float: left;">
+          帳號:&nbsp<input type="text" name="LoginAccount" class="l" id="LoginAccount" style="width:150px;">
+          &nbsp密碼:&nbsp<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="LoginPwd"  style="width:150px;">
           <button value="登入" id="login" onclick="Login();"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp登入</button>
           <button value="忘記密碼" id="forget" onclick="window.location.href='/forget'"><img src="/images/img_signup/forgetQ.png" style="width:26px; height:26px;" alt="">&nbsp忘記密碼</button>
           <button value="臉書登入" id="Fblogin" onclick="fbLogin()"><img src="/images/img_forum/facebook.png" >&nbspFB登入</button>
