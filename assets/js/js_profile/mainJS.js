@@ -320,9 +320,10 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         cb();
       }
     }
-  })
-  .error(function(res){
-    showDialog("錯誤訊息",res.responseJSON.err);
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err,function(){
+      window.location.replace("/home");
+    });
   });
 }
 
@@ -678,7 +679,9 @@ function postTimeline(){
         displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
       });
     }).error(function(res){
-      showDialog("錯誤訊息",res.responseJSON.err);
+      showDialog("錯誤訊息",res.responseJSON.err,function(){
+        window.location.replace("/home");
+      });
     });
   }
 }

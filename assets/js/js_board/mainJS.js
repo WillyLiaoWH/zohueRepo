@@ -200,11 +200,15 @@ function postArticle() {
 
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      showDialog("一般訊息","您尚未登入，不能發表文章喔！快登入加入大家的討論吧！");
+      showDialog("一般訊息","您尚未登入，不能發表文章喔！快登入加入大家的討論吧！",function(){
+        window.location.replace("/home");
+      });
     }else{
       $.get("/checkFull", function(full){
         if(!full) {
-          showDialog("一般訊息","您尚未完整註冊，不能發表文章喔，快登入加入大家的討論吧！");
+          showDialog("一般訊息","您尚未完整註冊，不能發表文章喔，快登入加入大家的討論吧！",function(){
+            window.location.replace("/signup");
+          });
         }
         else{
           if(auth.isAdmin==true && board=="17"){

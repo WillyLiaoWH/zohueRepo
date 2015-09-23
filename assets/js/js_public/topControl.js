@@ -379,7 +379,27 @@ function Login(){
       });
     }else{
       showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！",function(){
-        location.replace(url);
+        //location.replace(url);
+        bootbox.dialog({
+          message: "是否前往「完整註冊」？",
+          title: "一般訊息",
+          buttons: {
+            yes: {
+              label: "好",
+              className: "btn-primary",
+              callback: function() {
+                window.location.assign("/signup");
+              }
+            },
+            no: {
+              label: "以後再說",
+              className: "btn-primary",
+              callback: function() {
+                location.replace(url);
+              }
+            }
+          }
+        });
       });
     }
   }).error(function(res){
