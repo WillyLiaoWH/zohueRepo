@@ -257,7 +257,8 @@ module.exports.routes = {
         '/js/js_post/mainJS.js',
         '/js/js_post/bootstrap.min.js',
         '/js/js_post/cropper.min.js',
-        '/js/js_post/crop-avatar.js'
+        '/js/js_post/crop-avatar.js',
+        '/js/js_public/alertify.js'
       ],
       stylesheets: [
         '/styles/css_post/style.css',
