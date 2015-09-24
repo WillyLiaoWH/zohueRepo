@@ -86,6 +86,7 @@ function setPage() {
         table+="</div>";
         
         switch(res[i].notType) {
+          case "1":
           case "2":
           case "5":
           case "11":
