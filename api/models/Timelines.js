@@ -47,6 +47,9 @@ module.exports = {
     },
     owner: {
       model: 'user',
+    },
+    updatedTime: {
+      type: 'datetime'
     }
   }
 };

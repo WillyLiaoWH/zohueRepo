@@ -11,7 +11,7 @@ module.exports = {
 		var comment=req.param("timeline_comment_content");
         var comment_image=req.param("timeline_comment_image");
 		var timeline_id=req.param("timeline_id");
-		TimelineResponse.create({author: author, comment: comment, comment_image: comment_image, timeline: timeline_id}).exec(function(error, response) {
+		TimelineResponse.create({author: author, comment: comment, comment_image: comment_image, timeline: timeline_id, updatedTime: new Date()}).exec(function(error, response) {
             if(error) {
                 res.send(500,{err: "DB Error" });
                 console.log(error);
@@ -66,7 +66,7 @@ module.exports = {
         function edit(TimelineId){
             var edit_content = req.param("edit_content");
             var edit_img = req.param("edit_img");
-            TimelineResponse.update({id: TimelineId},{ comment:edit_content, comment_image:edit_img }).exec(function(err, timeline) {
+            TimelineResponse.update({id: TimelineId},{ comment:edit_content, comment_image:edit_img, updatedTime: new Date() }).exec(function(err, timeline) {
                 if(err) {
                     res.send(500,{err: "DB Error" });
                     console.log(err);

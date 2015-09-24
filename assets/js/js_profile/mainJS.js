@@ -338,13 +338,13 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
   for(i in res["timelinesList"]){
     var content = res["timelinesList"][i].content;
     var contentImg = res["timelinesList"][i].contentImg;
-    var dif = timeInMs-Date(updatedAt);
-    var temp = new Date(res["timelinesList"][i].updatedAt).toLocaleString();
-    var updatedAt;
+    var dif = timeInMs-Date(updatedTime);
+    var temp = new Date(res["timelinesList"][i].updatedTime).toLocaleString();
+    var updatedTime;
     if(temp.indexOf("GMT")==-1) {
-      updatedAt=temp.slice(0, temp.length-3);
+      updatedTime=temp.slice(0, temp.length-3);
     } else {
-      updatedAt=temp.slice(0, temp.indexOf("GMT"))+temp.slice(temp.indexOf("GMT")+5, temp.length-3);
+      updatedTime=temp.slice(0, temp.indexOf("GMT"))+temp.slice(temp.indexOf("GMT")+5, temp.length-3);
     }
     var timelinesID = res["timelinesList"][i].id;
     // var responseNum = res["timelinesList"][i].responseNum;
@@ -371,10 +371,10 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
       var comment_contentImg=element_res.comment_image;
       var comment_ID = element_res.id;
       //console.log(element_res);
-      var comment_updatedAt = new Date(element_res.updatedAt).toLocaleString();
+      var comment_updatedTime = new Date(element_res.updatedTime).toLocaleString();
       var comment_nicer = element_res.rnicer;
       var comment_reporter = element_res.rreporter;
-      var dif2 = (timeInMs-new Date(element_res.updatedAt).getTime())/1000;
+      var dif2 = (timeInMs-new Date(element_res.updatedTime).getTime())/1000;
       if(dif2 > 86400){var time=Math.round(dif2/86400)+"天前";
       }else if(dif2 > 3600){var time=Math.round(dif2/3600)+"小時前";
       }else if(dif2 > 60){var time=Math.round(dif2/60)+"分鐘前";
@@ -432,7 +432,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                         <button value="取消編輯" id="editRCancel" class="b" name="'+comment_ID+'"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>\
                       </div>\
                       <div class="row-fluid event_option btn-group">\
-                        <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="'+comment_updatedAt+'">'+time+'</a></div>\
+                        <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="'+comment_updatedTime+'">'+time+'</a></div>\
                         <div class="btn-group" id="RniceArticle'+comment_ID+'" style="float:none;">'+display_r_nice+'</div>\
                         <div class="btn-group" style="float:none;">\
                           <button type="button" class="n" data-toggle="dropdown">\
@@ -562,7 +562,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
                     <td>'+owner_div+'<div id="event_author_name" style="float:left;"><a href="?'+author_id+'">'+author+'</a></div></td>\
                   </tr>\
                   <tr>\
-                    <td><div id="event_time">'+updatedAt+'</div></td>\
+                    <td><div id="event_time">'+updatedTime+'</div></td>\
                   </tr>\
                 </table>\
               </div>\

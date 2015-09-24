@@ -64,7 +64,7 @@ module.exports = {
             var auth=req.param("timeline_post_auth");
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });}
             if(req.session.user.id == req.session.stay){
-                Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, follower: [req.session.user.id]}).exec(function(error, timeline) {
+                Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, follower: [req.session.user.id], updatedTime: new Date()}).exec(function(error, timeline) {
                     if(error) {
                         res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
@@ -82,12 +82,14 @@ module.exports = {
                                     }
                                 }
                             });
+                        }else{
+                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
                         }
                     }
                 });
             }else{
                 User.find({id: req.session.stay}).exec(function(error, owner) {
-                    Timelines.create({author: owner[0].id, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, owner: author, follower: [req.session.user.id, owner[0].id]}).exec(function(error, timeline) {
+                    Timelines.create({author: owner[0].id, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, owner: author, follower: [req.session.user.id, owner[0].id], updatedTime: new Date()}).exec(function(error, timeline) {
                         if(error) {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
@@ -125,7 +127,7 @@ module.exports = {
         function edit(TimelineId){
             var edit_content = req.param("edit_content");
             var edit_img = req.param("edit_img");
-            Timelines.update({id: TimelineId},{ content:edit_content, contentImg:edit_img }).exec(function(err, timeline) {
+            Timelines.update({id: TimelineId},{ content:edit_content, contentImg:edit_img, updatedTime: new Date() }).exec(function(err, timeline) {
                 if(err) {
                     res.send(500,{err: "DB Error" });
                     console.log(err);
@@ -199,7 +201,7 @@ module.exports = {
 
         function findTimelineResponse(id, cb){ // 取得作者 user 資料
             // notes: 未來可能需要用到.skip(10).limit(10)
-            User.find({id: id}).populate('timelinesPost', { sort: 'updatedAt DESC' }).exec(function (err, user) {
+            User.find({id: id}).populate('timelinesPost', { sort: 'time DESC' }).exec(function (err, user) {
                 if(user.length < 1 ){
                     res.send(500,{err: "查無此人" });
                 }else{

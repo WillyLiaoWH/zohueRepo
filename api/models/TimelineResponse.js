@@ -30,6 +30,9 @@ module.exports = {
     follower: {
       collection: 'user',
     },
+    updatedTime: {
+      type: 'datetime'
+    }
   }
 };
 
