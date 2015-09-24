@@ -7,10 +7,8 @@
 
 module.exports = {
     upload_avatar: function(req, res){
-        //var imageType = require('image-type');
-        //console.log(req.file("avatar_file"));
-        console.log(req.param("avatar_data"));
-        console.log(req.param("avatar_src"));
+        var http = require('http');
+        http.globalAgent.maxSockets = 10000;
 
         var data = req.param("avatar_data");
         var data2;
@@ -19,12 +17,11 @@ module.exports = {
         }
 
         if(req.method === 'GET')
-            return res.json({'status':'GET not allowed'});                      //  Call to /upload via GET is error
+            return res.json({'status':'GET not allowed'});
 
         function createDir(dir, cb){
             var fs = require('fs');
             if (!fs.exists(dir)){
-                //fs.mkdirSync(dir);
                 fs.mkdir(dir, function (err) {
                     cb();
                 });
@@ -38,61 +35,74 @@ module.exports = {
                 var regex = /.*assets\\+(.*)/;
                 var match = files[0].fd.match(regex);
                 var result = match[1].replace(/\\/g, "\/");
-                console.log(result);
 
                 //http://stackoverflow.com/questions/26130914/not-able-to-resize-image-using-imagemagick-node-js
-                //var gm = require('gm').subClass({ imageMagick : true });
                 var time = new Date().getTime();
                 var recall_url = 'images/img_avatar/upload/'+time+'.jpg';
+
+                // watchFile('assets/'+recall_url,
+                //     function(){
+                //         console.log("create~~~");
+                //     },function(){
+                //         console.log("remove~~~");
+                //     });
 
                 var easyimg = require('easyimage');
                 try {
                     easyimg.crop({
                         src:files[0].fd, dst:'assets/'+recall_url,
-                        // width:200, height:200,
                         cropwidth:data2.width, cropheight:data2.height,
-                        // width:data2.width, height:data2.height,
-                        // cropwidth:200, cropheight:200,
                         gravity:'NorthWest',
                         x:data2.x, y:data2.y
                     }).then(
                     function(image) {
-                        console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-                    },
-                    function (err) {
+                        cb(recall_url);
+                    },function (err) {
                         console.log(err);
+                        res.ok("載入錯誤，請重新上傳！");
                     });
-                    cb(recall_url);
                 } catch (e) {
                     res.ok("載入錯誤，請重新上傳！");
                 }
-                // var url = document.URL;
-                // var regex = /.*article\/+(.*)/;
-                // var match = url.replace(regex,"$1");
+            });
+        }
 
-                //res.json({state:200,file:files,message:null,result:result});
-                //res.JSON.stringify(json({state:200,message:null,result:result}));
-                
+        function watchFile(filepath, oncreate, ondelete) { // 監聽 file system 情況
+            var fs = require('fs'), path = require('path'), filedir = path.dirname(filepath), filename = path.basename(filepath);
+            fs.watch(filedir, function(event, who) {
+                if (event === 'change' && who === filename) { // event 可以是 rename 或 create
+                    if (fs.existsSync(filepath)) {
+                        oncreate();
+                    } else {
+                    ondelete();
+                    }
+                }
             });
         }
 
         createDir('assets/images/img_avatar/upload', function(){
             upload(function(a) {
-                setTimeout(function(){
-                    res.ok(JSON.stringify({state:200,message:null,result:a}));
-                }, 2000);
+                // res.ok(JSON.stringify({state:200,message:null,result:a}));
+                // http get status code 200 才 call back
+                var interval = setInterval(function() {
+                    var http = require('http');
+                    http.get('http://localhost/'+a, function(interRes) {
+                        console.log("Got response: " + interRes.statusCode);
+                        if(interRes.statusCode == 200){
+                            res.ok(JSON.stringify({state:200,message:null,result:a}));
+                            clearInterval(interval);
+                        }
+                    }).on('error', function(e) {
+                        console.log("Got error: " + e.message);
+                    });
+                }, 1000);
             });
         });
     },
 
 
 
-
-
     upload_post: function(req, res){
-        console.log(req.param("avatar_data"));
-        console.log(req.param("avatar_src"));
-
         var data = req.param("avatar_data");
         var data2;
         if(data){
@@ -105,7 +115,6 @@ module.exports = {
         function createDir(dir, cb){
             var fs = require('fs');
             if (!fs.exists(dir)){
-                //fs.mkdirSync(dir);
                 fs.mkdir(dir, function (err) {
                     cb();
                 });
