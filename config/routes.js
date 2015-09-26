@@ -346,7 +346,7 @@ module.exports.routes = {
       ]
     }
   },
-  '/backend': {
+  '/backendbackend': {
     //view: 'backend/adminLoginPage',
     controller: 'backend',
     locals: {
