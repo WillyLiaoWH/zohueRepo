@@ -26,7 +26,12 @@ module.exports = {
 			if(re.test(email)){
 				cb();
 			}else{
-				res.send('格式錯誤！');
+                if(login==0){
+                    res.send('您輸入的 E-mail 格式錯誤！');
+                }else{
+                    res.send('您還沒有登記您的 E-mail 喔！請到「個人設定→修改會員資料」輸入您的 E-mail，再來開通電子報服務喔！');
+                }
+				
 			}
 		}
 		function checkExist(cb){
