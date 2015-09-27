@@ -189,7 +189,27 @@ $(document).ready(function(){
     }
   });
 
-  // 刪除文章
+  // "停權"使用者
+  $(document).on("click",".unDelUser",function(e){
+    var userID = $(this).parent().parent().attr("value");
+    $.post( "/suspendUser", { id: userID}, function(res){
+      $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-ban-circle","glyphicon-repeat");
+      $("#backend_userList tr[value="+userID+"] span").last().switchClass("unDelUser","delUser");
+      showDialog("一般訊息",res);
+    }); 
+  });
+
+  // "回復"被停權的使用者
+  $(document).on("click",".delUser",function(e){
+    var userID = $(this).parent().parent().attr("value");
+    $.post( "/recoverUser", { id: userID}, function(res){
+      $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-repeat","glyphicon-ban-circle");
+      $("#backend_userList tr[value="+userID+"] span").last().switchClass("delUser","unDelUser");
+      showDialog("一般訊息",res);
+    }); 
+  });
+
+  // "刪除"文章
   $(document).on("click",".unDelArticle",function(e){
     var articleID = $(this).parent().parent().attr("value");
     $.post( "/deleteArticle", { id: articleID}, function(res){
@@ -201,7 +221,7 @@ $(document).ready(function(){
     }); 
   });
 
-  // 回復刪除的文章
+  // "回復"刪除的文章
   $(document).on("click",".delArticle",function(e){
     var articleID = $(this).parent().parent().attr("value");
     $.post( "/recoverArticle", { id: articleID}, function(res){
@@ -247,10 +267,12 @@ function loadUserList(){
       userTable="<tr class='tableHead'><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
 
       for(i=0; i<userList.length; i++) {
+        userID=userList[i].id;
         fullName=userList[i].lname+" "+userList[i].fname;
         createdAt=new Date(userList[i].createdAt).toLocaleString();
         postNum = userList[i].articlesPost.length;
         totalReport=0;
+
         for(j=0; j<userList[i].articlesPost.length; j++) {
           totalReport+=userList[i].articlesPost[j].report.length;
         }
@@ -260,7 +282,7 @@ function loadUserList(){
           avgReportNum = formatFloat(totalReport/postNum);
         }
         
-        userTable+="<tr><td>"+userList[i].account+"</td><td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+userList[i].gender+"</td>";
+        userTable+="<tr value="+userID+"><td>"+userList[i].account+"</td><td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+userList[i].gender+"</td>";
         userTable+="</td><td>"+userList[i].type+"</td><td>"+userList[i].email+"</td><td>"+createdAt+"</td>";
         if (userList[i].isFullSignup==false){
           userTable+="<td><span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span></td>";
@@ -273,7 +295,14 @@ function loadUserList(){
         }else{
           userTable+="<td>"+avgReportNum+"</td>";
         }
-        userTable+="<td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
+
+        if (userList[i].suspended==true){
+          userTable+="<td><span class='glyphicon glyphicon-repeat delUser' aria-hidden='true'></span></td></tr>";
+        }else{
+          userTable+="<td><span class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true'></span></td></tr>";
+        }
+        //articleTable+="<td><span class='glyphicon glyphicon-trash unDelUser' aria-hidden='true'></span></td></tr>";
+        //userTable+="<td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
       }
       document.getElementById("backend_userList").innerHTML = userTable;
     }    

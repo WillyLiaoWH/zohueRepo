@@ -44,7 +44,7 @@ body{
 
 .glyphicon-ok-circle{
 	color:#467500;
-	font-size: 20px
+	font-size: 18px;
 }
 
 .sortable:hover{
@@ -104,12 +104,12 @@ body{
 }
 /********For spinners (end)********/
 
-.delSub:hover, .unDelArticle:hover{
+.delSub:hover, .unDelArticle:hover, .unDelUser:hover{
   cursor:pointer;
   color:#CE0000;
 }
 
-.delArticle:hover{
+.delArticle:hover, .delUser:hover{
   cursor:pointer;
   color:#467500;
 }

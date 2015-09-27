@@ -97,6 +97,8 @@ module.exports.routes = {
   'POST /setRead': 'NotificationController.checkNotification',
   'POST /getQ':'UserController.getQ', 
   'POST /getPassword':'UserController.getPassword',
+  'POST /suspendUser': 'BackendController.suspendUser',
+  'POST /recoverUser': 'BackendController.recoverUser',
 
   'GET /friendStatus/:target_id' : 'User.friendStatus',
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係

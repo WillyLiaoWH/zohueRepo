@@ -115,9 +115,13 @@ module.exports = {
       //找回密碼用的
       type: 'string'
     },
+    suspended: {
+      type: 'boolean',
+      defaultsTo : false
+    },
     isAdmin: {
       type: 'boolean',
       defaultsTo: false
-    }
+    },
   }
 };

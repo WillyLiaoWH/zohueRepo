@@ -358,7 +358,7 @@ module.exports = {
                 res.send(500,{err: "DB Error" });
             } else {
                 console.log('The record has been deleted');
-                res.end();
+                res.send("已刪除文章");
             }
         });
     },

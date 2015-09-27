@@ -137,5 +137,37 @@ module.exports = {
             });
         }
     },
+
+    suspendUser: function(req, res) {
+        var userID = req.param("id");
+        var isAdmin = req.session.user.isAdmin;
+        if(isAdmin == true){
+            User.update({id: userID}, {suspended: true}).exec(function(err) {
+                if(err) {
+                    console.log(error);
+                    res.send(500,{err: "DB Error" });
+                } else {
+                    console.log('The user account has been suspended.');
+                    res.send("已停止此帳號的使用權限。");
+                }
+            });
+        }
+    },
+
+    recoverUser: function(req, res) {
+        var userID = req.param("id");
+        var isAdmin = req.session.user.isAdmin;
+        if(isAdmin == true){
+            User.update({id: userID}, {suspended: false}).exec(function(err) {
+                if(err) {
+                    console.log(error);
+                    res.send(500,{err: "DB Error" });
+                } else {
+                    console.log('The user account has been recovered.');
+                    res.send("已恢復此帳號的使用權限。");
+                }
+            });
+        }
+    },
 };
 

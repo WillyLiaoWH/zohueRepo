@@ -333,14 +333,18 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 if (usr.length!=0) {
-                    if (passwordHash.verify(password, usr[0].password)) {
-                    //if (password==usr[0].password) {
-                        req.session.user = usr[0];
-                        req.session.authenticated=true;
-                        res.send(usr[0]);
-                    } else {
-                        res.send(400, { err: "密碼錯誤" });
-                    }
+                    if(usr[0].suspended==true){
+                        res.send(401, {err: "由於您的帳號有不當使用之情況，我們已停止此帳號的使用權限！"});
+                    }else{
+                        if (passwordHash.verify(password, usr[0].password)) {
+                        //if (password==usr[0].password) {
+                            req.session.user = usr[0];
+                            req.session.authenticated=true;
+                            res.send(usr[0]);
+                        } else {
+                            res.send(400, { err: "密碼錯誤" });
+                        }
+                    } 
                 } else {
                     res.send(404, { err: "查無此帳號" });
                 }
