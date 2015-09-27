@@ -1044,7 +1044,7 @@ module.exports = {
             });
         } else {
             if(disease!=""||place!="") {
-                User.find({where: {alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}}}).populate("Userauth").exec(function(err, allUser){
+                User.find({where: {alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}, suspended: { '!': true }}}).populate("Userauth").exec(function(err, allUser){
                     if(err) {
                         res.send(500, {err: "DB Error"});
                     } else {
@@ -1052,7 +1052,7 @@ module.exports = {
                     }
                 });
             } else {
-                User.find({where: {alias: {'contains': alias}, type: {'contains': userType}}}).exec(function(err, allUser){
+                User.find({where: {alias: {'contains': alias}, type: {'contains': userType}, suspended: { '!': true }}}).exec(function(err, allUser){
                     if(err) {
                         res.send(500, {err: "DB Error"});
                     } else {

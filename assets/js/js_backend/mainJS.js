@@ -295,14 +295,11 @@ function loadUserList(){
         }else{
           userTable+="<td>"+avgReportNum+"</td>";
         }
-
         if (userList[i].suspended==true){
-          userTable+="<td><span class='glyphicon glyphicon-repeat delUser' aria-hidden='true'></span></td></tr>";
+          userTable+="<td><span class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
         }else{
-          userTable+="<td><span class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true'></span></td></tr>";
+          userTable+="<td><span class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
         }
-        //articleTable+="<td><span class='glyphicon glyphicon-trash unDelUser' aria-hidden='true'></span></td></tr>";
-        //userTable+="<td><span class='glyphicon glyphicon-ban-circle' aria-hidden='true'></span></td></tr>";
       }
       document.getElementById("backend_userList").innerHTML = userTable;
     }    
@@ -411,9 +408,9 @@ function loadForumList(articleList){
         }
 
         if(deleted=="false"){
-          articleTable+="<td><span class='glyphicon glyphicon-trash unDelArticle' aria-hidden='true'></span></td></tr>";
+          articleTable+="<td><span class='glyphicon glyphicon-trash unDelArticle' aria-hidden='true' title='刪除文章'></span></td></tr>";
         }else{
-          articleTable+="<td><span class='glyphicon glyphicon-repeat delArticle' aria-hidden='true'></span></td></tr>";
+          articleTable+="<td><span class='glyphicon glyphicon-repeat delArticle' aria-hidden='true' title='回復文章'></span></td></tr>";
         }   
       }
     document.getElementById("backend_articleList").innerHTML = articleTable;
