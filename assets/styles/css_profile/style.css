@@ -19,10 +19,41 @@
 
 }
 
-#friend{
-	float: right;
+#friend, #m_friend{
+	float: left;
 }
 
+@media all and (max-width: 768px){
+	#mobile_upper_profile{
+		display: block;
+	}
+	#upper_profile{
+		display: none;
+	}
+	#friend, #m_friend{
+		display: none;
+
+	}
+	#m_friend button{
+		margin: 8px 0px 14px 0px !important; 
+	}
+
+	#m_friend_setting{
+		display: block;
+	}
+}
+
+@media all (min-width: 768px) and (max-width: 2048px){
+	#upper_profile{
+		display: block;
+	}
+	#mobile_upper_profile, m_friend_setting, #m_friend{
+		display: none;
+	}
+	#timeline_profile{
+		width: 60%;
+	}
+}
 /* PO 文區塊 */
 #timeline_post_content{
 	min-height: 100px;

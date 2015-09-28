@@ -31,14 +31,33 @@
   </script>
     <div class="container container-fluid" id="post-form-main">
 
-    <div class="row-fluid">
-      <div class="col-md-7 col-sm-12 col-xs-12" id="artContent">
-        <br><br>
-        <div class="row" id="timeline_profile" style="position: relative;">
-          <div class="col-md-3" style="position: absolute; bottom: 0px;">
-            <img src="" id="avatar" height="150px">
+
+
+  
+      <div id="timeline_profile" style="margin: 5px; float: left;">
+        
+      <div id="mobile_upper_profile" class="hidden-desktop">
+          <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
+            <img src="" id="m_avatar" style="max-height: 120px"></img>
+          </span>
+          <span style="margin: 40px 0px 2px 45px; display: inline-block;">
+            <h3 id="m_alias"></h3> 
+            <b id="m_type"></b>
+            <text id="m_primaryDisease"></text>
+          </span>
+          <br>
+          <div id="m_friend">
+            <p id="m_status"></p>
           </div>
-          <div class="col-md-offset-3 col-md-9">
+          <br><br>
+      </div>
+
+
+      <div id="upper_profile" class="hidden-phone hidden-tablet">
+         <div class="col-md-3" style="">
+            <img src="" id="avatar" height="150px"></img>
+          </div>
+          <div class="col-md-9">
             <div class="row">
               <div class="col-md-12 ">
                 <div class="col-md-6">
@@ -48,25 +67,26 @@
                 </div>
                 <br> 
                 <div id="friend" class="col-md-6" style="text-align:right">
-                  <p id="status"></text>
+                  <p id="status"></p>
                 </div>
-              </div>
-              <div class="col-md-12">
-                  
-                <!-- <ul class="tabs"> -->
-                  <ul class="nav nav-pills" id="tabs">
-                    <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
-                    <li><a href="#about" data-toggle="pill">關於</a></li>
-      <!--           <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
-                    <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
-                    <li><a href="#personal_others" data-toggle="pill">更多</a></li>
-       -->
-                  </ul>
               </div>
             </div>
           </div>
         </div>
+     
+     
+          <!-- <ul class="tabs"> -->
+          <ul class="nav nav-pills" id="tabs">
+            <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
+            <li><a href="#about" data-toggle="pill">關於</a></li>
+            <li id="m_friend_setting"><a onclick="$('#m_friend').css('display','block')" style="cursor:pointer;">設定</a></li>
+            <!-- <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
+            <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
+            <li><a href="#personal_others" data-toggle="pill">更多</a></li>-->
+          </ul>
+       
 
+  <hr>
         <div class="tab-content">
           <div class="tab-pane active" id="timeline">
             <div class="row-fluid">
@@ -235,7 +255,7 @@
           <div class="tab-pane" id="about">
             <br>
             <div class="row">
-              <div class="col-md-3 "><img src="" id="avatar" height="100"></div>
+              <!--<div class="col-md-3 "><img src="" id="avatar" height="100"></div>-->
               <br>
               <h3  id="alias"></h3> 
             </div> 

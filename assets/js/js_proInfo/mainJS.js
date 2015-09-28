@@ -290,7 +290,21 @@ $(document).on("click","a.show-info",function(event){
   console.log("!!");
   //event.preventDefault();
   if ($(window).width() < 768) {
-    window.open($(this).attr("title"),'_blank');
+    var ss = "<button id='btn_backProInfo' class='b'><span class='glyphicon glyphicon-chevron-left'>返回專業文章</span></button><iframe id='ifm_article' src='https://docs.google.com/gview?url="+$(this).attr("title")+"&embedded=true'></iframe>";
+    $("#layout").css("opacity", "0.4");
+    $(".mobile_modalBox").empty();
+    $(".mobile_modalBox").append(ss);
+    $(".mobile_modalBox").width($(window).width());
+    $("#ifm_article").height($(window).height());
+    $(".mobile_modalBox").css("opacity", "0");
+    $("body").css("overflow", "hidden");
+    $("html").css("overflow", "hidden");
+    $(".mobile_modalBox").css("display", "block");
+    setTimeout(function(){
+      $(".mobile_modalBox").css("opacity", "1");
+    }, 2000);
+    $(".mobile_modalBox").css("top", "0px");
+    $(".mobile_modalBox").css("left", "0px");
   }else{
     //$(".modalBox").css("display", "block");
     //var ss = '<img src="'+$(this).attr("href")+'">';
@@ -308,6 +322,14 @@ $(document).on("click","a.show-info",function(event){
         iconClose:true,
     });
   }
+});
+
+$(document).on("click","#btn_backProInfo",function(event){
+    $(".mobile_modalBox").css("display", "none");
+    $(".mobile_modalBox").css("opacity", "1");
+    $("#layout").css("opacity", "1");
+    $("body").css("overflow", "scroll");
+    $("html").css("overflow", "scroll");
 });
 
 function showDialog(title, message, cb){
