@@ -229,7 +229,12 @@ module.exports = {
                         } else {
                             console.log(article);
                             if(article2[0].board==19||article2[0].board==20) {
-                                Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: title, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
+                                if(title.length>20) {
+                                    var notContent=title.substr(0, 20)+"...";
+                                } else {
+                                    var notContent=title;
+                                }
+                                Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
                                     if(err) {
                                         console.log(err);
                                     }
@@ -298,8 +303,13 @@ module.exports = {
                         if(err) {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
+                            if(content.length>20) {
+                                var notContent=content.substr(0, 20)+"...";
+                            } else {
+                                var notContent=content;
+                            }
                             for(var i=0; i<admin[0].friends.length; i++) {
-                                Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: content, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
+                                Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
                                     if(err) {
                                         console.log(err);
                                     }
@@ -394,9 +404,14 @@ module.exports = {
                     } else {
                         console.log("no error");
                         console.log(updated[0].nicer.length);
+                        if(updated[0].title.length>20) {
+                            var notContent=updated[0].title.substr(0, 20)+"...";
+                        } else {
+                            var notContent=updated[0].title;
+                        }
                         for(var i=0; i<updated[0].follower.length; i++) {
                             if(updated[0].follower[i]!=req.session.user.id) {
-                                Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false, link: "/article/"+articleId, content: updated[0].title, alreadySeen: false}).exec(function(err, not) {
+                                Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false, link: "/article/"+articleId, content: notContent, alreadySeen: false}).exec(function(err, not) {
                                     if(err) {
                                         console.log(err);
                                         res.send({err:"DB error"});
@@ -493,8 +508,14 @@ module.exports = {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
                     } else {
+
                         if(updated[0].author!=req.session.user.id) {
-                            Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false, link: "/article/"+updated[0].article, content: updated[0].comment, alreadySeen: false}).exec(function(err, not) {
+                            if(updated[0].comment.length>20) {
+                                var notContent=updated[0].comment.substr(0, 20)+"...";
+                            } else {
+                                var notContent=updated[0].comment;
+                            }
+                            Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false, link: "/article/"+updated[0].article, content: notContent, alreadySeen: false}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});

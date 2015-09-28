@@ -17,9 +17,14 @@ module.exports = {
                 console.log(error);
             } else {
                 Timelines.find({id: timeline_id}).populate("author").exec(function(err, timeline) {
+                    if(comment.length>20) {
+                        var notContent=comment.substr(0, 20)+"...";
+                    } else {
+                        var notContent=comment;
+                    }
                     for(var i=0; i<timeline[0].follower.length; i++) {
                         if(timeline[0].follower[i]!=req.session.user.id) {
-                            Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: comment, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
+                            Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: notContent, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});
@@ -122,7 +127,12 @@ module.exports = {
             TimelineResponse.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
                 if(timeline.author.id!=req.session.user.id) {
-                    Notification.create({user: timeline.author.id, notType: "6", from: req.session.user.id, alreadyRead: false, content: timeline.comment, link: "/profile?"+timeline.author.account, alreadySeen: false}).exec(function(err, not) {
+                    if(comment.length>20) {
+                        var notContent=timeline.comment.substr(0, 20)+"...";
+                    } else {
+                        var notContent=timeline.comment;
+                    }
+                    Notification.create({user: timeline.author.id, notType: "6", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+timeline.author.account, alreadySeen: false}).exec(function(err, not) {
                         if(err) {
                             console.log(err);
                             res.send({err:"DB error"});

@@ -26,9 +26,14 @@ module.exports = {
                             res.send(500,{err: "DB Error" });
                             console.log(err);
                         } else {
+                            if(comment.length>20) {
+                                var notContent=comment.substr(0, 20)+"...";
+                            } else {
+                                var notContent=comment;
+                            }
                             for(var i=0; i<article2[0].follower.length; i++) {
                                 if(article2[0].follower[i]!=req.session.user.id) {
-                                    Notification.create({user: article2[0].follower[i], notType: "1", from: req.session.user.id, content: comment, alreadyRead: false, link: "/article/"+article_id, alreadySeen: false}).exec(function(err, not) {
+                                    Notification.create({user: article2[0].follower[i], notType: "1", from: req.session.user.id, content: notContent, alreadyRead: false, link: "/article/"+article_id, alreadySeen: false}).exec(function(err, not) {
                                         if(err) {
                                             console.log(err);
                                             res.send({err:"DB error"});

@@ -73,8 +73,13 @@ module.exports = {
                                 if(err) {
                                     res.send(500,{err: "發生錯誤了Q_Q" });
                                 } else {
+                                    if(content.length>20) {
+                                        var notContent=content.substr(0, 20)+"...";
+                                    } else {
+                                        var notContent=content;
+                                    }
                                     for(var i=0; i<admin[0].friends.length; i++) {
-                                        Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: content, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
+                                        Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
                                             if(err) {
                                                 console.log(err);
                                             }
@@ -96,7 +101,12 @@ module.exports = {
                             Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'id']}).populate('author', {select: ['img', 'alias', 'id']}).exec(function(error, timeline2) {
                                 res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, id: timeline2[0].author.id});
                             });
-                            Notification.create({user: owner[0].id, notType: "9", from: req.session.user.id, alreadyRead: false, content: content, link: "/profile?"+owner[0].id, alreadySeen: false}).exec(function(err, not) {
+                            if(content.length>20) {
+                                var notContent=content.substr(0, 20)+"...";
+                            } else {
+                                var notContent=content;
+                            }
+                            Notification.create({user: owner[0].id, notType: "9", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+owner[0].id, alreadySeen: false}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});
@@ -361,6 +371,11 @@ module.exports = {
                 timeline.follower.add(nicer);
                 for(var i=0; i<timeline.follower.length; i++) {
                     if(timeline.follower!=req.session.user.id) {
+                        if(timeline.content.length>20) {
+                            var notContent=timeline.content.substr(0, 20)+"...";
+                        } else {
+                            var notContent=timeline.content;
+                        }
                         Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.id, alreadySeen: false}).exec(function(err, not) {
                             if(err) {
                                 console.log(err);
