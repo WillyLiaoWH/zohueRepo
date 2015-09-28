@@ -236,7 +236,20 @@ function setPage() {
     }
 
   }).error(function(err){
-    showDialog("錯誤訊息",err);
+    console.log(typeof(err.responseText));
+    bootbox.dialog({
+      message: err.responseText,
+      title: "錯誤訊息",
+      buttons: {
+        main: {
+          label: "確認",
+          className: "btn-primary",
+          callback: function() {
+            window.location.replace("/home");
+          }
+        }
+      }
+    });
   });
 
 }

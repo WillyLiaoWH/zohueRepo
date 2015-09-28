@@ -146,7 +146,9 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 if(articlesList.length==0) {
-                    res.send(404, {err: "no this article"});
+                    res.send(404, "查無此文章");
+                } else if(articlesList[0].deleted&&articlesList[0].deleted=="true") {
+                    res.send(404, "查無此文章");
                 } else {
                     if(req.session.authenticated && 
                         req.session.user.id==articlesList[0].author.id) {
