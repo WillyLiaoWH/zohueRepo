@@ -80,7 +80,9 @@ module.exports = {
                     		name2="生日";
                         else if (item=="phone")
                             name2="電話";
-                	res.send(name2 + "現在能被 " +name+"看到");
+                        else if (item=="name")
+                            name2="姓名";
+                	res.send("您的 "+name2 + " 現在能被 " +name+" 看到");
                 });
             }
             else{
@@ -109,11 +111,13 @@ module.exports = {
                     	if(item=="city")
                     		name2="居住地";
                     	else if (item=="email")
-                    		name2=email;
+                    		name2="email";
                     	else if (item=="gender")
                     		name2="性別";
                     	else if (item=="bday")
                     		name2="生日";
+                        else if (item=="name")
+                            name2 = "姓名"
                 	res.send(name2 + "現在能被 " +name2+"看到");
             	})
             }

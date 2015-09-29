@@ -664,7 +664,7 @@ function profile_auth(route){   //去改按過權限按鈕之後的內容，只�
         $('#'+item+'_btn_text').text("醫生");
       }
   $.get("/setProfileAuth/"+route,function(res){
-    showDialog("一般訊息",res);
+      showDialog("一般訊息",res);
   });
 }
 
