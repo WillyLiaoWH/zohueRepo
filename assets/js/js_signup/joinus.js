@@ -157,7 +157,7 @@ function validateEngNum(string) {
     return re.test(string);
 }
 function validateAccount(string) {
-    var re = /^[a-zA-Z0-9]{4,20}([\-]\d{4})?$/;
+    var re = /^[A-Za-z0-9]+$/;
     //var re = /^[0-9\-()+]{7,20}$/;
     return re.test(string);
 }
