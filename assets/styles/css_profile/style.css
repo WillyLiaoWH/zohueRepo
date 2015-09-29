@@ -16,7 +16,7 @@
 #timeline_profile{
 	border-radius: 10px;
 	/*background-color: #FFFFFF;*/
-
+	width: 60%;
 }
 
 #friend, #m_friend{
@@ -35,15 +35,17 @@
 
 	}
 	#m_friend button{
-		margin: 8px 0px 14px 0px !important; 
+		margin: 8px 3px 14px 3px !important; 
 	}
-
 	#m_friend_setting{
 		display: block;
 	}
+	#timeline_profile{
+		width: 100%;
+	}
 }
 
-@media all (min-width: 768px) and (max-width: 2048px){
+@media all (max-width: 2048px){
 	#upper_profile{
 		display: block;
 	}
@@ -51,7 +53,7 @@
 		display: none;
 	}
 	#timeline_profile{
-		width: 60%;
+		width: 60% !important;
 	}
 }
 /* PO 文區塊 */
