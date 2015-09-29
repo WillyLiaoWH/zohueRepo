@@ -519,8 +519,10 @@ function checkNot() {
       document.getElementById('notification').innerHTML="&nbsp通知 ("+res.num+")";
       if(res.num==0) {
         $("#notification").removeClass("orange").addClass("gray");
+        $("#mobile_notification").removeClass("orange").addClass("lightgray");
       } else {
         $("#notification").removeClass("gray").addClass("orange");
+        $("#mobile_notification").removeClass("lightgray").addClass("orange"); 
       }
     }
   });
