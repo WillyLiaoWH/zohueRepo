@@ -133,7 +133,7 @@ module.exports = {
             }
         }
         function R_NiceCount(cb){
-            Response.find({article: req.param('article_id')}).populate('author').exec(function(error, responseList) {
+            Response.find({article: req.param('article_id'), }).populate('author').exec(function(error, responseList) {
                 if (error) {
                     res.send(500, { err: "DB Error" });
                 } else {
@@ -151,7 +151,7 @@ module.exports = {
                     res.send(404, "查無此文章");
                 } else {
                     if(req.session.authenticated && 
-                        req.session.user.id==articlesList[0].author.id) {
+                        req.session.user.id==articlesList[0].author) {
                         isAuthor=true;
                     } else {
                         isAuthor=false;
@@ -166,6 +166,11 @@ module.exports = {
                         }
                     } else {
                         isNice=false;
+                    }
+                    if(req.session.authenticated && articlesList[0].follower.indexOf(req.session.user.id)!=-1) {
+                        var isFollower=true;
+                    } else {
+                        var isFollower=false;
                     }
 
                     var isReport=false;
@@ -195,7 +200,7 @@ module.exports = {
                         RUNI_NiceCount(responseList, function(responseNiceCount){
                             res.send({articleList: articlesList, isAuthor: isAuthor, isNice: isNice, 
                                 responseList: response, responseNice: responseNice, login: login, lnicer: articlesList[0].nicer.length, 
-                                responseNiceCount:responseNiceCount, isReport: isReport, reportCount: reportCount});
+                                responseNiceCount:responseNiceCount, isReport: isReport, reportCount: reportCount, isFollower: isFollower});
                         });
                     });
                 }
@@ -726,5 +731,39 @@ module.exports = {
 
         });
     },
+    changeFollow: function(req, res) {
+        if(!req.session.authenticated) {
+            res.send(404, {err: "請登入以使用此功能"});
+        } else {
+            var article_id=req.param("article_id");
+            Articles.findOne({id: article_id}).exec(function(err, article) {
+                if(err) {
+                    res.send(500, "server error");
+                } else {
+                    if(article.follower.indexOf(req.session.user.id)==-1) {
+                        var newFollower=article.follower;
+                        newFollower.push(req.session.user.id);
+                        Articles.update({id: article_id}, {follower: newFollower}).exec(function(err2, article2) {
+                            if(err2) {
+                                res.send(500, "server error");
+                            } else {
+                                res.send({isFollower: true});
+                            }
+                        });
+                    } else {
+                        var newFollower=article.follower;
+                        newFollower.splice(article.follower.indexOf(req.session.user.id), 1);
+                        Articles.update({id: article_id}, {follower: newFollower}).exec(function(err2, article2) {
+                            if(err2) {
+                                res.send(500, "server error");
+                            } else {
+                                res.send({isFollower: false});
+                            }
+                        });
+                    }
+                }
+            })
+        }
+    }
 };
 

@@ -99,6 +99,7 @@ module.exports.routes = {
   'POST /getPassword':'UserController.getPassword',
   'POST /suspendUser': 'BackendController.suspendUser',
   'POST /recoverUser': 'BackendController.recoverUser',
+  'POST /changeFollow': 'ArticlesController.changeFollow',
 
   'GET /friendStatus/:target_id' : 'User.friendStatus',
   'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係

@@ -38,6 +38,7 @@ $(document).ready(function(){
       document.getElementById('reasonInput').style.display="none";
     }
   });
+
 });
 
 var nice;
@@ -52,10 +53,19 @@ function setPage() {
       document.getElementById("niceArticle").style.display="inline";
       document.getElementById("report").style.display="inline";
       document.getElementById("artContent").className = "span10";
+      $("#follow").css("display", "inline");
+    } else {
+      $("#follow").css("display", "none");
     }
   });
 
   $.get("/setArticlePage/"+article_id, function(res){
+    console.log(res);
+    if(res.isFollower) {
+      $("#follow").html("取消追蹤");
+    } else {
+      $("#follow").html("追蹤文章");
+    }
     articleList=res.articleList;
     articleTitle=articleList[0].title;
     articleContent=articleList[0].content;
@@ -545,6 +555,22 @@ function showDialog(title, message, cb){
           if(typeof cb == "function")
             cb();
         }
+      }
+    }
+  });
+}
+function follow() {
+  var url = document.URL;
+  var regex = /.*article\/+(.*)/;
+  var article_id = url.replace(regex,"$1");
+  $.post("/changeFollow",{article_id: article_id},function(res){
+    if(res.err){
+      showDialog("錯誤訊息", res.err);
+    } else {
+      if(res.isFollower){
+        $("#follow").html("取消追蹤");
+      } else {
+        $("#follow").html("追蹤文章");
       }
     }
   });
