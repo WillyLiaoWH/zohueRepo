@@ -315,10 +315,6 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         showProfile(ori_author);
       });
     } else {
-      showProfile(ori_author);
-      sortTimelineList(function(){
-        displayTimelineList(res, pri_account, pri_id, pri_avatar, 0);
-      });
 
       function sortTimelineList(cb){
         res["timelinesList"].sort(function(a, b) {
@@ -326,6 +322,12 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         });
         cb();
       }
+
+      showProfile(ori_author);
+      sortTimelineList(function(){
+        displayTimelineList(res, pri_account, pri_id, pri_avatar, 0);
+      });
+
     }
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err,function(){
