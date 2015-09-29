@@ -277,16 +277,19 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
       console.log(res)
       if (res == "friend"){
         $("#status").html("好友");
+        $("#m_status").html("好友");
         $("#friend").html("<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
         $("#m_friend").html("<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
       }
       else if (res == "unconfirmed"){
         $("#status").html("尚未確認好友邀請");
+        $("#m_status").html("尚未確認好友邀請");
         $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
         $("#m_friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
       }
       else if (res == "sent"){
         $("#status").html("已送出好友邀請");
+        $("#m_status").html("已送出好友邀請");
         $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
         $("#m_friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
      }
@@ -1142,6 +1145,11 @@ function HandleResponse_showProfile(response){
   $("#bday").text(Math.floor(age/(86400000*365)).toString()+" 歲");
   //$("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
   $('#city').text(addressCity);
+}
+
+function mobile_friend_setting(){
+  $('#m_friend').css('display','block');
+  $('#m_friend').html($('#m_friend').html().replace(/&nbsp;/g, ''));
 }
 
 function showDialog(title, message, cb){

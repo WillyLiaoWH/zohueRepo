@@ -48,6 +48,17 @@
 	display: none !important;
 }
 
+@media all and (max-width: 480px){
+	.modal-dialog{
+		width: 300px !important;
+		margin: 15px !important;
+	}
+	#more button{
+		float: left;
+		margin-left: 10px;
+	}
+}
+
 @media all and (max-width: 1127px){
 	#search{
 		display: none !important;

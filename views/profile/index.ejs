@@ -38,18 +38,18 @@
         
       <div id="mobile_upper_profile" class="hidden-desktop">
           <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
-            <img src="" id="m_avatar" style="max-height: 120px"></img>
+            <img src="" id="m_avatar" style="height: 120px"></img>
           </span>
-          <span style="margin: 40px 0px 2px 45px; display: inline-block;">
+          <span style="margin: 40px 0px 40px 45px; display: inline-block;">
             <h3 id="m_alias"></h3> 
             <b id="m_type"></b>
             <text id="m_primaryDisease"></text>
           </span>
-          <br>
-          <div id="m_friend">
+          <hr>
+          <div id="m_friend" style="margin: 10px 0px 0px 0px; width: 100%;">
             <p id="m_status"></p>
           </div>
-          <br><br>
+         
       </div>
 
 
@@ -79,7 +79,7 @@
           <ul class="nav nav-pills" id="tabs">
             <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
             <li><a href="#about" data-toggle="pill">關於</a></li>
-            <li id="m_friend_setting"><a onclick="$('#m_friend').css('display','block')" style="cursor:pointer;">設定</a></li>
+            <li id="m_friend_setting"><a onclick="mobile_friend_setting();" style="cursor:pointer;">設定</a></li>
             <!-- <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
             <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
             <li><a href="#personal_others" data-toggle="pill">更多</a></li>-->
