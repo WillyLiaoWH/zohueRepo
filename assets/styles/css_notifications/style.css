@@ -1,6 +1,14 @@
 #body{
 	font-family: "微軟正黑體";
 }
+
+
+@media all and (max-width: 1024px){
+	#content{
+		width: 60% !important;
+	}
+}
+
 .not {
 	border: #AAAAAA 1px solid;
 	margin: 10px;

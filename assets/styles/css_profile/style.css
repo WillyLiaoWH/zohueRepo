@@ -23,7 +23,7 @@
 	float: left;
 }
 
-@media all and (max-width: 768px){
+@media all and (max-width: 980px){
 	#mobile_upper_profile{
 		display: block;
 	}
@@ -44,7 +44,7 @@
 	}
 }
 
-@media all (max-width: 2048px){
+@media all and (min-width: 1024px) and (max-width: 2048px){
 	#upper_profile{
 		display: block;
 	}
@@ -52,7 +52,14 @@
 		display: none;
 	}
 	#timeline_profile{
-		width: 60% !important;
+		width: 80% !important;
+	}
+}
+
+
+@media all and (min-width: 980px) and (max-width: 1024px){
+	#timeline_profile{
+		width: 70% !important;
 	}
 }
 
@@ -68,6 +75,10 @@
 .d-menu li{
 	color: #000000 !important;
 	padding: 5px 0px 5px 15px !important;
+}
+
+#signup{
+	display: none!important;
 }
 
 /* PO 文區塊 */

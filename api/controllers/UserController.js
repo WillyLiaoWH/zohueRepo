@@ -443,6 +443,7 @@ module.exports = {
         //gets only the photo, alias, name, birthday, city,email,gender,phone
         //only the first two are required
         pri_id = req.session.user.id;
+        console.log(req.session.user);
         var id=req.param("id");
         
         if (pri_id === id){
@@ -455,7 +456,7 @@ module.exports = {
             } else {
                 if (usr.length!=0) {
                     var ret= new Object();
-                    ret.alias = usr[0].alias;
+                    ret.alias = usr[0].alias; console.log(usr[0].alias);
                     ret.img = usr[0].img;
                     ret.type = usr[0].type;
                     ret.primaryDisease = usr[0].primaryDisease;
