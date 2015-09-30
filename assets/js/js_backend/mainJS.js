@@ -420,6 +420,7 @@ function loadForumList(articleList){
 function loadEnlManage(){
   document.getElementById("forumManage").style.display="none";
   document.getElementById("userManage").style.display="none";
+  $("#record").hide()
   document.getElementById("enlManage").style.display="block";
   document.getElementById("subscriberManage").style.display="none";
 }
@@ -428,6 +429,7 @@ function loadsubscriberList(){
   document.getElementById("forumManage").style.display="none";
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
+  $("#record").hide();
   document.getElementById("subscriberManage").style.display="block";
   searchEmail=document.getElementById("searchEmail").value;
 
@@ -447,6 +449,24 @@ function loadsubscriberList(){
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
+}
+
+function loadRecord(){
+  $("#forumManage").hide();
+  $("#userManage").hide();
+  $("#enlManage").hide();
+  $("#subscriberManage").hide();
+  $("#record").show();
+  var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
+  $.get("/getRecord",function(records){
+    console.log(records.length)
+    for (i=0;i<records.length;i++){
+      time=new Date(records[i].createdAt).toLocaleString();
+      recordTable+="<tr><td>"+records[i].user.account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+records[i].action+"</td></tr>"
+    }
+    $("#record_table").html(recordTable)
+  })
+  
 }
 
 function sortByChar(sortby){

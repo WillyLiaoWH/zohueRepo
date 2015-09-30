@@ -3,6 +3,9 @@ module.exports = {
   attributes: {
    user : {
       model : "User",
+    },
+    ip:{
+      type:'string',
       required: true
     },
    action:{

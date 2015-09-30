@@ -60,7 +60,7 @@ function setPage() {
   });
 
   $.get("/setArticlePage/"+article_id, function(res){
-    console.log(res);
+    
     if(res.isFollower) {
       $("#follow").html("取消追蹤");
     } else {

@@ -341,7 +341,7 @@ module.exports = {
                             req.session.user = usr[0];
                             req.session.authenticated=true;
                             res.send(usr[0]);
-                            Record.create({user:usr[0],action:"Login"}).exec(function(err,ret){
+                            Record.create({user:usr[0],ip:req.ip,action:"Login"}).exec(function(err,ret){
                                 console.log("使用者登入");
                             })
                         } else {

@@ -2,7 +2,7 @@ body{
   font-family: "微軟正黑體";
 }
 
-#userManage, #forumManage, #enlManage, #subscriberManage{
+#userManage, #forumManage, #enlManage, #subscriberManage,#record{
 	display:none;
 	margin-top:20px;
 }

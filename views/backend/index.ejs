@@ -39,6 +39,7 @@
             <li onclick="loadForumList()" id="forumTab"><a>論壇管理</a></li>
             <!-- <li onclick="loadEnlManage()"><a>發送電子報</a></li> -->
             <li onclick="loadsubscriberList()" ><a>電子報管理</a></li>
+            <li onclick="loadRecord()"><a>查看記錄</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a id="adminLogout">管理員登出</a></li>
@@ -196,6 +197,16 @@
                   </div>
                   <!-- Table -->
                   <table class="table" id="backend_subscriberList"></table>
+                </div>
+              </div>
+            </div>
+            <div id="record">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>查看記錄</h2>
+                </div>
+                <div class="panel-body">
+                  <table class="table" id="record_table"></table>
                 </div>
               </div>
             </div>
