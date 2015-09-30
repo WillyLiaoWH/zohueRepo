@@ -158,7 +158,7 @@ module.exports = {
                         });
                     }
                     else{
-                        Recod.create({user:null,ip:req.ip,action:"READ article "+articlesList[0].id}).exec(function(err,ret){
+                        Record.create({user:null,ip:req.ip,action:"READ article "+articlesList[0].id}).exec(function(err,ret){
                             console.log("開啟文章")
                         });
                     }
