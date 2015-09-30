@@ -50,7 +50,7 @@
 
 @media all and (max-width: 480px){
 	.modal-dialog{
-		width: 95% !important;
+		width: 295px !important;
 	}
 	#more button{
 		float: left;
