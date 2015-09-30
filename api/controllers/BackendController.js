@@ -66,6 +66,19 @@ module.exports = {
             res.send("你不是管理員喔！");
         }
     },
+    getRecord: function(req,res){
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin){
+            Record.find({}).populate('user').exec(function(err,records){
+                if(err){
+                    res.send(500,{err: "DB Error"});
+                }
+                else{
+                    res.send(records);
+                }
+            })
+        }
+    },
 
     getArticles: function(req, res){ // 根據board及category撈文章。
         var board=req.param("board");

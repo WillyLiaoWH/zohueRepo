@@ -341,6 +341,9 @@ module.exports = {
                             req.session.user = usr[0];
                             req.session.authenticated=true;
                             res.send(usr[0]);
+                            Record.create({user:usr[0],ip:req.ip,action:"Login"}).exec(function(err,ret){
+                                console.log("使用者登入");
+                            })
                         } else {
                             res.send(400, { err: "密碼錯誤" });
                         }
@@ -353,10 +356,13 @@ module.exports = {
 	},
 
     logout: function (req, res) {
-        req.session.destroy()
+        Record.create({user:req.session.user,action:"Logout"}).exec(function(err,ret){
+            console.log("使用者登出")
+            req.session.destroy()
+            res.redirect('/home')
+        })
         //req.session.save()
         //req.logout()
-        res.redirect('/home')
     },
 
     checkFull:function(req, res, next){

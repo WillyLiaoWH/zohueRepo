@@ -150,6 +150,20 @@ module.exports = {
                 } else if(articlesList[0].deleted&&articlesList[0].deleted=="true") {
                     res.send(404, "查無此文章");
                 } else {
+                    //找到文章了
+                    //先記錄要讀文章這件事
+                    if (req.session.authenticated){
+                        Record.create({user:req.session.user,ip:req.ip,action:"READ article "+articlesList[0].id}).exec(function(err,ret){
+                            console.log("開啟文章")
+                        });
+                    }
+                    else{
+                        Recod.create({user:null,ip:req.ip,action:"READ article "+articlesList[0].id}).exec(function(err,ret){
+                            console.log("開啟文章")
+                        });
+                    }
+
+
                     if(req.session.authenticated && 
                         req.session.user.id==articlesList[0].author) {
                         isAuthor=true;

@@ -207,15 +207,22 @@ function check(){
   if($("#UserAlias").val() == ""){
     $("label[id = checkAlias]").text("  *這裡也要填喔！");allow_create = 0;
   }else{
-    var len = $("#UserAlias").val().replace(/[^\x00-\xff]/g,"rr").length;
-    if(len > 16){
-      $("label[id = checkAlias]").text("  *暱稱不能超過 8 個中文字 / 16 個英文字喔！");allow_create = 0;
-    }else{$("label[id = checkAlias]").text("");}
+      var len = $("#UserAlias").val().replace(/[^\x00-\xff]/g,"rr").length;
+      if(len > 16){
+        $("label[id = checkAlias]").text("  *暱稱不能超過 8 個中文字 / 16 個英文字喔！");allow_create = 0;
+      }else{$("label[id = checkAlias]").text("");}
   }
+
+  // .search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)== -1)
 
   if($("#UserAccount").val() == ""){
     $("label[id = checkAccount]").text("  *這裡也要填喔！");allow_create = 0;
-  }else{$("label[id = checkAccount]").text("");}
+  }else{
+    if($("#UserAccount").val().search(/^[A-Za-z0-9]+$/)== -1){
+      $("label[id = checkAccount]").text("  *暱稱只能填英文字和數字喔！");allow_create = 0;
+    }else{
+    $("label[id = checkAccount]").text("");}
+  }
 
   if($("#UserPwd").val() == ""){
     $("label[id = checkPwd]").text("  *這裡也要填喔！");allow_create = 0;
@@ -270,12 +277,18 @@ function check(){
 
 function checkIfAccountExist(){
   if($("#UserAccount").val().trim().length > 0){
+
     var account = $("#UserAccount").val();
     var posting = $.post( "/simpleSignupAccountCheck", { account: account}, 
     function(res){
+
       if($("#UserAccount").val().trim().length > 0 ){
-        $("label[id = checkAccount]").removeClass("check").addClass("checkOK");
-        $("label[id = checkAccount]").text("  *您可以使用此帳號！"); //alert(res.responseJSON);
+        if($("#UserAccount").val().search(/^[A-Za-z0-9]+$/)== -1){
+            $("label[id = checkAccount]").text("  *帳號只能為英文字和數字的組合喔！");allow_create = 0;
+          }else{
+            $("label[id = checkAccount]").removeClass("check").addClass("checkOK");
+            $("label[id = checkAccount]").text("  *您可以使用此帳號！"); //alert(res.responseJSON);
+        }
       }
     })
     .error(function(res){
