@@ -275,27 +275,29 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
     $("div#timeline_post_content").html("<em>想對他說什麼呢？</em>")
     $.get( "/friendStatus/"+ori_author,function(res){
       console.log(res)
+      var ul_pre = "";
+      var ul_post = ""
       if (res == "friend"){
         $("#status").html("好友");
         $("#m_status").html("好友");
         $("#friend").html("<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
-        $("#m_friend").html("<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
+        $("#m_RelSettings").html(ul_pre+"<li class='setUpItem' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</li><li class='setUpItem' onclick='addBlack(this.parentNode, "+id+")'>封鎖</li>"+ul_post);
       }
       else if (res == "unconfirmed"){
         $("#status").html("尚未確認好友邀請");
         $("#m_status").html("尚未確認好友邀請");
         $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
-        $("#m_friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>")
+        $("#m_RelSettings").html(ul_pre+"<li class='setUpItem' onclick='confirmFriend(this.parentNode, "+id+")'>加好友</li><li class='setUpItem' onclick='addBlack(this.parentNode, "+id+")'>封鎖</li>"+ul_post)
       }
       else if (res == "sent"){
         $("#status").html("已送出好友邀請");
         $("#m_status").html("已送出好友邀請");
-        $("#friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
-        $("#m_friend").html("&nbsp&nbsp<br><button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
+        $("#friend").html("<button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>");
+        $("#m_RelSettings").html(ul_pre+"<li class='setUpItem' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</li><li class='setUpItem' onclick='addBlack(this.parentNode, "+id+")'>封鎖</li>"+ul_post);
      }
       else {
         $("#friend").html("<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>&nbsp&nbsp&nbsp&nbsp");
-        $("#m_friend").html("<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>&nbsp&nbsp&nbsp&nbsp");
+        $("#m_RelSettings").html(ul_pre+"<li class='setUpItem' onclick='addFriend(this.parentNode, "+id+")'>加好友</li><li class='setUpItem' onclick='addBlack(this.parentNode, "+id+")'>封鎖</li>"+ul_post);
      }
     });
   }

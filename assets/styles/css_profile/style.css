@@ -32,7 +32,6 @@
 	}
 	#friend, #m_friend{
 		display: none;
-
 	}
 	#m_friend button{
 		margin: 8px 3px 14px 3px !important; 
@@ -49,13 +48,28 @@
 	#upper_profile{
 		display: block;
 	}
-	#mobile_upper_profile, m_friend_setting, #m_friend{
+	#mobile_upper_profile, #m_friend_setting, #m_friend{
 		display: none;
 	}
 	#timeline_profile{
 		width: 60% !important;
 	}
 }
+
+.d-menu {
+	border-radius: 10px;
+	border: 1px solid rgba(0,0,0,0);
+	background-color: orange !important;
+	font-size:20px;
+	vertical-align: center;
+	width: 100px !important;
+}
+
+.d-menu li{
+	color: #000000 !important;
+	padding: 5px 0px 5px 15px !important;
+}
+
 /* PO 文區塊 */
 #timeline_post_content{
 	min-height: 100px;

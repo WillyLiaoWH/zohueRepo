@@ -46,10 +46,26 @@
             <text id="m_primaryDisease"></text>
           </span>
           <hr>
-          <div id="m_friend" style="margin: 10px 0px 0px 0px; width: 100%;">
-            <p id="m_status"></p>
-          </div>
-         
+          
+          <!-- <ul class="tabs"> -->
+          <ul class="nav nav-pills" style="font-size: 19px;">
+            <li class="active"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
+            <li><a href="#about" data-toggle="pill" style="padding: 8px 10px;">關於</a></li>
+            
+
+            <li id="m_friend_setting" class="dropdown" >
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 8px 10px;">個人設定
+                <b class="caret"></b>
+              </a>
+              <ul id="m_RelSettings" class="d-menu dropdown-menu dropdown-menu-right">
+                <li><a href="/change">修改會員資料</a></li>
+                <li><a href="/changePassword">更換密碼</a></li>
+                  <!--<li><a href="">隱私權設定</a></li>-->
+                <li><a onclick="subscribe();" style="cursor: pointer;">訂閱電子報</a></li>
+                <li><a onclick="Logout();" style="cursor: pointer;">登出</a></li>
+              </ul>
+            </li>
+          </ul>
       </div>
 
 
@@ -72,19 +88,18 @@
               </div>
             </div>
           </div>
-        </div>
+       
      
      
           <!-- <ul class="tabs"> -->
-          <ul class="nav nav-pills" id="tabs">
+          <ul class="nav nav-pills" id="tabs" style="font-size:19px;">
             <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
             <li><a href="#about" data-toggle="pill">關於</a></li>
-            <li id="m_friend_setting"><a onclick="mobile_friend_setting();" style="cursor:pointer;">設定</a></li>
             <!-- <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
             <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
             <li><a href="#personal_others" data-toggle="pill">更多</a></li>-->
           </ul>
-       
+        </div>
 
   <hr>
         <div class="tab-content">
