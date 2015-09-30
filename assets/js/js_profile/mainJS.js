@@ -302,7 +302,8 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
     });
   }
   else{
-    $("div#timeline_post_content").html("<em>在想什麼呢？</em>")
+    $("div#timeline_post_content").html("<em>在想什麼呢？</em>");
+    $("#m_friend_setting").hide();
   }
   $.post( "/setTimelinePage/"+ori_author, {}, function(res){
     if(res.notfull) {
