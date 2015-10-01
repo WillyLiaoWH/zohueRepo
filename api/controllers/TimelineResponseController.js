@@ -127,7 +127,7 @@ module.exports = {
             TimelineResponse.findOne(TimelineId).populate('nicer').populate("author").exec(function (err, timeline) {
                 timeline.nicer.add(nicer);
                 if(timeline.author.id!=req.session.user.id) {
-                    if(comment.length>20) {
+                    if(timeline.comment.length>20) {
                         var notContent=timeline.comment.substr(0, 20)+"...";
                     } else {
                         var notContent=timeline.comment;
