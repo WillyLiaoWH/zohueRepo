@@ -27,7 +27,7 @@ module.exports = {
         var authcheck = require("../services/authcheck.js")
         authcheck.authCheck(req,function(auth){
             res.send(auth);
-        })
+        });
     },
 	authSet : function (req,res){
 		 function chechAtuh(id, cb){
