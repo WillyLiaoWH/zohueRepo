@@ -437,7 +437,7 @@ module.exports = {
 
     showProfile: function(req, res) {
         //console.log(req.session.user);
-        res.send(JSON.stringify(req.session.user));
+        res.send(req.session.user);
     },
     getProfile: function(req, res){
         //gets only the photo, alias, name, birthday, city,email,gender,phone
