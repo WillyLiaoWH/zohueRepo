@@ -1011,25 +1011,21 @@ function getXMLHttp(){
 
 // ==== Profile 相關
 function showProfile(ori_author){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_showProfile(xmlHttp.responseText);
-    }
-  }
   if (!ori_author){
-    xmlHttp.open("GET", "/showProfile",true);
+    $.get("/showProfile",function(res){
+      HandleResponse2(res);
+    });
   }
   else{
     var addr="/getProfile/"+ori_author;
-    xmlHttp.open("GET", addr, true);
+    $.get(addr,function(res){
+      HandleResponse2(res);
+    });
     $('.auth_btn').hide();
   }
-  
-  xmlHttp.send(null);
 }
-function HandleResponse_showProfile(response){
-  obj = JSON.parse(response);
+function HandleResponse2(response){
+  obj=response;
   var email=obj.email;
   var alias=obj.alias;
   var fname=obj.fname;
@@ -1052,9 +1048,8 @@ function HandleResponse_showProfile(response){
   var primaryDisease=obj.primaryDisease;
   var primaryDiseaseHtml;
   var owner=window.location.toString().split('?')[1];
- 
-  if (typeof owner != "undefined"){
 
+  if (typeof owner != "undefined"){
     //檢查兩個人的關係
     $.get('/authCheck/'+owner,function(auth_status){
       console.log(owner)
