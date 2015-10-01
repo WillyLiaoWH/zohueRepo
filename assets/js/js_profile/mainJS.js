@@ -274,7 +274,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
     var id = ori_author
     $("div#timeline_post_content").html("<em>想對他說什麼呢？</em>")
     $.get( "/friendStatus/"+ori_author,function(res){
-      console.log(res)
+     
       var ul_pre = "";
       var ul_post = ""
       if (res == "friend"){
@@ -1052,6 +1052,7 @@ function HandleResponse2(response){
   if (typeof owner != "undefined"){
     //檢查兩個人的關係
     $.get('/authCheck/'+owner,function(auth_status){
+      console.log(owner)
       if(!auth_status["name"]){
         $('#name_row').hide();
       }
@@ -1077,6 +1078,7 @@ function HandleResponse2(response){
   }
   //檢查拿得到什麼
   $.get('/auth_data',function(auth_status){
+
     var index = ["name","email","gender","phone","bday","city","type"];
     for (var i in index){
       //console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
