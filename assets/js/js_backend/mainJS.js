@@ -281,7 +281,7 @@ function loadUserList(){
     if(typeof(userList)=="string"){
       showDialog("一般訊息",userList);
     }else{
-      userTable="<tr class='tableHead'><th>#</th><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>註冊日期</th><th>正式會員</th><tr>";
+      userTable="<tr class='tableHead'><th>#</th><th width='200px'>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>註冊日期</th><th>正式會員</th><tr>";
 
       for(i=0; i<userList.length; i++) {
         userID=userList[i].id;
@@ -488,7 +488,7 @@ function loadsubscriberList(){
     if(typeof(subscribers)=="string"){
       showDialog("一般訊息",subscribers);
     }else{
-      subscriberTable="<tr class='tableHead'><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
+      subscriberTable="<tr class='tableHead'><th>#</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
       for(i=0; i<subscribers.length; i++){
         createdAt=new Date(subscribers[i].createdAt).toLocaleString();
         subscriberId=subscribers[i].id;
