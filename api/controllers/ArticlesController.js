@@ -165,7 +165,7 @@ module.exports = {
 
 
                     if(req.session.authenticated && 
-                        req.session.user.id==articlesList[0].author) {
+                        req.session.user.id==articlesList[0].author.id) {
                         isAuthor=true;
                     } else {
                         isAuthor=false;

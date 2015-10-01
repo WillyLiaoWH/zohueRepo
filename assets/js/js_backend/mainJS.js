@@ -345,9 +345,9 @@ function loadUserList(){
         userTable+="發文數："+postNum+"<br>文章平均檢舉數："+avgReportNum+"<br>停權狀態：";
 
         if (userList[i].suspended==true){
-          userTable+="是  <span value='"+userID+"' class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
+          userTable+="<span value='"+userID+"' class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
         }else{
-          userTable+="否  <span value='"+userID+"' class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
+          userTable+="<span value='"+userID+"' class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
         }
         
 

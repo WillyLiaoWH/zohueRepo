@@ -1026,6 +1026,7 @@ function showProfile(ori_author){
 }
 function HandleResponse2(response){
   obj=response;
+
   var email=obj.email;
   var alias=obj.alias;
   var fname=obj.fname;
@@ -1049,6 +1050,7 @@ function HandleResponse2(response){
   var primaryDiseaseHtml;
   var owner=window.location.toString().split('?')[1];
 
+  
   if (typeof owner != "undefined"){
     //檢查兩個人的關係
     $.get('/authCheck/'+owner,function(auth_status){
@@ -1122,13 +1124,14 @@ function HandleResponse2(response){
   }else if(type=='N'){
     type="";
   }
-
+  
   $('#primaryDisease').text(primaryDiseaseHtml);
   $('#type').text(type);
   $('#email').text(email);
   $('#name').text(fname+lname);
   $('#alias').text(alias);
   $('#avatar').attr('src',img);
+
 
   $('#m_primaryDisease').text(primaryDiseaseHtml);
   $('#m_type').text(type);
