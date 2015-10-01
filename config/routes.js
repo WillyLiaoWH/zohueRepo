@@ -103,7 +103,7 @@ module.exports.routes = {
 
   'GET /getRecord':'Backend.getRecord',
   'GET /friendStatus/:target_id' : 'User.friendStatus',
-  'GET /authCheck/:account': 'UserAuth.authCheck',   //檢查兩個人的關係
+  'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
