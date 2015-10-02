@@ -101,6 +101,7 @@ module.exports.routes = {
   'POST /recoverUser': 'BackendController.recoverUser',
   'POST /changeFollow': 'ArticlesController.changeFollow',
 
+  'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getRecord':'Backend.getRecord',
   'GET /friendStatus/:target_id' : 'User.friendStatus',
   'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
