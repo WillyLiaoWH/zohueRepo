@@ -391,14 +391,14 @@ function Login(){
         location.replace(url);
       });
     }else{
-      showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！",function(){
+      // showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！",function(){
         //location.replace(url);
         bootbox.dialog({
-          message: "是否前往「完整註冊」？",
+          message: res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔 ~ 完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友。\n快填寫資料加入大家的行列吧！",
           title: "一般訊息",
           buttons: {
             yes: {
-              label: "好",
+              label: "好，立即前往完整註冊",
               className: "btn-primary",
               callback: function() {
                 window.location.assign("/signup");
@@ -406,14 +406,14 @@ function Login(){
             },
             no: {
               label: "以後再說",
-              className: "btn-primary",
+              className: "btn-default",
               callback: function() {
                 location.replace(url);
               }
             }
           }
         });
-      });
+      // });
     }
   }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
