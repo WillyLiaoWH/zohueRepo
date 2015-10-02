@@ -22,6 +22,17 @@
 #friend, #m_friend{
 	float: left;
 }
+#no_post_message{
+	display: none;
+	text-align: center;
+	
+}
+
+.row-center{
+	margin-top: 40px;
+	text-align: center;
+
+}
 
 @media all and (max-width: 980px){
 	#mobile_upper_profile{
@@ -100,7 +111,11 @@
 	margin-bottom:10px;
 }
 
+
+
 /* 動態時報區塊 */
+
+
 .timeline_event{
 	border: 1px solid rgba(102, 141, 60, 0.4);
 	border-radius: 10px;

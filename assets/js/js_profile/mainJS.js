@@ -313,10 +313,20 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         else
           window.location.replace("/home");
       });
-    }else if(res.notfull==false){
-      showDialog("一般訊息","此用戶目前尚未有任何文章！",function(){
-        showProfile(ori_author);
+    }else if(res.suspended==true){
+      
+      showDialog("一般訊息","此用戶目前已被停權，其個人頁面不開放檢視。",function(){
+        if(document.referrer.search("board")!=-1||document.referrer.search("friends")!=-1||document.referrer.search("article")!=-1)
+          window.location.replace(document.referrer);
+        else
+          window.location.replace("/home");
       });
+    }else if(res.notfull==false){
+      // $("#no_post_message").html("目前尚未有任何留言");
+      // showDialog("一般訊息","此用戶目前尚未有任何文章！",function(){
+        $("#no_post_message").show();
+        showProfile(ori_author);
+      // });
     } else {
 
       function sortTimelineList(cb){
@@ -325,7 +335,7 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         });
         cb();
       }
-
+      $("#no_post_message").hide();
       showProfile(ori_author);
       sortTimelineList(function(){
         displayTimelineList(res, pri_account, pri_id, pri_avatar, 0);
