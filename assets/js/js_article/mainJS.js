@@ -68,7 +68,9 @@ function setPage() {
     }
     articleList=res.articleList;
     articleTitle=articleList[0].title;
-    articleContent=articleList[0].content;
+    var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
+    articleContent=articleList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+
     board=articleList[0].board;
     updateClickNum();
 
