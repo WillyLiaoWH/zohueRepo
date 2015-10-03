@@ -9,10 +9,10 @@ function editProfile(){
 
 var app = angular.module('homeApp', []);
 app.controller('announcementCtrl', function($scope, $http) {
-	$http.get("http://localhost/getAnnouncement").success(function(response) {
+	$http.get("http://zohue.im.ntu.edu.tw/getAnnouncement").success(function(response) {
     	$scope.announcement = response;
     });
-    $http.get("http://localhost/getTopArticles").success(function(response) {
+    $http.get("http://zohue.im.ntu.edu.tw/getTopArticles").success(function(response) {
     	$scope.topArticles = response;
     });
 });
