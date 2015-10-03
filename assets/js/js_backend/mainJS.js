@@ -203,7 +203,6 @@ $(document).ready(function(){
     //   showDialog("一般訊息",res);
     // });
     var userID = $(this).attr("value");
-    
     var promptOptions = {
       title: "停權原因（必填）",
       buttons: {

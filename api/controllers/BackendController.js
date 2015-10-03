@@ -207,5 +207,11 @@ module.exports = {
             });
         }
     },
+
+    appeal: function(req, res) {
+        var account = req.param("account");
+        var appeal = req.param("appeal");
+        
+    }
 };
 

@@ -100,6 +100,7 @@ module.exports.routes = {
   'POST /suspendUser': 'BackendController.suspendUser',
   'POST /recoverUser': 'BackendController.recoverUser',
   'POST /changeFollow': 'ArticlesController.changeFollow',
+  'POST /appeal': 'BackendController.appeal',
 
   'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getTopArticles': 'Home.getTopArticles',
