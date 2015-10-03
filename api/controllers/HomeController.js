@@ -20,11 +20,24 @@ module.exports = {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
+            	var nowTime = new Date();
             	var async = require('async');
+            	var index = 0;
+            	async.each(articles, function(art, callback) {
+				  articles[index].topLevel = (articles[index].nicer.length + articles[index].clickNum);
+				  console.log(new Date(articles[index].createdAt));
+				  console.log(nowTime);
+				  console.log((nowTime - new Date(articles[index].createdAt))/(24*3600*1000));
+				  index++;
 
-
-            	res.send(articles[0]);
-                //res.send(Announcement[0].articles.slice(0,5));
+				  callback();
+				}, function(err){
+				    if( err ) {
+				      console.log('A file failed to process');
+				    } else {
+				      	res.send(articles);
+				    }
+				});
             }
 		});
 	},
