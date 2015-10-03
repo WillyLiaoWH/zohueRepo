@@ -16,26 +16,37 @@ module.exports = {
 		});
 	},
 	getTopArticles: function(req, res){
+		function compare(a,b) {
+			if (a.topLevel < b.topLevel)
+		    	return 1;
+		  	if (a.topLevel > b.topLevel)
+		    	return -1;
+		  	return 0;
+		}
+
 		Articles.find({deleted: "false"}).populate('nicer').exec(function(err, articles) {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
+            	var resultArticles = [];
             	var nowTime = new Date();
             	var async = require('async');
             	var index = 0;
             	async.each(articles, function(art, callback) {
-				  articles[index].topLevel = (articles[index].nicer.length + articles[index].clickNum);
-				  console.log(new Date(articles[index].createdAt));
-				  console.log(nowTime);
-				  console.log((nowTime - new Date(articles[index].createdAt))/(24*3600*1000));
-				  index++;
-
-				  callback();
+				  	var weeks = Math.floor((nowTime - new Date(articles[index].createdAt))/(24*3600*1000)/7);
+				  	resultArticles.push({
+				  		topLevel: (articles[index].nicer.length + articles[index].clickNum)/weeks,
+				  		title: articles[index].title,
+				  		href: './article/' + articles[index].id
+				  	});
+				  	index++;
+				  	callback();
 				}, function(err){
 				    if( err ) {
-				      console.log('A file failed to process');
+				      console.log('Error');
 				    } else {
-				      	res.send(articles);
+						resultArticles.sort(compare);
+				      	res.send(resultArticles.slice(0,5));
 				    }
 				});
             }
