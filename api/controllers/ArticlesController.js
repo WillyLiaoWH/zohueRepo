@@ -15,7 +15,7 @@ module.exports = {
               classification="";
               break;
             case "motion":
-              classification="心情"
+              classification="病況與心情"
               break;
             case "share":
               classification="分享";
