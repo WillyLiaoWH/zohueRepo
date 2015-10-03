@@ -203,11 +203,35 @@ $(document).ready(function(){
     //   showDialog("一般訊息",res);
     // });
     var userID = $(this).attr("value");
-    $.post( "/suspendUser", { id: userID}, function(res){
-      $("#backend_userList tr span[value="+userID+"]").switchClass("glyphicon-ban-circle","glyphicon-repeat");
-      $("#backend_userList tr span[value="+userID+"]").switchClass("unDelUser","delUser");
-      showDialog("一般訊息",res);
-    });  
+    
+    var promptOptions = {
+      title: "停權原因（必填）",
+      buttons: {
+        confirm: {
+          label: "確認送出"
+        },
+        cancel: {
+          label: "取消"
+        }
+      },
+      callback: function(result) {  
+        if(result != "" && result !== null){                                           
+          console.log("Hi "+result);
+          $.post( "/suspendUser", { id: userID, reason: result}, function(res){
+            $("#backend_userList tr span[value="+userID+"]").switchClass("glyphicon-ban-circle","glyphicon-repeat");
+            $("#backend_userList tr span[value="+userID+"]").switchClass("unDelUser","delUser");
+            showDialog("一般訊息",res);
+          });   
+
+          $.get("/getSuspendReason", function(res){
+            console.log(JSON.stringify(res));
+          });
+
+        }              
+      }
+    };
+
+    bootbox.prompt(promptOptions);
   });
 
   // "回復"被停權的使用者
