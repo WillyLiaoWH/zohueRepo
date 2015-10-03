@@ -400,9 +400,8 @@ function Login(){
                 var appeal = $('#appeal').val();
                 if(appeal!=""){
                   $.post( "/appeal", { account: account, appeal: appeal}, function(res){
-                    showDialog("一般訊息", "您的申訴已成功送出，我們會盡快處理，謝謝！");
+                    showDialog("一般訊息", res);
                   });
-                  alert("shit");
                 }
               }
             }

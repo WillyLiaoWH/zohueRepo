@@ -327,7 +327,6 @@ module.exports = {
 	login: function (req, res) {
         var account = req.param("account");
         var password = req.param("password");
-         
         User.findByAccount(account).exec(function(err, usr) {
             if (err) {
                 res.send(500, { err: "DB Error" });

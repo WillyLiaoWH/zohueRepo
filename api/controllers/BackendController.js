@@ -211,7 +211,19 @@ module.exports = {
     appeal: function(req, res) {
         var account = req.param("account");
         var appeal = req.param("appeal");
-        
+        SuspendReason.find({account:account}).exec(function(err, suspendReason){
+            if(err){
+                res.send(500,{err: "DB Error" });
+            }else{
+                var getOneRecord = suspendReason.pop();
+                if(typeof getOneRecord.appeal=='undefined'){
+                    getOneRecord.appeal = [{"date": new Date().toISOString(), "appeal": appeal}];
+                }else{
+                    getOneRecord.appeal.push({"date": new Date().toISOString(), "appeal": appeal});
+                }
+                getOneRecord.save(function(err){res.send("您的申訴已成功送出，我們會盡快處理，謝謝！");});
+            }
+        });
     }
 };
 
