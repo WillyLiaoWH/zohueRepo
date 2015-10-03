@@ -69,7 +69,7 @@
           <tr class="active" ng-repeat="todo in topArticles">
             <td><b>{{ todo.createdAt.toString().substring(0, 10) }}</b></td>
             <td>
-              <a href="./article/{{ todo.href }}">{{ todo.title }}</a>
+              <a href="{{ todo.href }}">{{ todo.title }}</a>
             </td>
           </tr>
         </tbody>

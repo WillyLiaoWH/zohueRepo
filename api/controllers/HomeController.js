@@ -11,7 +11,6 @@ module.exports = {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
-            	console.log(Announcement[0].articles);
                 res.send(Announcement[0].articles.slice(0,5));
             }
 		});
