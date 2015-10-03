@@ -6,6 +6,16 @@
  */
 
 module.exports = {
+    getSuspendReason: function(req, res) {
+        SuspendReason.find().exec(function(err,reason){
+            if(err){
+                res.send(500,{err: "DB Error"});
+            }else{
+                res.send(reason);
+            }
+        })
+    },
+
   	index: function(req, res) {
 	    res.view({
 	    	layout: false
@@ -153,15 +163,30 @@ module.exports = {
 
     suspendUser: function(req, res) {
         var userID = req.param("id");
+        var reason = req.param("reason");
         var isAdmin = req.session.user.isAdmin;
         if(isAdmin == true){
+
             User.update({id: userID}, {suspended: true}).exec(function(err) {
                 if(err) {
                     console.log(error);
                     res.send(500,{err: "DB Error" });
                 } else {
-                    console.log('The user account has been suspended.');
-                    res.send("已停止此帳號的使用權限。");
+                    User.find({ id: userID }, {select: ['account']}).exec(function(err, userAccount) {
+                        if (err) {
+                            res.send(500, { err: "DB Error" });
+                        } else {
+                            SuspendReason.create({account: userAccount[0].account, reason: reason}).exec(function(error, response) {
+                                if(error){
+                                    res.send(500,{err: "DB Error" });
+                                }else{
+                                    console.log('The user account has been suspended.');
+                                    res.send("已停止此帳號的使用權限。");
+                                }
+                            });  
+                            //console.log(userAccount[0].account);
+                        }
+                    });     
                 }
             });
         }

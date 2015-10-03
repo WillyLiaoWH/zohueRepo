@@ -17,8 +17,7 @@ module.exports = {
       required: true
     },
     appeal:{
-      type: 'json',
-      required: true
+      type: 'json'
     }
   }
 };
