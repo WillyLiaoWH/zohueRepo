@@ -357,8 +357,9 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // è
   var author_id=res["id"];
   var timeInMs = new Date().getTime();
 
+  var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
   for(i in res["timelinesList"]){
-    var content = res["timelinesList"][i].content;
+    var content = res["timelinesList"][i].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
     var contentImg = res["timelinesList"][i].contentImg;
     var dif = timeInMs-Date(updatedTime);
     var temp = new Date(res["timelinesList"][i].updatedTime).toLocaleString();
@@ -389,7 +390,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // è
       var comment_author_avater=element_res.img;
       var comment_author=element_res.alias;
       //console.log(element_res);
-      var comment_content=element_res.comment;
+      var comment_content=element_res.comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
       var comment_contentImg=element_res.comment_image;
       var comment_ID = element_res.id;
       //console.log(element_res);

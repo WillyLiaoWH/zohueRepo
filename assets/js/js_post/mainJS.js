@@ -69,7 +69,6 @@ function post() {
       allowed=false;
     });
   }
-
   postContent = postContent+"<div id='postContent_image'>"+postContent_image+"</div>";
   postContent = postContent.replace(/src=\"images/g, "src=\"..\/images");
   postContent = postContent.replace(/dummy href=/g, "a href=");
@@ -96,6 +95,7 @@ function post() {
           callback: function() {
             form.classification[3].checked=true;
             postClass="其它";
+            post();
           }
         },
         no: {
@@ -121,9 +121,7 @@ function post() {
     var url = document.URL;
     var regex = /.*post+\/+(.*)/;
     var board=url.replace(regex, "$1");
-    if(admin = true){
-      post 
-    }
+
     var posting = $.post( "/postArticle", { title: postTitle, content: postContent, classification: postClass, responseNum: responseNum, clickNum: clickNum, board: board}, function(res){
       showDialog("一般訊息","文章發表成功！",function(){
         window.location.replace("/article/"+res[0].id);
