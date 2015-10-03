@@ -7,10 +7,11 @@
 
 module.exports = {
 	getAnnouncement: function(req, res){
-		Boards.find({title: "最新活動"}).sort('createdAt DESC').populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt']}).exec(function(err, Announcement) {
+		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt'], sort: 'createdAt DESC'}).exec(function(err, Announcement) {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
+            	console.log(Announcement[0].articles);
                 res.send(Announcement[0].articles.slice(0,5));
             }
 		});
