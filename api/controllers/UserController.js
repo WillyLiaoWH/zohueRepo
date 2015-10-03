@@ -333,14 +333,19 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 if (usr.length!=0) {
-                    if(usr[0].suspended==true){
-                        res.send(401, {err: "由於您的帳號有不當使用之情況，我們已停止此帳號的使用權限！"});
+                    if(usr[0].suspended==true){ //處理帳號被停權時的後續動作: 送出停權訊息與停權原因。
+                        SuspendReason.find({account: account}, {select: ['reason']}).exec(function(err,reason){
+                            if (err) {
+                                res.send(500, { err: "DB Error" });
+                            } else {
+                                res.send({suspended: true, reason:reason[reason.length-1].reason}); 
+                            }
+                        });
                     }else{
                         if (passwordHash.verify(password, usr[0].password)) {
-                        //if (password==usr[0].password) {
                             req.session.user = usr[0];
                             req.session.authenticated=true;
-                            res.send(usr[0]);
+                            res.send({suspended: false, isFullSignup:usr[0].isFullSignup, alias:usr[0].alias});
                             Record.create({user:usr[0],ip:req.ip,action:"Login"}).exec(function(err,ret){
                                 console.log("使用者登入");
                             })

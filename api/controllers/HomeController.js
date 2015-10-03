@@ -7,7 +7,7 @@
 
 module.exports = {
 	getAnnouncement: function(req, res){
-		Boards.find({title: "最新活動"}).sort('createdAt DESC').populate('articles',{deleted:'false'}).exec(function(err, Announcement) {
+		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt'], sort: 'createdAt DESC'}).exec(function(err, Announcement) {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
@@ -37,7 +37,8 @@ module.exports = {
 				  	resultArticles.push({
 				  		topLevel: (articles[index].nicer.length + articles[index].clickNum)/weeks,
 				  		title: articles[index].title,
-				  		href: './article/' + articles[index].id
+				  		href: './article/' + articles[index].id,
+				  		createdAt: articles[index].createdAt
 				  	});
 				  	index++;
 				  	callback();
