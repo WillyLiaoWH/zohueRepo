@@ -35,7 +35,7 @@ module.exports = {
             	async.each(articles, function(art, callback) {
 				  	var weeks = Math.floor((nowTime - new Date(articles[index].createdAt))/(24*3600*1000)/7);
 				  	resultArticles.push({
-				  		topLevel: (articles[index].nicer.length + articles[index].clickNum)/weeks,
+				  		topLevel: (articles[index].nicer.length*5 + articles[index].clickNum)/weeks,
 				  		title: articles[index].title,
 				  		href: './article/' + articles[index].id,
 				  		createdAt: articles[index].createdAt
