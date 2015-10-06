@@ -386,36 +386,56 @@ function Login(){
     showDialog("錯誤訊息","帳號與密碼都要輸入喔！");
   } else {
     var posting = $.post( "/login", { account: account, password: password}, function(res){
-    if(res.isFullSignup==true){
-      showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
-        location.replace(url);
-      });
-    }else{
-      showDialog("一般訊息",res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔！完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友！\n快填寫資料加入大家的行列吧！",function(){
-        //location.replace(url);
+      if(res.suspended==true){
         bootbox.dialog({
-          message: "是否前往「完整註冊」？",
-          title: "一般訊息",
+          title: "此帳號已被停權",
+          message: '由於您的帳號可能有不正常的使用情況，我們已停止此帳號的使用權限。<br>'
+            +'停權原因：' + res.reason + '<br><br>如有任何問題，您可以利用以下「申訴欄位」向作夥反應。'
+            +'<textarea id="appeal" placeholder="申訴欄位" class="form-control" style="margin-top:10px;" rows="3"></textarea>',
           buttons: {
-            yes: {
-              label: "好",
+            confirm: {
+              label: "確認",
               className: "btn-primary",
-              callback: function() {
-                window.location.assign("/signup");
-              }
-            },
-            no: {
-              label: "以後再說",
-              className: "btn-primary",
-              callback: function() {
-                location.replace(url);
+              callback: function () {
+                var appeal = $('#appeal').val();
+                if(appeal!=""){
+                  $.post( "/appeal", { account: account, appeal: appeal}, function(res){
+                    showDialog("一般訊息", res);
+                  });
+                }
               }
             }
           }
         });
-      });
-    }
-  }).error(function(res){
+      }else{
+        if(res.isFullSignup==true){
+          showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
+            location.replace(url);
+          });
+        }else{
+          bootbox.dialog({
+            message: res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔 ~ 完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友。\n快填寫資料加入大家的行列吧！",
+            title: "一般訊息",
+            buttons: {
+              yes: {
+                label: "好，立即前往完整註冊",
+                className: "btn-primary",
+                callback: function() {
+                window.location.assign("/signup");
+              }
+              },
+              no: {
+                label: "以後再說",
+                className: "btn-default",
+                callback: function() {
+                  location.replace(url);
+                }
+              }
+            }
+          });  
+        }
+      }
+    }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
   }

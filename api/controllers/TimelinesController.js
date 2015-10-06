@@ -52,7 +52,7 @@ module.exports = {
     postTimeline: function(req, res){
         function checkAtuh(cb){
             if(typeof req.session.user === 'undefined'){
-                res.send(500,{err: "請先登入才能發表文章！" });
+                res.send(500,{err: "請先登入才能留言！" });
             }else{
                 cb();
             }
@@ -221,11 +221,16 @@ module.exports = {
                     if(!user[0].isFullSignup) {
                         res.send({notfull: true});
                     } else {
-                        if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
-                            res.send({notfull: false});
+                        if (user[0].suspended){
+                            res.send({suspended: true});    
                         }else{
-                            cb(user[0]);
+                            if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
+                                res.send({notfull: false});
+                            }else{
+                                cb(user[0]);
+                            }
                         }
+                        
                     }
                 }
                 // sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {

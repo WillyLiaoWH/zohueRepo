@@ -101,7 +101,10 @@ module.exports.routes = {
   'POST /suspendUser': 'BackendController.suspendUser',
   'POST /recoverUser': 'BackendController.recoverUser',
   'POST /changeFollow': 'ArticlesController.changeFollow',
+  'POST /appeal': 'BackendController.appeal',
 
+  'GET /getAnnouncement': 'Home.getAnnouncement',
+  'GET /getTopArticles': 'Home.getTopArticles',
   'GET /getRecord':'Backend.getRecord',
   'GET /friendStatus/:target_id' : 'User.friendStatus',
   'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
@@ -124,6 +127,7 @@ module.exports.routes = {
   'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /checkAdmin': 'Backend.checkAdmin',
+  'GET /getSuspendReason': 'Backend.getSuspendReason',
   'GET /profile': {
     view: 'profile/index',
     locals: {

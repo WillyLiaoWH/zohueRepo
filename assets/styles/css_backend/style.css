@@ -114,12 +114,20 @@ body{
   color:#467500;
 }
 
-tr:hover{
-  background-color:#F0F0F0;
-}
+/*tr:hover{
+  background-color:#ddd;
+}*/
 
 .tableHead{
-  background-color:#F0F0F0;
+  background-color:#f5f5f5;
+}
+
+#backend_userList tr.userRecord:hover{
+  cursor:pointer;
+}
+
+#backend_userList tr.userInfo:hover{
+  background-color: transparent;
 }
 
 .searchButton{

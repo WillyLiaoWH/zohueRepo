@@ -74,7 +74,8 @@ function setPage() {
         table+="<a href='/profile/?"+res[i].from.id+"'>"+res[i].from.alias+"</a>"+authorType+"&nbsp"
         table+=notMessage[parseInt(res[i].notType)-1];
         if(res[i].content) {
-          table+="「"+res[i].content+'」';
+          var regEx = /<[^>]*>/g;
+          table+=("「"+res[i].content+'」').replace(regEx, "");
         }
         switch(res[i].notType) {
           case "2":

@@ -77,6 +77,11 @@ $(document).ready(function(){
     });
   }
 
+  // 帳號管理時，點選某一使用者record，會收起已經打開的其他record。
+  $(document).on("click","#backend_userList .userRecord",function(e){
+     $("#backend_userList .userInfo").removeClass("in");
+  });
+
   // 論壇管理排序文章
   $(document).on("click",".sortByChar",function(e){
     sortByChar($(this).attr("value"));
@@ -191,20 +196,55 @@ $(document).ready(function(){
 
   // "停權"使用者
   $(document).on("click",".unDelUser",function(e){
-    var userID = $(this).parent().parent().attr("value");
-    $.post( "/suspendUser", { id: userID}, function(res){
-      $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-ban-circle","glyphicon-repeat");
-      $("#backend_userList tr[value="+userID+"] span").last().switchClass("unDelUser","delUser");
-      showDialog("一般訊息",res);
-    }); 
+    // var userID = $(this).parent().parent().attr("value");
+    // $.post( "/suspendUser", { id: userID}, function(res){
+    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-ban-circle","glyphicon-repeat");
+    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("unDelUser","delUser");
+    //   showDialog("一般訊息",res);
+    // });
+    var userID = $(this).attr("value");
+    var promptOptions = {
+      title: "停權原因（必填）",
+      buttons: {
+        confirm: {
+          label: "確認送出"
+        },
+        cancel: {
+          label: "取消"
+        }
+      },
+      callback: function(result) {  
+        if(result != "" && result !== null){                                           
+          console.log("Hi "+result);
+          $.post( "/suspendUser", { id: userID, reason: result}, function(res){
+            $("#backend_userList tr span[value="+userID+"]").switchClass("glyphicon-ban-circle","glyphicon-repeat");
+            $("#backend_userList tr span[value="+userID+"]").switchClass("unDelUser","delUser");
+            showDialog("一般訊息",res);
+          });   
+
+          $.get("/getSuspendReason", function(res){
+            console.log(JSON.stringify(res));
+          });
+
+        }              
+      }
+    };
+
+    bootbox.prompt(promptOptions);
   });
 
   // "回復"被停權的使用者
   $(document).on("click",".delUser",function(e){
-    var userID = $(this).parent().parent().attr("value");
+    // var userID = $(this).parent().parent().attr("value");
+    // $.post( "/recoverUser", { id: userID}, function(res){
+    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-repeat","glyphicon-ban-circle");
+    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("delUser","unDelUser");
+    //   showDialog("一般訊息",res);
+    // }); 
+    var userID = $(this).attr("value");
     $.post( "/recoverUser", { id: userID}, function(res){
-      $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-repeat","glyphicon-ban-circle");
-      $("#backend_userList tr[value="+userID+"] span").last().switchClass("delUser","unDelUser");
+      $("#backend_userList tr span[value="+userID+"]").switchClass("glyphicon-repeat","glyphicon-ban-circle");
+      $("#backend_userList tr span[value="+userID+"]").switchClass("delUser","unDelUser");
       showDialog("一般訊息",res);
     }); 
   });
@@ -264,7 +304,7 @@ function loadUserList(){
     if(typeof(userList)=="string"){
       showDialog("一般訊息",userList);
     }else{
-      userTable="<tr class='tableHead'><th>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>E-mail</th><th>註冊日期</th><th>正式會員</th><th>發文數</th><th>文章平均檢舉數</th><th>停權</th><tr>";
+      userTable="<tr class='tableHead'><th>#</th><th width='200px'>帳號</th><th>姓名</th><th>暱稱</th><th>性別</th><th>身分別</th><th>註冊日期</th><th>正式會員</th><tr>";
 
       for(i=0; i<userList.length; i++) {
         userID=userList[i].id;
@@ -272,6 +312,16 @@ function loadUserList(){
         createdAt=new Date(userList[i].createdAt).toLocaleString();
         postNum = userList[i].articlesPost.length;
         totalReport=0;
+        userType=getType(userList[i].type);
+        disease=getPrimaryDisease(userList[i].primaryDisease);
+        birthday=getBirthday(userList[i].birthday);
+        address=userList[i].postalCode+userList[i].addressCity+userList[i].addressDistrict+userList[i].address;
+
+        if(userList[i].gender=="M"){
+          gender="男性";
+        }else{
+          gender="女性";
+        }
 
         for(j=0; j<userList[i].articlesPost.length; j++) {
           totalReport+=userList[i].articlesPost[j].report.length;
@@ -282,24 +332,48 @@ function loadUserList(){
           avgReportNum = formatFloat(totalReport/postNum);
         }
         
-        userTable+="<tr value="+userID+"><td>"+userList[i].account+"</td><td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+userList[i].gender+"</td>";
-        userTable+="</td><td>"+userList[i].type+"</td><td>"+userList[i].email+"</td><td>"+createdAt+"</td>";
+        userTable+="<tr class='userRecord' value="+userID+" data-toggle='collapse' href='#profile"+userID+"' aria-expanded='false'><td>"+(i+1)+"</td><td>"+userList[i].account+"</td>";
+        userTable+="<td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+gender+"</td></td><td>"+userType+"</td><td>"+createdAt+"</td>";
+        
         if (userList[i].isFullSignup==false){
-          userTable+="<td><span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span></td>";
+          userTable+="<td><span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span></td><tr>";
         }else{
-          userTable+="<td><span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span></td>";
+          userTable+="<td><span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span></td></tr>";
         }
-        userTable+="<td>"+postNum+"</td>";
-        if (avgReportNum>=3){
-          userTable+="<td>"+avgReportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' title='文章平均檢舉數超過3'></span></td>";
+        // userTable+="<td>"+postNum+"</td>";
+        // if (avgReportNum>=3){
+        //   userTable+="<td>"+avgReportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' title='文章平均檢舉數超過3'></span></td>";
+        // }else{
+        //   userTable+="<td>"+avgReportNum+"</td>";
+        // }
+        // if (userList[i].suspended==true){
+        //   userTable+="<td><span class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
+        // }else{
+        //   userTable+="<td><span class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
+        // }
+
+        userTable+="<tr class='collapse userInfo' id='profile"+userID+"'><td></td><td class='text-right'><img src='"+userList[i].img+"' height='80px' width='80px'></td>";
+        userTable+="<td colspan='2'>帳號："+userList[i].account+"<br>姓名："+fullName+"<br>暱稱："+userList[i].alias+"<br>";
+        userTable+="性別："+gender+"<br>身分："+userType+"<br>主要/主治疾病："+disease+"<br>生日："+birthday+"<br>";
+        userTable+="Email："+userList[i].email+"<br>電話："+userList[i].phone+"<br>地址："+address+"<br>";
+        userTable+="自我介紹："+userList[i].selfIntroduction+"<br>註冊日期："+createdAt+"</td>";
+        userTable+="<td colspan='7'>正式會員：";
+
+        if (userList[i].isFullSignup==false){
+          userTable+="否<br>";
         }else{
-          userTable+="<td>"+avgReportNum+"</td>";
+          userTable+="是<br>";
         }
+
+        userTable+="發文數："+postNum+"<br>文章平均檢舉數："+avgReportNum+"<br>停權狀態：";
+
         if (userList[i].suspended==true){
-          userTable+="<td><span class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
+          userTable+="<span value='"+userID+"' class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
         }else{
-          userTable+="<td><span class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
+          userTable+="<span value='"+userID+"' class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
         }
+        
+
       }
       document.getElementById("backend_userList").innerHTML = userTable;
     }    
@@ -437,7 +511,7 @@ function loadsubscriberList(){
     if(typeof(subscribers)=="string"){
       showDialog("一般訊息",subscribers);
     }else{
-      subscriberTable="<tr class='tableHead'><th>編號</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
+      subscriberTable="<tr class='tableHead'><th>#</th><th>電子郵件地址</th><th>訂閱日期</th><th>刪除訂閱者</th><tr>";
       for(i=0; i<subscribers.length; i++){
         createdAt=new Date(subscribers[i].createdAt).toLocaleString();
         subscriberId=subscribers[i].id;
@@ -612,4 +686,59 @@ function showDialog(title, message, cb){
       }
     }
   });
+}
+
+function getType(type){
+  var userType="";
+  if(type=="P"){
+    userType="病友";
+  }else if(type=="N"){
+    userType="民眾";
+  }else if(type=="D"){
+    userType="醫師";
+  }else if(type=="S"){
+    userType="社工師";
+  }else if(type=="F"){
+    userType="家屬";
+  }else if(type=="RN"){
+    userType="護理師";
+  }else{
+    userType="N/A";
+  }
+  return userType;
+}
+
+function getPrimaryDisease(disease){
+  var primaryDisease="";
+  if(disease=="1"){
+    primaryDisease="鼻咽癌";
+  }else if(disease=="2"){
+    primaryDisease="鼻腔/副鼻竇癌";
+  }else if(disease=="3"){
+    primaryDisease="口腔癌";
+  }else if(disease=="4"){
+    primaryDisease="口腔癌";
+  }else if(disease=="5"){
+    primaryDisease="下咽癌";
+  }else if(disease=="6"){
+    primaryDisease="喉癌";
+  }else if(disease=="7"){
+    primaryDisease="唾液腺癌";
+  }else if(disease=="8"){
+    primaryDisease="甲狀腺癌";
+  }else if(disease=="999"){
+    primaryDisease="其它";
+  }else{
+    primaryDisease="N/A";
+  }
+  return primaryDisease;
+}
+
+function getBirthday(date){
+  var b = new Date(date)
+  var Y = b.getFullYear().toString() == "NaN" ? "" : b.getFullYear()-1911;
+  var M = b.getMonth()+1;
+  var D = b.getDate();
+  var birthday="民國"+Y+"年"+M+"月"+D+"日";
+  return birthday;
 }

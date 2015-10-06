@@ -15,7 +15,7 @@ module.exports = {
               classification="";
               break;
             case "motion":
-              classification="心情"
+              classification="病況與心情"
               break;
             case "share":
               classification="分享";
@@ -217,7 +217,7 @@ module.exports = {
 
 
                     if(req.session.authenticated && 
-                        req.session.user.id==articlesList[0].author) {
+                        req.session.user.id==articlesList[0].author.id) {
                         isAuthor=true;
                     } else {
                         isAuthor=false;

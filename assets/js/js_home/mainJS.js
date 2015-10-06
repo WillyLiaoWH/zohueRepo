@@ -4,3 +4,15 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 function editProfile(){
   content.style.display="none";
 }
+
+
+
+var app = angular.module('homeApp', []);
+app.controller('announcementCtrl', function($scope, $http) {
+	$http.get("./getAnnouncement").success(function(response) {
+    	$scope.announcement = response;
+    });
+    $http.get("./getTopArticles").success(function(response) {
+    	$scope.topArticles = response;
+    });
+});
