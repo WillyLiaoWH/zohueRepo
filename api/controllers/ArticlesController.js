@@ -660,28 +660,13 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else{
                 if(found){
-                    // 搜尋完alias後，一個一個串起來
-                    var obj = [];
-                    for(f in found){
-                        if(found[f].author){
-                            //console.log(found[f].author);
-                            obj.push(found[f]);
-                        }
-                    }
+                    
                     Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{
                             if(found){
-                                for(o in obj){
-                                    var exist=false;
-                                    for(f in found) {
-                                        if(found[f].id==obj[o].id)
-                                            exist=true;
-                                    }
-                                    if(!exist)
-                                        found.push(obj[o]);
-                                }
+                               
                                 Boards.find({id: board}).populate('category').exec(function(err, board) {
                                     if(err) {
                                         res.send(500, { err: "DB Error" });
@@ -741,33 +726,25 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else{
                 if(found){
-                    // 搜尋完alias後，一個一個串起來
-                    var obj = [];
-                    for(f in found){
-                        if(found[f].author){
-                            //console.log(found[f].author);
-                            obj.push(found[f]);
-                        }
-                    }
-                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
+                
+                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").populate("board").exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{
-                            if(found){
-                                for(o in obj){
-                                    var exist=false;
-                                    for(f in found) {
-                                        if(found[f].id==obj[o].id)
-                                            exist=true;
-                                    }
-                                    if(!exist)
-                                        found.push(obj[o]);
+
+                            Boards.find({id: found[0].board.id}).populate('category').exec(function(err, board) {
+                                if(err) {
+                                    res.send(500, { err: "DB Error" });
+                                } else {
+                                    Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                                        boards=boardsList;
+                                        res.send({articlesList: found, board: board[0]});
+                                    });
                                 }
-                               res.send({articlesList: found});
-                            }else{
-                                console.log("not found");
-                                res.send(500, { err: "找不到喔！" });
-                            }
+                            });
+
+
+
                         }
                     });
                 }else{

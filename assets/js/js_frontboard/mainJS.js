@@ -118,7 +118,7 @@ function setPage(page, keyword, sort) {
         //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
         setTimeout(function(){
           setSearchResult(res_search, page);
-        }, 800);
+        }, 1000);
       }
     }).error(function(res_search){
       showDialog("錯誤訊息","查無資料！");
@@ -212,7 +212,6 @@ function cancleSearch(){
 // 產生預設/搜尋結果畫面
 function setSearchResult(articleList, page){
     //排序文章
-
     articleList.sort(function(a, b) {
       return new Date(b.lastResponseTime)-new Date(a.lastResponseTime)+ b.responseNum-a.responseNum + b.nicer-a.nicer;
     });
@@ -224,7 +223,7 @@ function setSearchResult(articleList, page){
     myTable+="<td style='width:6%; text-align:center;'>推薦</td>";
     myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
 
-    articleNum=20;
+    articleNum=20; 
 
     lastPageArticlesNum=articleList.length%articleNum;
     pageNum=(articleList.length-lastPageArticlesNum)/articleNum;
@@ -252,7 +251,7 @@ function setSearchResult(articleList, page){
       pageNum=articleList.length/20+1;
     }
     if(page!=pageNum) {
-      for(i=0; i<articleNum; i++) {
+      for(i=0; i<articleNum; i++) { //alert(i + "~" + articleList[i].board.category + "~" + categoryList[0]);
         clickNum=articleList[i+articleNum*(page-1)].clickNum;
         responseNum=articleList[i+articleNum*(page-1)].responseNum;
         niceNum=articleList[i+articleNum*(page-1)].nicer.length;
@@ -393,7 +392,7 @@ function setSearchResult(articleList, page){
         }
 
         if(i%2==0){
-          myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>"; 
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
@@ -422,6 +421,7 @@ function setSearchResult(articleList, page){
   }
 
  function setBoardList(){
+  if($("#boardlist").html().trim()==""){
     boardList=[];
     for(i=1; i <= categoryList.length; i++){ 
       $.ajax({
@@ -449,6 +449,7 @@ function setSearchResult(articleList, page){
     }
     $("#boardlist").html(catHtml);
   }
+}
 
 
 
