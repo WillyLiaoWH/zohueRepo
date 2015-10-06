@@ -532,10 +532,10 @@ function checkNot() {
       document.getElementById('notification').innerHTML="&nbsp;通知 ("+res.num+")";
       $("#mobile_notification").html("&nbsp;通知 ("+res.num+")");
       if(res.num==0) {
-        $("#notification").removeClass("orange").addClass("gray");
+        $("#notification").removeClass("orange").addClass("lightgray");
         $("#mobile_notification").removeClass("orange").addClass("lightgray");
       } else {
-        $("#notification").removeClass("gray").addClass("orange");
+        $("#notification").removeClass("lightgray").addClass("orange");
         $("#mobile_notification").removeClass("lightgray").addClass("orange"); 
         $("#mobile_notification").css("color","#080707"); 
       }

@@ -38,7 +38,7 @@ button, input[type="button"], input[type="submit"]{
 	margin-left:20px;
 }
 
-@media all and (max-width: 1023px) {
+@media all and (max-width: 1024px) {
 	#logo{
 		width:100%;
 		height: auto;
@@ -46,13 +46,22 @@ button, input[type="button"], input[type="submit"]{
 		margin-left:0px;
 	}
 	#sideBanner{
-		display: none;
+		display: none !important;
 	}
 	#menu{
-		font-size: 20px !important;
+		display: none !important;
+		/*font-size: 20px !important;*/
 	}
 	#logoDiv{
-		width: 100% !important;
+		/*width: 100% !important;*/
+	}
+	#loginSection{
+		display: none !important;
+	}
+	#mobile_menu{
+		display: block !important;
+	}
+	#mobile_loginDiv{display: block !important;
 	}
 }
 
@@ -315,7 +324,7 @@ button, input[type="button"], input[type="submit"]{
 }
 
 .s{
-	min-height: 48px;
+	min-height: 45px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;

@@ -52,12 +52,12 @@
 		display: none;
 	}
 	#timeline_profile{
-		width: 80% !important;
+		width: 70% !important;
 	}
 }
 
 
-@media all and (min-width: 980px) and (max-width: 1024px){
+@media all and (min-width: 997px) and (max-width: 1024px){
 	#timeline_profile{
 		width: 70% !important;
 	}

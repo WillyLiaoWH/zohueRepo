@@ -31,10 +31,10 @@ $(document).ready(function(){
     tab=url.replace(regex, "$4")
     setPage(page, keyword, 0);
   } else {
-    var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)/;
+    var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)/
     board=url.replace(regex, "$1");
     page = url.replace(regex,"$2");
-    tab=url.replace(regex, "$3")
+    tab=url.replace(regex, "$3");
     setPage(page, "", 0);
   }
 
@@ -130,7 +130,7 @@ function setPage(page, keyword, sort) {
     $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML="癌病友論壇-"+boardCate+"-"+boardName;
+      document.getElementById('title').innerHTML="作夥論壇-"+boardCate+"-"+boardName;
 
       var res_search=res.articlesList
       temp_result=res_search;
@@ -148,7 +148,7 @@ function setPage(page, keyword, sort) {
     $.get("/setBoardPage/"+board+"/"+tab, function(res){
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML="癌病友論壇-"+boardCate+"-"+boardName;
+      document.getElementById('title').innerHTML="作夥論壇-"+boardCate+"-"+boardName;
       var res_search=res.articlesList;
       setBoardCategory(res.boards, res.boardCate, res.board.category.id);
       setSearchResult(res_search, page);
@@ -439,7 +439,7 @@ function setSearchResult(articleList, page){
     var cateSelect=document.getElementById('boardCategory');
     for(var i=0; i<boardCategorys.length; i++) {
       var option=document.createElement('option');
-      option.text=boardCategorys[i].title;
+      option.text="前往："+boardCategorys[i].title;
       option.value=boardCategorys[i].id;
       if(boardID==boardCategorys[i].id)
         option.selected=true;

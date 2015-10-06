@@ -54,6 +54,7 @@ module.exports.routes = {
   'POST /niceResponse': 'ArticlesController.niceResponse',
   'POST /notNiceResponse': 'ArticlesController.notNiceResponse',
   'POST /searchArticle/:tab': 'ArticlesController.searchArticle',
+  'POST /searchArticleFront/:tab': 'ArticlesController.searchArticleFront',
   'POST /searchProInfo': 'ProInfoController.searchProInfo',
   'POST /imgupload_avatar': 'ImguploadController.upload_avatar',
   'POST /imgupload_post': 'ImguploadController.upload_post',
@@ -107,6 +108,7 @@ module.exports.routes = {
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
+  'GET /setBoardFrontPage/:tab': 'Articles.setBoardFrontPage',
   'GET /setBoardPage/:board/:tab': 'Articles.setBoardPage',
   'GET /getArticles/:board': 'Backend.getArticles',
   'GET /getArticlesByBoards': 'Backend.getArticlesByBoards',
@@ -314,6 +316,18 @@ module.exports.routes = {
       ],
       stylesheets: [
         '/styles/css_board/style.css',
+        '/styles/importer.css'
+      ]
+    }
+  },
+  '/frontboard/*': {
+    view: 'frontboard/index',
+    locals: {
+      scripts: [
+        '/js/js_frontboard/mainJS.js'
+      ],
+      stylesheets: [
+        '/styles/css_frontboard/style.css',
         '/styles/importer.css'
       ]
     }

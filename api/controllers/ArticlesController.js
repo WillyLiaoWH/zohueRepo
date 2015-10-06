@@ -54,6 +54,58 @@ module.exports = {
         
 	},
 
+    setBoardFrontPage: function(req, res){
+        var tab=req.param("tab");
+        var classification;
+        switch (tab) {
+            case "all":
+              classification="";
+              break;
+            case "motion":
+              classification="心情"
+              break;
+            case "share":
+              classification="分享";
+              break;
+            case "problem":
+              classification="問題";
+              break;
+            case "others":
+              classification="其它";
+              break;
+        }
+        var board=req.param("board");
+        var boards;
+        var boardCate;
+        
+        BoardCategory.find().exec(function(err, boardCateList) {
+            boardCate=boardCateList;
+        });
+
+        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                // TBD revise
+                if(articlesList[0]!==undefined){
+                    Boards.find({id: articlesList[0].board.id}).populate('category').exec(function(err, board) {
+                        if(err) {
+                            res.send(500, { err: "DB Error" });
+                        } else {
+                            Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                                boards=boardsList;
+                                res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
+                            });
+                        }
+                    });
+                }else{
+                    res.send({articlesList: [], board: 0, boards: boards, boardCate: boardCate});
+                }
+            }
+        });    
+        
+    },
+
     setAllBoardPage: function(req, res){ // 在後台使用，可以根據board category撈文章。
         var boards;
         var category=req.param("category");
@@ -653,6 +705,79 @@ module.exports = {
             }
         });
     },
+
+    searchArticleFront: function(req, res){
+        var keyword = req.param("keyword");
+        console.log("searchArticleFront: "+keyword);
+
+        var tab=req.param("tab");
+        var classification;
+        switch (tab) {
+            case "all":
+              classification="";
+              break;
+            case "motion":
+              classification="心情"
+              break;
+            case "share":
+              classification="分享";
+              break;
+            case "problem":
+              classification="問題";
+              break;
+            case "others":
+              classification="其它";
+              break;
+        }
+
+        var boardCate;
+        BoardCategory.find().exec(function(err, boardCateList) {
+            boardCate=boardCateList;
+        });
+
+        //Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
+        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
+            if (err){
+                res.send(500, { err: "DB Error" });
+            } else{
+                if(found){
+                    // 搜尋完alias後，一個一個串起來
+                    var obj = [];
+                    for(f in found){
+                        if(found[f].author){
+                            //console.log(found[f].author);
+                            obj.push(found[f]);
+                        }
+                    }
+                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
+                        if (err){
+                            res.send(500, { err: "DB Error" });
+                        } else{
+                            if(found){
+                                for(o in obj){
+                                    var exist=false;
+                                    for(f in found) {
+                                        if(found[f].id==obj[o].id)
+                                            exist=true;
+                                    }
+                                    if(!exist)
+                                        found.push(obj[o]);
+                                }
+                               res.send({articlesList: found});
+                            }else{
+                                console.log("not found");
+                                res.send(500, { err: "找不到喔！" });
+                            }
+                        }
+                    });
+                }else{
+                    console.log("not found");
+                    res.send(500, { err: "找不到喔！" });
+                }
+            }
+        });
+    },
+
     mailAritlce: function(req,res){
         var articleId = req.param("article_id");
         var url=req.param("url");
