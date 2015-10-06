@@ -536,7 +536,14 @@ function loadRecord(){
     console.log(records.length)
     for (i=0;i<records.length;i++){
       time=new Date(records[i].createdAt).toLocaleString();
-      recordTable+="<tr><td>"+records[i].user.account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+records[i].action+"</td></tr>"
+      var account
+      if (typeof records[i].user == "undefined"){
+        account = "---"
+      }
+      else{
+        account = records[i].user.account
+      }
+      recordTable+="<tr><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+records[i].action+"</td></tr>"
     }
     $("#record_table").html(recordTable)
   })
