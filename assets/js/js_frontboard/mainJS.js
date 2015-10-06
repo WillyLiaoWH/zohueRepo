@@ -118,7 +118,7 @@ function setPage(page, keyword, sort) {
         //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
         setTimeout(function(){
           setSearchResult(res_search, page);
-        }, 1000);
+        }, 500);
       }
     }).error(function(res_search){
       showDialog("錯誤訊息","查無資料！");
@@ -130,7 +130,7 @@ function setPage(page, keyword, sort) {
       //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
       setTimeout(function(){
         setSearchResult(res_search, page);
-      }, 800);
+      }, 300);
     });
   }  
 }
@@ -438,7 +438,7 @@ function setSearchResult(articleList, page){
       });
     }
     var cc = 0;
-    for(i=1; i<=categoryList.length; i++){ 
+    catHtml="";    for(i=1; i<=categoryList.length; i++){ 
       catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
       catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
       for(j=0;j<boardList[i-1].length;j++){

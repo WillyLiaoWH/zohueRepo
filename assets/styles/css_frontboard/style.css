@@ -193,6 +193,20 @@
 	#page{
 		display: none !important;
 	}
+	#m_searchDiv{
+		display: block !important;
+	}
+	#d_searchDiv{
+		display: none !important;
+	}
+}
+
+#goToBoard{
+	display: none;
+}
+
+#m_boardlist{
+	display: none;
 }
 
 @media all and (max-width: 800px)  and (max-width: 1000px){
@@ -205,11 +219,14 @@
 	#tabDiv{
 		width: 700px !important;
 	}
-	#goToBoard{
-		display: none !important;
-	}
 	#page{
 		display: none !important;
+	}
+	#m_boardlist{
+		display: block;
+	}
+	#d_boardlist{
+		display: none;
 	}
 }
 
@@ -341,6 +358,10 @@ div.tab_container .tab_content h2 {
 	margin: 0 0 20px;
 }
 /*tabs end*/
+.nav-pills{
+	float: left;
+	margin: 0px;
+}
 
 .nav-pills li.active a,
 .nav-pills li.active a:hover{

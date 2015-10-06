@@ -27,7 +27,11 @@
           <div class="col-md-5">
            <h1 id="title" style="color:#D26900; margin-left:0px;"></h1>
           </div>
-          <div class="col-md-5 col-md-offset-2" style="display:inline-block; text-align:right;">   
+          <div id="d_searchDiv" class="col-md-5 col-md-offset-2" style="display:inline-block; text-align:right;">   
+              <input type="text" class="s" id="searchWord" placeholder="搜尋文章">
+               <button value="搜尋" id="search" class="b" ><img src="/images/img_forum/search_icon.png"/>搜尋</button>
+          </div>
+          <div id="m_searchDiv" style="display:inline-block; text-align:right;">   
               <input type="text" class="s" id="searchWord" placeholder="搜尋文章">
                <button value="搜尋" id="search" class="b" ><img src="/images/img_forum/search_icon.png"/>搜尋</button>
           </div>
@@ -35,19 +39,20 @@
 
       <div class="row-fluid">
         <div class="col-md-12" style="margin-left: 0px;">
-          <nav id="navbar-example" class="navbar navbar-default navbar-static">
-         
-          <ul id="boardlist" class="nav nav-pills" role="tablist">
-           
+          <nav id="m_boardlist" id="navbar-example" class="navbar navbar-default navbar-static">
+          <ul class="nav nav-pills navbar-right" role="tablist">
+            <li ><a href='/forum' style='color: #000000;' role='button'>論壇看板列表 <span class='glyphicon glyphicon-list'></span></a></li>
+          </ul>
+          <ul id="boardlist" class="nav nav-pills" role="tablist"> </ul>
+          <ul id="d_boardlist" class="nav nav-pills navbar-right" role="tablist">
+            <li ><a href='/forum' style='color: #000000;' role='button'>論壇看板列表 <span class='glyphicon glyphicon-list'></span></a></li>
           </ul>
         </div>
       </nav>
        </div>
-
         <hr>
-
         </div>
-
+       
         <div class="row-fluid">
           <div class="col-md-7 text-left">
              <table id="page" class="text-left" cellspacing=8 style="margin-left: 0px;"></table>
@@ -75,7 +80,7 @@
           </ul>
 
         </div>
-         <div id="goToBoard" class="col-md-5">
+         <div id="goToBoard">
             <!--<label style="display: inline;font-size: 22px; margin-right: 10px; color:#533828;">前往：</label>-->
             
             <select id="board"></select>
@@ -84,7 +89,8 @@
             
           </div>
       </div>
-      <div class="row-fluid">
+
+      <div class="row-fluid" style="margin-top: 51px;">
         <div class="col-md-12">
           <table id="articleList" class="table table-hover"></table>
         </div>
