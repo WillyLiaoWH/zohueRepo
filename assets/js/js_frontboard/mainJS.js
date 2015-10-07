@@ -213,7 +213,7 @@ function cancleSearch(){
 function setSearchResult(articleList, page){
     //排序文章
     articleList.sort(function(a, b) {
-      return new Date(b.lastResponseTime)-new Date(a.lastResponseTime)+ b.responseNum-a.responseNum + b.nicer-a.nicer;
+      return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
     });
     myTable="<tr style='background-color: #324232; color:white;'>"
     myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center;'>類別</td>"
@@ -416,7 +416,7 @@ function setSearchResult(articleList, page){
       }
     } 
     document.getElementById("articleList").innerHTML = myTable;
-    // 前往看板 bar
+    // 上方看板 bar
     setTimeout(function(){setBoardList();}, 100);
   }
 

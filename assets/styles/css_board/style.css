@@ -30,16 +30,19 @@
 
 #searchWord{
 	//width:350px;
-	width:100%;
-	margin: 8px 0px 0px 0px;
-	display: inline !important;
+	//width:100%;
+	//margin: 8px 0px 0px 0px;
+	//display: inline !important;
+	width:250px;
+	//width:100%;
+	margin: 15px -5px 0px 0px;
 }
 
 #search{
 	//width:90px;
 	font-size: 20px;
 	color:#533828;
-	margin-top:9px;
+	margin-top:15px;
 	background-color: rgba(102, 141, 60, 0.4);
 }
 
@@ -161,49 +164,70 @@
 	font-size: 20px;
 	table-layout: fixed;
 	width:100%;
+	/*margin-top: 5px;*/
 }
 
 #mobile_post{
 	display: none !important;
 }
 
-@media all and (max-width: 800px) {
+
+#mobile_post{
+	display: none !important;
+}
+
+#goToBoard{
+	display: none;
+}
+
+#m_boardlist{
+	display: none !important;
+}
+
+@media screen and (max-width: 480px){
+	#forumContent{
+		width: 100% !important;
+	}
+	#searchWord{
+		float: left;
+		width: 230px;
+		margin-right: 5px; 
+	}
+}
+
+@media screen and (max-width: 480px) and (max-width: 768px) {
 	#post{
 		display: none !important;
 	}
 	#mobile_post{
 		display: inline-block !important;
 	}
-}
-
-@media all and (max-width: 1023px) {
-	#tabs{
-		display: none !important;
-	}
 	#tabDiv{
-		display: none !important;
-	}
-	#mobile_tabs{
-		display: block !important;
-		text-align: center !important ;
-	}
-	#searchDiv{
-		display: none !important;
-	}
-	#post{
-		display: none !important;
-	}
-}
-
-@media all and (max-width: 1279px) {
-	#page{
-		display: none !important;
+		width: 500px !important;
 	}
 	#goToBoard{
 		display: none !important;
+	} 
+	#page{
+		display: none !important;
 	}
+	#m_boardlist{
+		display: block !important;
+	}
+	#d_boardlist{
+		display: none !important;
+	}
+	#articleListDiv{
+		margin-top: 51px !important;
+	}
+}
+
+@media all and (max-width: 768px) and (max-width: 1023px) {
 	#tabDiv{
-		width: 78% !important;
+		width: 700px !important;
+	}
+	#post{
+		display: none !important;
 	}
 }
 
@@ -319,6 +343,11 @@ div.tab_container .tab_content h2 {
 	margin: 0 0 20px;
 }
 /*tabs end*/
+
+.nav-pills{
+	float: left;
+	margin: 0px;
+}
 
 .nav-pills li.active a,
 .nav-pills li.active a:hover{

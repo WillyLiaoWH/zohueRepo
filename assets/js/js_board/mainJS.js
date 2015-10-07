@@ -13,10 +13,27 @@ var keyword="";
 var tab="";
 var maxReport=3;
 var board="";
+var categoryList=[];
+var boardList=[];
+
 $(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
     var key=$("#searchWord").val().replace(/^\s+$/m,'');
     setPage(1, key, 0);
+  });
+
+
+$(document).ready(function(){
+  $.ajax({
+      url:   "/getBoardCategory" ,
+      success: 
+      function(boardCategory) {
+        categoryList=boardCategory;
+      },
+      async:   false
+    }).error(function(res){
+      showDialog("錯誤訊息",res.responseJSON.err);
+    });
   });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
@@ -151,7 +168,9 @@ function setPage(page, keyword, sort) {
       document.getElementById('title').innerHTML="作夥論壇—"+boardCate+"—"+boardName;
       var res_search=res.articlesList;
       setBoardCategory(res.boards, res.boardCate, res.board.category.id);
-      setSearchResult(res_search, page);
+      setTimeout(function(){
+        setSearchResult(res_search, page);
+      }, 300);
     });
   }  
 }
@@ -324,7 +343,7 @@ function setSearchResult(articleList, page){
         }
 
         if(i%2==0){
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr class='warning'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
@@ -336,7 +355,7 @@ function setSearchResult(articleList, page){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
            
         }else{
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr class='success'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
@@ -407,7 +426,7 @@ function setSearchResult(articleList, page){
         }
 
         if(i%2==0){
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr class='warning'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
             
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
@@ -418,7 +437,7 @@ function setSearchResult(articleList, page){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
         }else{
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);"+color+"'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
@@ -431,6 +450,8 @@ function setSearchResult(articleList, page){
       }
     } 
     document.getElementById("articleList").innerHTML = myTable;
+    // 上方看板 bar
+    setTimeout(function(){setBoardList();}, 100);
   }
 
   // 產生看板跳轉 option
@@ -468,6 +489,39 @@ function setSearchResult(articleList, page){
       }
     }
   }
+
+
+ function setBoardList(){
+  if($("#boardlist").html().trim()==""){
+    boardList=[];
+    for(i=1; i <= categoryList.length; i++){ 
+      $.ajax({
+        url:   "/getBoardsOfCategory/" + i ,
+        success: 
+        function(boards) { 
+          bl = [];
+          for(j=0; j<boards.length; j++){
+            bl.push(boards[j].title); 
+          }
+          boardList[(i-1)]=bl;
+        },
+        async:   false
+      });
+    }
+    var cc = 0;
+    catHtml="";    for(i=1; i<=categoryList.length; i++){ 
+      catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
+      catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
+      for(j=0;j<boardList[i-1].length;j++){
+        cc = cc + 1;
+        catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all"+"'>"+boardList[i-1][j]+"</a></li>";  
+      }
+      catHtml = catHtml + "</ul></li>";
+    }
+    $("#boardlist").html(catHtml);
+  }
+}
+
 
   function showDialog(title, message, cb){
     bootbox.dialog({
