@@ -39,6 +39,7 @@
             <li onclick="loadForumList()" id="forumTab"><a>論壇管理</a></li>
             <li onclick="loadsubscriberList()" ><a>電子報管理</a></li>
             <li onclick="loadRecord()"><a>查看記錄</a></li>
+            <li onclick="loadProInfo()"><a>專業知識 </a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a id="adminLogout">管理員登出</a></li>
@@ -188,6 +189,89 @@
                 </div>
               </div>
             </div>
+
+            <div id="proInfo">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>專業知識</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-3">
+                  <label for="proInfoType">類型</label>
+                  <select id="proInfoType" class="form-control">
+                    <option value="概論">概論</option>
+                    <option value="預防">預防</option>
+                    <option value="手術">手術</option>
+                    <option value="療法">療法</option>
+                    <option value="治療">治療</option>
+                    <option value="篩檢">篩檢</option>
+                  </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="proInfoCencer">癌症別</label>
+                    <select id="proInfoCencer" class="form-control">
+                      <option value="癌症">癌症</option>
+                      <option value="鼻咽癌">鼻咽癌</option>
+                      <option value="鼻腔/副鼻竇癌">鼻腔/副鼻竇癌</option>
+                      <option value="口腔癌">口腔癌</option>
+                      <option value="口咽癌">口咽癌</option>
+                      <option value="下咽癌">下咽癌</option>
+                      <option value="喉癌">喉癌</option>
+                      <option value="唾液腺癌">唾液腺癌</option>
+                      <option value="甲狀腺癌">甲狀腺癌</option>
+                    </select>
+                  </div>
+                  <div class="col-md-offset-2 col-md-2">
+                    <label for="proInfoYear">發表時間</label>
+                    <input type="text" id="proInfoYear"class="form-control">
+                  </div>
+                  <div class="col-md-2">
+                    <label for="proInfoMonth">月份</label>
+                    <select id="proInfoMonth" class="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="proInfoTitle">標題</label>
+                    <input type="text" id="proInfoTitle" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="proInfoName">作者名</label>
+                    <input type="text" id="proInfoName" class="form-control">
+                  </div>
+                  <div class="col-md-2">
+                    <label for="proInfoName2">稱謂</label>
+                    <select id="proInfoName2" class="form-control">
+                      <option value="醫師">醫師</option>
+                      <option value="社工師">社工師</option>
+                      <option value="個案管理師">個案管理師</option>
+                      <option value=" ">--</option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <label for="proInfoFrom">出處</label>
+                    <input type="text" id-"proInfoFrom" class="form-control">
+                  </div>
+
+                  <div class="col-md-offset-11">
+                    <button class="btn btn-default" onclick="proInfoSubmit()">送出</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

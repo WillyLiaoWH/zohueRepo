@@ -415,11 +415,22 @@ function getart(callback, action){
   }
 }
 
+function loadProInfo(){
+  $("#forumManage").hide()
+  $("#userManage").hide()
+  $("#enlManage").hide()
+  $("#subscriberManage").hide()
+  $("#record").hide()
+  $("#proInfo").show()
+}
+
 function loadForumList(articleList){
   document.getElementById("forumManage").style.display="block";
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="none";
+  $("#record").hide()
+  $("#proInfo").hide()
   
   if(typeof(articleList)!="undefined"){
     articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
@@ -495,6 +506,7 @@ function loadEnlManage(){
   document.getElementById("forumManage").style.display="none";
   document.getElementById("userManage").style.display="none";
   $("#record").hide()
+  $("#proInfo").hide()
   document.getElementById("enlManage").style.display="block";
   document.getElementById("subscriberManage").style.display="none";
 }
@@ -504,6 +516,7 @@ function loadsubscriberList(){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   $("#record").hide();
+  $("#proInfo").hide()
   document.getElementById("subscriberManage").style.display="block";
   searchEmail=document.getElementById("searchEmail").value;
 
@@ -530,6 +543,7 @@ function loadRecord(){
   $("#userManage").hide();
   $("#enlManage").hide();
   $("#subscriberManage").hide();
+  $("#proInfo").hide()
   $("#record").show();
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
   $.get("/getRecord",function(records){
@@ -748,4 +762,17 @@ function getBirthday(date){
   var D = b.getDate();
   var birthday="民國"+Y+"年"+M+"月"+D+"日";
   return birthday;
+}
+
+function proInfoSubmit(){
+  var type=$("#proInfoType").value()
+  var cencer =$("#proInfoCencer").value()
+  var time = $("#proInfoYear").value() +" / "+$("#proInfoMonth").value()
+  var title = $("#proInfoTitle").value()
+  var author = $("#proInfoName").value()+"\n"+$("#proInfoName2").value()
+  var from = $("#proInfoFrom").value()
+
+  // $.post("/proInfoSubmit",{type:type,cencer:cencer,time:time,title:title,author:author,from:from},function(ret){
+    
+  // });
 }
