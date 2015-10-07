@@ -726,25 +726,24 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else{
                 if(found){
-                
                     Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").populate("board").exec(function(err,found){
                         if (err){
                             res.send(500, { err: "DB Error" });
                         } else{
-
-                            Boards.find({id: found[0].board.id}).populate('category').exec(function(err, board) {
-                                if(err) {
-                                    res.send(500, { err: "DB Error" });
-                                } else {
-                                    Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-                                        boards=boardsList;
-                                        res.send({articlesList: found, board: board[0]});
-                                    });
-                                }
-                            });
-
-
-
+                            if(found[0]!==undefined){
+                                Boards.find({id: found[0].board.id}).populate('category').exec(function(err, board) {
+                                    if(err) {
+                                        res.send(500, { err: "DB Error" });
+                                    } else {
+                                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                                            boards=boardsList;
+                                            res.send({articlesList: found, board: board[0]});
+                                        });
+                                    }
+                                });
+                            }else{
+                                res.send({articlesList: found, board: []});
+                            }
                         }
                     });
                 }else{
