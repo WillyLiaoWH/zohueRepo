@@ -177,7 +177,26 @@
 	display: none !important;
 }
 
-@media all and (max-width: 800px) {
+#goToBoard{
+	display: none;
+}
+
+#m_boardlist{
+	display: none !important;
+}
+
+@media screen and (max-width: 480px){
+	#forumContent{
+		width: 100% !important;
+	}
+	#searchWord{
+		float: left;
+		width: 185px;
+		margin-right: 5px; 
+	}
+}
+
+@media screen and (max-width: 480px) and (max-width: 768px) {
 	#post{
 		display: none !important;
 	}
@@ -189,27 +208,22 @@
 	}
 	#goToBoard{
 		display: none !important;
-	}
+	} 
 	#page{
 		display: none !important;
 	}
-	#m_searchDiv{
+	#m_boardlist{
 		display: block !important;
 	}
-	#d_searchDiv{
+	#d_boardlist{
 		display: none !important;
+	}
+	#articleListDiv{
+		margin-top: 51px !important;
 	}
 }
 
-#goToBoard{
-	display: none;
-}
-
-#m_boardlist{
-	display: none;
-}
-
-@media all and (max-width: 800px)  and (max-width: 1000px){
+@media screen and (max-width: 768px)  and (max-width: 1000px){
 	#post{
 		display: none !important;
 	}
@@ -222,15 +236,9 @@
 	#page{
 		display: none !important;
 	}
-	#m_boardlist{
-		display: block;
-	}
-	#d_boardlist{
-		display: none;
-	}
 }
 
-@media all and (max-width: 1000px) and (max-width: 1180px) {
+@media screen and (max-width: 1000px) and (max-width: 1180px) {
 	#tabDiv{
 		width: 700px !important;
 	}

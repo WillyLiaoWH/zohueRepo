@@ -38,6 +38,11 @@ button, input[type="button"], input[type="submit"]{
 	margin-left:20px;
 }
 
+@media all and (max-width: 480px){
+	.modal-dialog{
+		width: 300px !important;
+	}
+}
 @media all and (max-width: 1024px) {
 	#logo{
 		width:100%;
