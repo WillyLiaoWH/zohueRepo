@@ -368,7 +368,7 @@ module.exports = {
         var isAdmin = req.session.user.isAdmin;
 
         if( isAdmin == true && board == "17"){
-            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth}).exec(function(error, timeline) {
+            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, updatedTime: new Date()}).exec(function(error, timeline) {
                 if(error) {
                     res.send(500,{err: "發生錯誤了Q_Q" });
                 } else {
