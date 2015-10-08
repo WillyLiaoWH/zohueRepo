@@ -7,20 +7,11 @@
 
 module.exports = {
 	getAnnouncement: function(req, res){
-		function compare(a,b) {
-			if (a.createdAt < b.createdAt)
-		    	return 1;
-		  	if (a.createdAt > b.createdAt)
-		    	return -1;
-		  	return 0;
-		}
-
-		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt']}).exec(function(err, Announcement) {
+		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt'], sort: 'createdAt DESC'}).exec(function(err, Announcement) {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
-            	Announcement[0].articles.sort(compare);
-                res.send(Announcement[0].articles.slice(0,5));
+                res.send(Announcement[0].articles);
             }
 		});
 	},
