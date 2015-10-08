@@ -700,8 +700,10 @@ function postTimeline(){
       res["timelinesList"][0]["nicer"] = [];
       res["timelinesList"][0]["report"] = [];
       getPri(function(pri_account, pri_id, pri_avatar){
-        displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
+        setTimelinePage(pri_account, pri_id, pri_avatar);
+        // displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
       });
+      // $("#no_post_message").hide();
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err,function(){
         window.location.replace("/home");
@@ -752,6 +754,10 @@ function delTimeline(id){
         callback: function() {
           $.post( "/delTimeline", { id: id }, function(res){
             $("#container_edit"+id).parent().remove();
+            getPri(function(pri_account, pri_id, pri_avatar){
+              setTimelinePage(pri_account, pri_id, pri_avatar);
+              // displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
+            });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
           });
