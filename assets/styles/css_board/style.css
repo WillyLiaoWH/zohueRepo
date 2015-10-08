@@ -183,6 +183,9 @@
 #m_boardlist{
 	display: none !important;
 }
+#m_post{
+	display: none !important;
+}
 
 @media screen and (max-width: 480px){
 	#forumContent{
@@ -197,7 +200,7 @@
 
 @media screen and (max-width: 480px) and (max-width: 768px) {
 	#post{
-		display: none !important;
+		//display: none !important;
 	}
 	#mobile_post{
 		display: inline-block !important;
@@ -216,6 +219,11 @@
 	}
 	#d_boardlist{
 		display: none !important;
+	}#m_post{
+		display: block !important;
+	}
+	#d_post{
+		display: none !important;
 	}
 	#articleListDiv{
 		margin-top: 51px !important;
@@ -227,7 +235,7 @@
 		width: 700px !important;
 	}
 	#post{
-		display: none !important;
+		//display: none !important;
 	}
 }
 
