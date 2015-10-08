@@ -23,10 +23,10 @@
       <div id="forumContent" style="margin-left:0px;">
        
  <div class="row-fluid" style="margin-left: 0px; margin-bottom: 10px;">
-          <div class="col-md-7">
+          <div class="col-md-6">
            <h1 id="title" style="color:#D26900; margin-left:0px;"></h1>
           </div>
-          <div id="d_searchDiv" class="col-md-5" style="display:inline-block; text-align:right;">   
+          <div id="d_searchDiv" class="col-md-6" style="display:inline-block; text-align:right;">   
             <input type="text" class="s" id="searchWord" placeholder="搜尋文章"/>
                <button value="搜尋" id="search" class="b" ><img src="/images/img_forum/search_icon.png"/>搜尋</button>
           </div>
@@ -39,9 +39,13 @@
             <li ><a href='/forum' style='color: #000000;' role='button'>論壇看板列表 <span class='glyphicon glyphicon-list'></span></a></li>
           </ul>
           <ul id="boardlist" class="nav nav-pills" role="tablist"> </ul>
+           <ul class="nav nav-pills navbar-right" role="tablist">
+            <li><a id="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span>發表文章</a></li>
+          </ul>&nbsp;
           <ul id="d_boardlist" class="nav nav-pills navbar-right" role="tablist">
             <li ><a href='/forum' style='color: #000000;' role='button'>論壇看板列表 <span class='glyphicon glyphicon-list'></span></a></li>
           </ul>
+
         </div>
       </nav>
        </div>

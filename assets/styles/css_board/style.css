@@ -6,15 +6,15 @@
 	float:right;
 	//width: 125px;
 	//margin-right:13px;
-	margin-top:8px;
-	background-color: rgba(232, 81, 0, 0.7);
-	color:#533828;
-	display: block !important;
+	//margin-top:8px;
+	//background-color: rgba(232, 81, 0, 0.7);
+	//color:#533828;
+	//display: block !important;
 }
 
 #post:hover{
 	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	color:#FFF;
 	
 }
 
@@ -360,6 +360,7 @@ div.tab_container .tab_content h2 {
 
 .nav-pills li a{
 	color:#1D3521;
+	font-size: 18px;
 }
 .nav-pills li a:hover{
 	background-color: rgba(102, 141, 60, 0.4);
