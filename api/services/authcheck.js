@@ -6,26 +6,33 @@ authCheck: function (req,cb){      //看這兩個人關係能看到什麼
     var doctor=false;
     var friend=false;
     var self=false;
-    var viewer = req.session.user.account;
-    var viewerId=req.session.user.id;
+    if(typeof req.session.user === 'undefined'){
+           var viewer = "NoLoginUser";
+           var viewerId= "0";
+    }else{
+        var viewer = req.session.user.account;
+        var viewerId=req.session.user.id;
+        User.find({id:viewerId}).populate('friends').exec(function(err,user){
+            if(err){
 
-    User.find({id:viewerId}).populate('friends').exec(function(err,user){
-        if(err){
-
-        }
-        if (user[0].type=="D"){
+            }
+            if (user[0].type=="D"){
+                doctor=true;
+            }
+            for (var i=0 ; i<user[0].friends.length;i=i+1){
+                if (user[0].friends[i].id==searchId)
+                    friend=true;
+            }
+        });
+        if (viewerId==searchId){
+            self=true;
+            friend=true;
             doctor=true;
         }
-        for (var i=0 ; i<user[0].friends.length;i=i+1){
-            if (user[0].friends[i].id==searchId)
-                friend=true;
-        }
-    });
-    if (viewerId==searchId){
-        self=true;
-        friend=true;
-        doctor=true;
     }
+    
+
+
     str = '{"name":false,"city":false,"email":false,"gender":false,"phone":false,"bday":false}';
     var index = JSON.parse('{"0":"city","1":"email","2":"gender","3":"phone","4":"bday","5":"name"}');
     var ret_status=JSON.parse(str);

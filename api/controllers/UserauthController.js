@@ -7,7 +7,12 @@
 
 module.exports = {
     authGet:function(req,res){          //得到使用者的授權狀態
-        id=req.session.user.id;
+         if(typeof req.session.user === 'undefined'){
+           id= "0"; //假設沒登入者id為0
+        }else{
+           id=req.session.user.id;
+        }
+        
         Userauth.find({user:id}).exec(function(err,result){
             if(err){
                 res.send(500,{err:"DB error"});

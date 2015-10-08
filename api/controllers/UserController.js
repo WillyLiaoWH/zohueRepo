@@ -446,8 +446,11 @@ module.exports = {
     getProfile: function(req, res){
         //gets only the photo, alias, name, birthday, city,email,gender,phone
         //only the first two are required
-        pri_id = req.session.user.id;
-        console.log(req.session.user);
+        if(typeof req.session.user === 'undefined'){
+           pri_id = "0"; //假設沒登入者id為0
+           console.log("No login user looking at profile..."); 
+        }
+        
         var id=req.param("id");
         
         if (pri_id === id){
