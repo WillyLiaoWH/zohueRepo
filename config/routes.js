@@ -80,6 +80,7 @@ module.exports.routes = {
   'POST /TimelineResponseCancelNice': 'TimelineResponseController.cancelNice',
   'POST /TimelineReport': 'TimelineReport.clickReport',
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
+  'POST /recordProInfo':'ProInfoController.recordProInfo',
   
  
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
@@ -102,6 +103,7 @@ module.exports.routes = {
   'POST /recoverUser': 'BackendController.recoverUser',
   'POST /changeFollow': 'ArticlesController.changeFollow',
   'POST /appeal': 'BackendController.appeal',
+  'POST /proInfoSubmit':'BackendController.proInfoSubmit',
 
   'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getTopArticles': 'Home.getTopArticles',

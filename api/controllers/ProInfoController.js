@@ -64,6 +64,12 @@ module.exports = {
             }
         });
     },
+    recordProInfo: function(req, res){
+        var link = req.param("link");
+        Record.create({user:req.session.user,ip:req.ip,action:"INFO "+link}).exec(function(ret){
+            console.log("專業知識")
+        })
+    }
 
 };
 

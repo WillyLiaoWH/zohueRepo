@@ -10,6 +10,12 @@ var delArtId=[];
 var unDelArtId=[];
 
 $(document).ready(function(){
+  if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
+}
   checkAuth();
 
   $(document).on("click","#adminLogout",function(e){
@@ -539,6 +545,7 @@ function loadsubscriberList(){
 }
 
 function loadRecord(){
+
   $("#forumManage").hide();
   $("#userManage").hide();
   $("#enlManage").hide();
@@ -547,8 +554,27 @@ function loadRecord(){
   $("#record").show();
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
   $.get("/getRecord",function(records){
-    console.log(records.length)
+    var act
     for (i=0;i<records.length;i++){
+      var action = records[i].action
+      if (action == "Login"){
+        act = "Login"
+      }
+      else if (action.match(/^READ/)){
+        var id = action.substring(13)
+        act = "<a href='/article/"+id+"'>"+"閱讀文章"+"</a>"
+      }
+      else if (action.match(/^PROF/)){
+        var id = action.substring(5)
+        act = "<a href='/profile?"+id+"'>"+"個人頁面"+"</a>"
+      }
+      else if (action.match(/^INFO/)){
+        var id = action.substring(5)
+        act = "<a href="+id+">"+"專業知識"+"</a>"
+      }
+      else if (action.match(/^Logout/)){
+        act = "Logout"
+      }
       time=new Date(records[i].createdAt).toLocaleString();
       var account
       if (typeof records[i].user == "undefined"){
@@ -557,7 +583,7 @@ function loadRecord(){
       else{
         account = records[i].user.account
       }
-      recordTable+="<tr><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+records[i].action+"</td></tr>"
+      recordTable+="<tr><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+act+"</td></tr>"
     }
     $("#record_table").html(recordTable)
   })
@@ -765,14 +791,17 @@ function getBirthday(date){
 }
 
 function proInfoSubmit(){
-  var type=$("#proInfoType").value()
-  var cencer =$("#proInfoCencer").value()
-  var time = $("#proInfoYear").value() +" / "+$("#proInfoMonth").value()
-  var title = $("#proInfoTitle").value()
-  var author = $("#proInfoName").value()+"\n"+$("#proInfoName2").value()
-  var from = $("#proInfoFrom").value()
+  var type=$("#proInfoType").val()
+  var cancer =$("#proInfoCancer").val()
+  var time = $("#proInfoYear").val() +"年"+$("#proInfoMonth").val()+"月"
+  var title = $("#proInfoTitle").val()
+  var author = $("#proInfoName").val()+" \n "+$("#proInfoName2").val()
+  var from = $("#proInfoFrom").val()
+  var proInfo = $("#link").val() 
 
-  // $.post("/proInfoSubmit",{type:type,cencer:cencer,time:time,title:title,author:author,from:from},function(ret){
-    
-  // });
+  $.post("/proInfoSubmit",{type:type,cancer:cancer,time:time,title:title,author:author,from:from,proInfo:proInfo},function(ret){
+      if(ret=="OK"){
+        alert("發布完成");
+      }
+  });
 }

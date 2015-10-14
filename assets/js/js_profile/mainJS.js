@@ -348,6 +348,8 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
       window.location.replace("/home");
     });
   });
+
+  
 }
 
 function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // 輸入 object, 登入者 account, 登入者 id, 登入者 avatar, append 方式

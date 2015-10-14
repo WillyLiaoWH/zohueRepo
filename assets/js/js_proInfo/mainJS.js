@@ -287,8 +287,8 @@ function enterSearch(e) {
 
 $(document).on("click","a.show-info",function(event){
 //$(".show-info").on("click",function(event){
-  console.log("!!");
   //event.preventDefault();
+  $.post("/recordProInfo",{link:$(this).attr("title")})
   if ($(window).width() < 768) {
     var ss = "<button id='btn_backProInfo' class='b'><span class='glyphicon glyphicon-chevron-left'>返回專業文章</span></button><iframe id='ifm_article' src='https://docs.google.com/gview?url="+$(this).attr("title")+"&embedded=true'></iframe>";
     $("#layout").css("opacity", "0.4");

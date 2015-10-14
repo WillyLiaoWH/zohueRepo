@@ -206,6 +206,9 @@ module.exports = {
             if(id === 'undefined'){
                 var id = req.session.user.id;
             }
+            Record.create({user:req.session.user,ip:req.ip,action:("PROF "+id)}).exec(function(ret){
+                console.log("動態時報"+id)
+            })
             cb(id);
         }
 

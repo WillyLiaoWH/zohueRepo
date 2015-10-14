@@ -224,6 +224,24 @@ module.exports = {
                 getOneRecord.save(function(err){res.send("您的申訴已成功送出，我們會盡快處理，謝謝！");});
             }
         });
+    },
+    proInfoSubmit: function(req,res){
+        var type = req.param("type")
+        var cancer = req.param("cancer")
+        var time = req.param("time")
+        var title = req.param("title")
+        var author = req.param("author")
+        var from = req.param("from")
+        var info = req.param("proInfo")
+
+        ProInfo.create({title:title,author:author,link:info,classification:type,cancerType:cancer,date:time,note:from}).exec(function(err,ret){
+            if (err){
+                res.send(500,{err:"DB Error"});
+            }
+            else{
+                res.send("OK")
+            }
+        })
     }
 };
 
