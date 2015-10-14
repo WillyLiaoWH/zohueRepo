@@ -185,6 +185,10 @@
 	display: none !important;
 }
 
+#m_post{
+	display: none !important;
+}
+
 @media screen and (max-width: 480px){
 	#forumContent{
 		width: 100% !important;
@@ -216,6 +220,12 @@
 		display: block !important;
 	}
 	#d_boardlist{
+		display: none !important;
+	}
+	#m_post{
+		display: block !important;
+	}
+	#d_post{
 		display: none !important;
 	}
 	#articleListDiv{
@@ -383,6 +393,7 @@ div.tab_container .tab_content h2 {
 
 .nav-pills li a{
 	color:#1D3521;
+	font-size: 20px;
 }
 .nav-pills li a:hover{
 	background-color: rgba(102, 141, 60, 0.4);
