@@ -24,7 +24,7 @@ module.exports = {
 		  	return 0;
 		}
 
-		Articles.find({deleted: "false"}).populate('nicer').exec(function(err, articles) {
+		Articles.find({ deleted: "false", board: {'!': 20} }).populate('nicer').populate('response').exec(function(err, articles) {
 			if(err) {
                 res.send(500,{err: "DB Error" });
             } else {
@@ -33,9 +33,9 @@ module.exports = {
             	var async = require('async');
             	var index = 0;
             	async.each(articles, function(art, callback) {
-				  	var weeks = Math.floor((nowTime - new Date(articles[index].createdAt))/(24*3600*1000)/7);
+				  	var weeks = Math.floor((nowTime - new Date(articles[index].createdAt))/(24*3600*1000)/7) + 1;
 				  	resultArticles.push({
-				  		topLevel: (articles[index].nicer.length*5 + articles[index].clickNum)/weeks,
+				  		topLevel: (articles[index].response.length*10 + articles[index].nicer.length*5 + articles[index].clickNum)/weeks,
 				  		title: articles[index].title,
 				  		href: './article/' + articles[index].id,
 				  		createdAt: articles[index].createdAt
