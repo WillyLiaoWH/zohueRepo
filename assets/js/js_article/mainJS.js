@@ -52,7 +52,7 @@ function setPage() {
       //document.getElementById("content").style.width = "80%";
       document.getElementById("niceArticle").style.display="inline";
       document.getElementById("report").style.display="inline";
-      document.getElementById("artContent").className = "span10";
+      //document.getElementById("artContent").className = "span10";
       $("#follow").css("display", "inline");
     } else {
       $("#follow").css("display", "none");

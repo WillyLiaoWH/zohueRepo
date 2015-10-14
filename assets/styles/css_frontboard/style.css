@@ -260,22 +260,22 @@
 	}
 }
 
-#articleList td:nth-child(1){
+#articleList th:nth-child(1){
 		width: 125px !important;
 	}
-#articleList td:nth-child(2){
+#articleList th:nth-child(2){
 		width: 260px !important;
 	}
-#articleList td:nth-child(3){
+#articleList th:nth-child(3){
 		width: 210px !important;
 	}
-#articleList td:nth-child(4){
+#articleList th:nth-child(4){
 		width: 120px !important;
 	}
-#articleList td:nth-child(5){
+#articleList th:nth-child(5){
 		width: 80px !important;
 	}
-#articleList td:nth-child(6){
+#articleList th:nth-child(6){
 		width: 150px !important;
 	}
 

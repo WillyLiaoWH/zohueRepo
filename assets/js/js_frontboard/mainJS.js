@@ -17,11 +17,12 @@ var bdHtml = "";
 var catHtml = "";
 var categoryList=[];
 var boardList=[];
+var authorClickCount=0;
 
 $(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
     var key=$("#searchWord").val().replace(/^\s+$/m,'');
-    setPage(1, key, 0);
+    setPage(1, key, "lastResponseTime", "desc");
   });
 
 $(document).ready(function(){
@@ -47,13 +48,13 @@ $(document).ready(function(){
     keyword = decodeURIComponent(keyword);
     page=url.replace(regex,"$3");
     tab=url.replace(regex, "$4")
-    setPage(page, keyword, 0);
+    setPage(page, keyword, "lastResponseTime", "desc");
   } else {      
     var regex = /.*frontboard+\/+(.*)+\?tab=+(.*)/
     //board=url.replace(regex, "$1");
     page = url.replace(regex,"$1");
     tab=url.replace(regex, "$2");
-    setPage(page, "", 0);
+    setPage(page, "", "lastResponseTime", "desc");
   }
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
@@ -85,7 +86,18 @@ $(document).ready(function(){
   };
 });
 
-function setPage(page, keyword, sort) {
+function orderbyPostTime(){
+  setTimeout(function(){
+    authorClickCount=authorClickCount+1;
+    if(authorClickCount%2==0){
+       setPage(page, keyword, "createdAt", "desc");
+    }else{
+       setPage(page, keyword, "createdAt", "asc");
+    }
+  },1);
+}
+
+function setPage(page, keyword, orderby, direction) {
   // 篩選頁籤
   switch (tab) {
     case "all":
@@ -117,7 +129,7 @@ function setPage(page, keyword, sort) {
       }else{
         //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
         setTimeout(function(){
-          setSearchResult(res_search, page);
+          setSearchResult(res_search, page, orderby, direction);
         }, 500);
       }
     }).error(function(res_search){
@@ -129,7 +141,7 @@ function setPage(page, keyword, sort) {
       var res_search=res.articlesList;
       //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
       setTimeout(function(){
-        setSearchResult(res_search, page);
+        setSearchResult(res_search, page, orderby, direction);
       }, 300);
     });
   }  
@@ -210,19 +222,33 @@ function cancleSearch(){
 }
 
 // 產生預設/搜尋結果畫面
-function setSearchResult(articleList, page){
+function setSearchResult(articleList, page, orderby, direction){
     //排序文章
-    articleList.sort(function(a, b) {
-      return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);
-    });
-    myTable="<tr style='background-color: #324232; color:white;'>"
-    myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center;'>類別</td>"
-    myTable+="<td style='width:34%; padding:10px 15px 10px 15px;'>文章標題</td>"
-    myTable+="<td style='width:22%; text-align:center;'>發表人/發表時間</td>";
-    myTable+="<td style='width:12%; text-align:center;'>點閱/回覆</td>";
-    myTable+="<td style='width:6%; text-align:center;'>推薦</td>";
-    myTable+="<td style='text-align:center;'>最新回應時間</td></tr>";
-
+    if(orderby=="createdAt"){
+      if(direction=="desc"){
+        articleList.sort(function(a, b) { return new Date(b.createdAt)-new Date(a.createdAt);});
+      }else if(direction=="asc"){
+        articleList.sort(function(a, b) { return new Date(a.createdAt)-new Date(b.createdAt);});
+      }
+    }else if (orderby="lastResponseTime"){
+      if(direction=="desc"){
+        articleList.sort(function(a, b) {return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);});
+      }else if(direction=="asc"){
+        articleList.sort(function(a, b) {return new Date(a.lastResponseTime)-new Date(b.lastResponseTime);});
+      }
+    }else{
+      articleList.sort(function(a, b) {return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);});
+    }
+    myTable="<thead>";
+    myTable+="<tr style='background-color: #324232; color:white;' onClick='setTableRowStripCss();'>"
+    myTable+="<th data-sort='string' style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'>類別<span class='caret'></span></td>"
+    myTable+="<th data-sort='string' style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'>文章標題<span class='caret'></span></td>"
+    myTable+="<th data-sort='string' style='width:22%; text-align:center; cursor:pointer;'>發表人<span class='caret'></span> / <span onClick='orderbyPostTime();'>發表時間</span><span class='caret'></span></td>";
+    myTable+="<th data-sort='float' style='width:12%; text-align:center; cursor:pointer;'>點閱/回覆<span class='caret'></span></td>";
+    myTable+="<th data-sort='int' style='width:6%; text-align:center; cursor:pointer;'>推薦<span class='caret'></span></td>";
+    myTable+="<th data-sort='string' style='text-align:center; cursor:pointer;'>最新回應時間<span class='caret'></span></td></tr>";
+    myTable+="</thead>";
+    myTable+="<tbody>";
     articleNum=20; 
 
     lastPageArticlesNum=articleList.length%articleNum;
@@ -415,6 +441,7 @@ function setSearchResult(articleList, page){
         }
       }
     } 
+    myTable+="</tbody>";
     document.getElementById("articleList").innerHTML = myTable;
     // 上方看板 bar
     setTimeout(function(){setBoardList();}, 100);
@@ -450,8 +477,6 @@ function setSearchResult(articleList, page){
     $("#boardlist").html(catHtml);
   }
 }
-
-
 
   function showDialog(title, message, cb){
     bootbox.dialog({

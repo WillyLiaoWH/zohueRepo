@@ -318,7 +318,8 @@ module.exports.routes = {
     view: 'board/index',
     locals: {
       scripts: [
-        '/js/js_board/mainJS.js'
+        '/js/js_board/mainJS.js',
+        '/js/js_board/stupidtable.js'
       ],
       stylesheets: [
         '/styles/css_board/style.css',
@@ -330,7 +331,8 @@ module.exports.routes = {
     view: 'frontboard/index',
     locals: {
       scripts: [
-        '/js/js_frontboard/mainJS.js'
+        '/js/js_frontboard/mainJS.js',
+        '/js/js_frontboard/stupidtable.js'
       ],
       stylesheets: [
         '/styles/css_frontboard/style.css',

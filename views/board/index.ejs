@@ -18,8 +18,17 @@
         }
       });
     </script>
-
-    <div class="container-fluid col-md-8">
+    <script>$(function(){
+        $("#articleList").stupidtable();
+    });</script>
+    <script>
+      function setTableRowStripCss(){
+        setTimeout(function(){ 
+          $( "#articleList tbody > tr:even" ).removeClass().addClass("warning");
+          $( "#articleList tbody > tr:odd" ).removeClass().addClass("success");}, 30);
+      }
+    </script>
+    <div class="container-fluid col-md-9">
       <div id="forumContent" style="margin-left:0px;">
        
  <div class="row-fluid" style="margin-left: 0px; margin-bottom: 10px;">

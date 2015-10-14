@@ -240,22 +240,22 @@
 }
 
 
-	td:nth-child(1){
+	th:nth-child(1){
 		width: 125px !important;
 	}
-	td:nth-child(2){
+	th:nth-child(2){
 		width: 260px !important;
 	}
-	td:nth-child(3){
+	th:nth-child(3){
 		width: 210px !important;
 	}
-	td:nth-child(4){
+	th:nth-child(4){
 		width: 120px !important;
 	}
-	td:nth-child(5){
+	th:nth-child(5){
 		width: 80px !important;
 	}
-	td:nth-child(6){
+	th:nth-child(6){
 		width: 150px !important;
 	}
 
