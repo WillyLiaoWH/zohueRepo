@@ -389,8 +389,8 @@ function Login(){
       if(res.suspended==true){
         bootbox.dialog({
           title: "此帳號已被停權",
-          message: '由於您的帳號可能有不正常的使用情況，我們已停止此帳號的使用權限。<br>'
-            +'停權原因：' + res.reason + '<br><br>如有任何問題，您可以利用以下「申訴欄位」向作夥反應。'
+          message: '由於您的帳號可能有不正常的使用情況，我們已停止此帳號的使用權限。<br><br>'
+            +'停權原因：' + res.reason + '<br><br>如有任何問題，您可以利用以下「申訴欄位」向管理員反應。'
             +'<textarea id="appeal" placeholder="申訴欄位" class="form-control" style="margin-top:10px;" rows="3"></textarea>',
           buttons: {
             confirm: {

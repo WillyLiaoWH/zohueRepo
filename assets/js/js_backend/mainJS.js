@@ -359,8 +359,8 @@ function loadUserList(){
         // }
 
         userTable+="<tr class='collapse userInfo' id='profile"+userID+"'><td></td><td class='text-right'><img src='"+userList[i].img+"' height='80px' width='80px'></td>";
-        userTable+="<td colspan='2'>帳號："+userList[i].account+"<br>姓名："+fullName+"<br>暱稱："+userList[i].alias+"<br>";
-        userTable+="性別："+gender+"<br>身分："+userType+"<br>主要/主治疾病："+disease+"<br>生日："+birthday+"<br>";
+        userTable+="<td colspan='2'>ID："+userList[i].id+"<br>帳號："+userList[i].account+"<br>姓名："+fullName+"<br>";
+        userTable+="暱稱："+userList[i].alias+"<br>性別："+gender+"<br>身分："+userType+"<br>主要/主治疾病："+disease+"<br>生日："+birthday+"<br>";
         userTable+="Email："+userList[i].email+"<br>電話："+userList[i].phone+"<br>地址："+address+"<br>";
         userTable+="自我介紹："+userList[i].selfIntroduction+"<br>註冊日期："+createdAt+"</td>";
         userTable+="<td colspan='7'>正式會員：";
