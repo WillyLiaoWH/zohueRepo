@@ -2,6 +2,10 @@
 	font-family: "微軟正黑體";
 }
 
+embed {
+	height: 1000px;
+}
+
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
