@@ -233,15 +233,23 @@ module.exports = {
         var author = req.param("author")
         var from = req.param("from")
         var info = req.param("proInfo")
+        var content = '<embed src="'+info+'" height="100%" width="100%" internalinstanceid="9"><div id="postContent_image"><div class="clear" id="clear"></div></div>';
 
-        ProInfo.create({title:title,author:author,link:info,classification:type,cancerType:cancer,date:time,note:from}).exec(function(err,ret){
-            if (err){
-                res.send(500,{err:"DB Error"});
+        Articles.create({ title: title, author: 45, content: content, classification: '分享', responseNum: 0, clickNum: 0, board: 21, follower: [45], lastResponseTime: new Date() }).exec(function(error, proinfo) {
+            if(error) {
+                console.log(error);
+                res.send(500,{err: "DB Error" });
+            } else {
+                ProInfo.create({title:title,author:author,link:info,classification:type,cancerType:cancer,date:time,note:from,articleURL: "../article/"+proinfo.id }).exec(function(err,ret){
+                    if (err){
+                        res.send(500,{err:"DB Error"});
+                    }
+                    else{
+                        res.send("OK")
+                    }
+                });
             }
-            else{
-                res.send("OK")
-            }
-        })
+        });
     }
 };
 
