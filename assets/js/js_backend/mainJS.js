@@ -635,7 +635,7 @@ function loadHomepage(){
         createdAt=new Date(homepagePics[i].createdAt).toLocaleString();
         homepagePicId=homepagePics[i].id;
         homepagePicTable+="<tr><td>"+(i+1)+"</td><td><img src='"+homepagePics[i].pic+"' class='img-responsive'></img></td><td>"+homepagePics[i].title+"</td><td>"+createdAt+"</td>";
-        homepagePicTable+="<td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteSubscriber("+homepagePicId+");'></span></td></tr>";
+        homepagePicTable+="<td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteHomepagePic("+homepagePicId+");'></span></td></tr>";
       }
       document.getElementById("backend_homepagePicList").innerHTML = homepagePicTable;
     }
