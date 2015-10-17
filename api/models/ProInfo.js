@@ -34,6 +34,10 @@ module.exports = {
     date: {
       type: 'string',
       required: true
+    },
+    articleURL: {
+      type: 'string',
+      required: true
     }
   }
 };
