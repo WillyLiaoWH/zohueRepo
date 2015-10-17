@@ -48,7 +48,7 @@ function setPage(page) {
     myTable+="<td style='text-align:center;'>作者</td>";
     myTable+="<td style='text-align:center;'>發表時間</td>";
     myTable+="<td style='text-align:center;'>出處</td>";
-    //myTable+="<td style='width:11%; text-align:center;'>相關討論</td></tr>";
+    myTable+="<td style='width:11%; text-align:center;'>相關討論</td></tr>";
 
     articleNum=20;
 
@@ -96,7 +96,7 @@ function setPage(page) {
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
 
 
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>"; 
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>"; 
          
         }else{
           //文章類別
@@ -112,7 +112,7 @@ function setPage(page) {
           //出處
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
 
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>"; 
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>"; 
         }
       }
     }
@@ -128,7 +128,7 @@ function setPage(page) {
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>";
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
          
         }else{
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
@@ -140,7 +140,7 @@ function setPage(page) {
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>";
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
         }
       }
     } 
@@ -187,7 +187,7 @@ function setSearchResult(articleList){
     myTable+="<td style='text-align:center;'>作者</td>";
     myTable+="<td style='text-align:center;'>發表時間</td>";
     myTable+="<td style='text-align:center;'>出處</td>";
-    //myTable+="<td style='width:11%; text-align:center;'>相關討論</td></tr>";
+    myTable+="<td style='width:11%; text-align:center;'>相關討論</td></tr>";
 
     articleNum=20;
 
@@ -225,7 +225,7 @@ function setSearchResult(articleList){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>";
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
         }else{
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
@@ -236,7 +236,7 @@ function setSearchResult(articleList){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
                     myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>";
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
         }
       }
     }
@@ -254,7 +254,7 @@ function setSearchResult(articleList){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>";
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
          
         }else{
           myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [102,141,60,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
@@ -265,7 +265,7 @@ function setSearchResult(articleList){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          //myTable+="<td style='text-align:center;'><a>前往討論</a></td></tr>";
+          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
         }
       }
     } 

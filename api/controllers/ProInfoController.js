@@ -27,7 +27,7 @@ module.exports = {
                         console.log(error);
                         res.send(500,{err: "DB Error" });
                     } else {
-                        ProInfo.create({ title: split[0], author: split[1], link: split[2], classification: split[3],cancerType: split[4],note: split[5],date: split[6], articleURL: "./article/"+proinfo.id }).exec(function(error, proinfoArticle) {
+                        ProInfo.create({ title: split[0], author: split[1], link: split[2], classification: split[3],cancerType: split[4],note: split[5],date: split[6], articleURL: "../article/"+proinfo.id }).exec(function(error, proinfoArticle) {
                             if(error) {
                                 console.log(error);
                                 res.send(500,{err: "DB Error" });
