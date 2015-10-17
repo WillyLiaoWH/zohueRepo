@@ -107,6 +107,7 @@ module.exports.routes = {
 
   'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getTopArticles': 'Home.getTopArticles',
+  'GET /getHomepagePic': 'HomeController.getHomepagePic',
   'GET /getRecord':'Backend.getRecord',
   'GET /friendStatus/:target_id' : 'User.friendStatus',
   'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係

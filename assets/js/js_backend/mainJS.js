@@ -303,7 +303,8 @@ function loadUserList(){
   document.getElementById("forumManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   document.getElementById("subscriberManage").style.display="none";
-
+  $("#homepageManage").hide();
+  $("#Backendhomepage").hide();
   searchUser=document.getElementById("searchUser").value;
 
   $.get("/getAllUsers"+"?searchUser="+searchUser, function(userList){
@@ -428,6 +429,8 @@ function loadProInfo(){
   $("#subscriberManage").hide()
   $("#record").hide()
   $("#proInfo").show()
+  $("#homepageManage").hide();
+  $("#Backendhomepage").hide();
 }
 
 function loadForumList(articleList){
@@ -437,7 +440,8 @@ function loadForumList(articleList){
   document.getElementById("subscriberManage").style.display="none";
   $("#record").hide()
   $("#proInfo").hide()
-  
+  $("#homepageManage").hide();
+  $("#Backendhomepage").hide();
   if(typeof(articleList)!="undefined"){
     articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
     articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
@@ -513,6 +517,7 @@ function loadEnlManage(){
   document.getElementById("userManage").style.display="none";
   $("#record").hide()
   $("#proInfo").hide()
+  $("#Backendhomepage").hide();
   document.getElementById("enlManage").style.display="block";
   document.getElementById("subscriberManage").style.display="none";
 }
@@ -522,7 +527,9 @@ function loadsubscriberList(){
   document.getElementById("userManage").style.display="none";
   document.getElementById("enlManage").style.display="none";
   $("#record").hide();
-  $("#proInfo").hide()
+  $("#proInfo").hide();
+  $("#homepageManage").hide();
+  $("#Backendhomepage").hide();
   document.getElementById("subscriberManage").style.display="block";
   searchEmail=document.getElementById("searchEmail").value;
 
@@ -544,6 +551,19 @@ function loadsubscriberList(){
   });
 }
 
+// function loadBackendHomepage(){
+
+//   $("#forumManage").hide();
+//   $("#userManage").hide();
+//   $("#enlManage").hide();
+//   $("#subscriberManage").hide();
+//   $("#proInfo").hide()
+//   $("#record").show();
+//   $("#homepageManage").hide();
+//   $("#Backendhomepage").show();
+// }
+
+
 function loadRecord(){
 
   $("#forumManage").hide();
@@ -552,6 +572,9 @@ function loadRecord(){
   $("#subscriberManage").hide();
   $("#proInfo").hide()
   $("#record").show();
+  $("#homepageManage").hide();
+  $("#Backendhomepage").hide();
+
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
   $.get("/getRecord",function(records){
     var act
@@ -589,6 +612,40 @@ function loadRecord(){
   })
   
 }
+
+
+function loadHomepage(){
+  
+  $("#record").hide();
+  $("#forumManage").hide();
+  $("#userManage").hide();
+  $("#enlManage").hide();
+  $("#subscriberManage").hide();
+  $("#proInfo").hide();
+  $("#homepageManage").show();
+  $("#Backendhomepage").hide();
+
+
+  $.get("/getHomepagePic", function(homepagePics){
+    if(typeof(homepagePics)=="string"){
+      showDialog("一般訊息",homepagePics);
+    }else{
+      homepagePicTable="<tr class='tableHead'><th>#</th><th style='width:20%'>圖片</th><th>標題</th><th>新增日期</th><th>刪除照片</th><tr>";
+      for(i=0; i<homepagePics.length; i++){
+        createdAt=new Date(homepagePics[i].createdAt).toLocaleString();
+        homepagePicId=homepagePics[i].id;
+        homepagePicTable+="<tr><td>"+(i+1)+"</td><td><img src='"+homepagePics[i].pic+"' class='img-responsive'></img></td><td>"+homepagePics[i].title+"</td><td>"+createdAt+"</td>";
+        homepagePicTable+="<td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteSubscriber("+homepagePicId+");'></span></td></tr>";
+      }
+      document.getElementById("backend_homepagePicList").innerHTML = homepagePicTable;
+    }
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
+
+
+}
+
 
 function sortByChar(sortby){
   articleList=articleList.sort(function(a, b) {

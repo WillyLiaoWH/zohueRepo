@@ -6,6 +6,41 @@
  */
 
 module.exports = {
+	getHomepagePic: function(req, res){
+		// console.log("errorrrrrr");
+		// // var isAdmin = req.session.user.isAdmin;
+  //       // if (isAdmin){
+  //           HomepagePic.find({}).populate('title').populate('pic').exec(function(err,homepagePics){
+  //               if(err){
+  //                   res.send(500,{err: "DB Error"});
+  //               }
+  //               else{
+  //                   res.send(homepagePics);
+  //               }
+  //           })
+  //       // }
+
+        // var searchEmail = req.param("searchEmail");
+        // var isAdmin = req.session.user.isAdmin;
+        // if (isAdmin == true) {
+        	// console.log("errorrrrrr");
+            HomepagePic.find({}).exec(function(err, homepagePics) {
+                if (homepagePics.length==0) {
+                    res.send("查無結果！");
+                } else {
+                    if (err) {
+                        res.send(500, { err: "DB Error" });
+                    } else {
+                        res.send(homepagePics);
+                    }
+                }
+            });
+        // }else{
+        //     res.send("你不是管理員喔！");
+        // }
+    
+
+	},
 	getAnnouncement: function(req, res){
 		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt'], sort: 'createdAt DESC'}).exec(function(err, Announcement) {
 			if(err) {

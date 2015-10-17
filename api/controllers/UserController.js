@@ -450,6 +450,12 @@ module.exports = {
            pri_id = "0"; //假設沒登入者id為0
            console.log("No login user looking at profile..."); 
         }
+
+        if (typeof pri_id==='undefined'){
+            var pri_id="0";
+            console.log("Error: pri_id undefined but user has session!???");
+        }
+
         
         var id=req.param("id");
         
