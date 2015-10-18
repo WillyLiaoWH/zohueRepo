@@ -204,6 +204,7 @@ module.exports = {
             }
         });
     },
+
     getAllSuspendReason: function(req, res) {
         var isAdmin = req.session.user.isAdmin;
         if(isAdmin == true){
@@ -216,6 +217,7 @@ module.exports = {
             });
         }
     },
+
     getSuspendReason: function(req, res) {
         var account = req.param("account");
         var isAdmin = req.session.user.isAdmin;
@@ -231,6 +233,7 @@ module.exports = {
             });
         }
     },
+    
     proInfoSubmit: function(req,res){
         var type = req.param("type")
         var cancer = req.param("cancer")

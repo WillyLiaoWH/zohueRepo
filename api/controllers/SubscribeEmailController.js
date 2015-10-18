@@ -109,7 +109,7 @@ module.exports = {
             attachmentList.push({
                 filename: attachmentNameObj[i],
                 path: "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[i]
-                //path: "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
+                //path: "D:/github/zohueRepo/assets/images/img_email/"+attachmentObj[i]
             });
         }
         var isAdmin = req.session.user.isAdmin;
@@ -159,7 +159,7 @@ module.exports = {
                             if(req.param("attachmentList")!=0){ //送出郵件後要刪除附加檔案
                                 for(k=0;k<attachmentObj.length;k++){ 
                                     var fs = require('fs');
-                                    //var path = "C:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
+                                    //var path = "D:/github/zohueRepo/assets/images/img_email/"+attachmentObj[k];
                                     var path = "C:/Users/User/zohueRepo/assets/images/img_email/"+attachmentObj[k];
                                     fs.unlink(path, function (err) {
                                         if (err){
@@ -183,7 +183,7 @@ module.exports = {
     deleteFile: function(req, res) { //刪除檔案
         var fileName = req.param("fileName");
         var fs = require('fs');
-        //var path = "C:/github/zohueRepo/assets/images/img_email/"+fileName;
+        //var path = "D:/github/zohueRepo/assets/images/img_email/"+fileName;
         var path = "C:/Users/User/zohueRepo/assets/images/img_email/"+fileName;
         fs.unlink(path, function (err) {
             if (err){
