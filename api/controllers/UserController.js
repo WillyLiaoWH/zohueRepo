@@ -202,9 +202,14 @@ module.exports = {
                         res.send(500,{err: "DB Error" });
                         console.log(error);
                     } else {
-
-                        //req.session.user = user;
-                        res.send(user);
+                        User.update({id: user.id}, {lastForumTime: user.createdAt}).exec(function(error2, user2) {
+                            if(error2) {
+                                res.send(500,{err: "DB Error" });
+                                console.log(error);
+                            } else {
+                                res.send(user2);
+                            }
+                        })
                     }
                 });
             }
@@ -1115,6 +1120,15 @@ module.exports = {
             });
         }
     },
+    updateLastForumTime: function(req, res) {
+        if(req.session.user) {
+            User.update({id: req.session.user.id}, {lastForumTime: new Date().toISOString()}).exec(function(err, user) {
+                if(err) {
+                    console.log("錯誤訊息："+err);
+                }
+            })
+        }
+    }
     
 
 

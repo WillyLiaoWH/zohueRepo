@@ -123,5 +123,8 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
+    lastForumTime: {
+      type: 'string',
+    }
   }
 };

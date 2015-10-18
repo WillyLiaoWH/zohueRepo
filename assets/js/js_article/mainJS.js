@@ -4,7 +4,8 @@ var loaded=false;
 var board="";
 $(document).ready(function(){
   setPage();
-
+  $.get('/updateLastForumTime',function(res){
+  });
   var dialog = $("#reportDialog").dialog({
     autoOpen: false,
     height: "auto",

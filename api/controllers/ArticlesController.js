@@ -879,6 +879,28 @@ module.exports = {
                 }
             })
         }
+    },
+    countForum: function(req, res) {
+        if(!req.session.authenticated) {
+            res.send({login: false});
+        } else {
+            User.findOne(req.session.user.id).exec(function(err1, user) {
+                if(err1) {
+                    console.log("錯誤訊息："+err1);
+                    res.send(500, "server error");
+                } else {
+                    var lastForumTime=user.lastForumTime;
+                    Articles.find({createdAt: {'>': lastForumTime}}).exec(function(err2, articles) {
+                        if(err2) {
+                            console.log("錯誤訊息："+err2);
+                            res.send(500, "server error");
+                        } else {
+                            res.send({login: true, num: articles.length});
+                        }
+                    });
+                }
+            });
+        }
     }
 };
 

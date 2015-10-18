@@ -20,6 +20,9 @@ var boardList=[];
 var authorClickCount=0;
 
 $(document).ready(function(){
+  $.get('/updateLastForumTime',function(res){
+  });
+
   $("#search").click(function(){ // 搜尋按鈕 listener
     var key=$("#searchWord").val().replace(/^\s+$/m,'');
     setPage(1, key, "lastResponseTime", "desc");

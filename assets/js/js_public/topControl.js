@@ -63,6 +63,7 @@ function checkAuth() {
 
       checkNot();
       setInterval("checkNot()", 5000);
+      checkForum();
 
       var setUp=document.getElementById("setUp");
       setUp.style.display="inline";
@@ -558,6 +559,19 @@ function checkNot() {
         $("#notification").removeClass("lightgray").addClass("orange");
         $("#mobile_notification").removeClass("lightgray").addClass("orange"); 
         $("#mobile_notification").css("color","#080707"); 
+      }
+    }
+  });
+}
+
+function checkForum() {
+  $.get('/countForum',function(res){
+    if(res.err) {
+      showDialog("錯誤訊息",res.err);
+    } else {
+      if(res.login) {
+        $("#forum1").html('<span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp;作夥論壇&nbsp('+res.num+')');
+        $("#forum2").html("作夥論壇&nbsp("+res.num+")");
       }
     }
   });

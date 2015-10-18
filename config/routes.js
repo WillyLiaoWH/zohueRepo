@@ -135,6 +135,8 @@ module.exports.routes = {
   'GET /checkAdmin': 'Backend.checkAdmin',
   'GET /getAllSuspendReason': 'Backend.getAllSuspendReason',
   'GET /getSuspendReason': 'Backend.getSuspendReason',
+  'GET /countForum': 'Articles.countForum',
+  'GET /updateLastForumTime': 'User.updateLastForumTime',
   'GET /profile': {
     view: 'profile/index',
     locals: {
