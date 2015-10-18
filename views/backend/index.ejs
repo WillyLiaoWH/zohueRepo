@@ -35,14 +35,15 @@
           </button>
           <a class="navbar-brand" href="/Home">ZOHUE</a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li onclick="loadUserList()"><a>帳號管理</a></li>
-            <li onclick="loadForumList()" id="forumTab"><a>論壇管理</a></li>
-            <li onclick="loadsubscriberList()" ><a>電子報管理</a></li>
-            <li onclick="loadRecord()"><a>查看記錄</a></li>
-            <li onclick="loadProInfo()"><a>專業知識</a></li>
-            <li onclick="loadHomepage()"><a>首頁管理</a></li>
+        <div class="collapse navbar-collapse">
+        <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
+          <ul class="nav navbar-nav" id="functionList">
+            <li onclick="loadUserList()" data-toggle="collapse" href="#userManage"><a>帳號管理</a></li>
+            <li onclick="loadForumList()" id="forumTab" data-toggle="collapse" href="#forumManage"><a>論壇管理</a></li>
+            <li onclick="loadsubscriberList()" data-toggle="collapse" href="#subscriberManage"><a>電子報管理</a></li>
+            <li onclick="loadRecord()" data-toggle="collapse" href="#record"><a>查看記錄</a></li>
+            <li onclick="loadProInfo()" data-toggle="collapse" href="#proInfo"><a>專業知識</a></li>
+            <li onclick="loadHomepage()" data-toggle="collapse" href="#homepageManage"><a>首頁管理</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a id="adminLogout">管理員登出</a></li>
@@ -57,7 +58,7 @@
       <div class="row-fluid">
         <div class="span12">
           <div id="backend_content">
-            <div id="userManage">
+            <div id="userManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>帳號管理</h2></div>
@@ -78,7 +79,7 @@
               </div>
             </div>
 
-            <div id="forumManage">
+            <div id="forumManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2 id="title_forumManage">論壇管理</h2></div>
@@ -112,7 +113,7 @@
                 </div>
               </div>
             </div>
-            <div id="enlManage">
+            <div id="enlManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>電子報管理：發送電子報</h2></div>
@@ -159,7 +160,7 @@
                 </div>
               </div>
             </div>
-            <div id="subscriberManage">
+            <div id="subscriberManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>電子報管理</h2></div>
@@ -173,7 +174,7 @@
                       <button type="button" class="btn btn-default searchButton" onclick="cancelEmailSearch()">取消</button>
                     </div>
                     <div class="col-md-4 text-right">
-                      <button id="enlSend" type="button" onclick="loadEnlManage()" class="btn btn-default searchButton">發送電子報</button>
+                      <button id="enlSend" type="button" onclick="loadEnlManage()" class="btn btn-default searchButton" data-toggle="collapse" href="#enlManage">發送電子報</button>
                     </div>
                   </div>
                   <!-- Table -->
@@ -182,7 +183,7 @@
               </div>
             </div>
 
-            <div id="record">
+            <div id="record" class="collapse mainContent">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h2>查看記錄</h2>
@@ -193,7 +194,7 @@
               </div>
             </div>
 
-            <div id="proInfo">
+            <div id="proInfo" class="collapse mainContent">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h2>專業知識</h2>
@@ -301,7 +302,7 @@
             </div>
 
 
-            <div id="homepageManage">
+            <div id="homepageManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>首頁管理</h2></div>
@@ -328,7 +329,7 @@
               </div>
             </div>
 
-            <div id="Backendhomepage">
+            <div id="Backendhomepage" class="mainContent collapse in">
               <div class="panel panel-default">
                 <!-- Default panel contents -->                
                 <div class="panel-body">

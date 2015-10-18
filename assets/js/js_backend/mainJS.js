@@ -11,11 +11,11 @@ var unDelArtId=[];
 
 $(document).ready(function(){
   if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
-    position = position || 0;
-    return this.indexOf(searchString, position) === position;
-  };
-}
+    String.prototype.startsWith = function(searchString, position) {
+      position = position || 0;
+      return this.indexOf(searchString, position) === position;
+    };
+  }
   checkAuth();
 
   $(document).on("click","#adminLogout",function(e){
@@ -83,9 +83,27 @@ $(document).ready(function(){
     });
   }
 
-  // 帳號管理時，點選某一使用者record，會收起已經打開的其他record。
+  $(document).on("click","#functionList li",function(e){
+    $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
+  });
+
+  $(document).on("click", "#enlSend", function(e){
+    $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
+  });
+
+  // 處理帳號管理時，點選某一使用者record事件。
   $(document).on("click","#backend_userList .userRecord",function(e){
-     $("#backend_userList .userInfo").removeClass("in");
+    $("#backend_userList .userInfo").removeClass("in"); // 收起已經打開的其他record
+    var id = $(this).attr("value");
+    var account = $("tr[value='"+id+"'] td.userAccount").text();
+    if($("#profile"+id+" .suspendStatus").attr("value")=="true"){
+      $.get("/getSuspendReason"+"?account="+account, function(reason){
+        $("#suspendReason"+id).text("停權理由："+reason.reason);
+        if(reason.appeal!=null){
+          $("#appeal"+id).text("使用者申訴："+reason.appeal[reason.appeal.length-1].appeal);
+        }
+      });
+    }
   });
 
   // 論壇管理排序文章
@@ -202,12 +220,6 @@ $(document).ready(function(){
 
   // "停權"使用者
   $(document).on("click",".unDelUser",function(e){
-    // var userID = $(this).parent().parent().attr("value");
-    // $.post( "/suspendUser", { id: userID}, function(res){
-    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-ban-circle","glyphicon-repeat");
-    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("unDelUser","delUser");
-    //   showDialog("一般訊息",res);
-    // });
     var userID = $(this).attr("value");
     var promptOptions = {
       title: "停權原因（必填）",
@@ -221,17 +233,14 @@ $(document).ready(function(){
       },
       callback: function(result) {  
         if(result != "" && result !== null){                                           
-          console.log("Hi "+result);
           $.post( "/suspendUser", { id: userID, reason: result}, function(res){
             $("#backend_userList tr span[value="+userID+"]").switchClass("glyphicon-ban-circle","glyphicon-repeat");
             $("#backend_userList tr span[value="+userID+"]").switchClass("unDelUser","delUser");
+            $("#profile"+userID+" .suspendStatus").text("停權中  ");
+            $("#profile"+userID+" .suspendStatus").val("true");
+            $("#suspendReason"+userID).text("停權理由："+result);
             showDialog("一般訊息",res);
           });   
-
-          $.get("/getSuspendReason", function(res){
-            console.log(JSON.stringify(res));
-          });
-
         }              
       }
     };
@@ -240,17 +249,15 @@ $(document).ready(function(){
   });
 
   // "回復"被停權的使用者
-  $(document).on("click",".delUser",function(e){
-    // var userID = $(this).parent().parent().attr("value");
-    // $.post( "/recoverUser", { id: userID}, function(res){
-    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("glyphicon-repeat","glyphicon-ban-circle");
-    //   $("#backend_userList tr[value="+userID+"] span").last().switchClass("delUser","unDelUser");
-    //   showDialog("一般訊息",res);
-    // }); 
+  $(document).on("click",".delUser",function(e){ 
     var userID = $(this).attr("value");
     $.post( "/recoverUser", { id: userID}, function(res){
       $("#backend_userList tr span[value="+userID+"]").switchClass("glyphicon-repeat","glyphicon-ban-circle");
       $("#backend_userList tr span[value="+userID+"]").switchClass("delUser","unDelUser");
+      $("#profile"+userID+" .suspendStatus").text("正常使用  ");
+      $("#profile"+userID+" .suspendStatus").val("false");
+      $("#suspendReason"+userID).text("");
+      $("#appeal"+userID).text("");
       showDialog("一般訊息",res);
     }); 
   });
@@ -299,12 +306,6 @@ $(document).ready(function(){
 });
 
 function loadUserList(){
-  document.getElementById("userManage").style.display="block";
-  document.getElementById("forumManage").style.display="none";
-  document.getElementById("enlManage").style.display="none";
-  document.getElementById("subscriberManage").style.display="none";
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
   searchUser=document.getElementById("searchUser").value;
 
   $.get("/getAllUsers"+"?searchUser="+searchUser, function(userList){
@@ -339,7 +340,7 @@ function loadUserList(){
           avgReportNum = formatFloat(totalReport/postNum);
         }
         
-        userTable+="<tr class='userRecord' value="+userID+" data-toggle='collapse' href='#profile"+userID+"' aria-expanded='false'><td>"+(i+1)+"</td><td>"+userList[i].account+"</td>";
+        userTable+="<tr class='userRecord' value="+userID+" data-toggle='collapse' href='#profile"+userID+"' aria-expanded='false'><td>"+(i+1)+"</td><td class='userAccount'>"+userList[i].account+"</td>";
         userTable+="<td>"+fullName+"</td><td>"+userList[i].alias+"</td><td>"+gender+"</td></td><td>"+userType+"</td><td>"+createdAt+"</td>";
         
         if (userList[i].isFullSignup==false){
@@ -347,17 +348,6 @@ function loadUserList(){
         }else{
           userTable+="<td><span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span></td></tr>";
         }
-        // userTable+="<td>"+postNum+"</td>";
-        // if (avgReportNum>=3){
-        //   userTable+="<td>"+avgReportNum+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' title='文章平均檢舉數超過3'></span></td>";
-        // }else{
-        //   userTable+="<td>"+avgReportNum+"</td>";
-        // }
-        // if (userList[i].suspended==true){
-        //   userTable+="<td><span class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
-        // }else{
-        //   userTable+="<td><span class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
-        // }
 
         userTable+="<tr class='collapse userInfo' id='profile"+userID+"'><td></td><td class='text-right'><img src='"+userList[i].img+"' height='80px' width='80px'></td>";
         userTable+="<td colspan='2'>ID："+userList[i].id+"<br>帳號："+userList[i].account+"<br>姓名："+fullName+"<br>";
@@ -375,11 +365,12 @@ function loadUserList(){
         userTable+="發文數："+postNum+"<br>文章平均檢舉數："+avgReportNum+"<br>停權狀態：";
 
         if (userList[i].suspended==true){
-          userTable+="<span value='"+userID+"' class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span></td></tr>";
+          userTable+="<text class='suspendStatus' value='true'>停權中  </text><span value='"+userID+"' class='glyphicon glyphicon-repeat delUser' aria-hidden='true' title='回復使用權限'></span><br>";
+          //userTable+="<text id='suspendReason"+userID+"'></text><br><text id='appeal"+userID+"'></text></td></tr>";
         }else{
-          userTable+="<span value='"+userID+"' class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span></td></tr>";
+          userTable+="<text class='suspendStatus' value='false'>正常使用  </text><span value='"+userID+"' class='glyphicon glyphicon-ban-circle unDelUser' aria-hidden='true' title='停止使用權限'></span><br>";
         }
-        
+          userTable+="<text id='suspendReason"+userID+"'></text><br><text id='appeal"+userID+"'></text></td></tr>";
 
       }
       document.getElementById("backend_userList").innerHTML = userTable;
@@ -422,26 +413,7 @@ function getart(callback, action){
   }
 }
 
-function loadProInfo(){
-  $("#forumManage").hide()
-  $("#userManage").hide()
-  $("#enlManage").hide()
-  $("#subscriberManage").hide()
-  $("#record").hide()
-  $("#proInfo").show()
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
-}
-
 function loadForumList(articleList){
-  document.getElementById("forumManage").style.display="block";
-  document.getElementById("userManage").style.display="none";
-  document.getElementById("enlManage").style.display="none";
-  document.getElementById("subscriberManage").style.display="none";
-  $("#record").hide()
-  $("#proInfo").hide()
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
   if(typeof(articleList)!="undefined"){
     articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
     articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
@@ -456,7 +428,7 @@ function loadForumList(articleList){
         lastResponseTime=lastTime.slice(0, lastTime.length-3);
         createdAt=new Date(articleList[i].createdAt).toLocaleString();
         postTime=createdAt.slice(0,createdAt.length-3);
-        authorType=articleList[i].author.type;
+        authorType=getType(articleList[i].author.type);
         reportNum=articleList[i].report.length;
         var boardName=articleList[i].board.title;
         var deleted=articleList[i].deleted;
@@ -512,25 +484,7 @@ function loadForumList(articleList){
   }
 }
 
-function loadEnlManage(){
-  document.getElementById("forumManage").style.display="none";
-  document.getElementById("userManage").style.display="none";
-  $("#record").hide()
-  $("#proInfo").hide()
-  $("#Backendhomepage").hide();
-  document.getElementById("enlManage").style.display="block";
-  document.getElementById("subscriberManage").style.display="none";
-}
-
 function loadsubscriberList(){
-  document.getElementById("forumManage").style.display="none";
-  document.getElementById("userManage").style.display="none";
-  document.getElementById("enlManage").style.display="none";
-  $("#record").hide();
-  $("#proInfo").hide();
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
-  document.getElementById("subscriberManage").style.display="block";
   searchEmail=document.getElementById("searchEmail").value;
 
   $.get("/getAllSubscribers"+"?searchEmail="+searchEmail, function(subscribers){
@@ -551,30 +505,7 @@ function loadsubscriberList(){
   });
 }
 
-// function loadBackendHomepage(){
-
-//   $("#forumManage").hide();
-//   $("#userManage").hide();
-//   $("#enlManage").hide();
-//   $("#subscriberManage").hide();
-//   $("#proInfo").hide()
-//   $("#record").show();
-//   $("#homepageManage").hide();
-//   $("#Backendhomepage").show();
-// }
-
-
 function loadRecord(){
-
-  $("#forumManage").hide();
-  $("#userManage").hide();
-  $("#enlManage").hide();
-  $("#subscriberManage").hide();
-  $("#proInfo").hide()
-  $("#record").show();
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
-
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
   $.get("/getRecord",function(records){
     var act
@@ -615,17 +546,6 @@ function loadRecord(){
 
 
 function loadHomepage(){
-  
-  $("#record").hide();
-  $("#forumManage").hide();
-  $("#userManage").hide();
-  $("#enlManage").hide();
-  $("#subscriberManage").hide();
-  $("#proInfo").hide();
-  $("#homepageManage").show();
-  $("#Backendhomepage").hide();
-
-
   $.get("/getHomepagePic", function(homepagePics){
     if(typeof(homepagePics)=="string"){
       showDialog("一般訊息",homepagePics);
@@ -642,8 +562,6 @@ function loadHomepage(){
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
-
-
 }
 
 
@@ -918,7 +836,7 @@ function proInfoSubmit(){
 
   $.post("/proInfoSubmit",{type:type,cancer:cancer,time:time,title:title,author:author,from:from,proInfo:proInfo},function(ret){
       if(ret=="OK"){
-        alert("發布完成");
+        alert("發佈完成");
       }
   });
 }

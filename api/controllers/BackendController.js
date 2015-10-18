@@ -6,16 +6,6 @@
  */
 
 module.exports = {
-    getSuspendReason: function(req, res) {
-        SuspendReason.find().exec(function(err,reason){
-            if(err){
-                res.send(500,{err: "DB Error"});
-            }else{
-                res.send(reason);
-            }
-        })
-    },
-
   	index: function(req, res) {
 	    res.view({
 	    	layout: false
@@ -30,15 +20,6 @@ module.exports = {
     checkAdmin: function(req, res) {
         if(typeof req.session.user != 'undefined'){
             var isAdmin = req.session.user.isAdmin;
-            //     User.update({account: isAdmin}, {isAdmin: true}).exec(function(err) {
-            //         if(err) {
-            //             console.log("sss");
-            //             res.send("true");
-            //         } else {
-            //             console.log('fff');
-            //             res.send("false");
-            //         }
-            //     });
             if (isAdmin == true){
                 res.send("true");
             }else{
@@ -166,7 +147,6 @@ module.exports = {
         var reason = req.param("reason");
         var isAdmin = req.session.user.isAdmin;
         if(isAdmin == true){
-
             User.update({id: userID}, {suspended: true}).exec(function(err) {
                 if(err) {
                     console.log(error);
@@ -184,7 +164,6 @@ module.exports = {
                                     res.send("已停止此帳號的使用權限。");
                                 }
                             });  
-                            //console.log(userAccount[0].account);
                         }
                     });     
                 }
@@ -224,6 +203,33 @@ module.exports = {
                 getOneRecord.save(function(err){res.send("您的申訴已成功送出，我們會盡快處理，謝謝！");});
             }
         });
+    },
+    getAllSuspendReason: function(req, res) {
+        var isAdmin = req.session.user.isAdmin;
+        if(isAdmin == true){
+            SuspendReason.find().exec(function(err,reason){
+                if(err){
+                    res.send(500,{err: "DB Error"});
+                }else{
+                    res.send(reason);
+                }
+            });
+        }
+    },
+    getSuspendReason: function(req, res) {
+        var account = req.param("account");
+        var isAdmin = req.session.user.isAdmin;
+        if(isAdmin == true){
+            SuspendReason.findByAccount(account).exec(function(err, reason) {
+                if (err) {
+                    res.send(500, { err: "DB Error" });
+                } else {
+                    if (reason.length!=0) {
+                        res.send(reason[reason.length-1]);
+                    }
+                }
+            });
+        }
     },
     proInfoSubmit: function(req,res){
         var type = req.param("type")
