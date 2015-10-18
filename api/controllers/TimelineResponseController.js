@@ -24,7 +24,7 @@ module.exports = {
                     }
                     for(var i=0; i<timeline[0].follower.length; i++) {
                         if(timeline[0].follower[i]!=req.session.user.id) {
-                            Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: notContent, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.account, alreadySeen: false}).exec(function(err, not) {
+                            Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: notContent, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.id, alreadySeen: false}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});
@@ -132,7 +132,7 @@ module.exports = {
                     } else {
                         var notContent=timeline.comment;
                     }
-                    Notification.create({user: timeline.author.id, notType: "6", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+timeline.author.account, alreadySeen: false}).exec(function(err, not) {
+                    Notification.create({user: timeline.author.id, notType: "6", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+timeline.author.id, alreadySeen: false}).exec(function(err, not) {
                         if(err) {
                             console.log(err);
                             res.send({err:"DB error"});

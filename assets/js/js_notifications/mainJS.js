@@ -34,6 +34,7 @@ var notMessage=[
 function setPage() {
   $.get('/nots',function(res){
     if(res){
+      console.log(res);
       var table="";
       for(var i=0; i<res.length; i++) {
         if(res[i].alreadyRead) {
@@ -44,6 +45,7 @@ function setPage() {
         table+="<div class='image'>";
         var picSize="80";
         var authorIcon="", authorType="";
+        console.log(res[i].from);
         switch(res[i].from.type) {
           case "D":
             authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
