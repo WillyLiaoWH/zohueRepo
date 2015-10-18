@@ -20,15 +20,6 @@ module.exports = {
     checkAdmin: function(req, res) {
         if(typeof req.session.user != 'undefined'){
             var isAdmin = req.session.user.isAdmin;
-            //     User.update({account: isAdmin}, {isAdmin: true}).exec(function(err) {
-            //         if(err) {
-            //             console.log("sss");
-            //             res.send("true");
-            //         } else {
-            //             console.log('fff');
-            //             res.send("false");
-            //         }
-            //     });
             if (isAdmin == true){
                 res.send("true");
             }else{

@@ -3,20 +3,10 @@ body{
 }
 
 #userManage, #forumManage, #enlManage, #subscriberManage,#record,#proInfo,#homepageManage{
-	display:none;
+	/*display:none;*/
 	margin-top:20px;
 }
 
-/*.nav-pills li a:hover{
-	cursor:pointer;
-	color: #D26900;
-	background-color: transparent;
-}
-
-.nav-pills li a{
-	font-size:22px;
-}
-*/
 .form-control{
 	font-size: 20px;
 	height:45px;
@@ -114,10 +104,6 @@ body{
   color:#467500;
 }
 
-/*tr:hover{
-  background-color:#ddd;
-}*/
-
 .tableHead{
   background-color:#f5f5f5;
 }
@@ -194,7 +180,6 @@ body{
 
 #adminLoginArea{
   margin-top:150px;
-/*  display: none;*/
 }
 
 #adminLogin{
@@ -221,10 +206,6 @@ body{
 
 .navbar li a{
   cursor:pointer;
-}
-
-#enlSend{
-  //margin-left:20px;
 }
 
 #searchEmail{

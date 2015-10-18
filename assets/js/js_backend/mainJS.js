@@ -83,6 +83,14 @@ $(document).ready(function(){
     });
   }
 
+  $(document).on("click","#functionList li",function(e){
+    $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
+  });
+
+  $(document).on("click", "#enlSend", function(e){
+    $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
+  });
+
   // 處理帳號管理時，點選某一使用者record事件。
   $(document).on("click","#backend_userList .userRecord",function(e){
     $("#backend_userList .userInfo").removeClass("in"); // 收起已經打開的其他record
@@ -298,12 +306,6 @@ $(document).ready(function(){
 });
 
 function loadUserList(){
-  document.getElementById("userManage").style.display="block";
-  document.getElementById("forumManage").style.display="none";
-  document.getElementById("enlManage").style.display="none";
-  document.getElementById("subscriberManage").style.display="none";
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
   searchUser=document.getElementById("searchUser").value;
 
   $.get("/getAllUsers"+"?searchUser="+searchUser, function(userList){
@@ -411,26 +413,7 @@ function getart(callback, action){
   }
 }
 
-function loadProInfo(){
-  $("#forumManage").hide()
-  $("#userManage").hide()
-  $("#enlManage").hide()
-  $("#subscriberManage").hide()
-  $("#record").hide()
-  $("#proInfo").show()
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
-}
-
 function loadForumList(articleList){
-  document.getElementById("forumManage").style.display="block";
-  document.getElementById("userManage").style.display="none";
-  document.getElementById("enlManage").style.display="none";
-  document.getElementById("subscriberManage").style.display="none";
-  $("#record").hide()
-  $("#proInfo").hide()
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
   if(typeof(articleList)!="undefined"){
     articleTable="<tr class='tableHead'><th>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
     articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' style='width:200px;'>檢舉</th>";
@@ -501,25 +484,7 @@ function loadForumList(articleList){
   }
 }
 
-function loadEnlManage(){
-  document.getElementById("forumManage").style.display="none";
-  document.getElementById("userManage").style.display="none";
-  $("#record").hide()
-  $("#proInfo").hide()
-  $("#Backendhomepage").hide();
-  document.getElementById("enlManage").style.display="block";
-  document.getElementById("subscriberManage").style.display="none";
-}
-
 function loadsubscriberList(){
-  document.getElementById("forumManage").style.display="none";
-  document.getElementById("userManage").style.display="none";
-  document.getElementById("enlManage").style.display="none";
-  $("#record").hide();
-  $("#proInfo").hide();
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
-  document.getElementById("subscriberManage").style.display="block";
   searchEmail=document.getElementById("searchEmail").value;
 
   $.get("/getAllSubscribers"+"?searchEmail="+searchEmail, function(subscribers){
@@ -540,30 +505,7 @@ function loadsubscriberList(){
   });
 }
 
-// function loadBackendHomepage(){
-
-//   $("#forumManage").hide();
-//   $("#userManage").hide();
-//   $("#enlManage").hide();
-//   $("#subscriberManage").hide();
-//   $("#proInfo").hide()
-//   $("#record").show();
-//   $("#homepageManage").hide();
-//   $("#Backendhomepage").show();
-// }
-
-
 function loadRecord(){
-
-  $("#forumManage").hide();
-  $("#userManage").hide();
-  $("#enlManage").hide();
-  $("#subscriberManage").hide();
-  $("#proInfo").hide()
-  $("#record").show();
-  $("#homepageManage").hide();
-  $("#Backendhomepage").hide();
-
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
   $.get("/getRecord",function(records){
     var act
@@ -604,17 +546,6 @@ function loadRecord(){
 
 
 function loadHomepage(){
-  
-  $("#record").hide();
-  $("#forumManage").hide();
-  $("#userManage").hide();
-  $("#enlManage").hide();
-  $("#subscriberManage").hide();
-  $("#proInfo").hide();
-  $("#homepageManage").show();
-  $("#Backendhomepage").hide();
-
-
   $.get("/getHomepagePic", function(homepagePics){
     if(typeof(homepagePics)=="string"){
       showDialog("一般訊息",homepagePics);
@@ -631,8 +562,6 @@ function loadHomepage(){
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
-
-
 }
 
 
