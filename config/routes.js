@@ -58,6 +58,7 @@ module.exports.routes = {
   'POST /searchProInfo': 'ProInfoController.searchProInfo',
   'POST /imgupload_avatar': 'ImguploadController.upload_avatar',
   'POST /imgupload_post': 'ImguploadController.upload_post',
+  // 'POST /imgupload_homepagePic': 'ImguploadController.upload_homepagePic', /*還沒寫完by chien*/
   'POST /sendEmail' : 'ArticlesController.mailAritlce',
   'POST /checkFB' : 'User.checkFB',
   'POST /removeBlack': 'User.removeBlack',
@@ -104,6 +105,8 @@ module.exports.routes = {
   'POST /changeFollow': 'ArticlesController.changeFollow',
   'POST /appeal': 'BackendController.appeal',
   'POST /proInfoSubmit':'BackendController.proInfoSubmit',
+  'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
+  'POST /addHomepagePic': 'HomeController.addHomepagePic',
 
   'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getTopArticles': 'Home.getTopArticles',

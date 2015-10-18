@@ -728,6 +728,34 @@ function cancelEmailSearch(){
   loadsubscriberList();
 }
 
+function deleteHomepagePic(id) {
+  bootbox.dialog({
+    message: "確定要刪除該圖片嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          $.post( "/deleteHomepagePic", { id: id}, function(res){
+            showDialog("一般訊息","刪除成功！",function(){
+              loadHomepage();
+            });
+          }).error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
+}
+
 // 輸入input之後，按enter可以直接送出
 // function adminLogin(e) {
 //   var keynum;
@@ -846,6 +874,38 @@ function getBirthday(date){
   var birthday="民國"+Y+"年"+M+"月"+D+"日";
   return birthday;
 }
+
+function getFile(){
+  document.getElementById("upfile").click();
+}
+
+function sub(obj){
+  var file = obj.value;
+  // console.log(file);
+  var fileName = file.split("\\");
+  document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
+  // document.myForm.submit();
+  event.preventDefault();
+}
+
+function homepagePicSubmit(){
+  var pic=document.getElementById("yourBtn").innerHTML;//暫時是這樣還沒寫完by 1000
+  var title=$("#homepagePicTitle").val();
+  console.log(title);
+  console.log(document.getElementById("yourBtn").innerHTML);
+  $.post("/addHomepagePic",{title:title,pic:pic},function(ret){
+      if(ret=='照片已新增'){
+       
+        document.getElementById("homepagePicTitle").value="";
+        document.getElementById("upfile").value="";
+        document.getElementById("yourBtn").innerHTML="選擇新圖片";
+        showDialog("一般訊息","新增成功！",function(){
+              loadHomepage();
+            });
+      }
+  });
+}
+
 
 function proInfoSubmit(){
   var type=$("#proInfoType").val()
