@@ -155,6 +155,20 @@ $(document).ready(function(){
     return false;
   });
 
+  $(document).on("click",".removeFile",function(e){
+    var index = attachmentNameList.indexOf($(this).attr("value"));
+
+    $.post("/deleteFile",{fileName: attachmentList[index]}, function(res){
+      if (res != "SEND"){
+        console.log("刪除失敗");
+      }
+    });
+
+    attachmentNameList.splice(index, 1);
+    attachmentList.splice(index, 1);
+    $(this).parent().parent().remove();
+  });
+
   // 寄送電子報
   $(document).on("click","#sendNewsLetter",function(e){
     var mailSubject = document.getElementById("mailSubject").value;
@@ -541,9 +555,11 @@ function loadRecord(){
     }
     $("#record_table").html(recordTable)
   })
-  
 }
 
+function loadProInfo(){
+
+}
 
 function loadHomepage(){
   $.get("/getHomepagePic", function(homepagePics){
