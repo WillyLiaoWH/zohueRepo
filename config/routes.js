@@ -130,6 +130,7 @@ module.exports.routes = {
   'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /checkAdmin': 'Backend.checkAdmin',
+  'GET /getAllSuspendReason': 'Backend.getAllSuspendReason',
   'GET /getSuspendReason': 'Backend.getSuspendReason',
   'GET /profile': {
     view: 'profile/index',
