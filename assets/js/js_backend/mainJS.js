@@ -11,11 +11,11 @@ var unDelArtId=[];
 
 $(document).ready(function(){
   if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
-    position = position || 0;
-    return this.indexOf(searchString, position) === position;
-  };
-}
+    String.prototype.startsWith = function(searchString, position) {
+      position = position || 0;
+      return this.indexOf(searchString, position) === position;
+    };
+  }
   checkAuth();
 
   $(document).on("click","#adminLogout",function(e){
@@ -428,7 +428,7 @@ function loadForumList(articleList){
         lastResponseTime=lastTime.slice(0, lastTime.length-3);
         createdAt=new Date(articleList[i].createdAt).toLocaleString();
         postTime=createdAt.slice(0,createdAt.length-3);
-        authorType=articleList[i].author.type;
+        authorType=getType(articleList[i].author.type);
         reportNum=articleList[i].report.length;
         var boardName=articleList[i].board.title;
         var deleted=articleList[i].deleted;
