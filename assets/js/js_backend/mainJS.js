@@ -319,6 +319,8 @@ $(document).ready(function(){
 
 });
 
+
+
 function loadUserList(){
   searchUser=document.getElementById("searchUser").value;
 
@@ -810,16 +812,25 @@ function getBirthday(date){
 }
 
 function getFile(){
-  document.getElementById("upfile").click();
+  $("input#avatar").click();
+  // document.getElementById("yourBtn").innerHTML=document.getElementById("#avatar").name;
 }
 
-function sub(obj){
+function PicSubmit(){
+  document.myForm.submit();
+  document.getElementById("yourBtn").innerHTML="選擇新圖片";
+  var title=$("#title").val();
+  loadHomepage();
+  return false;
+}
+
+function getFilename(obj){
+
   var file = obj.value;
-  // console.log(file);
+
   var fileName = file.split("\\");
   document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
-  // document.myForm.submit();
-  event.preventDefault();
+
 }
 
 function homepagePicSubmit(){
@@ -827,6 +838,7 @@ function homepagePicSubmit(){
   var title=$("#homepagePicTitle").val();
   console.log(title);
   console.log(document.getElementById("yourBtn").innerHTML);
+  // document.getElementById("myForm").submit();
   $.post("/addHomepagePic",{title:title,pic:pic},function(ret){
       if(ret=='照片已新增'){
        

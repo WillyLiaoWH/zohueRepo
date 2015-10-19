@@ -43,12 +43,14 @@ module.exports = {
 		var title = req.param("title");
 		var pic = req.param("pic");
 		pic="../images/img_home/upload/"+pic;
-		
+
         var isAdmin = req.session.user.isAdmin;
         if (isAdmin == true) {
+
+
             HomepagePic.create({title:title, pic:pic}).exec(function(err){
                 if(err) {
-                    res.send(500,{err: "DB Error" });
+                    res.send(500,{err: "title跟pic不得為空白" });
                 } else {
                     res.send('照片已新增');
                 }
@@ -59,60 +61,48 @@ module.exports = {
     
 
 	},
-	// upload: function(req, res){   /*上傳還沒寫完 by Chien*/
- //        console.log(req.param("avatar_data"));
- //        console.log(req.param("avatar_src"));
+	upload_homepagePic: function (req, res) {
+		console.log("in upload");
+    // e.g.
+    // 0 => infinite
+    // 240000 => 4 minutes (240,000 miliseconds)
+    // etc.
+    //
+    // Node defaults to 2 minutes.
+	    res.setTimeout(0);
+	    var time = new Date().getTime();
+	    var pic="../images/img_home/upload/"+time+".jpg";
+		var title=req.param("title");
+		console.log(title);
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin == true) {
 
- //        var data = req.param("avatar_data");
- //        var data2;
- //        if(data){
- //            data2 = JSON.parse(data);
- //        }
+            HomepagePic.create({title:title, pic:pic}).exec(function(err){
+                if(err) {
+                    res.send(500,{err: "DB Error" });
+                } 
+                // else {
+                //     res.send('照片已新增');
+                // }
+            });
+        }else{
+            res.send("你不是管理員喔！");
+        }
 
- //        if(req.method === 'GET')
- //            return res.json({'status':'GET not allowed'});                      //  Call to /upload via GET is error
 
- //        function upload(cb){
- //            var uploadFile = req.file('avatar_file');
- //            uploadFile.upload({ dirname: '../../assets/images/img_signup'}, function onUploadComplete (err, files) {              //  Files will be uploaded to .tmp/uploads
- //                if (err) return res.serverError(err);                               //  IF ERROR Return and send 500 error with error
- //                var regex = /.*assets\\+(.*)/;
- //                var match = files[0].fd.match(regex);
- //                var result = match[1].replace(/\\/g, "\/");
- //                //console.log(result);
+	    req.file('avatar')
+	    .upload({
+	      dirname: '../../assets/images/img_home/upload',
+	      saveAs:time+".jpg",
+	      // You can apply a file upload limit (in bytes)
+	      maxBytes: 1000000
+	      
+	    }, function whenDone(err, uploadedFiles) {
+	      if (err) return res.serverError(err);
+	      else res.send("已新增");
+	    });
+	 },
 
- //                //http://stackoverflow.com/questions/26130914/not-able-to-resize-image-using-imagemagick-node-js
- //                //var gm = require('gm').subClass({ imageMagick : true });
- //                var time = new Date().getTime();
- //                var recall_url = 'images/img_signup/upload/'+time+'.jpg';
-
- //                var easyimg = require('easyimage');
- //                easyimg.crop({
- //                    src:files[0].fd, dst:'assets/'+recall_url,
- //                    // width:200, height:200,
- //                    cropwidth:data2.width, cropheight:data2.height,
- //                    // width:data2.width, height:data2.height,
- //                    // cropwidth:200, cropheight:200,
- //                    gravity:'NorthWest',
- //                    x:data2.x, y:data2.y
- //                }).then(
- //                function(image) {
- //                    console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
- //                },
- //                function (err) {
- //                    console.log(err);
- //                });
- //                cb(recall_url);
- //            });
- //        }
-
- //        upload(function(a) {
- //            setTimeout(function(){
- //                res.ok(JSON.stringify({state:200,message:null,result:a}));
- //            }, 2000);
-            
- //        });
- //    },
 	getAnnouncement: function(req, res){
 		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt'], sort: 'createdAt DESC'}).exec(function(err, Announcement) {
 			if(err) {
