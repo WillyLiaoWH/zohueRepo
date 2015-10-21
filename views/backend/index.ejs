@@ -187,9 +187,23 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h2>查看記錄</h2>
+
                 </div>
                 <div class="panel-body">
-                  <table class="table table-hover" id="record_table"></table>
+                  <div class="col-md-6">
+                    <button class="btn btn-default" onclick="recordFilter('All')">全部</button>
+                    <button class="btn btn-default" onclick="recordFilter('Log')">登入/登出</button>
+                    <button class="btn btn-default" onclick="recordFilter('Read')">閱讀文章</button>
+                    <button class="btn btn-default" onclick="recordFilter('ProInfo')">專業知識</button>
+                    <button class="btn btn-default" onclick="recordFilter('Profile')">個人頁面</button>
+                    <button class="btn btn-default" onclick="recordFilter('Post')">發表文章</button>
+                  </div>
+                  <div class="col-md-offset-5 col-md-1">
+                    <button class="btn btn-default" onclick="recordDownload()">下載紀錄</button>
+                  </div>
+                  <table class="table table-hover" id="record_table">
+                    <tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -199,17 +213,17 @@
                 <div class="panel-heading">
                   <h2>專業知識</h2>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body">   
                   <div class="col-md-3">
-                  <label for="proInfoType">類型</label>
-                  <select id="proInfoType" class="form-control">
-                    <option value="概論">概論</option>
-                    <option value="預防">預防</option>
-                    <option value="手術">手術</option>
-                    <option value="療法">療法</option>
-                    <option value="治療">治療</option>
-                    <option value="篩檢">篩檢</option>
-                  </select>
+                    <label for="proInfoType">類型</label>
+                    <select id="proInfoType" class="form-control">
+                      <option value="概論">概論</option>
+                      <option value="預防">預防</option>
+                      <option value="手術">手術</option>
+                      <option value="療法">療法</option>
+                      <option value="治療">治療</option>
+                      <option value="篩檢">篩檢</option>
+                    </select>
                   </div>
                   <div class="col-md-3">
                     <label for="proInfoCancer">癌症別</label>
@@ -297,6 +311,17 @@
                   <div class="col-md-offset-11">
                     <button class="btn btn-default" onclick="proInfoSubmit()">送出</button>
                   </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>刪除</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-11">
+                    <select id="delProInfo" class="form-control"></select>
+                  </div>
+                  <button class="btn btn-default" onclick="delProInfo()">送出</button>
                 </div>
               </div>
             </div>

@@ -523,25 +523,36 @@ function loadRecord(){
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
   $.get("/getRecord",function(records){
     var act
-    for (i=0;i<records.length;i++){
+    var cla;
+    for (i=records.length-1;i>=0;i--){
       var action = records[i].action
       if (action == "Login"){
+        cla = "Log"
         act = "Login"
       }
       else if (action.match(/^READ/)){
+        cla = "Read"
         var id = action.substring(13)
         act = "<a href='/article/"+id+"'>"+"閱讀文章"+"</a>"
       }
       else if (action.match(/^PROF/)){
+        cla = "Profile"
         var id = action.substring(5)
         act = "<a href='/profile?"+id+"'>"+"個人頁面"+"</a>"
       }
       else if (action.match(/^INFO/)){
+        cla = "ProInfo"
         var id = action.substring(5)
         act = "<a href="+id+">"+"專業知識"+"</a>"
       }
       else if (action.match(/^Logout/)){
+        cla = "Log"
         act = "Logout"
+      }
+      else if (action.match(/^POST article/)){
+        cla = "Post"
+        var id = action.substring(13)
+        act = "<a href='/article/"+id+"'>"+"發表文章"+"</a>"
       }
       time=new Date(records[i].createdAt).toLocaleString();
       var account
@@ -551,13 +562,59 @@ function loadRecord(){
       else{
         account = records[i].user.account
       }
-      recordTable+="<tr><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+act+"</td></tr>"
+      recordTable+="<tr class='"+cla+"'><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+act+"</td></tr>"
     }
     $("#record_table").html(recordTable)
   })
 }
 
-function loadProInfo(){
+function recordFilter(filter){
+  
+  if (filter == "Read"){
+    $(".Read").show()
+    $(".Log").hide()
+    $(".ProInfo").hide()
+    $(".Profile").hide()
+    $(".Post").hide()
+  }
+  else if (filter == "Log"){
+    $(".Read").hide()
+    $(".Log").show()
+    $(".ProInfo").hide()
+    $(".Profile").hide()
+    $(".Post").hide()
+
+  }
+  else if (filter == "ProInfo"){
+    $(".Read").hide()
+    $(".Log").hide()
+    $(".ProInfo").show()
+    $(".Profile").hide()
+    $(".Post").hide()
+
+  }
+  else if (filter == "Profile"){
+    $(".Read").hide()
+    $(".Log").hide()
+    $(".ProInfo").hide()
+    $(".Profile").show()
+    $(".Post").hide()
+
+  }
+  else if (filter == "Post"){
+    $(".Read").hide()
+    $(".Log").hide()
+    $(".ProInfo").hide()
+    $(".Profile").hide()
+    $(".Post").show()
+  }
+  else if (filter == "All"){
+     $(".Read").show()
+    $(".Log").show()
+    $(".ProInfo").show()
+    $(".Profile").show()
+    $(".Post").show()
+  }
 
 }
 
@@ -580,6 +637,15 @@ function loadHomepage(){
   });
 }
 
+function loadProInfo(){
+  $.get("/setProInfoPage",function(proInfo){
+    var options
+    for (i=0;i<proInfo.length;i++){
+      options +="<option value='"+proInfo[i].id+"'>"+proInfo[i].title+"</option>"
+    }
+    $("#delProInfo").html(options)
+  });
+}
 
 function sortByChar(sortby){
   articleList=articleList.sort(function(a, b) {
@@ -854,5 +920,27 @@ function proInfoSubmit(){
       if(ret=="OK"){
         alert("發佈完成");
       }
+  });
+}
+
+function recordDownload(){
+  $.get("/recordDownload",function(ret){
+    var alink = document.createElement('a')
+    var blob = new Blob([ret]);
+    var evt = document.createEvent("HTMLEvents");
+    alink.download = "record.csv"
+    alink.href = URL.createObjectURL(blob);
+    evt.initEvent("click", false, false);
+    alink.dispatchEvent(evt);
+  })
+}
+
+function delProInfo(){
+  var proInfoId = $("#delProInfo").val()
+  $.get("/deletetProInfo/"+proInfoId,function(ret){
+    if(ret=="OK"){
+      alert("刪除完成");
+      location.reload();
+    }
   });
 }

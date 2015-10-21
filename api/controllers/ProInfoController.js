@@ -40,6 +40,30 @@ module.exports = {
             });
         });
     },
+    deletetProInfo:function(req,res){
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin == true) {
+            ProInfo.find({id:req.param("id")}).exec(function(err,proInfo){
+                if (err){
+                    res.send(500,{err :"DB Error"})
+                }
+                else{
+                    Articles.destroy({id:proInfo[0].articleURL.substring(11)}).exec(function deleteCB(err){
+                        if (err){
+                            res.send(500,{err:"DB Error"})
+                        }
+                        else{
+                           
+                            ProInfo.destroy({id:req.param("id")}).exec(function deleteCB(err){
+
+                                res.send("OK");
+                            })
+                        }
+                    });
+                }
+            });
+        }
+    },
     destroyAll: function(req, res) {
         ProInfo.destroy({}).exec(function deleteCB(err){
             Articles.destroy({board:21}).exec(function deleteCB(err){

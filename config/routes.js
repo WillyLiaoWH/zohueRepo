@@ -108,6 +108,8 @@ module.exports.routes = {
   'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
 
+  'GET /deletetProInfo/:id' : 'ProInfoController.deletetProInfo',
+  'GET /recordDownload':'BackendController.recordDownload',
   'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getTopArticles': 'Home.getTopArticles',
   'GET /getHomepagePic': 'HomeController.getHomepagePic',

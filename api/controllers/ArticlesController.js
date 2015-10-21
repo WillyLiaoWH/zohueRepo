@@ -275,7 +275,7 @@ module.exports = {
     },
     
 	postArticle: function(req, res){
-        console.log(classification);
+        
 		var title=req.param("title");
         var classification=req.param("classification");
 		var author=req.session.user.id;
@@ -294,13 +294,13 @@ module.exports = {
                     res.send(500,{err: "DB Error" });
                     console.log(error);
                 } else {
-                    console.log(article);
+                    
                     Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article2) {
                         if(err) {
                             res.send(500,{err: "DB Error" });
                             console.log(err);
                         } else {
-                            console.log(article);
+
                             if(article2[0].board==19||article2[0].board==20) {
                                 if(title.length>20) {
                                     var notContent=title.substr(0, 20)+"...";
@@ -353,7 +353,11 @@ module.exports = {
                                     }  
                                 });  
                             }
-                            res.send(article2);
+                            Record.create({user:req.session.user,ip:req.ip,action:"POST article "+article2.id}).exec(function(err,record){
+                                console.log("發表文章")
+                                res.send(article2);
+                            })
+                            
                         }
                     });
                 }

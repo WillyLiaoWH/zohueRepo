@@ -6,6 +6,35 @@
  */
 
 module.exports = {
+    recordDownload:function(req,res){
+        var isAdmin = req.session.user.isAdmin;
+        if (isAdmin){
+            Record.find({}).exec(function(err,list){
+                if(err){
+                    res.send(500,{err: "DB Error"});
+                }
+                else{
+                    var json2csv = require('json2csv');
+                    var config = {
+                        fields : ['user','ip', 'action'],
+                        data: list
+                    };
+
+                    json2csv(config, function(err, csv) {
+                        // var fs = require('fs');
+                        // fs.writeFile("/tmp/test", csv, function(err) {
+                        //     console.log("haha")
+                        // });
+                        if (err) console.log(err);
+                        var filename = "report.csv";
+                        res.attachment(filename);
+                        res.end(csv, 'UTF-8');
+                    });
+
+                }
+            })
+        }
+    },
   	index: function(req, res) {
 	    res.view({
 	    	layout: false
