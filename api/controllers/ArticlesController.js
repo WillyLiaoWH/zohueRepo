@@ -30,6 +30,10 @@ module.exports = {
         var board=req.param("board");
         var boards;
         var boardCate;
+
+        if(board==21) { // 專業知識論壇頁面不開放
+            res.send(500, { err: "DB Error" });
+        }
         
         BoardCategory.find().exec(function(err, boardCateList) {
             boardCate=boardCateList;
@@ -40,7 +44,7 @@ module.exports = {
                 res.send(500, { err: "DB Error" });
             } else {
                 Boards.find({id: board}).populate('category').exec(function(err, board) {
-                    if(err) {
+                    if(err || board.length<1) {
                         res.send(500, { err: "DB Error" });
                     } else {
                         Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
@@ -50,8 +54,7 @@ module.exports = {
                     }
                 });
             }
-        });    
-        
+        });
 	},
 
     setBoardFrontPage: function(req, res){

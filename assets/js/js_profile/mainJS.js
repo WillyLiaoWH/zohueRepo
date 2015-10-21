@@ -1037,6 +1037,7 @@ function showProfile(ori_author){
     });
   }
   else{
+    alert(ori_author);
     var addr="/getProfile/"+ori_author;
     $.get(addr,function(res){
       HandleResponse2(res);

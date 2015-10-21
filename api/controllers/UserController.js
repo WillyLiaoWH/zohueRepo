@@ -452,15 +452,11 @@ module.exports = {
         //gets only the photo, alias, name, birthday, city,email,gender,phone
         //only the first two are required
         if(typeof req.session.user === 'undefined'){
-           pri_id = "0"; //假設沒登入者id為0
-           console.log("No login user looking at profile..."); 
+            pri_id = "0"; //假設沒登入者id為0
+            console.log("No login user looking at profile..."); 
+        }else{
+            pri_id = req.session.user.id;
         }
-
-        if (typeof pri_id==='undefined'){
-            var pri_id="0";
-            console.log("Error: pri_id undefined but user has session!???");
-        }
-
         
         var id=req.param("id");
         
@@ -469,53 +465,50 @@ module.exports = {
         }
         else{
             User.findById (id).exec(function(err, usr) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
-            } else {
-                if (usr.length!=0) {
-                    var ret= new Object();
-                    ret.alias = usr[0].alias; console.log(usr[0].alias);
-                    ret.img = usr[0].img;
-                    ret.type = usr[0].type;
-                    ret.primaryDisease = usr[0].primaryDisease;
-                    var authcheck=require("../services/authcheck.js");
-                    authcheck.authCheck(req,function(auth){
-                        //console.log(auth)
-                        if (auth.name===true){
-                            ret.lname = usr[0].lname;
-                            ret.fname = usr[0].fname 
-                        }
-                        if (auth.bday===true){
-                            ret.birthday = usr[0].birthday;
-                        }
-                        if (auth.city === true){
-                            ret.addressCity = usr[0].addressCity;
-                        }
-                        if (auth.email === true){
-                            ret.email = usr[0].email
-                        }
-                        if (auth.gender === true){
-                            ret.gender = usr[0].gender
-                        }
-                        if (auth.phone === true){
-                            ret.phone = usr[0].phone
-                        }
-                        if (auth.type === true){
-                            ret.type = usr[0].type
-                        }
-                        if (auth.primaryDisease === true){
-                            ret.primaryDisease = usr[0].primaryDisease
-                        }  
-                        res.send(ret);
-                    });
-                    
-                        
-                    
+                if (err) {
+                    res.send(500, { err: "DB Error" });
                 } else {
-                    res.send(404, { err: "查無此帳號" });
+                    if (usr.length!=0) {
+                        var ret= new Object();
+                        ret.alias = usr[0].alias; console.log(usr[0].alias);
+                        ret.img = usr[0].img;
+                        ret.type = usr[0].type;
+                        ret.primaryDisease = usr[0].primaryDisease;
+                        var authcheck=require("../services/authcheck.js");
+                        authcheck.authCheck(req,function(auth){
+                            //console.log(auth)
+                            if (auth.name===true){
+                                ret.lname = usr[0].lname;
+                                ret.fname = usr[0].fname 
+                            }
+                            if (auth.bday===true){
+                                ret.birthday = usr[0].birthday;
+                            }
+                            if (auth.city === true){
+                                ret.addressCity = usr[0].addressCity;
+                            }
+                            if (auth.email === true){
+                                ret.email = usr[0].email
+                            }
+                            if (auth.gender === true){
+                                ret.gender = usr[0].gender
+                            }
+                            if (auth.phone === true){
+                                ret.phone = usr[0].phone
+                            }
+                            if (auth.type === true){
+                                ret.type = usr[0].type
+                            }
+                            if (auth.primaryDisease === true){
+                                ret.primaryDisease = usr[0].primaryDisease
+                            }  
+                            res.send(ret);
+                        });
+                    } else {
+                        res.send(404, { err: "查無此帳號" });
+                    }
                 }
-            }
-        });
+            });
         }
     },
 
