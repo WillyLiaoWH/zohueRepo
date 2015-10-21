@@ -340,11 +340,11 @@
                     <div class="col-md-8">
                       <form name="myForm" action="/imgupload_homepagePic" method="post" enctype="multipart/form-data">
                         <label >新圖片標題</label>
-                        <input class="btn btn-default searchButton" type="text" id="title" name="title">
+                        <input class="btn btn-default searchButton" type="text" id="pic_title" name="title">
 
                         <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="getFile()">選擇新圖片</button>
                         
-                        <input id="avatar" type="file" value="upload" accept="image/x-png, image/gif, image/jpeg, image/jpg" name="avatar" style="display: none" onchange="getFilename(this)"/>
+                        <input id="pic_avatar" type="file" value="upload" accept="image/x-png, image/gif, image/jpeg, image/jpg" name="avatar" style="display: none" onchange="getFilename(this)"/>
                         
                         <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="PicSubmit()">上傳圖片</button>
                         <!-- <input type="submit"/> -->

@@ -878,16 +878,22 @@ function getBirthday(date){
 }
 
 function getFile(){
-  $("input#avatar").click();
+  $("input#pic_avatar").click();
   // document.getElementById("yourBtn").innerHTML=document.getElementById("#avatar").name;
 }
 
 function PicSubmit(){
   document.myForm.submit();
-  document.getElementById("yourBtn").innerHTML="選擇新圖片";
-  var title=$("#title").val();
-  loadHomepage();
-  return false;
+  // document.getElementById("yourBtn").innerHTML="選擇新圖片";
+  // var title=$("#title").val();
+  // loadHomepage();
+  // return false;
+  // var title=$("#pic_title").val()
+  // var avatar=$("#pic_avatar")[0].files[0]
+  // console.log(avatar)
+  // $.post("/imgupload_homepagePic",{title:title,avatar:avatar},function(res){
+  //   console.log("hh")
+  // })
 }
 
 function getFilename(obj){
