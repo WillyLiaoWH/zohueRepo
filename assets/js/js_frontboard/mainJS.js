@@ -339,8 +339,13 @@ function setSearchResult(articleList, page, orderby, direction){
 
         if(i%2==0){
           myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>"; 
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-            
+          
+          if(categoryList[articleList[i].board.category-1] != null){
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }else{ // 專業知識
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }
+          
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
@@ -351,7 +356,13 @@ function setSearchResult(articleList, page, orderby, direction){
            
         }else{
           myTable+="<tr class='warning'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          
+          if(categoryList[articleList[i].board.category-1] != null){
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }else{ // 專業知識
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }
+
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
@@ -422,7 +433,12 @@ function setSearchResult(articleList, page, orderby, direction){
 
         if(i%2==0){
           myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>"; 
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          
+          if(categoryList[articleList[i].board.category-1] != null){
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }else{ // 專業知識
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }
             
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
@@ -433,7 +449,13 @@ function setSearchResult(articleList, page, orderby, direction){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
         }else{
           myTable+="<tr class='warning'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+
+          if(categoryList[articleList[i].board.category-1] != null){
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+categoryList[articleList[i].board.category-1].title+"—"+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }else{ // 專業知識
+            myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+"["+articleList[i].board.title+"]<br>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+          }
+
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
           myTable+="<tr><td>"+postTime+"</td></tr></table></td>";

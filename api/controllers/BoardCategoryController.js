@@ -7,7 +7,7 @@
 
 module.exports = {
 	getBoardCategory: function(req, res){
-		BoardCategory.find().exec(function(err, boardCategory) {
+		BoardCategory.find({ id: { '!': 5 }}).exec(function(err, boardCategory) {
             //articlesList.sort('date ASC');
 			if (err) {
             	res.send(500, { err: "DB Error" });
