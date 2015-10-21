@@ -332,7 +332,6 @@
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>首頁管理</h2></div>
                 <div class="panel-body">
-                  
                   <div class="row">
                     <div class="col-md-2 text-center">
                       <h3>首頁宣傳圖片</h3>
@@ -347,19 +346,36 @@
                         <input id="pic_avatar" type="file" value="upload" accept="image/x-png, image/gif, image/jpeg, image/jpg" name="avatar" style="display: none" onchange="getFilename(this)"/>
                         
                         <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="PicSubmit()">上傳圖片</button>
-                        <!-- <input type="submit"/> -->
-                        
-                    </form>
+                      </form>
                     </div>
-                    
-                    
-                    </div>
-                        
-                        
-                  
-              
+                  </div>
+
                   <!-- Table -->
                   <table class="table table-hover" id="backend_homepagePicList"></table>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>熱門文章公式</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-4">
+                    <label>推薦次數</label>
+                    <input type="text" class="form-control" id="nicerNumWeight" placeholder="推薦次數">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="responseNumWeight">回應次數</label>
+                    <input type="text" class="form-control" id="responseNumWeight" placeholder="推薦次數">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="clickNumWeight">點閱次數</label>
+                    <input type="text" class="form-control" id="clickNumWeight" placeholder="推薦次數">
+                  </div>
+
+                  <div class="col-md-12" style="margin-top:5px;">
+                    <button class="btn btn-default pull-right" onclick="editTopArticleFormula()">送出</button>
+                  </div>
                 </div>
               </div>
             </div>

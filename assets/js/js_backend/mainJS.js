@@ -962,3 +962,19 @@ function delProInfo(){
     }
   });
 }
+
+function editTopArticleFormula(){
+  var nicerNumWeight = $("#nicerNumWeight").val();
+  var responseNumWeight = $("#responseNumWeight").val();
+  var clickNumWeight = $("#clickNumWeight").val();
+
+  $.post( "/setTopArticleFormula", {nicerNumWeight: nicerNumWeight, responseNumWeight: responseNumWeight, clickNumWeight: clickNumWeight}, function(res){
+    if(res=="success"){
+      showDialog("一般訊息","修改熱門文章公式成功！",function(){
+        window.location.assign("/backendbackend");
+      });
+    }
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
+}
