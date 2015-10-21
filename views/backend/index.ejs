@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/styles/css_backend/style.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <script src="/js/js_backend/mainJS.js"></script>
-
+    
 
   </head>
   <body id="body">
@@ -332,22 +332,32 @@
                 <!-- Default panel contents -->
                 <div class="panel-heading"><h2>首頁管理</h2></div>
                 <div class="panel-body">
+                  
                   <div class="row">
                     <div class="col-md-2 text-center">
                       <h3>首頁宣傳圖片</h3>
-                    </div>
-                    <div class="col-md-1 " style='height: 0px;width: 0px; overflow:hidden;display:none;'>
-                      <input id="upfile" type="file" value="upload" accept="image/x-png, image/gif, image/jpeg, image/jpg" onchange="sub(this)"/>
-                    </div>
+                    </div> 
                     <div class="col-md-8">
-                      <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="getFile()">選擇新圖片</button>
-                      <label >圖片標題</label>
-                        <input class="btn btn-default searchButton" type="text" id="homepagePicTitle">
-                         <button id="uploadHompagePic" type="button" onclick="homepagePicSubmit()" class="btn btn-default searchButton">上傳</button>
+                      <form name="myForm" action="/imgupload_homepagePic" method="post" enctype="multipart/form-data">
+                        <label >新圖片標題</label>
+                        <input class="btn btn-default searchButton" type="text" id="title" name="title">
+
+                        <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="getFile()">選擇新圖片</button>
+                        
+                        <input id="avatar" type="file" value="upload" accept="image/x-png, image/gif, image/jpeg, image/jpg" name="avatar" style="display: none" onchange="getFilename(this)"/>
+                        
+                        <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="PicSubmit()">上傳圖片</button>
+                        <!-- <input type="submit"/> -->
+                        
+                    </form>
+                    </div>
+                    
+                    
                     </div>
                         
                         
-                  </div>
+                  
+              
                   <!-- Table -->
                   <table class="table table-hover" id="backend_homepagePicList"></table>
                 </div>
