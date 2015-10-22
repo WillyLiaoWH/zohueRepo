@@ -233,7 +233,7 @@ function postArticle() {
   $.get("/checkAuth", function(auth){
     if(!auth) {
       showDialog("一般訊息","您尚未登入，不能發表文章喔！快登入加入大家的討論吧！",function(){
-        window.location.replace("/home");
+        //window.location.reload();
       });
     }else{
       $.get("/checkFull", function(full){

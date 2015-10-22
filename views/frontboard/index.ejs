@@ -18,9 +18,9 @@
         }
       });
     </script>
-     <script>$(function(){
+     <!--<script>$(function(){
         $("#articleList").stupidtable();
-    });</script>
+    });</script>-->
     <script>
       function setTableRowStripCss(){
         setTimeout(function(){ 
@@ -45,53 +45,45 @@
       <div class="row-fluid">
         <div class="col-md-12" style="margin-left: 0px;">
           <nav id="navbar-example" class="navbar navbar-default navbar-static">
-          <ul id="m_boardlist" class="nav nav-pills navbar-right" role="tablist">
+          <!--<ul id="m_boardlist" class="nav nav-pills navbar-right" role="tablist">
             <li ><a href='/forum' style='color: #000000;' role='button'><span class='glyphicon glyphicon-list'></span> 論壇看板列表</a></li>
-          </ul>
+          </ul>-->
           <ul id="m_post" class="nav nav-pills navbar-right" role="tablist">
-            <li><a href='/forum' id="post" onclick="alert('請選擇一個看板來發表文章喔！');" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
+            <li><a class="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
           </ul>
           
           <ul id="boardlist" class="nav nav-pills" role="tablist"> </ul>
           
           <ul id="d_post" class="nav nav-pills navbar-right" role="tablist">
-            <li><a href='/forum' id="post" onclick="alert('請選擇一個看板來發表文章喔！');" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
+            <li><a class="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
           </ul>&nbsp;
-          <ul id="d_boardlist" class="nav nav-pills navbar-right" role="tablist">
+          <!--<ul id="d_boardlist" class="nav nav-pills navbar-right" role="tablist">
             <li ><a href='/forum' style='color: #000000;' role='button'><span class='glyphicon glyphicon-list'></span> 論壇看板列表</a></li>
-          </ul>
+          </ul>-->
         </div>
       </nav>
        </div>
         <hr>
         </div>
        
-        <div class="row-fluid">
-          <div class="col-md-7 text-left">
-             <table id="page" class="text-left" cellspacing=8 style="margin-left: 0px;"></table>
-          </div>
-           <div class="col-md-5"/>
+      <div class="row-fluid">
+        <div class="col-md-7 text-left">
+           <table id="page" class="text-left" cellspacing=8 style="margin-left: 0px;"></table>
         </div>
-        <br>
+         <div class="col-md-5"></div>
+          <br><br><br><br>
+      </div>
+     
       <div class="row-fluid">
         <div id="tabDiv" class="col-md-9">
           <!-- <ul class="tabs"> -->
           <ul class="nav nav-pills" id="tabs">
-            <li id="all"><a href="?tab=all">全部</a></li>
-            <li id="motion"><a href="?tab=motion">病況與心情</a></li>
-            <li id="share"><a href="?tab=share">分享</a></li>
-            <li id="problem"><a href="?tab=problem">問題</a></li>
-            <li id="others"><a href="?tab=others">其它</a></li>
+            <li id="all"><a style="cursor: pointer;" onclick="tabClick('all');">全部</a></li>
+            <li id="motion"><a style="cursor: pointer;" onclick="tabClick('motion');">病況與心情</a></li>
+            <li id="share"><a style="cursor: pointer;" onclick="tabClick('share');">分享</a></li>
+            <li id="problem"><a style="cursor: pointer;" onclick="tabClick('problem');">問題</a></li>
+            <li id="others"><a style="cursor: pointer;" onclick="tabClick('others');">其它</a></li>
           </ul>
-
-          <ul class="nav nav-pills nav-stacked" id="mobile_tabs">
-            <li id="all"><a href="?tab=all">全部</a></li>
-            <li id="motion"><a href="?tab=motion">病況與心情</a></li>
-            <li id="share"><a href="?tab=share">分享</a></li>
-            <li id="problem"><a href="?tab=problem">問題</a></li>
-            <li id="others"><a href="?tab=others">其它</a></li>
-          </ul>
-
         </div>
          <div id="goToBoard">
             <!--<label style="display: inline;font-size: 22px; margin-right: 10px; color:#533828;">前往：</label>-->
@@ -101,6 +93,7 @@
             
             
           </div>
+          <br><br><br>
       </div>
 
       <div id="articleListDiv" class="row-fluid">
