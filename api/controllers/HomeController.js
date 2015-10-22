@@ -103,6 +103,27 @@ module.exports = {
 	    });
 	 },
 
+
+
+
+
+
+	setTopArticleFormula: function(req, res){
+		if(!/^\+?(0|[1-9]\d*)$/.test(req.param("nicerNumWeight")) || !/^\+?(0|[1-9]\d*)$/.test(req.param("responseNumWeight")) || !/^\+?(0|[1-9]\d*)$/.test(req.param("clickNumWeight"))){
+			res.send(500,{err: "格式錯誤！" });
+		}else{
+			var param = {
+				nicerNumWeight: req.param("nicerNumWeight"), 
+				responseNumWeight: req.param("responseNumWeight"),
+				clickNumWeight: req.param("clickNumWeight")
+			};
+
+			fs.writeFile('config/formula.json', JSON.stringify(param), function (err) {
+				if (err) return console.log(err);
+				res.send("success");
+			});
+		}
+	},
 	getAnnouncement: function(req, res){
 		Boards.find({title: "最新活動"}).populate('articles',{deleted:'false', select: ['title', 'id', 'createdAt'], sort: 'createdAt DESC'}).exec(function(err, Announcement) {
 			if(err) {
@@ -121,11 +142,6 @@ module.exports = {
 		  	return 0;
 		}
 
-		// var globalConfig = sails.config.globals;
-		// var nicerNumWeight = globalConfig.nicerNumWeight;
-		// var responseNumWeight = globalConfig.responseNumWeight;
-		// var clickNumWeight = globalConfig.clickNumWeight;
-
 		fs = require('fs');
 		fs.readFile('config/formula.json', 'utf8', function (err,data) {
   			if (err) {
@@ -135,13 +151,6 @@ module.exports = {
   			var nicerNumWeight = param.nicerNumWeight;
 			var responseNumWeight = param.responseNumWeight;
 			var clickNumWeight = param.clickNumWeight;
-
-			// param.clickNumWeight = 55555;
-  	// 		fs.writeFile('config/formula.json', JSON.stringify(param), function (err) {
-			// 	if (err) return console.log(err);
-			//   	console.log('Hello World > helloworld.txt');
-			// });
-		//});
 
 			Articles.find({ deleted: "false", board: {'!': 20} }).populate('nicer').populate('response').exec(function(err, articles) {
 				if(err) {

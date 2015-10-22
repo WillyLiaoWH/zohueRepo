@@ -107,6 +107,7 @@ module.exports.routes = {
   'POST /proInfoSubmit':'BackendController.proInfoSubmit',
   'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
+  'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
   'GET /deletetProInfo/:id' : 'ProInfoController.deletetProInfo',
   'GET /recordDownload':'BackendController.recordDownload',
