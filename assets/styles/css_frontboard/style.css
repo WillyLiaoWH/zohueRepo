@@ -2,7 +2,7 @@
 	font-family: "微軟正黑體";
 }
 
-#post{
+.post{
 	float:right;
 	//width: 125px;
 	//margin-right:13px;
@@ -197,13 +197,14 @@
 		float: left;
 		width: 190px;
 		margin-right: 5px; 
+	}#m_post{
+		display: block !important;
+	}#d_post{
+		display: none !important;
 	}
 }
 
-@media screen and (max-width: 480px) and (max-width: 768px) {
-	#post{
-		display: none !important;
-	}
+@media screen and (min-width: 480px) and (max-width: 768px) {
 	#mobile_post{
 		display: inline-block !important;
 	}
@@ -233,8 +234,8 @@
 	}
 }
 
-@media screen and (max-width: 768px)  and (max-width: 1000px){
-	#post{
+@media screen and (min-width: 768px)  and (max-width: 1000px){
+	#m_post{
 		display: none !important;
 	}
 	#mobile_post{
@@ -260,22 +261,22 @@
 	}
 }
 
-#articleList th:nth-child(1){
+#articleList td:nth-child(1){
 		width: 125px !important;
 	}
-#articleList th:nth-child(2){
+#articleList td:nth-child(2){
 		width: 260px !important;
 	}
-#articleList th:nth-child(3){
+#articleList td:nth-child(3){
 		width: 210px !important;
 	}
-#articleList th:nth-child(4){
-		width: 120px !important;
+#articleList td:nth-child(4){
+		width: 135px !important;
 	}
-#articleList th:nth-child(5){
+#articleList td:nth-child(5){
 		width: 80px !important;
 	}
-#articleList th:nth-child(6){
+#articleList td:nth-child(6){
 		width: 150px !important;
 	}
 

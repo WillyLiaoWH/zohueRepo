@@ -1,6 +1,8 @@
 var allow_create;
+var board="";
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
+  
   checkAuth2();
 
   $("#postContent") // 確保 contentEditable 的跳行不會包在 div 內
@@ -52,7 +54,15 @@ $(document).ready(function(){
 function checkAuth2() {
   $.get("/checkAuth", function(auth){
     if(!auth) {
-      abort();
+      window.location.replace("/forum");
+    }
+    url = document.URL;
+    regex=/.*post+\/+(.*)+/
+    board=url.replace(regex,"$1");
+    if(auth.isAdmin==true && (board=="17" || board=="18")){
+        //window.location.assign("/post/"+board);  
+    }else if(auth.isAdmin==false && parseInt(board)>=17 ){
+        window.location.assign("/forum");
     }
   });
 }
@@ -136,10 +146,6 @@ function post() {
     });
 
   }
-}
-
-function abort() {
-  window.location.replace("/forum/1");
 }
 
 function editProfile(){

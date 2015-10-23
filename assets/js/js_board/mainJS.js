@@ -17,12 +17,6 @@ var categoryList=[];
 var boardList=[];
 var authorClickCount=0;
 
-$(document).ready(function(){
-  $("#search").click(function(){ // 搜尋按鈕 listener
-    var key=$("#searchWord").val().replace(/^\s+$/m,'');
-    setPage(1, key, "lastResponseTime", "desc");
-  });
-
 
 $(document).ready(function(){
   $.ajax({
@@ -35,8 +29,13 @@ $(document).ready(function(){
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
     });
-  });
+});
 
+$(document).ready(function(){
+  $("#search").click(function(){ // 搜尋按鈕 listener
+    var key=$("#searchWord").val().replace(/^\s+$/m,'');
+    setPage(1, key, "lastResponseTime", "desc");
+  });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   // 根據網址判斷如何設定預設畫面
@@ -233,7 +232,7 @@ function postArticle() {
   $.get("/checkAuth", function(auth){
     if(!auth) {
       showDialog("一般訊息","您尚未登入，不能發表文章喔！快登入加入大家的討論吧！",function(){
-        window.location.replace("/home");
+        //window.location.reload();
       });
     }else{
       $.get("/checkFull", function(full){
@@ -243,10 +242,10 @@ function postArticle() {
           });
         }
         else{
-          if(auth.isAdmin==true && board=="17"){
+          if(auth.isAdmin==true && (board=="17" || board=="18")){
             window.location.assign("/post/"+board);  
-          }else if(auth.isAdmin==false && board=="17"){
-            showDialog("一般訊息","您不是管理員，不能在最新消息看板中發表文章喔！");
+          }else if(auth.isAdmin==false && parseInt(board)>=17 ){
+            showDialog("一般訊息","您不是管理員，不能在社團公告中發表文章喔！");
           }else if(board!="17"){
             window.location.assign("/post/"+board);
           } 
