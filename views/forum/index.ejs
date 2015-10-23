@@ -10,10 +10,17 @@
 	<body id="body"> -->
 <script>
 $( document ).ready(function() {
-        if($( window ).width() < 768){
-          $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+    $.get("/checkAuth", function(auth){
+        if(auth.isAdmin==true){
+          $("#clubAnnounce").show();
+        }else if(auth.isAdmin==false){
+           $("#clubAnnounce").hide();
         }
-      });
+    });
+    if($( window ).width() < 768){
+        $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+    }
+    });
 </script>
     <div id="forumDiv" class="container-fluid">
       <h1 style="color:#D26900;">作夥病友論壇 </h1>
@@ -44,7 +51,7 @@ $( document ).ready(function() {
         <li><a href="/post/16">樂</a></li>
       </ul>
       </div>
-      <div class="well col-md-2 sol-sm-12 sol-xs-12" style="margin:0px 0px 0px 0px; padding:23px 0; background-color:rgba(102, 141, 60, 0.3); border-radius:15px;">
+      <div id="clubAnnounce" class="well col-md-2 sol-sm-12 sol-xs-12" style="margin:0px 0px 0px 0px; padding:23px 0; background-color:rgba(102, 141, 60, 0.3); border-radius:15px;">
       <ul class="nav nav-list" style="font-size:23px;">
         <li class="nav-header" style="margin-bottom:15px;">社團公告</li>
         <li class="active"><a href="/post/17">最新消息</a></li>
