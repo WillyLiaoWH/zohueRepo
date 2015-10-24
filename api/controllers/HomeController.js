@@ -109,7 +109,10 @@ module.exports = {
 	      
 	    }, function whenDone(err, uploadedFiles) {
 	      if (err) return res.serverError(err);
-	      else res.redirect("/backendbackend");
+	      else{
+	      	var string = encodeURIComponent('homepageManage');
+  			res.redirect('/backendbackend?tab=' + string);
+	      }
 	    });
 	 },
 
