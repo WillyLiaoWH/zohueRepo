@@ -327,6 +327,9 @@ function checkPage(){
     $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
     $("#"+tabName).addClass("in");
     loadHomepage();
+    showDialog("一般訊息","新增成功！",function(){
+              loadHomepage();
+            });
   }
 }
 
