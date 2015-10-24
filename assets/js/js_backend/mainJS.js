@@ -28,6 +28,8 @@ $(document).ready(function(){
     });
   });
 
+  checkPage();
+
   function checkAuth() {
     $.get("/checkAdmin", function(res){
       if(res=="true") {
@@ -319,7 +321,14 @@ $(document).ready(function(){
 
 });
 
-
+function checkPage(){
+  var tabName = getURLParameter("tab");
+  if(tabName!=null){
+    $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
+    $("#"+tabName).addClass("in");
+    loadHomepage();
+  }
+}
 
 function loadUserList(){
   searchUser=document.getElementById("searchUser").value;
@@ -913,7 +922,6 @@ function homepagePicSubmit(){
   // document.getElementById("myForm").submit();
   $.post("/addHomepagePic",{title:title,pic:pic},function(ret){
       if(ret=='照片已新增'){
-       
         document.getElementById("homepagePicTitle").value="";
         document.getElementById("upfile").value="";
         document.getElementById("yourBtn").innerHTML="選擇新圖片";
@@ -977,4 +985,8 @@ function editTopArticleFormula(){
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
+}
+
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 }
