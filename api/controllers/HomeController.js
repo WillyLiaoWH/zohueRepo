@@ -72,7 +72,17 @@ module.exports = {
 	    res.setTimeout(0);
 	    var time = new Date().getTime();
 	    var pic="../images/img_home/upload/"+time+".jpg";
-		var title=req.param("title");
+		// var title=req.param("title");
+		
+
+		if(typeof req.param("title")=='undefined'){
+			var title=time;
+		}else var title=req.param("title");
+
+		if(typeof req.file("avatar")=='undefined'){
+			res.redirect("/backendbackend");
+		}
+
 		console.log(title);
         var isAdmin = req.session.user.isAdmin;
         if (isAdmin == true) {

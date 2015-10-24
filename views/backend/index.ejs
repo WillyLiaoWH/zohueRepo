@@ -37,7 +37,7 @@
         </div>
         <div class="collapse navbar-collapse">
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
-          <ul class="nav navbar-nav" id="functionList">
+          <ul class="nav navbar-nav" id="functionList" href="#">
             <li onclick="loadUserList()" data-toggle="collapse" href="#userManage"><a>帳號管理</a></li>
             <li onclick="loadForumList()" id="forumTab" data-toggle="collapse" href="#forumManage"><a>論壇管理</a></li>
             <li onclick="loadsubscriberList()" data-toggle="collapse" href="#subscriberManage"><a>電子報管理</a></li>
@@ -338,14 +338,16 @@
                     </div> 
                     <div class="col-md-8">
                       <form name="myForm" action="/imgupload_homepagePic" method="post" enctype="multipart/form-data">
-                        <label >新圖片標題</label>
-                        <input class="btn btn-default searchButton" type="text" id="pic_title" name="title">
+                        
 
-                        <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="getFile()">選擇新圖片</button>
+                        <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="getFile()">新增圖片</button>
                         
                         <input id="pic_avatar" type="file" value="upload" accept="image/x-png, image/gif, image/jpeg, image/jpg" name="avatar" style="display: none" onchange="getFilename(this)"/>
                         
-                        <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="PicSubmit()">上傳圖片</button>
+                        <label >新圖片標題</label>
+                        <input class="btn btn-default searchButton" type="text" id="pic_title" name="title">
+
+                        <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="PicSubmit()">送出</button>
                       </form>
                     </div>
                   </div>

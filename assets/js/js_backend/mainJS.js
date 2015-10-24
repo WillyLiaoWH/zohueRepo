@@ -883,7 +883,19 @@ function getFile(){
 }
 
 function PicSubmit(){
-  document.myForm.submit();
+  if($("#pic_title").val()==""){
+    showDialog("一般訊息","請輸入新圖片標題！")
+  }else{
+      if($("input#pic_avatar").val()==""){
+        showDialog("一般訊息","請選擇欲上傳之圖片！");
+      }else{
+          document.myForm.submit();
+      }
+  }
+
+  
+  // document.getElementById("pic_avatar").
+  // document.myForm.submit();
   // document.getElementById("yourBtn").innerHTML="選擇新圖片";
   // var title=$("#title").val();
   // loadHomepage();
