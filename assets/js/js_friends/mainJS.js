@@ -1,4 +1,5 @@
 var allow_create;
+//症狀清單
 var diseaseList={
   '1':"鼻咽癌",
   '2':"鼻腔/副鼻竇癌",
@@ -12,6 +13,7 @@ var diseaseList={
 };
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
+  //須登入才能使用
   $.get("/checkAuth", function(auth){
     if(!auth) {
       showDialog("錯誤訊息","您尚未登入喔！", function(){
@@ -21,6 +23,7 @@ $(document).ready(function(){
   });
 });
 
+//刪除黑名單
 function removeBlack(parent, id) {
   $.post("/removeBlack", {id: id}, function(res){
     if(res.err) {
@@ -33,6 +36,7 @@ function removeBlack(parent, id) {
     }
   })
 }
+//申請好友
 function addFriend(parent, id) {
   $.post("/addFriend", {id: id}, function(res){
     if(res.err) {
@@ -45,6 +49,7 @@ function addFriend(parent, id) {
     }
   })
 }
+//加入黑名單
 function addBlack(parent, id) {
   $.post("/addBlack", {id: id}, function(res){
     if(res.err) {
@@ -56,6 +61,7 @@ function addBlack(parent, id) {
     }
   })
 }
+//確認好友邀請
 function confirmFriend(parent, id) {
   $.post("/confirmFriend", {id: id}, function(res){
     if(res.err) {
@@ -68,6 +74,7 @@ function confirmFriend(parent, id) {
     }
   })
 }
+//刪除好友
 function removeFriend(parent, id) {
   $.post("/removeFriend", {id: id}, function(res){
     if(res.err) {
@@ -80,6 +87,7 @@ function removeFriend(parent, id) {
     }
   })
 }
+//取消好友邀請
 function removeAddFriend(parent, id) {
   $.post("/removeAddFriend", {id: id}, function(res){
     if(res.err) {
@@ -92,18 +100,21 @@ function removeAddFriend(parent, id) {
     }
   });
 }
-
+//搜尋使用者
 function search(page, mobile) {
+  //判斷顯示的是行動版還是正常版欄位
   if(mobile) {
     var index="2";
   } else {
     var index="1";
   }
+  //表示重按搜尋，先清空之前搜尋的
   if(page==0) {
     document.getElementById("searchList").innerHTML="";
   }
   document.getElementById("more").innerHTML="";
   var curHtml=document.getElementById("searchList").innerHTML;
+  //放置loading圖
   document.getElementById("searchList").innerHTML+="<div style='text-align: center;'><img src='/images/img_friends/ajax-loader.gif'></img></div>"
   var alias=document.getElementById("alias"+index).value;
   var disease=$("#disease"+index).val();
@@ -114,6 +125,7 @@ function search(page, mobile) {
       showDialog("錯誤訊息",res.err);
       window.assign("/home");
     } else {
+      //隔1秒再做
       setTimeout(function(){
         if(res.users.length!=0) {
           var allUser=res.users;
@@ -123,6 +135,7 @@ function search(page, mobile) {
               html+="<div class='friend'><div class='image'>";
               var picSize="100";
               var authorType="";
+              //判斷使用者類別
               switch(allUser[i].type) {
                 case "D":
                   authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
@@ -150,6 +163,7 @@ function search(page, mobile) {
               html+="<div class='friendMid'><div style='margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;'><a href='/profile/?"+allUser[i].id+"' style='font-size: 32px;'>"+allUser[i].alias+"</a>"+authorType+"</div>";
 
               html+="<br><span style='display:inline-block; height: 40%; width: 130%;'>";
+              //判斷好友狀態
               switch(allUser[i].isFriend) {
                 case -1:
                   html+="<div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "+allUser[i].id+")'>解除封鎖</button><br>";
@@ -176,6 +190,7 @@ function search(page, mobile) {
                 html+="<div style='display:inline-block; font-size: 22px; width: 100%'>來自"+allUser[i].addressCity+"</div><br>";
               }
 
+              //判斷使用者類別以調整顯示
               if(allUser[i].primaryDisease&&allUser[i].primaryDisease!="") {
                 html+="<div style='display:inline-block; font-size: 22px; width: 100%'>";
                 switch(allUser[i].type) {

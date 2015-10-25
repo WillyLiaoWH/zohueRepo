@@ -64,6 +64,7 @@ function checkAuth() {
       checkNot();
       setInterval("checkNot()", 5000);
       checkForum();
+      setInterval("checkForum()", 5000);
 
       var setUp=document.getElementById("setUp");
       setUp.style.display="inline";
