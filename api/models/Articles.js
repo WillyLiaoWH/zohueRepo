@@ -43,10 +43,6 @@ module.exports = {
       collection: 'report',
       via: 'article'
     },
-    board: {
-      type: 'string',
-      defaultsTo: '分類一'
-    },
     lastResponseTime: {
       type: 'datetime'
     }, 

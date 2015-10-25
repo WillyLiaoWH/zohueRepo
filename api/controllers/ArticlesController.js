@@ -897,7 +897,7 @@ module.exports = {
                     res.send(500, "server error");
                 } else {
                     var lastForumTime=user.lastForumTime;
-                    Articles.find({createdAt: {'>': lastForumTime}, suspended: false, board: {"<=": 16}}).exec(function(err2, articles) {
+                    Articles.find({createdAt: {'>': lastForumTime}, deleted: false, board: {"<=": 18}}).exec(function(err2, articles) {
                         if(err2) {
                             console.log("錯誤訊息："+err2);
                             res.send(500, "server error");
