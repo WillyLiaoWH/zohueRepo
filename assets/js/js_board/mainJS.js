@@ -322,7 +322,7 @@ function setSearchResult(articleList, page, orderby, direction){
           lastResponseTime=updateTime.slice(0, updateTime.indexOf("GMT"))+updateTime.slice(updateTime.indexOf("GMT")+5, updateTime.length-3);
         }
         
-        createdAt=new Date(articleList[i].createdAt).toLocaleString();
+        createdAt=new Date(articleList[i+articleNum*(page-1)].createdAt).toLocaleString();
         if(createdAt.indexOf("GMT")==-1) {
           postTime=createdAt.slice(0, createdAt.length-3);
         } else {
@@ -405,7 +405,7 @@ function setSearchResult(articleList, page, orderby, direction){
           lastResponseTime=updateTime.slice(0, updateTime.indexOf("GMT"))+updateTime.slice(updateTime.indexOf("GMT")+5, updateTime.length-3);
         }
         
-        createdAt=new Date(articleList[i].createdAt).toLocaleString();
+        createdAt=new Date(articleList[i+articleNum*(page-1)].createdAt).toLocaleString();
         if(createdAt.indexOf("GMT")==-1) {
           postTime=createdAt.slice(0, createdAt.length-3);
         } else {
