@@ -15,7 +15,16 @@ var maxReport=3;
 var board="";
 var categoryList=[];
 var boardList=[];
+var titleClickCount=0;
 var authorClickCount=0;
+var postTimeClickCount=0;
+var clickClickCount=0;
+var responseClickCount=0;
+var nicerClickCount=0;
+var lrtClickCount=0;
+var currentOrder="";
+var currentDirection="";
+var url ="";
 
 
 $(document).ready(function(){
@@ -33,27 +42,32 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
-    var key=$("#searchWord").val().replace(/^\s+$/m,'');
-    setPage(1, key, "lastResponseTime", "desc");
+    keyword=$("#searchWord").val().replace(/^\s+$/m,'');
+    tab="all";clearTab();
+    setPage(1, keyword, currentOrder, currentDirection);
   });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   // 根據網址判斷如何設定預設畫面
   var url = document.URL;
   if(url.search("search")!=-1) {
-    regex=/.*board-+(.*)+\/search\/+(.*)+\/+(.*)+\?tab=+(.*)/
+    regex=/.*board-+(.*)+\/search\/+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
     board=url.replace(regex, "$1");
     keyword=url.replace(regex, "$2");
     keyword = decodeURIComponent(keyword);
     page=url.replace(regex,"$3");
     tab=url.replace(regex, "$4")
-    setPage(page, keyword, "lastResponseTime", "desc");
+    order=url.replace(regex, "$5");
+    order=order!=null&&order.length>0?order:"createdAt";
+    setPage(page, keyword, order, "desc");
   } else {
-    var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)/
+    var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
     board=url.replace(regex, "$1");
     page = url.replace(regex,"$2");
     tab=url.replace(regex, "$3");
-    setPage(page, "", "lastResponseTime", "desc");
+    order=document.URL.replace(regex, "$4");
+    order=order!=null&&order.length>0?order:"createdAt";
+    setPage(page, "", order, "desc");
   }
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
@@ -75,12 +89,14 @@ $(document).ready(function(){
     }catch(err){}
   });
 
-  $("#tabs li a").click(function(){
-    window.location.reload();
-  });
+  //$("#tabs li a").click(function(){
+  //  window.location.reload();
+  //});
+
+});
 
   // 看板跳轉 listener
-  document.getElementById("boardCategory").onchange=function() {
+  /*document.getElementById("boardCategory").onchange=function() {
     $.get("/getBoardsOfCategory/"+$("#boardCategory").val(), function(boards) {
       var boardSelect=document.getElementById("board");
       while(boardSelect.length>0) {
@@ -121,7 +137,28 @@ $(document).ready(function(){
     if($("#board").val()!=board)
       window.location.assign("/board-"+$("#board").val()+"/1?tab=all");
   };
-});
+});*/
+
+
+function tabClick(tabc){
+  if(keyword.length>0){
+    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab="+tabc+"&order=");
+  }else{
+    window.location.assign("/board-"+board+"/1?tab="+tabc+"&order="+currentOrder);
+  }
+}
+
+function pageClick(page){
+  setPage(page, keyword, currentOrder, currentDirection);
+}
+
+function clearTab(){
+  $("#all").removeClass("active");
+  $("#motion").removeClass("active");
+  $("#share").removeClass("active");
+  $("#problem").removeClass("active");
+  $("#others").removeClass("active");
+}
 
 function orderbyPostTime(){
   setTimeout(function(){
@@ -159,27 +196,30 @@ function setPage(page, keyword, orderby, direction) {
     $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML="作夥論壇—"+boardCate+"—"+boardName;
-
+      $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
       var res_search=res.articlesList
       temp_result=res_search;
       if(res_search.length==0){
         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
-        showDialog("錯誤訊息","查無資料！");
+        showDialog("錯誤訊息","目前無相關資料！");
+        document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
+        setBoardList();
       }else{
-        setBoardCategory(res.boards, res.boardCate, res.board.category.id);
+        //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
         setSearchResult(res_search, page, orderby, direction);
       }
     }).error(function(res_search){
-      showDialog("錯誤訊息","查無資料！");
+      showDialog("錯誤訊息","目前無相關資料！");
+      document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
+      setBoardList();
     });
   } else {
     $.get("/setBoardPage/"+board+"/"+tab, function(res){
       var boardName=res.board.title;
       var boardCate=res.board.category.title;
-      document.getElementById('title').innerHTML="作夥論壇—"+boardCate+"—"+boardName;
+      $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
       var res_search=res.articlesList;
-      setBoardCategory(res.boards, res.boardCate, res.board.category.id);
+      //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
       setTimeout(function(){
         setSearchResult(res_search, page, orderby, direction);
       }, 300);
@@ -244,9 +284,9 @@ function postArticle() {
         else{
           if(auth.isAdmin==true && (board=="17" || board=="18")){
             window.location.assign("/post/"+board);  
-          }else if(auth.isAdmin==false && parseInt(board)>=17 ){
+          }else if(auth.isAdmin==false && (board=="17" || board=="18") ){
             showDialog("一般訊息","您不是管理員，不能在社團公告中發表文章喔！");
-          }else if(board!="17"){
+          }else if(board!="17" && board!="18"){
             window.location.assign("/post/"+board);
           } 
           
@@ -261,31 +301,90 @@ function cancleSearch(){
   window.location.assign("/board-"+board+"/1?tab="+tab);
 }
 
+function cleanArticleList(articleList){
+  ln = articleList.length;
+  for(i=0;i<ln;i++){
+    if(articleList[i].board.category==5){
+      articleList.splice(i, 1);    
+      ln = ln -1;
+      i=i-1; 
+    }
+  }
+  return articleList;
+}
+
 // 產生預設/搜尋結果畫面
 function setSearchResult(articleList, page, orderby, direction){
+    articleList = cleanArticleList(articleList);
+    currentOrder=orderby;
+    currentDirection=direction;
+    //排序文章
     if(orderby=="createdAt"){
       if(direction=="desc"){
         articleList.sort(function(a, b) { return new Date(b.createdAt)-new Date(a.createdAt);});
       }else if(direction=="asc"){
         articleList.sort(function(a, b) { return new Date(a.createdAt)-new Date(b.createdAt);});
       }
-    }else if (orderby="lastResponseTime"){
+    }else if (orderby=="lrt"){
       if(direction=="desc"){
         articleList.sort(function(a, b) {return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);});
       }else if(direction=="asc"){
         articleList.sort(function(a, b) {return new Date(a.lastResponseTime)-new Date(b.lastResponseTime);});
       }
+    }else if (orderby=="title"){
+      if(direction=="desc"){
+          articleList.sort(function(a, b) { 
+            return a.board.title.localeCompare(b.board.title);
+        });
+      }else if(direction=="asc"){
+          articleList.sort(function(a, b) {
+            return b.board.title.localeCompare(a.board.title);
+        });
+      }
+    }else if (orderby=="author"){
+      if(direction=="desc"){
+        articleList.sort(function(a, b) {
+          if(a.author.alias < b.author.alias) return -1;
+          if(a.author.alias > b.author.alias) return 1;
+          return 0;
+        });
+      }else if(direction=="asc"){
+        articleList.sort(function(a, b) {
+          if(a.author.alias < b.author.alias) return -1;
+          if(a.author.alias > b.author.alias) return 1;
+          return 0;
+        });
+      }
+    }else if (orderby=="clickNum"){ 
+      if(direction=="desc"){
+        articleList.sort(function(a, b) {return b.clickNum-a.clickNum;});
+      }else if(direction=="asc"){
+        articleList.sort(function(a, b) {return a.clickNum-b.clickNum;});
+      }
+    }else if (orderby=="responseNum"){
+      if(direction=="desc"){
+        articleList.sort(function(a, b) {return b.responseNum-a.responseNum;});
+      }else if(direction=="asc"){
+        articleList.sort(function(a, b) {return a.responseNum-b.responseNum;});
+      }
+    }else if (orderby=="nicer"){
+      if(direction=="desc"){
+        articleList.sort(function(a, b) {return b.nicer.length-a.nicer.length;});
+      }else if(direction=="asc"){
+        articleList.sort(function(a, b) {return a.nicer.length-b.nicer.length;});
+      }
     }else{
       articleList.sort(function(a, b) {return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);});
     }
+
     myTable="<thead>";
-    myTable+="<tr style='background-color: #1D3521; color:white;' onClick='setTableRowStripCss();'>"
-    myTable+="<th data-sort='string' style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'>文章類別<span class='caret'></span></td>"
-    myTable+="<th data-sort='string' style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'>文章標題<span class='caret'></span></td>"
-    myTable+="<th data-sort='string' style='width:22%; text-align:center; cursor:pointer;'>發表人<span class='caret'></span> / <span onClick='orderbyPostTime();'>發表時間</span><span class='caret'></span></td>";
-    myTable+="<th data-sort='float' style='width:12%; text-align:center; cursor:pointer;'>點閱/回覆<span class='caret'></span></td>";
-    myTable+="<th data-sort='int' style='width:6%; text-align:center; cursor:pointer;'>推薦<span class='caret'></span></td>";
-    myTable+="<th data-sort='string' style='text-align:center; cursor:pointer;'>最新回應時間<span class='caret'></span></td></tr>";
+    myTable+="<tr style='background-color: #324232; color:white;' onClick='setTableRowStripCss();'>"
+    myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'>類別</td>"
+    myTable+="<td style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'>文章標題</td>"
+    myTable+="<td style='width:22%; text-align:center; cursor:pointer;'><span onClick='orderbyAuthor();'>發表人<span class='caret'></span></span>/ <span onClick='orderbyPostTime();'>發表時間<span class='caret'></span></span></td>";
+    myTable+="<td style='width:12%; text-align:center; cursor:pointer;'><span onClick='orderbyClickNum();'>點閱<span class='caret'></span></span> / <span onClick='orderbyResponseNum();'>回覆<span class='caret'></span></span></td>";
+    myTable+="<td style='width:6%; text-align:center; cursor:pointer;' onClick='orderbyNicer();'>推薦<span class='caret'></span></td>";
+    myTable+="<td style='text-align:center; cursor:pointer;' onClick='orderbyLastResponseTime();'>最新回應時間<span class='caret'></span></td></tr>";
     myTable+="</thead>";
     myTable+="<tbody>";
     articleNum=20;
@@ -295,17 +394,22 @@ function setSearchResult(articleList, page, orderby, direction){
     if(lastPageArticlesNum!=0) {
       pageNum+=1;
     }
-    pageContext="<tr><td>頁次：</td>";
-    for(i=1; i<=pageNum; i++) {
-      if(i!=page) {
-        pageContext+="<td><label><a href='/board-"+board+"/search/"+keyword+"/"+i+"?tab="+tab+"'>"+i+"</a></label></td>";
-      } else {
-        pageContext+="<td>"+i+"</td>";
+    if(articleList.length>0){
+      pageContext="<tr><td>頁次：</td>";
+      for(i=1; i<=pageNum; i++) {
+        if(i!=page) {
+          pageContext+="<td><a style='cursor: pointer;' onclick='pageClick("+i+");'>"+i+"</a></td>";
+        } else {
+          pageContext+="<td>"+i+"</td>";
+        }
       }
+      pageContext+="</tr>"
+      document.getElementById("page").innerHTML = pageContext;
+      document.getElementById("pageDown").innerHTML = pageContext;
+    }else{
+      document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
     }
-    pageContext+="</tr>"
-    document.getElementById("page").innerHTML = pageContext;
-    document.getElementById("pageDown").innerHTML = pageContext;
+
     if(articleList.length%20==0){
       pageNum=articleList.length/20+1;
     }
@@ -380,7 +484,7 @@ function setSearchResult(articleList, page, orderby, direction){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
            
         }else{
-          myTable+="<tr class='success'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
           myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
           myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
@@ -481,7 +585,7 @@ function setSearchResult(articleList, page, orderby, direction){
   }
 
   // 產生看板跳轉 option
-  function setBoardCategory(boards, boardCategorys, boardID){
+  /*function setBoardCategory(boards, boardCategorys, boardID){
     console.log(JSON.stringify(boards));
     var cateSelect=document.getElementById('boardCategory');
     for(var i=0; i<boardCategorys.length; i++) {
@@ -514,8 +618,87 @@ function setSearchResult(articleList, page, orderby, direction){
         boardSelect.add(option);
       }
     }
-  }
+  }*/
 
+function orderbyTitle(){
+  setTimeout(function(){
+    titleClickCount=titleClickCount+1;
+    if(titleClickCount%2==1){
+       setPage(1, keyword, "title", "desc");
+    }else{
+       setPage(1, keyword, "title", "asc");
+    }
+  },1);
+}
+
+
+function orderbyAuthor(){
+  setTimeout(function(){
+    authorClickCount=authorClickCount+1;
+    if(authorClickCount%2==1){
+       setPage(1, keyword, "author", "desc");
+    }else{
+       setPage(1, keyword, "author", "asc");
+    }
+  },1);
+}
+
+
+function orderbyPostTime(){
+  setTimeout(function(){
+    postTimeClickCount=postTimeClickCount+1;
+    if(postTimeClickCount%2==1){
+       setPage(1, keyword, "createdAt", "desc");
+    }else{
+       setPage(1, keyword, "createdAt", "asc");
+    }
+  },1);
+}
+
+
+function orderbyClickNum(){
+  setTimeout(function(){
+    clickClickCount=clickClickCount+1;
+    if(clickClickCount%2==1){
+       setPage(1, keyword, "clickNum", "desc");
+    }else{
+       setPage(1, keyword, "clickNum", "asc");
+    }
+  },1);
+}
+
+function orderbyResponseNum(){
+  setTimeout(function(){
+    responseClickCount=responseClickCount+1;
+    if(responseClickCount%2==1){
+       setPage(page, keyword, "responseNum", "desc");
+    }else{
+       setPage(1, keyword, "responseNum", "asc");
+    }
+  },1);
+}
+
+function orderbyNicer(){
+  setTimeout(function(){
+    nicerClickCount=nicerClickCount+1;
+    if(nicerClickCount%2==1){
+       setPage(1, keyword, "nicer", "desc");
+    }else{
+       setPage(1, keyword, "nicer", "asc");
+    }
+  },1);
+}
+
+function orderbyLastResponseTime(){
+  setTimeout(function(){
+    lrtClickCount=lrtClickCount+1;
+    if(lrtClickCount%2==1){
+       setPage(1, keyword, "lrt", "desc");
+    }else{
+       setPage(1, keyword, "lrt", "asc");
+    }
+  },1);
+}
 
  function setBoardList(){
   if($("#boardlist").html().trim()==""){
@@ -540,7 +723,7 @@ function setSearchResult(articleList, page, orderby, direction){
       catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
       for(j=0;j<boardList[i-1].length;j++){
         cc = cc + 1;
-        catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all"+"'>"+boardList[i-1][j]+"</a></li>";  
+        catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
       }
       catHtml = catHtml + "</ul></li>";
     }

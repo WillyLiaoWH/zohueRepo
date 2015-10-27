@@ -114,21 +114,12 @@
         <div id="tabDiv" class="col-md-9">
           <!-- <ul class="tabs"> -->
           <ul class="nav nav-pills" id="tabs">
-            <li id="all"><a href="?tab=all">全部</a></li>
-            <li id="motion"><a href="?tab=motion">病況與心情</a></li>
-            <li id="share"><a href="?tab=share">分享</a></li>
-            <li id="problem"><a href="?tab=problem">問題</a></li>
-            <li id="others"><a href="?tab=others">其它</a></li>
+            <li id="all"><a style="cursor: pointer;" onclick="tabClick('all');">全部</a></li>
+            <li id="motion"><a style="cursor: pointer;" onclick="tabClick('motion');">病況與心情</a></li>
+            <li id="share"><a style="cursor: pointer;" onclick="tabClick('share');">分享</a></li>
+            <li id="problem"><a style="cursor: pointer;" onclick="tabClick('problem');">問題</a></li>
+            <li id="others"><a style="cursor: pointer;" onclick="tabClick('others');">其它</a></li>
           </ul>
-
-          <ul class="nav nav-pills nav-stacked" id="mobile_tabs">
-            <li id="all"><a href="?tab=all">全部</a></li>
-            <li id="motion"><a href="?tab=motion">病況與心情</a></li>
-            <li id="share"><a href="?tab=share">分享</a></li>
-            <li id="problem"><a href="?tab=problem">問題</a></li>
-            <li id="others"><a href="?tab=others">其它</a></li>
-          </ul>
-
         </div>
          <div id="goToBoard" class="col-md-5">
             <!--<label style="display: inline;font-size: 22px; margin-right: 10px; color:#533828;">前往：</label>-->
@@ -145,6 +136,7 @@
         </div>
       </div>
       <div class="row-fluid">
+        <span id="msg" style='color: #333; font-size:18px; text-align:center; margin:40px;'></span>
         <div class="col-md-12">
           <table id="pageDown" cellspacing=8></table>
         </div>
