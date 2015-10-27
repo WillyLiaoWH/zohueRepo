@@ -29,7 +29,7 @@ app.controller('announcementCtrl', function($scope, $http) {
 
 
 function homepagePic(){
-  console.log("in homepic");
+  // console.log("in homepic");
     $.get("/getHomepagePic", function(homepagePics){
     if(typeof(homepagePics)=="string"){
       showDialog("一般訊息",homepagePics);

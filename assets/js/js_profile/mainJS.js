@@ -322,12 +322,11 @@ function setTimelinePage(pri_account, pri_id, pri_avatar){
         else
           window.location.replace("/home");
       });
-    }else if(res.notfull==false){
-      // $("#no_post_message").html("目前尚未有任何留言");
-      // showDialog("一般訊息","此用戶目前尚未有任何文章！",function(){
+    }else if(res.notfull==false){    //timeline沒有文章
+      
         $("#no_post_message").show();
         showProfile(ori_author);
-      // });
+
     } else {
 
       function sortTimelineList(cb){
@@ -360,7 +359,9 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
   var author_id=res["id"];
   var timeInMs = new Date().getTime();
 
+
   for(i in res["timelinesList"]){
+    
     var content = res["timelinesList"][i].content;
     var contentImg = res["timelinesList"][i].contentImg;
     var dif = timeInMs-Date(updatedTime);
@@ -661,6 +662,7 @@ function displayTimelineList(res, pri_account, pri_id, pri_avatar, status){ // �
     if(res["timelinesList"][i].response.length<4){
       $("#readMore"+timelinesID).css("display", "none");
     }
+
   }
 }
 
@@ -702,10 +704,9 @@ function postTimeline(){
       res["timelinesList"][0]["nicer"] = [];
       res["timelinesList"][0]["report"] = [];
       getPri(function(pri_account, pri_id, pri_avatar){
-        setTimelinePage(pri_account, pri_id, pri_avatar);
-        // displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
+        displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
       });
-      // $("#no_post_message").hide();
+      $("#no_post_message").hide();
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err,function(){
         window.location.replace("/home");
@@ -747,7 +748,7 @@ function editTimelineSend(id){
 }
 function delTimeline(id){
   bootbox.dialog({
-    message: "確定要刪除文章嗎？",
+    message: "確定要刪除留言嗎？",
     title: "再次確認",
     buttons: {
       yes: {
@@ -755,10 +756,15 @@ function delTimeline(id){
         className: "btn-primary",
         callback: function() {
           $.post( "/delTimeline", { id: id }, function(res){
+            
+            if(res.timelineLength=='0'){
+                 $("#no_post_message").show();
+              }
             $("#container_edit"+id).parent().remove();
             getPri(function(pri_account, pri_id, pri_avatar){
-              setTimelinePage(pri_account, pri_id, pri_avatar);
-              // displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
+            //   // setTimelinePage(pri_account, pri_id, pri_avatar);
+              displayTimelineList(res, pri_account, pri_id, pri_avatar, 1)
+
             });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
@@ -1037,7 +1043,7 @@ function showProfile(ori_author){
     });
   }
   else{
-    alert(ori_author);
+    // alert(ori_author);
     var addr="/getProfile/"+ori_author;
     $.get(addr,function(res){
       HandleResponse2(res);
@@ -1075,7 +1081,7 @@ function HandleResponse2(response){
   if (typeof owner != "undefined"){
     //檢查兩個人的關係
     $.get('/authCheck/'+owner,function(auth_status){
-      console.log(owner)
+      // console.log(owner)
       if(!auth_status["name"]){
         $('#name_row').hide();
       }
