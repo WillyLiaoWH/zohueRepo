@@ -87,9 +87,8 @@ module.exports = {
                                     }
                                 }
                             });
-                        }else{
-                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
                         }
+                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
                     }
                 });
             }else{
