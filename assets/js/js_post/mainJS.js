@@ -61,7 +61,7 @@ function checkAuth2() {
     board=url.replace(regex,"$1");
     if(auth.isAdmin==true && (board=="17" || board=="18")){
         //window.location.assign("/post/"+board);  
-    }else if(auth.isAdmin==false && parseInt(board)>=17 ){
+    }else if(auth.isAdmin==false && (board=="17" || board=="18") ){
         window.location.assign("/forum");
     }
   });
