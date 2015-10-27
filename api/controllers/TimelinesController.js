@@ -87,9 +87,8 @@ module.exports = {
                                     }
                                 }
                             });
-                        }else{
-                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
                         }
+                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
                     }
                 });
             }else{
@@ -171,7 +170,14 @@ module.exports = {
                     if(err) {
                         res.send(500,{err: "DB Error" });
                     } else {
-                        res.send('文章刪除成功！');
+                        Timelines.find({author:req.session.stay}).exec(function(error, timeline){
+                            if (error){
+                              res.send(500,{err: "DB Error" });  
+                            }else{
+                                res.send({timelineLength:timeline.length});
+                            }
+                        });
+                        // res.send('文章刪除成功！');
                     }
                 });
             }else{

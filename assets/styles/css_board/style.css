@@ -129,6 +129,10 @@
   	position: absolute;
 }
 
+#page td{
+	padding: 10px;
+}
+
 #page{
 	float:left;
 	margin: 15px 0px 0px 20px;

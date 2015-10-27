@@ -230,9 +230,9 @@ function postArticle() {
           });
         }
         else{
-          if(auth.isAdmin==false && board=="17"){
+          if(auth.isAdmin==false && (board=="17" || board=="18")){
             showDialog("一般訊息","您不是管理員，不能在最新消息看板中發表文章喔！");
-          }else if(board!="17"){
+          }else if(board!="17" && board!="18"){
             window.location.assign("/forum");
           } 
           
@@ -659,7 +659,7 @@ function orderbyLastResponseTime(){
       for(j=0;j<boardList[i-1].length;j++){
         cc = cc + 1;
         //if(cc!=21){//專業知識
-          catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all"+"'>"+boardList[i-1][j]+"</a></li>";  
+          catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
         //}
       }
       catHtml = catHtml + "</ul></li>";

@@ -125,17 +125,17 @@ module.exports = {
             var uploadFile = req.file('avatar_file');
             
             uploadFile.upload({ dirname: 'assets/images/img_post', saveAs: uni_fn+'.jpg'}, function onUploadComplete (err, files) {              //  Files will be uploaded to .tmp/uploads
-                if (err) return res.serverError(err);                               //  IF ERROR Return and send 500 error with error
-                var regex = /.*assets\\+(.*)/;
-                var match = files[0].fd.match(regex);
-                var result = match[1].replace(/\\/g, "\/");
-                console.log(result);
-
-                //var time = new Date().getTime();
-                var recall_url = 'images/img_post/upload/'+uni_fn+'.jpg';
-                var easyimg = require('easyimage');
-
+                if (err) return res.serverError(err);
                 try {
+                    var regex = /.*assets\\+(.*)/;
+                    var match = files[0].fd.match(regex);
+                    var result = match[1].replace(/\\/g, "\/");
+                    console.log(result);
+
+                    //var time = new Date().getTime();
+                    var recall_url = 'images/img_post/upload/'+uni_fn+'.jpg';
+                    var easyimg = require('easyimage');
+
                     easyimg.crop({
                         src:files[0].fd, dst:'assets/'+recall_url,
                         // width:200, height:200,
