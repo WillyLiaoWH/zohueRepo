@@ -542,7 +542,7 @@ function loadRecord(){
       var action = records[i].action
       if (action == "Login"){
         cla = "Log"
-        act = "Login"
+        act = "登入"
       }
       else if (action.match(/^READ/)){
         cla = "Read"
@@ -561,7 +561,7 @@ function loadRecord(){
       }
       else if (action.match(/^Logout/)){
         cla = "Log"
-        act = "Logout"
+        act = "登出"
       }
       else if (action.match(/^POST article/)){
         cla = "Post"
@@ -652,13 +652,58 @@ function loadHomepage(){
 }
 
 function loadProInfo(){
+  $("#edit_proInfo").hide()
   $.get("/setProInfoPage",function(proInfo){
-    var options
+    var options = "<option value='0' selected='selected'>--</option>"
     for (i=0;i<proInfo.length;i++){
       options +="<option value='"+proInfo[i].id+"'>"+proInfo[i].title+"</option>"
     }
     $("#delProInfo").html(options)
+
+    $("#delProInfo").change(function(){
+      var id = $("#delProInfo").val()
+      if (id!=0){
+        $.get("/getProInfo/"+id,function(info){
+          console.log(info)
+          $("#edit_proInfo").show()
+          $("#proInfoType_change").val(info.classification)
+          $("#proInfoCancer_change").val(info.cancerType)
+          $("#proInfotime_change").val(info.date)
+          $("#proInfoTitle_change").val(info.title)
+          $("#proInfoAuthor_change").val(info.author)
+          $("#link_change").val(info.link)
+          $("#proInfoFrom_change").val(info.note)
+        });
+      }
+      else{
+        $("#edit_proInfo").hide()
+      }
+    })
   });
+}
+
+function proInfoChange(){
+          var type= $("#proInfoType_change").val()
+          var cancer= $("#proInfoCancer_change").val()
+          var date= $("#proInfotime_change").val()
+          var title= $("#proInfoTitle_change").val()
+          var author= $("#proInfoAuthor_change").val()
+          var link= $("#link_change").val()
+          var note=$("#proInfoFrom_change").val()
+          var id = $("#delProInfo").val()
+          
+          $.post("/changeProInfo",{type:type,
+            cancer:cancer,
+            date:date,
+            title:title,
+            author:author,
+            link:link,
+            note:note,
+            id:id
+            },function(ret){
+              showDialog("一般訊息","更新成功")
+              location.reload();
+            })
 }
 
 function sortByChar(sortby){
@@ -960,6 +1005,7 @@ function proInfoSubmit(){
   $.post("/proInfoSubmit",{type:type,cancer:cancer,time:time,title:title,author:author,from:from,proInfo:proInfo},function(ret){
       if(ret=="OK"){
         alert("發佈完成");
+        location.reload();
       }
   });
 }
@@ -978,12 +1024,31 @@ function recordDownload(){
 
 function delProInfo(){
   var proInfoId = $("#delProInfo").val()
-  $.get("/deletetProInfo/"+proInfoId,function(ret){
-    if(ret=="OK"){
-      alert("刪除完成");
-      location.reload();
+  bootbox.dialog({
+    message: "確定要刪除這篇嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          $.get("/deletetProInfo/"+proInfoId,function(ret){
+            if(ret=="OK"){
+              showDialog("一般訊息","刪除完成");
+              location.reload();
+            }
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
     }
   });
+  
 }
 
 function editTopArticleFormula(){

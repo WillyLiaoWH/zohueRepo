@@ -211,7 +211,7 @@
             <div id="proInfo" class="collapse mainContent">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h2>專業知識</h2>
+                  <h2>專業知識 - 新增</h2>
                 </div>
                 <div class="panel-body">   
                   <div class="col-md-3">
@@ -313,15 +313,49 @@
                   </div>
                 </div>
               </div>
+
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h2>刪除</h2>
+                  <h2>修改 / 刪除</h2>
                 </div>
                 <div class="panel-body">
                   <div class="col-md-11">
                     <select id="delProInfo" class="form-control"></select>
                   </div>
-                  <button class="btn btn-default" onclick="delProInfo()">送出</button>
+                  <button class="btn btn-default" onclick="delProInfo()">刪除</button>
+                  <div id="edit_proInfo">
+                    <div class="col-md-3">
+                      <label for="proInfoType_change">類型</label>
+                      <input id="proInfoType_change" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                      <label for="proInfoCancer_change">癌症別</label>
+                      <input id="proInfoCancer_change" class="form-control">
+                    </div>
+                    <div class="col-md-4 col-md-offset-2">
+                      <label for="proInfotime_change">發表時間</label>
+                      <input type="text" class="form-control" id="proInfotime_change">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="proInfoTitle_change">標題</label>
+                      <input type="text" id="proInfoTitle_change" class="form-control">
+                    </div>
+                    <div class="col-md-4 col-md-offset-2">
+                      <label for="proInfoAuthor_change">作者</label>
+                      <input type="text" id="proInfoAuthor_change" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="link_change">內容連結</label>
+                      <input type="text" id="link_change" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="proInfoFrom_change">出處</label>
+                      <input type="text" id="proInfoFrom_change" class="form-control">
+                    </div>
+                    <div class="col-md-offset-11">
+                      <button class="btn btn-default" onclick="proInfoChange()">修改</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

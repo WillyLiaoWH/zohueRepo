@@ -14,12 +14,17 @@ module.exports = {
                     res.send(500,{err: "DB Error"});
                 }
                 else{
+                    for (e=0;e<list.length;e++){
+                        list[e].createdAt = new Date(list[e].createdAt).toLocaleString()
+                    }
+                    console.log(list)
                     var json2csv = require('json2csv');
                     var config = {
-                        fields : ['user','ip', 'action'],
+                        fields : ['user','ip', 'action','createdAt'],
                         data: list
                     };
 
+                    //console.log(config)
                     json2csv(config, function(err, csv) {
                         // var fs = require('fs');
                         // fs.writeFile("/tmp/test", csv, function(err) {

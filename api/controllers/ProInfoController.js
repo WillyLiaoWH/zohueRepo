@@ -107,7 +107,37 @@ module.exports = {
         Record.create({user:req.session.user,ip:req.ip,action:"INFO "+link}).exec(function(ret){
             console.log("專業知識")
         })
-    }
+    },
+    getProInfo: function(req,res){
+        var id = req.param("id");
+        ProInfo.find(id).exec(function(err,ret){
+            if(err){
+                res.send(500,{err:'DB Error'})
+            }
+            else{
+                res.send(ret[0]);
+            }
+        })
+    },
+    changeProInfo:function(req,res){
+        var type= req.param("type")
+        var cancer= req.param("cancer")
+        var date= req.param("date")
+        var title= req.param("title")
+        var author= req.param("author")
+        var link= req.param("link")
+        var note=req.param("note")
+        var id = req.param("id")
+
+        ProInfo.update(id,{title:title,author:author,link:link,classification:type,cancerType:cancer,note:note,date:date}).exec(function(err,ret){
+            if (err){
+                res.send(500,{err:'DB Error'})
+            }
+            else{
+                res.send(ret)
+            }
+        })
+    },
 
 };
 

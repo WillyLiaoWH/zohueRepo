@@ -85,6 +85,7 @@ module.exports.routes = {
   
  
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
+  'POST /changeProInfo':'ProInfoController.changeProInfo',
   'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
   'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
@@ -130,6 +131,7 @@ module.exports.routes = {
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /showProfile':'User.showProfile',
   'GET /getProfile/:id':'User.getProfile',
+  'GET /getProInfo/:id':'ProInfoController.getProInfo',
   'GET /getAllUsers':'Backend.getAllUsers',
   'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
