@@ -59,9 +59,9 @@ function checkAuth2() {
     url = document.URL;
     regex=/.*post+\/+(.*)+/
     board=url.replace(regex,"$1");
-    if(auth.isAdmin==true && (board=="17" || board=="18")){
+    if(auth.isAdmin==true && (board=="17" || board=="18" || board=="21")){
         //window.location.assign("/post/"+board);  
-    }else if(auth.isAdmin==false && (board=="17" || board=="18") ){
+    }else if(auth.isAdmin==false && (board=="17" || board=="18" || board=="21") ){
         window.location.assign("/forum");
     }
   });
