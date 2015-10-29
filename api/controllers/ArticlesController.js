@@ -455,35 +455,27 @@ module.exports = {
 
     clickNice: function(req, res) {
         var articleId = req.param("article_id");
-        Articles.find({id: articleId}).populate("nicer").exec(function(error, article) {
+        Articles.find({id: articleId}).exec(function(error, article) {
             if(error) {
                 res.send(500,{err: "DB Error" });
                 console.log("error"+error);
             } else {
-                var niceList=article[0].nicer;
-                console.log(niceList);
-                if(!niceList) {
-                    niceList=[];
-                }
-                var newNiceList=[]
-                for(i=0; i<niceList.length; i++) {
-                    if(niceList[i]&&niceList[i].id!=req.session.user.id) {
-                        newNiceList.push(niceList[i]);
+                var newNicer=article[0].nicer;
+                var newFollower=article[0].follower;
+                if(req.session.user) {
+                    if(newNicer.indexOf(req.session.user.id)==-1) {
+                        newNicer.push(req.session.user.id);
+                    }
+                    if(newFollower.indexOf(req.session.user.id)==-1) {
+                        newFollower.push(req.session.user.id);
                     }
                 }
-                newNiceList.push(req.session.user);
-
-                var follower=article[0].follower;
-                if(follower.indexOf(req.session.user.id)==-1) {
-                    follower.push(req.session.user.id);
-                }
-                Articles.update({id: articleId}, {nicer: newNiceList, follower: follower}).exec(function(error, updated) {
+                
+                Articles.update({id: articleId}, {nicer: newNicer, follower: newFollower}).exec(function(error, updated) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
                         console.log("error2"+error);
                     } else {
-                        console.log("no error");
-                        console.log(updated[0].nicer.length);
                         if(updated[0].title.length>20) {
                             var notContent=updated[0].title.substr(0, 20)+"...";
                         } else {
@@ -897,7 +889,7 @@ module.exports = {
                     res.send(500, "server error");
                 } else {
                     var lastForumTime=user.lastForumTime;
-                    Articles.find({createdAt: {'>': lastForumTime}, deleted: false, board: {"<=": 18}}).exec(function(err2, articles) {
+                    Articles.find({createdAt: {'>': lastForumTime}, deleted: false, board: {"<=": 19}}).exec(function(err2, articles) {
                         if(err2) {
                             console.log("錯誤訊息："+err2);
                             res.send(500, "server error");
