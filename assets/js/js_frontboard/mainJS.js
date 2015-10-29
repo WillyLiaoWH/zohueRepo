@@ -27,6 +27,8 @@ var lrtClickCount=0;
 var currentOrder="";
 var currentDirection="";
 var url ="";
+var isNowElite=false;
+var arti = "";
 
 $(document).ready(function(){
   $.ajax({
@@ -63,6 +65,10 @@ $(document).ready(function(){
     tab=url.replace(regex, "$3");
     order=url.replace(regex, "$4");
     order=order!=null&&order.length>0?order:"createdAt";
+    if(tab=="elite"){
+      isNowElite = true;
+      tab="all";
+    }
     setPage(page, keyword, order, "desc");
   } else {      
     regex =/.*frontboard+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
@@ -70,6 +76,10 @@ $(document).ready(function(){
     tab=document.URL.replace(regex, "$2");
     order=document.URL.replace(regex, "$3");
     order=order!=null&&order.length>0?order:"createdAt";
+    if(tab=="elite"){
+      isNowElite = true;
+      tab="all";
+    }
     setPage(page, "", order, "desc");
   }
 
@@ -119,6 +129,7 @@ function clearTab(){
   $("#share").removeClass("active");
   $("#problem").removeClass("active");
   $("#others").removeClass("active");
+  $("#elite").removeClass("active");
 }
 
 function setPage(page, keyword, orderby, direction) {
@@ -138,6 +149,9 @@ function setPage(page, keyword, orderby, direction) {
       break;
     case "others":
       $("#others").addClass("active");
+      break;
+    case "elite":
+      $("#elite").addClass("active");
       break;
   }
   // 獲得文章
@@ -250,7 +264,7 @@ function cancleSearch(){
 function cleanArticleList(articleList){
   ln = articleList.length;
   for(i=0;i<ln;i++){
-    if(articleList[i].board.category==5){
+    if(articleList[i].board.category==5 || articleList[i].board.id==20){
       articleList.splice(i, 1);    
       ln = ln -1;
       i=i-1; 
@@ -258,13 +272,29 @@ function cleanArticleList(articleList){
   }
   return articleList;
 }
-var arti = "";
+
+function eliteArticleList(articleList){
+  ln = articleList.length;
+  for(i=0;i<ln;i++){
+    if(articleList[i].elite=="0"){
+      articleList.splice(i, 1);    
+      ln = ln -1;
+      i=i-1; 
+    }
+  }
+  return articleList;
+}
+
 // 產生預設/搜尋結果畫面
 function setSearchResult(articleList, page, orderby, direction){
-    arti = articleList;
-    articleList = cleanArticleList(articleList);
     currentOrder=orderby;
     currentDirection=direction;
+    arti = articleList;
+    articleList = cleanArticleList(articleList);
+    if(isNowElite){
+      articleList = eliteArticleList(articleList);
+      clearTab();
+    }
     //排序文章
     if(orderby=="createdAt"){
       if(direction=="desc"){

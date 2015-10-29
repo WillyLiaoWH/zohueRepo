@@ -25,6 +25,8 @@ var lrtClickCount=0;
 var currentOrder="";
 var currentDirection="";
 var url ="";
+var isNowElite=false;
+var arti = "";
 
 
 $(document).ready(function(){
@@ -59,6 +61,10 @@ $(document).ready(function(){
     tab=url.replace(regex, "$4")
     order=url.replace(regex, "$5");
     order=order!=null&&order.length>0?order:"createdAt";
+    if(tab=="elite"){
+      isNowElite = true;
+      tab="all";
+    }
     setPage(page, keyword, order, "desc");
   } else {
     var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
@@ -67,6 +73,10 @@ $(document).ready(function(){
     tab=url.replace(regex, "$3");
     order=document.URL.replace(regex, "$4");
     order=order!=null&&order.length>0?order:"createdAt";
+    if(tab=="elite"){
+      isNowElite = true;
+      tab="all";
+    }
     setPage(page, "", order, "desc");
   }
 
@@ -144,7 +154,7 @@ function tabClick(tabc){
   if(keyword.length>0){
     window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab="+tabc+"&order=");
   }else{
-    window.location.assign("/board-"+board+"/1?tab="+tabc+"&order="+currentOrder);
+    window.location.assign("/board-"+board+"/1?tab="+tabc+"&order=");
   }
 }
 
@@ -158,6 +168,7 @@ function clearTab(){
   $("#share").removeClass("active");
   $("#problem").removeClass("active");
   $("#others").removeClass("active");
+  $("#elite").removeClass("active");
 }
 
 function orderbyPostTime(){
@@ -313,11 +324,28 @@ function cleanArticleList(articleList){
   return articleList;
 }
 
+function eliteArticleList(articleList){
+  ln = articleList.length;
+  for(i=0;i<ln;i++){
+    if(articleList[i].elite=="0"){
+      articleList.splice(i, 1);    
+      ln = ln -1;
+      i=i-1; 
+    }
+  }
+  return articleList;
+}
+
 // 產生預設/搜尋結果畫面
 function setSearchResult(articleList, page, orderby, direction){
-    articleList = cleanArticleList(articleList);
     currentOrder=orderby;
     currentDirection=direction;
+    arti = articleList;
+    articleList = cleanArticleList(articleList);
+    if(isNowElite){
+      articleList = eliteArticleList(articleList);
+      clearTab();
+    }
     //排序文章
     if(orderby=="createdAt"){
       if(direction=="desc"){
