@@ -7,6 +7,15 @@ body{
 	margin-top:20px;
 }
 
+
+#editArticle{
+  display: none;
+}
+
+#newContent{
+  min-height: 500px;
+}
+
 .form-control{
 	font-size: 20px;
 	height:45px;
