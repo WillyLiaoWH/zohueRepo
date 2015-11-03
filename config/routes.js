@@ -111,6 +111,7 @@ module.exports.routes = {
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
+  'GET /recordLink/:target':'HomeController.recordLink',
   'GET /deletetProInfo/:id' : 'ProInfoController.deletetProInfo',
   'GET /recordDownload':'BackendController.recordDownload',
   'GET /getAnnouncement': 'Home.getAnnouncement',

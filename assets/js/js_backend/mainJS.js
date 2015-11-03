@@ -638,6 +638,11 @@ function loadRecord(){
         var id = action.substring(13)
         act = "<a href='/article/"+id+"'>"+"發表文章"+"</a>"
       }
+      else if (action.match(/^LINK/)){
+        cla = "Link"
+        var id = action.substring(5)
+        atc = "點擊廣告 "+id;
+      }
       time=new Date(records[i].createdAt).toLocaleString();
       var account
       if (typeof records[i].user == "undefined"){
@@ -660,6 +665,7 @@ function recordFilter(filter){
     $(".ProInfo").hide()
     $(".Profile").hide()
     $(".Post").hide()
+    $(".Link").hide()
   }
   else if (filter == "Log"){
     $(".Read").hide()
@@ -667,6 +673,7 @@ function recordFilter(filter){
     $(".ProInfo").hide()
     $(".Profile").hide()
     $(".Post").hide()
+    $(".Link").hide()
 
   }
   else if (filter == "ProInfo"){
@@ -675,6 +682,7 @@ function recordFilter(filter){
     $(".ProInfo").show()
     $(".Profile").hide()
     $(".Post").hide()
+    $(".Link").hide()
 
   }
   else if (filter == "Profile"){
@@ -683,6 +691,7 @@ function recordFilter(filter){
     $(".ProInfo").hide()
     $(".Profile").show()
     $(".Post").hide()
+    $(".Link").hide()
 
   }
   else if (filter == "Post"){
@@ -691,6 +700,16 @@ function recordFilter(filter){
     $(".ProInfo").hide()
     $(".Profile").hide()
     $(".Post").show()
+    $(".Link").hide()
+
+  }
+  else if (filter == "Link"){
+    $(".Read").hide()
+    $(".Log").hide()
+    $(".ProInfo").hide()
+    $(".Profile").hide()
+    $(".Post").hide()
+    $(".Link").show()
   }
   else if (filter == "All"){
      $(".Read").show()
@@ -698,6 +717,8 @@ function recordFilter(filter){
     $(".ProInfo").show()
     $(".Profile").show()
     $(".Post").show()
+    $(".Link").show()
+
   }
 
 }
