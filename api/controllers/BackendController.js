@@ -132,6 +132,50 @@ module.exports = {
         } 
 	},
 
+    getArticlesByArticleId: function(req, res){ // 根據board撈文章。  
+        var isAdmin = req.session.user.isAdmin;
+        if(isAdmin == true){
+            console.log(req.param('articleID'));
+            Articles.findOne({id:req.param('articleID')}).exec(function(err, article) {
+                if (err) {
+                    res.send(500, { err: "DB Error" });
+                } else {
+                    res.send(article);
+                }
+            });    
+        } 
+    },
+
+
+    backendEditArticle: function(req, res) {
+        var isAdmin = req.session.user.isAdmin;
+        if(isAdmin == true){
+            var articleId = req.param("id");
+            var newClassification = req.param("classification");
+            // var newCategory = req.param("newCategory");
+            var newBoard = req.param("board");
+            var newTitle = req.param("title");
+            var newContent = req.param("content");
+            
+            Articles.update({id: articleId}, {title: newTitle, content: newContent,classification:newClassification,board:newBoard }).exec(function(error, article) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                    console.log(error);
+                } else {
+                    res.send(article);
+                    // Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article) {
+                    //     if(err) {
+                    //         res.send(500,{err: "DB Error" });
+                    //         console.log(err);
+                    //     } else {
+                    //         res.send(article);
+                    //     }
+                    // });
+                }
+            });
+        }
+    },
+
     getArticlesByCategory: function(req, res){ // 根據category撈文章。
         var boards;
         var category=req.param("category");

@@ -602,3 +602,9 @@ function showSimpleSignup() {
           $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
         }
 }
+
+function recordLink(target){
+  $.get("/recordLink/"+target,function(ret){
+    return true 
+  })
+}
