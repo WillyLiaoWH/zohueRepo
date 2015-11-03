@@ -2,6 +2,12 @@ body{
   font-family: "微軟正黑體";
 }
 
+#backendHowTo{
+  font-size:20px;
+  float:right;
+  margin-bottom:10px;
+}
+
 #userManage, #forumManage, #enlManage, #subscriberManage,#record,#proInfo,#homepageManage{
 	/*display:none;*/
 	margin-top:20px;
