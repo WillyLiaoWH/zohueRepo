@@ -425,6 +425,7 @@ module.exports = {
         });
     },
 
+
     updateClickNum: function(req, res) {
         var id = req.param("id");
         var clickNum = req.param("clickNum");

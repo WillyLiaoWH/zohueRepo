@@ -113,6 +113,71 @@
                 </div>
               </div>
             </div>
+
+            <div id="editArticle" class="panel panel-default">
+                <div class="panel-heading">
+                  <h2>編輯文章</h2>
+
+                </div>
+                <div class="panel-body">
+                  
+                  <!-- <button class="btn btn-default" onclick="delProInfo()">刪除</button> -->
+                  <div id="edit_Article">
+                    <div class="col-md-3">
+                      <label for="articleID">文章編號</label>
+                      <input id="articleID" class="form-control" readonly="">
+                    </div>
+                    
+                    <div class="col-md-3">
+                      <label for="newBoardCategory">看板類型</label>
+                      <select class="form-control" id="newBoardCategory">
+                        <option value="1">病友照護</option>
+                        <option value="2">生活機能</option>
+                        <option value="3">社團公告</option>
+                        <option value="4">平台小幫手</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="newBoard">看板</label>
+                      <select class="form-control" id="newBoard">
+                      </select>                     
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="newClassification">類型</label>
+                      <select class="form-control" id="newClassification">
+                        <!-- <option selected='newboard'></option> -->
+                        <option value="分享">分享</option>
+                        <option value="病況與心情">病況與心情</option>
+                        <option value="問題">問題</option>
+                        <option value="其他">其他</option>
+                      </select>
+                      <!-- <input id="newClassification" class="form-control"> -->
+                    </div>
+                 
+                    <div class="col-md-6">
+                      <label for="newTitle_change">標題</label>
+                      <input type="text" id="newTitle_change" class="form-control">
+                    </div>
+                   
+                    <div class="col-md-12">
+                      <label for="newContent">內容</label>
+                      <div contentEditable="true" type="text" id="newContent" class="form-control"></div>
+                    </div>
+<!--                     <div class="col-md-6">
+                      <label for="proInfoFrom_change">出處</label>
+                      <input type="text" id="proInfoFrom_change" class="form-control">
+                    </div> -->
+                    <div class="col-md-offset-11">
+                      <button class="btn btn-default" onclick="editArticle()">修改</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            
+
             <div id="enlManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
@@ -196,6 +261,7 @@
                     <button class="btn btn-default" onclick="recordFilter('Read')">閱讀文章</button>
                     <button class="btn btn-default" onclick="recordFilter('ProInfo')">專業知識</button>
                     <button class="btn btn-default" onclick="recordFilter('Profile')">個人頁面</button>
+                     <button class="btn btn-default" onclick="recordFilter('Link')">點擊廣告</button>
                     <button class="btn btn-default" onclick="recordFilter('Post')">發表文章</button>
                   </div>
                   <div class="col-md-offset-5 col-md-1">
@@ -430,7 +496,7 @@
                 </div>
               </div>
             </div>
-
+            <a id="backendHowTo" href="/files/後台管理說明文件.pdf" target="_blank">後台管理說明文件</a>
           </div>
         </div>
       </div>
