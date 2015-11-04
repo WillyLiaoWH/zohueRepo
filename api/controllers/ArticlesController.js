@@ -278,6 +278,7 @@ module.exports = {
     },
     
 	postArticle: function(req, res){
+        
 		var title=req.param("title");
         var classification=req.param("classification");
 		var author=req.session.user.id;
@@ -290,86 +291,80 @@ module.exports = {
         // if(!req.session.user) {
         //     res.send({err: "尚未登入"});
         // } else {
-        Boards.find({id: board}).exec(function(error, boardExist) {
-            if(boardExist.length == 0 || (!req.session.isAdmin && (board==21||board==17||board==18))) {
-                res.send(500,{err: "找不到此看板！" });
-                console.log(error);
-            } else {
-        		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
-                    if(error) {
-                        console.log(title);console.log(author);console.log(content);
-                        res.send(500,{err: "DB Error" });
-                        console.log(error);
-                    } else {
-                        Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article2) {
-                            if(err) {
-                                res.send(500,{err: "DB Error" });
-                                console.log(err);
-                            } else {
+    		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
+                if(error) {
+                    console.log(title);console.log(author);console.log(content);
+                    res.send(500,{err: "DB Error" });
+                    console.log(error);
+                } else {
+                    
+                    Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article2) {
+                        if(err) {
+                            res.send(500,{err: "DB Error" });
+                            console.log(err);
+                        } else {
 
-                                if(article2[0].board==19||article2[0].board==20) {
-                                    if(title.length>20) {
-                                        var notContent=title.substr(0, 20)+"...";
-                                    } else {
-                                        var notContent=title;
-                                    }
-                                    Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
-                                        if(err) {
-                                            console.log(err);
-                                        }
-                                    });
-                                    //寄信給管理者
-                                    //引用 nodemailer  
-                                    var list
-                                    if (article2[0].board==19){
-                                        var list = ["r03725041@ntu.edu.tw","r03725042@ntu.edu.tw","r03725035@ntu.edu.tw"]
-
-                                    }
-                                    else if (article2[0].board==20){
-                                        var list = ["r04725020@ntu.edu.tw","r04725019@ntu.edu.tw","jeffweilee@gmail.com"]
-                                    }
-                                    var nodemailer = require('nodemailer');  
-                                    var transporter = nodemailer.createTransport({  
-                                        service: 'Gmail',  
-                                        auth: {  
-                                         user: 'ntu.cpcp@gmail.com',  
-                                         pass: 'lckung413'  
-                                        }  
-                                    });  
-                                    var options = {  
-                                        //寄件者  
-                                        from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
-                                        //收件者  
-                                        to: list[ article2[0].id % 3],   
-                                        
-                                        //主旨  
-                                        subject: "[系統訊息] 使用者發問", // Subject line  
-                                        
-                                        //嵌入 html 的內文  
-                                        html: article2[0].content+"<br><br><a href=http://zohue.im.ntu.edu.tw/article/"+article2[0].id+">link</a>",   
-                                           
-                                    };  
-                                    
-                                    //發送信件方法  
-                                    transporter.sendMail(options, function(error, info){  
-                                        if(error){  
-                                            console.log(error);  
-                                        }else{  
-                                            console.log('訊息發送: ' + info.response);  
-                                        }  
-                                    });  
+                            if(article2[0].board==19||article2[0].board==20) {
+                                if(title.length>20) {
+                                    var notContent=title.substr(0, 20)+"...";
+                                } else {
+                                    var notContent=title;
                                 }
-                                Record.create({user:req.session.user,ip:req.ip,action:"POST article "+article2.id}).exec(function(err,record){
-                                    console.log("發表文章")
-                                    res.send(article2);
-                                })
+                                Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
+                                    if(err) {
+                                        console.log(err);
+                                    }
+                                });
+                                //寄信給管理者
+                                //引用 nodemailer  
+                                var list
+                                if (article2[0].board==19){
+                                    var list = ["r03725041@ntu.edu.tw","r03725042@ntu.edu.tw","r03725035@ntu.edu.tw"]
+
+                                }
+                                else if (article2[0].board==20){
+                                    var list = ["r04725020@ntu.edu.tw","r04725019@ntu.edu.tw","jeffweilee@gmail.com"]
+                                }
+                                var nodemailer = require('nodemailer');  
+                                var transporter = nodemailer.createTransport({  
+                                    service: 'Gmail',  
+                                    auth: {  
+                                     user: 'ntu.cpcp@gmail.com',  
+                                     pass: 'lckung413'  
+                                    }  
+                                });  
+                                var options = {  
+                                    //寄件者  
+                                    from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
+                                    //收件者  
+                                    to: list[ article2[0].id % 3],   
+                                    
+                                    //主旨  
+                                    subject: "[系統訊息] 使用者發問", // Subject line  
+                                    
+                                    //嵌入 html 的內文  
+                                    html: article2[0].content+"<br><br><a href=http://zohue.im.ntu.edu.tw/article/"+article2[0].id+">link</a>",   
+                                       
+                                };  
                                 
+                                //發送信件方法  
+                                transporter.sendMail(options, function(error, info){  
+                                    if(error){  
+                                        console.log(error);  
+                                    }else{  
+                                        console.log('訊息發送: ' + info.response);  
+                                    }  
+                                });  
                             }
-                        });
-                    }
-                });
-            }
-        });
+                            Record.create({user:req.session.user,ip:req.ip,action:"POST article "+article2.id}).exec(function(err,record){
+                                console.log("發表文章")
+                                res.send(article2);
+                            })
+                            
+                        }
+                    });
+                }
+            });
 	},
     syncArticleToTimeline: function(req, res){
         var author=req.session.user.id;
@@ -902,7 +897,7 @@ module.exports = {
                     res.send(500, "server error");
                 } else {
                     var lastForumTime=user.lastForumTime;
-                    Articles.find({createdAt: {'>': lastForumTime}, deleted: false, board: {"<=": 18}}).exec(function(err2, articles) {
+                    Articles.find({createdAt: {'>': lastForumTime}}).exec(function(err2, articles) {
                         if(err2) {
                             console.log("錯誤訊息："+err2);
                             res.send(500, "server error");

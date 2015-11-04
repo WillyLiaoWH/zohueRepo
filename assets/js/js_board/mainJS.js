@@ -63,7 +63,7 @@ $(document).ready(function(){
     order=order!=null&&order.length>0?order:"createdAt";
     if(tab=="elite"){
       isNowElite = true;
-      tab="all";
+      //tab="all";
     }
     setPage(page, keyword, order, "desc");
   } else {
@@ -75,7 +75,7 @@ $(document).ready(function(){
     order=order!=null&&order.length>0?order:"createdAt";
     if(tab=="elite"){
       isNowElite = true;
-      tab="all";
+      //tab="all";
     }
     setPage(page, "", order, "desc");
   }
@@ -168,18 +168,8 @@ function clearTab(){
   $("#share").removeClass("active");
   $("#problem").removeClass("active");
   $("#others").removeClass("active");
-  $("#elite").removeClass("active");
-}
-
-function orderbyPostTime(){
-  setTimeout(function(){
-    authorClickCount=authorClickCount+1;
-    if(authorClickCount%2==0){
-       setPage(page, keyword, "createdAt", "desc");
-    }else{
-       setPage(page, keyword, "createdAt", "asc");
-    }
-  },1);
+  $("#elite").removeClass("activeOrange");
+  $("#elite").addClass("nonActiveOrange");
 }
 
 function setPage(page, keyword, orderby, direction) {
@@ -199,6 +189,11 @@ function setPage(page, keyword, orderby, direction) {
       break;
     case "others":
       $("#others").addClass("active");
+      break;
+    case "elite":
+      $("#elite").removeClass("nonActiveOrange");
+      $("#elite").addClass("activeOrange");
+      tab="all";
       break;
   }
   // 獲得文章
@@ -344,7 +339,7 @@ function setSearchResult(articleList, page, orderby, direction){
     articleList = cleanArticleList(articleList);
     if(isNowElite){
       articleList = eliteArticleList(articleList);
-      clearTab();
+      //clearTab();
     }
     //排序文章
     if(orderby=="createdAt"){
