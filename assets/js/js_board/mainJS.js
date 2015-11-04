@@ -46,7 +46,8 @@ $(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
     tab="all";clearTab();
-    setPage(1, keyword, currentOrder, currentDirection);
+    //setPage(1, keyword, currentOrder, currentDirection);
+    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab=all&order=");
   });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
