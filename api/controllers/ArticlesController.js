@@ -440,6 +440,34 @@ module.exports = {
         });
     },
 
+    setEliteArticle: function(req, res) {
+        var articleId = req.param("id");
+        
+        Articles.update({id: articleId}, {elite: "1"}).exec(function(err) {
+            if(err) {
+                console.log(error);
+                res.send(500,{err: "DB Error" });
+            } else {
+                console.log('The article record id:'+ articleId +' has been set to be elite');
+                res.send("已標記為精華文章");
+            }
+        });
+    },
+
+    cancelEliteArticle: function(req, res) {
+        var articleId = req.param("id");
+        
+        Articles.update({id: articleId}, {elite: "0"}).exec(function(err) {
+            if(err) {
+                console.log(error);
+                res.send(500,{err: "DB Error" });
+            } else {
+                console.log('The article record id:'+ articleId +' has been set NOT to be elite');
+                res.send("已標記為非精華文章");
+            }
+        });
+    },
+
     deleteArticle: function(req, res) {
         var articleId = req.param("id");
         
