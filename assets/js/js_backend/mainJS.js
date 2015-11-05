@@ -781,6 +781,14 @@ function loadHomepage(){
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
+
+  $.get("/getTopArticleFormula", function(topArticleFormula){
+    //alert(topArticleFormula);
+    var formulaData = JSON.parse(topArticleFormula);
+    $("#nicerNumWeight").val(formulaData.nicerNumWeight);
+    $("#responseNumWeight").val(formulaData.responseNumWeight);
+    $("#clickNumWeight").val(formulaData.clickNumWeight);
+  });
 }
 
 function loadProInfo(){

@@ -112,6 +112,7 @@ module.exports.routes = {
   'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
+  'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
 
   'GET /recordLink/:target':'HomeController.recordLink',
   'GET /deletetProInfo/:id' : 'ProInfoController.deletetProInfo',
