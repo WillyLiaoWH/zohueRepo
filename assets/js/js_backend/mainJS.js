@@ -306,10 +306,8 @@ $(document).ready(function(){
             $("#newBoardCategory").val(board.category.id);
             var newcategory=board.category
             $.get("/getBoardsOfCategory/"+newcategory.id, function(boards) {
-              // console.log(boards)
-             for(b=0; b<boards.length; b++) {
-                // console.log(board.id)
-                if(board.id==boards[b].id){
+              for(b=0; b<boards.length; b++) {
+               if(board.id==boards[b].id){
                     $("#newBoard").append("<option value='"+boards[b].id+"' selected='"+boards[b].id+"''>"+boards[b].title+"</option>");
                 }else{
                     $("#newBoard").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
@@ -322,12 +320,9 @@ $(document).ready(function(){
         $("#newTitle_change").val(article.title)
         $("#newBoardCategory").change(function(){
             var newcategory = $("#newBoardCategory").val();
-              // console.log(newcategory)
               $("#newBoard").empty();
               $.get("/getBoardsOfCategory/"+newcategory, function(boards) {
-              // console.log(boards)
                  for(b=0; b<boards.length; b++) {
-                    // console.log(board.id)
                     if(board.id==boards[b].id){
                         $("#newBoard").append("<option value='"+boards[b].id+"' selected='"+boards[b].id+"''>"+boards[b].title+"</option>");
                     }else{
