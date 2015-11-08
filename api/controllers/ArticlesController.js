@@ -934,6 +934,7 @@ module.exports = {
         console.log("setMeta");
         var id=req.param("id");
         console.log(id);
+        if(id=='undefined') res.send(500, "server error");
         Articles.find(id).exec(function(err, articles) {
             if(err) {
                 console.log("錯誤訊息："+err);
