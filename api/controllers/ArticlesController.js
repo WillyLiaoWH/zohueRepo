@@ -947,10 +947,11 @@ module.exports = {
                     } else {
                         var metaDescription=articles[0].content;
                     }
+                    var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
                     return res.view("article/index", {
                         metaTitle: metaTitle,
                         metaDescription: metaDescription,
-                        metaUrl: "http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
+                        metaUrl: metaUrl,
                         scripts: [
                             '/js/js_public/modalBox.js-master/modalBox-min.js',
                             '/js/js_public/alertify.js',
