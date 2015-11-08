@@ -943,8 +943,8 @@ module.exports = {
                 if(articles.length==1) {
                     var metaTitle=articles[0].title+" | ZOHUE作夥台灣頭頸癌病友加油站";
                     var metaDescription="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴";
-                    if(articles[0].content.length>30) {
-                        metaDescription=articles[0].content.substr(0, 30);
+                    if(articles[0].content.length>100) {
+                        metaDescription=articles[0].content.substr(0, 100);
                     } else {
                         metaDescription=articles[0].content;
                     }
