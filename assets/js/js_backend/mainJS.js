@@ -47,6 +47,12 @@ $(document).ready(function(){
           showDialog("錯誤訊息",res.responseJSON.err);
         });
 
+
+        $("#boardCategory").val("allCategory");//boardCategory沒顯示出
+        $("#board").empty();
+        $("#board").append("<option>選擇全部</option>")
+        getart(loadForumList, 2);
+
         $("#boardCategory").change(function(){
           var category = $("#boardCategory").val();
           var board = $("#board").val();
@@ -122,6 +128,9 @@ $(document).ready(function(){
   });
   $(document).on("click",".sortByUpdatedAt",function(e){
     sortByUpdatedAt();
+  });
+   $(document).on("click",".sortByElite",function(e){
+    sortByElite();
   });
 
   // 發送電子報的上傳檔案功能
@@ -297,10 +306,8 @@ $(document).ready(function(){
             $("#newBoardCategory").val(board.category.id);
             var newcategory=board.category
             $.get("/getBoardsOfCategory/"+newcategory.id, function(boards) {
-              // console.log(boards)
-             for(b=0; b<boards.length; b++) {
-                // console.log(board.id)
-                if(board.id==boards[b].id){
+              for(b=0; b<boards.length; b++) {
+               if(board.id==boards[b].id){
                     $("#newBoard").append("<option value='"+boards[b].id+"' selected='"+boards[b].id+"''>"+boards[b].title+"</option>");
                 }else{
                     $("#newBoard").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
@@ -313,12 +320,9 @@ $(document).ready(function(){
         $("#newTitle_change").val(article.title)
         $("#newBoardCategory").change(function(){
             var newcategory = $("#newBoardCategory").val();
-              // console.log(newcategory)
               $("#newBoard").empty();
               $.get("/getBoardsOfCategory/"+newcategory, function(boards) {
-              // console.log(boards)
                  for(b=0; b<boards.length; b++) {
-                    // console.log(board.id)
                     if(board.id==boards[b].id){
                         $("#newBoard").append("<option value='"+boards[b].id+"' selected='"+boards[b].id+"''>"+boards[b].title+"</option>");
                     }else{
@@ -337,7 +341,30 @@ $(document).ready(function(){
 
   });
 
-     
+    
+  // "設為或不設為"精華文章
+  $(document).on("click",".eliteArcticle",function(e){
+    var articleID = $(this).parent().parent().attr("value");
+    var eliteTF = $(this).prop("checked");
+    if(!eliteTF){
+      $.post( "/cancelEliteArticle", { id: articleID}, function(res){
+         showDialog("一般訊息","已標記為「非精華文章」！",function(){
+         });
+      });
+    }else{
+      $.post( "/setEliteArticle", { id: articleID}, function(res){
+         showDialog("一般訊息","已成功設為「精華文章」！",function(){
+         });
+      });
+    }
+    /*$.post( "/deleteArticle", { id: articleID}, function(res){
+      $("#backend_articleList tr[value="+articleID+"]").css("display","none");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-trash","glyphicon-repeat");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("unDelArticle","delArticle");
+      delArtId.push(articleID);
+      unDelArtId.splice(unDelArtId.indexOf(parseInt(articleID)), 1);
+    }); */
+  }); 
 
   
   // "刪除"文章
@@ -510,7 +537,7 @@ function loadForumList(articleList){
   if(typeof(articleList)!="undefined"){
     articleTable="<tr class='tableHead'><th style='width:150px;'>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
     articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' >檢舉</th>";
-    articleTable+="<th>編輯</th><th>刪除</th></tr>";
+    articleTable+="<th class='sortable sortByElite' style='width:90px;'>是否為精華文章</th><th>編輯</th><th>刪除</th></tr>";
 
       for(i=articleList.length-1; i>=0; i--) {
         articleID=articleList[i].id;
@@ -528,6 +555,8 @@ function loadForumList(articleList){
         if(boardName!="專業知識"){
        
           var deleted=articleList[i].deleted;
+          var isElite=articleList[i].elite;
+
           var link = "href=\"/article/" + articleID + "\"";
           
           var status=$("#artShowStatus").val();
@@ -569,6 +598,13 @@ function loadForumList(articleList){
           }else{
             articleTable+="<td>"+reportNum+"</td>";
           }
+
+          if(isElite=="1"){
+            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox' checked='checked'> 精華文章</input></td>";
+          }else{
+            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox'> 精華文章</input></td>";
+          }
+
           articleTable+="<td><span class='glyphicon glyphicon-edit editArticle' aria-hidden='true' title='編輯文章'></span></td>";
         
           if(deleted=="false"){
@@ -740,6 +776,14 @@ function loadHomepage(){
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
+
+  $.get("/getTopArticleFormula", function(topArticleFormula){
+    //alert(topArticleFormula);
+    var formulaData = JSON.parse(topArticleFormula);
+    $("#nicerNumWeight").val(formulaData.nicerNumWeight);
+    $("#responseNumWeight").val(formulaData.responseNumWeight);
+    $("#clickNumWeight").val(formulaData.clickNumWeight);
+  });
 }
 
 function loadProInfo(){
@@ -864,6 +908,13 @@ function sortByUpdatedAt(){
   articleList=articleList.sort(function(a, b) {
     return new Date(b.updatedAt)-new Date(a.updatedAt);
    });
+  loadForumList(articleList);
+}
+
+function sortByElite(sortby){
+  articleList=articleList.sort(function(a, b) {
+      return (a.elite - b.elite);
+  });
   loadForumList(articleList);
 }
 

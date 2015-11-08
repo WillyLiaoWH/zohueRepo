@@ -27,7 +27,7 @@
     <nav class="navbar navbar-default" id="backendMenu">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -35,7 +35,7 @@
           </button>
           <a class="navbar-brand" href="/Home">ZOHUE</a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="myNavbar">
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
           <ul class="nav navbar-nav" id="functionList" href="#">
             <li onclick="loadUserList()" data-toggle="collapse" href="#userManage"><a>帳號管理</a></li>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="panel-body">
                   
-                  <!-- <button class="btn btn-default" onclick="delProInfo()">刪除</button> -->
+                
                   <div id="edit_Article">
                     <div class="col-md-3">
                       <label for="articleID">文章編號</label>
@@ -129,7 +129,7 @@
                     </div>
                     
                     <div class="col-md-3">
-                      <label for="newBoardCategory">看板類型</label>
+                      <label for="newBoardCategory">看板分類</label>
                       <select class="form-control" id="newBoardCategory">
                         <option value="1">病友照護</option>
                         <option value="2">生活機能</option>
@@ -145,15 +145,15 @@
                     </div>
 
                     <div class="col-md-3">
-                      <label for="newClassification">類型</label>
+                      <label for="newClassification">文章類型</label>
                       <select class="form-control" id="newClassification">
-                        <!-- <option selected='newboard'></option> -->
+                      
                         <option value="分享">分享</option>
                         <option value="病況與心情">病況與心情</option>
                         <option value="問題">問題</option>
-                        <option value="其他">其他</option>
+                        <option value="其它">其它</option>
                       </select>
-                      <!-- <input id="newClassification" class="form-control"> -->
+                      
                     </div>
                  
                     <div class="col-md-6">
@@ -163,12 +163,9 @@
                    
                     <div class="col-md-12">
                       <label for="newContent">內容</label>
-                      <div contentEditable="true" type="text" id="newContent" class="form-control"></div>
+                      <div contentEditable="false" type="text" id="newContent" class="form-control" readonly=""></div>
                     </div>
-<!--                     <div class="col-md-6">
-                      <label for="proInfoFrom_change">出處</label>
-                      <input type="text" id="proInfoFrom_change" class="form-control">
-                    </div> -->
+
                     <div class="col-md-offset-11">
                       <button class="btn btn-default" onclick="editArticle()">修改</button>
                     </div>
@@ -430,12 +427,12 @@
             <div id="homepageManage" class="collapse mainContent">
               <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading"><h2>首頁管理</h2></div>
+                <div class="panel-heading"><h2>首頁圖片管理</h2></div>
                 <div class="panel-body">
-                  <div class="row">
-                    <div class="col-md-2 text-center">
-                      <h3>首頁宣傳圖片</h3>
-                    </div> 
+                  <div class="row" style="margin:0px">
+                    <!-- <div class="col-md-1 text-center"> -->
+                      <!-- <h3>首頁宣傳圖片</h3> -->
+                    <!-- </div>  -->
                     <div class="col-md-8">
                       <form name="myForm" action="/imgupload_homepagePic" method="post" enctype="multipart/form-data">
                         
@@ -463,16 +460,16 @@
                 </div>
                 <div class="panel-body">
                   <div class="col-md-4">
-                    <label>推薦次數</label>
-                    <input type="text" class="form-control" id="nicerNumWeight" placeholder="推薦次數">
+                    <label>推薦次數權重</label>
+                    <input type="text" class="form-control" id="nicerNumWeight" placeholder="推薦次數權重">
                   </div>
                   <div class="col-md-4">
-                    <label for="responseNumWeight">回應次數</label>
-                    <input type="text" class="form-control" id="responseNumWeight" placeholder="回應次數">
+                    <label for="responseNumWeight">回應次數權重</label>
+                    <input type="text" class="form-control" id="responseNumWeight" placeholder="回應次數權重">
                   </div>
                   <div class="col-md-4">
-                    <label for="clickNumWeight">點閱次數</label>
-                    <input type="text" class="form-control" id="clickNumWeight" placeholder="點閱次數">
+                    <label for="clickNumWeight">點閱次數權重</label>
+                    <input type="text" class="form-control" id="clickNumWeight" placeholder="點閱次數權重">
                   </div>
 
                   <div class="col-md-12" style="margin-top:5px;">

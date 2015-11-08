@@ -51,7 +51,8 @@ $(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
     tab="all";clearTab();
-    setPage(1, keyword, currentOrder, currentDirection);
+    //setPage(1, keyword, currentOrder, currentDirection);
+    window.location.assign("/frontboard/search/"+keyword+"/1?tab=all&order=");
   });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
@@ -67,7 +68,6 @@ $(document).ready(function(){
     order=order!=null&&order.length>0?order:"createdAt";
     if(tab=="elite"){
       isNowElite = true;
-      tab="all";
     }
     setPage(page, keyword, order, "desc");
   } else {      
@@ -78,7 +78,6 @@ $(document).ready(function(){
     order=order!=null&&order.length>0?order:"createdAt";
     if(tab=="elite"){
       isNowElite = true;
-      tab="all";
     }
     setPage(page, "", order, "desc");
   }
@@ -129,7 +128,8 @@ function clearTab(){
   $("#share").removeClass("active");
   $("#problem").removeClass("active");
   $("#others").removeClass("active");
-  $("#elite").removeClass("active");
+  $("#elite").removeClass("activeOrange");
+  $("#elite").addClass("nonActiveOrange");
 }
 
 function setPage(page, keyword, orderby, direction) {
@@ -151,7 +151,9 @@ function setPage(page, keyword, orderby, direction) {
       $("#others").addClass("active");
       break;
     case "elite":
-      $("#elite").addClass("active");
+      $("#elite").removeClass("nonActiveOrange");
+      $("#elite").addClass("activeOrange");
+      tab="all";
       break;
   }
   // 獲得文章
@@ -293,7 +295,7 @@ function setSearchResult(articleList, page, orderby, direction){
     articleList = cleanArticleList(articleList);
     if(isNowElite){
       articleList = eliteArticleList(articleList);
-      clearTab();
+      //clearTab();
     }
     //排序文章
     if(orderby=="createdAt"){

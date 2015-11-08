@@ -44,6 +44,8 @@ module.exports.routes = {
   'POST /syncArticleToTimeline': 'ArticlesController.syncArticleToTimeline',
   'POST /changeArticle': 'ArticlesController.changeArticle',
   'POST /deleteArticle': 'ArticlesController.deleteArticle',
+  'POST /setEliteArticle': 'ArticlesController.setEliteArticle',
+  'POST /cancelEliteArticle': 'ArticlesController.cancelEliteArticle',
   'POST /leaveComment': 'ResponseController.leaveComment',
   'POST /updateResponseNum': 'ResponseController.updateResponseNum',
   'POST /updateClickNum': 'ArticlesController.updateClickNum',
@@ -110,6 +112,7 @@ module.exports.routes = {
   'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
+  'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
 
   'GET /recordLink/:target':'HomeController.recordLink',
   'GET /deletetProInfo/:id' : 'ProInfoController.deletetProInfo',

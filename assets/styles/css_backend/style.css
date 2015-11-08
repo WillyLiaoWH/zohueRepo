@@ -20,6 +20,7 @@ body{
 
 #newContent{
   min-height: 500px;
+  height: 40%;
 }
 
 .form-control{
