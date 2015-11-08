@@ -942,10 +942,11 @@ module.exports = {
                 console.log(articles);
                 if(articles.length==1) {
                     var metaTitle=articles[0].title+" | ZOHUE作夥台灣頭頸癌病友加油站";
+                    var metaDescription="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴";
                     if(articles[0].content.length>30) {
-                        var metaDescription=articles[0].content.substr(0, 30);
+                        metaDescription=articles[0].content.substr(0, 30);
                     } else {
-                        var metaDescription=articles[0].content;
+                        metaDescription=articles[0].content;
                     }
                     var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
                     return res.view("article/index", {
