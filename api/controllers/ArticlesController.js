@@ -941,7 +941,7 @@ module.exports = {
             } else {
                 console.log(articles);
                 if(articles.length==1) {
-                    var metaTitle=articles[0].title;
+                    var metaTitle=articles[0].title+" | ZOHUE作夥台灣頭頸癌病友加油站";
                     if(articles[0].content.length>30) {
                         var metaDescription=articles[0].content.substr(0, 30);
                     } else {
@@ -955,7 +955,7 @@ module.exports = {
                             '/js/js_public/alertify.js',
                             '/js/js_article/mainJS.js',
                             '/js/js_post/cropper.min.js',
-                            '/js/js_article/crop-avatar.js'
+                            // '/js/js_article/crop-avatar.js'
                           ],
                         stylesheets: [
                             '/styles/css_article/style.css',
