@@ -929,6 +929,46 @@ module.exports = {
                 }
             });
         }
+    },
+    setMeta: function(req, res) {
+        console.log("setMeta");
+        var id=req.param("id");
+        console.log(id);
+        Articles.find(id).exec(function(err, articles) {
+            if(err) {
+                console.log("錯誤訊息："+err);
+                res.send(500, "server error");
+            } else {
+                console.log(articles);
+                if(articles.length==1) {
+                    var metaTitle=articles[0].title;
+                    if(articles[0].content.length>30) {
+                        var metaDescription=articles[0].content.substr(0, 30);
+                    } else {
+                        var metaDescription=articles[0].content;
+                    }
+                    return res.view("article/index", {
+                        metaTitle: metaTitle,
+                        metaDescription: metaDescription,
+                        scripts: [
+                            '/js/js_public/modalBox.js-master/modalBox-min.js',
+                            '/js/js_public/alertify.js',
+                            '/js/js_article/mainJS.js',
+                            '/js/js_post/cropper.min.js',
+                            '/js/js_article/crop-avatar.js'
+                          ],
+                        stylesheets: [
+                            '/styles/css_article/style.css',
+                            '/styles/css_post/crop-avatar.css',
+                            '/styles/css_post/cropper.min.css',
+                            '/styles/importer.css',
+                            '/styles/css_public/themes/alertify.core.css',
+                            '/styles/css_public/themes/alertify.default.css'
+                          ],
+                    });
+                }   
+            }
+        });
     }
 };
 

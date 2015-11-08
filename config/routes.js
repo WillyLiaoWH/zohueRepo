@@ -300,27 +300,32 @@ module.exports.routes = {
       ]
     }
   },
-
-  '/article/:id': {
-    view: 'article/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_public/alertify.js',
-        '/js/js_article/mainJS.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_article/crop-avatar.js'
-      ],
-      stylesheets: [
-        '/styles/css_article/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css',
-        '/styles/css_public/themes/alertify.core.css',
-        '/styles/css_public/themes/alertify.default.css'
-      ]
-    }
+  'GET /article/:id': {
+    controller: 'ArticlesController',
+    action: 'setMeta',
+    skipAssets: true
   },
+  // '/article/:id': {
+    
+  //   view: 'article/index',
+  //   locals: {
+  //     scripts: [
+  //       '/js/js_public/modalBox.js-master/modalBox-min.js',
+  //       '/js/js_public/alertify.js',
+  //       '/js/js_article/mainJS.js',
+  //       '/js/js_post/cropper.min.js',
+  //       '/js/js_article/crop-avatar.js'
+  //     ],
+  //     stylesheets: [
+  //       '/styles/css_article/style.css',
+  //       '/styles/css_post/crop-avatar.css',
+  //       '/styles/css_post/cropper.min.css',
+  //       '/styles/importer.css',
+  //       '/styles/css_public/themes/alertify.core.css',
+  //       '/styles/css_public/themes/alertify.default.css'
+  //     ],
+  //   },
+  // },
   '/getPassword/*':{
     view: 'forget/getPassword',
     locals:{
