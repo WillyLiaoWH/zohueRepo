@@ -15,9 +15,14 @@
     <% } %>
     <meta property="og:site_name" content="ZOHUE作夥台灣頭頸癌病友加油站">
     <meta property="og:url" content="http://zohue.im.ntu.edu.tw/home">
+    <% if(typeof(metaUrl)!='undefined') {%>
+      <meta property="og:url" content="<%=metaUrl%>">
+    <% } else { %>
+      <meta property="og:url" content="http://zohue.im.ntu.edu.tw/home">
+    <% } %>
     <meta property="og:image" content="http://zohue.im.ntu.edu.tw/images/img_public/logoThumb.png">
     <% if(typeof(this.metaDescription)!='undefined') {%>
-      <meta property="og:title" content="<%=metaDescription%>">
+      <meta property="og:description" content="<%=metaDescription%>">
     <% } else { %>
       <meta property="og:description" content="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴 ">
     <% } %>

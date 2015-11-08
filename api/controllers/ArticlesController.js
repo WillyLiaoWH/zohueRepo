@@ -950,6 +950,7 @@ module.exports = {
                     return res.view("article/index", {
                         metaTitle: metaTitle,
                         metaDescription: metaDescription,
+                        metaUrl: "http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
                         scripts: [
                             '/js/js_public/modalBox.js-master/modalBox-min.js',
                             '/js/js_public/alertify.js',
