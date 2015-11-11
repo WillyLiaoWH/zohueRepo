@@ -535,14 +535,12 @@ module.exports = {
                 res.send(500,{err: "DB Error" });
             } else {
                 var niceList=article[0].nicer;
-                console.log(niceList);
                 var newNiceList=[];
                 for(i=0; i<niceList.length; i++) {
                     if(niceList[i]&&niceList[i].id!=req.session.user.id) {
                         newNiceList.push(niceList[i]);
                     }
                 }
-                console.log(newNiceList);
                 Articles.update({id: articleId}, {nicer: newNiceList}).exec(function(error, updated) {
                     if(error) {
                         res.send(500,{err: "DB Error" });
