@@ -341,18 +341,6 @@ function leaveComment(){
   }
 }
 
-function updateResponseNum(){
-  var url = document.URL;
-  var regex = /.*article\/+(.*)/;
-  var id = url.replace(regex,"$1");
-  var responseNum = parseInt(response.length)+1;
-  $.post( "/updateResponseNum", { id: id, responseNum: responseNum}, function(res){
-    window.location.reload(true);
-  }).error(function(res){
-    showDialog("錯誤訊息",res.responseJSON.err);
-  });
-}
-
 function updateClickNum(){
   var url = document.URL;
   var regex = /.*article\/+(.*)/;

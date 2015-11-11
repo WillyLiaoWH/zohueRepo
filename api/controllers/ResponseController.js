@@ -48,15 +48,5 @@ module.exports = {
             }
         });
 	},
-	updateResponseNum: function(req, res){
-		var articleId = req.param("id");
-        var responseNum = req.param("responseNum");
-        Articles.update({id: articleId}, {responseNum: responseNum}).exec(function(error, updated) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } 
-        });
-	},
 };
 

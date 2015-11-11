@@ -47,7 +47,6 @@ module.exports.routes = {
   'POST /setEliteArticle': 'ArticlesController.setEliteArticle',
   'POST /cancelEliteArticle': 'ArticlesController.cancelEliteArticle',
   'POST /leaveComment': 'ResponseController.leaveComment',
-  'POST /updateResponseNum': 'ResponseController.updateResponseNum',
   'POST /updateClickNum': 'ArticlesController.updateClickNum',
   'POST /clickNice': 'ArticlesController.clickNice',
   'POST /cancelNice': 'ArticlesController.cancelNice',
