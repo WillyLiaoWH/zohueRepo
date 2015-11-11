@@ -39,7 +39,7 @@ module.exports = {
             boardCate=boardCateList;
         });
 
-        Articles.find({classification: {'contains': classification}, board: board, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
+        Articles.find({classification: {'contains': classification}, board: board, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -85,7 +85,7 @@ module.exports = {
             boardCate=boardCateList;
         });
 
-        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').exec(function(err, articlesList) {
+        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {

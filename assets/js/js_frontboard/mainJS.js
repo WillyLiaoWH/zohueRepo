@@ -342,9 +342,9 @@ function setSearchResult(articleList, page, orderby, direction){
       }
     }else if (orderby=="responseNum"){
       if(direction=="desc"){
-        articleList.sort(function(a, b) {return b.responseNum-a.responseNum;});
+        articleList.sort(function(a, b) {return b.response.length-a.response.length;});
       }else if(direction=="asc"){
-        articleList.sort(function(a, b) {return a.responseNum-b.responseNum;});
+        articleList.sort(function(a, b) {return a.response.length-b.response.length;});
       }
     }else if (orderby=="nicer"){
       if(direction=="desc"){
@@ -396,7 +396,7 @@ function setSearchResult(articleList, page, orderby, direction){
     if(page!=pageNum) {
       for(i=0; i<articleNum; i++) { //alert(i + "~" + articleList[i].board.category + "~" + categoryList[0]);
         clickNum=articleList[i+articleNum*(page-1)].clickNum;
-        responseNum=articleList[i+articleNum*(page-1)].responseNum;
+        responseNum=articleList[i+articleNum*(page-1)].response.length;
         niceNum=articleList[i+articleNum*(page-1)].nicer.length;
 
         updateTime=new Date(articleList[i+articleNum*(page-1)].lastResponseTime).toLocaleString();
@@ -490,7 +490,7 @@ function setSearchResult(articleList, page, orderby, direction){
     else {
       for(i=0; i<lastPageArticlesNum; i++) {
         clickNum=articleList[i+articleNum*(page-1)].clickNum;
-        responseNum=articleList[i+articleNum*(page-1)].responseNum;
+        responseNum=articleList[i+articleNum*(page-1)].response.length;
         niceNum=articleList[i+articleNum*(page-1)].nicer.length;
 
         updateTime=new Date(articleList[i+articleNum*(page-1)].lastResponseTime).toLocaleString();
