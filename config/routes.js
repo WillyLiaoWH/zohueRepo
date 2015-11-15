@@ -280,28 +280,33 @@ module.exports.routes = {
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
 
-  '/post/*': {
-    view: 'post/index',
-    locals: {
-      scripts: [
-        '/js/js_post/mainJS.js',
-        '/js/js_post/bootstrap.min.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_post/crop-avatar.js',
-        '/js/js_public/alertify.js'
-      ],
-      stylesheets: [
-        '/styles/css_post/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/bootstrap.min.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css'
-      ]
-    }
-  },
+  // '/post/*': {
+  //   view: 'post/index',
+  //   locals: {
+  //     scripts: [
+  //       '/js/js_post/mainJS.js',
+  //       '/js/js_post/bootstrap.min.js',
+  //       '/js/js_post/cropper.min.js',
+  //       '/js/js_post/crop-avatar.js',
+  //       '/js/js_public/alertify.js'
+  //     ],
+  //     stylesheets: [
+  //       '/styles/css_post/style.css',
+  //       '/styles/css_post/crop-avatar.css',
+  //       '/styles/css_post/bootstrap.min.css',
+  //       '/styles/css_post/cropper.min.css',
+  //       '/styles/importer.css'
+  //     ]
+  //   }
+  // },
   'GET /article/:id': {
     controller: 'ArticlesController',
     action: 'setMeta',
+    skipAssets: true
+  },
+  'GET /post/:board': {
+    controller: 'SessionController',
+    action: 'checkPostAuth',
     skipAssets: true
   },
   // '/article/:id': {
