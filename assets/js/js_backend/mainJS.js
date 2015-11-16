@@ -116,21 +116,33 @@ $(document).ready(function(){
     }
   });
 
-  // 論壇管理排序文章
-  $(document).on("click",".sortByChar",function(e){
-    sortByChar($(this).attr("value"));
-  });
-  $(document).on("click",".sortByLength",function(e){
-    sortByLength($(this).attr("value"));
-  });
-  $(document).on("click",".sortByCreatedAt",function(e){
-    sortByCreatedAt();
-  });
-  $(document).on("click",".sortByUpdatedAt",function(e){
-    sortByUpdatedAt();
-  });
-   $(document).on("click",".sortByElite",function(e){
-    sortByElite();
+  // 論壇文章排序
+  $(document).on("click",".sortable",function(e){
+    sortby = $(this).attr("value");
+    if(sortby=="title" || sortby=="classification" || sortby=="elite"){ // 依照筆劃排序
+      articleList=articleList.sort(function(a, b) {return a[sortby].localeCompare(b[sortby])});
+    }else if(sortby=="alias"){
+      articleList = articleList.sort(function(a, b) {
+        if(a.author.alias < b.author.alias) return -1;
+        if(a.author.alias > b.author.alias) return 1;
+        return 0;
+      });
+    }else if(sortby=="type"){
+      articleList = articleList.sort(function(a, b) {
+        if(a.author.type < b.author.type) return -1;
+        if(a.author.type > b.author.type) return 1;
+        return 0;
+      });
+    }else if(sortby=="createdAt"){
+      articleList=articleList.sort(function(a, b) {return new Date(a.createdAt)-new Date(b.createdAt);});
+    }else if(sortby=="updatedAt"){
+      articleList=articleList.sort(function(a, b) {return new Date(a.lastResponseTime)-new Date(b.lastResponseTime);});
+    }else if(sortby=="nicer" || sortby=="report"){ // 依照長度排序
+      articleList=articleList.sort(function(a, b) {return a[sortby].length-b[sortby].length;});
+    }else if(sortby=="clickNum" || sortby=="responseNum"){ // 依照數字大小排序
+      articleList=articleList.sort(function(a, b) {return a[sortby]-b[sortby];});
+    }
+    loadForumList(articleList);
   });
 
   // 發送電子報的上傳檔案功能
@@ -535,9 +547,12 @@ function getart(callback, action){
 
 function loadForumList(articleList){
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th style='width:150px;'>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
-    articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' >檢舉</th>";
-    articleTable+="<th class='sortable sortByElite' style='width:90px;'>是否為精華文章</th><th>編輯</th><th>刪除</th></tr>";
+    articleTable="<tr class='tableHead'><th style='width:150px;'>看板位置</th><th class='sortable' value='classification'>類別</th>";
+    articleTable+="<th class='sortable' value='title' style='width:350px;'>文章標題</th><th class='sortable' value='alias'>發表人</th>";
+    articleTable+="<th class='sortable' value='type'>身分</th><th class='sortable' value='createdAt'>發表時間</th><th class='sortable' value='updatedAt'>最新回應時間</th>";
+    articleTable+="<th><label class='sortable' value='clickNum'>點閱</label>／<label class='sortable' value='responseNum'>回覆</label></th>";
+    articleTable+="<th class='sortable' value='nicer'>推薦</th><th class='sortable' value='report'>檢舉</th>";
+    articleTable+="<th class='sortable' value='elite' style='width:90px;'>是否為精華文章</th><th>編輯</th><th>刪除</th></tr>";
 
       for(i=articleList.length-1; i>=0; i--) {
         articleID=articleList[i].id;
@@ -884,30 +899,10 @@ function editArticle(){
           }
 }
 
-function sortByChar(sortby){
-  articleList=articleList.sort(function(a, b) {
-      return a[sortby].localeCompare(b[sortby])
-  });
-  loadForumList(articleList);
-}
 function sortByLength(sortby){
   articleList=articleList.sort(function(a, b) {
       return b[sortby].length-a[sortby].length;
   });
-  loadForumList(articleList);
-}
-
-function sortByCreatedAt(){
-  articleList=articleList.sort(function(a, b) {
-    return new Date(b.createdAt)-new Date(a.createdAt);
-  });
-  loadForumList(articleList);
-}
-
-function sortByUpdatedAt(){
-  articleList=articleList.sort(function(a, b) {
-    return new Date(b.updatedAt)-new Date(a.updatedAt);
-   });
   loadForumList(articleList);
 }
 
