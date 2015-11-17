@@ -365,7 +365,7 @@ module.exports = {
 	},
 
     logout: function (req, res) {
-        Record.create({user:req.session.user,action:"Logout"}).exec(function(err,ret){
+        Record.create({user:req.session.user,ip:req.ip,action:"Logout"}).exec(function(err,ret){
             console.log("使用者登出")
             req.session.destroy()
             res.redirect('/home')

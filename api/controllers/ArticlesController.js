@@ -356,7 +356,7 @@ module.exports = {
                                     }  
                                 });  
                             }
-                            Record.create({user:req.session.user,ip:req.ip,action:"POST article "+article2.id}).exec(function(err,record){
+                            Record.create({user:req.session.user,ip:req.ip,action:"POST article "+article2[0].id}).exec(function(err,record){
                                 console.log("發表文章")
                                 res.send(article2);
                             })

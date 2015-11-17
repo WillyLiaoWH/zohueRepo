@@ -661,7 +661,7 @@ function loadRecord(){
     var cla;
     for (i=records.length-1;i>=0;i--){
       var action = records[i].action
-      if (action == "Login"){
+      if (action.match(/^Login/)){
         cla = "Log"
         act = "登入"
       }
@@ -692,7 +692,11 @@ function loadRecord(){
       else if (action.match(/^LINK/)){
         cla = "Link"
         var id = action.substring(5)
-        atc = "點擊廣告 "+id;
+        act = "友站連結 "+id;
+      }
+      else{
+        cla = "aaa"
+        act = "AAA"
       }
       time=new Date(records[i].createdAt).toLocaleString();
       var account
@@ -702,7 +706,7 @@ function loadRecord(){
       else{
         account = records[i].user.account
       }
-      recordTable+="<tr class='"+cla+"'><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+act+"</td></tr>"
+      recordTable+="<tr class='"+cla+"'><td>"+account+"</td><td>"+records[i].ip +"</td><td>"+time+"</td><td>"+records[i].action+"</td></tr>"
     }
     $("#record_table").html(recordTable)
   })

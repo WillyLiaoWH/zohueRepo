@@ -205,7 +205,7 @@ module.exports = {
 	recordLink: function(req,res){
 		var target = req.param("target");
 		Record.create({user:req.session.user,ip:req.ip,action:"LINK "+target}).exec(function(err,record){
-            console.log("點擊廣告")
+            console.log("友站連結")
             res.send("ok");
         })
 	}

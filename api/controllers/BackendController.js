@@ -47,8 +47,12 @@ module.exports = {
   	},
     
     adminLogout: function (req, res) {
-        req.session.destroy();
-        res.send("success");
+        Record.create({user:req.session.user,ip:req.ip,action:"Logout"}).exec(function(err,record){
+            console.log("使用者登出")
+            req.session.destroy();
+            res.send("success");
+        })
+        
     },
 
     checkAdmin: function(req, res) {
