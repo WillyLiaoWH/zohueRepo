@@ -543,7 +543,7 @@ function getart(callback, action){
       break;
     case 2: // 根據board撈文章。
       $.get("/getArticlesByBoards", function(res){
-        articleList=res.articlesList;
+        articleList=res.articlesList; $("#boardCategory").val('allCategory');
         callback(articleList);
       }).error(function(res){
         showDialog("錯誤訊息",res.responseJSON.err);
@@ -559,7 +559,7 @@ function loadForumList(articleList){
     articleTable+="<th class='sortable' value='type'>身分</th><th class='sortable' value='createdAt'>發表時間</th><th class='sortable' value='updatedAt'>最新回應時間</th>";
     articleTable+="<th><label class='sortable' value='clickNum'>點閱</label>／<label class='sortable' value='responseNum'>回覆</label></th>";
     articleTable+="<th class='sortable' value='nicer'>推薦</th><th class='sortable' value='report'>檢舉</th>";
-    articleTable+="<th class='sortable' value='elite' style='width:90px;'>是否為精華文章</th><th>編輯</th><th>刪除</th></tr>";
+    articleTable+="<th class='sortable' value='elite' style='width:90px;'>是精華文章</th><th>編輯</th><th>刪除</th></tr>";
 
       for(i=articleList.length-1; i>=0; i--) {
         articleID=articleList[i].id;
@@ -622,9 +622,9 @@ function loadForumList(articleList){
           }
 
           if(isElite=="1"){
-            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox' checked='checked'> 精華文章</input></td>";
+            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox' checked='checked'> </input></td>";
           }else{
-            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox'> 精華文章</input></td>";
+            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox'> </input></td>";
           }
 
           articleTable+="<td><span class='glyphicon glyphicon-edit editArticle' aria-hidden='true' title='編輯文章'></span></td>";
