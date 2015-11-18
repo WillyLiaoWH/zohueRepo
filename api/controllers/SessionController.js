@@ -31,7 +31,6 @@ module.exports = {
 				    	return res.view("post/index", {
 			                scripts: [
 						        '/js/js_post/mainJS.js',
-						        '/js/js_post/bootstrap.min.js',
 						        '/js/js_post/cropper.min.js',
 						        '/js/js_post/crop-avatar.js',
 						        '/js/js_public/alertify.js'
@@ -39,7 +38,6 @@ module.exports = {
 					      	stylesheets: [
 						        '/styles/css_post/style.css',
 						        '/styles/css_post/crop-avatar.css',
-						        '/styles/css_post/bootstrap.min.css',
 						        '/styles/css_post/cropper.min.css',
 						        '/styles/importer.css'
 					      	]
