@@ -115,7 +115,7 @@ body{
   color:#CE0000;
 }
 
-.delArticle:hover, .delUser:hover{
+.delArticle:hover, .delUser:hover, .editArticle:hover{
   cursor:pointer;
   color:#467500;
 }
