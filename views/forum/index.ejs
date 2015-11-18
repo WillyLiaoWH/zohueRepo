@@ -1,15 +1,5 @@
-<!-- <!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Join Us | ZOHUE</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-    <link rel="stylesheet" href="/styles/importer.css">
-	</head>
-	<body id="body"> -->
 <script>
-$( document ).ready(function() {
+  $( document ).ready(function() {
     $.get("/checkAuth", function(auth){
         if(auth.isAdmin==true){
           $("#clubAnnounce").show();
@@ -20,8 +10,38 @@ $( document ).ready(function() {
     if($( window ).width() < 768){
         $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
     }
-    });
+  });
 </script>
+
+
+
+<style>
+  .nav-header{
+    padding:3px 15px;
+    font-weight: bold;
+    color:#1D3521;
+    font-size:30px;
+  }
+
+  .nav-list li{
+    line-height: 20px;
+  }
+
+  .nav-list a{
+    color:#1D3521;
+  }
+
+  .nav-list li a:hover {
+    color: white; 
+    background-color: #1D3521;
+  }
+  #sideBanner{
+    display: none !important;
+  }
+</style>
+
+
+
     <div id="forumDiv" class="container-fluid">
       <h1 style="color:#D26900;">作夥病友論壇 </h1>
       <h3 style="color:#816C5B;">請選擇看板發表文章！</h3><br>
@@ -66,31 +86,3 @@ $( document ).ready(function() {
       </ul>
       </div>
     </div>
-
-    <style>
-      .nav-header{
-        padding:3px 15px;
-        font-weight: bold;
-        color:#1D3521;
-        font-size:30px;
-      }
-
-      .nav-list li{
-        line-height: 20px;
-      }
-
-      .nav-list a{
-        color:#1D3521;
-      }
-
-      .nav-list li a:hover {
-        color: white; 
-        background-color: #1D3521;
-      }
-      #sideBanner{
-        display: none !important;
-      }
-    </style>
-
-<!--   </body>
-</html> -->
