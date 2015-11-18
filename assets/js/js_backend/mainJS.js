@@ -352,7 +352,6 @@ $(document).ready(function(){
     }
 
   });
-
     
   // "設為或不設為"精華文章
   $(document).on("click",".eliteArcticle",function(e){
@@ -361,11 +360,13 @@ $(document).ready(function(){
     if(!eliteTF){
       $.post( "/cancelEliteArticle", { id: articleID}, function(res){
          showDialog("一般訊息","已標記為「非精華文章」！",function(){
+            updateEliteFront(articleID,"0");
          });
       });
     }else{
       $.post( "/setEliteArticle", { id: articleID}, function(res){
          showDialog("一般訊息","已成功設為「精華文章」！",function(){
+            updateEliteFront(articleID,"1");
          });
       });
     }
@@ -422,8 +423,14 @@ $(document).ready(function(){
 
 });
 
-
-
+function updateEliteFront(id, value) {
+   for (var i in articleList) {
+     if (articleList[i].id == id) {
+        articleList[i].elite = value;
+        break; //Stop this loop, we found it!
+     }
+   }
+}
 
 function checkPage(){
   var tabName = getURLParameter("tab");
