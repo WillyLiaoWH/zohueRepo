@@ -174,14 +174,12 @@ module.exports.routes = {
     locals: {
       scripts: [
         '/js/js_editArticle/mainJS.js',
-        '/js/js_post/bootstrap.min.js',
         '/js/js_post/cropper.min.js',
         '/js/js_editArticle/crop-avatar.js'
       ],
       stylesheets: [
         '/styles/css_editArticle/style.css',
         '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/bootstrap.min.css',
         '/styles/css_post/cropper.min.css',
         '/styles/importer.css'
       ]
@@ -192,14 +190,13 @@ module.exports.routes = {
     view: 'signup/index',
     locals: {
       scripts: [
-        'js/js_public/bootstrap.min.js',
-        'js/js_signup/cropper.min.js',
+        'js/js_post/cropper.min.js',
         'js/js_signup/crop-avatar.js',
         'js/js_signup/joinus.js'
       ],
       stylesheets: [
-        'styles/css_signup/crop-avatar.css',
-        'styles/css_signup/cropper.min.css',
+        'styles/css_post/crop-avatar.css',
+        'styles/css_post/cropper.min.css',
         'styles/css_signup/style_signup.css'
       ]
     }
@@ -239,14 +236,13 @@ module.exports.routes = {
     view: 'change/index',
     locals: {
       scripts: [
-        'js/js_public/bootstrap.min.js',
-        'js/js_change/cropper.min.js',
+        'js/js_post/cropper.min.js',
         'js/js_change/crop-avatar.js',
         'js/js_change/joinus.js'
       ],
       stylesheets: [
-        'styles/css_change/crop-avatar.css',
-        'styles/css_change/cropper.min.css',
+        'styles/css_post/crop-avatar.css',
+        'styles/css_post/cropper.min.css',
         'styles/css_change/style_signup.css'
       ]
     }
@@ -267,9 +263,8 @@ module.exports.routes = {
     view: 'proInfo/index',
     locals: {
       scripts: [
-      '/js/js_public/modalBox.js-master/modalBox-min.js',
+        '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_ProInfo/mainJS.js',
-        '/js/js_ProInfo/bootstrap.min.js'
       ],
       stylesheets: [
         '/styles/css_ProInfo/style.css',
@@ -280,25 +275,6 @@ module.exports.routes = {
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
 
-  // '/post/*': {
-  //   view: 'post/index',
-  //   locals: {
-  //     scripts: [
-  //       '/js/js_post/mainJS.js',
-  //       '/js/js_post/bootstrap.min.js',
-  //       '/js/js_post/cropper.min.js',
-  //       '/js/js_post/crop-avatar.js',
-  //       '/js/js_public/alertify.js'
-  //     ],
-  //     stylesheets: [
-  //       '/styles/css_post/style.css',
-  //       '/styles/css_post/crop-avatar.css',
-  //       '/styles/css_post/bootstrap.min.css',
-  //       '/styles/css_post/cropper.min.css',
-  //       '/styles/importer.css'
-  //     ]
-  //   }
-  // },
   'GET /article/:id': {
     controller: 'ArticlesController',
     action: 'setMeta',
@@ -309,27 +285,6 @@ module.exports.routes = {
     action: 'checkPostAuth',
     skipAssets: true
   },
-  // '/article/:id': {
-    
-  //   view: 'article/index',
-  //   locals: {
-  //     scripts: [
-  //       '/js/js_public/modalBox.js-master/modalBox-min.js',
-  //       '/js/js_public/alertify.js',
-  //       '/js/js_article/mainJS.js',
-  //       '/js/js_post/cropper.min.js',
-  //       '/js/js_article/crop-avatar.js'
-  //     ],
-  //     stylesheets: [
-  //       '/styles/css_article/style.css',
-  //       '/styles/css_post/crop-avatar.css',
-  //       '/styles/css_post/cropper.min.css',
-  //       '/styles/importer.css',
-  //       '/styles/css_public/themes/alertify.core.css',
-  //       '/styles/css_public/themes/alertify.default.css'
-  //     ],
-  //   },
-  // },
   '/getPassword/*':{
     view: 'forget/getPassword',
     locals:{
@@ -431,22 +386,6 @@ module.exports.routes = {
       ]
     }
   },
-
-  // '/forum': {
-  //   view: 'forum/index',
-  //   locals: {
-      
-  //     stylesheets: [
-  //       '/styles/importer.css'
-  //     ]
-  //   }
-  // },
-
-  // '/backend': {
-  //   //view: 'backend/index',
-  //   controller: 'backend'
-  // },
-
 
   '/': '/home'
 

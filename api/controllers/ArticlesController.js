@@ -957,7 +957,7 @@ module.exports = {
                             '/js/js_public/alertify.js',
                             '/js/js_article/mainJS.js',
                             '/js/js_post/cropper.min.js',
-                            // '/js/js_article/crop-avatar.js'
+                            '/js/js_article/crop-avatar.js'
                           ],
                         stylesheets: [
                             '/styles/css_article/style.css',
