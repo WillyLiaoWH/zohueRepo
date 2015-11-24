@@ -638,10 +638,13 @@ function loadRecord(){
         var id = action.substring(13)
         act = "<a href='/article/"+id+"'>"+"發表文章"+"</a>"
       }
-      else if (action.match(/^LINK/)){
-        cla = "Link"
-        var id = action.substring(5)
-        atc = "點擊廣告 "+id;
+      // else if (action.match(/^LINK/)){
+      //   cla = "Link"
+      //   var id = action.substring(5)
+      //   atc = "點擊廣告 "+id;
+      // }
+      else{
+        act = action
       }
       time=new Date(records[i].createdAt).toLocaleString();
       var account
