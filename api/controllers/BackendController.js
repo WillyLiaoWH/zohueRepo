@@ -47,8 +47,12 @@ module.exports = {
   	},
     
     adminLogout: function (req, res) {
-        req.session.destroy();
-        res.send("success");
+        Record.create({user:req.session.user,ip:req.ip,action:"Logout"}).exec(function(err,record){
+            console.log("使用者登出")
+            req.session.destroy();
+            res.send("success");
+        })
+        
     },
 
     checkAdmin: function(req, res) {
@@ -94,7 +98,25 @@ module.exports = {
     getRecord: function(req,res){
         var isAdmin = req.session.user.isAdmin;
         if (isAdmin){
-            Record.find({}).populate('user').exec(function(err,records){
+            var num = req.param("num")
+            /*
+              num : 0 all
+                    1 3days
+                    2 1month
+            */
+            if (num == 0 ){
+                var day_filter = new Date('1/1/2014')
+            }
+            else if (num==1){
+                var day_filter = new Date() 
+                day_filter = day_filter.setDate(day_filter.getDate()-3)
+
+            }
+            else if (num == 2){
+                var day_filter = new Date() 
+                day_filter = day_filter.setMonth(day_filter.getMonth()-1)
+            }
+            Record.find({createdAt :{">": new Date(day_filter)} }).populate('user').exec(function(err,records){
                 if(err){
                     res.send(500,{err: "DB Error"});
                 }

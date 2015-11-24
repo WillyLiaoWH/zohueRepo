@@ -547,7 +547,8 @@ function notification() {
   });
 }
 function checkNot() {
-  $.get('/countNot',function(res){
+  /*$.get('/countNot',function(res){*/
+  io.socket.get('/countNot',function(res){
     if(res.err) {
       showDialog("錯誤訊息",res.err);
     } else {
@@ -566,7 +567,8 @@ function checkNot() {
 }
 
 function checkForum() {
-  $.get('/countForum',function(res){
+  /*$.get('/countForum',function(res){*/
+  io.socket.get('/countForum',function(res){
     if(res.err) {
       showDialog("錯誤訊息",res.err);
     } else {

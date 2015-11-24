@@ -4,8 +4,8 @@
 
 .post{
 	float:right;
-	//width: 125px;
-	//margin-right:13px;
+	/*width: 125px;
+	/margin-right:13px;*/
 	margin-top:8px;
 	background-color: rgba(232, 81, 0, 0.7);
 	color:#533828;
@@ -30,12 +30,12 @@
 
 #searchWord{
 	width:250px;
-	//width:100%;
+	/*width:100%;*/
 	margin: 15px -5px 0px 0px;
 }
 
 #search{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
@@ -48,7 +48,7 @@
 }
 
 #cancleSearch{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
@@ -386,6 +386,23 @@ div.tab_container .tab_content h2 {
 .nav-pills li.active a:hover{
 	/*background-color: #1D3521;*/
 	background-color: #324232;
+}
+
+.nav-pills li.activeOrange a,
+.nav-pills li.activeOrange a:hover{
+	/*background-color: #1D3521;*/
+	background-color: rgba(232, 81, 0, 0.7);
+	color: #fff;
+}
+
+.nav-pills li.nonActiveOrange a {
+	color: rgba(232, 81, 0, 0.7);
+	font-weight: bolder;
+}
+.nav-pills li.nonActiveOrange a:hover{
+	/*background-color: #1D3521;*/
+	background-color: rgba(232, 81, 0, 0.3);
+	font-weight: bolder;
 }
 
 .nav-pills li{

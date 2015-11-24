@@ -44,8 +44,9 @@ module.exports.routes = {
   'POST /syncArticleToTimeline': 'ArticlesController.syncArticleToTimeline',
   'POST /changeArticle': 'ArticlesController.changeArticle',
   'POST /deleteArticle': 'ArticlesController.deleteArticle',
+  'POST /setEliteArticle': 'ArticlesController.setEliteArticle',
+  'POST /cancelEliteArticle': 'ArticlesController.cancelEliteArticle',
   'POST /leaveComment': 'ResponseController.leaveComment',
-  'POST /updateResponseNum': 'ResponseController.updateResponseNum',
   'POST /updateClickNum': 'ArticlesController.updateClickNum',
   'POST /clickNice': 'ArticlesController.clickNice',
   'POST /cancelNice': 'ArticlesController.cancelNice',
@@ -110,6 +111,7 @@ module.exports.routes = {
   'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
+  'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
 
   'GET /recordLink/:target':'HomeController.recordLink',
   'GET /deletetProInfo/:id' : 'ProInfoController.deletetProInfo',
@@ -117,7 +119,7 @@ module.exports.routes = {
   'GET /getAnnouncement': 'Home.getAnnouncement',
   'GET /getTopArticles': 'Home.getTopArticles',
   'GET /getHomepagePic': 'HomeController.getHomepagePic',
-  'GET /getRecord':'Backend.getRecord',
+  'GET /getRecord/:num':'Backend.getRecord',
   'GET /friendStatus/:target_id' : 'User.friendStatus',
   'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
@@ -172,14 +174,12 @@ module.exports.routes = {
     locals: {
       scripts: [
         '/js/js_editArticle/mainJS.js',
-        '/js/js_post/bootstrap.min.js',
         '/js/js_post/cropper.min.js',
         '/js/js_editArticle/crop-avatar.js'
       ],
       stylesheets: [
         '/styles/css_editArticle/style.css',
         '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/bootstrap.min.css',
         '/styles/css_post/cropper.min.css',
         '/styles/importer.css'
       ]
@@ -190,14 +190,13 @@ module.exports.routes = {
     view: 'signup/index',
     locals: {
       scripts: [
-        'js/js_public/bootstrap.min.js',
-        'js/js_signup/cropper.min.js',
+        'js/js_post/cropper.min.js',
         'js/js_signup/crop-avatar.js',
         'js/js_signup/joinus.js'
       ],
       stylesheets: [
-        'styles/css_signup/crop-avatar.css',
-        'styles/css_signup/cropper.min.css',
+        'styles/css_post/crop-avatar.css',
+        'styles/css_post/cropper.min.css',
         'styles/css_signup/style_signup.css'
       ]
     }
@@ -237,14 +236,13 @@ module.exports.routes = {
     view: 'change/index',
     locals: {
       scripts: [
-        'js/js_public/bootstrap.min.js',
-        'js/js_change/cropper.min.js',
+        'js/js_post/cropper.min.js',
         'js/js_change/crop-avatar.js',
         'js/js_change/joinus.js'
       ],
       stylesheets: [
-        'styles/css_change/crop-avatar.css',
-        'styles/css_change/cropper.min.css',
+        'styles/css_post/crop-avatar.css',
+        'styles/css_post/cropper.min.css',
         'styles/css_change/style_signup.css'
       ]
     }
@@ -265,9 +263,8 @@ module.exports.routes = {
     view: 'proInfo/index',
     locals: {
       scripts: [
-      '/js/js_public/modalBox.js-master/modalBox-min.js',
+        '/js/js_public/modalBox.js-master/modalBox-min.js',
         '/js/js_ProInfo/mainJS.js',
-        '/js/js_ProInfo/bootstrap.min.js'
       ],
       stylesheets: [
         '/styles/css_ProInfo/style.css',
@@ -278,45 +275,15 @@ module.exports.routes = {
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
 
-  '/post/*': {
-    view: 'post/index',
-    locals: {
-      scripts: [
-        '/js/js_post/mainJS.js',
-        '/js/js_post/bootstrap.min.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_post/crop-avatar.js',
-        '/js/js_public/alertify.js'
-      ],
-      stylesheets: [
-        '/styles/css_post/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/bootstrap.min.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css'
-      ]
-    }
+  'GET /article/:id': {
+    controller: 'ArticlesController',
+    action: 'setMeta',
+    skipAssets: true
   },
-
-  '/article/:id': {
-    view: 'article/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_public/alertify.js',
-        '/js/js_article/mainJS.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_article/crop-avatar.js'
-      ],
-      stylesheets: [
-        '/styles/css_article/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css',
-        '/styles/css_public/themes/alertify.core.css',
-        '/styles/css_public/themes/alertify.default.css'
-      ]
-    }
+  'GET /post/:board': {
+    controller: 'SessionController',
+    action: 'checkPostAuth',
+    skipAssets: true
   },
   '/getPassword/*':{
     view: 'forget/getPassword',
@@ -419,22 +386,6 @@ module.exports.routes = {
       ]
     }
   },
-
-  // '/forum': {
-  //   view: 'forum/index',
-  //   locals: {
-      
-  //     stylesheets: [
-  //       '/styles/importer.css'
-  //     ]
-  //   }
-  // },
-
-  // '/backend': {
-  //   //view: 'backend/index',
-  //   controller: 'backend'
-  // },
-
 
   '/': '/home'
 

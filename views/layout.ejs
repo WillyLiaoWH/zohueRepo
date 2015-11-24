@@ -8,10 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="ZOHUE,作夥,頭頸癌病友加油站,頭頸,癌病友,加油站">
     <meta name="description" content="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴 ">
-    <meta property="og:title" content="ZOHUE作夥台灣頭頸癌病友加油站"/>
-    <meta property="og:site_name" content="ZOHUE作夥台灣頭頸癌病友加油站"/>
-    <meta property="og:url" content="http://zohue.im.ntu.edu.tw/home">
+    <% if(typeof(metaTitle)!='undefined') {%>
+      <meta property="og:title" content="<%=metaTitle%>">
+    <% } else { %>
+      <meta property="og:title" content="ZOHUE作夥台灣頭頸癌病友加油站">
+    <% } %>
+    <meta property="og:site_name" content="ZOHUE作夥台灣頭頸癌病友加油站">
+    <% if(typeof(metaUrl)!='undefined') {%>
+      <meta property="og:url" content="<%=metaUrl%>">
+    <% } else { %>
+      <meta property="og:url" content="http://zohue.im.ntu.edu.tw/home">
+    <% } %>
     <meta property="og:image" content="http://zohue.im.ntu.edu.tw/images/img_public/logoThumb.png">
+    <meta property="og:description" content="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴 ">
+    
     <!--  
         Stylesheets and Preprocessors
         ==============================

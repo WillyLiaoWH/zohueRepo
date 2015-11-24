@@ -3,7 +3,7 @@ var board="";
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
   
-  checkAuth2();
+  //checkAuth2();
 
   $("#postContent") // 確保 contentEditable 的跳行不會包在 div 內
     // make sure br is always the lastChild of contenteditable

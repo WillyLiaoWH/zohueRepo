@@ -60,7 +60,8 @@ module.exports = {
    * to 80 (http://) or 443 (https://) if you have an SSL certificate        *
    ***************************************************************************/
 
-   port : 80,
+  // port : 80,
+  port:80,
   //   ssl:  {
   //     key: fs.readFileSync('ssl/key.pem'),
   //     cert: fs.readFileSync('ssl/cert.pem')

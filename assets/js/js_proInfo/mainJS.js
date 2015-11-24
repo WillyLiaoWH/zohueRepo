@@ -33,9 +33,27 @@ $(document).ready(function(){
   // });
 });
 
+function datesort(art1,art2){
+  date1 = art1.date
+  date2 = art2.date
+  year1 = parseInt(date1.split("年")[0])
+  month1 = parseInt(date1.split("年")[1].split("月")[0])
+  year2 = parseInt(date2.split("年")[0])
+  month2 = parseInt(date2.split("年")[1].split("月")[0])
+  if (year1 == year2){
+    return month2-month1
+  }
+  else{
+    return year2-year1
+  }
+
+   
+}
+
 function setPage(page) {
   $.get("/setProInfoPage", function(articleList){
     test="";
+    articleList.sort(datesort)
     for(i=0; i<articleList.length; i++) {
       test+=articleList[i].title;
       test+=articleList[i].updatedAt;

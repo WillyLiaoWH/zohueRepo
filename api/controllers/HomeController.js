@@ -120,7 +120,13 @@ module.exports = {
 
 
 
-
+	getTopArticleFormula: function(req, res){
+		fs = require('fs');
+		fs.readFile('config/formula.json', 'utf8', function (err, data) {
+			if (err) return console.log(err);
+			res.send(data);
+		});
+	},
 	setTopArticleFormula: function(req, res){
 		if(!/^\+?(0|[1-9]\d*)$/.test(req.param("nicerNumWeight")) || !/^\+?(0|[1-9]\d*)$/.test(req.param("responseNumWeight")) || !/^\+?(0|[1-9]\d*)$/.test(req.param("clickNumWeight"))){
 			res.send(500,{err: "格式錯誤！" });
@@ -131,6 +137,7 @@ module.exports = {
 				clickNumWeight: req.param("clickNumWeight")
 			};
 
+			fs = require('fs');
 			fs.writeFile('config/formula.json', JSON.stringify(param), function (err) {
 				if (err) return console.log(err);
 				res.send("success");
@@ -198,7 +205,7 @@ module.exports = {
 	recordLink: function(req,res){
 		var target = req.param("target");
 		Record.create({user:req.session.user,ip:req.ip,action:"LINK "+target}).exec(function(err,record){
-            console.log("點擊廣告")
+            console.log("友站連結")
             res.send("ok");
         })
 	}

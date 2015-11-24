@@ -47,6 +47,12 @@ $(document).ready(function(){
           showDialog("錯誤訊息",res.responseJSON.err);
         });
 
+
+        $("#boardCategory").val("allCategory");//boardCategory沒顯示出
+        $("#board").empty();
+        $("#board").append("<option>選擇全部</option>")
+        getart(loadForumList, 2);
+
         $("#boardCategory").change(function(){
           var category = $("#boardCategory").val();
           var board = $("#board").val();
@@ -110,18 +116,33 @@ $(document).ready(function(){
     }
   });
 
-  // 論壇管理排序文章
-  $(document).on("click",".sortByChar",function(e){
-    sortByChar($(this).attr("value"));
-  });
-  $(document).on("click",".sortByLength",function(e){
-    sortByLength($(this).attr("value"));
-  });
-  $(document).on("click",".sortByCreatedAt",function(e){
-    sortByCreatedAt();
-  });
-  $(document).on("click",".sortByUpdatedAt",function(e){
-    sortByUpdatedAt();
+  // 論壇文章排序
+  $(document).on("click",".sortable",function(e){
+    sortby = $(this).attr("value");
+    if(sortby=="title" || sortby=="classification" || sortby=="elite"){ // 依照筆劃排序
+      articleList=articleList.sort(function(a, b) {return a[sortby].localeCompare(b[sortby])});
+    }else if(sortby=="alias"){
+      articleList = articleList.sort(function(a, b) {
+        if(a.author.alias < b.author.alias) return -1;
+        if(a.author.alias > b.author.alias) return 1;
+        return 0;
+      });
+    }else if(sortby=="type"){
+      articleList = articleList.sort(function(a, b) {
+        if(a.author.type < b.author.type) return -1;
+        if(a.author.type > b.author.type) return 1;
+        return 0;
+      });
+    }else if(sortby=="createdAt"){
+      articleList=articleList.sort(function(a, b) {return new Date(a.createdAt)-new Date(b.createdAt);});
+    }else if(sortby=="updatedAt"){
+      articleList=articleList.sort(function(a, b) {return new Date(a.lastResponseTime)-new Date(b.lastResponseTime);});
+    }else if(sortby=="nicer" || sortby=="report"){ // 依照長度排序
+      articleList=articleList.sort(function(a, b) {return a[sortby].length-b[sortby].length;});
+    }else if(sortby=="clickNum" || sortby=="responseNum"){ // 依照數字大小排序
+      articleList=articleList.sort(function(a, b) {return a[sortby]-b[sortby];});
+    }
+    loadForumList(articleList);
   });
 
   // 發送電子報的上傳檔案功能
@@ -297,10 +318,8 @@ $(document).ready(function(){
             $("#newBoardCategory").val(board.category.id);
             var newcategory=board.category
             $.get("/getBoardsOfCategory/"+newcategory.id, function(boards) {
-              // console.log(boards)
-             for(b=0; b<boards.length; b++) {
-                // console.log(board.id)
-                if(board.id==boards[b].id){
+              for(b=0; b<boards.length; b++) {
+               if(board.id==boards[b].id){
                     $("#newBoard").append("<option value='"+boards[b].id+"' selected='"+boards[b].id+"''>"+boards[b].title+"</option>");
                 }else{
                     $("#newBoard").append("<option value='"+boards[b].id+"''>"+boards[b].title+"</option>");
@@ -313,12 +332,9 @@ $(document).ready(function(){
         $("#newTitle_change").val(article.title)
         $("#newBoardCategory").change(function(){
             var newcategory = $("#newBoardCategory").val();
-              // console.log(newcategory)
               $("#newBoard").empty();
               $.get("/getBoardsOfCategory/"+newcategory, function(boards) {
-              // console.log(boards)
                  for(b=0; b<boards.length; b++) {
-                    // console.log(board.id)
                     if(board.id==boards[b].id){
                         $("#newBoard").append("<option value='"+boards[b].id+"' selected='"+boards[b].id+"''>"+boards[b].title+"</option>");
                     }else{
@@ -336,8 +352,32 @@ $(document).ready(function(){
     }
 
   });
-
-     
+    
+  // "設為或不設為"精華文章
+  $(document).on("click",".eliteArcticle",function(e){
+    var articleID = $(this).parent().parent().attr("value");
+    var eliteTF = $(this).prop("checked");
+    if(!eliteTF){
+      $.post( "/cancelEliteArticle", { id: articleID}, function(res){
+         showDialog("一般訊息","已標記為「非精華文章」！",function(){
+            updateEliteFront(articleID,"0");
+         });
+      });
+    }else{
+      $.post( "/setEliteArticle", { id: articleID}, function(res){
+         showDialog("一般訊息","已成功設為「精華文章」！",function(){
+            updateEliteFront(articleID,"1");
+         });
+      });
+    }
+    /*$.post( "/deleteArticle", { id: articleID}, function(res){
+      $("#backend_articleList tr[value="+articleID+"]").css("display","none");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("glyphicon-trash","glyphicon-repeat");
+      $("#backend_articleList tr[value="+articleID+"] span").last().switchClass("unDelArticle","delArticle");
+      delArtId.push(articleID);
+      unDelArtId.splice(unDelArtId.indexOf(parseInt(articleID)), 1);
+    }); */
+  }); 
 
   
   // "刪除"文章
@@ -383,8 +423,14 @@ $(document).ready(function(){
 
 });
 
-
-
+function updateEliteFront(id, value) {
+   for (var i in articleList) {
+     if (articleList[i].id == id) {
+        articleList[i].elite = value;
+        break; //Stop this loop, we found it!
+     }
+   }
+}
 
 function checkPage(){
   var tabName = getURLParameter("tab");
@@ -497,7 +543,7 @@ function getart(callback, action){
       break;
     case 2: // 根據board撈文章。
       $.get("/getArticlesByBoards", function(res){
-        articleList=res.articlesList;
+        articleList=res.articlesList; $("#boardCategory").val('allCategory');
         callback(articleList);
       }).error(function(res){
         showDialog("錯誤訊息",res.responseJSON.err);
@@ -508,9 +554,12 @@ function getart(callback, action){
 
 function loadForumList(articleList){
   if(typeof(articleList)!="undefined"){
-    articleTable="<tr class='tableHead'><th style='width:150px;'>看板位置</th><th class='sortable sortByChar' value='classification'>類別</th><th class='sortable sortByChar' value='title' style='width:350px;'>文章標題</th><th>發表人</th><th>身分</th>";
-    articleTable+="<th class='sortable sortByCreatedAt'>發表時間</th><th class='sortable sortByUpdatedAt'>最新回應時間</th><th>點閱／回覆</th><th class='sortable sortByLength' value='nicer'>推薦</th><th class='sortable sortByLength' value='report' >檢舉</th>";
-    articleTable+="<th>編輯</th><th>刪除</th></tr>";
+    articleTable="<tr class='tableHead'><th style='width:150px;'>看板位置</th><th class='sortable' value='classification'>類別</th>";
+    articleTable+="<th class='sortable' value='title' style='width:350px;'>文章標題</th><th class='sortable' value='alias'>發表人</th>";
+    articleTable+="<th class='sortable' value='type'>身分</th><th class='sortable' value='createdAt'>發表時間</th><th class='sortable' value='updatedAt'>最新回應時間</th>";
+    articleTable+="<th><label class='sortable' value='clickNum'>點閱</label>／<label class='sortable' value='responseNum'>回覆</label></th>";
+    articleTable+="<th class='sortable' value='nicer'>推薦</th><th class='sortable' value='report'>檢舉</th>";
+    articleTable+="<th class='sortable' value='elite' style='width:45px;'>精華文章</th><th>編輯</th><th>刪除</th></tr>";
 
       for(i=articleList.length-1; i>=0; i--) {
         articleID=articleList[i].id;
@@ -528,6 +577,8 @@ function loadForumList(articleList){
         if(boardName!="專業知識"){
        
           var deleted=articleList[i].deleted;
+          var isElite=articleList[i].elite;
+
           var link = "href=\"/article/" + articleID + "\"";
           
           var status=$("#artShowStatus").val();
@@ -569,6 +620,13 @@ function loadForumList(articleList){
           }else{
             articleTable+="<td>"+reportNum+"</td>";
           }
+
+          if(isElite=="1"){
+            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox' checked='checked'> </input></td>";
+          }else{
+            articleTable+="<td value='"+isElite+"'><input class='eliteArcticle' type='checkbox'> </input></td>";
+          }
+
           articleTable+="<td><span class='glyphicon glyphicon-edit editArticle' aria-hidden='true' title='編輯文章'></span></td>";
         
           if(deleted=="false"){
@@ -603,14 +661,19 @@ function loadsubscriberList(){
   });
 }
 
-function loadRecord(){
+function loadRecord(num){
+  /*
+    num : 0 all
+          1 3days
+          2 1month
+  */
   var recordTable = "<tr class='tableHead'>,<th>帳號</th><th>IP</th><th>時間</th><th>動作</th></tr>"
-  $.get("/getRecord",function(records){
+  $.get("/getRecord/"+num,function(records){
     var act
     var cla;
     for (i=records.length-1;i>=0;i--){
       var action = records[i].action
-      if (action == "Login"){
+      if (action.match(/^Login/)){
         cla = "Log"
         act = "登入"
       }
@@ -638,12 +701,32 @@ function loadRecord(){
         var id = action.substring(13)
         act = "<a href='/article/"+id+"'>"+"發表文章"+"</a>"
       }
-      // else if (action.match(/^LINK/)){
-      //   cla = "Link"
-      //   var id = action.substring(5)
-      //   atc = "點擊廣告 "+id;
-      // }
+      else if (action.match(/^LINK/)){
+        cla = "Link"
+        var id = action.substring(5)
+        act = "友站連結 "+id;
+      }
+      else if (action.match(/^FRIEND/)){
+        cla = "Friend"
+        id = action.substring(12)
+        if (action.match(/ADDD/)){
+          act = "<a href='/profile?"+id+"'>"+"加好友"+"</a>"
+        }
+        else if (action.match(/BLOC/)){
+          act = "<a href='/profile?"+id+"'>"+"黑名單"+"</a>"
+        }
+        else if (action.match(/CONF/)){
+          act = "<a href='/profile?"+id+"'>"+"確認好友"+"</a>"
+        }
+        else if (action.match(/TAKE/)){
+          act = "<a href='/profile?"+id+"'>"+"收回好友"+"</a>"
+        }
+        else if (action.match(/FIND/)){
+          act = "搜尋 " + id
+        }
+      }
       else{
+        cla = "aaa"
         act = action
       }
       time=new Date(records[i].createdAt).toLocaleString();
@@ -669,6 +752,7 @@ function recordFilter(filter){
     $(".Profile").hide()
     $(".Post").hide()
     $(".Link").hide()
+    $(".Friend").hide()
   }
   else if (filter == "Log"){
     $(".Read").hide()
@@ -677,6 +761,7 @@ function recordFilter(filter){
     $(".Profile").hide()
     $(".Post").hide()
     $(".Link").hide()
+    $(".Friend").hide()
 
   }
   else if (filter == "ProInfo"){
@@ -686,6 +771,7 @@ function recordFilter(filter){
     $(".Profile").hide()
     $(".Post").hide()
     $(".Link").hide()
+    $(".Friend").hide()
 
   }
   else if (filter == "Profile"){
@@ -695,6 +781,7 @@ function recordFilter(filter){
     $(".Profile").show()
     $(".Post").hide()
     $(".Link").hide()
+    $(".Friend").hide()
 
   }
   else if (filter == "Post"){
@@ -704,6 +791,7 @@ function recordFilter(filter){
     $(".Profile").hide()
     $(".Post").show()
     $(".Link").hide()
+    $(".Friend").hide()
 
   }
   else if (filter == "Link"){
@@ -712,7 +800,17 @@ function recordFilter(filter){
     $(".ProInfo").hide()
     $(".Profile").hide()
     $(".Post").hide()
+    $(".Friend").hide()
     $(".Link").show()
+  }
+  else if (filter == "Friend"){
+    $(".Read").hide()
+    $(".Log").hide()
+    $(".ProInfo").hide()
+    $(".Profile").hide()
+    $(".Post").hide()
+    $(".Link").hide()
+    $(".Friend").show()
   }
   else if (filter == "All"){
      $(".Read").show()
@@ -721,6 +819,7 @@ function recordFilter(filter){
     $(".Profile").show()
     $(".Post").show()
     $(".Link").show()
+    $(".Friend").show()
 
   }
 
@@ -742,6 +841,14 @@ function loadHomepage(){
     }
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
+  });
+
+  $.get("/getTopArticleFormula", function(topArticleFormula){
+    //alert(topArticleFormula);
+    var formulaData = JSON.parse(topArticleFormula);
+    $("#nicerNumWeight").val(formulaData.nicerNumWeight);
+    $("#responseNumWeight").val(formulaData.responseNumWeight);
+    $("#clickNumWeight").val(formulaData.clickNumWeight);
   });
 }
 
@@ -843,12 +950,6 @@ function editArticle(){
           }
 }
 
-function sortByChar(sortby){
-  articleList=articleList.sort(function(a, b) {
-      return a[sortby].localeCompare(b[sortby])
-  });
-  loadForumList(articleList);
-}
 function sortByLength(sortby){
   articleList=articleList.sort(function(a, b) {
       return b[sortby].length-a[sortby].length;
@@ -856,17 +957,10 @@ function sortByLength(sortby){
   loadForumList(articleList);
 }
 
-function sortByCreatedAt(){
+function sortByElite(sortby){
   articleList=articleList.sort(function(a, b) {
-    return new Date(b.createdAt)-new Date(a.createdAt);
+      return (a.elite - b.elite);
   });
-  loadForumList(articleList);
-}
-
-function sortByUpdatedAt(){
-  articleList=articleList.sort(function(a, b) {
-    return new Date(b.updatedAt)-new Date(a.updatedAt);
-   });
   loadForumList(articleList);
 }
 

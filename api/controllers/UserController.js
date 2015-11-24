@@ -673,7 +673,11 @@ module.exports = {
                                                 res.send({err:"DB error"});
                                             }
                                         });
-                                        res.send({user: user});
+                                        Record.create({user:req.session.user,ip:req.ip,action:"FRIEND ADDD "+req.param("id")}).exec(function(err,ret){
+                                            console.log("加好友")
+                                            res.send({user: user});
+                                        })
+                                        
                                     }
                                 });
                             }
@@ -732,7 +736,11 @@ module.exports = {
                                             console.log(err);
                                             res.send({err:"DB error"});
                                         } else {
-                                            res.send({user: user});
+                                            Record.create({user:req.session.user,ip:req.ip,action:"FRIEND BLOC "+req.param("id")}).exec(function(err,ret){
+                                                console.log("黑名單")
+                                                res.send({user: user});
+                                            })
+                                            
                                         }
                                     });
                                 }
@@ -795,7 +803,11 @@ module.exports = {
                                                     res.send({err:"DB error"});
                                                 }
                                             });
-                                            res.send({user: user});
+                                            Record.create({user:req.session.user,ip:req.ip,action:"FRIEND CONF "+req.param("id")}).exec(function(err,ret){
+                                                console.log("確認好友")
+                                                res.send({user: user});
+                                            })
+                                            
                                         }
                                     });
                                 }
@@ -835,7 +847,10 @@ module.exports = {
                                             console.log(err);
                                             res.send({err:"DB error"});
                                         } else {
+                                            Record.create({user:req.session.user,ip:req.ip,action:"FRIEND REMO "+req.param("id")}).exec(function(err,ret){
+                                            console.log("刪除好友")
                                             res.send({user: user});
+                                        })
                                         }
                                     });
                                 }
@@ -875,8 +890,12 @@ module.exports = {
                                             console.log(err);
                                             res.send({err:"DB error"});
                                         } else {
+                                            Record.create({user:req.session.user,ip:req.ip,action:"FRIEND TAKE "+req.param("id")}).exec(function(err,ret){
+                                            console.log("收回好友邀請")
                                             res.send({user: user});
+                                            })
                                         }
+                                        
                                     });
                                 }
                             });
@@ -1061,23 +1080,27 @@ module.exports = {
                 }
             });
         } else {
-            if(disease!=""||place!="") {
-                User.find({where: {alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}, suspended: { '!': true }}}).populate("Userauth").exec(function(err, allUser){
-                    if(err) {
-                        res.send(500, {err: "DB Error"});
-                    } else {
-                        sendback(allUser);
-                    }
-                });
-            } else {
-                User.find({where: {alias: {'contains': alias}, type: {'contains': userType}, suspended: { '!': true }}}).exec(function(err, allUser){
-                    if(err) {
-                        res.send(500, {err: "DB Error"});
-                    } else {
-                        sendback(allUser);
-                    }
-                });
-            }
+            Record.create({user:req.session.user,ip:req.ip,action:"FRIEND FIND "+alias+" "+userType+" "+disease+" "+place+" "}).exec(function(err,ret){
+                console.log("搜尋好友")
+
+                if(disease!=""||place!="") {
+                    User.find({where: {alias: {'contains': alias}, primaryDisease: {'contains': disease}, addressCity: {'contains': place}, type: {'contains': userType}, suspended: { '!': true }}}).populate("Userauth").exec(function(err, allUser){
+                        if(err) {
+                            res.send(500, {err: "DB Error"});
+                        } else {
+                            sendback(allUser);
+                        }
+                    });
+                } 
+                else {
+                    User.find({where: {alias: {'contains': alias}, type: {'contains': userType}, suspended: { '!': true }}}).exec(function(err, allUser){
+                        if(err) 
+                            res.send(500, {err: "DB Error"});
+                         else 
+                            sendback(allUser);
+                    });
+                }
+            });    
         }
     },
     friendStatus : function (req,res){

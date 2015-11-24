@@ -2,6 +2,12 @@ body{
   font-family: "微軟正黑體";
 }
 
+#backendHowTo{
+  font-size:20px;
+  float:right;
+  margin-bottom:10px;
+}
+
 #userManage, #forumManage, #enlManage, #subscriberManage,#record,#proInfo,#homepageManage{
 	/*display:none;*/
 	margin-top:20px;
@@ -14,6 +20,7 @@ body{
 
 #newContent{
   min-height: 500px;
+  height: 40%;
 }
 
 .form-control{
@@ -108,7 +115,7 @@ body{
   color:#CE0000;
 }
 
-.delArticle:hover, .delUser:hover{
+.delArticle:hover, .delUser:hover, .editArticle:hover{
   cursor:pointer;
   color:#467500;
 }

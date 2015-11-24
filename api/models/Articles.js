@@ -28,10 +28,6 @@ module.exports = {
       collection: 'response',
       via: 'article'
     },
-    responseNum: {
-      type: 'string',
-      required: true
-    },
     clickNum: {
       type: 'string',
       required: true
