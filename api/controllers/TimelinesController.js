@@ -199,13 +199,13 @@ module.exports = {
             }
         }
 
-        function findAccount(cb){ // 取出欲瀏覽 profile 頁面的作者帳號
-            var account = req.param("account");
-            if(account === 'undefined'){
-                var account = req.session.user.account;
-            }
-            cb(account);
-        }
+        // function findAccount(cb){ // 取出欲瀏覽 profile 頁面的作者帳號
+        //     var account = req.param("account");
+        //     if(account === 'undefined'){
+        //         var account = req.session.user.account;
+        //     }
+        //     cb(account);
+        // }
 
         function findId(cb){
             var id =req.param("id");
@@ -335,27 +335,30 @@ module.exports = {
         }
 
         function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
-            
-
-            setTimeout(function() { // 一秒後如果沒有 call back，表示最後一個 timeline 且無留言
-                cb(Response);
-            }, 500);
-
             async.each(Response.timelinesPost, function(timeline, callback) {
-                async.each(timeline.response, function(timelineRes, callback2) {
-                    AuthorQuery(timelineRes, function(alias, img, id, nicer, report){
-                        var i=Response.timelinesPost.indexOf(timeline);
-                        var j=timeline.response.indexOf(timelineRes);
-                        Response.timelinesPost[i].response[j].id=id;
-                        Response.timelinesPost[i].response[j].alias=alias;
-                        Response.timelinesPost[i].response[j].img=img;
-                        Response.timelinesPost[i].response[j].rnicer=nicer;
-                        Response.timelinesPost[i].response[j].rreporter=report;
+                var i=Response.timelinesPost.indexOf(timeline);
+                if(timeline.response.length > 0){
+                    async.each(timeline.response, function(timelineRes, callback2) {
+                        AuthorQuery(timelineRes, function(alias, img, id, nicer, report){
+                            
+                            var j=timeline.response.indexOf(timelineRes);
+                            Response.timelinesPost[i].response[j].id=id;
+                            Response.timelinesPost[i].response[j].alias=alias;
+                            Response.timelinesPost[i].response[j].img=img;
+                            Response.timelinesPost[i].response[j].rnicer=nicer;
+                            Response.timelinesPost[i].response[j].rreporter=report;
 
-                        // 最後一個 timeline 且最後一個留言
-                        if(Response.timelinesPost.length==i+1 & Response.timelinesPost[i].response.length==j+1){cb(Response);}
+                            // 最後一個 timeline 且最後一個留言
+                            if(Response.timelinesPost.length==i+1 & Response.timelinesPost[i].response.length==j+1){cb(Response);}
+                        });
                     });
-                });
+                }else{
+                    if(Response.timelinesPost.length==i+1){
+                        setTimeout(function() { // 半秒後如果沒有 call back，表示最後一個 timeline 且無留言
+                            cb(Response);
+                        }, 500);
+                    }
+                }
             });
         }
 
