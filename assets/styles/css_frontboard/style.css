@@ -19,7 +19,7 @@
 }
 
 #signup{
-	display: none !important;
+	/*display: none !important;*/
 }
 
 #searchPanel{
@@ -201,6 +201,8 @@
 		display: block !important;
 	}#d_post{
 		display: none !important;
+	}#signup h1{
+		text-align: center;
 	}
 }
 

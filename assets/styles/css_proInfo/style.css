@@ -14,11 +14,11 @@
 }
 
 #signup{
-	display: none !important;
+	/*display: none !important;*/
 }
 
 #search{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
@@ -80,6 +80,8 @@
 @media all and (max-width: 1023px){
 	#page{
 		display: none !important;
+	}#signup h1{
+		text-align: center;
 	}
 }
 
