@@ -939,11 +939,13 @@ module.exports = {
             } else {
                 console.log(articles);
                 if(articles.length==1) {
-                    var metaTitle=articles[0].title+" | ZOHUE作夥台灣頭頸癌病友加油站";
+                    var metaTitle=articles[0].title;
                     var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
+                    var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
                     return res.view("article/index", {
                         metaTitle: metaTitle,
                         metaUrl: metaUrl,
+                        metaDescription: metaDescription,
                         scripts: [
                             '/js/js_public/modalBox.js-master/modalBox-min.js',
                             '/js/js_public/alertify.js',
