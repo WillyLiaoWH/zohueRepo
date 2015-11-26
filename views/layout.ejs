@@ -20,8 +20,11 @@
       <meta property="og:url" content="http://zohue.im.ntu.edu.tw/home">
     <% } %>
     <meta property="og:image" content="http://zohue.im.ntu.edu.tw/images/img_public/logoThumb.png">
-    <meta property="og:description" content="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴 ">
-    
+    <% if(typeof(metaDescription)!='undefined') {%>
+      <meta property="og:description" content="<%=metaDescription%>">
+    <% } else { %>
+      <meta property="og:description" content="台灣頭頸癌病友加油站 大家一起作夥 分享生活點滴 ">
+    <% } %>
     <!--  
         Stylesheets and Preprocessors
         ==============================
