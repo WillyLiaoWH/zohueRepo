@@ -853,11 +853,11 @@ module.exports = {
                             subject: "[癌友加油站] "+article[0].title, // Subject line  
                             
                             //嵌入 html 的內文  
-                            html: author+"<br>"+link+content,   
+                            html: author+"<br>"+link+"<br><br>"+content,   
                                
                         };  
                         
-                        //發送信件方法  
+                        // 發送信件方法  
                         transporter.sendMail(options, function(error, info){  
                             if(error){  
                                 console.log(error);  
