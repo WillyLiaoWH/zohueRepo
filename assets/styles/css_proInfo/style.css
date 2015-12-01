@@ -13,10 +13,6 @@
 	margin: 8px 0px 0px -15px;
 }
 
-#signup{
-	/*display: none !important;*/
-}
-
 #search{
 	/*width:90px;*/
 	font-size: 20px;
@@ -76,6 +72,12 @@
 	width:100%;
 }
 
+
+@media screen and (min-width: 600px){
+#signup{
+		display: none !important;
+	}
+}
 
 @media all and (max-width: 1023px){
 	#page{

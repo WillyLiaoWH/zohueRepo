@@ -18,10 +18,6 @@
 	
 }
 
-#signup{
-	/*display: none !important;*/
-}
-
 #searchPanel{
 	margin-right: 150px;
 	float:right;
@@ -187,6 +183,12 @@
 
 #m_post{
 	display: none !important;
+}
+
+@media screen and (min-width: 600px){
+#signup{
+		display: none !important;
+	}
 }
 
 @media screen and (max-width: 480px){
