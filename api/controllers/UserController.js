@@ -946,17 +946,19 @@ module.exports = {
                         } else {
                             // isFriend.push(-2);
                         }
-                        users[users.length-1].FBmail=undefined;
-                        users[users.length-1].account=undefined;
-                        users[users.length-1].email=undefined;
-                        users[users.length-1].fname=undefined;
-                        users[users.length-1].forgetQ=undefined;
-                        users[users.length-1].forgetA=undefined;
-                        users[users.length-1].lname=undefined;
-                        users[users.length-1].password=undefined;
-                        users[users.length-1].phone=undefined;
-                        users[users.length-1].postalCode=undefined;
-                        users[users.length-1].selfIntroduction=undefined;
+                        if(users.length>0) {
+                            users[users.length-1].FBmail=undefined;
+                            users[users.length-1].account=undefined;
+                            users[users.length-1].email=undefined;
+                            users[users.length-1].fname=undefined;
+                            users[users.length-1].forgetQ=undefined;
+                            users[users.length-1].forgetA=undefined;
+                            users[users.length-1].lname=undefined;
+                            users[users.length-1].password=undefined;
+                            users[users.length-1].phone=undefined;
+                            users[users.length-1].postalCode=undefined;
+                            users[users.length-1].selfIntroduction=undefined;
+                        }
                         if(push) {
                             var defaultAuth="friend";
                             var ageAuth;
