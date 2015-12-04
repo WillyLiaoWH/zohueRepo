@@ -15,7 +15,16 @@ module.exports = {
                     if (err) {
                         res.send(500, { err: "DB Error" });
                     } else {
-                        res.send(homepagePics);
+                        res.view("home/index", {
+                            homepagePics: homepagePics,
+                            scripts: [
+						        '/js/js_home/mainJS.js'
+						      ],
+						    stylesheets: [
+						        '/styles/css_home/style.css',
+						        '/styles/importer.css'],
+						    welcome: '歡迎光臨ZOHUE!'
+                        });
                     }
                 }
             });
