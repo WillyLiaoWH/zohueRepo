@@ -296,17 +296,10 @@ module.exports.routes = {
       ]
     }
   },
-  '/board-*': {
-    view: 'board/index',
-    locals: {
-      scripts: [
-        '/js/js_board/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/css_board/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/board-:board/:page': {
+    controller: 'ArticlesController',
+    action: 'setBoardPage',
+    skipAssets: true
   },
   '/frontboard/*': {
     view: 'frontboard/index',

@@ -31,55 +31,32 @@ var arti = "";
 
 $(document).ready(function(){
   $.ajax({
-      url:   "/getBoardCategory" ,
-      success: 
-      function(boardCategory) {
-        categoryList=boardCategory;
-      },
-      async:   false
-    }).error(function(res){
-      showDialog("錯誤訊息",res.responseJSON.err);
-    });
-});
+    url:   "/getBoardCategory" ,
+    success: 
+    function(boardCategory) {
+      categoryList=boardCategory;
+    },
+    async:   false
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
 
-$(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
-    tab="all";clearTab();
-    //setPage(1, keyword, currentOrder, currentDirection);
-    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab=all&order=");
+    window.location.assign("/board-"+board+"?tab=all&order=lastResponseTime&page=1&search="+keyword);
   });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   // 根據網址判斷如何設定預設畫面
   var url = document.URL;
-  if(url.search("search")!=-1) {
-    regex=/.*board-+(.*)+\/search\/+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
-    board=url.replace(regex, "$1");
-    keyword=url.replace(regex, "$2");
-    keyword = decodeURIComponent(keyword);
-    page=url.replace(regex,"$3");
-    tab=url.replace(regex, "$4")
-    order=url.replace(regex, "$5");
-    order=order!=null&&order.length>0?order:"createdAt";
-    if(tab=="elite"){
-      isNowElite = true;
-      //tab="all";
-    }
-    setPage(page, keyword, order, "desc");
-  } else {
-    var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
-    board=url.replace(regex, "$1");
-    page = url.replace(regex,"$2");
-    tab=url.replace(regex, "$3");
-    order=document.URL.replace(regex, "$4");
-    order=order!=null&&order.length>0?order:"createdAt";
-    if(tab=="elite"){
-      isNowElite = true;
-      //tab="all";
-    }
-    setPage(page, "", order, "desc");
-  }
+  regex=/.*board-(.*)\?tab=(.*)&order=(.*)&page=(.*)&search=(.*)/;
+  board=url.replace(regex, "$1");
+  keyword=url.replace(regex, "$5");
+  keyword = decodeURIComponent(keyword);
+  page=url.replace(regex,"$4");
+  tab=url.replace(regex, "$2")
+  order=url.replace(regex, "$3");
+  order=order!=null&&order.length>0?order:"createdAt";
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
     if(!auth) {
@@ -152,11 +129,7 @@ $(document).ready(function(){
 
 
 function tabClick(tabc){
-  if(keyword.length>0){
-    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab="+tabc+"&order=");
-  }else{
-    window.location.assign("/board-"+board+"/1?tab="+tabc+"&order=");
-  }
+    window.location.assign("/board-"+board+"?tab=all&order=lastResponseTime&page=1&search="+keyword);
 }
 
 function pageClick(page){

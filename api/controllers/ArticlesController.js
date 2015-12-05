@@ -8,6 +8,12 @@
 module.exports = {
     
 	setBoardPage: function(req, res){
+
+        function getTimeString(date) {
+            if(date.getHours()/12==0) var tt="上午";
+            else var tt="下午";
+            return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
+        }
         //settings
         var maxReport=3;
 
@@ -95,22 +101,11 @@ module.exports = {
                                         articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=一般民眾 style=float:left;margin-right:10px;height:50px;width:50px;";
                                         articleList[i].authorType="";
                                 }
-                                var updateTime=new Date(articleList[i].lastResponseTime).toLocaleString();
-                                if(updateTime.indexOf("GMT")==-1) {
-                                    articleList[i].lastResponseTime=updateTime.slice(0, updateTime.length-3);
-                                } else {
-                                    articleList[i].lastResponseTime=updateTime.slice(0, updateTime.indexOf("GMT"))+updateTime.slice(updateTime.indexOf("GMT")+5, updateTime.length-3);
-                                }
-
-                                var createdAt=new Date(articleList[i].createdAt).toLocaleString();
-                                if(createdAt.indexOf("GMT")==-1) {
-                                    articleList[i].postTime=createdAt.slice(0, createdAt.length-3);
-                                }
-                                else {
-                                    articleList[i].postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
-                                }
+                                articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
+                                articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
                             }
                             res.view("board/index", {
+                                tab: req.param("tab"),
                                 articleList: articleList,
                                 totalPage: totalPage,
                                 curPage: curPage,
@@ -121,7 +116,8 @@ module.exports = {
                                 stylesheets: [
                                     '/styles/css_board/style.css',
                                     '/styles/importer.css'
-                                ]});
+                                ]
+                            });
                         });
                     }
                 });
