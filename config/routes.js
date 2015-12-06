@@ -131,7 +131,7 @@ module.exports.routes = {
   'GET /getArticlesByBoards': 'Backend.getArticlesByBoards',
   'GET /getArticlesByArticleId': 'BackendController.getArticlesByArticleId',
   'GET /getArticlesByCategory/:category': 'Backend.getArticlesByCategory',
-  'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
+  //'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /getCategoryOfBoard/:board': 'Boards.getCategoryOfBoard',
@@ -285,7 +285,11 @@ module.exports.routes = {
   },
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
-
+  'GET /article/:article_id': {
+    controller: 'ArticlesController',
+    action: 'setArticlePage',
+    skipAssets: true
+  },
   'GET /article/:id': {
     controller: 'ArticlesController',
     action: 'setMeta',

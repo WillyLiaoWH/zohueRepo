@@ -207,7 +207,8 @@ module.exports = {
         response=[];
         responseNice=[];
         responseNiceCount=[];
-        Response.find({article: req.param('article_id')}).populate('author').exec(function(error, responseList) {
+        var article_id=req.param("article_id");
+        Response.find({article: article_id}).populate('author').exec(function(error, responseList) {
             if (error) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -256,7 +257,7 @@ module.exports = {
             }
         }
         function R_NiceCount(cb){
-            Response.find({article: req.param('article_id'), }).populate('author').exec(function(error, responseList) {
+            Response.find({article: article_id, }).populate('author').exec(function(error, responseList) {
                 if (error) {
                     res.send(500, { err: "DB Error" });
                 } else {
@@ -264,7 +265,7 @@ module.exports = {
                 }
             });
         }
-        Articles.find({id: req.param('article_id')}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
+        Articles.find({id: article_id}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -296,13 +297,14 @@ module.exports = {
                     if(req.session.authenticated && articlesList[0].nicer) {
                         isNice=false;
                         for(i=0; i<articlesList[0].nicer.length; i++) {
-                            if(articlesList[0].nicer[i]&&req.session.user.id==articlesList[0].nicer[i].id) {
+                            if(articlesList[0].nicer[i]&&req.session.user.id==articlesList[0].nicer[i]) {
                                 isNice=true;
                                 break;
                             }
                         }
                     } else {
                         isNice=false;
+                        
                     }
                     if(req.session.authenticated && articlesList[0].follower.indexOf(req.session.user.id)!=-1) {
                         var isFollower=true;
@@ -313,7 +315,7 @@ module.exports = {
                     var isReport=false;
                     var reportCount=articlesList[0].report.length;
                     if(req.session.authenticated) {
-                        Report.find({article: req.param('article_id'), reporter: req.session.user.id}).exec(function(err, report){
+                        Report.find({article: article_id, reporter: req.session.user.id}).exec(function(err, report){
                             if(err) {
                                 console.log(err);
                             } else {
@@ -335,9 +337,42 @@ module.exports = {
                     }
                     R_NiceCount(function(responseList){
                         RUNI_NiceCount(responseList, function(responseNiceCount){
-                            res.send({articleList: articlesList, isAuthor: isAuthor, isNice: isNice, 
-                                responseList: response, responseNice: responseNice, login: login, lnicer: articlesList[0].nicer.length, 
-                                responseNiceCount:responseNiceCount, isReport: isReport, reportCount: reportCount, isFollower: isFollower});
+                            
+                            articlesList[0].createdAt = new Date(articlesList[0].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                            articlesList[0].lastResponseTime = new Date(articlesList[0].lastResponseTime).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                            var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
+                            articlesList[0].content=articlesList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+
+                            if(response.length!=0){
+                                for(i=0; i<response.length; i++) {
+                                    response[i].createdAt = new Date(response[i].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                    //預先處理comment中的圖片
+                                    response[i].comment_image = response[i].comment_image.replace(/dummy href=/g, "a href=").replace(/\/dummy/g, "\/a");
+                                    response[i].comment = response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+                                }
+                            }
+                            
+                            res.view("article/index", {
+                                articleList: articlesList,
+                                isAuthor: isAuthor,
+                                isNice: isNice,
+                                responseList: response, 
+                                responseNice: responseNice, 
+                                login: login, 
+                                lnicer: articlesList[0].nicer.length,
+                                responseNiceCount: responseNiceCount,
+                                isReport: isReport,
+                                reportCount: reportCount, 
+                                isFollower: isFollower,
+                                scripts: [
+                                    '/js/js_article/mainJS.js'
+                                ],
+                                stylesheets: [
+                                    '/styles/css_article/style.css',
+                                    '/styles/importer.css'
+                                ]
+                            });
+
                         });
                     });
                 }
