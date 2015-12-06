@@ -129,22 +129,22 @@ $(document).ready(function(){
 
 
 function tabClick(tabc){
-    window.location.assign("/board-"+board+"?tab=all&order=lastResponseTime&page=1&search="+keyword);
+  window.location.assign("/board-"+board+"?tab="+tabc+"&order=lastResponseTime&page=1&search="+keyword);
 }
 
 function pageClick(page){
-  setPage(page, keyword, currentOrder, currentDirection);
+  window.location.assign("/board-"+board+"?tab="+tab+"&order="+order+"&page="+page+"&search="+keyword);
 }
 
-function clearTab(){
-  $("#all").removeClass("active");
-  $("#motion").removeClass("active");
-  $("#share").removeClass("active");
-  $("#problem").removeClass("active");
-  $("#others").removeClass("active");
-  $("#elite").removeClass("activeOrange");
-  $("#elite").addClass("nonActiveOrange");
-}
+// function clearTab(){
+//   $("#all").removeClass("active");
+//   $("#motion").removeClass("active");
+//   $("#share").removeClass("active");
+//   $("#problem").removeClass("active");
+//   $("#others").removeClass("active");
+//   $("#elite").removeClass("activeOrange");
+//   $("#elite").addClass("nonActiveOrange");
+// }
 
 function setPage(page, keyword, orderby, direction) {
   // 篩選頁籤
@@ -697,51 +697,52 @@ function orderbyLastResponseTime(){
   },1);
 }
 
- function setBoardList(){
-  if($("#boardlist").html().trim()==""){
-    boardList=[];
-    for(i=1; i <= categoryList.length; i++){ 
-      $.ajax({
-        url:   "/getBoardsOfCategory/" + i ,
-        success: 
-        function(boards) { 
-          bl = [];
-          for(j=0; j<boards.length; j++){
-            bl.push(boards[j].title); 
-          }
-          boardList[(i-1)]=bl;
-        },
-        async:   false
-      });
-    }
-    var cc = 0;
-    catHtml="";    for(i=1; i<=categoryList.length; i++){ 
-      catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
-      catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
-      for(j=0;j<boardList[i-1].length;j++){
-        cc = cc + 1;
-        catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
-      }
-      catHtml = catHtml + "</ul></li>";
-    }
-    $("#boardlist").html(catHtml);
-  }
-}
+//  function setBoardList(){
+//   if($("#boardlist").html().trim()==""){
+//     boardList=[];
+//     for(i=1; i <= categoryList.length; i++){ 
+//       $.ajax({
+//         url:   "/getBoardsOfCategory/" + i ,
+//         success: 
+//         function(boards) { 
+//           bl = [];
+//           for(j=0; j<boards.length; j++){
+//             bl.push(boards[j].title); 
+//           }
+//           boardList[(i-1)]=bl;
+//         },
+//         async:   false
+//       });
+//     }
+//     var cc = 0;
+//     catHtml="";    
+//     for(i=1; i<=categoryList.length; i++){ 
+//       catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
+//       catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
+//       for(j=0;j<boardList[i-1].length;j++){
+//         cc = cc + 1;
+//         catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
+//       }
+//       catHtml = catHtml + "</ul></li>";
+//     }
+//     $("#boardlist").html(catHtml);
+//   }
+// }
 
 
-  function showDialog(title, message, cb){
-    bootbox.dialog({
-      message: message,
-      title: title,
-      buttons: {
-        main: {
-          label: "確認",
-          className: "btn-primary",
-          callback: function() {
-            if(typeof cb == "function")
-              cb();
-          }
+function showDialog(title, message, cb){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
-    });
-  }
+    }
+  });
+}

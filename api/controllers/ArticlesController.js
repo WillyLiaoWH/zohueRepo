@@ -16,9 +16,13 @@ module.exports = {
         }
         //settings
         var maxReport=3;
+        var articleNumPerPage=20;
 
         var tab=req.param("tab");
         var order=req.param("order");
+        var board=req.param("board");
+        var keyword=req.param("search");
+        var page=req.param("page");
         switch (tab) {
             case "all":
               classification="";
@@ -36,20 +40,13 @@ module.exports = {
               classification="其它";
               break;
         }
-        var board=req.param("board");
-        var boards;
-        var boardCate;
 
         if(board==21) { // 專業知識論壇頁面不開放
             res.send(500, { err: "DB Error" });
         }
         
-        BoardCategory.find().exec(function(err, boardCateList) {
-            boardCate=boardCateList;
-        });
         Articles.find({classification: {'contains': classification}, board: board, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
             if (err) {
-                console.log("?");
                 res.send(500, { err: "DB Error" });
             } else {
                 Boards.find({id: board}).populate('category').exec(function(err2, board) {
@@ -58,10 +55,8 @@ module.exports = {
                         res.send(500, { err: "DB Error" });
                     } else {
                         
-                        Boards.find({category: board[0].category.id}).exec(function(err3, boardsList) {
-                            boards=boardsList;
-                            // res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
-                            totalPage=(articleList.length+19)/20;
+                        BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
+                            totalPage=Math.ceil(articleList.length/articleNumPerPage);
                             curPage=req.param("page");
                             articleList=articleList.slice((curPage-1)*20, curPage*20);
                             for(var i=0; i<articleList.length; i++) {
@@ -106,6 +101,11 @@ module.exports = {
                             }
                             res.view("board/index", {
                                 tab: req.param("tab"),
+                                keyword: req.param("search"),
+                                board: req.param("board"),
+                                boardTitle: board[0].title,
+                                boardCateTitle: board[0].category.title,
+                                boardsCateList: boardsCateList,
                                 articleList: articleList,
                                 totalPage: totalPage,
                                 curPage: curPage,

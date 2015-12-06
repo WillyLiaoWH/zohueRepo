@@ -296,7 +296,7 @@ module.exports.routes = {
       ]
     }
   },
-  '/board-:board/:page': {
+  '/board-:board': {
     controller: 'ArticlesController',
     action: 'setBoardPage',
     skipAssets: true
