@@ -4,22 +4,11 @@
 
 #post{
 	float:right;
-	/*width: 125px;
-	//margin-right:13px;
-	//margin-top:8px;
-	//background-color: rgba(232, 81, 0, 0.7);
-	//color:#533828;
-	//display: block !important;*/
 }
 
 #post:hover{
 	background-color: rgba(102, 141, 60, 0.4);
 	color:#FFF;
-	
-}
-
-#signup{
-	/*display: none !important;*/
 }
 
 #searchPanel{
@@ -169,6 +158,13 @@
 	table-layout: fixed;
 	width:100%;
 	/*margin-top: 5px;*/
+}
+
+.body>tr:nth-child(odd) {
+	background-color: #fcf8e3
+}
+.body>tr:nth-child(even) {
+	background-color: #dff0d8
 }
 
 #mobile_post{

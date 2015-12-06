@@ -691,7 +691,7 @@ function orderbyLastResponseTime(){
       for(j=0;j<boardList[i-1].length;j++){
         cc = cc + 1;
         //if(cc!=21){//專業知識
-          catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
+          catHtml = catHtml + "<li><a href='"+"/board-"+cc+"?tab=all&order=lastResponseTime&page=1&search="+"'>"+boardList[i-1][j]+"</a></li>";  
         //}
       }
       catHtml = catHtml + "</ul></li>";

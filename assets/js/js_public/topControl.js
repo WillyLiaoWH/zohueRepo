@@ -538,13 +538,9 @@ function fbLogin() {
      }); //設定需要授權的項目
   }
 function notification() {
-  $.get('/seeNot',function(res){
-    if(res.err) {
-      showDialog("錯誤訊息",res.err);
-    } else {
+
       window.location.assign("/notifications");
-    }
-  });
+    
 }
 function checkNot() {
   /*$.get('/countNot',function(res){*/

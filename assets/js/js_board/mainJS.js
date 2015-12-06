@@ -31,55 +31,32 @@ var arti = "";
 
 $(document).ready(function(){
   $.ajax({
-      url:   "/getBoardCategory" ,
-      success: 
-      function(boardCategory) {
-        categoryList=boardCategory;
-      },
-      async:   false
-    }).error(function(res){
-      showDialog("錯誤訊息",res.responseJSON.err);
-    });
-});
+    url:   "/getBoardCategory" ,
+    success: 
+    function(boardCategory) {
+      categoryList=boardCategory;
+    },
+    async:   false
+  }).error(function(res){
+    showDialog("錯誤訊息",res.responseJSON.err);
+  });
 
-$(document).ready(function(){
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
-    tab="all";clearTab();
-    //setPage(1, keyword, currentOrder, currentDirection);
-    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab=all&order=");
+    window.location.assign("/board-"+board+"?tab=all&order=lastResponseTime&page=1&search="+keyword);
   });
 
   // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
   // 根據網址判斷如何設定預設畫面
   var url = document.URL;
-  if(url.search("search")!=-1) {
-    regex=/.*board-+(.*)+\/search\/+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
-    board=url.replace(regex, "$1");
-    keyword=url.replace(regex, "$2");
-    keyword = decodeURIComponent(keyword);
-    page=url.replace(regex,"$3");
-    tab=url.replace(regex, "$4")
-    order=url.replace(regex, "$5");
-    order=order!=null&&order.length>0?order:"createdAt";
-    if(tab=="elite"){
-      isNowElite = true;
-      //tab="all";
-    }
-    setPage(page, keyword, order, "desc");
-  } else {
-    var regex = /.*board-+(.*)+\/+(.*)+\?tab=+(.*)\&order=+(.*)/
-    board=url.replace(regex, "$1");
-    page = url.replace(regex,"$2");
-    tab=url.replace(regex, "$3");
-    order=document.URL.replace(regex, "$4");
-    order=order!=null&&order.length>0?order:"createdAt";
-    if(tab=="elite"){
-      isNowElite = true;
-      //tab="all";
-    }
-    setPage(page, "", order, "desc");
-  }
+  regex=/.*board-(.*)\?tab=(.*)&order=(.*)&page=(.*)&search=(.*)/;
+  board=url.replace(regex, "$1");
+  keyword=url.replace(regex, "$5");
+  keyword = decodeURIComponent(keyword);
+  page=url.replace(regex,"$4");
+  tab=url.replace(regex, "$2")
+  order=url.replace(regex, "$3");
+  order=order!=null&&order.length>0?order:"createdAt";
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
     if(!auth) {
@@ -152,26 +129,22 @@ $(document).ready(function(){
 
 
 function tabClick(tabc){
-  if(keyword.length>0){
-    window.location.assign("/board-"+board+"/search/"+keyword+"/1?tab="+tabc+"&order=");
-  }else{
-    window.location.assign("/board-"+board+"/1?tab="+tabc+"&order=");
-  }
+  window.location.assign("/board-"+board+"?tab="+tabc+"&order=lastResponseTime&page=1&search="+keyword);
 }
 
 function pageClick(page){
-  setPage(page, keyword, currentOrder, currentDirection);
+  window.location.assign("/board-"+board+"?tab="+tab+"&order="+order+"&page="+page+"&search="+keyword);
 }
 
-function clearTab(){
-  $("#all").removeClass("active");
-  $("#motion").removeClass("active");
-  $("#share").removeClass("active");
-  $("#problem").removeClass("active");
-  $("#others").removeClass("active");
-  $("#elite").removeClass("activeOrange");
-  $("#elite").addClass("nonActiveOrange");
-}
+// function clearTab(){
+//   $("#all").removeClass("active");
+//   $("#motion").removeClass("active");
+//   $("#share").removeClass("active");
+//   $("#problem").removeClass("active");
+//   $("#others").removeClass("active");
+//   $("#elite").removeClass("activeOrange");
+//   $("#elite").addClass("nonActiveOrange");
+// }
 
 function setPage(page, keyword, orderby, direction) {
   // 篩選頁籤
@@ -724,51 +697,52 @@ function orderbyLastResponseTime(){
   },1);
 }
 
- function setBoardList(){
-  if($("#boardlist").html().trim()==""){
-    boardList=[];
-    for(i=1; i <= categoryList.length; i++){ 
-      $.ajax({
-        url:   "/getBoardsOfCategory/" + i ,
-        success: 
-        function(boards) { 
-          bl = [];
-          for(j=0; j<boards.length; j++){
-            bl.push(boards[j].title); 
-          }
-          boardList[(i-1)]=bl;
-        },
-        async:   false
-      });
-    }
-    var cc = 0;
-    catHtml="";    for(i=1; i<=categoryList.length; i++){ 
-      catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
-      catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
-      for(j=0;j<boardList[i-1].length;j++){
-        cc = cc + 1;
-        catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
-      }
-      catHtml = catHtml + "</ul></li>";
-    }
-    $("#boardlist").html(catHtml);
-  }
-}
+//  function setBoardList(){
+//   if($("#boardlist").html().trim()==""){
+//     boardList=[];
+//     for(i=1; i <= categoryList.length; i++){ 
+//       $.ajax({
+//         url:   "/getBoardsOfCategory/" + i ,
+//         success: 
+//         function(boards) { 
+//           bl = [];
+//           for(j=0; j<boards.length; j++){
+//             bl.push(boards[j].title); 
+//           }
+//           boardList[(i-1)]=bl;
+//         },
+//         async:   false
+//       });
+//     }
+//     var cc = 0;
+//     catHtml="";    
+//     for(i=1; i<=categoryList.length; i++){ 
+//       catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
+//       catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
+//       for(j=0;j<boardList[i-1].length;j++){
+//         cc = cc + 1;
+//         catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
+//       }
+//       catHtml = catHtml + "</ul></li>";
+//     }
+//     $("#boardlist").html(catHtml);
+//   }
+// }
 
 
-  function showDialog(title, message, cb){
-    bootbox.dialog({
-      message: message,
-      title: title,
-      buttons: {
-        main: {
-          label: "確認",
-          className: "btn-primary",
-          callback: function() {
-            if(typeof cb == "function")
-              cb();
-          }
+function showDialog(title, message, cb){
+  bootbox.dialog({
+    message: message,
+    title: title,
+    buttons: {
+      main: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          if(typeof cb == "function")
+            cb();
         }
       }
-    });
-  }
+    }
+  });
+}

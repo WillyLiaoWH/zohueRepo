@@ -216,20 +216,19 @@ module.exports.routes = {
 
   'GET /nots': 'Notification.getNotification',
   'GET /countNot': 'Notification.countNotification',
-  'GET /seeNot': 'Notification.seeNotification',
+  // '/seeNot':{
+  //   controller: 'NotificationController',
+  //   action: 'setNotificationPage',
+  //   skipAssets: true,
+  // },
+
 
   '/home': {
-    view: 'home/index',
-    locals: {
-      scripts: [
-        '/js/js_home/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/css_home/style.css',
-        '/styles/importer.css'],
-      welcome: '歡迎光臨ZOHUE!'
-    }
+    controller: 'HomeController',
+    action: 'getHomepagePic',
+    skipAssets: true,
   },
+
 
   '/changePassword': {
     view: 'changePassword/index',
@@ -309,17 +308,10 @@ module.exports.routes = {
       ]
     }
   },
-  '/board-*': {
-    view: 'board/index',
-    locals: {
-      scripts: [
-        '/js/js_board/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/css_board/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/board-:board': {
+    controller: 'ArticlesController',
+    action: 'setBoardPage',
+    skipAssets: true
   },
   '/frontboard/*': {
     view: 'frontboard/index',
@@ -350,20 +342,9 @@ module.exports.routes = {
     }
   },
   '/notifications': {
-    view: 'notifications/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_public/alertify.js',
-        '/js/js_notifications/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/importer.css',
-        '/styles/css_public/themes/alertify.core.css',
-        '/styles/css_public/themes/alertify.default.css',
-        '/styles/css_notifications/style.css'
-      ]
-    }
+    controller: 'NotificationController',
+    action: 'setNotificationPage',
+    skipAssets: true,
   },
   '/backendbackend': {
     //view: 'backend/adminLoginPage',
