@@ -6,6 +6,46 @@
  */
 
 module.exports = {
+    setPage: function (req,res){
+
+
+        function datesort(art1,art2){
+          date1 = art1.date
+          date2 = art2.date
+          year1 = parseInt(date1.split("年")[0])
+          month1 = parseInt(date1.split("年")[1].split("月")[0])
+          year2 = parseInt(date2.split("年")[0])
+          month2 = parseInt(date2.split("年")[1].split("月")[0])
+          if (year1 == year2){
+            return month2-month1
+          }
+          else{
+            return year2-year1
+          }
+        }
+
+        var page = req.param("page")
+        ProInfo.find({sort: "id desc"}).exec(function(err, articlesList) {
+            if (err) {
+                console.log("DB error")
+            } else {
+                articlesList.sort(datesort)
+                res.view("proInfo/index1", {
+                    list:articlesList,
+                    scripts: [
+                        '/js/js_public/modalBox.js-master/modalBox-min.js',
+                        '/js/js_ProInfo/mainJS.js',
+                    ],
+                    stylesheets: [
+                        '/styles/css_ProInfo/style.css',
+                        '/styles/importer.css'
+                    ],
+                });
+            }
+        });
+
+    },
+
     createProinfo: function(req, res) { // 將郵遞區號檔案轉換成local DB
         fs = require('fs');
         var content;

@@ -270,18 +270,21 @@ module.exports.routes = {
     }
   },
 
-  '/proInfo/*': {
-    view: 'proInfo/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_ProInfo/mainJS.js',
-      ],
-      stylesheets: [
-        '/styles/css_ProInfo/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/proInfo/:page': {
+    controller:'ProInfoController',
+    action: 'setPage',
+    skipAssets:true
+    // view: 'proInfo/index',
+    // locals: {
+    //   scripts: [
+    //     '/js/js_public/modalBox.js-master/modalBox-min.js',
+    //     '/js/js_ProInfo/mainJS.js',
+    //   ],
+    //   stylesheets: [
+    //     '/styles/css_ProInfo/style.css',
+    //     '/styles/importer.css'
+    //   ]
+    // }
   },
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
