@@ -715,11 +715,19 @@ function postTimeline(){
   }
 }
 function editTimeline(id){
+  // 暫存編輯內容
+  eval( "tempTimelineContent" + id + '=$("#div_edit_content"+id).html()' );
+  eval( "tempTimelineImg" + id + "=" + '$("#div_edit_img"+id).html()' );
+
   $("#container_edit"+id).css("display", "block");
   $("#container_edit"+id).parent().children( ".event_text" ).css("display", "none");
   $("#container_edit"+id).parent().children( ".event_img" ).css("display", "none");
 }
 function editTimelineCancel(id){
+  // 還原暫存的編輯內容
+  $("#div_edit_content"+id).html(eval("tempTimelineContent" + id));
+  $("#div_edit_img"+id).html(eval("tempTimelineImg" + id));
+
   $("#container_edit"+id).css("display", "none");
   $("#container_edit"+id).parent().children( ".event_text" ).css("display", "block");
   $("#container_edit"+id).parent().children( ".event_img" ).css("display", "block");
@@ -920,11 +928,19 @@ function postTimeline_comment(id){
   }
 }
 function editRTimeline(id){
+  // 暫存編輯內容
+  eval( "tempTimelineRContent" + id + '=$("#div_r_edit_content"+id).html()' );
+  eval( "tempTimelineRImg" + id + "=" + '$("#div_r_edit_img"+id).html()' );
+
   $("#container_r_edit"+id).css("display", "block");
   $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "none");
   $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
 }
 function editRTimelineCancel(id){
+  // 還原暫存的編輯內容
+  $("#div_r_edit_content"+id).html(eval("tempTimelineRContent" + id));
+  $("#div_r_edit_img"+id).html(eval("tempTimelineRImg" + id));
+
   $("#container_r_edit"+id).css("display", "none");
   $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "block");
   $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "block");

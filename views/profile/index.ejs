@@ -75,7 +75,9 @@
           <div class="tab-pane active" id="timeline">
             <div class="row-fluid">
               <div><label id="postTimelineLabel" style="font-size:22px;"></label><br>
-                <div contentEditable="true" class="s" id="timeline_post_content"></div>
+                <div contentEditable="true" class="s" id="timeline_post_content">
+                  <em>在想什麼呢？</em>
+                </div>
                 <div contentEditable="false" class="s" id="timeline_post_image">
                   <div class="clear" id="comment_clear"></div>
                 </div>
@@ -100,7 +102,7 @@
 
 
 
-
+<%= JSON.stringify(timelinesList) %>
 
 <% for(var i=0; i<timelinesList.length; i++) {
   timelinesList[i].contentImg // 預先處理圖片
@@ -208,7 +210,6 @@
          <div id="content_timeline_res">
             <!--留言內容-->
             <div class="event_text_r"><a class="name" href="?<%= timelinesList[i].response[j].author%>">阿肥</a> <%- timelinesList[i].response[j].comment.replace(/\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>') %></div>
-            <div class="row-fluid event_img" style="display:none;"></div>
             <% if(timelinesList[i].response[j].comment_image == ""){ %>
              <div class="row-fluid event_img" style="display:none;"></div>
             <% }else{ %>
