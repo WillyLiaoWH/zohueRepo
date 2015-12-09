@@ -84,7 +84,6 @@ module.exports.routes = {
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
   'POST /recordProInfo':'ProInfoController.recordProInfo',
   
- 
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
   'POST /changeProInfo':'ProInfoController.changeProInfo',
   'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
@@ -149,32 +148,6 @@ module.exports.routes = {
   'GET /countForum': 'Articles.countForum',
   'GET /updateLastForumTime': 'User.updateLastForumTime',
 
-
-  // 'GET /profile': {
-  //   view: 'profile/index',
-  //   locals: {
-  //     scripts: [
-  //       '/js/js_public/modalBox.js-master/modalBox-min.js',
-  //       '/js/js_public/alertify.js',
-  //       '/js/js_profile/mainJS.js',
-  //       '/js/js_post/cropper.min.js',
-  //       '/js/js_profile/crop-avatar.js?ver=1'
-  //     ],
-  //     stylesheets: [
-  //       '/styles/css_profile/style.css',
-  //       '/styles/css_post/crop-avatar.css',
-  //       '/styles/css_post/cropper.min.css',
-  //       '/styles/importer.css',
-  //       '/styles/css_public/themes/alertify.core.css',
-  //       '/styles/css_public/themes/alertify.default.css'
-  //     ]
-  //   }
-  // },
-  // 'GET /profile/:id': {
-  //   controller: 'TimelinesController',
-  //   action: 'setProfilePage',
-  //   skipAssets: false
-  // },
   'GET /profile': {
     controller: 'TimelinesController',
     action: 'setProfilePage',

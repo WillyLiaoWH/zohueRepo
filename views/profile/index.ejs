@@ -180,7 +180,7 @@
           </button>
         <% } %>
       </div>
-      <% if(typeof timelinesList[i].owner!="undefined" && timelinesList[i].owner.id==traveler){ %>
+      <% if((typeof timelinesList[i].owner!="undefined" && timelinesList[i].owner.id==traveler) || (typeof timelinesList[i].owner=="undefined" && timelinesList[i].author==id && traveler==id)){ %>
         <div class="btn-group" style="float:none;">
            <button type="button" class="n" data-toggle="dropdown">
             <img src="/images/img_timeline/all.png" height="20px" width="20px">&nbsp;每個人都看得到
