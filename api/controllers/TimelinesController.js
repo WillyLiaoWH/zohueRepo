@@ -183,6 +183,8 @@ module.exports = {
                                 //res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias, id: Response.id});
                                 
                                 res.view("profile/index", {
+                                    timeDiff: 0,
+                                    ago: 0,
                                     timelinesList: Response4.timelinesPost,
                                     avatar: Response.img,
                                     alias: Response.alias,

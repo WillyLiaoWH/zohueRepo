@@ -12,6 +12,7 @@ function insertHtmlAtCursor(html) {
     var insert_clear = $( "#"+insert_ele ).find( "#comment_clear" )[0];
     orinode.insertBefore(node, insert_clear);
     //orinode.insertBefore(node, document.getElementById("comment_clear"));
+    $("#"+insert_ele.replace("img","content")).attr("style", "border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;");
   }catch(err) {
     alert(err);
   }
@@ -94,12 +95,13 @@ function insertHtmlAtCursor(html) {
     },
 
     addListener: function () {
-      $(document).mouseup(function(){
+      $(document).mouseup(function(){ // 刪除圖片
         if(document.activeElement.id=='rmimg'){
           insert_ele = document.activeElement.parentNode.parentNode.id; // 更新 insert_ele
           document.activeElement.parentNode.remove();
           if($("#"+insert_ele).html().indexOf("img") == -1){ // div 內已無圖片
             $("#"+insert_ele).css("display", "none");
+            $("#"+insert_ele.replace("img","content")).attr("style", "");
           }
         }
       });
