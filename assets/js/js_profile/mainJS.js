@@ -1,4 +1,4 @@
-var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
+//var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var diseaseList={
   '1':"鼻咽癌",
   '2':"鼻腔/副鼻竇癌",
@@ -26,12 +26,10 @@ $(document).ready(function(){
   // });
 
   $(function(){
-
     $("#postTilmelineAuth .dropdown-menu li a").click(function(){
       $("#postTilmelineAuth button").html($(this).html());
-   });
-
-});
+    });
+  });
   
   $(document).on("click",".event_edit",function(e){
     editTimeline(this.name);
@@ -703,9 +701,9 @@ function postTimeline(){
       res["timelinesList"][0]["response"] = [];
       res["timelinesList"][0]["nicer"] = [];
       res["timelinesList"][0]["report"] = [];
-      getPri(function(pri_account, pri_id, pri_avatar){
-        displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
-      });
+      // getPri(function(pri_account, pri_id, pri_avatar){
+      //   displayTimelineList(res, pri_account, pri_id, pri_avatar, 1);
+      // });
       $("#no_post_message").hide();
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err,function(){
@@ -769,11 +767,11 @@ function delTimeline(id){
                  $("#no_post_message").show();
               }
             $("#container_edit"+id).parent().remove();
-            getPri(function(pri_account, pri_id, pri_avatar){
-            //   // setTimelinePage(pri_account, pri_id, pri_avatar);
-              displayTimelineList(res, pri_account, pri_id, pri_avatar, 1)
+            // getPri(function(pri_account, pri_id, pri_avatar){
+            // //   // setTimelinePage(pri_account, pri_id, pri_avatar);
+            //   displayTimelineList(res, pri_account, pri_id, pri_avatar, 1)
 
-            });
+            // });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
           });

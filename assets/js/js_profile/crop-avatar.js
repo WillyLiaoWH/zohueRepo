@@ -12,7 +12,10 @@ function insertHtmlAtCursor(html) {
     var insert_clear = $( "#"+insert_ele ).find( "#comment_clear" )[0];
     orinode.insertBefore(node, insert_clear);
     //orinode.insertBefore(node, document.getElementById("comment_clear"));
-    $("#"+insert_ele.replace("img","content")).attr("style", "border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;");
+
+    if(insert_ele.indexOf("timeline_comment_image") == -1 & insert_ele.indexOf("timeline_post_image") == -1){
+      $("#"+insert_ele.replace("img","content")).attr("style", "border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;");
+    }
   }catch(err) {
     alert(err);
   }

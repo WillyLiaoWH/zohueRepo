@@ -72,7 +72,7 @@ module.exports.routes = {
   'POST /postTimeline': 'TimelinesController.postTimeline',
   'POST /editTimeline': 'TimelinesController.editTimeline',
   'POST /delTimeline': 'TimelinesController.delTimeline',
-  'POST /setTimelinePage/:id': 'Timelines.setTimelinePage',
+  // 'POST /setTimelinePage/:id': 'Timelines.setTimelinePage',
   'POST /TimelineNice': 'Timelines.clickNice',
   'POST /TimelineCancelNice': 'Timelines.cancelNice',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
@@ -170,11 +170,11 @@ module.exports.routes = {
   //     ]
   //   }
   // },
-  'GET /profile/:id': {
-    controller: 'TimelinesController',
-    action: 'setProfilePage',
-    skipAssets: true
-  },
+  // 'GET /profile/:id': {
+  //   controller: 'TimelinesController',
+  //   action: 'setProfilePage',
+  //   skipAssets: false
+  // },
   'GET /profile': {
     controller: 'TimelinesController',
     action: 'setProfilePage',
