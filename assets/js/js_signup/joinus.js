@@ -262,25 +262,25 @@ function Submit(){
   }
 }
 
-function ShowAllQ(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_ShowAllQ(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/RecoveryQuestion/getall", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_ShowAllQ(response){
-  obj_Q = JSON.parse(response);
-  for(var r in obj_Q){
-    var question = obj_Q[r].question;
-    var questionID = obj_Q[r].id;
-    $("#forgetQ").append('<option value='+questionID+'>'+question+'</option>');
-  }
-  $("#forgetQ").append('<option value=999>其它</option>');
-}
+// function ShowAllQ(){
+//   var xmlHttp = getXMLHttp();
+//   xmlHttp.onreadystatechange = function(){
+//     if(xmlHttp.readyState == 4){
+//       HandleResponse_ShowAllQ(xmlHttp.responseText);
+//     }
+//   }
+//   xmlHttp.open("GET", "/RecoveryQuestion/getall", true);
+//   xmlHttp.send(null);
+// }
+// function HandleResponse_ShowAllQ(response){
+//   obj_Q = JSON.parse(response);
+//   for(var r in obj_Q){
+//     var question = obj_Q[r].question;
+//     var questionID = obj_Q[r].id;
+//     $("#forgetQ").append('<option value='+questionID+'>'+question+'</option>');
+//   }
+//   $("#forgetQ").append('<option value=999>其它</option>');
+// }
 
 
 

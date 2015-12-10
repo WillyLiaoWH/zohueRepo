@@ -9,18 +9,24 @@ var bcrypt = require('bcrypt-nodejs');
 var passwordHash = require('password-hash');
 module.exports = {
     setFullSignupPage: function(req,res){
-        res.view("signup/index", {
-            profileData: req.session.user,
-            scripts: [
-                'js/js_post/cropper.min.js',
-                'js/js_signup/crop-avatar.js',
-                'js/js_signup/joinus.js'
-            ],
-            stylesheets: [
-                'styles/css_post/crop-avatar.css',
-                'styles/css_post/cropper.min.css',
-                'styles/css_signup/style_signup.css'
-            ]
+        RecoveryQuestion.find().exec(function(err, questions){
+            dataProvider.getPostalData(req, function(postalData){
+                res.view("signup/index", {
+                    profileData: req.session.user,
+                    postalData: postalData,
+                    recoveryQuestions: questions,
+                    scripts: [
+                        'js/js_post/cropper.min.js',
+                        'js/js_signup/crop-avatar.js',
+                        'js/js_signup/joinus.js'
+                    ],
+                    stylesheets: [
+                        'styles/css_post/crop-avatar.css',
+                        'styles/css_post/cropper.min.css',
+                        'styles/css_signup/style_signup.css'
+                    ]
+                });
+            });
         });
     },
 
