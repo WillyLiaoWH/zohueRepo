@@ -148,7 +148,28 @@ module.exports.routes = {
   'GET /countForum': 'Articles.countForum',
   'GET /updateLastForumTime': 'User.updateLastForumTime',
 
-  'GET /profile': {
+  'GET /signup': { // 完整註冊
+    controller: 'UserController',
+    action: 'setFullSignupPage',
+    skipAssets: true
+  },
+  // 'get /signup': {
+  //   view: 'signup/index',
+  //   locals: {
+  //     scripts: [
+  //       'js/js_post/cropper.min.js',
+  //       'js/js_signup/crop-avatar.js',
+  //       'js/js_signup/joinus.js'
+  //     ],
+  //     stylesheets: [
+  //       'styles/css_post/crop-avatar.css',
+  //       'styles/css_post/cropper.min.css',
+  //       'styles/css_signup/style_signup.css'
+  //     ]
+  //   }
+  // },
+
+  'GET /profile': { // 個人頁面
     controller: 'TimelinesController',
     action: 'setProfilePage',
     skipAssets: true
@@ -171,21 +192,7 @@ module.exports.routes = {
     }
   },
 
-  'get /signup': {
-    view: 'signup/index',
-    locals: {
-      scripts: [
-        'js/js_post/cropper.min.js',
-        'js/js_signup/crop-avatar.js',
-        'js/js_signup/joinus.js'
-      ],
-      stylesheets: [
-        'styles/css_post/crop-avatar.css',
-        'styles/css_post/cropper.min.css',
-        'styles/css_signup/style_signup.css'
-      ]
-    }
-  },
+  
 
   'GET /nots': 'Notification.getNotification',
   'GET /countNot': 'Notification.countNotification',

@@ -8,6 +8,22 @@
 var bcrypt = require('bcrypt-nodejs');
 var passwordHash = require('password-hash');
 module.exports = {
+    setFullSignupPage: function(req,res){
+        res.view("signup/index", {
+            profileData: req.session.user,
+            scripts: [
+                'js/js_post/cropper.min.js',
+                'js/js_signup/crop-avatar.js',
+                'js/js_signup/joinus.js'
+            ],
+            stylesheets: [
+                'styles/css_post/crop-avatar.css',
+                'styles/css_post/cropper.min.css',
+                'styles/css_signup/style_signup.css'
+            ]
+        });
+    },
+
     getPassword: function(req,res){
         var account = req.param("account");
         var password = req.param("password");

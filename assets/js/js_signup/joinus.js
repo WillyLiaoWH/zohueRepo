@@ -1,29 +1,38 @@
 var obj_postal;
 
 $(document).ready(function(){
-  showProfile();
-  $.get("/user/showProfile", function(full){
-    ooo = JSON.parse(full);
-    var type=ooo.type;
-    switch(type){
-      case "P":
-      case "F":
-        document.getElementById("prim_dis").innerHTML = "主要疾病";
-        document.getElementById("sec_dis").innerHTML = "次要疾病";
-        break;
-      case "S":
-      case "N":
-      case "RN":
-        document.getElementById("p_type").style.visibility = "hidden";
-        document.getElementById("p_selfIntroduction").style.display = "none";
-        $("#type").attr("must","f");
-        break;
-      case "D":
-        document.getElementById("prim_dis").innerHTML = "主治科目";
-        document.getElementById("sec_dis").innerHTML = "其他專長";
-        break;
+  // 預設必填
+  $(".feedback-input[must='t']").each(function( index ) {
+    var id = ($(this).attr("id"));
+    if( $(this).val()=="" || $(this).val()==null ){
+      statusIMG(this,"M");
+    }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
+      statusIMG(this,"O");
     }
   });
+  // showProfile();
+  // $.get("/user/showProfile", function(full){
+  //   ooo = JSON.parse(full);
+  //   var type=ooo.type;
+  //   switch(type){
+  //     case "P":
+  //     case "F":
+  //       document.getElementById("prim_dis").innerHTML = "主要疾病";
+  //       document.getElementById("sec_dis").innerHTML = "次要疾病";
+  //       break;
+  //     case "S":
+  //     case "N":
+  //     case "RN":
+  //       document.getElementById("p_type").style.visibility = "hidden";
+  //       document.getElementById("p_selfIntroduction").style.display = "none";
+  //       $("#type").attr("must","f");
+  //       break;
+  //     case "D":
+  //       document.getElementById("prim_dis").innerHTML = "主治科目";
+  //       document.getElementById("sec_dis").innerHTML = "其他專長";
+  //       break;
+  //   }
+  // });
   
   $("#addressCity").change(function() { // 用縣市篩選區
     ShowAllDistrict(document.getElementById("addressCity").value);
@@ -222,8 +231,13 @@ function Submit(){
     var birthday_D = document.getElementById("birthday_D").value;
     var birthday = (new Date(birthday_Y, (birthday_M-1), birthday_D)).toString();
     //var birthday = (new Date(birthday_Y+'-'+birthday_M+'-'+birthday_D)).toString();
-    var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
-    var selfIntroduction = document.getElementById("selfIntroduction").value;
+    if($("#type").length > 0){
+      var primaryDisease = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
+      var selfIntroduction = document.getElementById("selfIntroduction").value;
+    }else{
+      var primaryDisease = "";
+      var selfIntroduction = "";
+    }
     var postalCode = document.getElementById("postalCode").value;
 
     var posting = $.post( "/fullSignup", { fname: fname, lname: lname, img: img, 
@@ -370,48 +384,48 @@ function ShowDate(month, year){
 function daysInMonth(month,year) { return new Date(year, month, 0).getDate(); }
 
 //default data
-function showProfile(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_showProfile(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/user/showProfile", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_showProfile(response){
-  obj = JSON.parse(response);
-  console.log(obj);
-  var FB_id=obj.FB_id;
-  //if (FB_id.length>2){
-    var account=obj.account;
-    var password=obj.password;
-    var alias=obj.alias;
-    var email=obj.email;
-    var fname=obj.fname;
-    var lname=obj.lname;
-    var img=obj.img;
-    var gender=obj.gender;
-    document.getElementById("fname_reg").value = lname;
-    document.getElementById("lname_reg").value = fname;
-    document.getElementById("avatar").src = img;
+// function showProfile(){
+//   var xmlHttp = getXMLHttp();
+//   xmlHttp.onreadystatechange = function(){
+//     if(xmlHttp.readyState == 4){
+//       HandleResponse_showProfile(xmlHttp.responseText);
+//     }
+//   }
+//   xmlHttp.open("GET", "/user/showProfile", true);
+//   xmlHttp.send(null);
+// }
+// function HandleResponse_showProfile(response){
+//   obj = JSON.parse(response);
+//   console.log(obj);
+//   var FB_id=obj.FB_id;
+//   //if (FB_id.length>2){
+//     var account=obj.account;
+//     var password=obj.password;
+//     var alias=obj.alias;
+//     var email=obj.email;
+//     var fname=obj.fname;
+//     var lname=obj.lname;
+//     var img=obj.img;
+//     var gender=obj.gender;
+//     document.getElementById("fname_reg").value = lname;
+//     document.getElementById("lname_reg").value = fname;
+//     document.getElementById("avatar").src = img;
 
-    if(gender=="M" || gender=="F"){
-      document.querySelector('#gender [value="' + gender + '"]').selected = true;
-    }
-  //}
+//     if(gender=="M" || gender=="F"){
+//       document.querySelector('#gender [value="' + gender + '"]').selected = true;
+//     }
+//   //}
 
-  // 預設必填
-  $(".feedback-input[must='t']").each(function( index ) {
-    var id = ($(this).attr("id"));
-    if( $(this).val()=="" || $(this).val()==null ){
-      statusIMG(this,"M");
-    }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
-      statusIMG(this,"O");
-    }
-  });
-}
+//   // 預設必填
+//   $(".feedback-input[must='t']").each(function( index ) {
+//     var id = ($(this).attr("id"));
+//     if( $(this).val()=="" || $(this).val()==null ){
+//       statusIMG(this,"M");
+//     }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
+//       statusIMG(this,"O");
+//     }
+//   });
+// }
 
 function showDialog(title, message, cb){
   bootbox.dialog({

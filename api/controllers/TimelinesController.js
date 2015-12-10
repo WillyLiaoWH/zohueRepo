@@ -38,27 +38,34 @@ module.exports = {
                 }else{
                     if(err) {
                         sails.log.error("ERR:", err);
+                    }else{
+                        cb(user[0]);
                     }
-                    if(!user[0].isFullSignup) {
-                        res.send({notfull: true});
-                    } else {
-                        if (user[0].suspended){
-                            res.send({suspended: true});    
-                        }else{
-                            if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
-                                res.send({notfull: false});
-                            }else{
-                                cb(user[0]);
-                            }
-                        }
-                        
-                    }
+
+
+
+                    // if(!user[0].isFullSignup) {
+                    //     res.send({notfull: true});
+                    // } else {
+                    //     if (user[0].suspended){
+                    //         res.send({suspended: true});    
+                    //     }else{
+                    //         if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
+                    //             res.send({notfull: false});
+                    //         }else{
+                    //             cb(user[0]);
+                    //         }
+                    //     }
+                    // }
                 }
             });
         }
 
         function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response、nicer 與 reporter 資料
             var async = require('async');
+            if(User.timelinesPost.length < 1){
+                cb(User);
+            }
             async.each(User.timelinesPost, function(timeline, callback) {
                 Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).populate('owner', {select: ['img', 'alias', 'account','id']}).exec(function (err, result) {
                     if(err) {
@@ -136,6 +143,9 @@ module.exports = {
         }
 
         function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
+            if(Response.timelinesPost.length < 1){
+                cb(Response);
+            }
             async.each(Response.timelinesPost, function(timeline, callback) {
                 var i=Response.timelinesPost.indexOf(timeline);
                 if(timeline.response.length > 0){
