@@ -146,66 +146,66 @@ function pageClick(page){
 //   $("#elite").addClass("nonActiveOrange");
 // }
 
-function setPage(page, keyword, orderby, direction) {
-  // 篩選頁籤
-  switch (tab) {
-    case "all":
-      $("#all").addClass("active");
-      break;
-    case "motion":
-      $("#motion").addClass("active");
-      break;
-    case "share":
-      $("#share").addClass("active");
-      break;
-    case "problem":
-      $("#problem").addClass("active");
-      break;
-    case "others":
-      $("#others").addClass("active");
-      break;
-    case "elite":
-      $("#elite").removeClass("nonActiveOrange");
-      $("#elite").addClass("activeOrange");
-      tab="all";
-      break;
-  }
-  // 獲得文章
-  if(keyword!="") {
-    document.getElementById("searchWord").value = keyword;
-    $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
-      var boardName=res.board.title;
-      var boardCate=res.board.category.title;
-      $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
-      var res_search=res.articlesList
-      temp_result=res_search;
-      if(res_search.length==0){
-        $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
-        showDialog("錯誤訊息","目前無相關資料！");
-        document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
-        setBoardList();
-      }else{
-        //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
-        setSearchResult(res_search, page, orderby, direction);
-      }
-    }).error(function(res_search){
-      showDialog("錯誤訊息","目前無相關資料！");
-      document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
-      setBoardList();
-    });
-  } else {
-    $.get("/setBoardPage/"+board+"/"+tab, function(res){
-      var boardName=res.board.title;
-      var boardCate=res.board.category.title;
-      $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
-      var res_search=res.articlesList;
-      //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
-      setTimeout(function(){
-        setSearchResult(res_search, page, orderby, direction);
-      }, 300);
-    });
-  }  
-}
+// function setPage(page, keyword, orderby, direction) {
+//   // 篩選頁籤
+//   switch (tab) {
+//     case "all":
+//       $("#all").addClass("active");
+//       break;
+//     case "motion":
+//       $("#motion").addClass("active");
+//       break;
+//     case "share":
+//       $("#share").addClass("active");
+//       break;
+//     case "problem":
+//       $("#problem").addClass("active");
+//       break;
+//     case "others":
+//       $("#others").addClass("active");
+//       break;
+//     case "elite":
+//       $("#elite").removeClass("nonActiveOrange");
+//       $("#elite").addClass("activeOrange");
+//       tab="all";
+//       break;
+//   }
+//   // 獲得文章
+//   if(keyword!="") {
+//     document.getElementById("searchWord").value = keyword;
+//     $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
+//       var boardName=res.board.title;
+//       var boardCate=res.board.category.title;
+//       $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
+//       var res_search=res.articlesList
+//       temp_result=res_search;
+//       if(res_search.length==0){
+//         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
+//         showDialog("錯誤訊息","目前無相關資料！");
+//         document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
+//         setBoardList();
+//       }else{
+//         //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
+//         setSearchResult(res_search, page, orderby, direction);
+//       }
+//     }).error(function(res_search){
+//       showDialog("錯誤訊息","目前無相關資料！");
+//       document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
+//       setBoardList();
+//     });
+//   } else {
+//     $.get("/setBoardPage/"+board+"/"+tab, function(res){
+//       var boardName=res.board.title;
+//       var boardCate=res.board.category.title;
+//       $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
+//       var res_search=res.articlesList;
+//       //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
+//       setTimeout(function(){
+//         setSearchResult(res_search, page, orderby, direction);
+//       }, 300);
+//     });
+//   }  
+// }
 
 function readConfirm(articleid){
   bootbox.dialog({
