@@ -30,6 +30,29 @@ module.exports = {
         });
     },
 
+    setChangePage: function(req, res){
+        RecoveryQuestion.find().exec(function(err, questions){
+            dataProvider.getPostalData(req, function(postalData){
+                res.view("change/index", {
+                    profileData: req.session.user,
+                    isFullSignup: req.session.user.isFullSignup,
+                    postalData: postalData,
+                    recoveryQuestions: questions,
+                    scripts: [
+                        'js/js_post/cropper.min.js',
+                        'js/js_change/crop-avatar.js',
+                        'js/js_change/joinus.js'
+                    ],
+                    stylesheets: [
+                        'styles/css_post/crop-avatar.css',
+                        'styles/css_post/cropper.min.css',
+                        'styles/css_change/style_signup.css'
+                    ]
+                });
+            });
+        });
+    },
+
     getPassword: function(req,res){
         var account = req.param("account");
         var password = req.param("password");

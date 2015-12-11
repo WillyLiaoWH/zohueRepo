@@ -1,84 +1,49 @@
 var obj_postal;
 
 $(document).ready(function(){
-  ShowMonth();
-  ShowAllQ();
+  // ShowMonth();
+  // ShowAllQ();
 
-  ShowAllCity(function(){ // 先取得郵遞區號資料
-    $.get("/checkFull", function(full){ // 再取得 user 資料
-      var formmain_ez=document.getElementById("form-main_ez");
-      var formmain=document.getElementById("form-main");
-      if(!full){
-        formmain_ez.style.display="block";
-        formmain.remove();
-        showProfile_ez();
-      }else{
-        formmain.style.display="block";
-        formmain_ez.remove();
-        showProfile();
+  // ShowAllCity(function(){ // 先取得郵遞區號資料
+  //   $.get("/checkFull", function(full){ // 再取得 user 資料
+  //     var formmain_ez=document.getElementById("form-main_ez");
+  //     var formmain=document.getElementById("form-main");
+  //     if(!full){
+  //       formmain_ez.style.display="block";
+  //       formmain.remove();
+  //       showProfile_ez();
+  //     }else{
+  //       formmain.style.display="block";
+  //       formmain_ez.remove();
+  //       showProfile();
         
-        $.get("/user/showProfile", function(full){
-          ooo = JSON.parse(full);
-          var type=ooo.type;
-          switch(type){
-            case "P":
-            case "F":
-              document.getElementById("prim_dis").innerHTML = "主要疾病";
-              document.getElementById("sec_dis").innerHTML = "次要疾病";
-              break;
-            case "S":
-            case "N":
-            case "RN":
-              document.getElementById("p_type").style.visibility = "hidden";
-              document.getElementById("p_selfIntroduction").style.display = "none";
-              $("#type").attr("must","f");
-              break;
-            case "D":
-              document.getElementById("prim_dis").innerHTML = "主治科目";
-              document.getElementById("sec_dis").innerHTML = "其他專長";
-              break;
-          }
-        });
-      }
-    });
-  });
-
-  // $.get("/checkFull", function(full){
-  //   var formmain_ez=document.getElementById("form-main_ez");
-  //   var formmain=document.getElementById("form-main");
-  //   if(!full){
-  //     formmain_ez.style.display="block";
-  //     formmain.remove();
-  //     showProfile_ez();
-  //   }else{
-  //     formmain.style.display="block";
-  //     formmain_ez.remove();
-  //     showProfile();
-      
-  //     $.get("/user/showProfile", function(full){
-  //       ooo = JSON.parse(full);
-  //       var type=ooo.type;
-  //       switch(type){
-  //         case "P":
-  //         case "F":
-  //           document.getElementById("prim_dis").innerHTML = "主要疾病";
-  //           document.getElementById("sec_dis").innerHTML = "次要疾病";
-  //           break;
-  //         case "S":
-  //         case "N":
-  //         case "RN":
-  //           document.getElementById("p_type").style.visibility = "hidden";
-  //           document.getElementById("p_selfIntroduction").style.display = "none";
-  //           $("#type").attr("must","f");
-  //           break;
-  //         case "D":
-  //           document.getElementById("prim_dis").innerHTML = "主治科目";
-  //           document.getElementById("sec_dis").innerHTML = "其他專長";
-  //           break;
-  //       }
-  //     });
-  //   }
+  //       $.get("/user/showProfile", function(full){
+  //         ooo = JSON.parse(full);
+  //         var type=ooo.type;
+  //         switch(type){
+  //           case "P":
+  //           case "F":
+  //             document.getElementById("prim_dis").innerHTML = "主要疾病";
+  //             document.getElementById("sec_dis").innerHTML = "次要疾病";
+  //             break;
+  //           case "S":
+  //           case "N":
+  //           case "RN":
+  //             document.getElementById("p_type").style.visibility = "hidden";
+  //             document.getElementById("p_selfIntroduction").style.display = "none";
+  //             $("#type").attr("must","f");
+  //             break;
+  //           case "D":
+  //             document.getElementById("prim_dis").innerHTML = "主治科目";
+  //             document.getElementById("sec_dis").innerHTML = "其他專長";
+  //             break;
+  //         }
+  //       });
+  //     }
+  //   });
   // });
+
+
 
   $("#addressCity").change(function() { // 用縣市篩選區
     ShowAllDistrict(document.getElementById("addressCity").value);
@@ -447,24 +412,24 @@ function HandleResponse_showProfile_ez(response){
 
 
 /************************** 郵遞區號相關 **************************/
-function ShowAllCity(cb){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_ShowAllCity(xmlHttp.responseText);
-      cb();
-    }
-  }
-  xmlHttp.open("GET", "/postallist/getall", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_ShowAllCity(response){
-  obj_postal = JSON.parse(response);
-  for(var r in obj_postal){
-    var addressCity = obj_postal[r].addressCity;
-    $("#addressCity").append('<option value='+addressCity+'>'+addressCity+'</option>');
-  }
-}
+// function ShowAllCity(cb){
+//   var xmlHttp = getXMLHttp();
+//   xmlHttp.onreadystatechange = function(){
+//     if(xmlHttp.readyState == 4){
+//       HandleResponse_ShowAllCity(xmlHttp.responseText);
+//       cb();
+//     }
+//   }
+//   xmlHttp.open("GET", "/postallist/getall", true);
+//   xmlHttp.send(null);
+// }
+// function HandleResponse_ShowAllCity(response){
+//   obj_postal = JSON.parse(response);
+//   for(var r in obj_postal){
+//     var addressCity = obj_postal[r].addressCity;
+//     $("#addressCity").append('<option value='+addressCity+'>'+addressCity+'</option>');
+//   }
+// }
 function ShowAllDistrict(city){
   var lookup = {};
   for (var i = 0, len = obj_postal.length; i < len; i++) {

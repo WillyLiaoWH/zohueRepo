@@ -169,6 +169,28 @@ module.exports.routes = {
   //   }
   // },
 
+  'GET /change': { // 完整註冊
+    controller: 'UserController',
+    action: 'setChangePage',
+    skipAssets: true
+  },
+
+  // '/change': {
+  //   view: 'change/index',
+  //   locals: {
+  //     scripts: [
+  //       'js/js_post/cropper.min.js',
+  //       'js/js_change/crop-avatar.js',
+  //       'js/js_change/joinus.js'
+  //     ],
+  //     stylesheets: [
+  //       'styles/css_post/crop-avatar.css',
+  //       'styles/css_post/cropper.min.css',
+  //       'styles/css_change/style_signup.css'
+  //     ]
+  //   }
+  // },
+
   'GET /profile': { // 個人頁面
     controller: 'TimelinesController',
     action: 'setProfilePage',
@@ -219,22 +241,6 @@ module.exports.routes = {
       stylesheets: [
         '/styles/css_changePassword/style.css',
         '/styles/importer.css'
-      ]
-    }
-  },
-
-  '/change': {
-    view: 'change/index',
-    locals: {
-      scripts: [
-        'js/js_post/cropper.min.js',
-        'js/js_change/crop-avatar.js',
-        'js/js_change/joinus.js'
-      ],
-      stylesheets: [
-        'styles/css_post/crop-avatar.css',
-        'styles/css_post/cropper.min.css',
-        'styles/css_change/style_signup.css'
       ]
     }
   },
