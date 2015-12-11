@@ -18,10 +18,6 @@
 	
 }
 
-#signup{
-	/*display: none !important;*/
-}
-
 #searchPanel{
 	margin-right: 150px;
 	float:right;
@@ -191,6 +187,12 @@
 	display: none !important;
 }
 
+@media screen and (min-width: 600px){
+#signup{
+		display: none !important;
+	}
+}
+
 @media screen and (max-width: 480px){
 	#forumContent{
 		width: 100% !important;
@@ -210,7 +212,7 @@
 
 @media screen and (max-width: 480px) and (max-width: 768px) {
 	#post{
-		//display: none !important;
+		/*display: none !important;*/
 	}
 	#mobile_post{
 		display: inline-block !important;
