@@ -153,44 +153,11 @@ module.exports.routes = {
     action: 'setFullSignupPage',
     skipAssets: true
   },
-  // 'get /signup': {
-  //   view: 'signup/index',
-  //   locals: {
-  //     scripts: [
-  //       'js/js_post/cropper.min.js',
-  //       'js/js_signup/crop-avatar.js',
-  //       'js/js_signup/joinus.js'
-  //     ],
-  //     stylesheets: [
-  //       'styles/css_post/crop-avatar.css',
-  //       'styles/css_post/cropper.min.css',
-  //       'styles/css_signup/style_signup.css'
-  //     ]
-  //   }
-  // },
-
-  'GET /change': { // 完整註冊
+  'GET /change': { // 修改會員資料
     controller: 'UserController',
     action: 'setChangePage',
     skipAssets: true
   },
-
-  // '/change': {
-  //   view: 'change/index',
-  //   locals: {
-  //     scripts: [
-  //       'js/js_post/cropper.min.js',
-  //       'js/js_change/crop-avatar.js',
-  //       'js/js_change/joinus.js'
-  //     ],
-  //     stylesheets: [
-  //       'styles/css_post/crop-avatar.css',
-  //       'styles/css_post/cropper.min.css',
-  //       'styles/css_change/style_signup.css'
-  //     ]
-  //   }
-  // },
-
   'GET /profile': { // 個人頁面
     controller: 'TimelinesController',
     action: 'setProfilePage',

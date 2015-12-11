@@ -1,50 +1,6 @@
 var obj_postal;
 
 $(document).ready(function(){
-  // ShowMonth();
-  // ShowAllQ();
-
-  // ShowAllCity(function(){ // 先取得郵遞區號資料
-  //   $.get("/checkFull", function(full){ // 再取得 user 資料
-  //     var formmain_ez=document.getElementById("form-main_ez");
-  //     var formmain=document.getElementById("form-main");
-  //     if(!full){
-  //       formmain_ez.style.display="block";
-  //       formmain.remove();
-  //       showProfile_ez();
-  //     }else{
-  //       formmain.style.display="block";
-  //       formmain_ez.remove();
-  //       showProfile();
-        
-  //       $.get("/user/showProfile", function(full){
-  //         ooo = JSON.parse(full);
-  //         var type=ooo.type;
-  //         switch(type){
-  //           case "P":
-  //           case "F":
-  //             document.getElementById("prim_dis").innerHTML = "主要疾病";
-  //             document.getElementById("sec_dis").innerHTML = "次要疾病";
-  //             break;
-  //           case "S":
-  //           case "N":
-  //           case "RN":
-  //             document.getElementById("p_type").style.visibility = "hidden";
-  //             document.getElementById("p_selfIntroduction").style.display = "none";
-  //             $("#type").attr("must","f");
-  //             break;
-  //           case "D":
-  //             document.getElementById("prim_dis").innerHTML = "主治科目";
-  //             document.getElementById("sec_dis").innerHTML = "其他專長";
-  //             break;
-  //         }
-  //       });
-  //     }
-  //   });
-  // });
-
-
-
   $("#addressCity").change(function() { // 用縣市篩選區
     ShowAllDistrict(document.getElementById("addressCity").value);
   });
@@ -202,31 +158,6 @@ function validateAccount(string) {
 
 
 /************************** 連接 PHP 相關 **************************/
-function getXMLHttp(){
-  var xmlHttp
-  try{
-    //Firefox, Opera 8.0+, Safari
-    xmlHttp = new XMLHttpRequest();
-  }
-  catch(e){
-    //Internet Explorer
-    try{
-      xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch(e){
-      try{
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      catch(e){
-        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
-          return false;
-        });
-      }
-    }
-  }
-  return xmlHttp;
-}
-
 function Submit(){
   var pass_signup = 1;
   var missingInfo = [];
@@ -310,126 +241,9 @@ function Submit_ez(){
   });
 }
 
-function ShowAllQ(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_ShowAllQ(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/RecoveryQuestion/getall", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_ShowAllQ(response){
-  obj = JSON.parse(response);
-  for(var r in obj){
-    var question = obj[r].question;
-    var questionID = obj[r].id;
-    $("#forgetQ").append('<option value='+questionID+'>'+question+'</option>');
-  }
-  $("#forgetQ").append('<option value=999>其它</option>');
-}
-
-function showProfile(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_showProfile(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/user/showProfile", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_showProfile(response){
-  obj = JSON.parse(response);
-
-  var account=obj.account;
-  var password=obj.password;
-  var alias=obj.alias;
-  var email=obj.email;
-  var fname=obj.fname;
-  var lname=obj.lname;
-  var img=obj.img;
-  var forgetQ=obj.forgetQ;
-  var forgetA=obj.forgetA;
-  var gender=obj.gender;
-  var phone=obj.phone;
-  var postalCode=obj.postalCode;
-  var addressCity=obj.addressCity;
-  var addressDistrict=obj.addressDistrict;
-  var address=obj.address;
-  var birthday = obj.birthday;
-  var b = new Date(birthday)
-  var Y = b.getFullYear().toString() == "NaN" ? "" : b.getFullYear()-1911;
-  var M = b.getMonth()+1;
-  var D = b.getDate();
-  var primaryDisease=obj.primaryDisease;
-  var selfIntroduction=obj.selfIntroduction;
-
-  document.getElementById("email").value = email;
-  document.getElementById("alias").value = alias;
-  document.getElementById("fname_reg").value = fname;
-  document.getElementById("lname_reg").value = lname;
-  document.getElementById("avatar").src = img;
-  try{
-    if(forgetQ.search('[otherQ]')==1){ // 其他
-      document.querySelector('#forgetQ [value="999"]').selected = true;
-      document.getElementById("forgetQ-other").style.display="block";
-      document.getElementById("forgetQ-other").value=forgetQ.substr(8);
-    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;$("#forgetQ-other").attr("must","f");}
-  }catch(e){/*window.location.reload();*/}
-  document.getElementById("forgetA").value = forgetA;
-  document.querySelector('#gender [value="' + gender + '"]').selected = true;
-  document.getElementById("phone").value = phone;
-  document.getElementById("postalCode").value = postalCode;
-  getCity(document.getElementById("postalCode").value);
-  document.getElementById("address").value = address;
-  document.getElementById("birthday_Y").value = Y;
-  document.getElementById("birthday_M").value = M;
-  ShowDate(M, Y)
-  document.getElementById("birthday_D").value = D;
-  document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
-  document.getElementById("selfIntroduction").value = selfIntroduction;
-}
-function showProfile_ez(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_showProfile_ez(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/user/showProfile", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_showProfile_ez(response){
-  obj = JSON.parse(response);
-  var email=obj.email;
-  var alias=obj.alias;
-  document.getElementById("email_ez").value = email;
-  document.getElementById("alias_ez").value = alias;
-}
-
 
 
 /************************** 郵遞區號相關 **************************/
-// function ShowAllCity(cb){
-//   var xmlHttp = getXMLHttp();
-//   xmlHttp.onreadystatechange = function(){
-//     if(xmlHttp.readyState == 4){
-//       HandleResponse_ShowAllCity(xmlHttp.responseText);
-//       cb();
-//     }
-//   }
-//   xmlHttp.open("GET", "/postallist/getall", true);
-//   xmlHttp.send(null);
-// }
-// function HandleResponse_ShowAllCity(response){
-//   obj_postal = JSON.parse(response);
-//   for(var r in obj_postal){
-//     var addressCity = obj_postal[r].addressCity;
-//     $("#addressCity").append('<option value='+addressCity+'>'+addressCity+'</option>');
-//   }
-// }
 function ShowAllDistrict(city){
   var lookup = {};
   for (var i = 0, len = obj_postal.length; i < len; i++) {
