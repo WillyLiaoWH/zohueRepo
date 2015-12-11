@@ -1131,7 +1131,7 @@ module.exports = {
                         });
                         //res.send({users: users.slice(page*unit), hasNext: hasNext});
                     } else {
-                        hasNext=true;console.log("~~~PAGE"+page+users.slice(0, page*unit+unit));
+                        hasNext=true;
                             return res.view("friends/index", {
                                 users: users.slice(0, page*unit+unit),
                                 hasNext: hasNext,
@@ -1173,7 +1173,7 @@ module.exports = {
             "Dec": 12
         };
         var page=req.param("thisPage")==undefined?0:parseInt(req.param("thisPage"));
-        console.log("FRIEND FIND "+alias+" "+userType+" "+disease+" "+place+" "+page);
+        //console.log("FRIEND FIND "+alias+" "+userType+" "+disease+" "+place+" "+page);
         if(!req.session.user) {
             User.find({alias: {'contains': alias}}).exec(function(err, users) {
                 if(err) {
