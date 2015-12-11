@@ -174,30 +174,30 @@ function validateAccount(string) {
 
 
 /************************** 連接 PHP 相關 **************************/
-function getXMLHttp(){
-  var xmlHttp
-  try{
-    //Firefox, Opera 8.0+, Safari
-    xmlHttp = new XMLHttpRequest();
-  }
-  catch(e){
-    //Internet Explorer
-    try{
-      xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch(e){
-      try{
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      catch(e){
-        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
-          return false;
-        });
-      }
-    }
-  }
-  return xmlHttp;
-}
+// function getXMLHttp(){
+//   var xmlHttp
+//   try{
+//     //Firefox, Opera 8.0+, Safari
+//     xmlHttp = new XMLHttpRequest();
+//   }
+//   catch(e){
+//     //Internet Explorer
+//     try{
+//       xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+//     }
+//     catch(e){
+//       try{
+//         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+//       }
+//       catch(e){
+//         showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
+//           return false;
+//         });
+//       }
+//     }
+//   }
+//   return xmlHttp;
+// }
 
 function Submit(){
   var pass_signup = 1;
@@ -366,13 +366,13 @@ function getPostCode(){
   return 0;
 }
 
-function ShowMonth(){
-  $("#birthday_M").empty();
-  $("#birthday_M").append('<option value="" disabled selected>月</option>');
-  for(var i = 1, len = 13; i < len; i++){
-    $("#birthday_M").append('<option value='+i+'>'+i+'</option>');
-  }
-}
+// function ShowMonth(){
+//   $("#birthday_M").empty();
+//   $("#birthday_M").append('<option value="" disabled selected>月</option>');
+//   for(var i = 1, len = 13; i < len; i++){
+//     $("#birthday_M").append('<option value='+i+'>'+i+'</option>');
+//   }
+// }
 function ShowDate(month, year){
   var days = daysInMonth(month, year);
   $("#birthday_D").empty();

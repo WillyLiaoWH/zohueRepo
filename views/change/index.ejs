@@ -97,6 +97,10 @@
               <h class="input_title">找回密碼問題</h>
               <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t" placeholder="找回密碼問題">
                 <option value="" disabled selected>找回密碼問題</option>
+                <% for(var i=0; i<recoveryQuestions.length; i++) { %>
+                  <option value='<%= recoveryQuestions[i].id %>'><%= recoveryQuestions[i].question %></option>
+                <% } %>
+                <option value=999>其它</option>
               </select>
               <div class="tooltip fade bottom in" role="tooltip" id="forgetQ-tooltip">
                 <div class="tooltip-arrow"></div>
@@ -155,6 +159,9 @@
                 <h class="input_title">居住縣市</h>
                 <select id="addressCity" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="居住縣市"> 
                   <option value="" disabled selected>居住縣市</option>
+                  <% for(var i=0; i<postalData.length; i++) { %>
+                    <option value='<%= postalData[i].addressCity %>'><%= postalData[i].addressCity %></option>
+                  <% } %>
                 </select>
                 <div class="tooltip fade bottom in" role="tooltip" id="addressCity-tooltip">
                   <div class="tooltip-arrow"></div>
