@@ -20,9 +20,19 @@ module.exports = {
 
         var tab=req.param("tab");
         var order=req.param("order");
+        var sort=req.param("sort");
         var board=req.param("board");
         var keyword=req.param("search");
         var page=req.param("page");
+
+        if(order!="DESC"&&order!="ASC") {
+            res.send(400, {error: "bad request error"});
+        }
+        if(sort!="classification"&&sort!="title"&&sort!="author"&&sort!="createdAt"&&sort!="clickNum"&&sort!="responseNum"&&sort!="niceNum"&&sort!="lastResponseTime") {
+            res.send(400, {error: "bad request error"});
+        }
+
+        var elite="";
         switch (tab) {
             case "all":
               classification="";
@@ -39,13 +49,21 @@ module.exports = {
             case "others":
               classification="其它";
               break;
+            case "elite":
+              classification="";
+              elite="1";
+              break;
+            default:
+              res.send(400, {error: "bad request error"});
         }
 
         if(board==21) { // 專業知識論壇頁面不開放
-            res.send(500, { err: "DB Error" });
+            res.send(400, {error: "bad request error"});
+        } else if(board<1||board>20) {
+            res.send(400, {error: "bad request error"});
         }
         
-        Articles.find({classification: {'contains': classification}, board: board, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
+        Articles.find({classification: {'contains': classification}, title: {'contains': keyword}, board: board, deleted: "false", elite: {'contains': elite}}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -57,8 +75,35 @@ module.exports = {
                         
                         BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
                             totalPage=Math.ceil(articleList.length/articleNumPerPage);
-                            curPage=req.param("page");
-                            articleList=articleList.slice((curPage-1)*20, curPage*20);
+                            if(page>totalPage||page<1) {
+                                res.send(400, {error: "bad request error"});
+                            } 
+
+                            articleList.sort(function(a, b) {
+                                if(order=="ASC") {
+                                    if(sort=="responseNum") 
+                                        return a.response.length-b.response.length;
+                                    else if(sort=="niceNum")
+                                        return a.nicer.length-b.nicer.length;
+                                    else if(sort="author")
+                                        return a[sort].alias.localeCompare(b[sort].alias);
+                                    else
+                                        return a[sort].localeCompare(b[sort]);
+                                } else {
+                                    if(sort=="responseNum") 
+                                        return b.response.length-a.response.length;
+                                    else if(sort=="niceNum")
+                                        return b.nicer.length-a.nicer.length;
+                                    else if(sort="author")
+                                        return b[sort].alias.localeCompare(a[sort].alias);
+                                    else {
+                                        console.log(b[sort].localeCompare(a[sort]));
+                                        return b[sort].localeCompare(a[sort]);
+                                    }
+                                }
+                            });
+
+                            articleList=articleList.slice((page-1)*20, page*20);
                             for(var i=0; i<articleList.length; i++) {
                                 if(articleList[i].report&&articleList[i].report.length>=maxReport) {
                                     articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
@@ -99,6 +144,16 @@ module.exports = {
                                 articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
                                 articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
                             }
+
+                            var proInfo=-1;
+                            for(var i=0; i<boardsCateList.length; i++) {
+                                if(boardsCateList[i].id==5) {
+                                    proInfo=i;
+                                    break;
+                                }
+                            }
+                            boardsCateList.splice(i, 1);
+
                             res.view("board/index", {
                                 tab: req.param("tab"),
                                 keyword: req.param("search"),
@@ -108,7 +163,7 @@ module.exports = {
                                 boardsCateList: boardsCateList,
                                 articleList: articleList,
                                 totalPage: totalPage,
-                                curPage: curPage,
+                                page: page,
                                 color: ["warning", "success"],
                                 scripts: [
                                     '/js/js_board/mainJS.js'

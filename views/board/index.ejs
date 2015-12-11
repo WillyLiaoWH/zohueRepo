@@ -15,16 +15,12 @@
           $( "#articleList tbody > tr:odd" ).removeClass().addClass("success");}, 30);
       }
     </script>
-    
-    <script>
-      if(<%=%>)
-    </script>
 
     <div class="container-fluid col-md-9">
       <div id="forumContent" style="margin-left:0px;">
         <div class="row-fluid" style="margin-left: 0px; margin-bottom: 10px;">
           <div class="col-md-6">
-           <h1 id="title" style="color:#D26900; margin-left:0px;"><span style='cursor: pointer;' onclick="window.location.assign('/board-<%=board%>?tab=all&order=lastResponseTime&page=<%=curPage%>&search=')">作夥病友論壇—<%=boardCateTitle%>—<%=boardTitle%></span></h1>
+           <h1 id="title" style="color:#D26900; margin-left:0px;"><span style='cursor: pointer;' onclick="window.location.assign('/board-<%=board%>?tab=all&sort=lastResponseTime&order=DESC&page=<%=page%>&search=')">作夥病友論壇—<%=boardCateTitle%>—<%=boardTitle%></span></h1>
           </div>
           <div id="d_searchDiv" class="col-md-6" style="display:inline-block; text-align:right;">   
             <input type="text" class="s" id="searchWord" placeholder="搜尋文章" value='<%=keyword%>'/>
@@ -109,7 +105,7 @@
                <% if(totalPage>0) { %>
                 <tr><td>頁次：</td>
                   <% for(var i=1; i<=totalPage; i++) { %>
-                    <% if(i!=curPage) { %>
+                    <% if(i!=page) { %>
                       <td><a style='cursor: pointer;' onclick='pageClick(<%=i%>);'><%=i%></a></td>
                     <% } else { %>
                       <td><%=i%></td>
@@ -147,12 +143,12 @@
           <table id="articleList" class="table table-hover">
             <thead>
               <tr style='background-color: #324232; color:white;' onclick='setTableRowStripCss();'>
-                <td style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'>類別</td>
-                <td style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'>文章標題</td>
-                <td style='width:22%; text-align:center; cursor:pointer;'><span onClick='orderbyAuthor();'>發表人<span class='caret'></span></span>/ <span onClick='orderbyPostTime();'>發表時間<span class='caret'></span></span></td>
-                <td style='width:12%; text-align:center; cursor:pointer;'><span onClick='orderbyClickNum();'>點閱<span class='caret'></span></span> / <span onClick='orderbyResponseNum();'>回覆<span class='caret'></span></span></td>
-                <td style='width:6%; text-align:center; cursor:pointer;' onClick='orderbyNicer();'>推薦<span class='caret'></span></td>
-                <td style='text-align:center; cursor:pointer;' onClick='orderbyLastResponseTime();'>最新回應時間<span class='caret'></span></td>
+                <td style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'><span onClick='changeSort("classification");'>類別</span></td>
+                <td style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'><span onClick='changeSort("title");'>文章標題</td>
+                <td style='width:22%; text-align:center; cursor:pointer;'><span onClick='changeSort("author");'>發表人<span class='caret'></span></span>/ <span onClick='changeSort("createdAt");'>發表時間<span class='caret'></span></span></td>
+                <td style='width:12%; text-align:center; cursor:pointer;'><span onClick='changeSort("clickNum");'>點閱<span class='caret'></span></span> / <span onClick='changeSort("responseNum");'>回覆<span class='caret'></span></span></td>
+                <td style='width:6%; text-align:center; cursor:pointer;' onClick='changeSort("niceNum");'>推薦<span class='caret'></span></td>
+                <td style='text-align:center; cursor:pointer;' onClick='changeSort("lastResponseTime");'>最新回應時間<span class='caret'></span></td>
               </tr>
             </thead>
             <tbody class="body">
@@ -180,7 +176,7 @@
             <% if(totalPage>0) { %>
               <tr><td>頁次：</td>
                 <% for(var i=1; i<=totalPage; i++) { %>
-                  <% if(i!=curPage) { %>
+                  <% if(i!=page) { %>
                     <td><a style='cursor: pointer;' onclick='pageClick(<%=i%>);'><%=i%></a></td>
                   <% } else { %>
                     <td><%=i%></td>

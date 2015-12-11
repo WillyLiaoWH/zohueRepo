@@ -4,59 +4,35 @@
 專業知識頁面應該也可以用同樣的方式改寫.
 另外也把一些看起來用不到的部分註解掉了 */
 
-//var allow_create;
-//var searched;
-//var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
-//var loaded=false;
 var page;
 var keyword="";
+var sort="";
 var tab="";
 var maxReport=3;
 var board="";
-var categoryList=[];
 var boardList=[];
-var titleClickCount=0;
-var authorClickCount=0;
-var postTimeClickCount=0;
-var clickClickCount=0;
-var responseClickCount=0;
-var nicerClickCount=0;
-var lrtClickCount=0;
-var currentOrder="";
-var currentDirection="";
 var url ="";
-var isNowElite=false;
-var arti = "";
 
 
 $(document).ready(function(){
-  $.ajax({
-    url:   "/getBoardCategory" ,
-    success: 
-    function(boardCategory) {
-      categoryList=boardCategory;
-    },
-    async:   false
-  }).error(function(res){
-    showDialog("錯誤訊息",res.responseJSON.err);
-  });
 
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
-    window.location.assign("/board-"+board+"?tab=all&order=lastResponseTime&page=1&search="+keyword);
+    window.location.assign("/board-"+board+"?tab="+tab+"&sort="+sort+"&order="+order+"&page=1&search="+keyword);
   });
 
-  // if ($("#refresh").val() == 'yes') { location.reload(true); } else { $('#refresh').val('yes'); }
-  // 根據網址判斷如何設定預設畫面
+  // 根據網址取得各項資訊
   var url = document.URL;
-  regex=/.*board-(.*)\?tab=(.*)&order=(.*)&page=(.*)&search=(.*)/;
+  regex=/.*board-(.*)\?tab=(.*)&sort=(.*)&order=(.*)&page=(.*)&search=(.*)/;
   board=url.replace(regex, "$1");
-  keyword=url.replace(regex, "$5");
+  keyword=url.replace(regex, "$6");
   keyword = decodeURIComponent(keyword);
-  page=url.replace(regex,"$4");
-  tab=url.replace(regex, "$2")
-  order=url.replace(regex, "$3");
-  order=order!=null&&order.length>0?order:"createdAt";
+  page=url.replace(regex,"$5");
+  tab=url.replace(regex, "$2");
+  sort=url.replace(regex, "$3");
+  sort=sort!=null&&sort.length>0?order:"lastResponseTime";
+  order=url.replace(regex, "$4");
+  order=order!=null&&order.length>0?order:"DESC";
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
     if(!auth) {
@@ -77,135 +53,15 @@ $(document).ready(function(){
     }catch(err){}
   });
 
-  //$("#tabs li a").click(function(){
-  //  window.location.reload();
-  //});
-
 });
 
-  // 看板跳轉 listener
-  /*document.getElementById("boardCategory").onchange=function() {
-    $.get("/getBoardsOfCategory/"+$("#boardCategory").val(), function(boards) {
-      var boardSelect=document.getElementById("board");
-      while(boardSelect.length>0) {
-        boardSelect.remove(0);
-      }
-      var inCate=false;
-      for(var i=0; i<boards.length; i++) {
-        var option=document.createElement('option');
-        option.text=boards[i].title;
-        option.value=boards[i].id;
-        if(boards[i].id==board) {
-          option.selected=true;
-          inCate=true;
-        }
-        try {
-          boardSelect.add(option, null);
-        } catch(ex) {
-          //for IE
-          boardSelect.add(option);
-        }
-      }
-      if(!inCate) {
-        var option=document.createElement('option');
-        option.text="請選擇";
-        option.value="";
-        option.disabled=true;
-        option.selected=true;
-        try {
-          boardSelect.add(option, 0);
-        } catch(ex) {
-          //for IE
-          boardSelect.add(option);
-        }
-      }
-    });
-  };
-  document.getElementById("board").onchange=function() {
-    if($("#board").val()!=board)
-      window.location.assign("/board-"+$("#board").val()+"/1?tab=all");
-  };
-});*/
-
-
 function tabClick(tabc){
-  window.location.assign("/board-"+board+"?tab="+tabc+"&order=lastResponseTime&page=1&search="+keyword);
+  window.location.assign("/board-"+board+"?tab="+tabc+"&sort="+sort+"&order="+order+"&page=1&search="+keyword);
 }
 
 function pageClick(page){
-  window.location.assign("/board-"+board+"?tab="+tab+"&order="+order+"&page="+page+"&search="+keyword);
+  window.location.assign("/board-"+board+"?tab="+tab+"&sort="+sort+"&order="+order+"&page="+page+"&search="+keyword);
 }
-
-// function clearTab(){
-//   $("#all").removeClass("active");
-//   $("#motion").removeClass("active");
-//   $("#share").removeClass("active");
-//   $("#problem").removeClass("active");
-//   $("#others").removeClass("active");
-//   $("#elite").removeClass("activeOrange");
-//   $("#elite").addClass("nonActiveOrange");
-// }
-
-// function setPage(page, keyword, orderby, direction) {
-//   // 篩選頁籤
-//   switch (tab) {
-//     case "all":
-//       $("#all").addClass("active");
-//       break;
-//     case "motion":
-//       $("#motion").addClass("active");
-//       break;
-//     case "share":
-//       $("#share").addClass("active");
-//       break;
-//     case "problem":
-//       $("#problem").addClass("active");
-//       break;
-//     case "others":
-//       $("#others").addClass("active");
-//       break;
-//     case "elite":
-//       $("#elite").removeClass("nonActiveOrange");
-//       $("#elite").addClass("activeOrange");
-//       tab="all";
-//       break;
-//   }
-//   // 獲得文章
-//   if(keyword!="") {
-//     document.getElementById("searchWord").value = keyword;
-//     $.post( "/searchArticle/"+tab, { keyword: keyword, board: board}, function(res){
-//       var boardName=res.board.title;
-//       var boardCate=res.board.category.title;
-//       $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
-//       var res_search=res.articlesList
-//       temp_result=res_search;
-//       if(res_search.length==0){
-//         $("#cancleSearch").css("background-color", "rgba(232, 81, 0, 0.7)");
-//         showDialog("錯誤訊息","目前無相關資料！");
-//         document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
-//         setBoardList();
-//       }else{
-//         //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
-//         setSearchResult(res_search, page, orderby, direction);
-//       }
-//     }).error(function(res_search){
-//       showDialog("錯誤訊息","目前無相關資料！");
-//       document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
-//       setBoardList();
-//     });
-//   } else {
-//     $.get("/setBoardPage/"+board+"/"+tab, function(res){
-//       var boardName=res.board.title;
-//       var boardCate=res.board.category.title;
-//       $('#title').html("<span style='cursor: pointer;' onClick=\"window.location.assign('/board-"+board+"/1?tab=all&order=createdAt')\">作夥病友論壇—"+boardCate+"—"+boardName+"</a>");
-//       var res_search=res.articlesList;
-//       //setBoardCategory(res.boards, res.boardCate, res.board.category.id);
-//       setTimeout(function(){
-//         setSearchResult(res_search, page, orderby, direction);
-//       }, 300);
-//     });
-//   }  
-// }
 
 function readConfirm(articleid){
   bootbox.dialog({
@@ -229,26 +85,7 @@ function readConfirm(articleid){
   });
 }
 
-// function postArticle() {
-//   $.post("/post/",{board:board},function(res){
-//     alert(res);
-//   })
-//   .error(function(res){
-//     alert(res.responseJSON.err);
-//   });
-// }
-
 function postArticle() {
-  // $.get("/checkFull", function(full){
-  //   if(!full) {
-  //     alert("你尚未完整註冊，不能發表文章喔");
-  //     // window.location.replace("/home");
-  //   }
-  //   else{
-  //      window.location.assign("/post/"+board);
-  //   }
-  // });
-
   $.get("/checkAuth", function(auth){
     if(!auth) {
       showDialog("一般訊息","您尚未登入，不能發表文章喔！快登入加入大家的討論吧！",function(){
@@ -278,457 +115,22 @@ function postArticle() {
 
 function cancleSearch(){
   document.getElementById("searchWord").value = "";
-  window.location.assign("/board-"+board+"/1?tab="+tab);
+  window.location.assign("/board-"+board+"?tab="+tab+"&sort="+sort+"&order="+order+"&page=1&search=");
 }
 
-function cleanArticleList(articleList){
-  ln = articleList.length;
-  for(i=0;i<ln;i++){
-    if(articleList[i].board.category==5){
-      articleList.splice(i, 1);    
-      ln = ln -1;
-      i=i-1; 
+function changeSort(attr) {
+  if(attr!=sort)
+    window.location.assign("/board-"+board+"?tab="+tab+"&sort="+attr+"&order="+order+"&page=1&search=")
+  else {
+    if(order=="DESC") {
+      order="ASC";
+      window.location.assign("/board-"+board+"?tab="+tab+"&sort="+sort+"&order="+order+"&page=1&search=");
+    } else if(order=="ASC") {
+      order="DESC";
+      window.location.assign("/board-"+board+"?tab="+tab+"&sort="+sort+"&order="+order+"&page=1&search=");
     }
   }
-  return articleList;
 }
-
-function eliteArticleList(articleList){
-  ln = articleList.length;
-  for(i=0;i<ln;i++){
-    if(articleList[i].elite=="0"){
-      articleList.splice(i, 1);    
-      ln = ln -1;
-      i=i-1; 
-    }
-  }
-  return articleList;
-}
-
-// 產生預設/搜尋結果畫面
-function setSearchResult(articleList, page, orderby, direction){
-    currentOrder=orderby;
-    currentDirection=direction;
-    arti = articleList;
-    articleList = cleanArticleList(articleList);
-    if(isNowElite){
-      articleList = eliteArticleList(articleList);
-      //clearTab();
-    }
-    //排序文章
-    if(orderby=="createdAt"){
-      if(direction=="desc"){
-        articleList.sort(function(a, b) { return new Date(b.createdAt)-new Date(a.createdAt);});
-      }else if(direction=="asc"){
-        articleList.sort(function(a, b) { return new Date(a.createdAt)-new Date(b.createdAt);});
-      }
-    }else if (orderby=="lrt"){
-      if(direction=="desc"){
-        articleList.sort(function(a, b) {return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);});
-      }else if(direction=="asc"){
-        articleList.sort(function(a, b) {return new Date(a.lastResponseTime)-new Date(b.lastResponseTime);});
-      }
-    }else if (orderby=="title"){
-      if(direction=="desc"){
-          articleList.sort(function(a, b) { 
-            return a.board.title.localeCompare(b.board.title);
-        });
-      }else if(direction=="asc"){
-          articleList.sort(function(a, b) {
-            return b.board.title.localeCompare(a.board.title);
-        });
-      }
-    }else if (orderby=="author"){
-      if(direction=="desc"){
-        articleList.sort(function(a, b) {
-          if(a.author.alias < b.author.alias) return -1;
-          if(a.author.alias > b.author.alias) return 1;
-          return 0;
-        });
-      }else if(direction=="asc"){
-        articleList.sort(function(a, b) {
-          if(a.author.alias < b.author.alias) return -1;
-          if(a.author.alias > b.author.alias) return 1;
-          return 0;
-        });
-      }
-    }else if (orderby=="clickNum"){ 
-      if(direction=="desc"){
-        articleList.sort(function(a, b) {return b.clickNum-a.clickNum;});
-      }else if(direction=="asc"){
-        articleList.sort(function(a, b) {return a.clickNum-b.clickNum;});
-      }
-    }else if (orderby=="responseNum"){
-      if(direction=="desc"){
-        articleList.sort(function(a, b) {return b.response.length-a.response.length;});
-      }else if(direction=="asc"){
-        articleList.sort(function(a, b) {return a.response.length-b.response.length;});
-      }
-    }else if (orderby=="nicer"){
-      if(direction=="desc"){
-        articleList.sort(function(a, b) {return b.nicer.length-a.nicer.length;});
-      }else if(direction=="asc"){
-        articleList.sort(function(a, b) {return a.nicer.length-b.nicer.length;});
-      }
-    }else{
-      articleList.sort(function(a, b) {return new Date(b.lastResponseTime)-new Date(a.lastResponseTime);});
-    }
-
-    myTable="<thead>";
-    myTable+="<tr style='background-color: #324232; color:white;' onClick='setTableRowStripCss();'>"
-    myTable+="<td style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'>類別</td>"
-    myTable+="<td style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'>文章標題</td>"
-    myTable+="<td style='width:22%; text-align:center; cursor:pointer;'><span onClick='orderbyAuthor();'>發表人<span class='caret'></span></span>/ <span onClick='orderbyPostTime();'>發表時間<span class='caret'></span></span></td>";
-    myTable+="<td style='width:12%; text-align:center; cursor:pointer;'><span onClick='orderbyClickNum();'>點閱<span class='caret'></span></span> / <span onClick='orderbyResponseNum();'>回覆<span class='caret'></span></span></td>";
-    myTable+="<td style='width:6%; text-align:center; cursor:pointer;' onClick='orderbyNicer();'>推薦<span class='caret'></span></td>";
-    myTable+="<td style='text-align:center; cursor:pointer;' onClick='orderbyLastResponseTime();'>最新回應時間<span class='caret'></span></td></tr>";
-    myTable+="</thead>";
-    myTable+="<tbody>";
-    articleNum=20;
-
-    lastPageArticlesNum=articleList.length%articleNum;
-    pageNum=(articleList.length-lastPageArticlesNum)/articleNum;
-    if(lastPageArticlesNum!=0) {
-      pageNum+=1;
-    }
-    if(articleList.length>0){
-      pageContext="<tr><td>頁次：</td>";
-      for(i=1; i<=pageNum; i++) {
-        if(i!=page) {
-          pageContext+="<td><a style='cursor: pointer;' onclick='pageClick("+i+");'>"+i+"</a></td>";
-        } else {
-          pageContext+="<td>"+i+"</td>";
-        }
-      }
-      pageContext+="</tr>"
-      document.getElementById("page").innerHTML = pageContext;
-      document.getElementById("pageDown").innerHTML = pageContext;
-    }else{
-      document.getElementById("msg").innerHTML = "嗨～快來發表一些文章吧！";
-    }
-
-    if(articleList.length%20==0){
-      pageNum=articleList.length/20+1;
-    }
-    if(page!=pageNum) {
-      for(i=0; i<articleNum; i++) {
-        clickNum=articleList[i+articleNum*(page-1)].clickNum;
-        responseNum=articleList[i+articleNum*(page-1)].response.length;
-        niceNum=articleList[i+articleNum*(page-1)].nicer.length;
-
-        updateTime=new Date(articleList[i+articleNum*(page-1)].lastResponseTime).toLocaleString();
-        if(updateTime.indexOf("GMT")==-1) {
-          lastResponseTime=updateTime.slice(0, updateTime.length-3);
-        } else {
-          lastResponseTime=updateTime.slice(0, updateTime.indexOf("GMT"))+updateTime.slice(updateTime.indexOf("GMT")+5, updateTime.length-3);
-        }
-        
-        createdAt=new Date(articleList[i+articleNum*(page-1)].createdAt).toLocaleString();
-        if(createdAt.indexOf("GMT")==-1) {
-          postTime=createdAt.slice(0, createdAt.length-3);
-        } else {
-          postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
-        }
-
-        /* 判斷發表人類別，決定稱謂與代表圖像 */
-        authorType="";
-        if(articleList[i].author.type=="D"){
-          authorType="&nbsp醫師";
-          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="S"){
-          authorType="&nbsp社工師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="RN"){
-          authorType="&nbsp護理師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="P"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="F"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else{
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }
-
-        if (articleList[i + articleNum * (page - 1)].report) {
-          if (articleList[i + articleNum * (page - 1)].report.length >= maxReport) {
-            var link = "onClick='readConfirm(" + articleList[i + articleNum * (page - 1)].id + ");'";
-            var color = "color:grey;";
-            var linkcolor = "color:grey;";
-            var badPic = '<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
-          } else {
-            var link = "href=\"/article/" + articleList[i + articleNum * (page - 1)].id + "\"";
-            var color = "";
-             var linkcolor = "color:#000079;";
-             var badPic = "";
-           }
-        } else {
-          var link = "href=\"/article/" + articleList[i + articleNum * (page - 1)].id + "\"";
-          var color = "";
-          var linkcolor = "color:#000079;";
-          var badPic = "";
-        }
-
-        if(i%2==0){
-          myTable+="<tr class='warning'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-            
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
-          myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
-          myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
-
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+clickNum+"/"+responseNum+"</td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
-           
-        }else{
-          myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
-          myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
-          myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
-
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+clickNum+"/"+responseNum+"</td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>";
-        }
-      }
-    }
-    else {
-      for(i=0; i<lastPageArticlesNum; i++) {
-        clickNum=articleList[i+articleNum*(page-1)].clickNum;
-        responseNum=articleList[i+articleNum*(page-1)].response.length;
-        niceNum=articleList[i+articleNum*(page-1)].nicer.length;
-
-        updateTime=new Date(articleList[i+articleNum*(page-1)].lastResponseTime).toLocaleString();
-        if(updateTime.indexOf("GMT")==-1) {
-          lastResponseTime=updateTime.slice(0, updateTime.length-3);
-        } else {
-          lastResponseTime=updateTime.slice(0, updateTime.indexOf("GMT"))+updateTime.slice(updateTime.indexOf("GMT")+5, updateTime.length-3);
-        }
-        
-        createdAt=new Date(articleList[i+articleNum*(page-1)].createdAt).toLocaleString();
-        if(createdAt.indexOf("GMT")==-1) {
-          postTime=createdAt.slice(0, createdAt.length-3);
-        } else {
-          postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
-        }
-
-        /* 判斷發表人類別，決定稱謂與代表圖像 */
-        authorType="";
-        if(articleList[i].author.type=="D"){
-          authorType="&nbsp醫師";
-          authorIcon="<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="S"){
-          authorType="&nbsp社工師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證社工師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="RN"){
-          authorType="&nbsp護理師";
-          authorIcon="<img src='/images/img_forum/sw_icon.png' title='已認證護理師' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="P"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='病友' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else if(articleList[i].author.type=="F"){
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='家屬' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }else{
-          authorIcon="<img src='/images/img_forum/user_icon.png' title='一般民眾' style='float:left;margin-right:10px; height:50px; width:50px;'>";
-        }
-
-        if (articleList[i + articleNum * (page - 1)].report) {
-          if (articleList[i + articleNum * (page - 1)].report.length >= maxReport) {
-            var link = "onClick='readConfirm(" + articleList[i + articleNum * (page - 1)].id + ");'";
-            var color = "color:grey;";
-            var linkcolor = "color:grey;";
-            var badPic = '<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
-          } else {
-            var link = "href=\"/article/" + articleList[i + articleNum * (page - 1)].id + "\"";
-            var color = "";
-            var linkcolor = "color:#000079;";
-            var badPic = "";
-          }
-        } else {
-          var link = "href=\"/article/" + articleList[i + articleNum * (page - 1)].id + "\"";
-          var color = "";
-          var linkcolor = "color:#000079;";
-          var badPic = "";
-        }
-
-        if(i%2==0){
-          myTable+="<tr class='warning'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-            
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
-          myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
-          myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
-
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+clickNum+"/"+responseNum+"</td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>"; 
-        }else{
-          myTable+="<tr class='success'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+badPic+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a "+link+" style='text-decoration:none;"+linkcolor+"text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
-          myTable+="<td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+authorIcon+"<img src='"+articleList[i+articleNum*(page-1)].author.img+"' style='float:left; margin-right:10px; height:50px; width:50px;'></td>";
-          myTable+="<td>"+"<a href='/profile?"+articleList[i+articleNum*(page-1)].author.id+"'>"+articleList[i+articleNum*(page-1)].author.alias+"</a>"+authorType+"</td></tr>";
-          myTable+="<tr><td>"+postTime+"</td></tr></table></td>";
-
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+clickNum+"/"+responseNum+"</td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+niceNum+"&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+lastResponseTime+"</td></tr>";
-        }
-      }
-    } 
-    myTable+="</tbody>";
-    document.getElementById("articleList").innerHTML = myTable;
-    // 上方看板 bar
-    setTimeout(function(){setBoardList();}, 100);
-  }
-
-  // 產生看板跳轉 option
-  /*function setBoardCategory(boards, boardCategorys, boardID){
-    console.log(JSON.stringify(boards));
-    var cateSelect=document.getElementById('boardCategory');
-    for(var i=0; i<boardCategorys.length; i++) {
-      var option=document.createElement('option');
-      option.text="前往看板-"+boardCategorys[i].title;
-      option.value=boardCategorys[i].id;
-      if(boardID==boardCategorys[i].id)
-        option.selected=true;
-      try {
-        cateSelect.add(option, null);
-      } catch(ex) {
-        //for IE
-        cateSelect.add(option);
-      }
-    }
-    boards.sort(function(a, b) {
-      return a.id-b.id;
-    });
-    var boardSelect=document.getElementById('board');
-    for(var i=0; i<boards.length; i++) {
-      var option=document.createElement('option');
-      option.text=boards[i].title;
-      option.value=boards[i].id;
-      if(board==boards[i].id)
-        option.selected=true;
-      try {
-        boardSelect.add(option, null);
-      } catch(ex) {
-        //for IE
-        boardSelect.add(option);
-      }
-    }
-  }*/
-
-function orderbyTitle(){
-  setTimeout(function(){
-    titleClickCount=titleClickCount+1;
-    if(titleClickCount%2==1){
-       setPage(1, keyword, "title", "desc");
-    }else{
-       setPage(1, keyword, "title", "asc");
-    }
-  },1);
-}
-
-
-function orderbyAuthor(){
-  setTimeout(function(){
-    authorClickCount=authorClickCount+1;
-    if(authorClickCount%2==1){
-       setPage(1, keyword, "author", "desc");
-    }else{
-       setPage(1, keyword, "author", "asc");
-    }
-  },1);
-}
-
-
-function orderbyPostTime(){
-  setTimeout(function(){
-    postTimeClickCount=postTimeClickCount+1;
-    if(postTimeClickCount%2==1){
-       setPage(1, keyword, "createdAt", "desc");
-    }else{
-       setPage(1, keyword, "createdAt", "asc");
-    }
-  },1);
-}
-
-
-function orderbyClickNum(){
-  setTimeout(function(){
-    clickClickCount=clickClickCount+1;
-    if(clickClickCount%2==1){
-       setPage(1, keyword, "clickNum", "desc");
-    }else{
-       setPage(1, keyword, "clickNum", "asc");
-    }
-  },1);
-}
-
-function orderbyResponseNum(){
-  setTimeout(function(){
-    responseClickCount=responseClickCount+1;
-    if(responseClickCount%2==1){
-       setPage(page, keyword, "responseNum", "desc");
-    }else{
-       setPage(1, keyword, "responseNum", "asc");
-    }
-  },1);
-}
-
-function orderbyNicer(){
-  setTimeout(function(){
-    nicerClickCount=nicerClickCount+1;
-    if(nicerClickCount%2==1){
-       setPage(1, keyword, "nicer", "desc");
-    }else{
-       setPage(1, keyword, "nicer", "asc");
-    }
-  },1);
-}
-
-function orderbyLastResponseTime(){
-  setTimeout(function(){
-    lrtClickCount=lrtClickCount+1;
-    if(lrtClickCount%2==1){
-       setPage(1, keyword, "lrt", "desc");
-    }else{
-       setPage(1, keyword, "lrt", "asc");
-    }
-  },1);
-}
-
-//  function setBoardList(){
-//   if($("#boardlist").html().trim()==""){
-//     boardList=[];
-//     for(i=1; i <= categoryList.length; i++){ 
-//       $.ajax({
-//         url:   "/getBoardsOfCategory/" + i ,
-//         success: 
-//         function(boards) { 
-//           bl = [];
-//           for(j=0; j<boards.length; j++){
-//             bl.push(boards[j].title); 
-//           }
-//           boardList[(i-1)]=bl;
-//         },
-//         async:   false
-//       });
-//     }
-//     var cc = 0;
-//     catHtml="";    
-//     for(i=1; i<=categoryList.length; i++){ 
-//       catHtml = catHtml + "<li><a id='drop"+i+"' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>"+categoryList[i-1].title+"<span class='caret'></span></a>";
-//       catHtml = catHtml + "<ul id='menu1' class='dropdown-menu' aria-labelledby='drop"+i+"'>";
-//       for(j=0;j<boardList[i-1].length;j++){
-//         cc = cc + 1;
-//         catHtml = catHtml + "<li><a href='"+"/board-"+cc+"/1?tab=all&order="+"'>"+boardList[i-1][j]+"</a></li>";  
-//       }
-//       catHtml = catHtml + "</ul></li>";
-//     }
-//     $("#boardlist").html(catHtml);
-//   }
-// }
-
 
 function showDialog(title, message, cb){
   bootbox.dialog({
