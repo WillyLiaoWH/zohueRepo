@@ -51,7 +51,10 @@ module.exports = {
     },
     follower: {
       collection: 'user',
-    },
+    },elite: {
+      type: 'string',
+      required: true
+    }
   }
 };
 

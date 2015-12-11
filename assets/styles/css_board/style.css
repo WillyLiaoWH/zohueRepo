@@ -18,17 +18,17 @@
 }
 
 #searchWord{
-	//width:350px;
+	/*width:350px;
 	//width:100%;
 	//margin: 8px 0px 0px 0px;
 	//display: inline !important;
+	//width:100%;*/
 	width:250px;
-	//width:100%;
 	margin: 15px -5px 0px 0px;
 }
 
 #search{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
@@ -41,7 +41,7 @@
 }
 
 #cancleSearch{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
@@ -143,7 +143,7 @@
 }
 
 #sideBanner{
-	//display: none !important ;
+	/*display: none !important ;*/
 }
 
 #article{
@@ -187,6 +187,12 @@
 	display: none !important;
 }
 
+@media screen and (min-width: 600px){
+#signup{
+		display: none !important;
+	}
+}
+
 @media screen and (max-width: 480px){
 	#forumContent{
 		width: 100% !important;
@@ -206,7 +212,7 @@
 
 @media screen and (max-width: 480px) and (max-width: 768px) {
 	#post{
-		//display: none !important;
+		/*display: none !important;*/
 	}
 	#mobile_post{
 		display: inline-block !important;
@@ -241,7 +247,7 @@
 		width: 700px !important;
 	}
 	#post{
-		//display: none !important;
+		/*display: none !important;*/
 	}
 }
 
