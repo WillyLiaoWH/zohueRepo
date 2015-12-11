@@ -925,7 +925,7 @@ module.exports = {
     searchFriends: function(req, res) {
         function sendback(allUser) {
             var unit=10;
-            var place=req.param("place");
+            var place=req.param("place")==undefined?"":req.param("place");
             User.find({account: req.session.user.account}).exec(function(err, user) {
                 if(err) {
                     console.log(err);
@@ -962,17 +962,19 @@ module.exports = {
                         } else {
                             // isFriend.push(-2);
                         }
-                        users[users.length-1].FBmail=undefined;
-                        users[users.length-1].account=undefined;
-                        users[users.length-1].email=undefined;
-                        users[users.length-1].fname=undefined;
-                        users[users.length-1].forgetQ=undefined;
-                        users[users.length-1].forgetA=undefined;
-                        users[users.length-1].lname=undefined;
-                        users[users.length-1].password=undefined;
-                        users[users.length-1].phone=undefined;
-                        users[users.length-1].postalCode=undefined;
-                        users[users.length-1].selfIntroduction=undefined;
+                        if(users.length>0) {
+                            users[users.length-1].FBmail=undefined;
+                            users[users.length-1].account=undefined;
+                            users[users.length-1].email=undefined;
+                            users[users.length-1].fname=undefined;
+                            users[users.length-1].forgetQ=undefined;
+                            users[users.length-1].forgetA=undefined;
+                            users[users.length-1].lname=undefined;
+                            users[users.length-1].password=undefined;
+                            users[users.length-1].phone=undefined;
+                            users[users.length-1].postalCode=undefined;
+                            users[users.length-1].selfIntroduction=undefined;
+                        }
                         if(push) {
                             var defaultAuth="friend";
                             var ageAuth;
@@ -1032,6 +1034,51 @@ module.exports = {
                                     }
                                     break;
                             }
+                            var picSize = 100;
+                            var type = allUser[i].type;
+                            var diseaseList={
+                                  '1':"鼻咽癌",
+                                  '2':"鼻腔/副鼻竇癌",
+                                  '3':"口腔癌",
+                                  '4':"口咽癌",
+                                  '5':"下咽癌",
+                                  '6':"喉癌",
+                                  '7':"唾液腺癌",
+                                  '8':"甲狀腺癌",
+                                  '999':"其它"
+                            };
+                            switch(type){
+                                case "D":
+                                    users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                    users[users.length-1].authorType="醫師";
+                                    users[users.length-1].diseaseDesc="主治"+diseaseList[allUser[i].primaryDisease];
+                                    break;
+                                case "S":
+                                    users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                    users[users.length-1].authorType="社工師";
+                                    users[users.length-1].diseaseDesc="主治"+diseaseList[allUser[i].primaryDisease];
+                                    break;
+                                case "RN":
+                                    users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                    users[users.length-1].authorType="護理師";
+                                    users[users.length-1].diseaseDesc="主治"+diseaseList[allUser[i].primaryDisease];
+                                    break;
+                                case "P":
+                                    users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                    users[users.length-1].authorType="";
+                                    users[users.length-1].diseaseDesc="患有"+diseaseList[allUser[i].primaryDisease];
+                                    break;
+                                case "F":
+                                    users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                    users[users.length-1].authorType="";
+                                    users[users.length-1].diseaseDesc="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
+                                    break;
+                                default:
+                                    users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                    users[users.length-1].authorType="";
+                                    users[users.length-1].diseaseDesc="";
+                                    break;
+                            }
                         }
                     }
                     function forSort(a) {
@@ -1055,22 +1102,56 @@ module.exports = {
                     }
                     users.sort(function(a, b) {
                         return forSort(a)-forSort(b);
-                    })
-                    var hasNext;
+                    });
+                    //var hasNext;
                     if(users.length<=(page+1)*unit) {
                         hasNext=false;
-                        res.send({users: users.slice(page*unit), hasNext: hasNext});
+                        return res.view("friends/index", {
+                            users: users,
+                            hasNext: hasNext,
+                            page: page+1,
+                            diseaseList: diseaseList,
+                            scripts: [
+                                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                '/js/js_public/alertify.js',
+                                '/js/js_friends/mainJS.js'
+                              ],
+                            stylesheets: [
+                                '/styles/importer.css',
+                                '/styles/css_public/themes/alertify.core.css',
+                                '/styles/css_public/themes/alertify.default.css',
+                                '/styles/css_friends/style.css'
+                              ]
+                        });
+                        //res.send({users: users.slice(page*unit), hasNext: hasNext});
                     } else {
-                        hasNext=true;
-                        res.send({users: users.slice(page*unit, page*unit+unit), hasNext: hasNext});
+                        hasNext=true;console.log("~~~PAGE"+page+users.slice(0, page*unit+unit));
+                            return res.view("friends/index", {
+                                users: users.slice(0, page*unit+unit),
+                                hasNext: hasNext,
+                                page: page+1,
+                                diseaseList: diseaseList,
+                                scripts: [
+                                    '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                    '/js/js_public/alertify.js',
+                                    '/js/js_friends/mainJS.js'
+                                ],
+                                stylesheets: [
+                                    '/styles/importer.css',
+                                    '/styles/css_public/themes/alertify.core.css',
+                                    '/styles/css_public/themes/alertify.default.css',
+                                    '/styles/css_friends/style.css'
+                                ]
+                            });
+                        //res.send({users: users.slice(page*unit, page*unit+unit), hasNext: hasNext});
                     }
                 }
             });
         }
-        var alias=req.param("alias");
-        var disease=req.param("disease");
-        var place=req.param("place");
-        var userType=req.param("userType");
+        var alias=req.param("alias")==undefined?"":req.param("alias");
+        var disease=req.param("disease")==undefined?"":req.param("disease");
+        var place=req.param("place")==undefined?"":req.param("place");
+        var userType=req.param("userType")==undefined?"":req.param("userType");
         var monthMap={
             "Jan": 1,
             "Feb": 2,
@@ -1081,11 +1162,12 @@ module.exports = {
             "Jul": 7,
             "Aug": 8,
             "Sep": 9,
-            "Oct": 10,
+            "Oct": 10, 
             "Nov": 11,
             "Dec": 12
         };
-        var page=parseInt(req.param("thisPage"));
+        var page=req.param("thisPage")==undefined?0:parseInt(req.param("thisPage"));
+        console.log("FRIEND FIND "+alias+" "+userType+" "+disease+" "+place+" "+page);
         if(!req.session.user) {
             User.find({alias: {'contains': alias}}).exec(function(err, users) {
                 if(err) {
@@ -1110,10 +1192,11 @@ module.exports = {
                 } 
                 else {
                     User.find({where: {alias: {'contains': alias}, type: {'contains': userType}, suspended: { '!': true }}}).exec(function(err, allUser){
-                        if(err) 
+                        if(err){
                             res.send(500, {err: "DB Error"});
-                         else 
+                        }else{ 
                             sendback(allUser);
+                        }
                     });
                 }
             });    

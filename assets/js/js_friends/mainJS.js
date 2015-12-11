@@ -102,6 +102,12 @@ function removeAddFriend(parent, id) {
 }
 //搜尋使用者
 function search(page, mobile) {
+  var index = ($(window).width() < 768) ? "2" : "1";
+  window.location.href = '/friends?alias='+$("#alias"+index).val()+'&disease='+$("#disease"+index).val()+'&place='+$("#place"+index).val()+'&userType='+$("#userType"+index).val()+'&thisPage='+page; 
+}
+
+//搜尋使用者
+/*function search(page, mobile) {
   //判斷顯示的是行動版還是正常版欄位
   if(mobile) {
     var index="2";
@@ -237,7 +243,7 @@ function search(page, mobile) {
       }, 1000);
     }
   });
-}
+}*/
 
 function toProfile(id) {
   window.location.assign("/profile/?"+id);

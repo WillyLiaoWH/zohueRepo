@@ -89,7 +89,7 @@ module.exports.routes = {
   'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
   'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
-  'POST /searchFriends': 'User.searchFriends',
+  //'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
   'POST /deleteFile' : 'SubscribeEmailController.deleteFile',
   'POST /auth_setTimeline':'Timelines.auth_set',
@@ -312,21 +312,10 @@ module.exports.routes = {
       ]
     }
   },
-  '/friends': {
-    view: 'friends/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_public/alertify.js',
-        '/js/js_friends/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/importer.css',
-        '/styles/css_public/themes/alertify.core.css',
-        '/styles/css_public/themes/alertify.default.css',
-        '/styles/css_friends/style.css'
-      ]
-    }
+  'GET /friends': {
+    controller: 'UserController',
+    action: 'searchFriends',
+    skipAssets: true
   },
   '/notifications': {
     controller: 'NotificationController',
