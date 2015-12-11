@@ -73,6 +73,7 @@
   <hr>
         <div class="tab-content">
           <div class="tab-pane active" id="timeline">
+            <% if(traveler != "guest"){ %>
             <div class="row-fluid">
               <div><label id="postTimelineLabel" style="font-size:22px;"></label><br>
                 <div contentEditable="true" class="s" id="timeline_post_content">
@@ -103,7 +104,7 @@
                 </div>
               </div>
             </div>
-
+            <% } %>
 
 
 
@@ -146,6 +147,7 @@
    </div>
 
    <!--編輯區塊-->
+   <% if(traveler != "guest"){ %>
    <div class="container-fluid container_edit" id="container_edit<%= timelinesList[i].id %>">
       <% if(timelinesList[i].contentImg == ""){ %>
         <div class="row-fluid" id="div_edit_content<%= timelinesList[i].id %>" contenteditable="true" style=""><%= timelinesList[i].content %></div>
@@ -158,6 +160,7 @@
       <button value="插入圖片" id="editImage" class="b" name="<%= timelinesList[i].id %>"><img src="/images/img_forum/images_icon.png">插入圖片</button>
       <button value="取消編輯" id="editCancel" class="b" name="<%= timelinesList[i].id %>"><span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯</button>              
    </div>
+   <% } %>
 
    <!--文章內容-->
    <div class="row-fluid event_text"><%- timelinesList[i].content.replace(/\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>') %></div>
@@ -168,6 +171,7 @@
    <% } %>
 
    <!--推薦及設定-->
+   <% if(traveler != "guest"){ %>
    <div class="row-fluid event_option btn-group">
       <div class="btn-group" id="niceArticle<%= timelinesList[i].id %>" style="float:none;">
         <% if( JSON.stringify(timelinesList[i].nicer).indexOf('{"id":'+id+'}') > 0){ %>
@@ -220,6 +224,7 @@
          </ul>
       </div>
    </div>
+   <% } %>
    <div class="row-fluid" id="niceCount<%= timelinesList[i].id %>">有 <%= timelinesList[i].nicer.length %> 人推薦</div>
 
    <!--預設文章留言-->
@@ -247,6 +252,7 @@
              <div class="row-fluid event_img" style="display:block;"><%- timelinesList[i].response[j].comment_image %></div>
             <% } %>
             <!--留言編輯-->
+            <% if(traveler != "guest"){ %>
             <div class="container-fluid container_r_edit" id="container_r_edit<%= timelinesList[i].response[j].id %>">
               <% if(timelinesList[i].response[j].comment_image == ""){ %>
                 <div class="row-fluid" id="div_r_edit_content<%= timelinesList[i].response[j].id %>" contenteditable="true" style=""><%= timelinesList[i].response[j].comment %></div>
@@ -265,9 +271,11 @@
                 <span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯
               </button>                      
             </div>
+            <% } %>
             <!--留言時間、推薦、設定-->
             <div class="row-fluid event_option btn-group">
                <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %>"><%- ago%></a></div>
+               <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
                 <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+id+'}') > 0){ %>
                   <button class="n" name="<%= timelinesList[i].response[j].id %>" id="TimelineResponseCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"></button>
@@ -300,6 +308,7 @@
                     <% } %>
                   </ul>
                </div>
+               <% } %>
                <div class="btn-group" style="float:none;min-height:30px;padding-top:10px;padding-right:10px;" id="RniceCount<%= timelinesList[i].response[j].id %>">有 <%= timelinesList[i].response[j].rnicer.length %> 人推薦</div>
             </div>
          </div>
@@ -333,6 +342,7 @@
              <div class="row-fluid event_img" style="display:block;"><%- timelinesList[i].response[j].comment_image %></div>
             <% } %>
             <!--留言編輯-->
+            <% if(traveler != "guest"){ %>
             <div class="container-fluid container_r_edit" id="container_r_edit<%= timelinesList[i].response[j].id %>">
               <% if(timelinesList[i].response[j].comment_image == ""){ %>
                 <div class="row-fluid" id="div_r_edit_content<%= timelinesList[i].response[j].id %>" contenteditable="true" style=""><%= timelinesList[i].response[j].comment %></div>
@@ -351,9 +361,11 @@
                 <span class="glyphicon glyphicon-remove" style="color:black;top:4px;" aria-hidden="true"></span>取消編輯
               </button>                      
             </div>
+            <% } %>
             <!--留言時間、推薦、設定-->
             <div class="row-fluid event_option btn-group">
                <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %>"><%- ago%></a></div>
+               <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
                 <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+id+'}') > 0){ %>
                   <button class="n" name="<%= timelinesList[i].response[j].id %>" id="TimelineResponseCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"></button>
@@ -386,6 +398,7 @@
                     <% } %>
                   </ul>
                </div>
+               <% } %>
                <div class="btn-group" style="float:none;min-height:30px;padding-top:10px;padding-right:10px;" id="RniceCount<%= timelinesList[i].response[j].id %>">有 <%= timelinesList[i].response[j].rnicer.length %> 人推薦</div>
             </div>
          </div>
@@ -405,6 +418,7 @@
    </div>
    
    <!--回覆區塊-->
+   <% if(traveler != "guest"){ %>
    <div class="row-fluid event_comment">
       <table style="width:100%;">
          <tbody>
@@ -427,6 +441,7 @@
          <div class="clear" id="comment_clear"></div>
       </div>
    </div>
+   <% } %>
 </div>
 <% } %>
 <script type="text/javascript">

@@ -11,8 +11,9 @@ module.exports = {
         var searchID = url.parse(req.url, true).search.substring(1);
 
         function checkLogin(cb){ // 檢查是否登入
-            if(typeof req.session.user === 'undefined'){
-                res.send(500,{err: "請先登入才能查看個人頁面！" });
+            if(typeof req.session.user === 'undefined' && searchID == ""){
+                //res.send(500,{err: "請先登入才能查看個人頁面！" });
+                res.redirect("/home");
             }else if(searchID == 'undefined'){
             }else{ // 防止此問題: jquery-ui 可能會讓使用到 crop-avatar.js 的頁面執行兩次頁面讀取
                 cb();
@@ -32,31 +33,16 @@ module.exports = {
 
         function findTimelineResponse(id, cb){ // 取得作者 user 資料
             // notes: 未來可能需要用到.skip(10).limit(10)
-            User.find({id: id}).populate('timelinesPost', { sort: 'time DESC' }).exec(function (err, user) {
+            User.find({id: id}).populate('timelinesPost', { sort: 'updatedTime DESC' }).exec(function (err, user) {
                 if(user.length < 1 ){
                     res.send(500,{err: "查無此人" });
                 }else{
                     if(err) {
                         sails.log.error("ERR:", err);
                     }else{
+                        user.sort(function(a, b){return new Date(b.updatedTime)-new Date(a.updatedTime);});
                         cb(user[0]);
                     }
-
-
-
-                    // if(!user[0].isFullSignup) {
-                    //     res.send({notfull: true});
-                    // } else {
-                    //     if (user[0].suspended){
-                    //         res.send({suspended: true});    
-                    //     }else{
-                    //         if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
-                    //             res.send({notfull: false});
-                    //         }else{
-                    //             cb(user[0]);
-                    //         }
-                    //     }
-                    // }
                 }
             });
         }
@@ -180,6 +166,10 @@ module.exports = {
                     getNicer(Response, function(Response2){
                         addAuth(id, Response2, function(Response3){
                             findTimelineResponseAuthor(Response3, function(Response4){
+                                var traveler = "guest"; // 沒登入者
+                                if(typeof req.session.user !== 'undefined'){
+                                    traveler = req.session.user.id;
+                                }
                                 res.view("profile/index", {
                                     timeDiff: 0,
                                     ago: 0,
@@ -187,7 +177,7 @@ module.exports = {
                                     avatar: Response.img,
                                     alias: Response.alias,
                                     id: Response.id,                // 塗鴉牆主人
-                                    traveler: req.session.user.id,  // 訪客
+                                    traveler: traveler,             // 訪客
                                     scripts: [
                                         '/js/js_public/modalBox.js-master/modalBox-min.js',
                                         '/js/js_public/alertify.js',
