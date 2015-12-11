@@ -330,84 +330,84 @@ function HandleResponse_ShowAllQ(response){
   $("#forgetQ").append('<option value=999>其它</option>');
 }
 
-function showProfile(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_showProfile(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/user/showProfile", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_showProfile(response){
-  obj = JSON.parse(response);
+// function showProfile(){
+//   var xmlHttp = getXMLHttp();
+//   xmlHttp.onreadystatechange = function(){
+//     if(xmlHttp.readyState == 4){
+//       HandleResponse_showProfile(xmlHttp.responseText);
+//     }
+//   }
+//   xmlHttp.open("GET", "/user/showProfile", true);
+//   xmlHttp.send(null);
+// }
+// function HandleResponse_showProfile(response){
+//   obj = JSON.parse(response);
 
-  var account=obj.account;
-  var password=obj.password;
-  var alias=obj.alias;
-  var email=obj.email;
-  var fname=obj.fname;
-  var lname=obj.lname;
-  var img=obj.img;
-  var forgetQ=obj.forgetQ;
-  var forgetA=obj.forgetA;
-  var gender=obj.gender;
-  var phone=obj.phone;
-  var postalCode=obj.postalCode;
-  var addressCity=obj.addressCity;
-  var addressDistrict=obj.addressDistrict;
-  var address=obj.address;
-  var birthday = obj.birthday;
-  var b = new Date(birthday)
-  var Y = b.getFullYear().toString() == "NaN" ? "" : b.getFullYear()-1911;
-  var M = b.getMonth()+1;
-  var D = b.getDate();
-  var primaryDisease=obj.primaryDisease;
-  var selfIntroduction=obj.selfIntroduction;
+//   var account=obj.account;
+//   var password=obj.password;
+//   var alias=obj.alias;
+//   var email=obj.email;
+//   var fname=obj.fname;
+//   var lname=obj.lname;
+//   var img=obj.img;
+//   var forgetQ=obj.forgetQ;
+//   var forgetA=obj.forgetA;
+//   var gender=obj.gender;
+//   var phone=obj.phone;
+//   var postalCode=obj.postalCode;
+//   var addressCity=obj.addressCity;
+//   var addressDistrict=obj.addressDistrict;
+//   var address=obj.address;
+//   var birthday = obj.birthday;
+//   var b = new Date(birthday)
+//   var Y = b.getFullYear().toString() == "NaN" ? "" : b.getFullYear()-1911;
+//   var M = b.getMonth()+1;
+//   var D = b.getDate();
+//   var primaryDisease=obj.primaryDisease;
+//   var selfIntroduction=obj.selfIntroduction;
 
-  document.getElementById("email").value = email;
-  document.getElementById("alias").value = alias;
-  document.getElementById("fname_reg").value = fname;
-  document.getElementById("lname_reg").value = lname;
-  document.getElementById("avatar").src = img;
-  try{
-    if(forgetQ.search('[otherQ]')==1){ // 其他
-      document.querySelector('#forgetQ [value="999"]').selected = true;
-      document.getElementById("forgetQ-other").style.display="block";
-      document.getElementById("forgetQ-other").value=forgetQ.substr(8);
-    }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;$("#forgetQ-other").attr("must","f");}
-  }catch(e){/*window.location.reload();*/}
-  document.getElementById("forgetA").value = forgetA;
-  document.querySelector('#gender [value="' + gender + '"]').selected = true;
-  document.getElementById("phone").value = phone;
-  document.getElementById("postalCode").value = postalCode;
-  getCity(document.getElementById("postalCode").value);
-  document.getElementById("address").value = address;
-  document.getElementById("birthday_Y").value = Y;
-  document.getElementById("birthday_M").value = M;
-  ShowDate(M, Y)
-  document.getElementById("birthday_D").value = D;
-  document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
-  document.getElementById("selfIntroduction").value = selfIntroduction;
-}
-function showProfile_ez(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_showProfile_ez(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/user/showProfile", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_showProfile_ez(response){
-  obj = JSON.parse(response);
-  var email=obj.email;
-  var alias=obj.alias;
-  document.getElementById("email_ez").value = email;
-  document.getElementById("alias_ez").value = alias;
-}
+//   document.getElementById("email").value = email;
+//   document.getElementById("alias").value = alias;
+//   document.getElementById("fname_reg").value = fname;
+//   document.getElementById("lname_reg").value = lname;
+//   document.getElementById("avatar").src = img;
+//   try{
+//     if(forgetQ.search('[otherQ]')==1){ // 其他
+//       document.querySelector('#forgetQ [value="999"]').selected = true;
+//       document.getElementById("forgetQ-other").style.display="block";
+//       document.getElementById("forgetQ-other").value=forgetQ.substr(8);
+//     }else{document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;$("#forgetQ-other").attr("must","f");}
+//   }catch(e){/*window.location.reload();*/}
+//   document.getElementById("forgetA").value = forgetA;
+//   document.querySelector('#gender [value="' + gender + '"]').selected = true;
+//   document.getElementById("phone").value = phone;
+//   document.getElementById("postalCode").value = postalCode;
+//   getCity(document.getElementById("postalCode").value);
+//   document.getElementById("address").value = address;
+//   document.getElementById("birthday_Y").value = Y;
+//   document.getElementById("birthday_M").value = M;
+//   ShowDate(M, Y)
+//   document.getElementById("birthday_D").value = D;
+//   document.querySelector('#type [value="' + primaryDisease + '"]').selected = true;
+//   document.getElementById("selfIntroduction").value = selfIntroduction;
+// }
+// function showProfile_ez(){
+//   var xmlHttp = getXMLHttp();
+//   xmlHttp.onreadystatechange = function(){
+//     if(xmlHttp.readyState == 4){
+//       HandleResponse_showProfile_ez(xmlHttp.responseText);
+//     }
+//   }
+//   xmlHttp.open("GET", "/user/showProfile", true);
+//   xmlHttp.send(null);
+// }
+// function HandleResponse_showProfile_ez(response){
+//   obj = JSON.parse(response);
+//   var email=obj.email;
+//   var alias=obj.alias;
+//   document.getElementById("email_ez").value = email;
+//   document.getElementById("alias_ez").value = alias;
+// }
 
 
 
