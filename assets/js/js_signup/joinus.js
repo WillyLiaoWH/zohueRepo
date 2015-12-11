@@ -10,29 +10,6 @@ $(document).ready(function(){
       statusIMG(this,"O");
     }
   });
-  // showProfile();
-  // $.get("/user/showProfile", function(full){
-  //   ooo = JSON.parse(full);
-  //   var type=ooo.type;
-  //   switch(type){
-  //     case "P":
-  //     case "F":
-  //       document.getElementById("prim_dis").innerHTML = "主要疾病";
-  //       document.getElementById("sec_dis").innerHTML = "次要疾病";
-  //       break;
-  //     case "S":
-  //     case "N":
-  //     case "RN":
-  //       document.getElementById("p_type").style.visibility = "hidden";
-  //       document.getElementById("p_selfIntroduction").style.display = "none";
-  //       $("#type").attr("must","f");
-  //       break;
-  //     case "D":
-  //       document.getElementById("prim_dis").innerHTML = "主治科目";
-  //       document.getElementById("sec_dis").innerHTML = "其他專長";
-  //       break;
-  //   }
-  // });
   
   $("#addressCity").change(function() { // 用縣市篩選區
     ShowAllDistrict(document.getElementById("addressCity").value);
@@ -174,31 +151,6 @@ function validateAccount(string) {
 
 
 /************************** 連接 PHP 相關 **************************/
-// function getXMLHttp(){
-//   var xmlHttp
-//   try{
-//     //Firefox, Opera 8.0+, Safari
-//     xmlHttp = new XMLHttpRequest();
-//   }
-//   catch(e){
-//     //Internet Explorer
-//     try{
-//       xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-//     }
-//     catch(e){
-//       try{
-//         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-//       }
-//       catch(e){
-//         showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
-//           return false;
-//         });
-//       }
-//     }
-//   }
-//   return xmlHttp;
-// }
-
 function Submit(){
   var pass_signup = 1;
   var missingInfo = [];
@@ -262,46 +214,9 @@ function Submit(){
   }
 }
 
-// function ShowAllQ(){
-//   var xmlHttp = getXMLHttp();
-//   xmlHttp.onreadystatechange = function(){
-//     if(xmlHttp.readyState == 4){
-//       HandleResponse_ShowAllQ(xmlHttp.responseText);
-//     }
-//   }
-//   xmlHttp.open("GET", "/RecoveryQuestion/getall", true);
-//   xmlHttp.send(null);
-// }
-// function HandleResponse_ShowAllQ(response){
-//   obj_Q = JSON.parse(response);
-//   for(var r in obj_Q){
-//     var question = obj_Q[r].question;
-//     var questionID = obj_Q[r].id;
-//     $("#forgetQ").append('<option value='+questionID+'>'+question+'</option>');
-//   }
-//   $("#forgetQ").append('<option value=999>其它</option>');
-// }
-
 
 
 /************************** 郵遞區號相關 **************************/
-// function ShowAllCity(){
-//   var xmlHttp = getXMLHttp();
-//   xmlHttp.onreadystatechange = function(){
-//     if(xmlHttp.readyState == 4){
-//       HandleResponse_ShowAllCity(xmlHttp.responseText);
-//     }
-//   }
-//   xmlHttp.open("GET", "/postallist/getall", true);
-//   xmlHttp.send(null);
-// }
-// function HandleResponse_ShowAllCity(response){
-//   obj_postal = JSON.parse(response);
-//   for(var r in obj_postal){
-//     var addressCity = obj_postal[r].addressCity;
-//     $("#addressCity").append('<option value='+addressCity+'>'+addressCity+'</option>');
-//   }
-// }
 function ShowAllDistrict(city){
   var lookup = {};
   for (var i = 0, len = obj_postal.length; i < len; i++) {
@@ -366,13 +281,6 @@ function getPostCode(){
   return 0;
 }
 
-// function ShowMonth(){
-//   $("#birthday_M").empty();
-//   $("#birthday_M").append('<option value="" disabled selected>月</option>');
-//   for(var i = 1, len = 13; i < len; i++){
-//     $("#birthday_M").append('<option value='+i+'>'+i+'</option>');
-//   }
-// }
 function ShowDate(month, year){
   var days = daysInMonth(month, year);
   $("#birthday_D").empty();
@@ -382,50 +290,6 @@ function ShowDate(month, year){
   }
 }
 function daysInMonth(month,year) { return new Date(year, month, 0).getDate(); }
-
-//default data
-// function showProfile(){
-//   var xmlHttp = getXMLHttp();
-//   xmlHttp.onreadystatechange = function(){
-//     if(xmlHttp.readyState == 4){
-//       HandleResponse_showProfile(xmlHttp.responseText);
-//     }
-//   }
-//   xmlHttp.open("GET", "/user/showProfile", true);
-//   xmlHttp.send(null);
-// }
-// function HandleResponse_showProfile(response){
-//   obj = JSON.parse(response);
-//   console.log(obj);
-//   var FB_id=obj.FB_id;
-//   //if (FB_id.length>2){
-//     var account=obj.account;
-//     var password=obj.password;
-//     var alias=obj.alias;
-//     var email=obj.email;
-//     var fname=obj.fname;
-//     var lname=obj.lname;
-//     var img=obj.img;
-//     var gender=obj.gender;
-//     document.getElementById("fname_reg").value = lname;
-//     document.getElementById("lname_reg").value = fname;
-//     document.getElementById("avatar").src = img;
-
-//     if(gender=="M" || gender=="F"){
-//       document.querySelector('#gender [value="' + gender + '"]').selected = true;
-//     }
-//   //}
-
-//   // 預設必填
-//   $(".feedback-input[must='t']").each(function( index ) {
-//     var id = ($(this).attr("id"));
-//     if( $(this).val()=="" || $(this).val()==null ){
-//       statusIMG(this,"M");
-//     }else{ // 使用FB註冊的會員會有一些基本資料已在必填欄位內
-//       statusIMG(this,"O");
-//     }
-//   });
-// }
 
 function showDialog(title, message, cb){
   bootbox.dialog({
