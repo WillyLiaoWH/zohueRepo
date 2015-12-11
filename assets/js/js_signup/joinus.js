@@ -285,23 +285,23 @@ function Submit(){
 
 
 /************************** 郵遞區號相關 **************************/
-function ShowAllCity(){
-  var xmlHttp = getXMLHttp();
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4){
-      HandleResponse_ShowAllCity(xmlHttp.responseText);
-    }
-  }
-  xmlHttp.open("GET", "/postallist/getall", true);
-  xmlHttp.send(null);
-}
-function HandleResponse_ShowAllCity(response){
-  obj_postal = JSON.parse(response);
-  for(var r in obj_postal){
-    var addressCity = obj_postal[r].addressCity;
-    $("#addressCity").append('<option value='+addressCity+'>'+addressCity+'</option>');
-  }
-}
+// function ShowAllCity(){
+//   var xmlHttp = getXMLHttp();
+//   xmlHttp.onreadystatechange = function(){
+//     if(xmlHttp.readyState == 4){
+//       HandleResponse_ShowAllCity(xmlHttp.responseText);
+//     }
+//   }
+//   xmlHttp.open("GET", "/postallist/getall", true);
+//   xmlHttp.send(null);
+// }
+// function HandleResponse_ShowAllCity(response){
+//   obj_postal = JSON.parse(response);
+//   for(var r in obj_postal){
+//     var addressCity = obj_postal[r].addressCity;
+//     $("#addressCity").append('<option value='+addressCity+'>'+addressCity+'</option>');
+//   }
+// }
 function ShowAllDistrict(city){
   var lookup = {};
   for (var i = 0, len = obj_postal.length; i < len; i++) {

@@ -1,4 +1,8 @@
-		<div id="form-main" class="col-md-7">
+		<script>
+      obj_postal = <%- JSON.stringify(postalData) %>;
+    </script>
+
+    <div id="form-main" class="col-md-7">
       <h1 style="color:#D26900;">完整註冊，以建立個人頁面，並取得發文權限。</h1>
       <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -99,7 +103,9 @@
                 <h class="input_title">居住縣市</h>
                 <select id="addressCity" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="居住縣市"> 
                   <option value="" disabled selected>縣市</option>
-                  <script>ShowAllCity();</script>
+                  <% for(var i=0; i<postalData.length; i++) { %>
+                    <option value='<%= postalData[i].addressCity %>'><%= postalData[i].addressCity %></option>
+                  <% } %>
                 </select>
                 <div class="tooltip fade bottom in" role="tooltip" id="addressCity-tooltip">
                   <div class="tooltip-arrow"></div>
