@@ -1,20 +1,24 @@
     <script>
-     $( document ).ready(function() {
+      $( document ).ready(function() {
         if($( window ).width() < 768){
           $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
         }
       });
+
+      obj_postal = <%- JSON.stringify(postalData) %>;
     </script>
 
 
 
+    <% if( !isFullSignup ){ %>
+    <!-- 簡易註冊會員 -->
     <div id="form-main_ez" class="col-md-7">
       <h1 style="color:#D26900;">修改會員資料</h1>
       <div id="form-div">
         <form class="form" id="form1">
           <div class="alias_ez">
             <h class="input_title">暱稱</h>
-            <input name="alias_ez" type="text" class="validate[required,custom[alias_ez]] feedback-input" id="alias_ez" placeholder="暱稱" must="t"/>
+            <input name="alias_ez" type="text" class="validate[required,custom[alias_ez]] feedback-input" id="alias_ez" placeholder="暱稱" must="t" value="<%=profileData.alias%>"/>
             <div class="tooltip fade bottom in" role="tooltip" id="alias_ez-tooltip">
               <div class="tooltip-arrow"></div>
               <div class="tooltip-inner" id="alias_ez-inner"></div>
@@ -23,7 +27,7 @@
           
           <div class="email_ez">
             <h class="input_title">E-mail</h>
-            <input name="email_ez" type="text" class="validate[required,custom[email_ez]] feedback-input" id="email_ez" placeholder="E-mail" must="t"/>
+            <input name="email_ez" type="text" class="validate[required,custom[email_ez]] feedback-input" id="email_ez" placeholder="E-mail" must="t" value="<%=profileData.email%>"/>
             <div class="tooltip fade bottom in" role="tooltip" id="email_ez-tooltip">
               <div class="tooltip-arrow"></div>
               <div class="tooltip-inner" id="email_ez-inner"></div>
@@ -37,13 +41,17 @@
       </div>
     </div>
 
+
+
+    <% }else{ %>
+    <!-- 完整註冊會員 -->
 		<div id="form-main" class="col-md-7">
         <h1 style="color:#D26900;">修改會員資料</h1>
   			<div id="form-div">
     			<form class="form" id="form1">
             <div>
               <h class="input_title">暱稱</h>
-              <input name="alias" type="text" class="validate[required,custom[alias]] feedback-input" id="alias" placeholder="暱稱" must="t"/>
+              <input name="alias" type="text" class="validate[required,custom[alias]] feedback-input" id="alias" placeholder="暱稱" must="t" value="<%=profileData.alias%>"/>
               <div class="tooltip fade bottom in" role="tooltip" id="alias-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="alias-inner"></div>
@@ -52,7 +60,7 @@
 
             <div>
               <h class="input_title">E-mail</h>
-              <input name="email" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="E-mail" must="t"/>
+              <input name="email" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="E-mail" must="t" value="<%=profileData.email%>"/>
               <div class="tooltip fade bottom in" role="tooltip" id="email-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="email-inner"></div>
@@ -61,7 +69,7 @@
       			<div>
       				<div id="fname_reg-div">
                 <h class="input_title">姓氏</h>
-        				<input name="fname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="fname_reg" placeholder="姓氏" must="t"/>
+        				<input name="fname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="fname_reg" placeholder="姓氏" must="t" value="<%=profileData.fname%>"/>
                 <div class="tooltip fade bottom in" role="tooltip" id="fname_reg-tooltip">
                   <div class="tooltip-arrow"></div>
                   <div class="tooltip-inner" id="fname_reg-inner"></div>
@@ -69,7 +77,7 @@
         			</div>
         			<div id="lname_reg-div">
                 <h class="input_title">名字</h>
-        				<input name="lname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="lname_reg" placeholder="名字" must="t"/>
+        				<input name="lname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="lname_reg" placeholder="名字" must="t" value="<%=profileData.lname%>"/>
                 <div class="tooltip fade bottom in" role="tooltip" id="lname_reg-tooltip">
                   <div class="tooltip-arrow"></div>
                   <div class="tooltip-inner" id="lname_reg-inner"></div>
@@ -78,10 +86,10 @@
       			</div>
 
       			<div>
-                <h class="input_title">上傳相片</h>
-                <input name="image" type="button" class="validate[required,custom[image]] feedback-input" id="image" value="上傳相片"/>
+              <h class="input_title">上傳相片</h>
+              <input name="image" type="button" class="validate[required,custom[image]] feedback-input" id="image" value="上傳相片"/>
               <div class="avatar-view" title="上傳相片">
-                <img id="avatar" src="images/img_signup/default_img.jpeg" alt="Avatar">
+                <img id="avatar" src="<%=profileData.img%>" alt="Avatar">
               </div>
       			</div>
 
@@ -89,6 +97,10 @@
               <h class="input_title">找回密碼問題</h>
               <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t" placeholder="找回密碼問題">
                 <option value="" disabled selected>找回密碼問題</option>
+                <% for(var i=0; i<recoveryQuestions.length; i++) { %>
+                  <option value='<%= recoveryQuestions[i].id %>'><%= recoveryQuestions[i].question %></option>
+                <% } %>
+                <option value=999>其它</option>
               </select>
               <div class="tooltip fade bottom in" role="tooltip" id="forgetQ-tooltip">
                 <div class="tooltip-arrow"></div>
@@ -100,10 +112,22 @@
                 <div class="tooltip-inner" id="forgetQ-other-inner"></div>
               </div>
             </div>
+            <script>
+              try{
+                if(<%=profileData.forgetQ.search('[otherQ]')==1%>){ // 其他
+                  document.querySelector('#forgetQ [value="999"]').selected = true;
+                  document.getElementById("forgetQ-other").style.display="block";
+                  document.getElementById("forgetQ-other").value="<%=profileData.forgetQ.substr(8)%>";
+                }else{
+                  document.querySelector('#forgetQ [value="' + forgetQ + '"]').selected = true;
+                  $("#forgetQ-other").attr("must","f");
+                }
+              }catch(e){/*window.location.reload();*/}
+            </script>
 
             <div>
               <h class="input_title">找回密碼問題答案</h>
-              <input name="forgetA" type="text" class="validate[required,custom[forgetA]] feedback-input" id="forgetA" placeholder="找回密碼問題答案" must="t"/>
+              <input name="forgetA" type="text" class="validate[required,custom[forgetA]] feedback-input" id="forgetA" placeholder="找回密碼問題答案" must="t" value="<%=profileData.forgetA%>"/>
               <div class="tooltip fade bottom in" role="tooltip" id="forgetA-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="forgetA-inner"></div>
@@ -118,6 +142,9 @@
                 <option value='F'>女性</option>
                 <option value='O'>其他</option>
               </select>
+              <script>
+                document.querySelector('#gender [value="<%=profileData.gender%>"]').selected = true;
+              </script>
               <div class="tooltip fade bottom in" role="tooltip" id="gender-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="gender-inner"></div>
@@ -126,7 +153,7 @@
 
             <div>
               <h class="input_title">連絡電話</h>
-              <input name="phone" type="text" class="validate[required,custom[phone]] feedback-input" id="phone" placeholder="連絡電話"/>
+              <input name="phone" type="text" class="validate[required,custom[phone]] feedback-input" id="phone" placeholder="連絡電話" value="<%=profileData.phone%>"/>
               <div class="tooltip fade bottom in" role="tooltip" id="phone-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="phone-inner"></div>
@@ -135,18 +162,21 @@
 
             <div>
               <h class="input_title">郵遞區號</h>
-              <input name="postalCode" type="text" class="validate[required,custom[postalCode]] feedback-input" id="postalCode" placeholder="郵遞區號" must="t"/>
+              <input name="postalCode" type="text" class="validate[required,custom[postalCode]] feedback-input" id="postalCode" placeholder="郵遞區號" must="t" value="<%=profileData.postalCode%>"/>
               <div class="tooltip fade bottom in" role="tooltip" id="postalCode-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="postalCode-inner"></div>
               </div>
             </div>
-
+            
             <div>
               <div id="fname-div">
                 <h class="input_title">居住縣市</h>
                 <select id="addressCity" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="居住縣市"> 
                   <option value="" disabled selected>居住縣市</option>
+                  <% for(var i=0; i<postalData.length; i++) { %>
+                    <option value='<%= postalData[i].addressCity %>'><%= postalData[i].addressCity %></option>
+                  <% } %>
                 </select>
                 <div class="tooltip fade bottom in" role="tooltip" id="addressCity-tooltip">
                   <div class="tooltip-arrow"></div>
@@ -164,10 +194,11 @@
                 </div>
               </div>
             </div>
+            <script> getCity(<%- parseInt(profileData.postalCode) %>); </script>
 
             <div>
               <h class="input_title">詳細住址</h>
-              <input name="address" type="text" class="validate[required,custom[address]] feedback-input" id="address" placeholder="地址" />
+              <input name="address" type="text" class="validate[required,custom[address]] feedback-input" id="address" placeholder="地址" value="<%=profileData.address%>"/>
               <div class="tooltip fade bottom in" role="tooltip" id="address-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="address-inner"></div>
@@ -188,6 +219,9 @@
               <div id="birthday_M-div">
                 <select id="birthday_M" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="月">
                   <option value="" disabled selected>月</option>
+                  <% for(var i=1; i<13; i++) { %>
+                    <option value="<%=i%>"><%=i%></option>
+                  <% } %>
                 </select>
                 <div class="tooltip fade bottom in" role="tooltip" id="birthday_M-tooltip">
                   <div class="tooltip-arrow"></div>
@@ -195,6 +229,12 @@
                 </div>
               </div>
               <br>
+              <script>
+                document.getElementById("birthday_Y").value
+                  = <%=(new Date(profileData.birthday)).getFullYear().toString() == "NaN" ? "" : (new Date(profileData.birthday)).getFullYear()-1911%>;
+                document.getElementById("birthday_M").value
+                  = <%=(new Date(profileData.birthday)).getMonth()+1%>;
+              </script>
               <div id="birthday_D-div">
                 <select id="birthday_D" class="validate[required,custom[postalCode]] feedback-input" must="t" placeholder="日">
                   <option value="" disabled selected>日</option>
@@ -204,12 +244,27 @@
                   <div class="tooltip-inner" id="birthday_D-inner"></div>
                 </div>
               </div>
+              <script>
+                ShowDate(<%=(new Date(profileData.birthday)).getMonth()+1%>, <%=(new Date(profileData.birthday)).getFullYear().toString() == "NaN" ? "" : (new Date(profileData.birthday)).getFullYear()-1911%>)
+                document.getElementById("birthday_D").value
+                  = <%=(new Date(profileData.birthday)).getDate()%>;
+              </script>
             </div>
 
+            <% if(profileData.type != "S" && profileData.type != "N" && profileData.type != "RN"){ %>
             <div class="type" id="p_type">
+              <% switch(profileData.type){ 
+                case "P":
+                case "F": %>
               <h id="prim_dis" class="input_title">主要疾病</h>
-              <select id="type" class="validate[required,custom[type]] feedback-input" must="t" placeholder="主要疾病/主治科目">
+              <select id="type" class="validate[required,custom[type]] feedback-input" must="t">
                 <option value="" disabled selected>主要疾病</option>
+              <% break;
+                case "D": %>
+              <h id="prim_dis" class="input_title">主治科目</h>
+              <select id="type" class="validate[required,custom[type]] feedback-input" must="t">
+                <option value="" disabled selected>主治科目</option>
+              <% break;} %>
                 <option value='1'>鼻咽癌</option>
                 <option value='2'>鼻腔/副鼻竇癌</option>
                 <option value='3'>口腔癌</option>
@@ -220,19 +275,35 @@
                 <option value='8'>甲狀腺癌</option>
                 <option value='999'>其它</option>
               </select>
+              <script>
+                document.querySelector('#type [value="<%=profileData.primaryDisease%>"]').selected = true;
+              </script>
               <div class="tooltip fade bottom in" role="tooltip" id="type-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="type-inner"></div>
               </div>
             </div>
-      			<div class="selfIntroduction" id="p_selfIntroduction">
+            <div class="selfIntroduction" id="p_selfIntroduction">
+              <% switch(profileData.type){ 
+                case "P":
+                case "F": %>
               <h id="sec_dis" class="input_title">次要疾病</h>
-        			<textarea name="selfIntroduction" class="validate[required,length[6,300]] feedback-input" id="selfIntroduction" placeholder="次要疾病"></textarea>
+              <textarea name="selfIntroduction" class="validate[required,length[6,300]] feedback-input" id="selfIntroduction" placeholder="次要疾病"><%=profileData.selfIntroduction%></textarea>
+              <% break;
+                case "D": %>
+              <h id="sec_dis" class="input_title">其他專長</h>
+              <textarea name="selfIntroduction" class="validate[required,length[6,300]] feedback-input" id="selfIntroduction" placeholder="其他專長"><%=profileData.selfIntroduction%></textarea>
+              <% break;} %>
               <div class="tooltip fade bottom in" role="tooltip" id="selfIntroduction-tooltip">
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="selfIntroduction-inner"></div>
               </div>
-      			</div>
+            </div>
+            <% }else{ %>
+              <div> &nbsp; <div>
+            <% } %>
+
+
 
       			<div class="submit">
         			<input type="button" value="送 出" id="button-blue" onclick="Submit()"/>
@@ -302,3 +373,4 @@
           </div>
         </div><!-- /.modal -->
     </div>
+    <% } %>

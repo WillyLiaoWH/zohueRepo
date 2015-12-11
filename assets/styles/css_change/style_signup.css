@@ -32,7 +32,7 @@
   	-webkit-border-radius: 7px;
   	font-family: "微軟正黑體";
 	font-size:30px;
-	display:none;
+	/*display:none;*/
 }
 
 #form-div {
