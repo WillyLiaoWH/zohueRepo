@@ -1,21 +1,3 @@
-    <script>
-      $( document ).ready(function() {
-        if($( window ).width() < 768){
-          $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-        }
-      });
-    </script>
-    <!--<script>$(function(){
-        $("#articleList").stupidtable();
-    });</script>-->
-    <script>
-      function setTableRowStripCss(){
-        setTimeout(function(){ 
-          $( "#articleList tbody > tr:even" ).removeClass().addClass("warning");
-          $( "#articleList tbody > tr:odd" ).removeClass().addClass("success");}, 30);
-      }
-    </script>
-
     <div class="container-fluid col-md-9">
       <div id="forumContent" style="margin-left:0px;">
         <div class="row-fluid" style="margin-left: 0px; margin-bottom: 10px;">
@@ -43,7 +25,7 @@
               <li><a id='drop<%=i%>' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><%=boardsCateList[i-1].title%><span class='caret'></span></a>
               <ul id='menu<%=i%>' class='dropdown-menu' aria-labelledby='drop<%=i%>'>
               <% for(var j=0;j<boardsCateList[i-1].board.length;j++) { %>
-                <li><a href='/board-<%=boardsCateList[i-1].board[j].id%>?tab=all&order=lastResponseTime&page=1&search='><%=boardsCateList[i-1].board[j].title%></a></li>
+                <li><a href='/board-<%=boardsCateList[i-1].board[j].id%>?tab=all&sort=lastResponseTime&order=DESC&page=1&search='><%=boardsCateList[i-1].board[j].title%></a></li>
               <% } %>
               </ul></li>
             <% } %>
@@ -126,7 +108,7 @@
             <li id="share"<%if(tab=='share') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('share');">分享</a></li>
             <li id="problem"<%if(tab=='problem') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('problem');">問題</a></li>
             <li id="others"<%if(tab=='others') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('others');">其它</a></li>
-            <li id="elite"<%if(tab=='others') { %><%=' class=activeOrange'%><%} else {%><%=' class=nonActiveOrange'%><%}%>><a style="cursor: pointer;" onclick="tabClick('elite');"><span class='glyphicon glyphicon-star' style="top:4px;"></span> 精華區</a></li>
+            <li id="elite"<%if(tab=='elite') { %><%=' class=activeOrange'%><%} else {%><%=' class=nonActiveOrange'%><%}%>><a style="cursor: pointer;" onclick="tabClick('elite');"><span class='glyphicon glyphicon-star' style="top:4px;"></span> 精華區</a></li>
           </ul>
            <br><br><br>
         </div>
@@ -155,7 +137,7 @@
                 <% for(var i=0; i<articleList.length; i++) { %>
                   <tr>
                     <td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'><%=articleList[i].badPic+articleList[i].classification%></td>
-                    <td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> text-decoration:underline;'><%=articleList[i].title%></a></td>
+                    <td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> text-decoration:underline;'><%-articleList[i].title%></a></td>
                     <td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><img <%=articleList[i].authorIcon%>><img src='<%=articleList[i].author.img%>' style='float:left; margin-right:10px; height:50px; width:50px;'></td>
                     <td><a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a><%=articleList[i].authorType%></td></tr>
                     <tr><td><%=articleList[i].postTime%></td></tr></table></td>

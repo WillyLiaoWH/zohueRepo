@@ -8,6 +8,7 @@ var page;
 var keyword="";
 var sort="";
 var tab="";
+var order="";
 var maxReport=3;
 var board="";
 var boardList=[];
@@ -15,6 +16,9 @@ var url ="";
 
 
 $(document).ready(function(){
+  if($( window ).width() < 768){
+    $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+  }
 
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
@@ -30,7 +34,7 @@ $(document).ready(function(){
   page=url.replace(regex,"$5");
   tab=url.replace(regex, "$2");
   sort=url.replace(regex, "$3");
-  sort=sort!=null&&sort.length>0?order:"lastResponseTime";
+  sort=sort!=null&&sort.length>0?sort:"lastResponseTime";
   order=url.replace(regex, "$4");
   order=order!=null&&order.length>0?order:"DESC";
 
@@ -147,4 +151,10 @@ function showDialog(title, message, cb){
       }
     }
   });
+}
+
+function setTableRowStripCss(){
+  setTimeout(function(){ 
+    $( "#articleList tbody > tr:even" ).removeClass().addClass("warning");
+    $( "#articleList tbody > tr:odd" ).removeClass().addClass("success");}, 30);
 }
