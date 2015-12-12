@@ -812,16 +812,24 @@ module.exports = {
 
     updateClickNum: function(req, res) {
         var id = req.param("id");
-        var clickNum = req.param("clickNum");
-        
-        Articles.update({id: id}, {clickNum: clickNum}).exec(function(error, updated) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
+
+        Articles.find({id: id}).exec(function(err, article) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
             } else {
-                res.send("clickNum 更新嚕");
+                var clickNum = parseInt(article[0].clickNum)+1;
+                Articles.update({id: id}, {clickNum: clickNum}).exec(function(error, updated) {
+                    if(error) {
+                        res.send(500,{err: "DB Error" });
+                        console.log(error);
+                    } else {
+                        res.send("ClickNum updated.");
+                    }
+                });
             }
         });
+
+        
     },
 
     setEliteArticle: function(req, res) {
