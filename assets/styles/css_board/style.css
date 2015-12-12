@@ -25,17 +25,17 @@
 }
 
 #searchWord{
-	//width:350px;
-	//width:100%;
-	//margin: 8px 0px 0px 0px;
-	//display: inline !important;
+	/*width:350px;*/
+	/*width:100%;*/
+	/*margin: 8px 0px 0px 0px;*/
+	/*display: inline !important;*/
 	width:250px;
-	//width:100%;
+	/*width:100%;*/
 	margin: 15px -5px 0px 0px;
 }
 
 #search{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
@@ -48,7 +48,7 @@
 }
 
 #cancleSearch{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
@@ -150,7 +150,7 @@
 }
 
 #sideBanner{
-	//display: none !important ;
+	/*display: none !important ;*/
 }
 
 #article{
@@ -247,7 +247,7 @@
 		width: 700px !important;
 	}
 	#post{
-		//display: none !important;
+		/*display: none !important;*/
 	}
 }
 

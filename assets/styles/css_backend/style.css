@@ -33,7 +33,7 @@ body{
 }
 
 .reasonTd:hover{
-  //background-color: #E0E0E0;
+  /*background-color: #E0E0E0;*/
   cursor:pointer;
 }
 
@@ -65,8 +65,8 @@ body{
 
 .spinner {
   margin: 40px 0px 40px 0px;
-  //margin: 100px auto 0;
-  //width: 70px;
+  /*margin: 100px auto 0;*/
+  /*width: 70px;*/
   text-align: center;
 }
 

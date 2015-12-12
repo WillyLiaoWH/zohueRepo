@@ -30,7 +30,7 @@ div.show-image input.delete {
 
 
 #body{
-	//background-image: url(../../../images/img_home/shl.png);
+	/*background-image: url(../../../images/img_home/shl.png);*/
 }
 
 
@@ -88,7 +88,7 @@ div.show-image input.delete {
 }
 
 #editPanel{
-	//margin-top: -25px;
+	/*margin-top: -25px;*/
 	margin-bottom:20px;
 }
 
@@ -128,7 +128,7 @@ div.show-image input.delete {
 	width: 24%;
 	height: 550px;
 	float:left;
-	//color:#668D3C;
+	/*color:#668D3C;*/
 	color:#D26900;
 	font-family: "微軟正黑體";
 	font-size:35px;
@@ -150,7 +150,7 @@ div.show-image input.delete {
 	font-size: 20px;
 	border-radius: 10px;
 	line-height: 22px;
-	//background-color: rgba(195, 183, 172, 0.5);
+	/*background-color: rgba(195, 183, 172, 0.5);*/
 	background-color: rgba(102, 141, 60, 0.3);
 	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
@@ -175,7 +175,7 @@ div.show-image input.delete {
   	font-weight:500;
 	font-size: 20px;
 	border-radius: 10px;
-	//line-height: 22px;
+	/*line-height: 22px;*/
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
