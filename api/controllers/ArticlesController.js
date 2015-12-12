@@ -262,8 +262,8 @@ module.exports = {
         response=[];
         responseNice=[];
         responseNiceCount=[];
-        var article_id=req.param("article_id");
-        Response.find({article: article_id}).populate('author').exec(function(error, responseList) {
+        var id=req.param("article_id");
+        Response.find({article: id}).populate('author').exec(function(error, responseList) {
             if (error) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -312,7 +312,7 @@ module.exports = {
             }
         }
         function R_NiceCount(cb){
-            Response.find({article: article_id, }).populate('author').exec(function(error, responseList) {
+            Response.find({article: id, }).populate('author').exec(function(error, responseList) {
                 if (error) {
                     res.send(500, { err: "DB Error" });
                 } else {
@@ -320,7 +320,7 @@ module.exports = {
                 }
             });
         }
-        Articles.find({id: article_id}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
+        Articles.find({id: id}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -370,7 +370,7 @@ module.exports = {
                     var isReport=false;
                     var reportCount=articlesList[0].report.length;
                     if(req.session.authenticated) {
-                        Report.find({article: article_id, reporter: req.session.user.id}).exec(function(err, report){
+                        Report.find({article: id, reporter: req.session.user.id}).exec(function(err, report){
                             if(err) {
                                 console.log(err);
                             } else {
@@ -406,28 +406,51 @@ module.exports = {
                                     response[i].comment = response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
                                 }
                             }
-                            
-                            res.view("article/index", {
-                                articleList: articlesList,
-                                isAuthor: isAuthor,
-                                isNice: isNice,
-                                responseList: response, 
-                                responseNice: responseNice, 
-                                login: login, 
-                                lnicer: articlesList[0].nicer.length,
-                                responseNiceCount: responseNiceCount,
-                                isReport: isReport,
-                                reportCount: reportCount, 
-                                isFollower: isFollower,
-                                scripts: [
-                                    '/js/js_article/mainJS.js'
-                                ],
-                                stylesheets: [
-                                    '/styles/css_article/style.css',
-                                    '/styles/importer.css'
-                                ]
-                            });
 
+                            if(id=='undefined') res.send(500, "server error");
+                            Articles.find(id).exec(function(err, articles) {
+                                if(err) {
+                                    console.log("錯誤訊息："+err);
+                                    res.send(500, "server error");
+                                } else {
+                                    if(articles.length==1) {
+                                        var metaTitle=articles[0].title;
+                                        var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
+                                        var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
+                                        return res.view("article/index", {
+                                            metaTitle: metaTitle,
+                                            metaUrl: metaUrl,
+                                            metaDescription: metaDescription,
+                                            articleList: articlesList,
+                                            isAuthor: isAuthor,
+                                            isNice: isNice,
+                                            responseList: response, 
+                                            responseNice: responseNice, 
+                                            login: login, 
+                                            lnicer: articlesList[0].nicer.length,
+                                            responseNiceCount: responseNiceCount,
+                                            isReport: isReport,
+                                            reportCount: reportCount, 
+                                            isFollower: isFollower,
+                                            scripts: [
+                                                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                                '/js/js_public/alertify.js',
+                                                '/js/js_article/mainJS.js',
+                                                '/js/js_post/cropper.min.js',
+                                                '/js/js_article/crop-avatar.js'
+                                              ],
+                                            stylesheets: [
+                                                '/styles/css_article/style.css',
+                                                '/styles/css_post/crop-avatar.css',
+                                                '/styles/css_post/cropper.min.css',
+                                                '/styles/importer.css',
+                                                '/styles/css_public/themes/alertify.core.css',
+                                                '/styles/css_public/themes/alertify.default.css'
+                                              ],
+                                        });
+                                    }   
+                                }
+                            });
                         });
                     });
                 }
@@ -602,8 +625,6 @@ module.exports = {
                 });
             }
         });
-
-        
     },
 
     setEliteArticle: function(req, res) {
@@ -1094,43 +1115,43 @@ module.exports = {
             });
         }
     },
-    setMeta: function(req, res) {
-        var id=req.param("id");
-        console.log(id);
-        if(id=='undefined') res.send(500, "server error");
-        Articles.find(id).exec(function(err, articles) {
-            if(err) {
-                console.log("錯誤訊息："+err);
-                res.send(500, "server error");
-            } else {
-                console.log(articles);
-                if(articles.length==1) {
-                    var metaTitle=articles[0].title;
-                    var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
-                    var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
-                    return res.view("article/index", {
-                        metaTitle: metaTitle,
-                        metaUrl: metaUrl,
-                        metaDescription: metaDescription,
-                        scripts: [
-                            '/js/js_public/modalBox.js-master/modalBox-min.js',
-                            '/js/js_public/alertify.js',
-                            '/js/js_article/mainJS.js',
-                            '/js/js_post/cropper.min.js',
-                            '/js/js_article/crop-avatar.js'
-                          ],
-                        stylesheets: [
-                            '/styles/css_article/style.css',
-                            '/styles/css_post/crop-avatar.css',
-                            '/styles/css_post/cropper.min.css',
-                            '/styles/importer.css',
-                            '/styles/css_public/themes/alertify.core.css',
-                            '/styles/css_public/themes/alertify.default.css'
-                          ],
-                    });
-                }   
-            }
-        });
-    }
+    // setMeta: function(req, res) {
+    //     var id=req.param("id");
+    //     console.log(id);
+    //     if(id=='undefined') res.send(500, "server error");
+    //     Articles.find(id).exec(function(err, articles) {
+    //         if(err) {
+    //             console.log("錯誤訊息："+err);
+    //             res.send(500, "server error");
+    //         } else {
+    //             console.log(articles);
+    //             if(articles.length==1) {
+    //                 var metaTitle=articles[0].title;
+    //                 var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
+    //                 var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
+    //                 return res.view("article/index", {
+    //                     metaTitle: metaTitle,
+    //                     metaUrl: metaUrl,
+    //                     metaDescription: metaDescription,
+    //                     scripts: [
+    //                         '/js/js_public/modalBox.js-master/modalBox-min.js',
+    //                         '/js/js_public/alertify.js',
+    //                         '/js/js_article/mainJS.js',
+    //                         '/js/js_post/cropper.min.js',
+    //                         '/js/js_article/crop-avatar.js'
+    //                       ],
+    //                     stylesheets: [
+    //                         '/styles/css_article/style.css',
+    //                         '/styles/css_post/crop-avatar.css',
+    //                         '/styles/css_post/cropper.min.css',
+    //                         '/styles/importer.css',
+    //                         '/styles/css_public/themes/alertify.core.css',
+    //                         '/styles/css_public/themes/alertify.default.css'
+    //                       ],
+    //                 });
+    //             }   
+    //         }
+    //     });
+    // }
 };
 

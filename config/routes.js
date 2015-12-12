@@ -246,11 +246,6 @@ module.exports.routes = {
     action: 'setArticlePage',
     skipAssets: true
   },
-  'GET /article/:id': {
-    controller: 'ArticlesController',
-    action: 'setMeta',
-    skipAssets: true
-  },
   'GET /post/:board': {
     controller: 'SessionController',
     action: 'checkPostAuth',

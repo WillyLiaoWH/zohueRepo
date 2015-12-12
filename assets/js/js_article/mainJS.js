@@ -345,8 +345,7 @@ function updateClickNum(){
   var url = document.URL;
   var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
-  //var clickNum=parseInt(articleList[0].clickNum)+1;
-  $.post( "/updateClickNum", { id: id}, function(res){
+  $.post( "/updateClickNum", {id: id}, function(res){
   }).error(function(res){
     showDialog("錯誤訊息",res.err);
   });
