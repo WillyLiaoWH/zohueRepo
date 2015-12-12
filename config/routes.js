@@ -164,22 +164,28 @@ module.exports.routes = {
     skipAssets: true
   },
 
-  'GET /editArticle/*': {
-    view: 'editArticle/index',
-    locals: {
-      scripts: [
-        '/js/js_editArticle/mainJS.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_editArticle/crop-avatar.js'
-      ],
-      stylesheets: [
-        '/styles/css_editArticle/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css'
-      ]
-    }
+  'GET /editArticle/:article_id': {
+    controller: 'ArticlesController',
+    action: 'setEditArticlePage',
+    skipAssets: true
   },
+
+  // 'GET /editArticle/*': {
+  //   view: 'editArticle/index',
+  //   locals: {
+  //     scripts: [
+  //       '/js/js_editArticle/mainJS.js',
+  //       '/js/js_post/cropper.min.js',
+  //       '/js/js_editArticle/crop-avatar.js'
+  //     ],
+  //     stylesheets: [
+  //       '/styles/css_editArticle/style.css',
+  //       '/styles/css_post/crop-avatar.css',
+  //       '/styles/css_post/cropper.min.css',
+  //       '/styles/importer.css'
+  //     ]
+  //   }
+  // },
 
   
 

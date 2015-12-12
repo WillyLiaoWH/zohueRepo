@@ -809,7 +809,59 @@ module.exports = {
             });
         }
     },
+    setEditArticlePage: function(req, res){
+        var id=req.param("article_id");
 
+        Articles.find({id: id}).populate('author').exec(function(err, article) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                if(article.length==0) {
+                    res.send(404, "查無此文章");
+                } else if(article[0].deleted&&article[0].deleted=="true") {
+                    res.send(404, "查無此文章");
+                } else {
+                    if(req.session.authenticated && 
+                        req.session.user.id==article[0].author.id) {
+                        isAuthor=true;
+                    } else {
+                        isAuthor=false;
+                    }
+                    content = article[0].content.substring(0,article[0].content.indexOf("<div id='postContent_image'>\n"));
+                    content_image = article[0].content.substring(article[0].content.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, article[0].content.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
+                    content_image = content_image.replace(/<a/g, "<dummy");
+
+                    if(id=='undefined') res.send(500, "server error");
+                    Articles.find(id).exec(function(err, articles) {
+                        if(err) {
+                            console.log("錯誤訊息："+err);
+                            res.send(500, "server error");
+                        } else {
+                            if(articles.length==1) {
+                                return res.view("editArticle/index", {
+                                    title: article[0].title,
+                                    content_image: content_image,
+                                    content: content,
+                                    isAuthor: isAuthor, 
+                                    scripts: [
+                                        '/js/js_editArticle/mainJS.js',
+                                        '/js/js_post/cropper.min.js',
+                                        '/js/js_editArticle/crop-avatar.js'
+                                    ],
+                                    stylesheets: [
+                                        '/styles/css_editArticle/style.css',
+                                        '/styles/css_post/crop-avatar.css',
+                                        '/styles/css_post/cropper.min.css',
+                                        '/styles/importer.css',
+                                    ],
+                                });
+                            }   
+                        }
+                    });
+                }
+            }
+        });
+    },
     changeArticle: function(req, res) {
         var articleId = req.param("id");
         var newTitle = req.param("newTitle");
