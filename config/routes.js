@@ -268,17 +268,20 @@ module.exports.routes = {
     action: 'setBoardPage',
     skipAssets: true
   },
-  '/frontboard/*': {
-    view: 'frontboard/index',
-    locals: {
-      scripts: [
-        '/js/js_frontboard/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/css_frontboard/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/frontboard': {
+    controller: 'ArticlesController',
+    action: 'setFrontBoard',
+    skipAssets: true
+    // view: 'frontboard/index',
+    // locals: {
+    //   scripts: [
+    //     '/js/js_frontboard/mainJS.js'
+    //   ],
+    //   stylesheets: [
+    //     '/styles/css_frontboard/style.css',
+    //     '/styles/importer.css'
+    //   ]
+    // }
   },
   'GET /friends': {
     controller: 'UserController',
