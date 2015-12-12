@@ -73,7 +73,7 @@ function setPage() {
 //     articleContent=articleList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
 
 //     board=articleList[0].board;
-//     updateClickNum();
+     updateClickNum();
 
 //     response=res.responseList;
 
@@ -345,8 +345,8 @@ function updateClickNum(){
   var url = document.URL;
   var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
-  var clickNum=parseInt(articleList[0].clickNum)+1;
-  $.post( "/updateClickNum", { id: id, clickNum: clickNum}, function(res){
+  //var clickNum=parseInt(articleList[0].clickNum)+1;
+  $.post( "/updateClickNum", { id: id}, function(res){
   }).error(function(res){
     showDialog("錯誤訊息",res.err);
   });
