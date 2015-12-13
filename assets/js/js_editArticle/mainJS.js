@@ -1,5 +1,4 @@
 var allow_create;
-var board="";
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
   setPage();
@@ -50,33 +49,9 @@ $(document).ready(function(){
     });
 });
 
-// function setPage() {
-//   var url = document.URL;
-//   var regex = /.*editArticle\/+(.*)/;
-//   var article_id = url.replace(regex,"$1");
-//   $.get("/setArticlePage/"+article_id, function(res){
-//     articleList=res.articleList;
-//     articleTitle=articleList[0].title;
-//     articleContent=articleList[0].content;
-//     board=articleList[0].board;
-
-//     content1 = articleContent.substring(0,articleContent.indexOf("<div id='postContent_image'>\n"));
-//     content2 = articleContent.substring(articleContent.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, articleContent.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
-//     content2 = content2.replace(/<a/g, "<dummy");
-
-//     if(content2.indexOf("img") == -1){ // div 內無圖片
-//       $("#postContent_image").css("display", "none");
-//     }
-
-//     document.getElementById("postContent_image").innerHTML = content2;
-//     document.getElementById("postTitle").value = articleTitle;
-//     document.getElementById("postContent").innerHTML = content1;
-
-//     $( ".show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
-//   }).error(function(res){
-//     showDialog("錯誤訊息",res.responseJSON.err);
-//   });
-// }
+function setPage() {
+  $( ".show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 圖片加入叉叉
+}
 
 function post() {
   if(document.getElementById("rmimg")){$(".delete").remove();} // 去除叉叉紐
