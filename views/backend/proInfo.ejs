@@ -1,0 +1,151 @@
+<div id="proInfo" class=" mainContent">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>專業知識 - 新增</h2>
+    </div>
+    <div class="panel-body">   
+      <div class="col-md-3">
+        <label for="proInfoType">類型</label>
+        <select id="proInfoType" class="form-control">
+          <option value="概論">概論</option>
+          <option value="預防">預防</option>
+          <option value="手術">手術</option>
+          <option value="療法">療法</option>
+          <option value="治療">治療</option>
+          <option value="篩檢">篩檢</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="proInfoCancer">癌症別</label>
+        <select id="proInfoCancer" class="form-control">
+          <option value="總論">總論</option>
+          <option value="鼻咽癌">鼻咽癌</option>
+          <option value="鼻腔/副鼻竇癌">鼻腔/副鼻竇癌</option>
+          <option value="口腔癌">口腔癌</option>
+          <option value="口咽癌">口咽癌</option>
+          <option value="下咽癌">下咽癌</option>
+          <option value="喉癌">喉癌</option>
+          <option value="唾液腺癌">唾液腺癌</option>
+          <option value="甲狀腺癌">甲狀腺癌</option>
+        </select>
+      </div>
+      <div class="col-md-offset-2 col-md-2">
+        <label for="proInfoYear">發表年份(民國)</label>
+        <select id="proInfoYear" class="form-control">
+          <option value="88">88</option>
+          <option value="89">89</option>
+          <option value="90">90</option>
+          <option value="91">91</option>
+          <option value="92">92</option>
+          <option value="93">93</option>
+          <option value="94">94</option>
+          <option value="95">95</option>
+          <option value="96">96</option>
+          <option value="97">97</option>
+          <option value="98">98</option>
+          <option value="99">99</option>
+          <option value="100">100</option>
+          <option value="101">101</option>
+          <option value="102">102</option>
+          <option value="103">103</option>
+          <option value="104">104</option>
+          <option value="105">105</option>
+
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="proInfoMonth">月份</label>
+        <select id="proInfoMonth" class="form-control">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="proInfoTitle">標題</label>
+        <input type="text" id="proInfoTitle" class="form-control">
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+        <label for="proInfoName">作者名</label>
+        <input type="text" id="proInfoName" class="form-control">
+      </div>
+      <div class="col-md-2">
+        <label for="proInfoName2">稱謂</label>
+        <select id="proInfoName2" class="form-control">
+          <option value="醫師">醫師</option>
+          <option value="社工師">社工師</option>
+          <option value="護理師">護理師</option>
+          <option value="個案管理師">個案管理師</option>
+          <option value=" ">--</option>
+        </select>
+      </div>
+      
+      <div class="col-md-6">
+        <label for="link">內容連結</label>
+        <input type="text" id="link" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="proInfoFrom">出處</label>
+        <input type="text" id="proInfoFrom" class="form-control">
+      </div>
+
+      <div class="col-md-offset-11">
+        <button class="btn btn-default" onclick="proInfoSubmit()">送出</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>修改 / 刪除</h2>
+    </div>
+    <div class="panel-body">
+      <div class="col-md-11">
+        <select id="delProInfo" class="form-control"></select>
+      </div>
+      <button class="btn btn-default" onclick="delProInfo()">刪除</button>
+      <div id="edit_proInfo">
+        <div class="col-md-3">
+          <label for="proInfoType_change">類型</label>
+          <input id="proInfoType_change" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <label for="proInfoCancer_change">癌症別</label>
+          <input id="proInfoCancer_change" class="form-control">
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+          <label for="proInfotime_change">發表時間</label>
+          <input type="text" class="form-control" id="proInfotime_change">
+        </div>
+        <div class="col-md-6">
+          <label for="proInfoTitle_change">標題</label>
+          <input type="text" id="proInfoTitle_change" class="form-control">
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+          <label for="proInfoAuthor_change">作者</label>
+          <input type="text" id="proInfoAuthor_change" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label for="link_change">內容連結</label>
+          <input type="text" id="link_change" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label for="proInfoFrom_change">出處</label>
+          <input type="text" id="proInfoFrom_change" class="form-control">
+        </div>
+        <div class="col-md-offset-11">
+          <button class="btn btn-default" onclick="proInfoChange()">修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

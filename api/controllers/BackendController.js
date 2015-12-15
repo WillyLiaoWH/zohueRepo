@@ -40,10 +40,60 @@ module.exports = {
             })
         }
     },
-  	index: function(req, res) {
-	    res.view({
-	    	layout: false
-	    });
+  	setPage: function(req, res) {
+        var page = req.param("page")
+        if (page==="userManage"){
+
+            res.view("backend/userManage",{
+
+                layout: "back_layout"
+            });
+        }
+        else if (page === "forumManage"){
+            res.view("backend/forumManage",{
+
+                layout: "back_layout"
+            });
+
+        }
+        else if (page === "subscriberManage"){
+            res.view("backend/subscriberManage",{
+
+                layout: "back_layout"
+            });
+
+        }
+        else if (page === "edit"){
+
+        }
+        else if (page ==="record"){
+            res.view("backend/record",{
+
+                layout: "back_layout"
+            });
+
+        }
+        else if (page ==="proInfo"){
+            res.view("backend/proInfo",{
+
+                layout: "back_layout"
+            });
+
+        }
+        else if (page ==="homepageManage"){
+            res.view("backend/homepageManage",{
+
+                layout: "back_layout"
+            });
+
+        }
+        else{
+            res.view("backend/default",{
+
+                layout: "back_layout"
+            });
+        }
+	    
   	},
     
     adminLogout: function (req, res) {

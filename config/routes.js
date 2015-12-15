@@ -299,15 +299,11 @@ module.exports.routes = {
     action: 'setNotificationPage',
     skipAssets: true,
   },
-  '/backendbackend': {
+  '/backendbackend/:page': {
     //view: 'backend/adminLoginPage',
     controller: 'backend',
-    locals: {
-      scripts: [
-      ],
-      stylesheets: [
-      ]
-    }
+    action : 'setPage',
+    skipAssets: true,
   },
   '/forget':{
     view:'forget/index',

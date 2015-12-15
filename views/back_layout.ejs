@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Join Us | ZOHUE</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <script src="/js/js_public/jquery.min.js"></script>
+    <script src="/js/js_public/jquery-1.10.2.js"></script>
+    <script src="/js/js_public/jquery-ui.js"></script>
+    <script src="/js/js_public/jquery.scrolly.min.js"></script>
+    <script src="/js/js_public/jquery.scrollzer.min.js"></script>
+    <script src="/js/js_public/bootstrap.min.js"></script>
+    <script src="/js/js_public/bootbox.min.js"></script>
+    <link rel="stylesheet" href="/styles/css_public/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/css_public/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/styles/css_public/jquery-ui.css">
+
+    <link rel="stylesheet" href="/styles/css_backend/style.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <script src="/js/js_backend/mainJS.js"></script>
+    
+
+  </head>
+  <body id="body">
+
+    <nav class="navbar navbar-default" id="backendMenu">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/Home">ZOHUE</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+        <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
+          <ul class="nav navbar-nav" id="functionList" href="#">
+            <li ><a href="userManage">帳號管理</a></li>
+            <li ><a href="forumManage">論壇管理</a></li>
+            <li ><a href="subscriberManage">電子報管理</a></li>
+            <li ><a href="record">查看記錄</a></li>
+            <li ><a href="proInfo">專業知識</a></li>
+            <li ><a href="homepageManage">首頁管理</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a id="adminLogout">管理員登出</a></li>
+          </ul>
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <div class="container-fluid" id="backendContent">
+      <div class="row-fluid">
+        <div class="span12">
+          <div id="backend_content">
+            <%- body %>
+            
+
+            <a id="backendHowTo" href="/files/後台管理說明文件.pdf" target="_blank">後台管理說明文件</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

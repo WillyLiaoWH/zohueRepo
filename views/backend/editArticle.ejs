@@ -1,0 +1,59 @@
+<div id="editArticle" class="panel panel-default">
+    <div class="panel-heading">
+      <h2>編輯文章</h2>
+
+    </div>
+    <div class="panel-body">
+      
+    
+      <div id="edit_Article">
+        <div class="col-md-3">
+          <label for="articleID">文章編號</label>
+          <input id="articleID" class="form-control" readonly="">
+        </div>
+        
+        <div class="col-md-3">
+          <label for="newBoardCategory">看板分類</label>
+          <select class="form-control" id="newBoardCategory">
+            <option value="1">病友照護</option>
+            <option value="2">生活機能</option>
+            <option value="3">社團公告</option>
+            <option value="4">平台小幫手</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label for="newBoard">看板</label>
+          <select class="form-control" id="newBoard">
+          </select>                     
+        </div>
+
+        <div class="col-md-3">
+          <label for="newClassification">文章類型</label>
+          <select class="form-control" id="newClassification">
+          
+            <option value="分享">分享</option>
+            <option value="病況與心情">病況與心情</option>
+            <option value="問題">問題</option>
+            <option value="其它">其它</option>
+          </select>
+          
+        </div>
+     
+        <div class="col-md-6">
+          <label for="newTitle_change">標題</label>
+          <input type="text" id="newTitle_change" class="form-control">
+        </div>
+       
+        <div class="col-md-12">
+          <label for="newContent">內容</label>
+          <div contentEditable="false" type="text" id="newContent" class="form-control" readonly=""></div>
+        </div>
+
+        <div class="col-md-offset-11">
+          <button class="btn btn-default" onclick="editArticle()">修改</button>
+        </div>
+
+      </div>
+    </div>
+  </div>

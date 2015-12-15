@@ -1,0 +1,20 @@
+<div id="userManage" class="mainContent">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2>帳號管理</h2></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3" style="margin-left:15px; padding-right:0px;">
+          <input type="text" class="form-control" id="searchUser" onkeypress="return userSearch(event);" placeholder="搜尋帳號、姓名、暱稱">
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-default searchButton" onclick="loadUserList()">搜尋</button>
+          <button type="button" class="btn btn-default searchButton" onclick="cancelUserSearch()">取消</button>
+        </div>
+      </div>
+      <!-- Table -->
+      <table class="table table-hover" id="backend_userList"></table>
+    </div>
+    
+  </div>
+</div>

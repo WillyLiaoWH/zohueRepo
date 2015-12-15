@@ -1,0 +1,22 @@
+<div id="subscriberManage" class=" mainContent">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2>電子報管理</h2></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="searchEmail" onkeypress="return emailSearch(event);" placeholder="搜尋E-mail">
+        </div>
+        <div class="col-md-5">
+          <button type="button" class="btn btn-default searchButton" onclick="loadsubscriberList()">搜尋</button>
+          <button type="button" class="btn btn-default searchButton" onclick="cancelEmailSearch()">取消</button>
+        </div>
+        <div class="col-md-4 text-right">
+          <button id="enlSend" type="button" class="btn btn-default searchButton" data-toggle="collapse" href="#enlManage">發送電子報</button>
+        </div>
+      </div>
+      <!-- Table -->
+      <table class="table table-hover" id="backend_subscriberList"></table>
+    </div>
+  </div>
+</div>

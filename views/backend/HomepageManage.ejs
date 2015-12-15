@@ -1,0 +1,54 @@
+<div id="homepageManage" class="mainContent">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2>首頁圖片管理</h2></div>
+    <div class="panel-body">
+      <div class="row" style="margin:0px">
+        <!-- <div class="col-md-1 text-center"> -->
+          <!-- <h3>首頁宣傳圖片</h3> -->
+        <!-- </div>  -->
+        <div class="col-md-8">
+          <form name="myForm" action="/imgupload_homepagePic" method="post" enctype="multipart/form-data">
+            
+
+            <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="getFile()">新增圖片</button>
+            
+            <input id="pic_avatar" type="file" value="upload" accept="image/jpeg, image/jpg" name="avatar" style="display: none" onchange="getFilename(this)"/>
+            
+            <label >新圖片標題</label>
+            <input class="btn btn-default searchButton" type="text" id="pic_title" name="title">
+
+            <button type="button"  class="btn btn-default searchButton" id="yourBtn" onclick="PicSubmit()">送出</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <table class="table table-hover" id="backend_homepagePicList"></table>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>熱門文章公式</h2>
+    </div>
+    <div class="panel-body">
+      <div class="col-md-4">
+        <label>推薦次數權重</label>
+        <input type="text" class="form-control" id="nicerNumWeight" placeholder="推薦次數權重">
+      </div>
+      <div class="col-md-4">
+        <label for="responseNumWeight">回應次數權重</label>
+        <input type="text" class="form-control" id="responseNumWeight" placeholder="回應次數權重">
+      </div>
+      <div class="col-md-4">
+        <label for="clickNumWeight">點閱次數權重</label>
+        <input type="text" class="form-control" id="clickNumWeight" placeholder="點閱次數權重">
+      </div>
+
+      <div class="col-md-12" style="margin-top:5px;">
+        <button class="btn btn-default pull-right" onclick="editTopArticleFormula()">送出</button>
+      </div>
+    </div>
+  </div>
+</div>
