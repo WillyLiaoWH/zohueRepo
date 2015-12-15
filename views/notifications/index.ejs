@@ -51,7 +51,7 @@
 		        <img src='<%=not[i].from.img%>' onclick='toProfile(\"<%=not[i].from.id %>\")' style='margin-right:10px; cursor: pointer; height: 80px; width:80px;'>
 		        </div>
 				<div class='message'>
-					<a href='/profile/?"<%=not[i].from.id%>'><%=not[i].from.alias%></a>
+					<a href='/profile/?<%=not[i].from.id%>'><%=not[i].from.alias%></a>
 					
 					<%=local.type%>
 					<%=local.notMessage[parseInt(not[i].notType)-1]%>
