@@ -8,8 +8,31 @@
 module.exports = {
     
 	setBoardPage: function(req, res){
+
+        function getTimeString(date) {
+            if(date.getHours()/12==0) var tt="上午";
+            else var tt="下午";
+            return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
+        }
+        //settings
+        var maxReport=3;
+        var articleNumPerPage=20;
+
         var tab=req.param("tab");
-        var classification;
+        var order=req.param("order");
+        var sort=req.param("sort");
+        var board=req.param("board");
+        var keyword=req.param("search");
+        var page=req.param("page");
+
+        if(order!="DESC"&&order!="ASC") {
+            res.send(400, {error: "bad request error"});
+        }
+        if(sort!="classification"&&sort!="title"&&sort!="author"&&sort!="createdAt"&&sort!="clickNum"&&sort!="responseNum"&&sort!="niceNum"&&sort!="lastResponseTime") {
+            res.send(400, {error: "bad request error"});
+        }
+
+        var elite="";
         switch (tab) {
             case "all":
               classification="";
@@ -26,36 +49,362 @@ module.exports = {
             case "others":
               classification="其它";
               break;
+            case "elite":
+              classification="";
+              elite="1";
+              break;
+            default:
+              res.send(400, {error: "bad request error"});
         }
-        var board=req.param("board");
-        var boards;
-        var boardCate;
 
         if(board==21) { // 專業知識論壇頁面不開放
-            res.send(500, { err: "DB Error" });
+            res.send(400, {error: "bad request error"});
+        } else if(board<1||board>20) {
+            res.send(400, {error: "bad request error"});
         }
         
-        BoardCategory.find().exec(function(err, boardCateList) {
-            boardCate=boardCateList;
-        });
-
-        Articles.find({classification: {'contains': classification}, board: board, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articlesList) {
+        Articles.find({classification: {'contains': classification}, title: {'contains': keyword}, board: board, deleted: "false", elite: {'contains': elite}}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
-                Boards.find({id: board}).populate('category').exec(function(err, board) {
-                    if(err || board.length<1) {
+                Boards.find({id: board}).populate('category').exec(function(err2, board) {
+                    if(err2 || board.length<1) {
                         res.send(500, { err: "DB Error" });
                     } else {
-                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-                            boards=boardsList;
-                            res.send({articlesList: articlesList, board: board[0], boards: boards, boardCate: boardCate});
+                        
+                        BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
+                            totalPage=Math.ceil(articleList.length/articleNumPerPage);
+                            if((totalPage!=0&&page>totalPage)||page<1) {
+                                res.send(400, {error: "bad request error"});
+                            } 
+
+                            articleList.sort(function(a, b) {
+                                if(order=="ASC") {
+                                    switch (sort) {
+                                        case "responseNum":
+                                            return a.response.length-b.response.length;
+                                            break;
+                                        case "niceNum":
+                                            return a.nicer.length-b.nicer.length;
+                                            break;
+                                        case "author":
+                                            return a[sort].alias.localeCompare(b[sort].alias);
+                                            break;
+                                        case "createdAt":
+                                        case "lastResponseTime":
+                                            return new Date(a[sort])-new Date(b[sort])
+                                            break;
+                                        case "classification":
+                                        case "title":
+                                            return a[sort].localeCompare(b[sort]);
+                                            break;
+                                        case "clickNum":
+                                            return a[sort]-b[sort];
+                                            break;
+                                        default:
+                                            res.send(400, {error: "bad request error"});
+                                    }
+                                } else {
+                                    switch (sort) {
+                                        case "responseNum":
+                                            return b.response.length-a.response.length;
+                                            break;
+                                        case "niceNum":
+                                            return b.nicer.length-a.nicer.length;
+                                            break;
+                                        case "author":
+                                            return b[sort].alias.localeCompare(a[sort].alias);
+                                            break;
+                                        case "createdAt":
+                                        case "lastResponseTime":
+                                            return new Date(b[sort])-new Date(a[sort])
+                                            break;
+                                        case "classification":
+                                        case "title":
+                                            return b[sort].localeCompare(a[sort]);
+                                            break;
+                                        case "clickNum":
+                                            return b[sort]-a[sort];
+                                            break;
+                                        default:
+                                            res.send(400, {error: "bad request error"});
+                                    }
+                                }
+                            });
+                            articleList=articleList.slice((page-1)*20, page*20);
+                            for(var i=0; i<articleList.length; i++) {
+                                if(articleList[i].report&&articleList[i].report.length>=maxReport) {
+                                    articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
+                                    articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
+                                    articleList[i].color = "color:grey;";
+                                    articleList[i].linkcolor = "color:grey;";
+                                } else {
+                                    articleList[i].badPic = '';
+                                    articleList[i].link = "href=/article/"+articleList[i].id;
+                                    articleList[i].color = "";
+                                    articleList[i].linkcolor = "color:#000079;";
+                                }
+                                switch(articleList[i].author.type) {
+                                    case "D":
+                                        articleList[i].authorType="&nbsp醫師";
+                                        articleList[i].authorIcon="src=/images/img_forum/doctor_icon.png title=已認證醫師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        break;
+                                    case "S":
+                                        articleList[i].authorType="&nbsp社工師";
+                                        articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證社工師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        break;
+                                    case "RN":
+                                        articleList[i].authorType="&nbsp護理師";
+                                        articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證護理師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        break;
+                                    case "P":
+                                        articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=病友 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorType="";
+                                        break;
+                                    case "F":
+                                        articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=家屬 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorType="";
+                                        break;
+                                    default:
+                                        articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=一般民眾 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorType="";
+                                }
+                                articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
+                                articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
+                            }
+
+                            var proInfo=-1;
+                            for(var i=0; i<boardsCateList.length; i++) {
+                                if(boardsCateList[i].id==5) {
+                                    proInfo=i;
+                                    break;
+                                }
+                            }
+                            boardsCateList.splice(i, 1);
+
+                            res.view("board/index", {
+                                tab: req.param("tab"),
+                                keyword: req.param("search"),
+                                board: req.param("board"),
+                                boardTitle: board[0].title,
+                                boardCateTitle: board[0].category.title,
+                                boardsCateList: boardsCateList,
+                                articleList: articleList,
+                                totalPage: totalPage,
+                                page: page,
+                                scripts: [
+                                    '/js/js_board/mainJS.js'
+                                ],
+                                stylesheets: [
+                                    '/styles/css_board/style.css',
+                                    '/styles/importer.css'
+                                ]
+                            });
                         });
                     }
                 });
             }
         });
-	},
+    },
+
+    setFrontBoard: function(req, res) {
+        function getTimeString(date) {
+            if(date.getHours()/12==0) var tt="上午";
+            else var tt="下午";
+            return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
+        }
+        //settings
+        var maxReport=3;
+        var articleNumPerPage=20;
+
+        var tab=req.param("tab");
+        var order=req.param("order");
+        var sort=req.param("sort");
+        var keyword=req.param("search");
+        var page=req.param("page");
+
+        if(order!="DESC"&&order!="ASC") {
+            console.log("order incorrect");
+            res.send(400, {error: "bad request error"});
+        }
+        if(sort!="classification"&&sort!="title"&&sort!="author"&&sort!="createdAt"&&sort!="clickNum"&&sort!="responseNum"&&sort!="niceNum"&&sort!="lastResponseTime") {
+            console.log("sort incorrect");
+            res.send(400, {error: "bad request error"});
+        }
+
+        var elite="";
+        switch (tab) {
+            case "all":
+              classification="";
+              break;
+            case "motion":
+              classification="病況與心情"
+              break;
+            case "share":
+              classification="分享";
+              break;
+            case "problem":
+              classification="問題";
+              break;
+            case "others":
+              classification="其它";
+              break;
+            case "elite":
+              classification="";
+              elite="1";
+              break;
+            default:
+              console.log("tab incorrect");
+              res.send(400, {error: "bad request error"});
+        }
+        
+        Articles.find({classification: {'contains': classification}, title: {'contains': keyword}, board: {"!": 21}, deleted: "false", elite: {'contains': elite}}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
+                    totalPage=Math.ceil(articleList.length/articleNumPerPage);
+                    if((totalPage!=0&&page>totalPage)||page<1) {
+                        console.log("page incorrect");
+                        res.send(400, {error: "bad request error"});
+                    }
+                    articleList.sort(function(a, b) {
+                        if(order=="ASC") {
+                            switch (sort) {
+                                case "responseNum":
+                                    return a.response.length-b.response.length;
+                                    break;
+                                case "niceNum":
+                                    return a.nicer.length-b.nicer.length;
+                                    break;
+                                case "author":
+                                    return a[sort].alias.localeCompare(b[sort].alias);
+                                    break;
+                                case "createdAt":
+                                case "lastResponseTime":
+                                    return new Date(a[sort])-new Date(b[sort])
+                                    break;
+                                case "classification":
+                                case "title":
+                                    return a[sort].localeCompare(b[sort]);
+                                    break;
+                                case "clickNum":
+                                    return a[sort]-b[sort];
+                                    break;
+                                default:
+                                    res.send(400, {error: "bad request error"});
+                            }
+                        } else {
+                            switch (sort) {
+                                case "responseNum":
+                                    return b.response.length-a.response.length;
+                                    break;
+                                case "niceNum":
+                                    return b.nicer.length-a.nicer.length;
+                                    break;
+                                case "author":
+                                    return b[sort].alias.localeCompare(a[sort].alias);
+                                    break;
+                                case "createdAt":
+                                case "lastResponseTime":
+                                    return new Date(b[sort])-new Date(a[sort])
+                                    break;
+                                case "classification":
+                                case "title":
+                                    return b[sort].localeCompare(a[sort]);
+                                    break;
+                                case "clickNum":
+                                    return b[sort]-a[sort];
+                                    break;
+                                default:
+                                    res.send(400, {error: "bad request error"});
+                            }
+                        }
+                    });
+                    
+                    var boardRefe=[];
+                    for(var i=0; i<boardsCateList.length; i++) {
+                        for(var j=0; j<boardsCateList[i].board.length; j++) {
+                            boardRefe[boardsCateList[i].board[j].id]=boardsCateList[i].title;
+                        }
+                    }
+
+                    articleList=articleList.slice((page-1)*20, page*20);
+
+                    for(var i=0; i<articleList.length; i++) {
+                        articleList[i].title="["+boardRefe[articleList[i].board.id]+"—"+articleList[i].board.title+"]<br>"+articleList[i].title;
+
+                        if(articleList[i].report&&articleList[i].report.length>=maxReport) {
+                            articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
+                            articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
+                            articleList[i].color = "color:grey;";
+                            articleList[i].linkcolor = "color:grey;";
+                        } else {
+                            articleList[i].badPic = '';
+                            articleList[i].link = "href=/article/"+articleList[i].id;
+                            articleList[i].color = "";
+                            articleList[i].linkcolor = "color:#000079;";
+                        }
+                        switch(articleList[i].author.type) {
+                            case "D":
+                                articleList[i].authorType="&nbsp醫師";
+                                articleList[i].authorIcon="src=/images/img_forum/doctor_icon.png title=已認證醫師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                break;
+                            case "S":
+                                articleList[i].authorType="&nbsp社工師";
+                                articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證社工師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                break;
+                            case "RN":
+                                articleList[i].authorType="&nbsp護理師";
+                                articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證護理師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                break;
+                            case "P":
+                                articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=病友 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorType="";
+                                break;
+                            case "F":
+                                articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=家屬 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorType="";
+                                break;
+                            default:
+                                articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=一般民眾 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorType="";
+                        }
+                        articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
+                        articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
+                    }
+
+                    var proInfo=-1;
+                    for(var i=0; i<boardsCateList.length; i++) {
+                        if(boardsCateList[i].id==5) {
+                            proInfo=i;
+                            break;
+                        }
+                    }
+                    boardsCateList.splice(i, 1);
+
+                    res.view("board/index", {
+                        tab: req.param("tab"),
+                        keyword: req.param("search"),
+                        board: req.param("board"),
+                        boardTitle: "總板",
+                        boardCateTitle: "",
+                        boardsCateList: boardsCateList,
+                        articleList: articleList,
+                        totalPage: totalPage,
+                        page: page,
+                        scripts: [
+                            '/js/js_frontboard/mainJS.js'
+                        ],
+                        stylesheets: [
+                            '/styles/css_board/style.css',
+                            '/styles/importer.css'
+                        ]
+                    });
+                });
+            }
+        });
+    },
 
     setBoardFrontPage: function(req, res){
         var tab=req.param("tab");
@@ -139,7 +488,8 @@ module.exports = {
         response=[];
         responseNice=[];
         responseNiceCount=[];
-        Response.find({article: req.param('article_id')}).populate('author').exec(function(error, responseList) {
+        var id=req.param("article_id");
+        Response.find({article: id}).populate('author').exec(function(error, responseList) {
             if (error) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -188,7 +538,7 @@ module.exports = {
             }
         }
         function R_NiceCount(cb){
-            Response.find({article: req.param('article_id'), }).populate('author').exec(function(error, responseList) {
+            Response.find({article: id, }).populate('author').exec(function(error, responseList) {
                 if (error) {
                     res.send(500, { err: "DB Error" });
                 } else {
@@ -196,7 +546,7 @@ module.exports = {
                 }
             });
         }
-        Articles.find({id: req.param('article_id')}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
+        Articles.find({id: id}).populate('author').populate('response').populate('report').exec(function(err, articlesList) {
             if (err) {
                 res.send(500, { err: "DB Error" });
             } else {
@@ -228,13 +578,14 @@ module.exports = {
                     if(req.session.authenticated && articlesList[0].nicer) {
                         isNice=false;
                         for(i=0; i<articlesList[0].nicer.length; i++) {
-                            if(articlesList[0].nicer[i]&&req.session.user.id==articlesList[0].nicer[i].id) {
+                            if(articlesList[0].nicer[i]&&req.session.user.id==articlesList[0].nicer[i]) {
                                 isNice=true;
                                 break;
                             }
                         }
                     } else {
                         isNice=false;
+                        
                     }
                     if(req.session.authenticated && articlesList[0].follower.indexOf(req.session.user.id)!=-1) {
                         var isFollower=true;
@@ -245,7 +596,7 @@ module.exports = {
                     var isReport=false;
                     var reportCount=articlesList[0].report.length;
                     if(req.session.authenticated) {
-                        Report.find({article: req.param('article_id'), reporter: req.session.user.id}).exec(function(err, report){
+                        Report.find({article: id, reporter: req.session.user.id}).exec(function(err, report){
                             if(err) {
                                 console.log(err);
                             } else {
@@ -267,9 +618,65 @@ module.exports = {
                     }
                     R_NiceCount(function(responseList){
                         RUNI_NiceCount(responseList, function(responseNiceCount){
-                            res.send({articleList: articlesList, isAuthor: isAuthor, isNice: isNice, 
-                                responseList: response, responseNice: responseNice, login: login, lnicer: articlesList[0].nicer.length, 
-                                responseNiceCount:responseNiceCount, isReport: isReport, reportCount: reportCount, isFollower: isFollower});
+                            
+                            articlesList[0].createdAt = new Date(articlesList[0].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                            articlesList[0].lastResponseTime = new Date(articlesList[0].lastResponseTime).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                            var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
+                            articlesList[0].content=articlesList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+
+                            if(response.length!=0){
+                                for(i=0; i<response.length; i++) {
+                                    response[i].createdAt = new Date(response[i].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                    //預先處理comment中的圖片
+                                    response[i].comment_image = response[i].comment_image.replace(/dummy href=/g, "a href=").replace(/\/dummy/g, "\/a");
+                                    response[i].comment = response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+                                }
+                            }
+
+                            if(id=='undefined') res.send(500, "server error");
+                            Articles.find(id).exec(function(err, articles) {
+                                if(err) {
+                                    console.log("錯誤訊息："+err);
+                                    res.send(500, "server error");
+                                } else {
+                                    if(articles.length==1) {
+                                        var metaTitle=articles[0].title;
+                                        var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
+                                        var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
+                                        return res.view("article/index", {
+                                            metaTitle: metaTitle,
+                                            metaUrl: metaUrl,
+                                            metaDescription: metaDescription,
+                                            articleList: articlesList,
+                                            isAuthor: isAuthor,
+                                            isNice: isNice,
+                                            responseList: response, 
+                                            responseNice: responseNice, 
+                                            login: login, 
+                                            lnicer: articlesList[0].nicer.length,
+                                            responseNiceCount: responseNiceCount,
+                                            isReport: isReport,
+                                            reportCount: reportCount, 
+                                            isFollower: isFollower,
+                                            scripts: [
+                                                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                                '/js/js_public/alertify.js',
+                                                '/js/js_article/mainJS.js',
+                                                '/js/js_post/cropper.min.js',
+                                                '/js/js_article/crop-avatar.js'
+                                              ],
+                                            stylesheets: [
+                                                '/styles/css_article/style.css',
+                                                '/styles/css_post/crop-avatar.css',
+                                                '/styles/css_post/cropper.min.css',
+                                                '/styles/importer.css',
+                                                '/styles/css_public/themes/alertify.core.css',
+                                                '/styles/css_public/themes/alertify.default.css'
+                                              ],
+                                        });
+                                    }   
+                                }
+                            });
                         });
                     });
                 }
@@ -402,7 +809,59 @@ module.exports = {
             });
         }
     },
+    setEditArticlePage: function(req, res){
+        var id=req.param("article_id");
 
+        Articles.find({id: id}).populate('author').exec(function(err, article) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
+            } else {
+                if(article.length==0) {
+                    res.send(404, "查無此文章");
+                } else if(article[0].deleted&&article[0].deleted=="true") {
+                    res.send(404, "查無此文章");
+                } else {
+                    if(req.session.authenticated && 
+                        req.session.user.id==article[0].author.id) {
+                        isAuthor=true;
+                    } else {
+                        isAuthor=false;
+                    }
+                    content = article[0].content.substring(0,article[0].content.indexOf("<div id='postContent_image'>\n"));
+                    content_image = article[0].content.substring(article[0].content.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, article[0].content.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
+                    content_image = content_image.replace(/<a/g, "<dummy");
+
+                    if(id=='undefined') res.send(500, "server error");
+                    Articles.find(id).exec(function(err, articles) {
+                        if(err) {
+                            console.log("錯誤訊息："+err);
+                            res.send(500, "server error");
+                        } else {
+                            if(articles.length==1) {
+                                return res.view("editArticle/index", {
+                                    title: article[0].title,
+                                    content_image: content_image,
+                                    content: content,
+                                    isAuthor: isAuthor, 
+                                    scripts: [
+                                        '/js/js_editArticle/mainJS.js',
+                                        '/js/js_post/cropper.min.js',
+                                        '/js/js_editArticle/crop-avatar.js'
+                                    ],
+                                    stylesheets: [
+                                        '/styles/css_editArticle/style.css',
+                                        '/styles/css_post/crop-avatar.css',
+                                        '/styles/css_post/cropper.min.css',
+                                        '/styles/importer.css',
+                                    ],
+                                });
+                            }   
+                        }
+                    });
+                }
+            }
+        });
+    },
     changeArticle: function(req, res) {
         var articleId = req.param("id");
         var newTitle = req.param("newTitle");
@@ -428,14 +887,20 @@ module.exports = {
 
     updateClickNum: function(req, res) {
         var id = req.param("id");
-        var clickNum = req.param("clickNum");
-        
-        Articles.update({id: id}, {clickNum: clickNum}).exec(function(error, updated) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
+
+        Articles.find({id: id}).exec(function(err, article) {
+            if (err) {
+                res.send(500, { err: "DB Error" });
             } else {
-                res.send("clickNum 更新嚕");
+                var clickNum = parseInt(article[0].clickNum)+1;
+                Articles.update({id: id}, {clickNum: clickNum}).exec(function(error, updated) {
+                    if(error) {
+                        res.send(500,{err: "DB Error" });
+                        console.log(error);
+                    } else {
+                        res.send("ClickNum updated.");
+                    }
+                });
             }
         });
     },
@@ -928,43 +1393,43 @@ module.exports = {
             });
         }
     },
-    setMeta: function(req, res) {
-        var id=req.param("id");
-        console.log(id);
-        if(id=='undefined') res.send(500, "server error");
-        Articles.find(id).exec(function(err, articles) {
-            if(err) {
-                console.log("錯誤訊息："+err);
-                res.send(500, "server error");
-            } else {
-                console.log(articles);
-                if(articles.length==1) {
-                    var metaTitle=articles[0].title;
-                    var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
-                    var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
-                    return res.view("article/index", {
-                        metaTitle: metaTitle,
-                        metaUrl: metaUrl,
-                        metaDescription: metaDescription,
-                        scripts: [
-                            '/js/js_public/modalBox.js-master/modalBox-min.js',
-                            '/js/js_public/alertify.js',
-                            '/js/js_article/mainJS.js',
-                            '/js/js_post/cropper.min.js',
-                            '/js/js_article/crop-avatar.js'
-                          ],
-                        stylesheets: [
-                            '/styles/css_article/style.css',
-                            '/styles/css_post/crop-avatar.css',
-                            '/styles/css_post/cropper.min.css',
-                            '/styles/importer.css',
-                            '/styles/css_public/themes/alertify.core.css',
-                            '/styles/css_public/themes/alertify.default.css'
-                          ],
-                    });
-                }   
-            }
-        });
-    }
+    // setMeta: function(req, res) {
+    //     var id=req.param("id");
+    //     console.log(id);
+    //     if(id=='undefined') res.send(500, "server error");
+    //     Articles.find(id).exec(function(err, articles) {
+    //         if(err) {
+    //             console.log("錯誤訊息："+err);
+    //             res.send(500, "server error");
+    //         } else {
+    //             console.log(articles);
+    //             if(articles.length==1) {
+    //                 var metaTitle=articles[0].title;
+    //                 var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
+    //                 var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
+    //                 return res.view("article/index", {
+    //                     metaTitle: metaTitle,
+    //                     metaUrl: metaUrl,
+    //                     metaDescription: metaDescription,
+    //                     scripts: [
+    //                         '/js/js_public/modalBox.js-master/modalBox-min.js',
+    //                         '/js/js_public/alertify.js',
+    //                         '/js/js_article/mainJS.js',
+    //                         '/js/js_post/cropper.min.js',
+    //                         '/js/js_article/crop-avatar.js'
+    //                       ],
+    //                     stylesheets: [
+    //                         '/styles/css_article/style.css',
+    //                         '/styles/css_post/crop-avatar.css',
+    //                         '/styles/css_post/cropper.min.css',
+    //                         '/styles/importer.css',
+    //                         '/styles/css_public/themes/alertify.core.css',
+    //                         '/styles/css_public/themes/alertify.default.css'
+    //                       ],
+    //                 });
+    //             }   
+    //         }
+    //     });
+    // }
 };
 

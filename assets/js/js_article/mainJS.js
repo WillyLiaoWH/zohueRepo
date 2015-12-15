@@ -44,226 +44,226 @@ $(document).ready(function(){
 
 var nice;
 function setPage() {
-  var url = document.URL;
-  var regex = /.*article\/+(.*)/;
-  var article_id = url.replace(regex,"$1");
+//   var url = document.URL;
+//   var regex = /.*article\/+(.*)/;
+//   var article_id = url.replace(regex,"$1");
 
-  $.get("/checkAuth", function(auth){
+   $.get("/checkAuth", function(auth){
     if(auth) {
-      //document.getElementById("content").style.width = "80%";
+      document.getElementById("content").style.width = "80%";
       document.getElementById("niceArticle").style.display="inline";
       document.getElementById("report").style.display="inline";
-      //document.getElementById("artContent").className = "span10";
+      document.getElementById("artContent").className = "span10";
       $("#follow").css("display", "inline");
     } else {
       $("#follow").css("display", "none");
     }
-  });
+   });
 
-  $.get("/setArticlePage/"+article_id, function(res){
+//   $.get("/setArticlePage/"+article_id, function(res){
     
-    if(res.isFollower) {
-      $("#follow").html("取消追蹤");
-    } else {
-      $("#follow").html("追蹤文章");
-    }
-    articleList=res.articleList;
-    articleTitle=articleList[0].title;
-    var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
-    articleContent=articleList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+//     if(res.isFollower) {
+//       $("#follow").html("取消追蹤");
+//     } else {
+//       $("#follow").html("追蹤文章");
+//     }
+//     articleList=res.articleList;
+//     articleTitle=articleList[0].title;
+//     var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
+//     articleContent=articleList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
 
-    board=articleList[0].board;
-    updateClickNum();
+//     board=articleList[0].board;
+     updateClickNum();
 
-    response=res.responseList;
+//     response=res.responseList;
 
-    regex=/(.*)T(.*)\..*/
-    createdAt=new Date(articleList[0].createdAt).toLocaleString();
-    if(createdAt.indexOf("GMT")==-1) {
-      postTime=createdAt.slice(0, createdAt.length-3);
-    } else {
-      postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
-    }
-    lastResponseTime=new Date(articleList[0].lastResponseTime).toLocaleString();
-    if(lastResponseTime.indexOf("GMT")==-1) {
-      updateTime=lastResponseTime.slice(0, lastResponseTime.length-3);
-    } else {
-      updateTime=lastResponseTime.slice(0, lastResponseTime.indexOf("GMT"))+lastResponseTime.slice(lastResponseTime.indexOf("GMT")+5, lastResponseTime.length-3);
-    }
+//     regex=/(.*)T(.*)\..*/
+//     createdAt=new Date(articleList[0].createdAt).toLocaleString();
+//     if(createdAt.indexOf("GMT")==-1) {
+//       postTime=createdAt.slice(0, createdAt.length-3);
+//     } else {
+//       postTime=createdAt.slice(0, createdAt.indexOf("GMT"))+createdAt.slice(createdAt.indexOf("GMT")+5, createdAt.length-3);
+//     }
+//     lastResponseTime=new Date(articleList[0].lastResponseTime).toLocaleString();
+//     if(lastResponseTime.indexOf("GMT")==-1) {
+//       updateTime=lastResponseTime.slice(0, lastResponseTime.length-3);
+//     } else {
+//       updateTime=lastResponseTime.slice(0, lastResponseTime.indexOf("GMT"))+lastResponseTime.slice(lastResponseTime.indexOf("GMT")+5, lastResponseTime.length-3);
+//     }
 
-    if ($(window).width() < 768) {
-      document.getElementById("adj_tr").innerHTML = "<td rowspan='2'><div id='articleAvatar_type' style='padding:0px'></div><div id='articleAvatar' style='padding:0px'></div><td id='articleTitle' colspan='2'></td></td><td></td> <td></td> <td ></td>";
-      var ava_height = "50px";
-      var adj_td="";
-      var adj_border="border-right:solid 1px rgba(102, 141, 60, 0.4)";
-    }else{
-      document.getElementById("adj_tr").innerHTML = "<td id='articleAvatar_type' rowspan='2' style='width:50px;'></td><td id='articleAvatar' rowspan='2' style='width:50px;'></td><td id='articleTitle' colspan='3'></td><td></td> <td></td> <td ></td>";
-      var ava_height = "70px";
-      var adj_td="<td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
-      var adj_border="";
-    }
-
-
-    if(articleList[0].author.type=="S") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
-    } else if(articleList[0].author.type=="D") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px; display: inline-block;height:"+ava_height+";' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"&nbsp醫師</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
-    } else if(articleList[0].author.type=="P") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='病友'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
-    } else if(articleList[0].author.type=="F") {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='家屬'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
-    } else {
-      document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='一般民眾'>";
-      document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
-      articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
-    }
+//     if ($(window).width() < 768) {
+//       document.getElementById("adj_tr").innerHTML = "<td rowspan='2'><div id='articleAvatar_type' style='padding:0px'></div><div id='articleAvatar' style='padding:0px'></div><td id='articleTitle' colspan='2'></td></td><td></td> <td></td> <td ></td>";
+//       var ava_height = "50px";
+//       var adj_td="";
+//       var adj_border="border-right:solid 1px rgba(102, 141, 60, 0.4)";
+//     }else{
+//       document.getElementById("adj_tr").innerHTML = "<td id='articleAvatar_type' rowspan='2' style='width:50px;'></td><td id='articleAvatar' rowspan='2' style='width:50px;'></td><td id='articleTitle' colspan='3'></td><td></td> <td></td> <td ></td>";
+//       var ava_height = "70px";
+//       var adj_td="<td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間："+updateTime+"</td>";
+//       var adj_border="";
+//     }
 
 
-    document.getElementById("articleTitle").innerHTML = articleTitle;
-    document.getElementById("articleData").innerHTML = articleData;
-    document.getElementById("articleContent").innerHTML = articleContent;
+    // if(articleList[0].author.type=="S") {
+    //   document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/sw_icon.png' title='已認證社工師'>";
+    //   document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
+    //   articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"&nbsp社工師</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
+    // } else if(articleList[0].author.type=="D") {
+    //   document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px; display: inline-block;height:"+ava_height+";' src='/images/img_forum/doctor_icon.png' title='已認證醫師'>";
+    //   document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
+    //   articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"&nbsp醫師</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
+    // } else if(articleList[0].author.type=="P") {
+    //   document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='病友'>";
+    //   document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
+    //   articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
+    // } else if(articleList[0].author.type=="F") {
+    //   document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='家屬'>";
+    //   document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
+    //   articleData="<td valign='botnicetom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
+    // } else {
+    //   document.getElementById("articleAvatar_type").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='/images/img_forum/user_icon.png' title='一般民眾'>";
+    //   document.getElementById("articleAvatar").innerHTML = "<img style='padding:5px 0px 0px 8px;display: inline-block;height:"+ava_height+";' src='"+articleList[0].author.img+"'>";
+    //   articleData="<td valign='bottom' style='padding:0px 0px 7px 20px;'>發表人："+"<a href='/profile/?"+articleList[0].author.id+"'>"+articleList[0].author.alias+"</a>"+"</td><td valign='bottom' style='padding:0px 0px 7px 0px;"+adj_border+"'>發表時間："+postTime+"</td>"+adj_td;
+    // }
 
-    if(document.getElementById("postContent_image").innerHTML.indexOf("images")>-1)
-    {
-      // 插入 HR
-      var orinode = document.getElementById("articleContent"); // 找到插入圖片的DIV
-      var range = document.createRange(); // 設定插入圖片時的range function
-      range.setStart(orinode, 0); // 設定range起始點
-      var node = range.createContextualFragment("<hr id='hr'>"); // 欲插入之element
-      orinode.insertBefore(node, document.getElementById("postContent_image"));
-    }
+
+//     document.getElementById("articleTitle").innerHTML = articleTitle;
+//     document.getElementById("articleData").innerHTML = articleData;
+//     document.getElementById("articleContent").innerHTML = articleContent;
+
+//     if(document.getElementById("postContent_image").innerHTML.indexOf("images")>-1)
+//     {
+//       // 插入 HR
+//       var orinode = document.getElementById("articleContent"); // 找到插入圖片的DIV
+//       var range = document.createRange(); // 設定插入圖片時的range function
+//       range.setStart(orinode, 0); // 設定range起始點
+//       var node = range.createContextualFragment("<hr id='hr'>"); // 欲插入之element
+//       orinode.insertBefore(node, document.getElementById("postContent_image"));
+//     }
     
 
-    responseContext="";
-    if(response.length!=0) {
-      for(i=0; i<response.length; i++) {
-        commentTime=new Date(response[i].createdAt).toLocaleString();
-        if(commentTime.indexOf("GMT")==-1) {
-        commentTime=commentTime.slice(0, commentTime.length-3);
-      } else {
-        commentTime=commentTime.slice(0, commentTime.indexOf("GMT"))+commentTime.slice(commentTime.indexOf("GMT")+5, commentTime.length-3);
-      }
-        switch(response[i].author.type){
-          case "D":
-            var type_avatar_img = "src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
-            var user_type = "醫師";
-          break;
-          case "S":
-            var type_avatar_img = "src='/images/img_forum/sw_icon.png' title='已認證社工師'";
-            var user_type = "社工師";
-          break;
-          case "P":
-            var type_avatar_img = "src='/images/img_forum/user_icon.png' title='病友'";
-            var user_type = "";
-          break;
-          case "F":
-            var type_avatar_img = "src='/images/img_forum/user_icon.png' title='家屬'";
-            var user_type = "";
-          break;
-          default:
-            var type_avatar_img = "src='/images/img_forum/user_icon.png' title='一般民眾'";
-            var user_type = "";
-          break;
-        }
+//     responseContext="";
+//     if(response.length!=0) {
+//       for(i=0; i<response.length; i++) {
+//         commentTime=new Date(response[i].createdAt).toLocaleString();
+//         if(commentTime.indexOf("GMT")==-1) {
+//         commentTime=commentTime.slice(0, commentTime.length-3);
+//       } else {
+//         commentTime=commentTime.slice(0, commentTime.indexOf("GMT"))+commentTime.slice(commentTime.indexOf("GMT")+5, commentTime.length-3);
+//       }
+//         switch(response[i].author.type){
+//           case "D":
+//             var type_avatar_img = "src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
+//             var user_type = "醫師";
+//           break;
+//           case "S":
+//             var type_avatar_img = "src='/images/img_forum/sw_icon.png' title='已認證社工師'";
+//             var user_type = "社工師";
+//           break;
+//           case "P":
+//             var type_avatar_img = "src='/images/img_forum/user_icon.png' title='病友'";
+//             var user_type = "";
+//           break;
+//           case "F":
+//             var type_avatar_img = "src='/images/img_forum/user_icon.png' title='家屬'";
+//             var user_type = "";
+//           break;
+//           default:
+//             var type_avatar_img = "src='/images/img_forum/user_icon.png' title='一般民眾'";
+//             var user_type = "";
+//           break;
+//         }
 
-        //var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
+//         //var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
 
-        // 預先處理comment中的圖片
-        var pre_comment_image = response[i].comment_image;
-        pre_comment_image = pre_comment_image.replace(/dummy href=/g, "a href=");
-        pre_comment_image = pre_comment_image.replace(/\/dummy/g, "\/a");
+//         // 預先處理comment中的圖片
+//         var pre_comment_image = response[i].comment_image;
+//         pre_comment_image = pre_comment_image.replace(/dummy href=/g, "a href=");
+//         pre_comment_image = pre_comment_image.replace(/\/dummy/g, "\/a");
 
 
-        if ($(window).width() < 768) {
-          var type_avatar = "<tr><td valign=top rowspan='4'><div style='padding:5px; margin-top:20px;'><img "+type_avatar_img+" style='height:40px;'></div>";
-          responseContext += type_avatar+"<div style='padding:5px;'><img src='"+response[i].author.img+"' style='height:40px; width:40px;'></div></td></tr>";
-        }else{
-          var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
-          responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
-        }
-        var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
-        //responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
-        responseContext += "<tr><td style='padding:20px 0px 0px 10px;width: 100%;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
-        if(response[i].comment.trim()==""){ // 沒有文字 => 只有圖片
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+"<a href='/profile/?"+response[i].author.id+"'>"+response[i].author.alias+"</a>"+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;word-wrap: break-word;'>"+pre_comment_image+"</label></td></tr>";
-        }else if(pre_comment_image.indexOf("images")==-1){ // 沒有圖片 => 只有文字
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+"<a href='/profile/?"+response[i].author.id+"'>"+response[i].author.alias+"</a>"+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;word-wrap: break-word;'>"+response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>')+"</label></td></tr>";
-        }else{ // 有文字、圖片
-          responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+"<a href='/profile/?"+response[i].author.id+"'>"+response[i].author.alias+"</a>"+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;word-wrap: break-word;'>"+response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>')+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
-        }
-        if(res.login) {
-          if(res.responseNice[i]) {
-            responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse("+response[i].id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
-          } else {
-            responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='推薦' class='n' onclick='niceResponse("+response[i].id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label  id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
-          } 
-        }else{
-          responseContext += "<tr></tr>";
-        }
-      }
-      document.getElementById("commentList").innerHTML = responseContext;
-      document.getElementById("commentList").style.display = "block";
-    }
+//         if ($(window).width() < 768) {
+//           var type_avatar = "<tr><td valign=top rowspan='4'><div style='padding:5px; margin-top:20px;'><img "+type_avatar_img+" style='height:40px;'></div>";
+//           responseContext += type_avatar+"<div style='padding:5px;'><img src='"+response[i].author.img+"' style='height:40px; width:40px;'></div></td></tr>";
+//         }else{
+//           var type_avatar = "<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img "+type_avatar_img+" style='height:70px;'></td>";
+//           responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
+//         }
+//         var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
+//         //responseContext += "<tr>"+type_avatar+"<td valign=top rowspan=4 style='padding:26px 5px 0px 0px;'><img src='"+response[i].author.img+"' style='height:70px; width:70px;'></td>";
+//         responseContext += "<tr><td style='padding:20px 0px 0px 10px;width: 100%;'><label style='color:rgba(102, 141, 60, 0.9);'>"+commentTime+"</label></td></tr>";
+//         if(response[i].comment.trim()==""){ // 沒有文字 => 只有圖片
+//           responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+"<a href='/profile/?"+response[i].author.id+"'>"+response[i].author.alias+"</a>"+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;word-wrap: break-word;'>"+pre_comment_image+"</label></td></tr>";
+//         }else if(pre_comment_image.indexOf("images")==-1){ // 沒有圖片 => 只有文字
+//           responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+"<a href='/profile/?"+response[i].author.id+"'>"+response[i].author.alias+"</a>"+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;word-wrap: break-word;'>"+response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>')+"</label></td></tr>";
+//         }else{ // 有文字、圖片
+//           responseContext += "<tr><td style='padding:0px 0px 5px 10px;'><label style='font-weight:bold; color:#000079;'>"+"<a href='/profile/?"+response[i].author.id+"'>"+response[i].author.alias+"</a>"+" "+user_type+"&nbsp</label><label style='word-break: break-all;width: 100%;word-wrap: break-word;'>"+response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>')+"<br><hr id='hr'>"+pre_comment_image+"</label></td></tr>";
+//         }
+//         if(res.login) {
+//           if(res.responseNice[i]) {
+//             responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse("+response[i].id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
+//           } else {
+//             responseContext += "<tr><td style='padding:3px 0px 0px 10px;'><div id='response"+response[i].id+"'><button style='margin-right:10px;' value='推薦' class='n' onclick='niceResponse("+response[i].id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label  id=N_res_nice"+response[i].id+">"+res.responseNiceCount[i]+"</label>&nbsp人推薦</div></td></tr>";
+//           } 
+//         }else{
+//           responseContext += "<tr></tr>";
+//         }
+//       }
+//       document.getElementById("commentList").innerHTML = responseContext;
+//       document.getElementById("commentList").style.display = "block";
+//     }
 
-    // 圖片跳窗，使用 modalBox.js
-    $('.show-image a').click(function(event){
-      event.preventDefault();
-      if ($(window).width() < 768) {
-        window.open($(this).attr("href"),'_blank');
-      }else{
-        //var ss = '<img src="'+$(this).attr("href")+'">';
-        var ss = '<a href="'+$(this).attr("href")+'" target="_blank"><img src="'+$(this).attr("href")+'"></a>';
-        $( ".modalBox" ).empty();
-        $( ".modalBox" ).append(ss);
-        $('.modalBox').modalBox('open');
-      }
-    });
+//     // 圖片跳窗，使用 modalBox.js
+//     $('.show-image a').click(function(event){
+//       event.preventDefault();
+//       if ($(window).width() < 768) {
+//         window.open($(this).attr("href"),'_blank');
+//       }else{
+//         //var ss = '<img src="'+$(this).attr("href")+'">';
+//         var ss = '<a href="'+$(this).attr("href")+'" target="_blank"><img src="'+$(this).attr("href")+'"></a>';
+//         $( ".modalBox" ).empty();
+//         $( ".modalBox" ).append(ss);
+//         $('.modalBox').modalBox('open');
+//       }
+//     });
 
-    if(res.isAuthor) {
-      document.getElementById("editArticle").style.display = "inline";
-      document.getElementById("deleteArticle").style.display = "inline";
-      document.getElementById("mobile_editArticle").style.display = "inline";
-      document.getElementById("mobile_deleteArticle").style.display = "inline";
-    }
-    if(res.isNice) {
-      document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
-      document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
-    } else {
-      document.getElementById("niceArticle").innerHTML = "<button value='推薦' class='n' onclick='clickNice();'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>";
-      document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
-    }
-    if(res.isReport) {
-      document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
-      document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
-    } else {
-      document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";
-      document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
-    }
+//     if(res.isAuthor) {
+//       document.getElementById("editArticle").style.display = "inline";
+//       document.getElementById("deleteArticle").style.display = "inline";
+//       document.getElementById("mobile_editArticle").style.display = "inline";
+//       document.getElementById("mobile_deleteArticle").style.display = "inline";
+//     }
+//     if(res.isNice) {
+//       document.getElementById("niceArticle").innerHTML = "<button value='收回' class='n' onclick='cancelNice();'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>";
+//       document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
+//     } else {
+//       document.getElementById("niceArticle").innerHTML = "<button value='推薦' class='n' onclick='clickNice();'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>";
+//       document.getElementById("niceCount").innerHTML = "有 "+res.lnicer+" 人推薦";
+//     }
+//     if(res.isReport) {
+//       document.getElementById("report").innerHTML = "<button value='收回' class='n' onclick='cancelReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>";
+//       document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
+//     } else {
+//       document.getElementById("report").innerHTML = "<button value='檢舉' class='n' onclick='clickReport()'><img style='width:24px; height:24px;' src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>";
+//       document.getElementById("reportCount").innerHTML = "有 "+res.reportCount+" 人檢舉";
+//     }
 
-  }).error(function(err){
-    console.log(typeof(err.responseText));
-    bootbox.dialog({
-      message: err.responseText,
-      title: "錯誤訊息",
-      buttons: {
-        main: {
-          label: "確認",
-          className: "btn-primary",
-          callback: function() {
-            window.location.replace("/home");
-          }
-        }
-      }
-    });
-  });
+//   }).error(function(err){
+//     console.log(typeof(err.responseText));
+//     bootbox.dialog({
+//       message: err.responseText,
+//       title: "錯誤訊息",
+//       buttons: {
+//         main: {
+//           label: "確認",
+//           className: "btn-primary",
+//           callback: function() {
+//             window.location.replace("/home");
+//           }
+//         }
+//       }
+//     });
+//   });
 
 }
 
@@ -345,8 +345,7 @@ function updateClickNum(){
   var url = document.URL;
   var regex = /.*article\/+(.*)/;
   var id = url.replace(regex,"$1");
-  var clickNum=parseInt(articleList[0].clickNum)+1;
-  $.post( "/updateClickNum", { id: id, clickNum: clickNum}, function(res){
+  $.post( "/updateClickNum", {id: id}, function(res){
   }).error(function(res){
     showDialog("錯誤訊息",res.err);
   });

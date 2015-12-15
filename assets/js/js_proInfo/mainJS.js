@@ -8,7 +8,7 @@ $(document).ready(function(){
   var url = document.URL;
   var regex = /.*proInfo\/+(.*)/;
   var page = url.replace(regex,"$1");
-  setPage(page);
+  //setPage(page);
 
   $.get("/checkAuth", function(auth){
     if(auth) {

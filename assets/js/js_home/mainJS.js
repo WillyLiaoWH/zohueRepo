@@ -7,7 +7,6 @@ function editProfile(){
 }
 
 
-
 function compare(a,b) {
 	if (a.createdAt < b.createdAt)
 		return 1;

@@ -15,11 +15,12 @@
     <script src="/js/js_friends/mainJS.js"></script>-->
     <script>
       $( document ).ready(function() {
-        search(0, true);
-        setTimeout(
-            function(){if($(window).width() < 768){
-                $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-            }}, 2000);
+         setTimeout(function(){if($(window).width() < 768){
+            $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+         }}, 2000);
+          <% if(page > 0){%>
+            $("html, body").animate({ scrollTop: "<%- (page-1)*1250+130 %>px"} , 220, "swing");
+          <% } %>
       });
     </script>
 	</head>
@@ -71,7 +72,7 @@
                 </select>
             </div>
 
-            <button value="搜尋" onclick="search(0, false)" id="searchButton">
+            <button value="搜尋" onclick="search(0)" id="searchButton">
                 <img src="/images/img_forum/search_icon.png">搜尋
             </button>
             <br>
@@ -132,14 +133,71 @@
         <center>
 
         <div id="searchResult" class="col-md-9" style="float: left; height: 100%;">
-            <div id="searchList">
+           <div id="searchList">
+            <% if (users.length >0) { %>
+                <% for(i = 0; i < users.length; i++) { %>
+                <div class="friend">
+                    <div class="image">
+                        <%- users[i].authorIcon %>
+                        <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin-right:10px; height:100px; width:100px;">
+                    </div>
+                    <div class="friendMid">
+                        <div style="margin-right: 0px; display: inline-block; height: 60%; width: 100%; font-size: 32px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 32px;"><%- users[i].alias %></a><%- users[i].authorType %></div>
+                        <br>
+                        <span style="display:inline-block; height: 40%; width: 130%;">
+                          <% if (users[i].isFriend==-1) { %>
+                              <div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "<%- users[i].id %>")'>解除封鎖</button><br>
+                          <% }else if(users[i].isFriend==0){ %>
+                              <button type='button' class='button' onclick='addFriend(this.parentNode, <%- users[i].id %>)'>加好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
+                          <% }else if(users[i].isFriend==1){ %>
+                              <div class='status'>要求加入好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "<%- users[i].id %>")'>確認好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
+                          <% }else if(users[i].isFriend==2){ %>
+                              <div class='status'>已送出好友邀請&nbsp&nbsp</div><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "<%- users[i].id %>")'>收回好友邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
+                          <% }else if(users[i].isFriend==3){ %>
+                              <div class='status'>好友&nbsp&nbsp</div><button type='button' class='button' onclick='removeFriend(this.parentNode, "<%- users[i].id %>")'>解除好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "<%- users[i].id %>")'>封鎖</button><br>
+                          <% } %>
+                        </span>
+                    </div>
+                    <div class="friendRight">
+                        <% if(users[i].addressCity&&users[i].addressCity!=""){ %>
+                            <div style='display:inline-block; font-size: 22px; width: 100%'>來自<%- users[i].addressCity %> </div><br>
+                        <% } if(users[i].primaryDisease&&users[i].primaryDisease!="") { %>
+                            <div style="display:inline-block; font-size: 22px; width: 100%">
+                                 <% if(users[i].type=="D"){ %>
+                                     主治 <%- diseaseList[users[i].primaryDisease] %>
+                                 <% }else if(users[i].type=="S"){ %>
+                                     主治 <%- diseaseList[users[i].primaryDisease] %>
+                                 <% }else if(users[i].type=="RN"){ %>
+                                     主治 <%- diseaseList[users[i].primaryDisease] %>
+                                 <% }else if(users[i].type=="P"){ %>
+                                     患有 <%- diseaseList[users[i].primaryDisease] %>
+                                 <% }else if(users[i].type=="F"){ %>
+                                     照顧 <%- diseaseList[users[i].primaryDisease] %> 患者 
+                                 <% } %>
+                            </div><br>
+                        <% } if(users[i].age!=-1) { %>
+                            <div style="display:inline-block; font-size: 22px; width: 100%"><%- users[i].age %>歲</div>
+                        <% } %>
+                    </div>
+                </div>
+                 <% } %>
+            <% } else { %>
+                找不到符合搜尋條件的人
+            <% } %>   
             </div>
             <div id="more">
+                <% if (hasNext) { %>
+                    <button type="button" class="button" onclick="search(<%- page %>)">顯示更多人</button>
+                <% } %>
             </div>
         </div>
 
       
     </div>
   
-<!--   </body>
+   </body>
 </html>

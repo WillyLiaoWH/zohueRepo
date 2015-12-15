@@ -32,7 +32,7 @@
   	-webkit-border-radius: 7px;
   	font-family: "微軟正黑體";
 	font-size:30px;
-	display:none;
+	/*display:none;*/
 }
 
 #form-div {
@@ -45,8 +45,8 @@
 	width: 100%;
   	-moz-border-radius: 7px;
   	-webkit-border-radius: 7px;
-  	//margin: 0px auto;
-  	//margin-left:20px;
+  	/*margin: 0px auto;*/
+  	/*margin-left:20px;*/
   	margin-top:15px;
   	margin-bottom:20px;
 }
@@ -236,7 +236,7 @@ input:focus, textarea:focus {
 	border: #fbfbfb solid 4px;
 	border-radius: 5px;
 	cursor:pointer;
-	//background-color: #3498db;
+	/*background-color: #3498db;*/
 	background-color: rgba(232, 81, 0, 0.7);
 	color:white;
 	font-size:24px;
@@ -249,9 +249,9 @@ input:focus, textarea:focus {
   	font-weight:700;
 }
 #button-blue:hover{
-	//background-color: #5599FF;
+	/*background-color: #5599FF;*/
 	background-color: rgba(232, 81, 0, 0.7);
-	//color: #0493bd;
+	/*color: #0493bd;*/
 }
 .submit:hover {
 	color: #3498db;

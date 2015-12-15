@@ -4,22 +4,11 @@
 
 #post{
 	float:right;
-	/*width: 125px;
-	//margin-right:13px;
-	//margin-top:8px;
-	//background-color: rgba(232, 81, 0, 0.7);
-	//color:#533828;
-	//display: block !important;*/
 }
 
 #post:hover{
 	background-color: rgba(102, 141, 60, 0.4);
 	color:#FFF;
-	
-}
-
-#signup{
-	/*display: none !important;*/
 }
 
 #searchPanel{
@@ -29,17 +18,17 @@
 }
 
 #searchWord{
-	//width:350px;
+	/*width:350px;
 	//width:100%;
 	//margin: 8px 0px 0px 0px;
 	//display: inline !important;
+	//width:100%;*/
 	width:250px;
-	//width:100%;
 	margin: 15px -5px 0px 0px;
 }
 
 #search{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
@@ -52,7 +41,7 @@
 }
 
 #cancleSearch{
-	//width:90px;
+	/*width:90px;*/
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
@@ -154,7 +143,7 @@
 }
 
 #sideBanner{
-	//display: none !important ;
+	/*display: none !important ;*/
 }
 
 #article{
@@ -169,6 +158,13 @@
 	table-layout: fixed;
 	width:100%;
 	/*margin-top: 5px;*/
+}
+
+.body>tr:nth-child(odd) {
+	background-color: #fcf8e3
+}
+.body>tr:nth-child(even) {
+	background-color: #dff0d8
 }
 
 #mobile_post{
@@ -191,6 +187,12 @@
 	display: none !important;
 }
 
+@media screen and (min-width: 600px){
+#signup{
+		display: none !important;
+	}
+}
+
 @media screen and (max-width: 480px){
 	#forumContent{
 		width: 100% !important;
@@ -210,7 +212,7 @@
 
 @media screen and (max-width: 480px) and (max-width: 768px) {
 	#post{
-		//display: none !important;
+		/*display: none !important;*/
 	}
 	#mobile_post{
 		display: inline-block !important;
@@ -245,7 +247,7 @@
 		width: 700px !important;
 	}
 	#post{
-		//display: none !important;
+		/*display: none !important;*/
 	}
 }
 

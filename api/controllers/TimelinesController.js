@@ -6,6 +6,201 @@
  */
 var async = require('async');
 module.exports = {
+    setProfilePage: function(req, res){
+        var url = require('url');
+        var searchID = url.parse(req.url, true).search.substring(1);
+
+        function checkLogin(cb){ // 檢查是否登入
+            if(typeof req.session.user === 'undefined' && searchID == ""){
+                //res.send(500,{err: "請先登入才能查看個人頁面！" });
+                res.redirect("/home");
+            }else if(searchID == 'undefined'){
+            }else{ // 防止此問題: jquery-ui 可能會讓使用到 crop-avatar.js 的頁面執行兩次頁面讀取
+                cb();
+            }
+        }
+
+        function findId(cb){
+            var id = searchID;
+            if(id == ''){
+                var id = req.session.user.id;
+            }
+            Record.create({user:req.session.user,ip:req.ip,action:("PROF "+id)}).exec(function(ret){
+                console.log("動態時報"+id)
+            })
+            cb(id);
+        }
+
+        function findTimelineResponse(id, cb){ // 取得作者 user 資料
+            // notes: 未來可能需要用到.skip(10).limit(10)
+            User.find({id: id}).populate('timelinesPost', { sort: 'updatedTime DESC' }).exec(function (err, user) {
+                if(user.length < 1 ){
+                    res.send(500,{err: "查無此人" });
+                }else{
+                    if(err) {
+                        sails.log.error("ERR:", err);
+                    }else{
+                        user.sort(function(a, b){return new Date(b.updatedTime)-new Date(a.updatedTime);});
+                        cb(user[0]);
+                    }
+                }
+            });
+        }
+
+        function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response、nicer 與 reporter 資料
+            var async = require('async');
+            if(User.timelinesPost.length < 1){
+                cb(User);
+            }
+            async.each(User.timelinesPost, function(timeline, callback) {
+                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).populate('owner', {select: ['img', 'alias', 'account','id']}).exec(function (err, result) {
+                    if(err) {
+                        console.log("err");
+                    }else{
+                        var i=User.timelinesPost.indexOf(timeline);
+                        User.timelinesPost[i]=result[0];
+                        if(User.timelinesPost.length==i+1){cb(User);}
+                    }
+                });
+            });
+        }
+
+        function addAuth(id,result,cb){ // 阿波寫的 問他XD  //大家好我是阿波，這是去把不該看到的刪掉
+            if(typeof req.session.user === 'undefined'){
+                cb(result);
+            }else{
+                var doctor=false;
+                var friend=false;
+                var self=false;
+                var viewer = req.session.user.id;
+
+                User.find({id:viewer}).populate('friends').exec(function(err,user){
+                    if(err){
+                        console.log("err3");
+                    }
+                    if (user[0].type=="D"){
+                        doctor=true;
+                    }
+                    for (var i=0 ; i<user[0].friends.length;i=i+1){
+                        if (user[0].friends[i].id===id){
+                            friend=true;
+                        }
+                    }
+
+                    if (viewer==id){
+                        self=true;
+                        friend=true;
+                        doctor=true;
+                    }
+                    var len=result.timelinesPost.length;
+                    for (var i=len-1;i>=0;i=i-1){
+                        if (result.timelinesPost[i].auth==="self"){
+                            if (!self){
+                                //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }        
+                        } 
+                        else if (result.timelinesPost[i].auth==="doctor"){
+                            if (!doctor){
+                                //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
+                        } 
+                        else if (result.timelinesPost[i].auth==="friend" ){
+                            if(!friend){
+                               // console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
+                                result.timelinesPost.splice(i,1);
+                            }
+                        }
+                    }
+                    cb(result);
+                });
+            }
+        }
+
+        function AuthorQuery(timelineRes, cb){
+            TimelineResponse.find(timelineRes.id).populate('author').populate('nicer', {select: ['id']}).populate('report', {select: ['reporter']}).exec(function (err, result2) {
+                if(err) {
+                    console.log("err");
+                }else{
+                    cb(result2[0].author.alias, result2[0].author.img, result2[0].id, result2[0].nicer, result2[0].report);
+                }
+            });
+        }
+
+        function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
+            if(Response.timelinesPost.length < 1){
+                cb(Response);
+            }
+            async.each(Response.timelinesPost, function(timeline, callback) {
+                var i=Response.timelinesPost.indexOf(timeline);
+                if(timeline.response.length > 0){
+                    async.each(timeline.response, function(timelineRes, callback2) {
+                        AuthorQuery(timelineRes, function(alias, img, id, nicer, report){
+                            
+                            var j=timeline.response.indexOf(timelineRes);
+                            Response.timelinesPost[i].response[j].id=id;
+                            Response.timelinesPost[i].response[j].alias=alias;
+                            Response.timelinesPost[i].response[j].img=img;
+                            Response.timelinesPost[i].response[j].rnicer=nicer;
+                            Response.timelinesPost[i].response[j].rreporter=report;
+
+                            // 最後一個 timeline 且最後一個留言
+                            if(Response.timelinesPost.length==i+1 & Response.timelinesPost[i].response.length==j+1){cb(Response);}
+                        });
+                    });
+                }else{
+                    if(Response.timelinesPost.length==i+1){
+                        setTimeout(function() { // 半秒後如果沒有 call back，表示最後一個 timeline 且無留言
+                            cb(Response);
+                        }, 500);
+                    }
+                }
+            });
+        }
+
+        checkLogin(function(){
+            findId(function(id){
+                req.session.stay = id;
+                findTimelineResponse(id, function(Response){
+                    getNicer(Response, function(Response2){
+                        addAuth(id, Response2, function(Response3){
+                            findTimelineResponseAuthor(Response3, function(Response4){
+                                var traveler = "guest"; // 沒登入者
+                                if(typeof req.session.user !== 'undefined'){
+                                    traveler = req.session.user.id;
+                                }
+                                res.view("profile/index", {
+                                    timeDiff: 0,
+                                    ago: 0,
+                                    timelinesList: Response4.timelinesPost,
+                                    avatar: Response.img,
+                                    alias: Response.alias,
+                                    id: Response.id,                // 塗鴉牆主人
+                                    traveler: traveler,             // 訪客
+                                    scripts: [
+                                        '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                        '/js/js_public/alertify.js',
+                                        '/js/js_profile/mainJS.js',
+                                        '/js/js_post/cropper.min.js',
+                                        '/js/js_profile/crop-avatar.js'
+                                    ],
+                                    stylesheets: [
+                                        '/styles/css_profile/style.css',
+                                        '/styles/css_post/crop-avatar.css',
+                                        '/styles/css_post/cropper.min.css',
+                                        '/styles/importer.css',
+                                        '/styles/css_public/themes/alertify.core.css',
+                                        '/styles/css_public/themes/alertify.default.css'
+                                    ]
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });           
+    },
     auth_set:function(req,res){
         function chechAtuh(id, cb){
             Timelines.find({id: id}).populate('author').exec(function(error, timeline) {
@@ -190,193 +385,6 @@ module.exports = {
             del(isAuth, TimelineId);
         });
     },
-    setTimelinePage: function(req, res){
-        function checkLogin(cb){ // 檢查是否登入
-            if(typeof req.session.user === 'undefined' & req.param("id") === 'undefined'){
-                res.send(500,{err: "請先登入才能查看個人頁面！" });
-            }else{
-                cb();
-            }
-        }
-
-        // function findAccount(cb){ // 取出欲瀏覽 profile 頁面的作者帳號
-        //     var account = req.param("account");
-        //     if(account === 'undefined'){
-        //         var account = req.session.user.account;
-        //     }
-        //     cb(account);
-        // }
-
-        function findId(cb){
-            var id =req.param("id");
-            if(id === 'undefined'){
-                var id = req.session.user.id;
-            }
-            Record.create({user:req.session.user,ip:req.ip,action:("PROF "+id)}).exec(function(ret){
-                console.log("動態時報"+id)
-            })
-            cb(id);
-        }
-
-        function findTimelineResponse(id, cb){ // 取得作者 user 資料
-            // notes: 未來可能需要用到.skip(10).limit(10)
-            User.find({id: id}).populate('timelinesPost', { sort: 'time DESC' }).exec(function (err, user) {
-                if(user.length < 1 ){
-                    res.send(500,{err: "查無此人" });
-                }else{
-                    if(err) {
-                        sails.log.error("ERR:", err);
-                    }
-                    if(!user[0].isFullSignup) {
-                        res.send({notfull: true});
-                    } else {
-                        if (user[0].suspended){
-                            res.send({suspended: true});    
-                        }else{
-                            if(user[0].timelinesPost.length < 1){ // 若此人從沒 po 過任何 timeline, 回傳 res (為了使 req.session.stay 更新)
-                                res.send({notfull: false});
-                            }else{
-                                cb(user[0]);
-                            }
-                        }
-                        
-                    }
-                }
-                // sails.services['util'].populateDeep('user', user[0], 'timelinesPost.response', function (err, result) {
-                //     if (err) {
-                //         sails.log.error("ERR:", err);
-                //         console.log("err2");
-                //     }else {
-                //          cb(result);
-                //     }
-                // });
-            });
-        }
-
-        function getNicer(User, cb){ // 取得 user 每篇 timelinesPost 的 response、nicer 與 reporter 資料
-            var async = require('async');
-            async.each(User.timelinesPost, function(timeline, callback) {
-                Timelines.find(timeline.id).populate('nicer', {select: ['id']}).populate('response').populate('report', {select: ['reporter']}).populate('owner', {select: ['img', 'alias', 'account','id']}).exec(function (err, result) {
-                    if(err) {
-                        console.log("err");
-                    }else{
-                        var i=User.timelinesPost.indexOf(timeline);
-                        User.timelinesPost[i]=result[0];
-                        if(User.timelinesPost.length==i+1){cb(User);}
-                    }
-                });
-            });
-        }
-
-        function addAuth(id,result,cb){ // 阿波寫的 問他XD  //大家好我是阿波，這是去把不該看到的刪掉
-            if(typeof req.session.user === 'undefined'){
-                cb(result);
-            }else{
-                var doctor=false;
-                var friend=false;
-                var self=false;
-                var viewer = req.session.user.id;
-
-                User.find({id:viewer}).populate('friends').exec(function(err,user){
-                    if(err){
-                        console.log("err3");
-                    }
-                    if (user[0].type=="D"){
-                        doctor=true;
-                    }
-                    for (var i=0 ; i<user[0].friends.length;i=i+1){
-                        if (user[0].friends[i].id===id){
-                            friend=true;
-                        }
-                    }
-
-                    if (viewer==id){
-                        self=true;
-                        friend=true;
-                        doctor=true;
-                    }
-                    var len=result.timelinesPost.length;
-                    for (var i=len-1;i>=0;i=i-1){
-                        if (result.timelinesPost[i].auth==="self"){
-                            if (!self){
-                                //console.log("not self: "+JSON.stringify(result.timelinesPost[i]));
-                                result.timelinesPost.splice(i,1);
-                            }
-                                        
-                        } 
-                        else if (result.timelinesPost[i].auth==="doctor"){
-                            if (!doctor){
-                                //console.log("not doctor: "+JSON.stringify(result.timelinesPost[i]));
-                                result.timelinesPost.splice(i,1);
-                            }
-                        } 
-                        else if (result.timelinesPost[i].auth==="friend" ){
-                            if(!friend){
-                               // console.log("not friend: "+JSON.stringify(result.timelinesPost[i]));
-                                result.timelinesPost.splice(i,1);
-                            }
-                        }
-                    }
-                cb(result);
-                
-                });
-                
-            }
-        }
-
-        function AuthorQuery(timelineRes, cb){
-            TimelineResponse.find(timelineRes.id).populate('author').populate('nicer', {select: ['id']}).populate('report', {select: ['reporter']}).exec(function (err, result2) {
-                if(err) {
-                    console.log("err");
-                }else{
-                    cb(result2[0].author.alias, result2[0].author.img, result2[0].id, result2[0].nicer, result2[0].report);
-                }
-            });
-        }
-
-        function findTimelineResponseAuthor(Response, cb){ // 取得 user 中每篇 timelinePost 中每則 response 的 author
-            async.each(Response.timelinesPost, function(timeline, callback) {
-                var i=Response.timelinesPost.indexOf(timeline);
-                if(timeline.response.length > 0){
-                    async.each(timeline.response, function(timelineRes, callback2) {
-                        AuthorQuery(timelineRes, function(alias, img, id, nicer, report){
-                            
-                            var j=timeline.response.indexOf(timelineRes);
-                            Response.timelinesPost[i].response[j].id=id;
-                            Response.timelinesPost[i].response[j].alias=alias;
-                            Response.timelinesPost[i].response[j].img=img;
-                            Response.timelinesPost[i].response[j].rnicer=nicer;
-                            Response.timelinesPost[i].response[j].rreporter=report;
-
-                            // 最後一個 timeline 且最後一個留言
-                            if(Response.timelinesPost.length==i+1 & Response.timelinesPost[i].response.length==j+1){cb(Response);}
-                        });
-                    });
-                }else{
-                    if(Response.timelinesPost.length==i+1){
-                        setTimeout(function() { // 半秒後如果沒有 call back，表示最後一個 timeline 且無留言
-                            cb(Response);
-                        }, 500);
-                    }
-                }
-            });
-        }
-
-        checkLogin(function(){
-            findId(function(id){
-                req.session.stay = id;
-                findTimelineResponse(id, function(Response){
-                    getNicer(Response, function(Response2){
-                        addAuth(id, Response2, function(Response3){
-                            findTimelineResponseAuthor(Response3, function(Response4){
-                                res.send({timelinesList: Response4.timelinesPost, avatar: Response.img, alias: Response.alias, id: Response.id});
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    },
     clickNice: function(req, res) {
         if(typeof req.session.user == 'undefined'){
             res.send(500,{err: "您沒有權限" });
@@ -418,4 +426,3 @@ module.exports = {
         }
     }
 };
-

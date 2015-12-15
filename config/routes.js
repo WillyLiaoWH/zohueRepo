@@ -72,7 +72,7 @@ module.exports.routes = {
   'POST /postTimeline': 'TimelinesController.postTimeline',
   'POST /editTimeline': 'TimelinesController.editTimeline',
   'POST /delTimeline': 'TimelinesController.delTimeline',
-  'POST /setTimelinePage/:id': 'Timelines.setTimelinePage',
+  // 'POST /setTimelinePage/:id': 'Timelines.setTimelinePage',
   'POST /TimelineNice': 'Timelines.clickNice',
   'POST /TimelineCancelNice': 'Timelines.cancelNice',
   'POST /leaveCommentTimeline': 'TimelineResponseController.leaveCommentTimeline',
@@ -84,13 +84,12 @@ module.exports.routes = {
   'POST /TimelineCancelReport': 'TimelineReport.cancelReport',
   'POST /recordProInfo':'ProInfoController.recordProInfo',
   
- 
   //'POST /TimelineResponseReport': 'ArticlesController.clickReport',
   'POST /changeProInfo':'ProInfoController.changeProInfo',
   'POST /TimelineResponseReport': 'TimelineResponseReport.clickReport',
   'POST /TimelineResponseCancelReport': 'TimelineResponseReport.cancelReport',
   'POST /subscribe': 'SubscribeEmailController.subscribe',
-  'POST /searchFriends': 'User.searchFriends',
+  //'POST /searchFriends': 'User.searchFriends',
   'POST /sendNewsLetter' : 'SubscribeEmailController.sendNewsLetter',
   'POST /deleteFile' : 'SubscribeEmailController.deleteFile',
   'POST /auth_setTimeline':'Timelines.auth_set',
@@ -131,7 +130,7 @@ module.exports.routes = {
   'GET /getArticlesByBoards': 'Backend.getArticlesByBoards',
   'GET /getArticlesByArticleId': 'BackendController.getArticlesByArticleId',
   'GET /getArticlesByCategory/:category': 'Backend.getArticlesByCategory',
-  'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
+  //'GET /setArticlePage/:article_id': 'Articles.setArticlePage',
   'GET /setProInfoPage': 'ProInfo.setProInfoPage',
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /getCategoryOfBoard/:board': 'Boards.getCategoryOfBoard',
@@ -148,59 +147,47 @@ module.exports.routes = {
   'GET /getSuspendReason': 'Backend.getSuspendReason',
   'GET /countForum': 'Articles.countForum',
   'GET /updateLastForumTime': 'User.updateLastForumTime',
-  'GET /profile': {
-    view: 'profile/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_public/alertify.js',
-        '/js/js_profile/mainJS.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_profile/crop-avatar.js?ver=1'
-      ],
-      stylesheets: [
-        '/styles/css_profile/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css',
-        '/styles/css_public/themes/alertify.core.css',
-        '/styles/css_public/themes/alertify.default.css'
-      ]
-    }
+
+  'GET /signup': { // 完整註冊
+    controller: 'UserController',
+    action: 'setFullSignupPage',
+    skipAssets: true
+  },
+  'GET /change': { // 修改會員資料
+    controller: 'UserController',
+    action: 'setChangePage',
+    skipAssets: true
+  },
+  'GET /profile': { // 個人頁面
+    controller: 'TimelinesController',
+    action: 'setProfilePage',
+    skipAssets: true
   },
 
-  'GET /editArticle/*': {
-    view: 'editArticle/index',
-    locals: {
-      scripts: [
-        '/js/js_editArticle/mainJS.js',
-        '/js/js_post/cropper.min.js',
-        '/js/js_editArticle/crop-avatar.js'
-      ],
-      stylesheets: [
-        '/styles/css_editArticle/style.css',
-        '/styles/css_post/crop-avatar.css',
-        '/styles/css_post/cropper.min.css',
-        '/styles/importer.css'
-      ]
-    }
+  'GET /editArticle/:article_id': {
+    controller: 'ArticlesController',
+    action: 'setEditArticlePage',
+    skipAssets: true
   },
 
-  'get /signup': {
-    view: 'signup/index',
-    locals: {
-      scripts: [
-        'js/js_post/cropper.min.js',
-        'js/js_signup/crop-avatar.js',
-        'js/js_signup/joinus.js'
-      ],
-      stylesheets: [
-        'styles/css_post/crop-avatar.css',
-        'styles/css_post/cropper.min.css',
-        'styles/css_signup/style_signup.css'
-      ]
-    }
-  },
+  // 'GET /editArticle/*': {
+  //   view: 'editArticle/index',
+  //   locals: {
+  //     scripts: [
+  //       '/js/js_editArticle/mainJS.js',
+  //       '/js/js_post/cropper.min.js',
+  //       '/js/js_editArticle/crop-avatar.js'
+  //     ],
+  //     stylesheets: [
+  //       '/styles/css_editArticle/style.css',
+  //       '/styles/css_post/crop-avatar.css',
+  //       '/styles/css_post/cropper.min.css',
+  //       '/styles/importer.css'
+  //     ]
+  //   }
+  // },
+
+  
 
   'GET /nots': 'Notification.getNotification',
   'GET /countNot': 'Notification.countNotification',
@@ -231,22 +218,6 @@ module.exports.routes = {
     }
   },
 
-  '/change': {
-    view: 'change/index',
-    locals: {
-      scripts: [
-        'js/js_post/cropper.min.js',
-        'js/js_change/crop-avatar.js',
-        'js/js_change/joinus.js'
-      ],
-      stylesheets: [
-        'styles/css_post/crop-avatar.css',
-        'styles/css_post/cropper.min.css',
-        'styles/css_change/style_signup.css'
-      ]
-    }
-  },
-
   '/forum': {
     view: 'forum/index',
     locals: {
@@ -258,25 +229,27 @@ module.exports.routes = {
     }
   },
 
-  '/proInfo/*': {
-    view: 'proInfo/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_ProInfo/mainJS.js',
-      ],
-      stylesheets: [
-        '/styles/css_ProInfo/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/proInfo/:page': {
+    controller:'ProInfoController',
+    action: 'setPage',
+    skipAssets:true
+    // view: 'proInfo/index',
+    // locals: {
+    //   scripts: [
+    //     '/js/js_public/modalBox.js-master/modalBox-min.js',
+    //     '/js/js_ProInfo/mainJS.js',
+    //   ],
+    //   stylesheets: [
+    //     '/styles/css_ProInfo/style.css',
+    //     '/styles/importer.css'
+    //   ]
+    // }
   },
   'GET /proInfodestroyAll': 'ProInfo.destroyAll',
   'GET /proInfoCreateFromCSV': 'ProInfo.createProinfo',
-
-  'GET /article/:id': {
+  'GET /article/:article_id': {
     controller: 'ArticlesController',
-    action: 'setMeta',
+    action: 'setArticlePage',
     skipAssets: true
   },
   'GET /post/:board': {
@@ -296,45 +269,30 @@ module.exports.routes = {
       ]
     }
   },
-  '/board-*': {
-    view: 'board/index',
-    locals: {
-      scripts: [
-        '/js/js_board/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/css_board/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/board-:board': {
+    controller: 'ArticlesController',
+    action: 'setBoardPage',
+    skipAssets: true
   },
-  '/frontboard/*': {
-    view: 'frontboard/index',
-    locals: {
-      scripts: [
-        '/js/js_frontboard/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/css_frontboard/style.css',
-        '/styles/importer.css'
-      ]
-    }
+  '/frontboard': {
+    controller: 'ArticlesController',
+    action: 'setFrontBoard',
+    skipAssets: true
+    // view: 'frontboard/index',
+    // locals: {
+    //   scripts: [
+    //     '/js/js_frontboard/mainJS.js'
+    //   ],
+    //   stylesheets: [
+    //     '/styles/css_frontboard/style.css',
+    //     '/styles/importer.css'
+    //   ]
+    // }
   },
-  '/friends': {
-    view: 'friends/index',
-    locals: {
-      scripts: [
-        '/js/js_public/modalBox.js-master/modalBox-min.js',
-        '/js/js_public/alertify.js',
-        '/js/js_friends/mainJS.js'
-      ],
-      stylesheets: [
-        '/styles/importer.css',
-        '/styles/css_public/themes/alertify.core.css',
-        '/styles/css_public/themes/alertify.default.css',
-        '/styles/css_friends/style.css'
-      ]
-    }
+  'GET /friends': {
+    controller: 'UserController',
+    action: 'searchFriends',
+    skipAssets: true
   },
   '/notifications': {
     controller: 'NotificationController',
