@@ -64,19 +64,16 @@ $(document).ready(function(){
   });
 
   $(document).on("click",".auth_set_friend",function(e){
-    auth_set(this.name,"friend");
+    auth_set(this.name,"friend","只有好友看得到");
   });
-
   $(document).on("click",".auth_set_doctor",function(e){
-    auth_set(this.name,"doctor");
+    auth_set(this.name,"doctor","只有醫生看得到");
   });
-
   $(document).on("click",".auth_set_all",function(e){
-    auth_set(this.name,"all");
+    auth_set(this.name,"all","每個人都看得到");
   });
-
   $(document).on("click",".auth_set_self",function(e){
-    auth_set(this.name,"self");
+    auth_set(this.name,"self","只有自己看得到");
   });
 
   $(document).on("click",".profile_auth",function(e){
@@ -557,8 +554,9 @@ function Timeline_r_cancel_nice(id){
   });
 }
 
-function auth_set(id,target){
+function auth_set(id,target,text){
   $.post("/auth_setTimeline",{id:id , target:target},function(res){
+    $("#btn_timeline_auth"+id).html('<img src="/images/img_timeline/'+target+'.png" height="20px" width="20px">&nbsp;'+text);
     showDialog("一般訊息",res);
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
