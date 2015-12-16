@@ -251,10 +251,8 @@ function postTimeline(){
       $("#timeline_post_content").empty();
       $("#timeline_post_image").empty();
       $("#timeline_post_image").css("display", "none");
-      res["timelinesList"][0]["response"] = [];
-      res["timelinesList"][0]["nicer"] = [];
-      res["timelinesList"][0]["report"] = [];
-      // 這裡要把 PO 文 ajax 到頁面上，或直接重整
+      // 這裡把 PO 文 ajax 到頁面上指定位置
+      $( "#timeline_factory" ).after( res );
       $("#no_post_message").hide();
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err,function(){

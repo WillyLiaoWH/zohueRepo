@@ -179,6 +179,7 @@ module.exports = {
                                     id: Response.id,                // 塗鴉牆主人
                                     traveler: traveler,             // 訪客
                                     scripts: [
+                                        '/js/js_profile/ejs.js',
                                         '/js/js_public/modalBox.js-master/modalBox-min.js',
                                         '/js/js_public/alertify.js',
                                         '/js/js_profile/mainJS.js',
@@ -245,6 +246,10 @@ module.exports = {
           
     },
     postTimeline: function(req, res){
+        // 基本步驟: user 發布 timeline 後會存入 DB.
+        // 然後透過 express.js 的 res.render, 將 timeline 內容 render 進 views/profile/template.ejs 中, 最後得到一 html string.
+        // 再透過 sails.js 內建的 res.send 將 render 好的 html string 回傳給前端.
+        // 前端可透過 JQuery 把該 html string append 到想要的地方.
         function checkAtuh(cb){
             if(typeof req.session.user === 'undefined'){
                 res.send(500,{err: "請先登入才能留言！" });
@@ -283,7 +288,32 @@ module.exports = {
                                 }
                             });
                         }
-                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
+                        res.render("profile/template", {
+                            timeDiff: 0,
+                            ago: 0,
+                            timelinesList: [timeline],
+                            avatar: req.session.user.img,
+                            alias: req.session.user.alias,
+                            id: req.session.stay,                   // 塗鴉牆主人
+                            traveler: req.session.user.id,          // 訪客
+                            scripts: [
+                                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                '/js/js_public/alertify.js',
+                                '/js/js_profile/mainJS.js',
+                                '/js/js_post/cropper.min.js',
+                                '/js/js_profile/crop-avatar.js'
+                            ],
+                            stylesheets: [
+                                '/styles/css_profile/style.css',
+                                '/styles/css_post/crop-avatar.css',
+                                '/styles/css_post/cropper.min.css',
+                                '/styles/importer.css',
+                                '/styles/css_public/themes/alertify.core.css',
+                                '/styles/css_public/themes/alertify.default.css'
+                            ]
+                        }, function(err, html){
+                            res.send(html);
+                        });
                     }
                 });
             }else{
