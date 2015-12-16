@@ -13,8 +13,6 @@ var diseaseList={
 var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
 var source,activeSource;
 $(document).ready(function(){
-  placeholder()
-
   $(function(){
     $("#postTilmelineAuth .dropdown-menu li a").click(function(){
       $("#postTilmelineAuth button").html($(this).html());
@@ -143,30 +141,6 @@ $(document).ready(function(){
     }
   });
 });
-
-
-function placeholder(){
-  $('div#timeline_post_content').on('activate', function() {
-      $(this).empty();
-      var range, sel;
-      if ( (sel = document.selection) && document.body.createTextRange) {
-          range = document.body.createTextRange();
-          range.moveToElementText(this);
-          range.select();
-      }
-  });
-
-  $('div#timeline_post_content').focus(function() {
-      if (this.hasChildNodes() && document.createRange && window.getSelection) {
-          $(this).empty();
-          var range = document.createRange();
-          range.selectNodeContents(this);
-          var sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-      }
-  });
-}
 
 function removeBlack(parent, id) {
   $.post("/removeBlack", {id: id}, function(res){

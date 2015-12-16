@@ -76,13 +76,11 @@
             <% if(traveler != "guest"){ %>
             <div class="row-fluid">
               <div><label id="postTimelineLabel" style="font-size:22px;"></label><br>
-                <div contentEditable="true" class="s" id="timeline_post_content">
-                  <% if(traveler == id){ %>
-                    <em>在想什麼呢？</em>
-                  <% }else{ %>
-                    <em>留個言吧！</em>
-                  <% } %>
-                </div>
+                <% if(traveler == id){ %>
+                  <div contentEditable="true" class="s" id="timeline_post_content" placeholder="在想什麼呢？"></div>
+                <% }else{ %>
+                  <div contentEditable="true" class="s" id="timeline_post_content" placeholder="留個言吧！"></div>
+                <% } %>
                 <div contentEditable="false" class="s" id="timeline_post_image">
                   <div class="clear" id="comment_clear"></div>
                 </div>
