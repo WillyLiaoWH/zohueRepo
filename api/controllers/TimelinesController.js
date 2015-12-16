@@ -170,6 +170,9 @@ module.exports = {
                                 if(typeof req.session.user !== 'undefined'){
                                     traveler = req.session.user.id;
                                 }
+                                Response4.timelinesPost.sort(function(a, b){
+                                    return new Date(b.updatedTime)-new Date(a.updatedTime);
+                                });
                                 res.view("profile/index", {
                                     timeDiff: 0,
                                     ago: 0,
@@ -179,7 +182,6 @@ module.exports = {
                                     id: Response.id,                // 塗鴉牆主人
                                     traveler: traveler,             // 訪客
                                     scripts: [
-                                        '/js/js_profile/ejs.js',
                                         '/js/js_public/modalBox.js-master/modalBox-min.js',
                                         '/js/js_public/alertify.js',
                                         '/js/js_profile/mainJS.js',
