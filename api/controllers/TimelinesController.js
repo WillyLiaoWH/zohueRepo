@@ -297,22 +297,7 @@ module.exports = {
                             avatar: req.session.user.img,
                             alias: req.session.user.alias,
                             id: req.session.stay,                   // 塗鴉牆主人
-                            traveler: req.session.user.id,          // 訪客
-                            scripts: [
-                                '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                '/js/js_public/alertify.js',
-                                '/js/js_profile/mainJS.js',
-                                '/js/js_post/cropper.min.js',
-                                '/js/js_profile/crop-avatar.js'
-                            ],
-                            stylesheets: [
-                                '/styles/css_profile/style.css',
-                                '/styles/css_post/crop-avatar.css',
-                                '/styles/css_post/cropper.min.css',
-                                '/styles/importer.css',
-                                '/styles/css_public/themes/alertify.core.css',
-                                '/styles/css_public/themes/alertify.default.css'
-                            ]
+                            traveler: req.session.user.id           // 訪客
                         }, function(err, html){
                             res.send(html);
                         });
@@ -325,7 +310,17 @@ module.exports = {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
                             Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'id']}).populate('author', {select: ['img', 'alias', 'id']}).exec(function(error, timeline2) {
-                                res.send({timelinesList: [timeline2[0]], avatar: timeline2[0].author.img, alias: timeline2[0].author.alias, id: timeline2[0].author.id});
+                                res.render("profile/template", {
+                                    timeDiff: 0,
+                                    ago: 0,
+                                    timelinesList: [timeline2[0]],
+                                    avatar: timeline2[0].author.img,
+                                    alias: timeline2[0].author.alias,
+                                    id: timeline2[0].author.id,             // 塗鴉牆主人
+                                    traveler: req.session.user.id           // 訪客
+                                }, function(err, html){
+                                    res.send(html);
+                                });
                             });
                             if(content.length>20) {
                                 var notContent=content.substr(0, 20)+"...";

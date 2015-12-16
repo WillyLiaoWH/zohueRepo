@@ -65,7 +65,7 @@
    <% if(traveler != "guest"){ %>
    <div class="row-fluid event_option btn-group">
       <div class="btn-group" id="niceArticle<%= timelinesList[i].id %>" style="float:none;">
-        <% if( JSON.stringify(timelinesList[i].nicer).indexOf('{"id":'+id+'}') > 0){ %>
+        <% if( JSON.stringify(timelinesList[i].nicer).indexOf('{"id":'+traveler+'}') > 0){ %>
           <button value="收回" class="n" name="<%= timelinesList[i].id %>" id="TimelineCancelNice">
             <img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png">&nbsp;收回
           </button>
@@ -168,7 +168,7 @@
                <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %>"><%- ago%></a></div>
                <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
-                <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+id+'}') > 0){ %>
+                <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+traveler+'}') > 0){ %>
                   <button class="n" name="<%= timelinesList[i].response[j].id %>" id="TimelineResponseCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"></button>
                 <% }else{ %>
                   <button class="n" name="<%= timelinesList[i].response[j].id %>" id="TimelineResponseNice"><img src="/images/img_forum/good_icon.png"></button>
@@ -258,7 +258,7 @@
                <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %>"><%- ago%></a></div>
                <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
-                <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+id+'}') > 0){ %>
+                <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+traveler+'}') > 0){ %>
                   <button class="n" name="<%= timelinesList[i].response[j].id %>" id="TimelineResponseCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"></button>
                 <% }else{ %>
                   <button class="n" name="<%= timelinesList[i].response[j].id %>" id="TimelineResponseNice"><img src="/images/img_forum/good_icon.png"></button>
