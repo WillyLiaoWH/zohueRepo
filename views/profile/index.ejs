@@ -36,13 +36,29 @@
           <ul class="nav nav-pills" style="font-size: 19px;">
             <li class="active"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
             <li><a href="#about" data-toggle="pill" style="padding: 8px 10px;">關於</a></li>
-            
-
             <li id="m_friend_setting" class="dropdown" >
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 8px 10px;">關係設定
                 <b class="caret"></b>
               </a>
               <ul id="m_RelSettings" class="d-menu dropdown-menu dropdown-menu-right">
+                <% if(traveler != "guest" && traveler != id){
+                switch(friendStatus){
+                case 'friend': %>
+                  <li class='setUpItem' onclick='removeFriend(this.parentNode, <%- id %>)'>解除好友</li>
+                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                <% break;
+                case 'unconfirmed': %>
+                  <li class='setUpItem' onclick='confirmFriend(this.parentNode, <%- id %>)'>加好友</li>
+                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                <% break;
+                case 'sent': %>
+                  <li class='setUpItem' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回好友邀請</li>
+                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                <% break;
+                default: %>
+                  <li class='setUpItem' onclick='addFriend(this.parentNode, <%- id %>)'>加好友</li>
+                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li
+                <% break;}} %>
               </ul>
             </li>
           </ul>
@@ -75,8 +91,7 @@
                 <br>
 
 
-                <% 
-                if(traveler != "guest" && traveler != id){
+                <% if(traveler != "guest" && traveler != id){
                 switch(friendStatus){
                 case 'friend': %>
                   <div id="friend" class="col-md-6" style="text-align:right">
@@ -104,7 +119,6 @@
                     <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>&nbsp&nbsp&nbsp&nbsp
                   </div>
                 <% break;}} %>
-                
               </div>
             </div>
           </div>
