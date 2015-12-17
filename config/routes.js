@@ -119,7 +119,7 @@ module.exports.routes = {
   'GET /getTopArticles': 'Home.getTopArticles',
   'GET /getHomepagePic': 'HomeController.getHomepagePic',
   'GET /getRecord/:num':'Backend.getRecord',
-  'GET /friendStatus/:target_id' : 'User.friendStatus',
+  // 'GET /friendStatus/:target_id' : 'User.friendStatus',
   // 'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',

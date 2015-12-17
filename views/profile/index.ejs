@@ -72,10 +72,39 @@
                     <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
                   <% break;} %>
                 </div>
-                <br> 
-                <div id="friend" class="col-md-6" style="text-align:right">
-                  <p id="status"></p>
-                </div>
+                <br>
+
+
+                <% 
+                if(traveler != "guest" && traveler != id){
+                switch(friendStatus){
+                case 'friend': %>
+                  <div id="friend" class="col-md-6" style="text-align:right">
+                    <button type='button' class='b' onclick='removeFriend(this.parentNode, <%- id %>)'>解除好友</button>&nbsp&nbsp&nbsp&nbsp
+                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
+                  </div>
+                <% break;
+                case 'unconfirmed': %>
+                  <div id="friend" class="col-md-6" style="text-align:right">
+                    &nbsp&nbsp<br>
+                    <button type='button' class='b' onclick='confirmFriend(this.parentNode, <%- id %>)'>加好友</button>&nbsp&nbsp&nbsp&nbsp
+                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
+                  </div>
+                <% break;
+                case 'sent': %>
+                  <div id="friend" class="col-md-6" style="text-align:right">
+                    <button type='button' class='b' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp
+                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
+                  </div>
+                <% break;
+                default: %>
+                  <div id="friend" class="col-md-6" style="text-align:right">
+                    <p id="status"></p>
+                    <button type='button' class='b' onclick='addFriend(this.parentNode, <%- id %>)'>加好友</button>&nbsp&nbsp&nbsp&nbsp
+                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>&nbsp&nbsp&nbsp&nbsp
+                  </div>
+                <% break;}} %>
+                
               </div>
             </div>
           </div>

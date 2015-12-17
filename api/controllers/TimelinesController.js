@@ -244,6 +244,36 @@ module.exports = {
             });
         }
 
+        function findfriendStatus(target_id, cb){ // 找出與這個人的朋友關係
+            if(req.session.user) {
+                var my_id = req.session.user.id;
+                
+                User.findById(my_id).exec(function(err,usr){
+                    if (err){
+                        console.log(err);
+                        res.send(500)
+                    }
+                    friendlist = usr[0].friends;
+                    unconfirmedFriends = usr[0].unconfirmedFriends;
+                    sentAddFriends= usr[0].sentAddFriends;
+                    
+                    if (friendlist.indexOf(parseInt(target_id))!=-1){
+                        //res.send("friend");
+                        cb("friend");
+                    }else if (unconfirmedFriends.indexOf(parseInt(target_id))!=-1){
+                        // res.send("unconfirmed");
+                        cb("unconfirmed");
+                    }else if (sentAddFriends.indexOf(parseInt(target_id))!=-1){
+                        // res.send("sent");
+                        cb("sent");
+                    }else{
+                        // res.send("no");
+                        cb("no");
+                    }
+                });
+            }
+        }
+
         checkLogin(function(){
             findId(function(id){
                 req.session.stay = id;
@@ -253,40 +283,43 @@ module.exports = {
                             findTimelineResponseAuthor(Response3, function(Response4){
                                 findAboutInfo(id, function(aboutInfo,authInfo){
                                     findAuthData(id, function(authData){
-                                        var traveler = "guest"; // 沒登入者
-                                        if(typeof req.session.user !== 'undefined'){
-                                            traveler = req.session.user.id;
-                                        }
-                                        Response4.timelinesPost.sort(function(a, b){
-                                            return new Date(b.updatedTime)-new Date(a.updatedTime);
-                                        });
-                                        res.view("profile/index", {
-                                            timeDiff: 0,
-                                            ago: 0,
-                                            timelinesList: Response4.timelinesPost,
-                                            avatar: Response.img,
-                                            alias: Response.alias,
-                                            id: Response.id,                // 塗鴉牆主人
-                                            traveler: traveler,             // 訪客
-                                            aboutInfo: aboutInfo,           // about 頁面主人的 user 資料
-                                            authInfo: authInfo,             // about 頁面每個項目的授權資料 (true/false)
-                                            authData: authData,             // about 頁面每個項目的授權狀態 (all/friend/self)
-                                            diseaseList: {'1':"鼻咽癌",'2':"鼻腔/副鼻竇癌",'3':"口腔癌",'4':"口咽癌",'5':"下咽癌",'6':"喉癌",'7':"唾液腺癌",'8':"甲狀腺癌",'999':"其它"},
-                                            scripts: [
-                                                '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                                '/js/js_public/alertify.js',
-                                                '/js/js_profile/mainJS.js',
-                                                '/js/js_post/cropper.min.js',
-                                                '/js/js_profile/crop-avatar.js'
-                                            ],
-                                            stylesheets: [
-                                                '/styles/css_profile/style.css',
-                                                '/styles/css_post/crop-avatar.css',
-                                                '/styles/css_post/cropper.min.css',
-                                                '/styles/importer.css',
-                                                '/styles/css_public/themes/alertify.core.css',
-                                                '/styles/css_public/themes/alertify.default.css'
-                                            ]
+                                        findfriendStatus(id, function(friendStatus){
+                                            var traveler = "guest"; // 沒登入者
+                                            if(typeof req.session.user !== 'undefined'){
+                                                traveler = req.session.user.id;
+                                            }
+                                            Response4.timelinesPost.sort(function(a, b){
+                                                return new Date(b.updatedTime)-new Date(a.updatedTime);
+                                            });
+                                            res.view("profile/index", {
+                                                timeDiff: 0,
+                                                ago: 0,
+                                                timelinesList: Response4.timelinesPost,
+                                                avatar: Response.img,
+                                                alias: Response.alias,
+                                                id: Response.id,                // 塗鴉牆主人
+                                                traveler: traveler,             // 訪客
+                                                aboutInfo: aboutInfo,           // about 頁面主人的 user 資料
+                                                authInfo: authInfo,             // about 頁面每個項目的授權資料 (true/false)
+                                                authData: authData,             // about 頁面每個項目的授權狀態 (all/friend/self)
+                                                friendStatus: friendStatus,
+                                                diseaseList: {'1':"鼻咽癌",'2':"鼻腔/副鼻竇癌",'3':"口腔癌",'4':"口咽癌",'5':"下咽癌",'6':"喉癌",'7':"唾液腺癌",'8':"甲狀腺癌",'999':"其它"},
+                                                scripts: [
+                                                    '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                                    '/js/js_public/alertify.js',
+                                                    '/js/js_profile/mainJS.js',
+                                                    '/js/js_post/cropper.min.js',
+                                                    '/js/js_profile/crop-avatar.js'
+                                                ],
+                                                stylesheets: [
+                                                    '/styles/css_profile/style.css',
+                                                    '/styles/css_post/crop-avatar.css',
+                                                    '/styles/css_post/cropper.min.css',
+                                                    '/styles/importer.css',
+                                                    '/styles/css_public/themes/alertify.core.css',
+                                                    '/styles/css_public/themes/alertify.default.css'
+                                                ]
+                                            });
                                         });
                                     });
                                 });
