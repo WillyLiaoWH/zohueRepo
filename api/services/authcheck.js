@@ -1,8 +1,8 @@
 module.exports = {
-authCheck: function (req,cb){      //看這兩個人關係能看到什麼
+authCheck: function (searchId,req,cb){      //看這兩個人關係能看到什麼
 
     // var id=req.session.user.id;
-    var searchId=req.param("id");
+    //var searchId=req.param("id");
     var doctor=false;
     var friend=false;
     var self=false;

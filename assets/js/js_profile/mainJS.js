@@ -1,15 +1,3 @@
-//var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
-var diseaseList={
-  '1':"鼻咽癌",
-  '2':"鼻腔/副鼻竇癌",
-  '3':"口腔癌",
-  '4':"口咽癌",
-  '5':"下咽癌",
-  '6':"喉癌",
-  '7':"唾液腺癌",
-  '8':"甲狀腺癌",
-  '999':"其它"
-};
 var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
 var source,activeSource;
 $(document).ready(function(){
@@ -139,6 +127,11 @@ $(document).ready(function(){
   });
 });
 
+
+
+
+
+// ------------------------------------------------------ about page
 function removeBlack(parent, id) {
   $.post("/removeBlack", {id: id}, function(res){
     if(res.err) {
@@ -151,7 +144,6 @@ function removeBlack(parent, id) {
     }
   })
 }
-
 function addBlack(parent, id) {
   $.post("/addBlack", {id: id}, function(res){
     if(res.err) {
@@ -163,7 +155,6 @@ function addBlack(parent, id) {
     }
   })
 }
-
 function addFriend(parent, id) {
   $.post("/addFriend", {id: id}, function(res){
     if(res.err) {
@@ -212,8 +203,6 @@ function removeAddFriend(parent, id) {
     }
   });
 }
-
-
 function profile_auth(route){   //去改按過權限按鈕之後的內容，只有前台
   var item = route.split("/")[0];
   var target = route.split("/")[1];
@@ -235,6 +224,11 @@ function profile_auth(route){   //去改按過權限按鈕之後的內容，只�
   });
 }
 
+
+
+
+
+// ------------------------------------------------------ timeline page
 function postTimeline(){
   if($("#timeline_post_image #rmimg")){$("#timeline_post_image .delete").remove();} // 去除叉叉紐
   if($("#timeline_post_image #comment_clear")){$("#timeline_post_image .clear").remove();} // 去除clear
@@ -564,175 +558,10 @@ function auth_set(id,target,text){
 }
 
 
-//=====  LINK 
-function getXMLHttp(){
-  var xmlHttp
-  try{
-    //Firefox, Opera 8.0+, Safari
-    xmlHttp = new XMLHttpRequest();
-  }
-  catch(e){
-    //Internet Explorer
-    try{
-      xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch(e){
-      try{
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      catch(e){
-        showDialog("錯誤訊息","您的瀏覽器不支援本網站之此功能！請更換瀏覽器後再試試看～",function(){
-          return false;
-        });
-      }
-    }
-  }
-  return xmlHttp;
-}
-
-// ==== Profile 相關
-function showProfile(ori_author){
-  if (!ori_author){
-    $.get("/showProfile",function(res){
-      HandleResponse2(res);
-    });
-  }
-  else{
-    var addr="/getProfile/"+ori_author;
-    $.get(addr,function(res){
-      HandleResponse2(res);
-    });
-    $('.auth_btn').hide();
-  }
-}
-function HandleResponse2(response){
-  obj=response;
-
-  var email=obj.email;
-  var alias=obj.alias;
-  var fname=obj.fname;
-  var lname=obj.lname;
-  var img=obj.img;
-  var gender=obj.gender;
-  var phone=obj.phone;
-  var postalCode=obj.postalCode;
-  var addressCity=obj.addressCity;
-  var addressDistrict=obj.addressDistrict;
-  var address=obj.address;
-  var birthday = obj.birthday;
-  var now = new Date()
-  var b = new Date(birthday)
-  var age = now.getTime() - b.getTime()
-  var Y = (b.getFullYear().toString() == "NaN") ? "  " : b.getFullYear()-1911;
-  var M = (b.getMonth().toString() == "NaN") ? "  " : b.getMonth()+1;
-  var D = (b.getDate().toString() == "NaN") ? "  " : b.getDate();
-  var type=obj.type;
-  var primaryDisease=obj.primaryDisease;
-  var primaryDiseaseHtml;
-  var owner=window.location.toString().split('?')[1];
-
-  if (typeof owner != "undefined"){
-    //檢查兩個人的關係
-    $.get('/authCheck/'+owner,function(auth_status){
-      // console.log(owner)
-      if(!auth_status["name"]){
-        $('#name_row').hide();
-      }
-      if (!auth_status["email"]){
-        $('#email_row').hide();
-      }
-      // if (!auth_status["type"]){
-      //   $('#type_row').hide();
-      // }
-      if (!auth_status["gender"]){
-        $('#gender_row').hide();
-      }
-      if (!auth_status["phone"]){
-        $('#phone_row').hide();
-      }
-      if (!auth_status["bday"]){
-        $('#bday_row').hide();
-      }
-      if (!auth_status["city"]){
-        $('#city_row').hide();
-      }
-    })
-  }
-  //檢查拿得到什麼
-  $.get('/auth_data',function(auth_status){
-
-    var index = ["name","email","gender","phone","bday","city","type"];
-    for (var i in index){
-      //console.log(i + " - " + index[i] +  " - " + auth_status[index[i]]);
-      $('#'+index[i]+'_pic').attr("src","/images/img_timeline/"+auth_status[index[i]]+".png");
-      if (auth_status[index[i]]=="self"){
-        $('#'+index[i]+'_btn_text').text("自己才看得到");
-      }
-      else if(auth_status[index[i]]=="friend"){
-        $('#'+index[i]+'_btn_text').text("朋友才看得到");
-      }
-      else if(auth_status[index[i]]=="all"){
-        $('#'+index[i]+'_btn_text').text("人人都看得到");
-      }
-      else if(auth_status[index[i]]=="doctor"){
-        $('#'+index[i]+'_btn_text').text("醫生");
-      }
-    }
-  })
-
-  if (type=='S'){
-    if(primaryDisease!=""){
-      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
-    }
-    type="社工師";
-
-  }else if(type=='P'){
-
-    type="";
-  }else if(type=='F'){
-    type="";
-  }else if(type=='D'){
-    if(primaryDisease!=""){
-      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
-    }
-    type="醫生";
-  }else if(type=='RN'){
-    if(primaryDisease!=""){
-      primaryDiseaseHtml="主治"+diseaseList[primaryDisease];
-    }
-    type="護理師";
-  }else if(type=='N'){
-    type="";
-  }
-  
-  $('#primaryDisease').text(primaryDiseaseHtml);
-  $('#type').text(type);
-  $('#email').text(email);
-  $('#name').text(fname+lname);
-  $('#alias').text(alias);
-  $('#avatar').attr('src',img);
 
 
-  $('#m_primaryDisease').text(primaryDiseaseHtml);
-  $('#m_type').text(type);
-  $('#m_alias').text(alias);
-  $('#m_avatar').attr('src',img);
 
-  if (gender=='M'){
-    gender="男性";
-  }else if(gender=='F'){
-    gender="女性";
-  }else{
-    gender="其他";
-  }
-  $('#gender').text(gender);
-  $('#phone').text(phone);
-  
-  $("#bday").text(Math.floor(age/(86400000*365)).toString()+" 歲");
-  //$("#bday").text("民國 "+Y.toString()+" 年 "+M.toString()+" 月 "+D.toString()+" 日");
-  $('#city').text(addressCity);
-}
-
+// ------------------------------------------------------ others
 function mobile_friend_setting(){
   $('#m_friend').css('display','block');
   $('#m_friend').html($('#m_friend').html().replace(/&nbsp;/g, ''));

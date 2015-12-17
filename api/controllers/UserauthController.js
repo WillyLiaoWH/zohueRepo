@@ -6,34 +6,34 @@
  */
 
 module.exports = {
-    authGet:function(req,res){          //得到使用者的授權狀態
-         if(typeof req.session.user === 'undefined'){
-           id= "0"; //假設沒登入者id為0
-        }else{
-           id=req.session.user.id;
-        }
+    // authGet:function(req,res){          //得到使用者的授權狀態
+    //      if(typeof req.session.user === 'undefined'){
+    //        id= "0"; //假設沒登入者id為0
+    //     }else{
+    //        id=req.session.user.id;
+    //     }
         
-        Userauth.find({user:id}).exec(function(err,result){
-            if(err){
-                res.send(500,{err:"DB error"});
-            }
-            if(result.length==0){
-                str='{"name":"all","city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
-                res.send(JSON.parse(str));
-            }
-            else{
-                res.send(result[0]);
-            }
-        })
-    },
+    //     Userauth.find({user:id}).exec(function(err,result){
+    //         if(err){
+    //             res.send(500,{err:"DB error"});
+    //         }
+    //         if(result.length==0){
+    //             str='{"name":"all","city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
+    //             res.send(JSON.parse(str));
+    //         }
+    //         else{
+    //             res.send(result[0]);
+    //         }
+    //     })
+    // },
 
 
-    authCheck: function (req,res){      //看這兩個人關係能看到什麼
-        var authcheck = require("../services/authcheck.js")
-        authcheck.authCheck(req,function(auth){
-            res.send(auth);
-        });
-    },
+    // authCheck: function (req,res){      //看這兩個人關係能看到什麼
+    //     var authcheck = require("../services/authcheck.js")
+    //     authcheck.authCheck(req,function(auth){
+    //         res.send(auth);
+    //     });
+    // },
 	authSet : function (req,res){
 		 function chechAtuh(id, cb){
             Userauth.find({user:id}).exec(function(err,result){

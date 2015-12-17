@@ -13,12 +13,23 @@
         
       <div id="mobile_upper_profile" class="hidden-desktop">
           <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
-            <img src="" id="m_avatar" style="height: 120px"></img>
+            <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px"></img>
           </span>
           <span style="margin: 40px 0px 40px 45px; display: inline-block;">
-            <h3 id="m_alias"></h3> 
-            <b id="m_type"></b>
-            <text id="m_primaryDisease"></text>
+            <h3 id="m_alias"><%= aboutInfo.alias %></h3>
+            <% switch(aboutInfo.type){
+            case 'S': %>
+              <b id="m_type">社工師</b>
+              <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+            <% break;
+            case 'D': %>
+              <b id="m_type">醫生</b>
+              <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+            <% break;
+            case 'RN': %>
+              <b id="m_type">護理師</b>
+              <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+            <% break;} %>
           </span>
         
           <!-- <ul class="tabs"> -->
@@ -40,15 +51,26 @@
 
       <div id="upper_profile" class="hidden-phone hidden-tablet">
          <div class="col-md-3" style="">
-            <img src="" id="avatar" height="150px"></img>
+            <img src="<%- aboutInfo.img %>" id="avatar" height="150px"></img>
           </div>
           <div class="col-md-9">
             <div class="row">
               <div class="col-md-12 ">
                 <div class="col-md-6">
-                  <h3 id="alias"></h3> 
-                  <b id="type"></b>
-                  <text id="primaryDisease"></text>
+                  <h3 id="alias"><%= aboutInfo.alias %></h3>
+                  <% switch(aboutInfo.type){
+                  case 'S': %>
+                    <b id="type">社工師</b>
+                    <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+                  <% break;
+                  case 'D': %>
+                    <b id="type">醫生</b>
+                    <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+                  <% break;
+                  case 'RN': %>
+                    <b id="type">護理師</b>
+                    <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+                  <% break;} %>
                 </div>
                 <br> 
                 <div id="friend" class="col-md-6" style="text-align:right">
@@ -64,9 +86,6 @@
           <ul class="nav nav-pills" id="tabs" style="font-size:19px;">
             <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
             <li><a href="#about" data-toggle="pill">關於</a></li>
-            <!-- <li><a href="#personal_friend" data-toggle="pill">我的朋友</a></li>
-            <li><a href="#personal_photo" data-toggle="pill">個人健康歷程</a></li>
-            <li><a href="#personal_others" data-toggle="pill">更多</a></li>-->
           </ul>
         </div>
 
@@ -130,27 +149,33 @@
             </div>
           </div>
 
+
+
           <div class="tab-pane" id="about">
             <br>
             <div class="row">
               <!--<div class="col-md-3 "><img src="" id="avatar" height="100"></div>-->
               <br>
-              <h3  id="alias"></h3> 
+              <h3 id="alias"><%- aboutInfo.alias %></h3> 
             </div> 
            <table class="table">
             <tr class="auth_btn">
               <th></th>
               <th></th>
+              <% if(traveler == id){ %>
               <th>權限設定</th>
+              <% } %>
             </tr>
+            <% if(authInfo.name){ %>
             <tr id="name_row">
               <td>姓名：</td>
-              <td id="name"></td>
+              <td id="name"><%- aboutInfo.fname + aboutInfo.lname %></td>
+              <% if(traveler == id){ %>
               <td>
                 <div class="btn-group auth_btn" style="float:none;">
                   <button type="button" class="n" data-toggle="dropdown">
-                    <img id="name_pic" src="" height="20px" width="20px">
-                    <text id="name_btn_text"></text>                  
+                    <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px">
+                    <text id="name_btn_text"></text>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                    <li><a class="profile_auth" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -159,14 +184,18 @@
                   </ul>
                 </div>
               </td>
+              <% } %>
             </tr>
+            <% }
+            if(authInfo.bday){ %>
              <tr id="bday_row">
                <td>年齡：</td>
-               <td id="bday"></td>
+               <td id="bday"><%- Math.floor((new Date()-new Date(aboutInfo.birthday))/(86400000*365)).toString()+" 歲" %></td>
+               <% if(traveler == id){ %>
                <td>
                 <div class="btn-group auth_btn" style="float:none;">
                   <button type="button" class="n" data-toggle="dropdown">
-                    <img id="bday_pic" src="" height="20px" width="20px">
+                    <img id="bday_pic" src="/images/img_timeline/<%=authData.bday%>.png" height="20px" width="20px">
                     <text id="bday_btn_text"></text>                  
                   </button>
                   <ul class="dropdown-menu" role="menu">
@@ -176,14 +205,18 @@
                   </ul>
                 </div>
                </td>
+               <% } %>
              </tr>
+            <% }
+            if(authInfo.city){ %>
              <tr id="city_row">
                <td>來自：</td>
-               <td id="city"></td>
+               <td id="city"><%- aboutInfo.addressCity %></td>
+               <% if(traveler == id){ %>
                <td>
                  <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown">
-                     <img id="city_pic" src="" height="20px" width="20px">
+                     <img id="city_pic" src="/images/img_timeline/<%=authData.city%>.png" height="20px" width="20px">
                      <text id="city_btn_text"></text>
                    </button>
                    <ul class="dropdown-menu" role="menu">
@@ -193,14 +226,24 @@
                    </ul>
                  </div>
                </td>
+               <% } %>
              </tr>
+            <% }
+            if(authInfo.gender){ %>
              <tr id="gender_row">
                <td>性別：</td>
-               <td id="gender"></td>
+               <% if(aboutInfo.gender == "M"){ %>
+                <td id="gender">男性</td>
+               <% }else if(aboutInfo.gender == "F"){ %>
+                <td id="gender">女性</td>
+               <% }else{ %>
+                <td id="gender">其他</td>
+               <% } %>
+               <% if(traveler == id){ %>
                <td>
                  <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
-                      <img id="gender_pic" src="" height="20px" width="20px">
+                      <img id="gender_pic" src="/images/img_timeline/<%=authData.gender%>.png" height="20px" width="20px">
                       <text id="gender_btn_text"></text>
                     </button>
                      <ul class="dropdown-menu" role="menu">
@@ -210,14 +253,18 @@
                     </ul>
                   </div>
                </td>
+               <% } %>
              </tr>
+            <% }
+            if(authInfo.email){ %>
              <tr id="email_row">
                <td>E-mail：</td>
-               <td id="email"></td>
+               <td id="email"><%- aboutInfo.email %></td>
+               <% if(traveler == id){ %>
                <td>
                  <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
-                      <img id="email_pic" src="" height="20px" width="20px">
+                      <img id="email_pic" src="/images/img_timeline/<%=authData.email%>.png" height="20px" width="20px">
                       <text id="email_btn_text"></text>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -227,14 +274,18 @@
                     </ul>
                   </div>
                </td>
+               <% } %>
              </tr>
+            <% }
+            if(authInfo.phone){ %>
              <tr id="phone_row">
                <td>電話：</td>
-               <td id="phone"></td>
+               <td id="phone"><%- aboutInfo.phone %></td>
+               <% if(traveler == id){ %>
                <td>
                   <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown" id="phone_btn">
-                     <img id="phone_pic" src="" height="20px" width="20px">
+                     <img id="phone_pic" src="/images/img_timeline/<%=authData.phone%>.png" height="20px" width="20px">
                      <text id="phone_btn_text"></text>
                    </button>
                    <ul class="dropdown-menu" role="menu">
@@ -244,12 +295,11 @@
                    </ul>
                  </div>
                </td>
+               <% } %>
              </tr>
+            <% } %>
            </table>
           </div>
-          <div class="tab-pane" id="personal_friend">...friend</div>
-          <div class="tab-pane" id="personal_photo">...Personal</div>
-          <div class="tab-pane" id="personal_others">...others</div>
         </div>
       </div>
 

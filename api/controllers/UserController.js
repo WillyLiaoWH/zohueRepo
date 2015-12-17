@@ -500,69 +500,69 @@ module.exports = {
         //console.log(req.session.user);
         res.send(req.session.user);
     },
-    getProfile: function(req, res){
-        //gets only the photo, alias, name, birthday, city,email,gender,phone
-        //only the first two are required
-        if(typeof req.session.user === 'undefined'){
-            pri_id = "0"; //假設沒登入者id為0
-            console.log("No login user looking at profile..."); 
-        }else{
-            pri_id = req.session.user.id;
-        }
+    // getProfile: function(req, res){
+    //     //gets only the photo, alias, name, birthday, city,email,gender,phone
+    //     //only the first two are required
+    //     if(typeof req.session.user === 'undefined'){
+    //         pri_id = "0"; //假設沒登入者id為0
+    //         console.log("No login user looking at profile..."); 
+    //     }else{
+    //         pri_id = req.session.user.id;
+    //     }
         
-        var id=req.param("id");
+    //     var id=req.param("id");
         
-        if (pri_id === id){
-            res.send(JSON.stringify(req.session.user))
-        }
-        else{
-            User.findById (id).exec(function(err, usr) {
-                if (err) {
-                    res.send(500, { err: "DB Error" });
-                } else {
-                    if (usr.length!=0) {
-                        var ret= new Object();
-                        ret.alias = usr[0].alias; console.log(usr[0].alias);
-                        ret.img = usr[0].img;
-                        ret.type = usr[0].type;
-                        ret.primaryDisease = usr[0].primaryDisease;
-                        var authcheck=require("../services/authcheck.js");
-                        authcheck.authCheck(req,function(auth){
-                            //console.log(auth)
-                            if (auth.name===true){
-                                ret.lname = usr[0].lname;
-                                ret.fname = usr[0].fname 
-                            }
-                            if (auth.bday===true){
-                                ret.birthday = usr[0].birthday;
-                            }
-                            if (auth.city === true){
-                                ret.addressCity = usr[0].addressCity;
-                            }
-                            if (auth.email === true){
-                                ret.email = usr[0].email
-                            }
-                            if (auth.gender === true){
-                                ret.gender = usr[0].gender
-                            }
-                            if (auth.phone === true){
-                                ret.phone = usr[0].phone
-                            }
-                            if (auth.type === true){
-                                ret.type = usr[0].type
-                            }
-                            if (auth.primaryDisease === true){
-                                ret.primaryDisease = usr[0].primaryDisease
-                            }  
-                            res.send(ret);
-                        });
-                    } else {
-                        res.send(404, { err: "查無此帳號" });
-                    }
-                }
-            });
-        }
-    },
+    //     if (pri_id === id){
+    //         res.send(JSON.stringify(req.session.user))
+    //     }
+    //     else{
+    //         User.findById (id).exec(function(err, usr) {
+    //             if (err) {
+    //                 res.send(500, { err: "DB Error" });
+    //             } else {
+    //                 if (usr.length!=0) {
+    //                     var ret= new Object();
+    //                     ret.alias = usr[0].alias; console.log(usr[0].alias);
+    //                     ret.img = usr[0].img;
+    //                     ret.type = usr[0].type;
+    //                     ret.primaryDisease = usr[0].primaryDisease;
+    //                     var authcheck=require("../services/authcheck.js");
+    //                     authcheck.authCheck(req,function(auth){
+    //                         //console.log(auth)
+    //                         if (auth.name===true){
+    //                             ret.lname = usr[0].lname;
+    //                             ret.fname = usr[0].fname 
+    //                         }
+    //                         if (auth.bday===true){
+    //                             ret.birthday = usr[0].birthday;
+    //                         }
+    //                         if (auth.city === true){
+    //                             ret.addressCity = usr[0].addressCity;
+    //                         }
+    //                         if (auth.email === true){
+    //                             ret.email = usr[0].email
+    //                         }
+    //                         if (auth.gender === true){
+    //                             ret.gender = usr[0].gender
+    //                         }
+    //                         if (auth.phone === true){
+    //                             ret.phone = usr[0].phone
+    //                         }
+    //                         if (auth.type === true){
+    //                             ret.type = usr[0].type
+    //                         }
+    //                         if (auth.primaryDisease === true){
+    //                             ret.primaryDisease = usr[0].primaryDisease
+    //                         }  
+    //                         res.send(ret);
+    //                     });
+    //                 } else {
+    //                     res.send(404, { err: "查無此帳號" });
+    //                 }
+    //             }
+    //         });
+    //     }
+    // },
 
     upload: function(req, res){
         console.log(req.param("avatar_data"));

@@ -20,7 +20,7 @@ module.exports = {
             }
         }
 
-        function findId(cb){
+        function findId(cb){ // 找出要看 timeline page 的 user id
             var id = searchID;
             if(id == ''){
                 var id = req.session.user.id;
@@ -118,7 +118,7 @@ module.exports = {
             }
         }
 
-        function AuthorQuery(timelineRes, cb){
+        function AuthorQuery(timelineRes, cb){ // 找出某篇 timeline 留言的作者、nicer、reporter 等等
             TimelineResponse.find(timelineRes.id).populate('author').populate('nicer', {select: ['id']}).populate('report', {select: ['reporter']}).exec(function (err, result2) {
                 if(err) {
                     console.log("err");
@@ -159,6 +159,91 @@ module.exports = {
             });
         }
 
+        function findAboutInfo(id, cb){ // 找出 about page 中, 每個項目的授權資料
+            if(typeof req.session.user === 'undefined'){
+                pri_id = "0"; //假設沒登入者id為0
+                console.log("No login user looking at profile..."); 
+            }else{
+                pri_id = req.session.user.id;
+            }
+            
+            if (pri_id === id){
+                // res.send(JSON.stringify(req.session.user))
+                cb(req.session.user, {"name":true,"city":true,"email":true,"gender":true,"phone":true,"bday":true} );
+            }
+            else{
+                User.findById(id).exec(function(err, usr) {
+                    if (err) {
+                        res.send(500, { err: "DB Error" });
+                    } else {
+                        if (usr.length!=0) {
+                            var ret= new Object();
+                            ret.alias = usr[0].alias; console.log(usr[0].alias);
+                            ret.img = usr[0].img;
+                            ret.type = usr[0].type;
+                            ret.primaryDisease = usr[0].primaryDisease;
+                            var authcheck=require("../services/authcheck.js");
+                            authcheck.authCheck(id,req,function(auth){
+                                // console.log(auth)
+                                if (auth.name===true){
+                                    ret.lname = usr[0].lname;
+                                    ret.fname = usr[0].fname 
+                                }
+                                if (auth.bday===true){
+                                    ret.birthday = usr[0].birthday;
+                                }
+                                if (auth.city === true){
+                                    ret.addressCity = usr[0].addressCity;
+                                }
+                                if (auth.email === true){
+                                    ret.email = usr[0].email
+                                }
+                                if (auth.gender === true){
+                                    ret.gender = usr[0].gender
+                                }
+                                if (auth.phone === true){
+                                    ret.phone = usr[0].phone
+                                }
+                                if (auth.type === true){
+                                    ret.type = usr[0].type
+                                }
+                                if (auth.primaryDisease === true){
+                                    ret.primaryDisease = usr[0].primaryDisease
+                                }  
+                                // res.send(ret);
+                                cb(ret,auth);
+                            });
+                        } else {
+                            res.send(404, { err: "查無此帳號" });
+                        }
+                    }
+                });
+            }
+        }
+
+        function findAuthData(id, cb){ // 找出 about page 中, 每個項目的授權資料
+            if(typeof req.session.user === 'undefined'){
+                id= "0"; //假設沒登入者id為0
+            }else{
+               id=req.session.user.id;
+            }
+            
+            Userauth.find({user:id}).exec(function(err,result){
+                if(err){
+                    res.send(500,{err:"DB error"});
+                }
+                if(result.length==0){
+                    str='{"name":"all","city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
+                    // res.send(JSON.parse(str));
+                    cb(JSON.parse(str));
+                }
+                else{
+                    // res.send(result[0]);
+                    cb(result[0])
+                }
+            });
+        }
+
         checkLogin(function(){
             findId(function(id){
                 req.session.stay = id;
@@ -166,36 +251,44 @@ module.exports = {
                     getNicer(Response, function(Response2){
                         addAuth(id, Response2, function(Response3){
                             findTimelineResponseAuthor(Response3, function(Response4){
-                                var traveler = "guest"; // 沒登入者
-                                if(typeof req.session.user !== 'undefined'){
-                                    traveler = req.session.user.id;
-                                }
-                                Response4.timelinesPost.sort(function(a, b){
-                                    return new Date(b.updatedTime)-new Date(a.updatedTime);
-                                });
-                                res.view("profile/index", {
-                                    timeDiff: 0,
-                                    ago: 0,
-                                    timelinesList: Response4.timelinesPost,
-                                    avatar: Response.img,
-                                    alias: Response.alias,
-                                    id: Response.id,                // 塗鴉牆主人
-                                    traveler: traveler,             // 訪客
-                                    scripts: [
-                                        '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                        '/js/js_public/alertify.js',
-                                        '/js/js_profile/mainJS.js',
-                                        '/js/js_post/cropper.min.js',
-                                        '/js/js_profile/crop-avatar.js'
-                                    ],
-                                    stylesheets: [
-                                        '/styles/css_profile/style.css',
-                                        '/styles/css_post/crop-avatar.css',
-                                        '/styles/css_post/cropper.min.css',
-                                        '/styles/importer.css',
-                                        '/styles/css_public/themes/alertify.core.css',
-                                        '/styles/css_public/themes/alertify.default.css'
-                                    ]
+                                findAboutInfo(id, function(aboutInfo,authInfo){
+                                    findAuthData(id, function(authData){
+                                        var traveler = "guest"; // 沒登入者
+                                        if(typeof req.session.user !== 'undefined'){
+                                            traveler = req.session.user.id;
+                                        }
+                                        Response4.timelinesPost.sort(function(a, b){
+                                            return new Date(b.updatedTime)-new Date(a.updatedTime);
+                                        });
+                                        res.view("profile/index", {
+                                            timeDiff: 0,
+                                            ago: 0,
+                                            timelinesList: Response4.timelinesPost,
+                                            avatar: Response.img,
+                                            alias: Response.alias,
+                                            id: Response.id,                // 塗鴉牆主人
+                                            traveler: traveler,             // 訪客
+                                            aboutInfo: aboutInfo,           // about 頁面主人的 user 資料
+                                            authInfo: authInfo,             // about 頁面每個項目的授權資料 (true/false)
+                                            authData: authData,             // about 頁面每個項目的授權狀態 (all/friend/self)
+                                            diseaseList: {'1':"鼻咽癌",'2':"鼻腔/副鼻竇癌",'3':"口腔癌",'4':"口咽癌",'5':"下咽癌",'6':"喉癌",'7':"唾液腺癌",'8':"甲狀腺癌",'999':"其它"},
+                                            scripts: [
+                                                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                                '/js/js_public/alertify.js',
+                                                '/js/js_profile/mainJS.js',
+                                                '/js/js_post/cropper.min.js',
+                                                '/js/js_profile/crop-avatar.js'
+                                            ],
+                                            stylesheets: [
+                                                '/styles/css_profile/style.css',
+                                                '/styles/css_post/crop-avatar.css',
+                                                '/styles/css_post/cropper.min.css',
+                                                '/styles/importer.css',
+                                                '/styles/css_public/themes/alertify.core.css',
+                                                '/styles/css_public/themes/alertify.default.css'
+                                            ]
+                                        });
+                                    });
                                 });
                             });
                         });

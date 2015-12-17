@@ -120,7 +120,7 @@ module.exports.routes = {
   'GET /getHomepagePic': 'HomeController.getHomepagePic',
   'GET /getRecord/:num':'Backend.getRecord',
   'GET /friendStatus/:target_id' : 'User.friendStatus',
-  'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
+  // 'GET /authCheck/:id': 'UserAuth.authCheck',   //檢查兩個人的關係
   'GET /checkAuth': 'SessionController.checkAuth',   //檢查有沒有登入
   'GET /checkFull': 'User.checkFull',
   'GET /getEmail' : 'User.getEmail',
@@ -135,12 +135,12 @@ module.exports.routes = {
   'GET /getBoardsOfCategory/:category': 'Boards.getBoardsOfCategory',
   'GET /getCategoryOfBoard/:board': 'Boards.getCategoryOfBoard',
   'GET /showProfile':'User.showProfile',
-  'GET /getProfile/:id':'User.getProfile',
+  // 'GET /getProfile/:id':'User.getProfile',
   'GET /getProInfo/:id':'ProInfoController.getProInfo',
   'GET /getAllUsers':'Backend.getAllUsers',
   'GET /getAllSubscribers':'SubscribeEmail.getAllSubscribers',
   'GET /setProfileAuth/:item/:status' : 'UserAuth.authSet',
-  'GET /Auth_data':'UserAuth.authGet',
+  // 'GET /Auth_data':'UserAuth.authGet',
   'GET /getBoardCategory': 'BoardCategory.getBoardCategory',
   'GET /checkAdmin': 'Backend.checkAdmin',
   'GET /getAllSuspendReason': 'Backend.getAllSuspendReason',
