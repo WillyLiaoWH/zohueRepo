@@ -1,7 +1,6 @@
 var allow_create;
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 var loaded=false;
-var board="";
 $(document).ready(function(){
   setPage();
   $.get('/updateLastForumTime',function(res){
@@ -267,7 +266,7 @@ function setPage() {
 
 }
 
-function backToList() {
+function backToList(board) {
   // var url=document.URL;
   // var regex = /.*article\/+(.*)\?board=+(.*)&page=+(.*)/;
   // var board=url.replace(regex,"$2");
@@ -276,7 +275,7 @@ function backToList() {
   if(document.referrer.search("board")!=-1)
     window.location.assign(document.referrer);
   else
-    window.location.assign("/board-"+board+"/1?tab=all")
+    window.location.assign("/board-"+board+"?tab=all&sort=lastResponseTime&order=DESC&page=1&search=")
 }
 
 function editArticle() {
@@ -286,7 +285,7 @@ function editArticle() {
   location.assign("/editArticle/"+article_id);
 }
 
-function deleteArticle() {
+function deleteArticle(board) {
   bootbox.dialog({
     message: "確定要刪除文章嗎？",
     title: "再次確認",
@@ -303,7 +302,7 @@ function deleteArticle() {
               if(document.referrer.search("board")!=-1)
                 window.location.assign(document.referrer);
               else
-                window.location.assign("/board-"+board+"/1?tab=all");
+                window.location.assign("/board-"+board+"?tab=all&sort=lastResponseTime&order=DESC&page=1&search=");
             });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);
