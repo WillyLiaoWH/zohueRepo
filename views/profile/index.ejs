@@ -36,6 +36,7 @@
           <ul class="nav nav-pills" style="font-size: 19px;">
             <li class="active"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
             <li><a href="#about" data-toggle="pill" style="padding: 8px 10px;">關於</a></li>
+            <% if(traveler != "guest" && traveler != id){ %>
             <li id="m_friend_setting" class="dropdown" >
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 8px 10px;">關係設定
                 <b class="caret"></b>
@@ -61,6 +62,7 @@
                 <% break;}} %>
               </ul>
             </li>
+            <% } %>
           </ul>
       </div>
 
@@ -218,7 +220,18 @@
                 <div class="btn-group auth_btn" style="float:none;">
                   <button type="button" class="n" data-toggle="dropdown">
                     <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px">
-                    <text id="name_btn_text"></text>
+                    <text id="name_btn_text">
+                      <% switch(authData.name){
+                        case 'all': %>
+                          人人都看得到
+                      <% break;
+                        case 'friend': %>
+                          朋友才看得到
+                      <% break;
+                        case 'self': %>
+                          自己才看得到
+                      <% break;} %>
+                    </text>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                    <li><a class="profile_auth" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -239,7 +252,18 @@
                 <div class="btn-group auth_btn" style="float:none;">
                   <button type="button" class="n" data-toggle="dropdown">
                     <img id="bday_pic" src="/images/img_timeline/<%=authData.bday%>.png" height="20px" width="20px">
-                    <text id="bday_btn_text"></text>                  
+                    <text id="bday_btn_text">
+                      <% switch(authData.bday){
+                        case 'all': %>
+                          人人都看得到
+                      <% break;
+                        case 'friend': %>
+                          朋友才看得到
+                      <% break;
+                        case 'self': %>
+                          自己才看得到
+                      <% break;} %>
+                    </text>                  
                   </button>
                   <ul class="dropdown-menu" role="menu">
                    <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -260,7 +284,18 @@
                  <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown">
                      <img id="city_pic" src="/images/img_timeline/<%=authData.city%>.png" height="20px" width="20px">
-                     <text id="city_btn_text"></text>
+                     <text id="city_btn_text">
+                       <% switch(authData.city){
+                        case 'all': %>
+                          人人都看得到
+                      <% break;
+                        case 'friend': %>
+                          朋友才看得到
+                      <% break;
+                        case 'self': %>
+                          自己才看得到
+                      <% break;} %>
+                     </text>
                    </button>
                    <ul class="dropdown-menu" role="menu">
                      <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -287,7 +322,18 @@
                  <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
                       <img id="gender_pic" src="/images/img_timeline/<%=authData.gender%>.png" height="20px" width="20px">
-                      <text id="gender_btn_text"></text>
+                      <text id="gender_btn_text">
+                        <% switch(authData.gender){
+                          case 'all': %>
+                            人人都看得到
+                        <% break;
+                          case 'friend': %>
+                            朋友才看得到
+                        <% break;
+                          case 'self': %>
+                            自己才看得到
+                        <% break;} %>
+                      </text>
                     </button>
                      <ul class="dropdown-menu" role="menu">
                        <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -308,7 +354,18 @@
                  <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
                       <img id="email_pic" src="/images/img_timeline/<%=authData.email%>.png" height="20px" width="20px">
-                      <text id="email_btn_text"></text>
+                      <text id="email_btn_text">
+                        <% switch(authData.email){
+                          case 'all': %>
+                            人人都看得到
+                        <% break;
+                          case 'friend': %>
+                            朋友才看得到
+                        <% break;
+                          case 'self': %>
+                            自己才看得到
+                        <% break;} %>
+                      </text>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                       <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -329,7 +386,18 @@
                   <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown" id="phone_btn">
                      <img id="phone_pic" src="/images/img_timeline/<%=authData.phone%>.png" height="20px" width="20px">
-                     <text id="phone_btn_text"></text>
+                     <text id="phone_btn_text">
+                        <% switch(authData.phone){
+                          case 'all': %>
+                            人人都看得到
+                        <% break;
+                          case 'friend': %>
+                            朋友才看得到
+                        <% break;
+                          case 'self': %>
+                            自己才看得到
+                        <% break;} %>
+                     </text>
                    </button>
                    <ul class="dropdown-menu" role="menu">
                     <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>

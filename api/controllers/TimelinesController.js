@@ -245,6 +245,7 @@ module.exports = {
         }
 
         function findfriendStatus(target_id, cb){ // 找出與這個人的朋友關係
+            console.log("fs");
             if(req.session.user) {
                 var my_id = req.session.user.id;
                 
@@ -271,6 +272,8 @@ module.exports = {
                         cb("no");
                     }
                 });
+            }else{
+                cb("guest");
             }
         }
 
