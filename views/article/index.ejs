@@ -161,7 +161,15 @@
                     </div>
                   </td>
                 </tr>
-                <% }} else { %><tr></tr><% } %>
+                <% }} else { %>
+                <tr>
+                  <td class="comment_row">
+                    <div id='response<%= responseList[i].id %>'>
+                      有&nbsp<label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
+                    </div>
+                  </td>
+                </tr>
+                <% } %>
               <% } %>
             </table><br>
           </div>
