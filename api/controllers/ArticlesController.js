@@ -529,7 +529,6 @@ module.exports = {
                         count_temp = response[0].nicer.length;
                         responseNiceCount.push(count_temp);
                         kk=kk+1
-                        console.log(kk)
                         if(kk >= responseList.length){ // 硬幹 asynchronous
                             cb(responseNiceCount);
                         }
@@ -700,7 +699,6 @@ module.exports = {
         // } else {
     		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
                 if(error) {
-                    console.log(title);console.log(author);console.log(content);
                     res.send(500,{err: "DB Error" });
                     console.log(error);
                 } else {
@@ -1118,7 +1116,7 @@ module.exports = {
     searchArticle: function(req, res){
         var keyword = req.param("keyword");
         var board=req.param("board");
-        console.log(keyword);
+        
 
         var tab=req.param("tab");
         var classification;

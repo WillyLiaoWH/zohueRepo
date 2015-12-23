@@ -473,23 +473,24 @@ function sendEmail(){
       $.get("/getEmail",function(res){
         mailaddress=res;
 
-        alertify.set({ labels : { ok: "轉寄給其他人", cancel: "是" } });
-        alertify.confirm("是否要把這篇寄給"+mailaddress,function(e){
-          if (e){
-            alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
-            mailaddress=prompt('把這封email送到：');
-            if (mailaddress.length>0){
-              
-              var url = document.URL;
-              var regex = /.*article\/+(.*)/;
-              var article_id = url.replace(regex,"$1");
-              $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
-                if (res == "SEND"){
-                  alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
-                  alertify.alert("已經送出信件至"+mailaddress); 
-               }
-              });
-            }
+          bootbox.confirm("是否要把這篇寄給"+mailaddress,function(e){
+          if (!e){
+            
+            bootbox.prompt('把這封email送到：',function(mailaddress){
+              if (mailaddress!=null){
+                
+                var url = document.URL;
+                var regex = /.*article\/+(.*)/;
+                var article_id = url.replace(regex,"$1");
+                $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
+                  if (res == "SEND"){
+                    alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
+                    alertify.alert("已經送出信件至"+mailaddress); 
+                 }
+                });
+              }
+            });
+            
           }
           else{
             if (mailaddress.length>0){
@@ -498,8 +499,8 @@ function sendEmail(){
               var article_id = url.replace(regex,"$1");
               $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
                 if (res == "SEND"){
-                  alertify.set({ labels : { ok: "ok", cancel: "cancel" } });
-                  alertify.alert("已經送出信件至"+mailaddress); 
+                  
+                  bootbox.alert("已經送出信件至"+mailaddress); 
                }
               });
             }  
@@ -508,18 +509,18 @@ function sendEmail(){
       });
     }
     else{
-      mailaddress=prompt('把這封email送到：') ;
-    
-      if (mailaddress.length>0){
-        var url = document.URL;
-        var regex = /.*article\/+(.*)/;
-        var article_id = url.replace(regex,"$1");
-        $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
-          if (res == "SEND"){
-            showDialog("一般訊息","已經送出信件至"+mailaddress);
-          }
-        });
-      }
+      bootbox.prompt('把這封email送到：',function(mailaddress){
+        if (mailaddress.length>0){
+          var url = document.URL;
+          var regex = /.*article\/+(.*)/;
+          var article_id = url.replace(regex,"$1");
+          $.post("/sendEmail",{article_id: article_id,mailaddress: mailaddress,url: url},function(res){
+            if (res == "SEND"){
+              showDialog("一般訊息","已經送出信件至"+mailaddress);
+            }
+          });
+        }
+      }) ;
     }
   });
 
