@@ -54,7 +54,7 @@ module.exports = {
     },
     elite: {
       type: 'string',
-      required: true
+      required: false
     }
   }
 };
