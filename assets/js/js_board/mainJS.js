@@ -47,9 +47,9 @@ $(document).ready(function(){
 
   $("#searchWord").on("keyup mouseup", function(){
     try{
-      if($("#searchWord").val().trim()!=""){
-        $("#search").css("background-color", "rgba(232, 81, 0, 0.7)");
-      }else{$("#search").css("background-color", "rgba(102, 141, 60, 0.4)");}
+      // if($("#searchWord").val().trim()!=""){
+      //   $("#search").css("background-color", "#FFCE54");
+      // }else{$("#search").css("background-color", "#FFCE54");}
         
       if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
         this.appendChild(document.createChild("br"));

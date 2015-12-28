@@ -18,13 +18,9 @@
 }
 
 #searchWord{
-	/*width:350px;
-	//width:100%;
-	//margin: 8px 0px 0px 0px;
-	//display: inline !important;
-	//width:100%;*/
 	width:250px;
 	margin: 15px -5px 0px 0px;
+	background-color: #FFFAED;
 }
 
 #search{
@@ -32,7 +28,7 @@
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 }
 
 #search.hover{
@@ -391,7 +387,7 @@ div.tab_container .tab_content h2 {
 
 .nav-pills li.active a,
 .nav-pills li.active a:hover{
-	background-color: #1D3521;
+	background-color: #FFCE54;
 }
 
 
@@ -421,7 +417,7 @@ div.tab_container .tab_content h2 {
 	font-size: 20px;
 }
 .nav-pills li a:hover{
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 	color:white;
 }
 
