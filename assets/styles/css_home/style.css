@@ -8,13 +8,13 @@
 	float:right;
 	margin-top:25px;
 	/*color:#816C5B;*/
-	background-color: rgba(232, 81, 0, 0.7);
+	/*background-color: rgba(232, 81, 0, 0.7);*/
 	color:#533828;
 }
 
 #submit:hover{
 	/*background-color: rgba(102, 141, 60, 0.7);*/
-	background-color: rgba(102, 141, 60, 0.4);
+	/*background-color: rgba(102, 141, 60, 0.4);*/
 	color:#816C58;
 }
 
@@ -24,7 +24,7 @@
 
 .b{
 	/*float:right;*/
-	background-color: rgba(232, 81, 0, 0.7);
+	/*background-color: rgba(232, 81, 0, 0.7);*/
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -39,7 +39,7 @@
 }
 
 .b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
+	/*background-color: rgba(102, 141, 60, 0.4);*/
 	color:#816C58;
 }
 

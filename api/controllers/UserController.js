@@ -1071,6 +1071,7 @@ module.exports = {
                                     break;
                             }
                             var picSize = 100;
+                            var picSize_l = 25;
                             var type = allUser[i].type;
                             var diseaseList={
                                   '1':"鼻咽癌",
@@ -1086,32 +1087,32 @@ module.exports = {
                             if(users.length>0) {
                                 switch(type){
                                     case "D":
-                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height:"+picSize_l+"px; width:"+picSize_l+"px;'>";
                                         users[users.length-1].authorType="醫師";
                                         users[users.length-1].diseaseDesc="主治"+diseaseList[allUser[i].primaryDisease];
                                         break;
                                     case "S":
-                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師' style='margin-right:10px; height:"+picSize_l+"px; width:"+picSize_l+"px;'>";
                                         users[users.length-1].authorType="社工師";
                                         users[users.length-1].diseaseDesc="主治"+diseaseList[allUser[i].primaryDisease];
                                         break;
                                     case "RN":
-                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師' style='margin-right:10px; height:"+picSize_l+"px; width:"+picSize_l+"px;'>";
                                         users[users.length-1].authorType="護理師";
                                         users[users.length-1].diseaseDesc="主治"+diseaseList[allUser[i].primaryDisease];
                                         break;
                                     case "P":
-                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友' style='margin-right:10px; height:"+picSize_l+"px; width:"+picSize_l+"px;'>";
                                         users[users.length-1].authorType="";
                                         users[users.length-1].diseaseDesc="患有"+diseaseList[allUser[i].primaryDisease];
                                         break;
                                     case "F":
-                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬' style='margin-right:10px; height:"+picSize_l+"px; width:"+picSize_l+"px;'>";
                                         users[users.length-1].authorType="";
                                         users[users.length-1].diseaseDesc="照顧"+diseaseList[allUser[i].primaryDisease]+"患者";
                                         break;
                                     default:
-                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize+"px; width:"+picSize+"px;'>";
+                                        users[users.length-1].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height:"+picSize_l+"px; width:"+picSize_l+"px;'>";
                                         users[users.length-1].authorType="";
                                         users[users.length-1].diseaseDesc="";
                                         break;

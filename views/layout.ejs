@@ -107,10 +107,10 @@
    <div class="fb-root"></div>
    <div class="mobile_modalBox"></div>
    <div id="layout">
-    <div class="row-fluid">
+    <div class="row-fluid" id="topbar">
       <div id="logoDiv" class="span4">
       <!-- <div class="col-md-4 col-sm-12 col-xs-12"> -->
-        <a href="/home" style="text-decoration: none;"><img id="logo" src="/images/img_public/logo2.png"/></a>
+        <a href="/home" style="text-decoration: none;"><img id="logo" src="/images/img_public/new1.png"/></a>
       <!--   <div style="text-align:center; font-size:22px; font-weight: bold; color:#d78961;">台灣頭頸部癌病友作夥加油站！</div> -->
       </div>
       <div class="span8 visible-desktop hidden-phone hidden-tablet">
@@ -204,7 +204,7 @@
     </div>
     <!-- 登入部份的mobile版 -->
 
-    <hr id="hr" class="visible-desktop hidden-phone hidden-tablet">
+    <!--<hr id="hr" class="visible-desktop hidden-phone hidden-tablet">-->
 
     <!-- menu部份的desktop版 -->
     <div class="visible-desktop hidden-phone hidden-tablet">
@@ -284,16 +284,16 @@
         <h1 style="font-size:30px;" >簡易註冊</h1>
         <form id="simpleSignUp">
           暱稱<label id="checkAlias" class="check"></label><br>
-          <input type="text" name="UserAlias" class="s" id="UserAlias"><br>
+          <input type="text" name="UserAlias" class="s" id="UserAlias" placeholder="請輸入暱稱"><br>
           <div id="FBlogin">
           帳號<label id="checkAccount" class="check"></label><br>
-          <input type="text" name="UserAccount" class="s" id="UserAccount" onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();"><br>
+          <input type="text" name="UserAccount" class="s" id="UserAccount" placeholder="請輸入帳號"  onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();"><br>
           密碼<label id="checkPwd" class="check"></label><br>
-          <input type="password" name="UserPwd" class="s" id="UserPwd" onchange="checkPwd();" onkeyup="checkPwd();"><br>
+          <input type="password" name="UserPwd" class="s" id="UserPwd" placeholder="請輸入密碼" onchange="checkPwd();" onkeyup="checkPwd();"><br>
           確認密碼<label id="checkPwdConfirm" class="check"></label><br>
-          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm" onchange="checkPwd();" onkeyup="checkPwd();"><br>
+          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm" placeholder="請再輸入確認密碼" onchange="checkPwd();" onkeyup="checkPwd();"><br>
           </div>
-          E-mail（建議填寫）<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" class="s" id="UserEmail"><br>
+          E-mail（建議填寫）<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" placeholder="請輸入您的電子郵件地址" class="s" id="UserEmail"><br>
           <input type="hidden" name="FB_id" id="FB_id" value="1">
           <input type="hidden" name="UserGender" id="UserGender">
           <input type="hidden" name="fname" id="fname">
