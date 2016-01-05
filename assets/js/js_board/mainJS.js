@@ -40,16 +40,16 @@ $(document).ready(function(){
 
   $.get("/checkAuth", function(auth){ // 註冊後把論壇 div 加寬 
     if(!auth) {
-      document.getElementById("forumContent").className = "span10";
+      // document.getElementById("forumContent").className = "span10";
       //document.getElementById("forumContent").className = "span7";
     }
   });
 
   $("#searchWord").on("keyup mouseup", function(){
     try{
-      // if($("#searchWord").val().trim()!=""){
-      //   $("#search").css("background-color", "#FFCE54");
-      // }else{$("#search").css("background-color", "#FFCE54");}
+      if($("#searchWord").val().trim()!=""){
+        $("#search").css("background-color", "#F19766");
+      }else{$("#search").css("background-color", "#FFCE54");}
         
       if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
         this.appendChild(document.createChild("br"));

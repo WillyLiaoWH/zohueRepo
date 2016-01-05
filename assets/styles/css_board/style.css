@@ -6,11 +6,6 @@
 	float:right;
 }
 
-#post:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#FFF;
-}
-
 #searchPanel{
 	margin-right: 150px;
 	float:right;
@@ -29,24 +24,6 @@
 	color:#533828;
 	margin-top:15px;
 	background-color: #FFCE54;
-}
-
-#search.hover{
-	background-color: rgba(102, 141, 60, 0.8);
-	color:#816C58;
-}
-
-#cancleSearch{
-	/*width:90px;*/
-	font-size: 20px;
-	color:#533828;
-	margin-top:9px;
-	background-color: rgba(102, 141, 60, 0.4);
-}
-
-#cancleSearch.hover{
-	background-color: rgba(102, 141, 60, 0.8);
-	color:#816C58;
 }
 
 #sortAs{
@@ -156,11 +133,14 @@
 	/*margin-top: 5px;*/
 }
 
-.body>tr:nth-child(odd) {
+/*.body>tr:nth-child(odd) {
 	background-color: #fcf8e3
 }
 .body>tr:nth-child(even) {
 	background-color: #dff0d8
+}*/
+.body>tr {
+	border-bottom: 2px solid #3765A3;
 }
 
 #mobile_post{
@@ -404,7 +384,8 @@ div.tab_container .tab_content h2 {
 }
 .nav-pills li.nonActiveOrange a:hover{
 	/*background-color: #1D3521;*/
-	background-color: rgba(232, 81, 0, 0.3);
+	/*background-color: rgba(232, 81, 0, 0.3);*/
+	background-color: #F19766;
 	font-weight: bolder;
 }
 
@@ -425,4 +406,11 @@ div.tab_container .tab_content h2 {
 	#hoho{
 		margin-top: 80px;
 	}
+}
+
+#forumContent {
+	width: 100%;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{
+	background-color: #FFBA40;
 }
