@@ -13,7 +13,7 @@ button, input[type="button"], input[type="submit"]{
 button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 	cursor: pointer;
 	background-color: #D26900;
-	color:#FFF;
+	color:#FFF !important;
 }
 
 select, input[type="text"], input[type="password"]{
@@ -219,7 +219,7 @@ select, input[type="text"], input[type="password"]{
 
 #UserType{
 	-webkit-appearance:none;
-	background: url(../../../images/img_public/down-arrow.png);
+	/*background: url(../../../images/img_public/down-arrow.png);*/
 	background-size: 30px 30px;
 	background-position: right;
 	background-repeat: no-repeat;
@@ -249,7 +249,7 @@ select, input[type="text"], input[type="password"]{
 }
 #logout:hover{
 	/*background-color: rgba(102, 141, 60, 0.4);*/
-	color:#816C58;
+	color:#FFF;
 }
 
 
