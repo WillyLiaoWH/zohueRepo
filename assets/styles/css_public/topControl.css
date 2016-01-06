@@ -12,7 +12,7 @@ button, input[type="button"], input[type="submit"]{
 
 button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 	cursor: pointer;
-	background-color: #D26900;
+	background-color: #D16900;
 	color:#FFF !important;
 }
 
@@ -247,11 +247,6 @@ select, input[type="text"], input[type="password"]{
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
 }
-#logout:hover{
-	/*background-color: rgba(102, 141, 60, 0.4);*/
-	color:#FFF;
-}
-
 
 #hr{
 	width:99%;
@@ -279,7 +274,7 @@ select, input[type="text"], input[type="password"]{
 }
 
 .setUpItem:hover{
-	color:#D26900;
+	color:#D16900;
 }
 
 #fullSignup {
@@ -295,7 +290,7 @@ select, input[type="text"], input[type="password"]{
 
 .item:hover{
 	/*color:#0097AC;*/
-	color:#D26900;
+	color:#D16900;
 	/*font-size:22px;*/
 
 }
