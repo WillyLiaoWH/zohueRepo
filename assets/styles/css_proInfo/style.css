@@ -11,6 +11,8 @@
 #searchWord{
 	width: 100%;
 	margin: 8px 0px 0px -15px;
+	background-color: #FFFAED;
+
 }
 
 #search{
@@ -18,7 +20,7 @@
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
-	background-color: rgba(102, 141, 60, 0.4);
+
 }
 
 #search.hover{
@@ -31,7 +33,6 @@
 	font-size: 20px;
 	color:#533828;
 	margin-top:9px;
-	background-color: rgba(102, 141, 60, 0.4);
 }
 
 #cancleSearch.hover{
@@ -122,10 +123,7 @@
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
-	/*background-color: rgba(195, 183, 172, 0.5);*/
-	background-color: rgba(102, 141, 60, 0.3);
 	padding: 8px 8px 8px 8px;
-	/*margin: 8px 3px 0px 0px;*/
 	width:100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -134,9 +132,17 @@
   	border: 1px solid rgba(0,0,0,0);
 }
 
+td{
+	 border-bottom: 2px solid #3765A3;
+}
+
+h1{
+	margin-left:-15px;
+}
+
 .b{
 	/*float:right;*/
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color:#FFEC54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -173,6 +179,7 @@
 	display:none;
 	margin-top:0; margin-right:auto; margin-bottom:0; margin-left:auto;
 }
+
 
 .mobile_modalBox{
 	position: fixed;
