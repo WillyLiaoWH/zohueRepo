@@ -96,6 +96,8 @@
 #timeline_post_content{
 	min-height: 100px;
 	height: auto;
+	background-color: white;
+	border: 1px solid #FFCE54;
 }
 #timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
@@ -275,8 +277,8 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 }
 .b:hover{
 	border: 1px solid #CCCCCC;
-	background-color: #F5F5F5;
-	color:#816C58;
+	background-color: #D16900;
+	color:white;
 }
 
 
@@ -292,9 +294,9 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	vertical-align: center;
 }
 .n:hover{
-	background-color: rgb(241, 241, 241);
+	background-color: #D16900;
 	border: 1px solid #CCCCCC;
-	color:#816C58;
+	color:white;
 	vertical-align: center;
 }
 
