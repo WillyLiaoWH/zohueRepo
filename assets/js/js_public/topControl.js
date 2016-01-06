@@ -14,7 +14,7 @@ $(window).load(function(){ // 暫存回覆頁面
 $(document).ready(function(){  
   FB_API();
   checkAuth();
-
+  markMenuItem();
   // 強制貼上純文字
   $(document).on("paste", "div[contenteditable='true']" ,function(e) {
     e.preventDefault();
@@ -605,4 +605,29 @@ function recordLink(target){
   $.get("/recordLink/"+target,function(ret){
     return true 
   })
+}
+
+
+function markMenuItem(){
+  var url = document.URL;
+   $("#profile_page").css("color","#533828");
+   $("#forum").css("color","#533828");
+   $("#proInfo").css("color","#533828");
+   $("#friends").css("color","#533828");
+   $("#gettingStarted").css("color","#533828");
+   $("#setUp").css("color","#533828");
+    
+  if(url.match('profile')!=null){
+    $("#profile_page").css("color","#D26900");
+  }else if(url.match('frontboard')!=null){
+    $("#forum").css("color","#D26900");
+  }else if(url.match('proInfo')!=null){
+    $("#proInfo").css("color","#D26900");
+  }else if(url.match('friends')!=null){
+    $("#friends").css("color","#D26900");
+  }else if(url.match('gettingStarted')!=null){
+    $("#gettingStarted").css("color","#D26900");
+  }else if(url.match('change')!=null || url.match('changePassword')!=null){
+    $("#setUp").css("color","#D26900");
+  }
 }

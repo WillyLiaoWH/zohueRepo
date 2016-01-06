@@ -4,6 +4,14 @@
 	font-size: 20px;
 }
 
+input[type="text"] {
+	border: 1px solid #FFCE54 !important;
+}
+
+select {
+	border: 1px solid #FFCE54 !important;
+}
+
 #email-tooltip,#email_ez-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #alias-tooltip,#alias_ez-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
 #type-tooltip{margin-right: 0px; margin-top: -20px; display: none;}
@@ -36,7 +44,7 @@
 }
 
 #form-div {
-	background-color:rgba(102, 141, 60, 0.4);
+	background-color: floralwhite;
 /*	padding-left:35px;
 	padding-right:35px;
 	padding-top:35px;
