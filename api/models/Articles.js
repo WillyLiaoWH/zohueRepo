@@ -53,7 +53,7 @@ module.exports = {
       collection: 'user',
     },elite: {
       type: 'string',
-      defaulsTo: "0"
+      //defaulsTo: "0"
     }
   }
 };

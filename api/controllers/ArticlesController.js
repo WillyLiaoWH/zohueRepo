@@ -991,7 +991,6 @@ module.exports = {
     },
 
     cancelNice: function(req, res) {
-        console.log("cancel");
         var articleId = req.param("article_id");
         Articles.find({id: articleId}).populate("nicer").exec(function(error, article) {
             if(error) {
