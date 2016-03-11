@@ -53,7 +53,7 @@
             </tr>
 　          <tr id="articleData">
               <td valign='bottom' style='padding:0px 0px 7px 20px;'>
-                發表人：<a href='/profile/?" <%= articleList[0].author.id %>'><%= articleList[0].author.alias %></a>
+                發表人：<a href='/profile/?<%= articleList[0].author.id %>'><%= articleList[0].author.alias %></a>
                 <% if(articleList[0].author.type=="S"){ %>社工師
                 <% }else if(articleList[0].author.type=="D"){ %>醫師
                 <% }else{ %><% } %>
