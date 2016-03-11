@@ -96,6 +96,8 @@
 #timeline_post_content{
 	min-height: 100px;
 	height: auto;
+	background-color: white;
+	border: 1px solid #FFCE54;
 }
 #timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
@@ -117,7 +119,7 @@
 
 
 .timeline_event{
-	border: 1px solid rgba(102, 141, 60, 0.4);
+	border: 1px solid #CCCCCC;
 	border-radius: 10px;
 	margin-top:-20px;
 	padding: 0px;
@@ -158,7 +160,7 @@
 .dropdown-menu{
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
-	background-color: rgb(179, 194, 162);
+	background-color: #FFCE54;
 	font-size:20px;
 	color:#533828;
 	vertical-align: center;
@@ -216,23 +218,24 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
     border-left: 65px solid transparent;
 }
 .event_comment{
-	border-top: 1px solid rgba(102, 141, 60, 0.4);
+	border-top: 1px solid #CCCCCC;
 }
 .event_commentlist{
 	/*border-top: 1px solid rgba(102, 141, 60, 0.4);*/
 	display:none;
 }
 .default_event_commentlist{
-	border-top: 1px solid rgba(102, 141, 60, 0.4);
+	border-top: 1px solid #CCCCCC;
 }
 .edit_content{
+	border: 1px solid #FFCE54;
 	word-break: break-all;
 	min-height: 50px;
 	color:#816C58;
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: white;
 	padding: 8px 8px 8px 8px;
 	margin: 5px;
 	width:100%;
@@ -259,7 +262,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	/*display: none;*/
 	/*float:right;*/
 	/*width: 125px;*/
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: #FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -273,15 +276,16 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 .b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	border: 1px solid #CCCCCC;
+	background-color: #D16900;
+	color:white;
 }
 
 
 .n{
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
-	background-color: rgb(179, 194, 162);
+	background-color: ##FFCE54;
 	padding: 4px 8px 4px 8px;
 	font-size:20px;
 	color:#533828;
@@ -290,9 +294,9 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	vertical-align: center;
 }
 .n:hover{
-	background-color: rgb(241, 241, 241);
-	border: 1px solid rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	background-color: #D16900;
+	border: 1px solid #CCCCCC;
+	color:white;
 	vertical-align: center;
 }
 
