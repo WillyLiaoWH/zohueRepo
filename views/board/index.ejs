@@ -137,10 +137,17 @@
                 <% for(var i=0; i<articleList.length; i++) { %>
                   <tr>
                     <td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'><%=articleList[i].badPic+articleList[i].classification%></td>
-                    <td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> text-decoration:underline;'><%-articleList[i].title%></a></td>
-                    <td><table><tr><td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><img <%=articleList[i].authorIcon%>><img src='<%=articleList[i].author.img%>' style='float:left; margin-right:10px; height:50px; width:50px;'></td>
-                    <td><a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a><%=articleList[i].authorType%></td></tr>
-                    <tr><td><%=articleList[i].postTime%></td></tr></table></td>
+                    <td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> '><%-articleList[i].title%></a></td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><img src='<%=articleList[i].author.img%>' style='float:left; margin-right:10px; height:50px; width:50px;'></td>
+                          <td><a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a><%=articleList[i].authorType%></td></tr>
+                        <tr>
+                          <td><%=articleList[i].postTime%></td>
+                        </tr>
+                      </table>
+                    </td>
                     <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].clickNum%>/<%=articleList[i].response.length%></td>
                     <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].nicer.length%>&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>
                     <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].lastResponseTime%></td></tr>

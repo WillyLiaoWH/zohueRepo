@@ -32,35 +32,37 @@
         <div class="row-fluid" style="margin-top:10px;">
           <table id="article">
             <tr id="adj_tr">
-              <td id="articleAvatar_type" rowspan="2" style='width:50px;'>
-                <% if(articleList[0].author.type=="S"){ %>
-                  <img src='/images/img_forum/sw_icon.png' title='已認證社工師'>
-                <% }else if(articleList[0].author.type=="D"){ %>
-                  <img src='/images/img_forum/doctor_icon.png' title='已認證醫師'>
-                <% }else if(articleList[0].author.type=="P"){ %>
-                  <img src='/images/img_forum/user_icon.png' title='病友'>
-                <% }else if(articleList[0].author.type=="F"){ %>
-                  <img src='/images/img_forum/user_icon.png' title='家屬'>
-                <% }else{ %>
-                  <img src='/images/img_forum/user_icon.png' title='一般民眾'>
-                <% } %>
-              </td>
+              
 　            <td id="articleAvatar" rowspan="2" style='width:50px;'>
                 <img src='<%= articleList[0].author.img %>'>
               </td>
 　            <td id="articleTitle" colspan="3"><%= articleList[0].title %></td>
-              <td></td> <td></td> <td ></td>
+              
             </tr>
 　          <tr id="articleData">
-              <td valign='bottom' style='padding:0px 0px 7px 20px;'>
+              
+              <td valign='bottom' style='padding:0px 0px 7px 20px; height:30%'>
                 發表人：<a href='/profile/?" <%= articleList[0].author.id %>'><%= articleList[0].author.alias %></a>
                 <% if(articleList[0].author.type=="S"){ %>社工師
+                    <img src='/images/img_forum/sw_icon.png' title='已認證社工師' style=" height: 40%;">
                 <% }else if(articleList[0].author.type=="D"){ %>醫師
-                <% }else{ %><% } %>
+                    <img src='/images/img_forum/doctor_icon.png' title='已認證醫師'style=" height: 40%;">
+                <% }else{ %>  
+                    <img src='/images/img_forum/user_icon.png' title='一般民眾'style=" height: 40%;">
+                  <% } %>
               </td>
-              <td valign='bottom' style='padding:0px 0px 7px 0px;'>發表時間：<%= articleList[0].createdAt %></td>
-              <td valign='bottom' style='padding:0px 0px 7px 0px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間：<%= articleList[0].lastResponseTime %></td>
+               
             </tr>
+
+            <tr id="articleData">
+              <td></td>
+              <td valign='bottom' style='padding:0px 0px 7px 20px;'>發表時間：<%= articleList[0].createdAt %></td>
+              <td valign='bottom' style='padding:0px 0px 7px 20px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間：<%= articleList[0].lastResponseTime %>
+                </td>
+            </tr>
+
+
+
             <tr><td colspan="5" id="articleContent"><%- articleList[0].content %></td></tr>
             <tr>
               <td colspan="5" style="border-right:solid 1px rgba(102, 141, 60, 0.4);">
