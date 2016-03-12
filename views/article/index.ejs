@@ -1,3 +1,4 @@
+ <!DOCTYPE HTML>
   <div class="container-fluid col-md-8" id="post-form-main">
     <h1 style="margin-bottom:30px; color:#D26900;">癌病友論壇</h1>
     <div class="row-fluid">
@@ -43,14 +44,15 @@
 
               <td valign='bottom' style='padding:0px 0px 7px 20px;'>
                 發表人：<a href='/profile/?<%= articleList[0].author.id %>'><%= articleList[0].author.alias %></a>
-
-                <% if(articleList[0].author.type=="S"){ %>社工師
-                    <img src='/images/img_forum/sw_icon.png' title='已認證社工師' style=" height: 40%;">
-                <% }else if(articleList[0].author.type=="D"){ %>醫師
-                    <img src='/images/img_forum/doctor_icon.png' title='已認證醫師'style=" height: 40%;">
-                <% }else{ %>  
-                    <img src='/images/img_forum/user_icon.png' title='一般民眾'style=" height: 40%;">
-                  <% } %>
+                      <% if(articleList[0].author.type=="S"){ %> 社工師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
+                      <% }else if(articleList[0].author.type=="D"){ %> 醫師
+                       <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
+                      <% }else if(articleList[0].author.type=="RN"){ %> 護理師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
+                      <% } else{ %>
+                      <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
+                      <% } %>
               </td>
                
             </tr>
@@ -99,19 +101,6 @@
             <table id="commentList">
               <% for(i=0; i<responseList.length; i++){ %>
                 <tr>
-                  <td valign=top rowspan=4 class='comment_avatar_type' >
-                    <% if(responseList[i].author.type=="S"){ %>
-                      <img src='/images/img_forum/sw_icon.png' title='已認證社工師'>
-                    <% }else if(responseList[i].author.type=="D"){ %>
-                      <img src='/images/img_forum/doctor_icon.png' title='已認證醫師'>
-                    <% }else if(responseList[i].author.type=="P"){ %>
-                      <img src='/images/img_forum/user_icon.png' title='病友'>
-                    <% }else if(responseList[i].author.type=="F"){ %>
-                      <img src='/images/img_forum/user_icon.png' title='家屬'>
-                    <% }else{ %>
-                      <img src='/images/img_forum/user_icon.png' title='一般民眾'>
-                    <% } %>
-                  </td>
                   <td valign=top rowspan=4 class='comment_avatar'>
                     <img src='<%= responseList[i].author.img %>'>
                   </td>
@@ -124,10 +113,17 @@
                 <tr>
                   <td id="comment_content">
                     <label>
-                      <a href='/profile/?<%= responseList[i].author.id %>'><%= responseList[i].author.alias %></a>
-                      <% if(articleList[0].author.type=="S"){ %>社工師
-                      <% }else if(articleList[0].author.type=="D"){ %>醫師
-                      <% }else{ %><% } %>
+                      <a href='/profile/?<%= responseList[i].author.id %>'>
+                        <%= responseList[i].author.alias %></a>
+                      <% if(articleList[0].author.type=="S"){ %> 社工師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
+                      <% }else if(articleList[0].author.type=="D"){ %> 醫師
+                       <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
+                      <% }else if(articleList[0].author.type=="RN"){ %> 護理師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
+                      <% } else{ %>
+                      <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
+                      <% } %>
                     </label>
                     <% if(responseList[i].comment.trim()==""){ %>
                       <label class='comment_content'><%- responseList[i].comment_image %></label>

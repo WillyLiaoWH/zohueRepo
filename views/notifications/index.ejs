@@ -14,15 +14,16 @@
 		  "在平台小幫手發布文章"]
 	%>
 
-	<%for(var i=0; i<not.length; i++) {  %>
-		<%if(not[i].alreadyRead) { %>
+	<%for(var i=0; i<not.length; i++) { 
+	 %>
+		<%if(not[i].alreadyRead) { 
+		%>
 			<div class='not read' id='<%=not[i].id%>'>
 		<% } else { %>
 			<div class='not unread' id='<%=not[i].id%>'>
 		<% } %>
 
 				<div class='image'>
-					
 					<%if(not[i].from.type=="D"){ %>
 						<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height: 50px; width:50px;'>
 						<%local.type="醫師"%>

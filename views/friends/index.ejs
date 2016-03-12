@@ -141,7 +141,11 @@
                         <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin-right:10px; height:100px; width:100px;">
                     </div>
                     <div class="friendMid">
-                        <div style="margin-right: 0px; display: inline-block; height: 55%; width: 100%; font-size: 32px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 32px;"><%- users[i].alias %></a><%- users[i].authorType %> <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> <%- users[i].authorIcon %> <%}%></div>
+                        <div style="margin-right: 0px; display: inline-block; height: 55%; width: 100%; font-size: 32px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 32px;"><%- users[i].alias %></a>
+                            <%- users[i].authorType %> 
+                            <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> 
+                                <%- users[i].authorIcon %> <%}%>
+                        </div>
                         <br>
                         <span style="display:inline-block; height: 40%; width: 130%;">
                           <% if (users[i].isFriend==-1) { %>
@@ -164,9 +168,11 @@
                     <div class="friendRight">
                         <% if(users[i].addressCity&&users[i].addressCity!=""){ %>
                             <div style='display:inline-block; font-size: 22px; width: 100%'>來自<%- users[i].addressCity %> </div><br>
-                        <% } if(users[i].primaryDisease&&users[i].primaryDisease!="") { %>
+                        <% } 
+                        var pd = users[i].primaryDisease;
+                        if(pd!=""&&(pd=="D"||pd=="S"||pd=="RN"||pd=="P"||pd=="F")) { %>
                             <div style="display:inline-block; font-size: 22px; width: 100%">
-                                 <% if(users[i].type=="D"){ %>
+                                <% if(users[i].type=="D"){ %>
                                      主治 <%- diseaseList[users[i].primaryDisease] %>
                                  <% }else if(users[i].type=="S"){ %>
                                      主治 <%- diseaseList[users[i].primaryDisease] %>

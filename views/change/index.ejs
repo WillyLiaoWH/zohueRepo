@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="submit">
-            <input type="button" value="送 出" id="button-blue" onclick="Submit_ez()"/>
+            <input type="button" value="送 出" class="s" onclick="Submit_ez()"/>
             <div class="ease"></div>
           </div>
         </form>
@@ -86,10 +86,18 @@
       			</div>
 
       			<div>
-              <h class="input_title">上傳相片</h>
-              <input name="image" type="button" class="validate[required,custom[image]] feedback-input" id="image" value="上傳相片"/>
-              <div class="avatar-view" title="上傳相片">
+               
+              <br><br><br>
+              <div>
+              <!--<h class="input_title">上傳相片</h>-->
+              </div>
+              <div id="fname_reg-div">
+                <input name="image" type="button" class="validate[required,custom[image]] feedback-input" id="image" value="上傳相片"/>
+              </div>
+               <div id="lname_reg-div">
+                    <div class="avatar-view" title="上傳相片">
                 <img id="avatar" src="<%=profileData.img%>" alt="Avatar">
+               </div>
               </div>
       			</div>
 
@@ -306,7 +314,7 @@
 
 
       			<div class="submit">
-        			<input type="button" value="送 出" id="button-blue" onclick="Submit()"/>
+        			<input type="button" value="送 出" class="s" onclick="Submit()"/>
         			<div class="ease"></div>
       			</div>
     		  </form>

@@ -266,10 +266,10 @@
 }
 
 #articleList td:nth-child(1){
-		width: 125px !important;
+		width: 100px !important;
 	}
 #articleList td:nth-child(2){
-		width: 265px !important;
+		width: 275px !important;
 	}
 #articleList td:nth-child(3){
 		width: 210px !important;

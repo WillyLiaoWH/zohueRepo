@@ -6,6 +6,8 @@
 	background-color: #FFFAF0;
 	padding: 35px 35px 50px;
 	margin-bottom: 20px;
+    border: 1px solid #CCCCCC;
+	border-radius: 10px;
 }
 
 .changePassword_s{
@@ -36,7 +38,7 @@
 }
 
 #submit:hover{
-	background-color: rgba(102, 141, 60, 0.5);
+	background-color: #D16900
 }
 
 #account{

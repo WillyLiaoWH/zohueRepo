@@ -147,26 +147,26 @@ module.exports = {
                                 switch(articleList[i].author.type) {
                                     case "D":
                                         articleList[i].authorType="&nbsp醫師";
-                                        articleList[i].authorIcon="src=/images/img_forum/doctor_icon.png title=已認證醫師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
                                         break;
                                     case "S":
                                         articleList[i].authorType="&nbsp社工師";
-                                        articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證社工師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'";
                                         break;
                                     case "RN":
                                         articleList[i].authorType="&nbsp護理師";
-                                        articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證護理師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'";
                                         break;
                                     case "P":
-                                        articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=病友 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友'";
                                         articleList[i].authorType="";
                                         break;
                                     case "F":
-                                        articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=家屬 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'";
                                         articleList[i].authorType="";
                                         break;
                                     default:
-                                        articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=一般民眾 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'";
                                         articleList[i].authorType="";
                                 }
                                 articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
@@ -348,26 +348,26 @@ module.exports = {
                         switch(articleList[i].author.type) {
                             case "D":
                                 articleList[i].authorType="&nbsp醫師";
-                                articleList[i].authorIcon="src=/images/img_forum/doctor_icon.png title=已認證醫師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>";
                                 break;
                             case "S":
                                 articleList[i].authorType="&nbsp社工師";
-                                articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證社工師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>";
                                 break;
                             case "RN":
                                 articleList[i].authorType="&nbsp護理師";
-                                articleList[i].authorIcon="src=/images/img_forum/sw_icon.png title=已認證護理師 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>";
                                 break;
                             case "P":
-                                articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=病友 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorIcon="<img class='imgAuthorType' class= src='/images/img_forum/user_icon.png' title='病友'/>";
                                 articleList[i].authorType="";
                                 break;
                             case "F":
-                                articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=家屬 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'/>";
                                 articleList[i].authorType="";
                                 break;
                             default:
-                                articleList[i].authorIcon="src=/images/img_forum/user_icon.png title=一般民眾 style=float:left;margin-right:10px;height:50px;width:50px;";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'/>";
                                 articleList[i].authorType="";
                         }
                         articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
@@ -397,7 +397,7 @@ module.exports = {
                             '/js/js_frontboard/mainJS.js'
                         ],
                         stylesheets: [
-                            '/styles/css_board/style.css',
+                            '/styles/css_frontboard/style.css',
                             '/styles/importer.css'
                         ]
                     });
