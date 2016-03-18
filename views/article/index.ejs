@@ -115,13 +115,14 @@
                     <label>
                       <a href='/profile/?<%= responseList[i].author.id %>'>
                         <%= responseList[i].author.alias %></a>
-                      <% if(articleList[0].author.type=="S"){ %> 社工師
+                      <% if(responseList[i].author.type=="S"){ %> 社工師
                       <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
-                      <% }else if(articleList[0].author.type=="D"){ %> 醫師
+                      <% }else if(responseList[i].author.type=="D"){ %> 醫師
                        <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
-                      <% }else if(articleList[0].author.type=="RN"){ %> 護理師
+                      <% }else if(responseList[i].author.type=="RN"){ %> 護理師
                       <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
                       <% } else{ %>
+                      <%=responseList[i].author.type%>
                       <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
                       <% } %>
                     </label>
