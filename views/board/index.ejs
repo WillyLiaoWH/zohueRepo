@@ -1,3 +1,4 @@
+<!doctype=html>
     <div class="container-fluid col-md-9">
       <div id="forumContent" style="margin-left:0px;">
         <div class="row-fluid" style="margin-left: 0px; margin-bottom: 10px;">
@@ -125,32 +126,36 @@
           <table id="articleList" class="table table-hover">
             <thead>
               <tr style='background-color: #3765A3; color:white;' onclick='setTableRowStripCss();'>
-                <td style='width:11%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'><span onClick='changeSort("classification");'>類別</span></td>
-                <td style='width:34%; padding:10px 15px 10px 15px; cursor:pointer;'><span onClick='changeSort("title");'>文章標題</td>
-                <td style='width:22%; text-align:center; cursor:pointer;'><span onClick='changeSort("author");'>發表人<span class='caret'></span></span>/ <span onClick='changeSort("createdAt");'>發表時間<span class='caret'></span></span></td>
-                <td style='width:12%; text-align:center; cursor:pointer;'><span onClick='changeSort("clickNum");'>點閱<span class='caret'></span></span> / <span onClick='changeSort("responseNum");'>回覆<span class='caret'></span></span></td>
-                <td style='width:6%; text-align:center; cursor:pointer;' onClick='changeSort("niceNum");'>推薦<span class='caret'></span></td>
+                <td style='width:8%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'><span onClick='changeSort("classification");'>類別</span></td>
+                <td style='padding:10px 15px 10px 15px; cursor:pointer;'><span onClick='changeSort("title");'>文章標題</td>
+                <td style='text-align:center; cursor:pointer;'><span>發表人<span class='caret'></span></span>/<span>發表時間<span class='caret'></span></span></td>
+                <td style='text-align:center; cursor:pointer;'><span onClick='changeSort("clickNum");'>點閱<span class='caret'></span></span> / <span onClick='changeSort("responseNum");'>回覆<span class='caret'></span></span></td>
+                <td style='text-align:center; cursor:pointer;' onClick='changeSort("niceNum");'>推薦<span class='caret'></span></td>
                 <td style='text-align:center; cursor:pointer;' onClick='changeSort("lastResponseTime");'>最新回應時間<span class='caret'></span></td>
               </tr>
             </thead>
             <tbody class="body">
                 <% for(var i=0; i<articleList.length; i++) { %>
                   <tr>
-                    <td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'><%=articleList[i].badPic+articleList[i].classification%></td>
-                    <td style='width:35%; padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> '><%-articleList[i].title%></a></td>
+                    <td style='padding:10px 0px 10px 0px; text-align:center;'><%=articleList[i].badPic+articleList[i].classification%></td>
+                    <td style='padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> '><%-articleList[i].title%></a></td>
                     <td>
                       <table>
-                        <tr >
-                          <td rowspan=2 style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><img src='<%=articleList[i].author.img%>' style='float:left; margin-right:10px; height:50px; width:50px;'></td>
-                          <td><a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a><%=articleList[i].authorType%></td></tr>
+
                         <tr>
-                          <td><%=articleList[i].postTime%></td>
+                          <td rowspan=1 style='padding:10px 0px 10px 10px; text-align:center;'><img src='<%=articleList[i].author.img%>' style='float:left; margin-right:10px; height:50px; width:50px;'></td>
+                          <td><a href='/profile?<%=articleList[i].author.id%>'>
+                            <%=articleList[i].author.alias%></a>
+                            <%-articleList[i].authorType%></td></tr>
+
+                        <tr>
+                          <td colspan=2 style="font-size: 18px; text-align:center"><%=articleList[i].postTime%></td>
                         </tr>
                       </table>
                     </td>
-                    <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].clickNum%>/<%=articleList[i].response.length%></td>
-                    <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].nicer.length%>&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>
-                    <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].lastResponseTime%></td></tr>
+                    <td style='padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].clickNum%>/<%=articleList[i].response.length%></td>
+                    <td style='padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].nicer.length%>&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>
+                    <td style='padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].lastResponseTime%></td></tr>
                 <% } %>
             </tbody>
           </table>

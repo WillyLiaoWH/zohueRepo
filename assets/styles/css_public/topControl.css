@@ -38,6 +38,13 @@ select, input[type="text"], input[type="password"]{
 	margin-top: 10px;
 }
 
+.imgAuthorType{
+	margin-left:10px; 
+	height:22px; 
+	width:22px;
+	margin-bottom:10px;
+}
+
 .title{
 	margin:3px;
 	font-family: "Gulim"; 

@@ -108,7 +108,10 @@
 	margin: 5px 0px 10px 20px;
 	font-size: 22px;
 	color:#533828;
+}
 
+#pageDown td{
+	padding: 10px;
 }
 
 #goToBoard{
@@ -244,7 +247,9 @@
 		width: 100px !important;
 	}
 #articleList td:nth-child(2){
+
 		width: 320px !important;
+
 	}
 #articleList td:nth-child(3){
 		width: 220px !important;

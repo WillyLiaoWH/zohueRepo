@@ -57,6 +57,8 @@ select {
   	/*margin-left:20px;*/
   	margin-top:15px;
   	margin-bottom:20px;
+    border: 1px solid #CCCCCC;
+	border-radius: 10px;
 }
 
 @media all and (max-width: 500px){

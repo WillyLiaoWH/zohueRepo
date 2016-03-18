@@ -19,7 +19,6 @@ module.exports = {
         		// } else {
         			res.send(not);
         		// }
-        		
         	}
         });
     },
@@ -115,7 +114,6 @@ module.exports = {
                                   ]
                              });
                             // }
-                            
                         }
                      });
                 }
