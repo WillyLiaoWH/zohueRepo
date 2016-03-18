@@ -11,7 +11,7 @@
 #searchWord{
 	width: 100%;
 	margin: 8px 0px 0px -15px;
-	background-color: #FFFAED;
+	background-color: #white;
 
 }
 
@@ -24,7 +24,7 @@
 }
 
 #search.hover{
-	background-color: rgba(102, 141, 60, 0.8);
+	background-color: #FFA354;
 	color:#816C58;
 }
 
@@ -36,7 +36,7 @@
 }
 
 #cancleSearch.hover{
-	background-color: rgba(102, 141, 60, 0.8);
+	background-color: rgba(232, 81, 0, 0.6);
 	color:#816C58;
 }
 
@@ -142,7 +142,7 @@ h1{
 
 .b{
 	/*float:right;*/
-	background-color:#FFEC54;
+	background-color:#FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -157,7 +157,7 @@ h1{
 }
 
 .b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 	color:#816C58;
 }
 

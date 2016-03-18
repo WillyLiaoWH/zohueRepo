@@ -15,7 +15,7 @@
 #searchWord{
 	width:250px;
 	margin: 15px -5px 0px 0px;
-	background-color: #FFFAED;
+	background-color: white;
 }
 
 #search{
@@ -141,7 +141,19 @@
 }*/
 .body>tr {
 	border-bottom: 2px solid #3765A3;
+	border-left: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	background: #f8f8f8;
 }
+
+.table-hover>tbody>tr:hover{
+	background-color:rgba(51,102,153,0.1);
+}
+#articleListTable tr:hover{
+	background-color:rgba(51,102,153,0.1);	
+}
+
+
 
 #mobile_post{
 	display: none !important;
@@ -229,13 +241,13 @@
 
 
 #articleList td:nth-child(1){
-		width: 125px !important;
+		width: 100px !important;
 	}
 #articleList td:nth-child(2){
-		width: 260px !important;
+		width: 320px !important;
 	}
 #articleList td:nth-child(3){
-		width: 210px !important;
+		width: 220px !important;
 	}
 #articleList td:nth-child(4){
 		width: 135px !important;

@@ -142,7 +142,7 @@ module.exports = {
                                     articleList[i].badPic = '';
                                     articleList[i].link = "href=/article/"+articleList[i].id;
                                     articleList[i].color = "";
-                                    articleList[i].linkcolor = "color:#000079;";
+                                    articleList[i].linkcolor = "color:#336699;";
                                 }
                                 switch(articleList[i].author.type) {
                                     case "D":
@@ -343,7 +343,7 @@ module.exports = {
                             articleList[i].badPic = '';
                             articleList[i].link = "href=/article/"+articleList[i].id;
                             articleList[i].color = "";
-                            articleList[i].linkcolor = "color:#000079;";
+                            articleList[i].linkcolor = "color:#336699;";
                         }
                         switch(articleList[i].author.type) {
                             case "D":
