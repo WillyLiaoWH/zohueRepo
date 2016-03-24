@@ -30,7 +30,7 @@ function removeBlack(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加為好友</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
@@ -43,7 +43,7 @@ function addFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+      //html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
@@ -81,7 +81,7 @@ function removeFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加為好友</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
@@ -94,7 +94,7 @@ function removeAddFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='addFriend(this.parentNode, "+id+")'>加為好友</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
