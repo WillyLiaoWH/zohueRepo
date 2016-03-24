@@ -141,15 +141,15 @@
                         <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin:10px; height:80%">
                     </div>
                     <div class="friendMid">
-<<<<<<< HEAD
+
                         <div style="margin-top: 10px; display: inline-block;  width: 100%; font-size: 24px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 24px;"><%- users[i].alias %></a><%- users[i].authorType %> <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> <%- users[i].authorIcon %> <%}%></div>
-=======
+<!-- =======
                         <div style="margin-right: 0px; display: inline-block; height: 55%; width: 100%; font-size: 32px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 32px;"><%- users[i].alias %></a>
                             <%- users[i].authorType %> 
                             <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> 
                                 <%- users[i].authorIcon %> <%}%>
                         </div>
->>>>>>> c3ce019cf850af8e8c9f3ba17d191ecc889c1e51
+>>>>>>> c3ce019cf850af8e8c9f3ba17d191ecc889c1e51 -->
                         <br>
                         <span style="display:inline-block; margin-top:10px;height: 40%; width: 130%;">
                           <% if (users[i].isFriend==-1) { %>
@@ -171,19 +171,14 @@
                     </div>
                     <div class="friendRight">
                         <% if(users[i].addressCity&&users[i].addressCity!=""){ %>
-<<<<<<< HEAD
-                            <div style='display:inline-block; font-size: 22px;margin-top:10px; width: 100%'>來自<%- users[i].addressCity %> </div><br>
-                        <% } if(users[i].primaryDisease&&users[i].primaryDisease!="") { %>
-                            <div style="display:inline-block; font-size: 22px; margin-top:10px;width: 100%">
-                                 <% if(users[i].type=="D"){ %>
-=======
-                            <div style='display:inline-block; font-size: 22px; width: 100%'>來自<%- users[i].addressCity %> </div><br>
+
+                            <div style='display:inline-block; font-size: 22px; margin-top:10px;width: 100%'>來自<%- users[i].addressCity %> </div><br>
                         <% } 
                         var pd = users[i].primaryDisease;
                         if(pd!=""&&(pd=="D"||pd=="S"||pd=="RN"||pd=="P"||pd=="F")) { %>
-                            <div style="display:inline-block; font-size: 22px; width: 100%">
+                            <div style="display:inline-block; font-size: 22px;margin-top:10px; width: 100%">
                                 <% if(users[i].type=="D"){ %>
->>>>>>> c3ce019cf850af8e8c9f3ba17d191ecc889c1e51
+
                                      主治 <%- diseaseList[users[i].primaryDisease] %>
                                  <% }else if(users[i].type=="S"){ %>
                                      主治 <%- diseaseList[users[i].primaryDisease] %>
