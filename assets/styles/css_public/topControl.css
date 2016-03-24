@@ -12,7 +12,7 @@ button, input[type="button"], input[type="submit"]{
 
 button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 	cursor: pointer;
-	background-color: #D16900;
+	background-color: #FFCE54;
 	color:#FFF !important;
 }
 

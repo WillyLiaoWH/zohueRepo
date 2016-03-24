@@ -44,7 +44,7 @@ select {
 }
 
 #form-div {
-	background-color: floralwhite;
+	background-color: gainsboro;
 /*	padding-left:35px;
 	padding-right:35px;
 	padding-top:35px;
@@ -240,18 +240,19 @@ input:focus, textarea:focus {
 }
 
 #button-blue{
-	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+	/*font-family: 'Montserrat', Arial, Helvetica, sans-serif;*/
 	float:left;
-	width: 100%;
-	border: #fbfbfb solid 4px;
-	border-radius: 5px;
+	width: 50%;
+	/*border: #fbfbfb solid 4px;*/
+	/*border-radius: 5px;*/
+	margin-left: 25%;
 	cursor:pointer;
 	/*background-color: #3498db;*/
-	background-color: rgba(232, 81, 0, 0.7);
-	color:white;
+	background-color: #FFCE54;
+	color:black;
 	font-size:24px;
-	padding-top:22px;
-	padding-bottom:22px;
+	/*padding-top:22px;*/
+	/*padding-bottom:22px;*/
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
@@ -260,7 +261,7 @@ input:focus, textarea:focus {
 }
 #button-blue:hover{
 	/*background-color: #5599FF;*/
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: #FFCE54;
 	/*color: #0493bd;*/
 }
 .submit:hover {
@@ -276,10 +277,10 @@ input:focus, textarea:focus {
 	-ms-transition: .3s ease;
 	transition: .3s ease;
 }
-.submit:hover .ease{
+/*.submit:hover .ease{
   width:100%;
   background-color:white;
-}
+}*/
 
 .imgupload_btn{
 	margin-right: 10px;
