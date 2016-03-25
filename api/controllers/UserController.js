@@ -748,7 +748,7 @@ module.exports = {
             User.find({id: req.session.user.id}).exec(function(err, user) {
                 if(err) {
                     console.log(err);
-                    res.send({err: "DB error"});
+                    res.send({err: "DB error1"});
                 } else {
                     var blackList=user[0].blackList;
                     blackList.push(parseInt(req.param("id")));
@@ -764,12 +764,12 @@ module.exports = {
                     User.update({id: req.session.user.id}, {blackList: blackList, friends: friendsList, sentAddFriends: sentAddFriendsList}).exec(function(err, user) {
                         if(err) {
                             console.log(err);
-                            res.send({err:"DB error"});
+                            res.send({err:"DB error2"});
                         } else {
                             User.find({id: req.param("id")}).exec(function(err, user) {
                                 if(err) {
                                     console.log(err);
-                                    res.send({err: "DB error"});
+                                    res.send({err: "DB error3"});
                                 } else {
                                     var unconfirmedFriendsList=user[0].unconfirmedFriends;
                                     if(unconfirmedFriendsList.indexOf(req.session.user.id)!=-1) {
@@ -786,7 +786,7 @@ module.exports = {
                                     User.update({id: req.param("id")}, {unconfirmedFriends: unconfirmedFriendsList, friends: friendsList, blackerList: blackerList}).exec(function(err, user) {
                                         if(err) {
                                             console.log(err);
-                                            res.send({err:"DB error"});
+                                            res.send({err:"DB error4"});
                                         } else {
                                             Record.create({user:req.session.user,ip:req.ip,action:"FRIEND BLOC "+req.param("id")}).exec(function(err,ret){
                                                 console.log("黑名單")

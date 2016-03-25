@@ -155,13 +155,13 @@
                           <% if (users[i].isFriend==-1) { %>
                               <div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "<%- users[i].id %>")'>解除封鎖</button><br>
                           <% }else if(users[i].isFriend==0){ %>
-                              <button type='button' class='button' onclick='addFriend(this.parentNode, <%- users[i].id %>)'>加好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <button type='button' class='button' onclick='addFriend(this.parentNode, <%- users[i].id %>)'>加為好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
                               <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
                           <% }else if(users[i].isFriend==1){ %>
-                              <div class='status'>要求加入好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "<%- users[i].id %>")'>確認好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <div class='status'>要求加為好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "<%- users[i].id %>")'>確認好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
                               <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
                           <% }else if(users[i].isFriend==2){ %>
-                              <div class='status'>已送出好友邀請&nbsp&nbsp</div><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "<%- users[i].id %>")'>收回好友邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <!--<div class='status'>已送出好友邀請&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "<%- users[i].id %>")'>收回邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;
                               <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
                           <% }else if(users[i].isFriend==3){ %>
                               <div class='status'>好友&nbsp&nbsp</div><button type='button' class='button' onclick='removeFriend(this.parentNode, "<%- users[i].id %>")'>解除好友</button>&nbsp;&nbsp;&nbsp;&nbsp;

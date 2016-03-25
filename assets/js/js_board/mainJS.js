@@ -152,9 +152,3 @@ function showDialog(title, message, cb){
     }
   });
 }
-
-function setTableRowStripCss(){
-  setTimeout(function(){ 
-    $( "#articleList tbody > tr:even" ).removeClass().addClass("warning");
-    $( "#articleList tbody > tr:odd" ).removeClass().addClass("success");}, 30);
-}
