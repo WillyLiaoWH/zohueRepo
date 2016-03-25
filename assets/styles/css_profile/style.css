@@ -277,7 +277,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 }
 .b:hover{
 	border: 1px solid #CCCCCC;
-	background-color: #D16900;
+	background-color: #FFCE54;
 	color:white;
 }
 
@@ -285,7 +285,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 .n{
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
-	background-color: ##FFCE54;
+	background-color: #FFCE54;
 	padding: 4px 8px 4px 8px;
 	font-size:20px;
 	color:#533828;
@@ -294,7 +294,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	vertical-align: center;
 }
 .n:hover{
-	background-color: #D16900;
+	background-color: #FFCE54;
 	border: 1px solid #CCCCCC;
 	color:white;
 	vertical-align: center;
