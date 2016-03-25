@@ -43,8 +43,6 @@
 .button{
 	cursor: pointer;
 	margin-left:10px;
-	background-color: rgba(232, 81, 0, 0.6);
-	color:#533828;
 	margin-top: 1px;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;

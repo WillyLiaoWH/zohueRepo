@@ -25,6 +25,7 @@
 		<% } %>
 
 				<div class='image'>
+					<%if(not[i].from!=undefined){%>
 					<%if(not[i].from.type=="D"){ %>
 						<!--<img src='/images/img_forum/doctor_icon.png' title='已認證醫師' style='margin-right:10px; height: 50px; width:50px;'>-->
 						<%local.type="醫師"%>
@@ -49,6 +50,7 @@
 						<!--<img src='/images/img_forum/user_icon.png' title='一般民眾' style='margin-right:10px; height: 50px; width:50px;'>-->
 						<%local.type=""%>
 					<%}%>
+					
 		        
 		        <img src='<%=not[i].from.img%>' onclick='toProfile(\"<%=not[i].from.id %>\")' style='margin-right:10px; cursor: pointer; height: 80px; width:80px;'>
 		        </div>
@@ -85,7 +87,7 @@
 					   <button value='設為已讀' class='button' onclick='setRead(<%=not[i].id%>, this);'>&nbsp設為已讀</button>
 					<%}%>   
 				</div>    
-				 
+				 <%}%>
 				
 
 			
