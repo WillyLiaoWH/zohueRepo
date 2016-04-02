@@ -1,10 +1,43 @@
 #body{
 	/*background-image: url(../../../images/img_home/shl.png);*/
+	background-color:#F2F2F2;
 	font-family: "微軟正黑體";
 }
 
 button, input[type="button"], input[type="submit"]{
 	cursor: pointer;
+	background-color: #FFCE54;
+	color:#533828;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover{
+	cursor: pointer;
+	background-color: #FFCE54;
+	color:#FFF !important;
+}
+
+select, input[type="text"], input[type="password"]{
+	/*background-color: #FFFAED;*/
+	background-color: #FFF;
+	color:#533828;
+}
+
+.icon-bar{
+	background-color: #FFF !important;
+}
+
+.navbar-brand{
+	float:right !important;
+	color: #FFF !important;
+}
+
+.navbar-header{
+	display:inline !important;
+	margin: 0px !important;
+}
+.navbar-default{
+	background-color: #3765A3;
+	color: #FFF;
 }
 
 #label_complete_signup{
@@ -23,6 +56,13 @@ button, input[type="button"], input[type="submit"]{
 	margin-top: 10px;
 }
 
+.imgAuthorType{
+	margin-left:10px; 
+	height:22px; 
+	width:22px;
+	margin-bottom:10px;
+}
+
 .title{
 	margin:3px;
 	font-family: "Gulim"; 
@@ -36,6 +76,11 @@ button, input[type="button"], input[type="submit"]{
 #logo{
 	width: 100%;
 	margin-left:20px;
+}
+
+#topbar{
+	background-color: #3765A3;
+	padding: 10px;
 }
 
 @media all and (max-width: 480px){
@@ -64,7 +109,9 @@ button, input[type="button"], input[type="submit"]{
 		display: none !important;
 	}
 	#mobile_menu{
-		display: block !important;
+		/*display: block !important;*/
+		margin-right: auto;
+		margin-left: auto
 	}
 	#mobile_loginDiv{display: block !important;
 	}
@@ -77,15 +124,15 @@ button, input[type="button"], input[type="submit"]{
 	margin-top:25px;
 	height:50px;
 	/*width:40%;*/
-	color:#816C5B;
+	color:#FFF;
 	display: none;
 }
 
 #Fblogin{
 	cursor: pointer;
 	margin-left:10px;
-	background-color: rgba(232, 81, 0, 0.6);
-	color:#533828;
+	/*background-color: rgba(232, 81, 0, 0.6);*/
+	/*color:#533828;*/
 	margin-top: 1px;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -102,8 +149,8 @@ button, input[type="button"], input[type="submit"]{
 #login{
 	cursor: pointer;
 	margin-left:10px;
-	background-color: rgba(232, 81, 0, 0.6);
-	color:#533828;
+	/*background-color: rgba(232, 81, 0, 0.6);*/
+	/*color:#533828;*/
 	margin-top: 1px;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -121,8 +168,8 @@ button, input[type="button"], input[type="submit"]{
 #forget{
 	cursor: pointer;
 	margin-left:10px;
-	background-color: rgba(232, 81, 0, 0.6);
-	color:#533828;
+	/*background-color: rgba(232, 81, 0, 0.6);*/
+	/*color:#533828;*/
 	margin-top: 1px;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -150,6 +197,7 @@ button, input[type="button"], input[type="submit"]{
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
+  	text-align: center;
 }
 
 #notification{ 
@@ -179,15 +227,15 @@ button, input[type="button"], input[type="submit"]{
 }
 
 #login:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	/*background-color: rgba(102, 141, 60, 0.4);*/
+	/*color:#816C58;*/
 }
 
 #profile{
 	font-size:20px;
 	font-family: "微軟正黑體";
 	margin-top:20px;
-	color:#816C5B;
+	color:#FFF;
 	display: none;
 }
 
@@ -199,11 +247,11 @@ button, input[type="button"], input[type="submit"]{
 
 #UserType{
 	-webkit-appearance:none;
-	background: url(../../../images/img_public/down-arrow.png);
+	/*background: url(../../../images/img_public/down-arrow.png);*/
 	background-size: 30px 30px;
 	background-position: right;
 	background-repeat: no-repeat;
-	background-color: rgba(102, 141, 60, 0.4);
+	/*background-color: rgba(102, 141, 60, 0.4);*/
 }
 
 #logout{
@@ -214,8 +262,8 @@ button, input[type="button"], input[type="submit"]{
 	margin-top: 25px;
 	margin-right:100px;
 	margin-left:15px;*/
-	background-color: rgba(232, 81, 0, 0.6);
-	color:#533828;
+	/*background-color: rgba(232, 81, 0, 0.6);*/
+	/*color:#533828;*/
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
 	font-size: 20px;
@@ -227,11 +275,6 @@ button, input[type="button"], input[type="submit"]{
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
 }
-#logout:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
-}
-
 
 #hr{
 	width:99%;
@@ -259,7 +302,7 @@ button, input[type="button"], input[type="submit"]{
 }
 
 .setUpItem:hover{
-	color:#D26900;
+	color:#D16900;
 }
 
 #fullSignup {
@@ -275,7 +318,7 @@ button, input[type="button"], input[type="submit"]{
 
 .item:hover{
 	/*color:#0097AC;*/
-	color:#D26900;
+	color:#D16900;
 	/*font-size:22px;*/
 
 }
@@ -337,7 +380,7 @@ button, input[type="button"], input[type="submit"]{
 	border-radius: 10px;
 	line-height: 22px;
 	/*background-color: rgba(195, 183, 172, 0.5);*/
-	background-color: rgba(102, 141, 60, 0.3);
+	/*background-color: rgba(102, 141, 60, 0.3);*/
 	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
 	width:100%;
@@ -351,7 +394,7 @@ button, input[type="button"], input[type="submit"]{
 
 .l{
 	height: 48px;
-	color:#816C5B;
+	/*color:#816C5B;*/
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
 	font-size: 20px;
 	border-radius: 10px;
@@ -374,8 +417,8 @@ button, input[type="button"], input[type="submit"]{
 	/*display: none;
 	float:right;
 	width: 125px;*/
-	background-color: rgba(232, 81, 0, 0.7);
-	color:#533828;
+	/*background-color: rgba(232, 81, 0, 0.7);*/
+	/*color:#533828;*/
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
 	font-size: 20px;
@@ -389,8 +432,8 @@ button, input[type="button"], input[type="submit"]{
 }
 
 .b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	/*background-color: rgba(102, 141, 60, 0.4);*/
+	/*color:#816C58;*/
 }
 
 .check{
@@ -410,13 +453,13 @@ button, input[type="button"], input[type="submit"]{
 	float:right;
 	margin-top:25px;
 	/*color:#816C5B;*/
-	background-color: rgba(232, 81, 0, 0.7);
-	color:#533828;
+	/*background-color: rgba(232, 81, 0, 0.7);*/
+	/*color:#533828;*/
 }
 
 #submit:hover{
 	/*background-color: rgba(102, 141, 60, 0.7);*/
-	background-color: rgba(102, 141, 60, 0.4);
+	/*background-color: rgba(102, 141, 60, 0.4);*/
 	color:#816C58;
 }
 
@@ -497,10 +540,18 @@ button, input[type="button"], input[type="submit"]{
 	color:#816C5B;
 	display: none;
 }
+#mobile_profile_in{
+	margin-left: 60px;
+}
+
+#mobile_userAlias{
+	color: #FFF;
+}
 
 .nav-tabs li a{
 	font-size: 20px;
-	color:#1D3521;
+	/*color:#1D3521;*/
+	color: #FFF;
 }
 
 #mobile_menu{
