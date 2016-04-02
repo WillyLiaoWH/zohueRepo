@@ -27,4 +27,4 @@ zohueRepo
                           佛祖保佑         永無bug
                           
 
-this is ejs branch ttt
+this is ejs for mobile branch - ejs4mobile
