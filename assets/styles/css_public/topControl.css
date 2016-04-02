@@ -29,6 +29,7 @@ select, input[type="text"], input[type="password"]{
 .navbar-brand{
 	float:right !important;
 	color: #FFF !important;
+	font-size: 13px;
 }
 
 .navbar-header{
@@ -189,7 +190,7 @@ select, input[type="text"], input[type="password"]{
 	margin-top: 1px;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 18px;
+	font-size: 13px;
 	border-radius: 10px;
 	padding: 4px;
 	-webkit-box-sizing: border-box;
@@ -534,14 +535,15 @@ select, input[type="text"], input[type="password"]{
 }
 
 #mobile_profile{
-	font-size:20px;
+	font-size:13px;
 	font-family: "微軟正黑體";
 	margin-top:10px;
 	color:#816C5B;
 	display: none;
 }
 #mobile_profile_in{
-	margin-left: 60px;
+	margin-left: 10px;
+	font-size: 13px;
 }
 
 #mobile_userAlias{
