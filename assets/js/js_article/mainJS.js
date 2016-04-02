@@ -5,31 +5,31 @@ $(document).ready(function(){
   setPage();
   $.get('/updateLastForumTime',function(res){
   });
-  var dialog = $("#reportDialog").dialog({
-    autoOpen: false,
-    height: "auto",
-    width: 300,
-    modal: true,
-    buttons: {   
-        "檢舉": function() {   
-            report();   
-        },   
-        "取消": function() {   
-            $(this).dialog("close");   
-        }   
-    },   
-    close: function() {   
-      var form=document.getElementById('reportForm');
-      for (var i=0; i<form.reason.length; i++) {
-        if (form.reason[i].checked) {
-          form.reason[i].checked=false;
-          break;
-        }
-      }
-      document.getElementById('reasonInput').value="";
-      document.getElementById('reasonInput').style.display="none";
-    }
-  });
+  // var dialog = $("#reportDialog").dialog({
+  //   autoOpen: false,
+  //   height: "auto",
+  //   width: 300,
+  //   modal: true,
+  //   buttons: {   
+  //       "檢舉": function() {   
+  //           report();   
+  //       },   
+  //       "取消": function() {   
+  //           $(this).dialog("close");   
+  //       }   
+  //   },   
+  //   close: function() {   
+  //     var form=document.getElementById('reportForm');
+  //     for (var i=0; i<form.reason.length; i++) {
+  //       if (form.reason[i].checked) {
+  //         form.reason[i].checked=false;
+  //         break;
+  //       }
+  //     }
+  //     document.getElementById('reasonInput').value="";
+  //     document.getElementById('reasonInput').style.display="none";
+  //   }
+  // });
   
   $('input[type=radio][name=reason]').change(function(){
     if(this.value=='others') {
@@ -49,7 +49,7 @@ function setPage() {
 
    $.get("/checkAuth", function(auth){
     if(auth) {
-      document.getElementById("content").style.width = "80%";
+      //document.getElementById("content").style.width = "80%";
       document.getElementById("niceArticle").style.display="inline";
       document.getElementById("report").style.display="inline";
       document.getElementById("artContent").className = "span10";
@@ -399,7 +399,10 @@ function notNiceResponse(response_id) {
 }
 
 function clickReport() {
-  $("#reportDialog").dialog("open");
+  var reportFormContent = '<form id="reportForm"><label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br><label><input type="radio" name="reason" value="shouldn\'t exist"> 我認為這不應該出現在論壇</label><br><label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br><label><input type="radio" name="reason" value="others"> 其它</label><br><textarea type="text" id="reasonInput"/></form> ';
+  showDialog("協助我們了解發生的狀況", reportFormContent, function(){
+      report();
+  });
 }
 
 function report() {
@@ -416,7 +419,7 @@ function report() {
     var reason=choose;
   }
   if(!reason) {
-    showDialog("一般訊息","請選擇原因");
+    showDialog("一般訊息","請選擇或填寫原因");
   } else {
     var url = document.URL;
     var regex = /.*article\/+(.*)/;

@@ -388,8 +388,7 @@ div.tab_container .tab_content h2 {
 
 .nav-pills li.active a,
 .nav-pills li.active a:hover{
-	/*background-color: #1D3521;*/
-	background-color: #324232;
+	background-color: #FFCE54;
 }
 
 .nav-pills li.activeOrange a,
