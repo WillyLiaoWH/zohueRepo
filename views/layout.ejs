@@ -150,8 +150,30 @@
     </div>
 
     <!-- menu部份的mobile版 -->
-    <div id="mobile_menu" class="row-fluid hidden-desktop visible-phone visible-tablet" style="margin-top: 15px; text-align: center; font-weight: bold;">
-      <ul class="nav nav-tabs nav-stacked">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid" style="padding: 8px;">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile_menu" aria-expanded=true>
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">選單</a>
+
+   
+        <div id="mobile_profile">
+               <button value="通知" id="mobile_notification" class="lightgray" onclick="notification();">通知</button>
+         <span id="mobile_profile_in"><img id="mobile_userimg" src="" alt="Smiley face" height="30px" width="30px">
+          <label id="mobile_userAlias" class="col-sm-7"></label>
+        </span>
+        </div>
+        </div>
+
+      </div>
+      <div class="collapse navbar-collapse" id="mobile_menu">
+        <ul class="nav nav-tabs nav-stacked" style="text-align:center;">
         <li id="mobile_profilepage"><a href="/profile">個人頁面</a></li>
         <li><a id="forum2" href="/frontboard?tab=all&sort=createdAt&order=DESC&page=1&search=">作夥論壇</a></li>
         <li><a href="/proInfo/1">專業知識</a></li>
@@ -173,7 +195,10 @@
         <li><a href="/gettingStarted">關於作夥</a></li>
         <!-- <li data-toggle="collapse" data-target="#mobile_loginArea"><a style="color:rgb(232, 81, 0); font-weight:bold;">登入作夥</a></li> -->
       </ul>
+      </div>
     </div>
+    </nav>
+    
     <!-- menu部份的mobile版 -->
     
     <!-- 登入部份的mobile版 -->
@@ -197,11 +222,11 @@
           <button value="簡易註冊" id="mobile_simpleSignup" onclick="showSimpleSignup();"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color:#533828;">簡易註冊</span></button>
         </div>
       </div>
-      <div id="mobile_profile" class="row-fluid text-center">
+      <!-- <div id="mobile_profile" class="row-fluid text-center">
         <img id="mobile_userimg" src="" alt="Smiley face" height="30px" width="30px">
         <label id="mobile_userAlias" class="col-sm-7"></label>
          <button value="通知" id="mobile_notification" onclick="notification();">通知</button>
-      </div>
+      </div> -->
     </div>
     <!-- 登入部份的mobile版 -->
 

@@ -22,6 +22,24 @@ select, input[type="text"], input[type="password"]{
 	color:#533828;
 }
 
+.icon-bar{
+	background-color: #FFF !important;
+}
+
+.navbar-brand{
+	float:right !important;
+	color: #FFF !important;
+}
+
+.navbar-header{
+	display:inline !important;
+	margin: 0px !important;
+}
+.navbar-default{
+	background-color: #3765A3;
+	color: #FFF;
+}
+
 #label_complete_signup{
 	color:#EA7500;
 	font-size: 28px;
@@ -91,7 +109,9 @@ select, input[type="text"], input[type="password"]{
 		display: none !important;
 	}
 	#mobile_menu{
-		display: block !important;
+		/*display: block !important;*/
+		margin-right: auto;
+		margin-left: auto
 	}
 	#mobile_loginDiv{display: block !important;
 	}
@@ -177,6 +197,7 @@ select, input[type="text"], input[type="password"]{
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
+  	text-align: center;
 }
 
 #notification{ 
@@ -519,10 +540,18 @@ select, input[type="text"], input[type="password"]{
 	color:#816C5B;
 	display: none;
 }
+#mobile_profile_in{
+	margin-left: 60px;
+}
+
+#mobile_userAlias{
+	color: #FFF;
+}
 
 .nav-tabs li a{
 	font-size: 20px;
-	color:#1D3521;
+	/*color:#1D3521;*/
+	color: #FFF;
 }
 
 #mobile_menu{

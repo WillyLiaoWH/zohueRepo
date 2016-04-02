@@ -1,3 +1,12 @@
+#gs_menu a {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.panel-heading{
+  padding: 20px;
+}
+
 .gs_imageH{
   margin:15px 10px;
   width:40vw;
