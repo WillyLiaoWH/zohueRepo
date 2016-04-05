@@ -35,7 +35,7 @@
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 }
 
 #search.hover{
@@ -374,6 +374,18 @@ div.tab_container {
 	border-top: none;
 	background: #fff;
 }
+
+.body>tr {
+	border-bottom: 2px solid #3765A3;
+	/*border-left: 1px solid #e7e7e7;*/
+	/*border-right: 1px solid #e7e7e7;*/
+	background: #f8f8f8;
+}
+
+.table-hover>tbody>tr:hover{
+	background-color:rgba(51,102,153,0.1);
+}
+
 div.tab_container .tab_content {
 	padding: 20px;
 }
@@ -389,7 +401,7 @@ div.tab_container .tab_content h2 {
 .nav-pills li.active a,
 .nav-pills li.active a:hover{
 	/*background-color: #1D3521;*/
-	background-color: #324232;
+	background-color: #FFCE54;
 }
 
 .nav-pills li.activeOrange a,
@@ -405,7 +417,8 @@ div.tab_container .tab_content h2 {
 }
 .nav-pills li.nonActiveOrange a:hover{
 	/*background-color: #1D3521;*/
-	background-color: rgba(232, 81, 0, 0.3);
+	/*background-color: rgba(232, 81, 0, 0.3);*/
+	background-color: #F19766;
 	font-weight: bolder;
 }
 
@@ -418,7 +431,7 @@ div.tab_container .tab_content h2 {
 	font-size: 20px;
 }
 .nav-pills li a:hover{
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 	color:white;
 }
 

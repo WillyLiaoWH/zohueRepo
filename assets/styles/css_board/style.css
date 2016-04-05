@@ -144,8 +144,8 @@
 }*/
 .body>tr {
 	border-bottom: 2px solid #3765A3;
-	border-left: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
+	/*border-left: 1px solid #e7e7e7;*/
+	/*border-right: 1px solid #e7e7e7;*/
 	background: #f8f8f8;
 }
 
