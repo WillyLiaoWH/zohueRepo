@@ -164,7 +164,7 @@
                               <!--<div class='status'>已送出好友邀請&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "<%- users[i].id %>")'>收回邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;
                               <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
                           <% }else if(users[i].isFriend==3){ %>
-                              <div class='status'>好友&nbsp&nbsp</div><button type='button' class='button' onclick='removeFriend(this.parentNode, "<%- users[i].id %>")'>解除好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <!--<div class='status'>好友&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeFriend(this.parentNode, "<%- users[i].id %>")'>解除好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
                               <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "<%- users[i].id %>")'>封鎖</button><br>
                           <% } %>
                         </span>
