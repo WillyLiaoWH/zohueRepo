@@ -97,7 +97,7 @@
 	min-height: 100px;
 	height: auto;
 	background-color: white;
-	border: 1px solid #FFCE54;
+	border: 1px solid #ccc;
 }
 #timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
@@ -219,7 +219,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 }
 .event_comment{
 	border-top: 1px solid #CCCCCC;
-	background-color: #DDD;
+	background-color: rgba(221, 221, 221, 0.54);
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 }

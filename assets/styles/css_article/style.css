@@ -63,14 +63,55 @@ div.show-image input.delete {
 }
 
 #article{
-	border: solid 1px #cccccc;
-	background-color: rgba(255, 250, 240, 1); 
+	/*border: solid 1px #cccccc;*/
+	
 	/*floralwhite*/
-	border-width:1px;
-	border-radius: 10px;
-	width: 100%;
-	margin-top:-20px;
+	/*border-width:1px;*/
+	/*border-radius: 10px;*/
+	/*width: 100%;*/
+	/*margin-top:-20px;*/
+	/*border-top-left-radius: 15px;*/
+    /*border-top-right-radius: 15px;*/
+    /*overflow: hidden;*/
+/*    background-color: #FCFCFC; 
+
+
+	border: solid #cccccc;
+	border-width: 0px 1px 1px 1px;
+	padding:20px 20px 0px 20px;
+*/	/*background-color: rgba(234, 234, 234, 1);*/
+	/*font-size: 20px;*/
+/*	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+*/
 }
+
+
+
+#articlediv{
+	border: solid 1px #cccccc;
+	
+	/*floralwhite*/
+	/*border-width:1px;*/
+	/*border-radius: 10px;*/
+	/*width: 100%;*/
+	/*margin-top:-20px;*/
+	border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /*overflow: hidden;*/
+    background-color: #FCFCFC; 
+
+
+	/*border: solid #cccccc;*/
+	/*border-width: 0px 1px 1px 1px;*/
+	/*padding:20px 20px 0px 20px;*/
+	/*background-color: rgba(234, 234, 234, 1);*/
+	/*font-size: 20px;*/
+	/*border-bottom-right-radius: 10px;*/
+    /*border-bottom-left-radius: 10px;*/
+
+}
+
 
 #articleAvatar_type img, #articleAvatar img{
 	padding:5px 0px 0px 8px; 
@@ -102,7 +143,8 @@ div.show-image input.delete {
 	padding:20px;
 	color:#533828;
 	font-size: 20px;
-	border: solid 1px #cccccc;
+	border: solid  #cccccc;
+	border-width: 1px 0px 1px 0px;
 	word-break:break-all;
 }
 
@@ -148,8 +190,12 @@ div.show-image input.delete {
 	border: solid #cccccc;
 	border-width: 0px 1px 1px 1px;
 	padding:20px 20px 0px 20px;
-	background-color: rgba(255, 250, 240, 1);
+	background-color: rgba(234, 234, 234, 1);
 	font-size: 20px;
+	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+	
+
 }
 
 #commentList label{
@@ -234,7 +280,7 @@ div.show-image input.delete {
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
-  	border: 1px solid #FFCE54;
+  	border: 1px solid #ccc;
 }
 
 #commentSend, #image{
