@@ -2,6 +2,8 @@
 	/*background-image: url(../../../images/img_home/shl.png);*/
 	background-color:#F2F2F2;
 	font-family: "微軟正黑體";
+	padding-right: 0px !important;
+	padding-left: 0px !important;
 }
 
 button, input[type="button"], input[type="submit"]{
@@ -39,6 +41,7 @@ select, input[type="text"], input[type="password"]{
 .navbar-default{
 	background-color: #3765A3;
 	color: #FFF;
+	border-width: 1px 0px 0px 0px;
 }
 
 #label_complete_signup{
@@ -556,7 +559,11 @@ select, input[type="text"], input[type="password"]{
 	color: #FFF;
 }
 
-#mobile_menu{
+.nav-tabs li a:hover, .nav-tabs li a:focus{
+	color: #000;
+}
+
+#mobile_menu {
 	/*border:1px solid rgba(102, 141, 60, 0.4);*/
 	/*border-radius:5px;*/
 }
