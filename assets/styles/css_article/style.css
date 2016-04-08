@@ -13,6 +13,10 @@ embed {
 	border: 1px solid;
 }
 
+#reportForm > label{
+	font-size: 18px;
+}
+
 .clear { /* 解決 float+height auto 問題 */
   clear:both;
 }
