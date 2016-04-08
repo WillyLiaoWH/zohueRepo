@@ -128,9 +128,9 @@
                     <% if(responseList[i].comment.trim()==""){ %>
                       <label class='comment_content'><%- responseList[i].comment_image %></label>
                     <% }else if(responseList[i].comment_image.indexOf("images")==-1){ %>
-                      <label class='comment_content'><%= responseList[i].comment %></label>
+                      <label class='comment_content'><%- responseList[i].comment %></label>
                     <% }else{ %>
-                      <label class='comment_content'><%= responseList[i].comment %>
+                      <label class='comment_content'><%- responseList[i].comment %>
                         <br>
                         <hr id='hr'><%- responseList[i].comment_image %>
                       </label>
