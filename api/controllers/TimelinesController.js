@@ -294,7 +294,22 @@ module.exports = {
                                             Response4.timelinesPost.sort(function(a, b){
                                                 return new Date(b.updatedTime)-new Date(a.updatedTime);
                                             });
-                                            res.view("profile/index", {
+                                            var MobileDetect = require('mobile-detect'),
+                                            md = new MobileDetect(req.headers['user-agent']);
+                                            var page="";
+                                            var m;
+                                            if (md.mobile()==null){
+                                                //PC
+                                                page="profile/index";
+                                                m="layout";
+                                            }
+                                            else{
+                                                //mobile
+                                                page="profile/mindex";
+                                                m="mlayout";
+                                            }
+                                            res.view(page, {
+                                                layout: m,
                                                 timeDiff: 0,
                                                 ago: 0,
                                                 timelinesList: Response4.timelinesPost,
