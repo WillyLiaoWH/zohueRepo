@@ -122,16 +122,15 @@
                       <% }else if(responseList[i].author.type=="RN"){ %> 護理師
                       <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
                       <% } else{ %>
-                      <%=responseList[i].author.type%>
                       <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
                       <% } %>
                     </label>
                     <% if(responseList[i].comment.trim()==""){ %>
                       <label class='comment_content'><%- responseList[i].comment_image %></label>
                     <% }else if(responseList[i].comment_image.indexOf("images")==-1){ %>
-                      <label class='comment_content'><%= responseList[i].comment %></label>
+                      <label class='comment_content'><%- responseList[i].comment %></label>
                     <% }else{ %>
-                      <label class='comment_content'><%= responseList[i].comment %>
+                      <label class='comment_content'><%- responseList[i].comment %>
                         <br>
                         <hr id='hr'><%- responseList[i].comment_image %>
                       </label>
