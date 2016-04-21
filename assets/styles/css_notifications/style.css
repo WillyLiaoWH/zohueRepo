@@ -2,47 +2,16 @@
 	font-family: "微軟正黑體";
 }
 
-
-@media all and (max-width: 1024px){
-	#content{
-		width: 60% !important;
-	}
-}
-
 .not {
-	border: #AAAAAA 1px solid;
+	/*border: #AAAAAA 1px solid;*/
+	border-radius: 10px;
 	margin: 10px;
-	width: 1000px;
-	/*height: 80px;*/
+	padding: 10px;
 	display: block;
-}
-.image {
-	display: inline-block; 
-	height: 100%;
-	width: 180px;
-	padding: 0px;
-	vertical-align: top;
-}
-.message {
-	vertical-align: top;
-	display: inline-block;
-	height: 100%;
-	width: 40%;
-
-	font-size: 20px;
-	color: black;
-}
-.go {
-	display: inline-block;
-	height: 100%;
-	width: 200px;
-
-	font-size: 24px;
-	color: black;
 }
 .button{
 	cursor: pointer;
-	margin-left:10px;
+	/*margin-left:10px;*/
 	margin-top: 1px;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -56,12 +25,40 @@
   	border: 1px solid rgba(0,0,0,0);
 }
 .read {
-	background-image: url(../../../images/img_home/shl.png);
+	background-color: #FFFFFF;
 }
 .unread {
-	background-color: #D8D8D8;
+	background-color: floralwhite;
+}
+.upper{
+	height: 100px !important;
+}
+
+.image {
+	display: inline; 
+	height: 100%;
+	width: 180px;
+	padding: 0px;
+	vertical-align: top;
+	float: left;
+}
+.message {
+	vertical-align: top;
+	display: inline;
+	height: 100%;
+	font-size: 28px;
+	color: black;
+}
+.go {
+	height: 100%;
+	font-size: 24px;
+	color: black;
+	display: inline;
 }
 .setRead{
 	width: 150px;
-	display: inline-block;
+	display: inline;
 }
+/*div.setRead{
+	float: right;
+}*/

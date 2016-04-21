@@ -33,8 +33,8 @@ $(document).ready(function(){
 });
 
   // This is called with the results from from FB.getLoginStatus().
-function FB_API(){
- window.fbAsyncInit = function() {
+  function FB_API(){
+   window.fbAsyncInit = function() {
     FB.init({
       appId      : '1639694986252116',
       xfbml      : true,
@@ -43,12 +43,12 @@ function FB_API(){
   };
 
   (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1639694986252116&version=v2.3";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1639694986252116&version=v2.3";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
 }
 
 
@@ -167,7 +167,7 @@ function checkAuth() {
       }
       // var mlogout=document.getElementById("mobile_logout");
       // mlogout.style.display="none";
-     
+      
       var setUp=document.getElementById("mobile_setUp");
       setUp.style.display="none";
 
@@ -209,20 +209,20 @@ function check(){
   if($("#UserAlias").val() == ""){
     $("label[id = checkAlias]").text("  *這裡也要填喔！");allow_create = 0;
   }else{
-      var len = $("#UserAlias").val().replace(/[^\x00-\xff]/g,"rr").length;
-      if(len > 16){
-        $("label[id = checkAlias]").text("  *暱稱不能超過 8 個中文字 / 16 個英文字喔！");allow_create = 0;
-      }else{$("label[id = checkAlias]").text("");}
+    var len = $("#UserAlias").val().replace(/[^\x00-\xff]/g,"rr").length;
+    if(len > 16){
+      $("label[id = checkAlias]").text("  *暱稱不能超過 8 個中文字 / 16 個英文字喔！");allow_create = 0;
+    }else{$("label[id = checkAlias]").text("");}
   }
 
   // .search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)== -1)
 
-  if($("#UserAccount").val() == ""){
-    $("label[id = checkAccount]").text("  *這裡也要填喔！");allow_create = 0;
+if($("#UserAccount").val() == ""){
+  $("label[id = checkAccount]").text("  *這裡也要填喔！");allow_create = 0;
+}else{
+  if($("#UserAccount").val().search(/^[A-Za-z0-9]+$/)== -1){
+    $("label[id = checkAccount]").text("  *暱稱只能填英文字和數字喔！");allow_create = 0;
   }else{
-    if($("#UserAccount").val().search(/^[A-Za-z0-9]+$/)== -1){
-      $("label[id = checkAccount]").text("  *暱稱只能填英文字和數字喔！");allow_create = 0;
-    }else{
     $("label[id = checkAccount]").text("");}
   }
 
@@ -282,17 +282,17 @@ function checkIfAccountExist(){
 
     var account = $("#UserAccount").val();
     var posting = $.post( "/simpleSignupAccountCheck", { account: account}, 
-    function(res){
+      function(res){
 
-      if($("#UserAccount").val().trim().length > 0 ){
-        if($("#UserAccount").val().search(/^[A-Za-z0-9]+$/)== -1){
+        if($("#UserAccount").val().trim().length > 0 ){
+          if($("#UserAccount").val().search(/^[A-Za-z0-9]+$/)== -1){
             $("label[id = checkAccount]").text("  *帳號只能為英文字和數字的組合喔！");allow_create = 0;
           }else{
             $("label[id = checkAccount]").removeClass("check").addClass("checkOK");
             $("label[id = checkAccount]").text("  *您可以使用此帳號！"); //alert(res.responseJSON);
+          }
         }
-      }
-    })
+      })
     .error(function(res){
       $("label[id = checkAccount]").removeClass("checkOK").addClass("check");
       $("label[id = checkAccount]").text("  *此帳號已經有人使用囉！"); //alert(res.responseJSON.err);
@@ -361,17 +361,17 @@ function Submit(){
         className: "btn-primary",
         callback: function() {
           var posting = $.post( "/simpleSignup", { account: account, password: password, alias: alias, email: email,FB_id:FB_id,gender:gender, type: type,fname:fname,lname:lname, isFullSignup: false}, 
-          function(res){
+            function(res){
               showDialog("一般訊息","註冊成功！如果在網站操作上有任何問題，可以參考左邊選單的「新手上路」喔！",function(){
                 loginWithAccount(account, password);
               });
-          }).error(function(res){
-            showDialog("錯誤訊息",res.responseJSON.err);
-          });
+            }).error(function(res){
+              showDialog("錯誤訊息",res.responseJSON.err);
+            });
+          }
         }
       }
-    }
-  });
+    });
 }
 
 function Login(){
@@ -392,8 +392,8 @@ function Login(){
         bootbox.dialog({
           title: "此帳號已被停權",
           message: '由於您的帳號可能有不正常的使用情況，我們已停止此帳號的使用權限。<br><br>'
-            +'停權原因：' + res.reason + '<br><br>如有任何問題，您可以利用以下「申訴欄位」向管理員反應。'
-            +'<textarea id="appeal" placeholder="申訴欄位" class="form-control" style="margin-top:10px;" rows="3"></textarea>',
+          +'停權原因：' + res.reason + '<br><br>如有任何問題，您可以利用以下「申訴欄位」向管理員反應。'
+          +'<textarea id="appeal" placeholder="申訴欄位" class="form-control" style="margin-top:10px;" rows="3"></textarea>',
           buttons: {
             confirm: {
               label: "確認",
@@ -423,8 +423,8 @@ function Login(){
                 label: "好，立即前往完整註冊",
                 className: "btn-primary",
                 callback: function() {
-                window.location.assign("/signup");
-              }
+                  window.location.assign("/signup");
+                }
               },
               no: {
                 label: "以後再說",
@@ -496,9 +496,9 @@ function subscribe(){
 
 
 function fbLogin() {  
-      FB.login(function(response) {
+  FB.login(function(response) {
         //console.log(response)
-       if (response.status === 'connected') {
+        if (response.status === 'connected') {
       // Logged into your app and Facebook.
       FB.api('/me',function(response){
         console.log(response);
@@ -524,110 +524,110 @@ function fbLogin() {
           }
 
         });
-      });
-    } else if (response.status === 'not_authorized') {
+});
+} else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+      'into this app.';
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
       document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+      'into Facebook.';
     }
      }); //設定需要授權的項目
-  }
+}
 function notification() {
 
-      window.location.assign("/notifications");
-    
+  window.location.assign("/notifications");
+  
 }
 function checkNot() {
   /*$.get('/countNot',function(res){*/
-  io.socket.get('/countNot',function(res){
-    if(res.err) {
-      showDialog("錯誤訊息",res.err);
-    } else {
-      document.getElementById('notification').innerHTML="&nbsp;通知 ("+res.num+")";
-      $("#mobile_notification").html("&nbsp;通知 ("+res.num+")");
-      if(res.num==0) {
-        $("#notification").removeClass("orange").addClass("lightgray");
-        $("#mobile_notification").removeClass("orange").addClass("lightgray");
+    io.socket.get('/countNot',function(res){
+      if(res.err) {
+        showDialog("錯誤訊息",res.err);
       } else {
-        $("#notification").removeClass("lightgray").addClass("orange");
-        $("#mobile_notification").removeClass("lightgray").addClass("orange"); 
-        $("#mobile_notification").css("color","#080707"); 
-      }
-    }
-  });
-}
-
-function checkForum() {
-  /*$.get('/countForum',function(res){*/
-  io.socket.get('/countForum',function(res){
-    if(res.err) {
-      showDialog("錯誤訊息",res.err);
-    } else {
-      if(res.login) {
-        $("#forum1").html('<span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp;作夥論壇&nbsp('+res.num+')');
-        $("#forum2").html("作夥論壇&nbsp("+res.num+")");
-      }
-    }
-  });
-}
-
-function showDialog(title, message, cb){
-  bootbox.dialog({
-    message: message,
-    title: title,
-    buttons: {
-      main: {
-        label: "確認",
-        className: "btn-primary",
-        callback: function() {
-          if(typeof cb == "function")
-            cb();
+        document.getElementById('notification').innerHTML="&nbsp;通知 ("+res.num+")";
+        $("#mobile_notification").html("&nbsp;通知 ("+res.num+")");
+        if(res.num==0) {
+          $("#notification").removeClass("orange").addClass("lightgray");
+          $("#mobile_notification").removeClass("orange").addClass("lightgray");
+        } else {
+          $("#notification").removeClass("lightgray").addClass("orange");
+          $("#mobile_notification").removeClass("lightgray").addClass("orange"); 
+          $("#mobile_notification").css("color","#080707"); 
         }
       }
-    }
-  });
-}
-
-function showSimpleSignup() {
-  $("#signup").removeClass("hidden-phone");
-  $("#signup").show();
-  if($( window ).width() < 768){
-          $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-        }
-}
-
-function recordLink(target){
-  $.get("/recordLink/"+target,function(ret){
-    return true 
-  })
-}
-
-
-function markMenuItem(){
-  var url = document.URL;
-   $("#profile_page").css("color","#533828");
-   $("#forum").css("color","#533828");
-   $("#proInfo").css("color","#533828");
-   $("#friends").css("color","#533828");
-   $("#gettingStarted").css("color","#533828");
-   $("#setUp").css("color","#533828");
-    
-  if(url.match('profile')!=null){
-    $("#profile_page").css("color","#D26900");
-  }else if(url.match('frontboard')!=null){
-    $("#forum").css("color","#D26900");
-  }else if(url.match('proInfo')!=null){
-    $("#proInfo").css("color","#D26900");
-  }else if(url.match('friends')!=null){
-    $("#friends").css("color","#D26900");
-  }else if(url.match('gettingStarted')!=null){
-    $("#gettingStarted").css("color","#D26900");
-  }else if(url.match('change')!=null || url.match('changePassword')!=null){
-    $("#setUp").css("color","#D26900");
+    });
   }
-}
+
+  function checkForum() {
+    /*$.get('/countForum',function(res){*/
+      io.socket.get('/countForum',function(res){
+        if(res.err) {
+          showDialog("錯誤訊息",res.err);
+        } else {
+          if(res.login) {
+            $("#forum1").html('<span class="glyphicon glyphicon-comment" style="color:rgb(129, 108, 88)" aria-hidden="true"></span>&nbsp;作夥論壇&nbsp('+res.num+')');
+            $("#forum2").html("作夥論壇&nbsp("+res.num+")");
+          }
+        }
+      });
+    }
+
+    function showDialog(title, message, cb){
+      bootbox.dialog({
+        message: message,
+        title: title,
+        buttons: {
+          main: {
+            label: "確認",
+            className: "btn-primary",
+            callback: function() {
+              if(typeof cb == "function")
+                cb();
+            }
+          }
+        }
+      });
+    }
+
+    function showSimpleSignup() {
+      $("#signup").removeClass("hidden-phone");
+      $("#signup").show();
+      if($( window ).width() < 768){
+        $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+      }
+    }
+
+    function recordLink(target){
+      $.get("/recordLink/"+target,function(ret){
+        return true 
+      })
+    }
+
+
+    function markMenuItem(){
+      var url = document.URL;
+      $("#profile_page").css("color","#533828");
+      $("#forum").css("color","#533828");
+      $("#proInfo").css("color","#533828");
+      $("#friends").css("color","#533828");
+      $("#gettingStarted").css("color","#533828");
+      $("#setUp").css("color","#533828");
+      
+      if(url.match('profile')!=null){
+        $("#profile_page").css("color","#D26900");
+      }else if(url.match('frontboard')!=null){
+        $("#forum").css("color","#D26900");
+      }else if(url.match('proInfo')!=null){
+        $("#proInfo").css("color","#D26900");
+      }else if(url.match('friends')!=null){
+        $("#friends").css("color","#D26900");
+      }else if(url.match('gettingStarted')!=null){
+        $("#gettingStarted").css("color","#D26900");
+      }else if(url.match('change')!=null || url.match('changePassword')!=null){
+        $("#setUp").css("color","#D26900");
+      }
+    }
