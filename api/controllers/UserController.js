@@ -14,7 +14,22 @@ module.exports = {
         }else{
             RecoveryQuestion.find().exec(function(err, questions){
                 dataProvider.getPostalData(req, function(postalData){
-                    res.view("signup/index", {
+                    var MobileDetect = require('mobile-detect'),
+                    md = new MobileDetect(req.headers['user-agent']);
+                    var page="";
+                    var m;
+                    if (md.mobile()==null){
+                        //PC
+                        page="signup/index";
+                        m="layout";
+                    }
+                    else{
+                        //mobile
+                        page="signup/mindex";
+                        m="mlayout";
+                    }
+                    res.view(page, {
+                        layout:m,
                         profileData: req.session.user,
                         postalData: postalData,
                         recoveryQuestions: questions,
@@ -39,7 +54,22 @@ module.exports = {
         }else{
             RecoveryQuestion.find().exec(function(err, questions){
                 dataProvider.getPostalData(req, function(postalData){
-                    res.view("change/index", {
+                    var MobileDetect = require('mobile-detect'),
+                    md = new MobileDetect(req.headers['user-agent']);
+                    var page="";
+                    var m;
+                    if (md.mobile()==null){
+                        //PC
+                        page="change/index";
+                        m="layout";
+                    }
+                    else{
+                        //mobile
+                        page="change/mindex";
+                        m="mlayout";
+                    }
+                    res.view(page, {
+                        layout:m,
                         profileData: req.session.user,
                         isFullSignup: req.session.user.isFullSignup,
                         postalData: postalData,
@@ -1145,7 +1175,22 @@ module.exports = {
                     //var hasNext;
                     if(users.length<=(page+1)*unit) {
                         hasNext=false;
-                        return res.view("friends/index", {
+                        var MobileDetect = require('mobile-detect'),
+                        md = new MobileDetect(req.headers['user-agent']);
+                        var page="";
+                        var m;
+                        if (md.mobile()==null){
+                            //PC
+                            page="friends/index";
+                            m="layout";
+                        }
+                        else{
+                            //mobile
+                            page="friends/mindex";
+                            m="mlayout";
+                        }
+                        return res.view(page, {
+                            layout:m,
                             users: users,
                             hasNext: hasNext,
                             page: page+1,
@@ -1165,7 +1210,22 @@ module.exports = {
                         //res.send({users: users.slice(page*unit), hasNext: hasNext});
                     } else {
                         hasNext=true;
-                            return res.view("friends/index", {
+                            var MobileDetect = require('mobile-detect'),
+                            md = new MobileDetect(req.headers['user-agent']);
+                            var page="";
+                            var m;
+                            if (md.mobile()==null){
+                                //PC
+                                page="friends/index";
+                                m="layout";
+                            }
+                            else{
+                                //mobile
+                                page="friends/mindex";
+                                m="mlayout";
+                            }
+                            return res.view(page, {
+                                layout:m,
                                 users: users.slice(0, page*unit+unit),
                                 hasNext: hasNext,
                                 page: page+1,

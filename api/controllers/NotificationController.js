@@ -96,28 +96,36 @@ module.exports = {
                             res.send(500, {err: "DB error"});
                         } else {
                             not.sort(function(a, b){return new Date(b.createdAt)-new Date(a.createdAt);});
+
                             var MobileDetect = require('mobile-detect'),
                             md = new MobileDetect(req.headers['user-agent']);
-                            if (md.mobile==null){
+                            var page="";
+                            var m;
+                            if (md.mobile()==null){
                                 //PC
-                                res.view("notifications/index", {
-                                    not: not,
-                                    scripts: [
-                                        '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                        '/js/js_public/alertify.js',
-                                        '/js/js_notifications/mainJS.js'
-                                      ],
-                                    stylesheets: [
-                                        '/styles/importer.css',
-                                        '/styles/css_public/themes/alertify.core.css',
-                                        '/styles/css_public/themes/alertify.default.css',
-                                        '/styles/css_notifications/style.css'
-                                      ]
-                                 });
+                                page="notifications/index";
+                                m="layout";
                             }
                             else{
                                 //mobile
+                                page="notifications/mindex";
+                                m="mlayout";
                             }
+                            res.view(page, {
+                                not: not,
+                                layout:m,
+                                scripts: [
+                                    '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                    '/js/js_public/alertify.js',
+                                    '/js/js_notifications/mainJS.js'
+                                  ],
+                                stylesheets: [
+                                    '/styles/importer.css',
+                                    '/styles/css_public/themes/alertify.core.css',
+                                    '/styles/css_public/themes/alertify.default.css',
+                                    '/styles/css_notifications/style.css'
+                                  ]
+                             });
                         }
                      });
                 }

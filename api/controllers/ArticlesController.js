@@ -181,10 +181,24 @@ module.exports = {
                                 }
                             }
                             boardsCateList.splice(i, 1);
-
-                            res.view("board/index", {
+                            var MobileDetect = require('mobile-detect'),
+                            md = new MobileDetect(req.headers['user-agent']);
+                            var page="";
+                            var m;
+                            if (md.mobile()==null){
+                                //PC
+                                page="board/index";
+                                m="layout";
+                            }
+                            else{
+                                //mobile
+                                page="board/mindex";
+                                m="mlayout";
+                            }
+                            res.view(page, {
                                 tab: req.param("tab"),
                                 keyword: req.param("search"),
+                                layout:m,
                                 board: req.param("board"),
                                 boardTitle: board[0].title,
                                 boardCateTitle: board[0].category.title,
@@ -382,11 +396,25 @@ module.exports = {
                         }
                     }
                     boardsCateList.splice(i, 1);
-
-                    res.view("board/index", {
+                    var MobileDetect = require('mobile-detect'),
+                    md = new MobileDetect(req.headers['user-agent']);
+                    var page="";
+                    var m;
+                    if (md.mobile()==null){
+                        //PC
+                        page="board/index";
+                        m="layout";
+                    }
+                    else{
+                        //mobile
+                        page="board/mindex";
+                        m="mlayout";
+                    }
+                    res.view(page, {
                         tab: req.param("tab"),
                         keyword: req.param("search"),
                         board: req.param("board"),
+                        layout:m,
                         boardTitle: "總板",
                         boardCateTitle: "",
                         boardsCateList: boardsCateList,
@@ -642,9 +670,24 @@ module.exports = {
                                         var metaTitle=articles[0].title;
                                         var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
                                         var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
-                                        return res.view("article/index", {
+                                        var MobileDetect = require('mobile-detect'),
+                                        md = new MobileDetect(req.headers['user-agent']);
+                                        var page="";
+                                        var m;
+                                        if (md.mobile()==null){
+                                            //PC
+                                            page="article/index";
+                                            m="layout";
+                                        }
+                                        else{
+                                            //mobile
+                                            page="article/mindex";
+                                            m="mlayout";
+                                        }
+                                        return res.view(page, {
                                             metaTitle: metaTitle,
                                             metaUrl: metaUrl,
+                                            layout:m,
                                             metaDescription: metaDescription,
                                             articleList: articlesList,
                                             isAuthor: isAuthor,
@@ -836,10 +879,25 @@ module.exports = {
                             res.send(500, "server error");
                         } else {
                             if(articles.length==1) {
-                                return res.view("editArticle/index", {
+                                var MobileDetect = require('mobile-detect'),
+                                md = new MobileDetect(req.headers['user-agent']);
+                                var page="";
+                                var m;
+                                if (md.mobile()==null){
+                                    //PC
+                                    page="editArticle/index";
+                                    m="layout";
+                                }
+                                else{
+                                    //mobile
+                                    page="editArticle/mindex";
+                                    m="mlayout";
+                                }
+                                return res.view(page, {
                                     title: article[0].title,
                                     content_image: content_image,
                                     content: content,
+                                    layout:m,
                                     isAuthor: isAuthor, 
                                     scripts: [
                                         '/js/js_editArticle/mainJS.js',
@@ -1390,43 +1448,5 @@ module.exports = {
             });
         }
     },
-    // setMeta: function(req, res) {
-    //     var id=req.param("id");
-    //     console.log(id);
-    //     if(id=='undefined') res.send(500, "server error");
-    //     Articles.find(id).exec(function(err, articles) {
-    //         if(err) {
-    //             console.log("錯誤訊息："+err);
-    //             res.send(500, "server error");
-    //         } else {
-    //             console.log(articles);
-    //             if(articles.length==1) {
-    //                 var metaTitle=articles[0].title;
-    //                 var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
-    //                 var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
-    //                 return res.view("article/index", {
-    //                     metaTitle: metaTitle,
-    //                     metaUrl: metaUrl,
-    //                     metaDescription: metaDescription,
-    //                     scripts: [
-    //                         '/js/js_public/modalBox.js-master/modalBox-min.js',
-    //                         '/js/js_public/alertify.js',
-    //                         '/js/js_article/mainJS.js',
-    //                         '/js/js_post/cropper.min.js',
-    //                         '/js/js_article/crop-avatar.js'
-    //                       ],
-    //                     stylesheets: [
-    //                         '/styles/css_article/style.css',
-    //                         '/styles/css_post/crop-avatar.css',
-    //                         '/styles/css_post/cropper.min.css',
-    //                         '/styles/importer.css',
-    //                         '/styles/css_public/themes/alertify.core.css',
-    //                         '/styles/css_public/themes/alertify.default.css'
-    //                       ],
-    //                 });
-    //             }   
-    //         }
-    //     });
-    // }
 };
 
