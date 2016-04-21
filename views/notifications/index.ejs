@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<div id="content" class="col-md-12">
+<div id="content">
 	<%var  local = {};
 		local.notMessage=[
 		  "在您追蹤的文章留言",
@@ -8,8 +8,8 @@
 		  "覺得您追蹤的動態",
 		  "覺得您的回應",
 		  "覺得您的留言",
-		  "邀請您成為他的好友",
-		  "已經和您成為好友了",
+		  "邀請您成為好友",
+		  "已經和您成為好友",
 		  "在您的牆上留下動態",
 		  "發了一則動態",
 		  "在平台小幫手發布文章"]
@@ -23,7 +23,29 @@
 		<% } else { %>
 			<div class='not unread' id='<%=not[i].id%>'>
 		<% } %>
-		<div class="upper">
+		
+      			<div class='go'>
+      				
+      				<%if (not[i].notType==1||not[i].notType==2||not[i].notType==5||not[i].notType==11){%>
+      				
+          				<button value='查看文章' class='button' onclick='check("<%=not[i].link%>", "<%=not[i].id%>");'>&nbsp查看文章</button>
+      				<%}%>
+
+      				<%if (not[i].notType==3||not[i].notType==4||not[i].notType==6||not[i].notType==8||not[i].notType==9||not[i].notType==10){%>
+      					<button value='查看動態' class='button' onclick='check("<%=not[i].link%>", "<%=not[i].id%>");'>&nbsp;查看動態</button>
+      				<%}%>
+      				<%if (not[i].notType==7){%>
+      					<button value='確認好友' class='button' onclick='confirmFriend(<%=not[i].from.id%>, <%=not[i].id%>);'>&nbsp確認好友</button>
+      				<%}%>
+      					
+      			</div>
+      			
+				<div class='setRead'>
+					<%if(not[i].alreadyRead==false) {%>
+					   <button value='設為已讀' class='button' onclick='setRead(<%=not[i].id%>, this);'>&nbsp設為已讀</button>
+					<%}%>   
+				</div> 
+				
 				<div class='image'>
 					<%if(not[i].from!=undefined){%>
 					<%if(not[i].from.type=="D"){ %>
@@ -66,29 +88,7 @@
       					<%="很讚"%>
       				<%}%>
           		</div>
-          		</div>
-
-      			<div class='go'>
-      				
-      				<%if (not[i].notType==1||not[i].notType==2||not[i].notType==5||not[i].notType==11){%>
-      				
-          				<button value='查看文章' class='button' onclick='check("<%=not[i].link%>", "<%=not[i].id%>");'>&nbsp查看文章</button>
-      				<%}%>
-
-      				<%if (not[i].notType==3||not[i].notType==4||not[i].notType==6||not[i].notType==8||not[i].notType==9||not[i].notType==10){%>
-      					<button value='查看動態' class='button' onclick='check("<%=not[i].link%>", "<%=not[i].id%>");'>&nbsp;查看動態</button>
-      				<%}%>
-      				<%if (not[i].notType==7){%>
-      					<button value='確認好友' class='button' onclick='confirmFriend(<%=not[i].from.id%>, <%=not[i].id%>);'>&nbsp確認好友</button>
-      				<%}%>
-      					
-      			</div>
-      			
-				<div class='setRead'>
-					<%if(not[i].alreadyRead==false) {%>
-					   <button value='設為已讀' class='button' onclick='setRead(<%=not[i].id%>, this);'>&nbsp設為已讀</button>
-					<%}%>   
-				</div>    
+  
 				 <%}%>
 				
 

@@ -86,12 +86,12 @@ select, input[type="text"], input[type="password"]{
 	background-color: #3765A3;
 	padding: 10px;
 }
-
+/*
 @media all and (max-width: 480px){
 	.modal-dialog{
 		width: 300px !important;
 	}
-}
+}*/
 @media all and (max-width: 1024px) {
 	#logo{
 		width:100%;

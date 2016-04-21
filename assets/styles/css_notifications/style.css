@@ -35,23 +35,24 @@
 }
 
 .image {
-	display: inline; 
 	height: 100%;
-	width: 180px;
 	padding: 0px;
+	margin-right: 5px;
 	vertical-align: top;
 	float: left;
+	display: inline;
 }
 .message {
 	vertical-align: top;
-	display: inline;
+	display: inline-block;
 	height: 100%;
-	font-size: 28px;
+	font-size: 20px;
 	color: black;
+	margin: 10px;
 }
 .go {
 	height: 100%;
-	font-size: 24px;
+	font-size: 22px;
 	color: black;
 	display: inline;
 }
