@@ -3,10 +3,14 @@
     </script>
 
     <div id="form-main" class="col-md-7">
-      <h1 style="color:#D26900;">完整註冊，以建立個人頁面，並取得發文權限。</h1>
+      <h1 style="color:black;">完整註冊</h1>
       <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>提醒：</strong> 星號表示必填欄位！
+        <strong>提醒：</strong> 星號為必填欄位！
+      </div>
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>提醒：</strong> 完整註冊才能建立個人頁面，取得發文權限！
       </div>
         <div id="form-div">
           <form class="form" id="form1">
@@ -217,8 +221,8 @@
 
 
             <div class="submit">
-              <input type="button" value="送 出" id="button-blue" onclick="Submit()"/>
-              <div class="ease"></div>
+              <input type="button" class="s" value="送 出" id="button-blue" onclick="Submit()"/>
+              <!--<div class="ease"></div>-->
             </div>
           </form>
           <form style="display: hidden" action="/change/index.html" method="post" id="hform">
