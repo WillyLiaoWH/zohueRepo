@@ -5,7 +5,7 @@
 .not {
 	/*border: #AAAAAA 1px solid;*/
 	border-radius: 10px;
-	margin: 10px;
+	margin-top: 5px;
 	padding: 10px;
 	display: block;
 }
@@ -44,11 +44,12 @@
 }
 .message {
 	vertical-align: top;
-	display: inline-block;
+	/*display: inline-block;*/
 	height: 100%;
-	font-size: 20px;
+	font-size: 18px;
 	color: black;
 	margin: 10px;
+	margin-left: 90px;
 }
 .go {
 	height: 100%;

@@ -2,16 +2,16 @@
 <div id="content">
 	<%var  local = {};
 		local.notMessage=[
-		  "在您追蹤的文章留言",
+		  "在您追蹤的文章留言囉",
 		  "覺得您追蹤的文章",
 		  "在您追蹤的動態留言",
-		  "覺得您追蹤的動態",
+		  "覺得您正在追蹤的動態",
 		  "覺得您的回應",
 		  "覺得您的留言",
 		  "邀請您成為好友",
 		  "已經和您成為好友",
-		  "在您的牆上留下動態",
-		  "發了一則動態",
+		  "在您牆上留動態",
+		  "發佈了一則動態",
 		  "在平台小幫手發布文章"]
 	%>
 
@@ -39,13 +39,13 @@
       				<%}%>
       					
       			</div>
-      			
+      			<!-- 
 				<div class='setRead'>
 					<%if(not[i].alreadyRead==false) {%>
 					   <button value='設為已讀' class='button' onclick='setRead(<%=not[i].id%>, this);'>&nbsp設為已讀</button>
 					<%}%>   
 				</div> 
-				
+ -->
 				<div class='image'>
 					<%if(not[i].from!=undefined){%>
 					<%if(not[i].from.type=="D"){ %>
@@ -82,7 +82,7 @@
 					<%=local.type%>
 					<%=local.notMessage[parseInt(not[i].notType)-1]%>
 					<%if(not[i].content) { %>
-          				<%=("「"+not[i].content+'」').replace(/<[^>]*>/g, "")%>
+          				<%-("「"+not[i].content+'」').replace(/<[^>]*>/g, "").replace(/\s/g,"")%>
           			<%}%>
           			<%if (not[i].notType==2||not[i].notType==4||not[i].notType==5||not[i].notType==6){%>
       					<%="很讚"%>

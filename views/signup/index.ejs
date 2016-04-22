@@ -1,4 +1,4 @@
-		<script>
+    <script>
       obj_postal = <%- JSON.stringify(postalData) %>;
     </script>
 
@@ -8,35 +8,35 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>提醒：</strong> 星號表示必填欄位！
       </div>
-  			<div id="form-div">
-    			<form class="form" id="form1">
-      			<div>
-      				<div id="fname_reg-div">
+        <div id="form-div">
+          <form class="form" id="form1">
+            <div>
+              <div id="fname_reg-div">
                 <h class="input_title">姓氏</h>
-        				<input name="fname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="fname_reg" placeholder="姓氏" must="t" value="<%=profileData.fname%>"/>
+                <input name="fname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="fname_reg" placeholder="姓氏" must="t" value="<%=profileData.fname%>"/>
                 <div class="tooltip fade bottom in" role="tooltip" id="fname_reg-tooltip">
                   <div class="tooltip-arrow"></div>
                   <div class="tooltip-inner" id="fname_reg-inner"></div>
                 </div>
-        			</div>
+              </div>
               
-        			<div id="lname_reg-div">
+              <div id="lname_reg-div">
                 <h class="input_title">名字</h>
-        				<input name="lname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="lname_reg" placeholder="名字" must="t" value="<%=profileData.lname%>"/>
+                <input name="lname_reg" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" id="lname_reg" placeholder="名字" must="t" value="<%=profileData.lname%>"/>
                 <div class="tooltip fade bottom in" role="tooltip" id="lname_reg-tooltip">
                   <div class="tooltip-arrow"></div>
                   <div class="tooltip-inner" id="lname_reg-inner"></div>
                 </div>
-        			</div>
-      			</div>
+              </div>
+            </div>
 
-      			<div>
+            <div>
                 <h class="input_title">上傳相片</h>
                 <input name="image" type="button" class="validate[required,custom[image]] feedback-input" id="image" value="上傳相片"/>
               <div class="avatar-view" title="上傳相片">
                 <img id="avatar" src="images/img_signup/default_img.jpeg" alt="Avatar">
               </div>
-      			</div>
+            </div>
             <div>
               <h class="input_title">找回密碼問題</h>
               <select id="forgetQ" class="validate[required,custom[forgetQ]] feedback-input" must="t" placeholder="找回密碼問題">
@@ -209,23 +209,23 @@
                 <div class="tooltip-arrow"></div>
                 <div class="tooltip-inner" id="selfIntroduction-inner"></div>
               </div>
-      			</div>
+            </div>
             <% }else{ %>
               <div> &nbsp; <div>
             <% } %>
 
 
 
-      			<div class="submit">
-        			<input type="button" value="送 出" id="button-blue" onclick="Submit()"/>
-        			<div class="ease"></div>
-      			</div>
-    		  </form>
+            <div class="submit">
+              <input type="button" value="送 出" id="button-blue" onclick="Submit()"/>
+              <div class="ease"></div>
+            </div>
+          </form>
           <form style="display: hidden" action="/change/index.html" method="post" id="hform">
             <input type="hidden" id="haccount" name="var1" value=""/>
             <input type="hidden" id="var2" name="var2" value=""/>
           </form>
-  		  </div>
+        </div>
 
         <!-- Cropping modal -->
         <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
