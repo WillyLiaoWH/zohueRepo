@@ -30,8 +30,23 @@ module.exports = {
                 console.log("DB error")
             } else {
                 articlesList.sort(datesort)
-                res.view("proInfo/index1", {
+                var MobileDetect = require('mobile-detect'),
+                md = new MobileDetect(req.headers['user-agent']);
+                var page="";
+                var m;
+                if (md.mobile()==null){
+                    //PC
+                    page="proInfo/index1";
+                    m="layout";
+                }
+                else{
+                    //mobile
+                    page="proInfo/mindex1";
+                    m="mlayout";
+                }
+                res.view(page, {
                     list:articlesList,
+                    layout:m,
                     scripts: [
                         '/js/js_public/modalBox.js-master/modalBox-min.js',
                         '/js/js_ProInfo/mainJS.js',

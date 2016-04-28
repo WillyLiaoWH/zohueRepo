@@ -670,7 +670,7 @@ function sendEmail(){
 function shareFB(){
   u=location.href;
   t=document.title;
-  window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');
+  window.open('http://www.facebook.com/sharer/sharer.php?u='+u,'sharer','toolbar=0,status=0,width=626,height=436');
   return false;
 }
 
@@ -699,9 +699,9 @@ function follow() {
       showDialog("錯誤訊息", res.err);
     } else {
       if(res.isFollower){
-        $("#follow").html("取消追蹤");
+        $("#follow").html("<img src='/images/img_forum/follow.png' style='width:18%'>取消追蹤");
       } else {
-        $("#follow").html("追蹤文章");
+        $("#follow").html("<img src='/images/img_forum/follow.png' style='width:18%'>追蹤文章");
       }
     }
   });

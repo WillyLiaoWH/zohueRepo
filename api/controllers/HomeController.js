@@ -15,7 +15,22 @@ module.exports = {
                     if (err) {
                         res.send(500, { err: "DB Error" });
                     } else {
-                        res.view("home/index", {
+                    	var MobileDetect = require('mobile-detect'),
+                    	md = new MobileDetect(req.headers['user-agent']);
+                    	var page="";
+                    	var m;
+                    	if (md.mobile()==null){
+                    	    //PC
+                    	    page="home/index";
+                    	    m="layout";
+                    	}
+                    	else{
+                    	    //mobile
+                    	    page="home/mindex";
+                    	    m="mlayout";
+                    	}
+                        res.view(page, {
+                        	layout:m,
                             homepagePics: homepagePics,
                             scripts: [
 						        '/js/js_home/mainJS.js'

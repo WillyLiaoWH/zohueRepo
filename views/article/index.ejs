@@ -22,6 +22,7 @@
           <button value="轉寄文章" id="sendEmail" class="b" onclick="sendEmail()"><span class="glyphicon glyphicon-envelope" ></span>轉寄文章</button>
           <button value="分享至臉書" id="shareFB" class="b" onclick="shareFB()"><img id="FB"src="/images/img_forum/facebook.png" >分享至臉書</button>
           <button value="追蹤" id="follow" class="b" onclick="follow();">
+            <img src="/images/img_forum/follow.png" style="width:18%">
             <% if(isFollower){ %>取消追蹤<% }else{ %>追蹤文章<% } %>
           </button>
         </div>
@@ -107,6 +108,7 @@
             <div id="commentList">
               <% for(i=0; i<responseList.length; i++){ %>
 
+
               <div style=" margin: 35px 0px 80px 0px;" id='responseID<%= responseList[i].id %>'>
                   <div>
                     <div valign=top  class='col-md-2 comment_avatar'>
@@ -129,6 +131,7 @@
                         
                         <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
                         <% } %>
+
                       </label>
                     </div>
                   </div>

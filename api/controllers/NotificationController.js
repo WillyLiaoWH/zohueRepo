@@ -96,11 +96,24 @@ module.exports = {
                             res.send(500, {err: "DB error"});
                         } else {
                             not.sort(function(a, b){return new Date(b.createdAt)-new Date(a.createdAt);});
-                            // if(not.length>=10) {
-                            //  res.send(not.slice(0, 10));
-                            // } else {
-                            res.view("notifications/index", {
+
+                            var MobileDetect = require('mobile-detect'),
+                            md = new MobileDetect(req.headers['user-agent']);
+                            var page="";
+                            var m;
+                            if (md.mobile()==null){
+                                //PC
+                                page="notifications/index";
+                                m="layout";
+                            }
+                            else{
+                                //mobile
+                                page="notifications/mindex";
+                                m="mlayout";
+                            }
+                            res.view(page, {
                                 not: not,
+                                layout:m,
                                 scripts: [
                                     '/js/js_public/modalBox.js-master/modalBox-min.js',
                                     '/js/js_public/alertify.js',
@@ -113,7 +126,6 @@ module.exports = {
                                     '/styles/css_notifications/style.css'
                                   ]
                              });
-                            // }
                         }
                      });
                 }
