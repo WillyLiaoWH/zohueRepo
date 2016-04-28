@@ -183,6 +183,7 @@ module.exports = {
                             boardsCateList.splice(i, 1);
 
                             res.view("board/index", {
+                                loginid: req.session.user.id, 
                                 tab: req.param("tab"),
                                 keyword: req.param("search"),
                                 board: req.param("board"),
@@ -567,6 +568,11 @@ module.exports = {
                         });
                     }
 
+                    if(articlesList[0].board.id==21){
+                        isProInfo=true;
+                    }else{
+                        isProInfo=false;
+                    }
 
                     if(req.session.authenticated && 
                         req.session.user.id==articlesList[0].author.id) {
@@ -642,7 +648,12 @@ module.exports = {
                                         var metaTitle=articles[0].title;
                                         var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
                                         var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
+                                        var loginid = "guest"; // 沒登入者
+                                            if(typeof req.session.user !== 'undefined'){
+                                                loginid = req.session.user.id;
+                                        }
                                         return res.view("article/index", {
+                                            loginid:loginid,
                                             metaTitle: metaTitle,
                                             metaUrl: metaUrl,
                                             metaDescription: metaDescription,

@@ -148,6 +148,7 @@ div.show-image input.delete {
 	word-break:break-all;
 }
 
+
 #niceArticle, #report{
 	padding:0px 10px 0px 10px;
 	align: right;
@@ -180,6 +181,38 @@ div.show-image input.delete {
 	background-color: #FFCE54;
 	color:#533828;
 }
+
+.container_edit, .container_r_edit{
+	margin: 15px;
+	padding:0px;
+	display:none;
+}
+
+div[id*="div_edit_content"], div[id*="div_r_edit_content"]{
+	word-break: break-all;
+	min-height: 100px;
+	color:#816C58;
+	font-size: 18px;
+	line-height: 22px;
+	background-color: white;
+	padding: 8px 8px 8px 8px;
+	width:auto;
+	border-radius: 10px;
+	/*border-top-left-radius: 10px;*/
+	/*border-top-right-radius: 10px;*/
+	border: 1px solid #ccc;
+}
+div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
+	float:left;
+	padding-bottom:0px;
+	display: none;
+	background-color: rgba(129, 108, 88, 0.6);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	/*border: solid rgb(196, 204, 209);*/
+	/*border-width: 0px 5px 5px 5px;*/
+}
+
 
 #commentSend:hover{
 	background-color: #FFCE54;
@@ -232,7 +265,7 @@ div.show-image input.delete {
 }
 
 .comment_row{
-	padding:3px 0px 30px 10px;
+	/*。padding:3px 0px 30px 10px;*/
 }
 
 #post-form-main{

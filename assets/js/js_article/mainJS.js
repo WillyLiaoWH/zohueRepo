@@ -38,6 +38,18 @@ $(document).ready(function(){
       document.getElementById('reasonInput').style.display="none";
     }
   });
+$(document).on("click",".comment_edit",function(e){
+    editRArticle(this.name);
+  });
+  $(document).on("click","#editRCancel",function(e){
+    editRArticleCancel(this.name);
+  });
+  $(document).on("click","#editRSend",function(e){
+    editRArticleSend(this.name);
+  });
+  $(document).one("click",".comment_del",function(e){
+    delArticle_Comment(this.name);
+  });
 
 });
 
@@ -266,6 +278,10 @@ function setPage() {
 
 }
 
+function backToBoard () {
+    window.location.assign("/proInfo/1");
+}
+
 function backToList(board) {
   // var url=document.URL;
   // var regex = /.*article\/+(.*)\?board=+(.*)&page=+(.*)/;
@@ -340,6 +356,127 @@ function leaveComment(){
   }
 }
 
+
+function editRArticle(id){
+  // 暫存編輯內容
+  eval( "tempTimelineRContent" + id + '=$("#div_r_edit_content"+id).html()' );
+  eval( "tempTimelineRImg" + id + "=" + '$("#div_r_edit_img"+id).html()' );
+
+  $("#container_r_edit"+id).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".comment_origin_content" ).css("display", "none");
+  $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+}
+function editRArticleCancel(id){
+  // 還原暫存的編輯內容
+  $("#div_r_edit_content"+id).html(eval("tempTimelineRContent" + id));
+  $("#div_r_edit_img"+id).html(eval("tempTimelineRImg" + id));
+
+  $("#container_r_edit"+id).css("display", "none");
+  $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".comment_origin_content" ).css("display", "block");
+  if($("#container_r_edit"+id).parent().children( ".event_img" ).html().trim()==""){
+    $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+  }
+}
+function editRArticleSend(id){
+  if($("#div_r_edit_img"+id)){$("#div_r_edit_img"+id+" .delete").remove();} // 去除叉叉紐
+  var name = $("#container_r_edit"+id).parent().children(".event_text_r").children("a.name").html()
+  var edit_content=$("#div_r_edit_content"+id).html();
+  var edit_img=$("#div_r_edit_img"+id).html();
+  var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
+  finish_edit_img = finish_edit_img.replace(/\/dummy/g, "\/a");
+
+  //if(edit_content.trim()=="" & edit_img.trim()==""){showDialog("錯誤訊息","發佈失敗！");}
+  //else{
+    $.post( "/editCommentArticle", {edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
+
+      $("#container_r_edit"+id).parent().children( ".comment_origin_content" ).html("<label class='comment_content event_text_r'>"+edit_content+"</label>");
+      $("#container_r_edit"+id).css("display", "none");
+      $("#container_r_edit"+id).parent().children( ".comment_origin_content" ).css("display", "block");
+
+      $("#container_r_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
+        //editRArticleCancel(id);
+
+  
+
+    }).error(function(res){
+      showDialog("錯誤訊息",res.responseJSON.err);
+    });
+  //}
+}
+
+function delArticle_Comment (id) {
+  bootbox.dialog({
+    message: "確定要刪除留言嗎？",
+    title: "再次確認",
+    buttons: {
+      yes: {
+        label: "確認",
+        className: "btn-primary",
+        callback: function() {
+          $.post( "/delCommentArticle", { id: id }, function(res){
+            $("#responseID"+id).remove();
+          }).error(function(res){
+            showDialog("錯誤訊息",res.responseJSON.err);
+          });
+        }
+      },
+      no: {
+        label: "取消",
+        className: "btn-primary",
+        callback: function() {
+        }
+      }
+    }
+  });
+  
+}
+
+
+function editRTimeline(id){
+  // 暫存編輯內容
+  eval( "tempTimelineRContent" + id + '=$("#div_r_edit_content"+id).html()' );
+  eval( "tempTimelineRImg" + id + "=" + '$("#div_r_edit_img"+id).html()' );
+
+  $("#container_r_edit"+id).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "none");
+  $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+}
+function editRTimelineCancel(id){
+  // 還原暫存的編輯內容
+  $("#div_r_edit_content"+id).html(eval("tempTimelineRContent" + id));
+  $("#div_r_edit_img"+id).html(eval("tempTimelineRImg" + id));
+
+  $("#container_r_edit"+id).css("display", "none");
+  $("#container_r_edit"+id).parent().children( ".event_text_r" ).css("display", "block");
+  $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "block");
+  if($("#container_r_edit"+id).parent().children( ".event_img" ).html().trim()==""){
+    $("#container_r_edit"+id).parent().children( ".event_img" ).css("display", "none");
+  }
+}
+function editRTimelineSend(id){
+  if($("#div_r_edit_img"+id)){$("#div_r_edit_img"+id+" .delete").remove();} // 去除叉叉紐
+  var name = $("#container_r_edit"+id).parent().children(".event_text_r").children("a.name").html()
+  var edit_content=$("#div_r_edit_content"+id).html();
+  var edit_img=$("#div_r_edit_img"+id).html();
+  var finish_edit_img = edit_img.replace(/dummy href=/g, "a href=");
+  finish_edit_img = finish_edit_img.replace(/\/dummy/g, "\/a");
+
+  if(edit_content.trim()=="" & edit_img.trim()==""){showDialog("錯誤訊息","發佈失敗！");}
+  else{
+    $.post( "/editCommentTimeline", {edit_content: edit_content, edit_img: edit_img, id: id}, function(res){
+      $("#container_r_edit"+id).parent().children( ".event_text_r" ).html("<a class='name' href='?"+id+"'>"+name+"</a>"+edit_content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>'));
+      $("#container_r_edit"+id).parent().children( ".event_img" ).html(finish_edit_img);
+
+      editRTimelineCancel(id);
+    }).error(function(res){
+      showDialog("錯誤訊息",res.responseJSON.err);
+    });
+  }
+}
+
+
 function updateClickNum(){
   var url = document.URL;
   var regex = /.*article\/+(.*)/;
@@ -393,6 +530,7 @@ function notNiceResponse(response_id) {
     var N_res_nicer = document.getElementById(N_res).innerHTML;
     N_res_nicer = parseInt(N_res_nicer)-1;
     document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;' value='推薦' class='n' onclick='niceResponse("+response_id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
+   // document.getElementById("responseNice"+response_id).innerHTML ="<有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
