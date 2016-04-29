@@ -398,9 +398,9 @@ module.exports = {
                         }
                     }
                     boardsCateList.splice(i, 1);
+                    page="board/index";
                     var MobileDetect = require('mobile-detect'),
                     md = new MobileDetect(req.headers['user-agent']);
-                    var page="";
                     var m;
                     if (md.mobile()==null){
                         //PC
@@ -412,12 +412,13 @@ module.exports = {
                         page="board/mindex";
                         m="mlayout";
                     }
-                    res.view(page, {
+                     res.view(page, {
+                    //res.view("board/index",{
                         tab: req.param("tab"),
                         keyword: req.param("search"),
                         board: req.param("board"),
-                        layout:m,
                         boardTitle: "總板",
+                        slayout:m,
                         boardCateTitle: "",
                         boardsCateList: boardsCateList,
                         articleList: articleList,
