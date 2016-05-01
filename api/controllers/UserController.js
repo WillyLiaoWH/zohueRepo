@@ -18,14 +18,17 @@ module.exports = {
                     md = new MobileDetect(req.headers['user-agent']);
                     var page="";
                     var m;
+                    var css;
                     if (md.mobile()==null){
                         //PC
                         page="signup/index";
+                        css="style_signup";
                         m="layout";
                     }
                     else{
                         //mobile
                         page="signup/mindex";
+                        css="mStyle_signup";
                         m="mlayout";
                     }
                     res.view(page, {
@@ -41,7 +44,7 @@ module.exports = {
                         stylesheets: [
                             'styles/css_post/crop-avatar.css',
                             'styles/css_post/cropper.min.css',
-                            'styles/css_signup/style_signup.css'
+                            'styles/css_signup/'+css+'.css'
                         ]
                     });
                 });
@@ -58,14 +61,17 @@ module.exports = {
                     md = new MobileDetect(req.headers['user-agent']);
                     var page="";
                     var m;
+                    var css;
                     if (md.mobile()==null){
                         //PC
                         page="change/index";
+                        css="style_signup";
                         m="layout";
                     }
                     else{
                         //mobile
                         page="change/mindex";
+                        css="mStyle_signup";
                         m="mlayout";
                     }
                     res.view(page, {
@@ -82,7 +88,7 @@ module.exports = {
                         stylesheets: [
                             'styles/css_post/crop-avatar.css',
                             'styles/css_post/cropper.min.css',
-                            'styles/css_change/style_signup.css'
+                            'styles/css_change/'+css+'.css'
                         ]
                     });
                 });
@@ -1179,14 +1185,17 @@ module.exports = {
                         md = new MobileDetect(req.headers['user-agent']);
                         var page="";
                         var m;
+                        var css;
                         if (md.mobile()==null){
                             //PC
                             page="friends/index";
+                            css="style";
                             m="layout";
                         }
                         else{
                             //mobile
                             page="friends/mindex";
+                            css="mStyle";
                             m="mlayout";
                         }
                         return res.view(page, {
@@ -1204,7 +1213,7 @@ module.exports = {
                                 '/styles/importer.css',
                                 '/styles/css_public/themes/alertify.core.css',
                                 '/styles/css_public/themes/alertify.default.css',
-                                '/styles/css_friends/style.css'
+                                '/styles/css_friends/'+css+'.css'
                               ]
                         });
                         //res.send({users: users.slice(page*unit), hasNext: hasNext});
@@ -1214,14 +1223,17 @@ module.exports = {
                             md = new MobileDetect(req.headers['user-agent']);
                             var page="";
                             var m;
+                            var css;
                             if (md.mobile()==null){
                                 //PC
                                 page="friends/index";
+                                css="style";
                                 m="layout";
                             }
                             else{
                                 //mobile
                                 page="friends/mindex";
+                                css="mStyle";
                                 m="mlayout";
                             }
                             return res.view(page, {
@@ -1239,7 +1251,7 @@ module.exports = {
                                     '/styles/importer.css',
                                     '/styles/css_public/themes/alertify.core.css',
                                     '/styles/css_public/themes/alertify.default.css',
-                                    '/styles/css_friends/style.css'
+                                    '/styles/css_friends/'+css+'.css'
                                 ]
                             });
                         //res.send({users: users.slice(page*unit, page*unit+unit), hasNext: hasNext});

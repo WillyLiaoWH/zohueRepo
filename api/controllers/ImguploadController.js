@@ -5,7 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
+ module.exports = {
     upload_avatar: function(req, res){
         var http = require('http');
         http.globalAgent.maxSockets = 10000;
@@ -47,25 +47,25 @@ module.exports = {
                 //         console.log("remove~~~");
                 //     });
 
-                var easyimg = require('easyimage');
-                try {
-                    easyimg.crop({
-                        src:files[0].fd, dst:'assets/'+recall_url,
-                        cropwidth:data2.width, cropheight:data2.height,
-                        gravity:'NorthWest',
-                        x:data2.x, y:data2.y
-                    }).then(
-                    function(image) {
-                        cb(recall_url);
-                    },function (err) {
-                        console.log(err);
-                        res.ok("載入錯誤，請重新上傳！");
-                    });
-                } catch (e) {
+            var easyimg = require('easyimage');
+            try {
+                easyimg.crop({
+                    src:files[0].fd, dst:'assets/'+recall_url,
+                    cropwidth:data2.width, cropheight:data2.height,
+                    gravity:'NorthWest',
+                    x:data2.x, y:data2.y
+                }).then(
+                function(image) {
+                    cb(recall_url);
+                },function (err) {
+                    console.log(err);
                     res.ok("載入錯誤，請重新上傳！");
-                }
-            });
-        }
+                });
+            } catch (e) {
+                res.ok("載入錯誤，請重新上傳！");
+            }
+        });
+}
 
         function watchFile(filepath, oncreate, ondelete) { // 監聽 file system 情況
             var fs = require('fs'), path = require('path'), filedir = path.dirname(filepath), filename = path.basename(filepath);
@@ -74,7 +74,7 @@ module.exports = {
                     if (fs.existsSync(filepath)) {
                         oncreate();
                     } else {
-                    ondelete();
+                        ondelete();
                     }
                 }
             });
@@ -156,19 +156,19 @@ module.exports = {
                     res.ok("載入錯誤，請重新上傳！");
                 }
             });
-        }
+}
 
-        function res_upload(uni_fn, recall_url, cb){
-            var time = new Date().getTime();
-            var easyimg = require('easyimage');
-            var recall_url2 = 'images/img_post/resize/'+uni_fn+'.jpg';
-            
-            try{
-                easyimg.resize({
-                    src:'assets/'+recall_url, dst:'assets/'+recall_url2,
-                    width:300, height:300
-                }).then(
-                function(image) {
+function res_upload(uni_fn, recall_url, cb){
+    var time = new Date().getTime();
+    var easyimg = require('easyimage');
+    var recall_url2 = 'images/img_post/resize/'+uni_fn+'.jpg';
+    
+    try{
+        easyimg.resize({
+            src:'assets/'+recall_url, dst:'assets/'+recall_url2,
+            width:300, height:300
+        }).then(
+        function(image) {
                     //res.ok(JSON.stringify({state:200,message:null,result:recall_url2}));
                     cb(recall_url2);
                     console.log('Resized: ' + image.width + ' x ' + image.height);
@@ -176,19 +176,19 @@ module.exports = {
                 function (err) {
                     console.log(err);
                 });
-            } catch (e) {
-                res.ok("圖片處理失敗！");
-            }
-        }
+    } catch (e) {
+        res.ok("圖片處理失敗！");
+    }
+}
 
-        var uni_fn = new Date().getTime();
-        createDir('assets/images/img_post/upload', function(){
-            createDir('assets/images/img_post/resize', function(){
-                upload(uni_fn, function(a) {
-                    res_upload(uni_fn, a, function(b) {
-                        var fs = require('fs');
-                        var id = setInterval(function(){
-                            console.log('assets/'+b);
+var uni_fn = new Date().getTime();
+createDir('assets/images/img_post/upload', function(){
+    createDir('assets/images/img_post/resize', function(){
+        upload(uni_fn, function(a) {
+            res_upload(uni_fn, a, function(b) {
+                var fs = require('fs');
+                var id = setInterval(function(){
+                    console.log('assets/'+b);
                             // if (fs.existsSync('assets/'+b)) {
                                 // res.ok(JSON.stringify({state:200,message:null,result:b}));
                                 // clearInterval(id);
@@ -204,10 +204,10 @@ module.exports = {
                                 }
                             });
                         }, 2000);
-                    });
-                });
             });
-        });
-    },
+});
+});
+});
+},
 };
 

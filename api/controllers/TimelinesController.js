@@ -298,6 +298,7 @@ module.exports = {
                                             md = new MobileDetect(req.headers['user-agent']);
                                             var page="";
                                             var m;
+                                            var css;
                                             if (md.mobile()==null){
                                                 //PC
                                                 page="profile/index";

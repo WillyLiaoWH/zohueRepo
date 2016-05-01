@@ -5,46 +5,46 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-	leaveCommentTimeline: function(req, res){
-        var author=req.session.user.id;
-		var comment=req.param("timeline_comment_content");
-        var comment_image=req.param("timeline_comment_image");
-		var timeline_id=req.param("timeline_id");
-		TimelineResponse.create({author: author, comment: comment, comment_image: comment_image, timeline: timeline_id, updatedTime: new Date()}).exec(function(error, response) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } else {
-                Timelines.find({id: timeline_id}).populate("author").exec(function(err, timeline) {
-                    if(comment.length>20) {
-                        var notContent=comment.substr(0, 20)+"...";
+ module.exports = {
+   leaveCommentTimeline: function(req, res){
+    var author=req.session.user.id;
+    var comment=req.param("timeline_comment_content");
+    var comment_image=req.param("timeline_comment_image");
+    var timeline_id=req.param("timeline_id");
+    TimelineResponse.create({author: author, comment: comment, comment_image: comment_image, timeline: timeline_id, updatedTime: new Date()}).exec(function(error, response) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+            console.log(error);
+        } else {
+            Timelines.find({id: timeline_id}).populate("author").exec(function(err, timeline) {
+                if(comment.length>20) {
+                    var notContent=comment.substr(0, 20)+"...";
+                } else {
+                    var notContent=comment;
+                }
+                for(var i=0; i<timeline[0].follower.length; i++) {
+                    if(timeline[0].follower[i]!=req.session.user.id) {
+                        Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: notContent, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.id, alreadySeen: false}).exec(function(err, not) {
+                            if(err) {
+                                console.log(err);
+                                res.send({err:"DB error"});
+                            }
+                        });
+                    }
+                }
+                var follower=timeline[0].follower;
+                if(follower.indexOf(author)==-1) {
+                    follower.push(author);
+                }
+                Timelines.update({id: timeline_id}, {follower: follower}).exec(function(err, timelines) {
+                    if(err) {
+                        console.log(err);
+                        res.send({err: "DB error"});
                     } else {
-                        var notContent=comment;
+                        res.send('留言成功！');
                     }
-                    for(var i=0; i<timeline[0].follower.length; i++) {
-                        if(timeline[0].follower[i]!=req.session.user.id) {
-                            Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: notContent, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.id, alreadySeen: false}).exec(function(err, not) {
-                                if(err) {
-                                    console.log(err);
-                                    res.send({err:"DB error"});
-                                }
-                            });
-                        }
-                    }
-                    var follower=timeline[0].follower;
-                    if(follower.indexOf(author)==-1) {
-                        follower.push(author);
-                    }
-                    Timelines.update({id: timeline_id}, {follower: follower}).exec(function(err, timelines) {
-                        if(err) {
-                            console.log(err);
-                            res.send({err: "DB error"});
-                        } else {
-                            res.send('留言成功！');
-                        }
-                    });
                 });
+            });
                 // Articles.update({id: article_id},{lastResponseTime: response.createdAt}).exec(function(err, article) {
                 //     if(err) {
                 //         res.send(500,{err: "DB Error" });
@@ -53,35 +53,35 @@ module.exports = {
                 //         res.send(article);
                 //     }
                 // });
+}
+});
+},
+editCommentTimeline: function(req, res){
+    function chechAtuh(id, cb){
+        TimelineResponse.find({id: id}).populate('author').exec(function(error, timeline) {
+            if(error) {
+                res.send(500,{err: "DB Error" });
+            } else {
+                if(req.session.user.account == timeline[0].author.account){
+                    cb();
+                }else{res.send("您沒有權限");}
             }
         });
-	},
-    editCommentTimeline: function(req, res){
-        function chechAtuh(id, cb){
-            TimelineResponse.find({id: id}).populate('author').exec(function(error, timeline) {
-                if(error) {
-                    res.send(500,{err: "DB Error" });
-                } else {
-                    if(req.session.user.account == timeline[0].author.account){
-                        cb();
-                    }else{res.send("您沒有權限");}
-                }
-            });
-        }
-        function edit(TimelineId){
-            var edit_content = req.param("edit_content");
-            var edit_img = req.param("edit_img");
-            TimelineResponse.update({id: TimelineId},{ comment:edit_content, comment_image:edit_img, updatedTime: new Date() }).exec(function(err, timeline) {
-                if(err) {
-                    res.send(500,{err: "DB Error" });
-                    console.log(err);
-                } else {
+    }
+    function edit(TimelineId){
+        var edit_content = req.param("edit_content");
+        var edit_img = req.param("edit_img");
+        TimelineResponse.update({id: TimelineId},{ comment:edit_content, comment_image:edit_img, updatedTime: new Date() }).exec(function(err, timeline) {
+            if(err) {
+                res.send(500,{err: "DB Error" });
+                console.log(err);
+            } else {
                     //console.log(timeline);
                     res.send(timeline);
                 }
             });
-        }
-        var TimelineId = req.param("id");
+    }
+    var TimelineId = req.param("id");
         // 用 call back 先檢查 session 是否有刪除 timeline 之權限
         chechAtuh(TimelineId, function(){
             edit(TimelineId);

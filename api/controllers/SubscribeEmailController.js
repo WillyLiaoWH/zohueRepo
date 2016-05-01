@@ -5,78 +5,78 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-	subscribe: function(req, res) {
-        var email="";
-        var login=0;
+ module.exports = {
+   subscribe: function(req, res) {
+    var email="";
+    var login=0;
 
-        function getEmail(cb){
-            if(typeof req.session.user == 'undefined'){
-                email=req.param("email");
-                login = 0;
-                cb();
-            }else{
-                email = req.session.user.email;
-                login = 1;
-                cb();
+    function getEmail(cb){
+        if(typeof req.session.user == 'undefined'){
+            email=req.param("email");
+            login = 0;
+            cb();
+        }else{
+            email = req.session.user.email;
+            login = 1;
+            cb();
+        }
+    }
+    function checkSpec(cb){
+     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+     if(re.test(email)){
+        cb();
+    }else{
+        if(login==0){
+            res.send('您輸入的 E-mail 格式錯誤！');
+        }else{
+            res.send('您還沒有登記您的 E-mail 喔！請到「個人設定→修改會員資料」輸入您的 E-mail，再來開通電子報服務喔！');
+        }
+        
+    }
+}
+function checkExist(cb){
+    SubscribeEmail.find({email: email}).exec(function(error, response) {
+       if(error) {
+           res.send(500,{err: "DB Error" });
+           console.log(error);
+       } else {
+          if(response.length > 0){
+            if(login==0){
+                res.send('已經訂閱過囉！');
             }
-        }
-		function checkSpec(cb){
-			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
-			if(re.test(email)){
-				cb();
-			}else{
-                if(login==0){
-                    res.send('您輸入的 E-mail 格式錯誤！');
-                }else{
-                    res.send('您還沒有登記您的 E-mail 喔！請到「個人設定→修改會員資料」輸入您的 E-mail，再來開通電子報服務喔！');
-                }
-				
-			}
-		}
-		function checkExist(cb){
-            SubscribeEmail.find({email: email}).exec(function(error, response) {
-            	if(error) {
-            	    res.send(500,{err: "DB Error" });
-            	    console.log(error);
-            	} else {
-            		if(response.length > 0){
-                        if(login==0){
-                            res.send('已經訂閱過囉！');
-                        }
-                        else{
-                            SubscribeEmail.destroy({email: email}).exec(function(err){
-                                if(err) {
-                                    res.send(500,{err: "DB Error" });
-                                } else {
-                                    res.send('您已取消訂閱電子報，再按一次即可恢復訂閱！');
-                                }
-                            });
-                        }
-            		}else{
-            			cb();
-            		}
-            	}
-        	});
-        }
-        function subs(){
-            SubscribeEmail.create({email: email}).exec(function(error, response) {
-            	if(error){
-            		res.send(500,{err: "DB Error" });
-            		console.log(error);
-            	}else{
-            		res.send('訂閱成功！');
-            	}
-        	});   
-        }
-        getEmail(function(){
-            checkSpec(function(){
-                checkExist(function(){
-                    subs();
+            else{
+                SubscribeEmail.destroy({email: email}).exec(function(err){
+                    if(err) {
+                        res.send(500,{err: "DB Error" });
+                    } else {
+                        res.send('您已取消訂閱電子報，再按一次即可恢復訂閱！');
+                    }
                 });
-            });
+            }
+        }else{
+         cb();
+     }
+ }
+});
+}
+function subs(){
+    SubscribeEmail.create({email: email}).exec(function(error, response) {
+       if(error){
+          res.send(500,{err: "DB Error" });
+          console.log(error);
+      }else{
+          res.send('訂閱成功！');
+      }
+  });   
+}
+getEmail(function(){
+    checkSpec(function(){
+        checkExist(function(){
+            subs();
         });
-	},
+    });
+});
+},
 
     upload: function(req, res){ //上傳附加檔案
         var isAdmin = req.session.user.isAdmin;
@@ -91,8 +91,8 @@ module.exports = {
 
             uploadFile.upload({ dirname: '../../assets/images/img_email', saveAs: newFileName},function onUploadComplete (err, files) {
                 if (err) return res.serverError(err);
-                    res.send(newFileName);
-                });
+                res.send(newFileName);
+            });
         }else{
             res.send("false");
         }
@@ -173,12 +173,12 @@ module.exports = {
                             }
                         }  
                     }); 
-                }
-            });
-        }else{
-            res.send("你不是管理員喔！");
-        } 
-    },
+}
+});
+}else{
+    res.send("你不是管理員喔！");
+} 
+},
 
     deleteFile: function(req, res) { //刪除檔案
         var fileName = req.param("fileName");

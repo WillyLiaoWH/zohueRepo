@@ -5,9 +5,9 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-    
-	setBoardPage: function(req, res){
+ module.exports = {
+
+     setBoardPage: function(req, res){
 
         function getTimeString(date) {
             if(date.getHours()/12==0) var tt="上午";
@@ -35,26 +35,26 @@ module.exports = {
         var elite="";
         switch (tab) {
             case "all":
-              classification="";
-              break;
+            classification="";
+            break;
             case "motion":
-              classification="病況與心情"
-              break;
+            classification="病況與心情"
+            break;
             case "share":
-              classification="分享";
-              break;
+            classification="分享";
+            break;
             case "problem":
-              classification="問題";
-              break;
+            classification="問題";
+            break;
             case "others":
-              classification="其它";
-              break;
+            classification="其它";
+            break;
             case "elite":
-              classification="";
-              elite="1";
-              break;
+            classification="";
+            elite="1";
+            break;
             default:
-              res.send(400, {error: "bad request error"});
+            res.send(400, {error: "bad request error"});
         }
 
         if(board==21) { // 專業知識論壇頁面不開放
@@ -71,7 +71,7 @@ module.exports = {
                     if(err2 || board.length<1) {
                         res.send(500, { err: "DB Error" });
                     } else {
-                        
+
                         BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
                             totalPage=Math.ceil(articleList.length/articleNumPerPage);
                             if((totalPage!=0&&page>totalPage)||page<1) {
@@ -82,96 +82,96 @@ module.exports = {
                                 if(order=="ASC") {
                                     switch (sort) {
                                         case "responseNum":
-                                            return a.response.length-b.response.length;
-                                            break;
+                                        return a.response.length-b.response.length;
+                                        break;
                                         case "niceNum":
-                                            return a.nicer.length-b.nicer.length;
-                                            break;
+                                        return a.nicer.length-b.nicer.length;
+                                        break;
                                         case "author":
-                                            return a[sort].alias.localeCompare(b[sort].alias);
-                                            break;
+                                        return a[sort].alias.localeCompare(b[sort].alias);
+                                        break;
                                         case "createdAt":
                                         case "lastResponseTime":
-                                            return new Date(a[sort])-new Date(b[sort])
-                                            break;
+                                        return new Date(a[sort])-new Date(b[sort])
+                                        break;
                                         case "classification":
                                         case "title":
-                                            return a[sort].localeCompare(b[sort]);
-                                            break;
+                                        return a[sort].localeCompare(b[sort]);
+                                        break;
                                         case "clickNum":
-                                            return a[sort]-b[sort];
-                                            break;
+                                        return a[sort]-b[sort];
+                                        break;
                                         default:
-                                            res.send(400, {error: "bad request error"});
+                                        res.send(400, {error: "bad request error"});
                                     }
                                 } else {
                                     switch (sort) {
                                         case "responseNum":
-                                            return b.response.length-a.response.length;
-                                            break;
+                                        return b.response.length-a.response.length;
+                                        break;
                                         case "niceNum":
-                                            return b.nicer.length-a.nicer.length;
-                                            break;
+                                        return b.nicer.length-a.nicer.length;
+                                        break;
                                         case "author":
-                                            return b[sort].alias.localeCompare(a[sort].alias);
-                                            break;
+                                        return b[sort].alias.localeCompare(a[sort].alias);
+                                        break;
                                         case "createdAt":
                                         case "lastResponseTime":
-                                            return new Date(b[sort])-new Date(a[sort])
-                                            break;
+                                        return new Date(b[sort])-new Date(a[sort])
+                                        break;
                                         case "classification":
                                         case "title":
-                                            return b[sort].localeCompare(a[sort]);
-                                            break;
+                                        return b[sort].localeCompare(a[sort]);
+                                        break;
                                         case "clickNum":
-                                            return b[sort]-a[sort];
-                                            break;
+                                        return b[sort]-a[sort];
+                                        break;
                                         default:
-                                            res.send(400, {error: "bad request error"});
+                                        res.send(400, {error: "bad request error"});
                                     }
                                 }
                             });
-                            articleList=articleList.slice((page-1)*20, page*20);
-                            for(var i=0; i<articleList.length; i++) {
-                                if(articleList[i].report&&articleList[i].report.length>=maxReport) {
-                                    articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
-                                    articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
-                                    articleList[i].color = "color:grey;";
-                                    articleList[i].linkcolor = "color:grey;";
-                                } else {
-                                    articleList[i].badPic = '';
-                                    articleList[i].link = "href=/article/"+articleList[i].id;
-                                    articleList[i].color = "";
-                                    articleList[i].linkcolor = "color:#336699;";
-                                }
-                                switch(articleList[i].author.type) {
-                                    case "D":
-                                        articleList[i].authorType="&nbsp醫師";
-                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
-                                        break;
-                                    case "S":
-                                        articleList[i].authorType="&nbsp社工師";
-                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'";
-                                        break;
-                                    case "RN":
-                                        articleList[i].authorType="&nbsp護理師";
-                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'";
-                                        break;
-                                    case "P":
-                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友'";
-                                        articleList[i].authorType="";
-                                        break;
-                                    case "F":
-                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'";
-                                        articleList[i].authorType="";
-                                        break;
-                                    default:
-                                        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'";
-                                        articleList[i].authorType="";
-                                }
-                                articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
-                                articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
-                            }
+articleList=articleList.slice((page-1)*20, page*20);
+for(var i=0; i<articleList.length; i++) {
+    if(articleList[i].report&&articleList[i].report.length>=maxReport) {
+        articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
+        articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
+        articleList[i].color = "color:grey;";
+        articleList[i].linkcolor = "color:grey;";
+    } else {
+        articleList[i].badPic = '';
+        articleList[i].link = "href=/article/"+articleList[i].id;
+        articleList[i].color = "";
+        articleList[i].linkcolor = "color:#336699;";
+    }
+    switch(articleList[i].author.type) {
+        case "D":
+        articleList[i].authorType="&nbsp醫師";
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
+        break;
+        case "S":
+        articleList[i].authorType="&nbsp社工師";
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'";
+        break;
+        case "RN":
+        articleList[i].authorType="&nbsp護理師";
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'";
+        break;
+        case "P":
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友'";
+        articleList[i].authorType="";
+        break;
+        case "F":
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'";
+        articleList[i].authorType="";
+        break;
+        default:
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'";
+        articleList[i].authorType="";
+    }
+    articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
+    articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
+}
 
                             var proInfo=-1;
                             for(var i=0; i<boardsCateList.length; i++) {
@@ -186,14 +186,17 @@ module.exports = {
                             md = new MobileDetect(req.headers['user-agent']);
                             var page="";
                             var m;
+                            var css;
                             if (md.mobile()==null){
                                 //PC
                                 page="board/index";
+                                css="style";
                                 m="layout";
                             }
                             else{
                                 //mobile
                                 page="board/mindex";
+                                css="mStyle";
                                 m="mlayout";
                             }
                             res.view(page, {
@@ -209,26 +212,26 @@ module.exports = {
                                 totalPage: totalPage,
                                 page: page,
                                 scripts: [
-                                    '/js/js_board/mainJS.js'
+                                '/js/js_board/mainJS.js'
                                 ],
                                 stylesheets: [
-                                    '/styles/css_board/style.css',
-                                    '/styles/importer.css'
+                                '/styles/css_board/'+css+'.css',
+                                '/styles/importer.css'
                                 ]
                             });
-                        });
-                    }
-                });
-            }
-        });
-    },
+});
+}
+});
+}
+});
+},
 
-    setFrontBoard: function(req, res) {
-        function getTimeString(date) {
-            if(date.getHours()/12==0) var tt="上午";
-            else var tt="下午";
-            return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
-        }
+setFrontBoard: function(req, res) {
+    function getTimeString(date) {
+        if(date.getHours()/12==0) var tt="上午";
+        else var tt="下午";
+        return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
+    }
         //settings
         var maxReport=3;
         var articleNumPerPage=20;
@@ -251,27 +254,27 @@ module.exports = {
         var elite="";
         switch (tab) {
             case "all":
-              classification="";
-              break;
+            classification="";
+            break;
             case "motion":
-              classification="病況與心情"
-              break;
+            classification="病況與心情"
+            break;
             case "share":
-              classification="分享";
-              break;
+            classification="分享";
+            break;
             case "problem":
-              classification="問題";
-              break;
+            classification="問題";
+            break;
             case "others":
-              classification="其它";
-              break;
+            classification="其它";
+            break;
             case "elite":
-              classification="";
-              elite="1";
-              break;
+            classification="";
+            elite="1";
+            break;
             default:
-              console.log("tab incorrect");
-              res.send(400, {error: "bad request error"});
+            console.log("tab incorrect");
+            res.send(400, {error: "bad request error"});
         }
         
         Articles.find({classification: {'contains': classification}, title: {'contains': keyword}, board: {"!": 21}, deleted: "false", elite: {'contains': elite}}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
@@ -288,131 +291,134 @@ module.exports = {
                         if(order=="ASC") {
                             switch (sort) {
                                 case "responseNum":
-                                    return a.response.length-b.response.length;
-                                    break;
+                                return a.response.length-b.response.length;
+                                break;
                                 case "niceNum":
-                                    return a.nicer.length-b.nicer.length;
-                                    break;
+                                return a.nicer.length-b.nicer.length;
+                                break;
                                 case "author":
-                                    return a[sort].alias.localeCompare(b[sort].alias);
-                                    break;
+                                return a[sort].alias.localeCompare(b[sort].alias);
+                                break;
                                 case "createdAt":
                                 case "lastResponseTime":
-                                    return new Date(a[sort])-new Date(b[sort])
-                                    break;
+                                return new Date(a[sort])-new Date(b[sort])
+                                break;
                                 case "classification":
                                 case "title":
-                                    return a[sort].localeCompare(b[sort]);
-                                    break;
+                                return a[sort].localeCompare(b[sort]);
+                                break;
                                 case "clickNum":
-                                    return a[sort]-b[sort];
-                                    break;
+                                return a[sort]-b[sort];
+                                break;
                                 default:
-                                    res.send(400, {error: "bad request error"});
+                                res.send(400, {error: "bad request error"});
                             }
                         } else {
                             switch (sort) {
                                 case "responseNum":
-                                    return b.response.length-a.response.length;
-                                    break;
+                                return b.response.length-a.response.length;
+                                break;
                                 case "niceNum":
-                                    return b.nicer.length-a.nicer.length;
-                                    break;
+                                return b.nicer.length-a.nicer.length;
+                                break;
                                 case "author":
-                                    return b[sort].alias.localeCompare(a[sort].alias);
-                                    break;
+                                return b[sort].alias.localeCompare(a[sort].alias);
+                                break;
                                 case "createdAt":
                                 case "lastResponseTime":
-                                    return new Date(b[sort])-new Date(a[sort])
-                                    break;
+                                return new Date(b[sort])-new Date(a[sort])
+                                break;
                                 case "classification":
                                 case "title":
-                                    return b[sort].localeCompare(a[sort]);
-                                    break;
+                                return b[sort].localeCompare(a[sort]);
+                                break;
                                 case "clickNum":
-                                    return b[sort]-a[sort];
-                                    break;
+                                return b[sort]-a[sort];
+                                break;
                                 default:
-                                    res.send(400, {error: "bad request error"});
+                                res.send(400, {error: "bad request error"});
                             }
                         }
                     });
-                    
-                    var boardRefe=[];
-                    for(var i=0; i<boardsCateList.length; i++) {
-                        for(var j=0; j<boardsCateList[i].board.length; j++) {
-                            boardRefe[boardsCateList[i].board[j].id]=boardsCateList[i].title;
-                        }
-                    }
 
-                    articleList=articleList.slice((page-1)*20, page*20);
+var boardRefe=[];
+for(var i=0; i<boardsCateList.length; i++) {
+    for(var j=0; j<boardsCateList[i].board.length; j++) {
+        boardRefe[boardsCateList[i].board[j].id]=boardsCateList[i].title;
+    }
+}
 
-                    for(var i=0; i<articleList.length; i++) {
-                        articleList[i].title="["+boardRefe[articleList[i].board.id]+"—"+articleList[i].board.title+"]<br>"+articleList[i].title;
+articleList=articleList.slice((page-1)*20, page*20);
 
-                        if(articleList[i].report&&articleList[i].report.length>=maxReport) {
-                            articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
-                            articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
-                            articleList[i].color = "color:grey;";
-                            articleList[i].linkcolor = "color:grey;";
-                        } else {
-                            articleList[i].badPic = '';
-                            articleList[i].link = "href=/article/"+articleList[i].id;
-                            articleList[i].color = "";
-                            articleList[i].linkcolor = "color:#336699;";
-                        }
-                        switch(articleList[i].author.type) {
-                            case "D":
-                                articleList[i].authorType="&nbsp醫師";
-                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>";
-                                break;
-                            case "S":
-                                articleList[i].authorType="&nbsp社工師";
-                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>";
-                                break;
-                            case "RN":
-                                articleList[i].authorType="&nbsp護理師";
-                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>";
-                                break;
-                            case "P":
-                                articleList[i].authorIcon="<img class='imgAuthorType' class= src='/images/img_forum/user_icon.png' title='病友'/>";
-                                articleList[i].authorType="";
-                                break;
-                            case "F":
-                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'/>";
-                                articleList[i].authorType="";
-                                break;
-                            default:
-                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'/>";
-                                articleList[i].authorType="";
-                        }
-                        articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
-                        articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
-                    }
+for(var i=0; i<articleList.length; i++) {
+    articleList[i].title="["+boardRefe[articleList[i].board.id]+"—"+articleList[i].board.title+"]<br>"+articleList[i].title;
 
-                    var proInfo=-1;
-                    for(var i=0; i<boardsCateList.length; i++) {
-                        if(boardsCateList[i].id==5) {
-                            proInfo=i;
-                            break;
-                        }
-                    }
-                    boardsCateList.splice(i, 1);
-                    page="board/index";
-                    var MobileDetect = require('mobile-detect'),
-                    md = new MobileDetect(req.headers['user-agent']);
-                    var m;
-                    if (md.mobile()==null){
+    if(articleList[i].report&&articleList[i].report.length>=maxReport) {
+        articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
+        articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
+        articleList[i].color = "color:grey;";
+        articleList[i].linkcolor = "color:grey;";
+    } else {
+        articleList[i].badPic = '';
+        articleList[i].link = "href=/article/"+articleList[i].id;
+        articleList[i].color = "";
+        articleList[i].linkcolor = "color:#336699;";
+    }
+    switch(articleList[i].author.type) {
+        case "D":
+        articleList[i].authorType="&nbsp醫師";
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>";
+        break;
+        case "S":
+        articleList[i].authorType="&nbsp社工師";
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>";
+        break;
+        case "RN":
+        articleList[i].authorType="&nbsp護理師";
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>";
+        break;
+        case "P":
+        articleList[i].authorIcon="<img class='imgAuthorType' class= src='/images/img_forum/user_icon.png' title='病友'/>";
+        articleList[i].authorType="";
+        break;
+        case "F":
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'/>";
+        articleList[i].authorType="";
+        break;
+        default:
+        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'/>";
+        articleList[i].authorType="";
+    }
+    articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
+    articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
+}
+
+var proInfo=-1;
+for(var i=0; i<boardsCateList.length; i++) {
+    if(boardsCateList[i].id==5) {
+        proInfo=i;
+        break;
+    }
+}
+boardsCateList.splice(i, 1);
+page="board/index";
+var MobileDetect = require('mobile-detect'),
+md = new MobileDetect(req.headers['user-agent']);
+var m;
+var css;
+if (md.mobile()==null){
                         //PC
                         page="board/index";
+                        css="style";
                         m="layout";
                     }
                     else{
                         //mobile
                         page="board/mindex";
+                        css="mStyle";
                         m="mlayout";
                     }
-                     res.view(page, {
+                    res.view(page, {
                     //res.view("board/index",{
                         tab: req.param("tab"),
                         keyword: req.param("search"),
@@ -425,50 +431,50 @@ module.exports = {
                         totalPage: totalPage,
                         page: page,
                         scripts: [
-                            '/js/js_frontboard/mainJS.js'
+                        '/js/js_frontboard/mainJS.js'
                         ],
                         stylesheets: [
-                            '/styles/css_frontboard/style.css',
-                            '/styles/importer.css'
+                        '/styles/css_frontboard/'+css+'.css',
+                        '/styles/importer.css'
                         ]
                     });
                 });
-            }
-        });
-    },
+}
+});
+},
 
-    setBoardFrontPage: function(req, res){
-        var tab=req.param("tab");
-        var classification;
-        switch (tab) {
-            case "all":
-              classification="";
-              break;
-            case "motion":
-              classification="心情"
-              break;
-            case "share":
-              classification="分享";
-              break;
-            case "problem":
-              classification="問題";
-              break;
-            case "others":
-              classification="其它";
-              break;
-        }
-        var board=req.param("board");
-        var boards;
-        var boardCate;
-        
-        BoardCategory.find().exec(function(err, boardCateList) {
-            boardCate=boardCateList;
-        });
+setBoardFrontPage: function(req, res){
+    var tab=req.param("tab");
+    var classification;
+    switch (tab) {
+        case "all":
+        classification="";
+        break;
+        case "motion":
+        classification="心情"
+        break;
+        case "share":
+        classification="分享";
+        break;
+        case "problem":
+        classification="問題";
+        break;
+        case "others":
+        classification="其它";
+        break;
+    }
+    var board=req.param("board");
+    var boards;
+    var boardCate;
+    
+    BoardCategory.find().exec(function(err, boardCateList) {
+        boardCate=boardCateList;
+    });
 
-        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articlesList) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
-            } else {
+    Articles.find({classification: {'contains': classification}, deleted: "false"}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articlesList) {
+        if (err) {
+            res.send(500, { err: "DB Error" });
+        } else {
                 // TBD revise
                 if(articlesList[0]!==undefined){
                     Boards.find({id: articlesList[0].board.id}).populate('category').exec(function(err, board) {
@@ -486,8 +492,8 @@ module.exports = {
                 }
             }
         });    
-        
-    },
+    
+},
 
     setAllBoardPage: function(req, res){ // 在後台使用，可以根據board category撈文章。
         var boards;
@@ -607,61 +613,61 @@ module.exports = {
                     if(req.session.authenticated && 
                         req.session.user.id==articlesList[0].author.id) {
                         isAuthor=true;
-                    } else {
-                        isAuthor=false;
+                } else {
+                    isAuthor=false;
+                }
+                if(req.session.authenticated && articlesList[0].nicer) {
+                    isNice=false;
+                    for(i=0; i<articlesList[0].nicer.length; i++) {
+                        if(articlesList[0].nicer[i]&&req.session.user.id==articlesList[0].nicer[i]) {
+                            isNice=true;
+                            break;
+                        }
                     }
-                    if(req.session.authenticated && articlesList[0].nicer) {
-                        isNice=false;
-                        for(i=0; i<articlesList[0].nicer.length; i++) {
-                            if(articlesList[0].nicer[i]&&req.session.user.id==articlesList[0].nicer[i]) {
-                                isNice=true;
-                                break;
+                } else {
+                    isNice=false;
+                    
+                }
+                if(req.session.authenticated && articlesList[0].follower.indexOf(req.session.user.id)!=-1) {
+                    var isFollower=true;
+                } else {
+                    var isFollower=false;
+                }
+
+                var isReport=false;
+                var reportCount=articlesList[0].report.length;
+                if(req.session.authenticated) {
+                    Report.find({article: id, reporter: req.session.user.id}).exec(function(err, report){
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            if(report && report.length!=0) {
+                                isReport=true;
+                            } else {
+                                isReport=false;
                             }
                         }
-                    } else {
-                        isNice=false;
-                        
-                    }
-                    if(req.session.authenticated && articlesList[0].follower.indexOf(req.session.user.id)!=-1) {
-                        var isFollower=true;
-                    } else {
-                        var isFollower=false;
-                    }
+                    });
+                } else {
+                    isReport=false;
+                }
 
-                    var isReport=false;
-                    var reportCount=articlesList[0].report.length;
-                    if(req.session.authenticated) {
-                        Report.find({article: id, reporter: req.session.user.id}).exec(function(err, report){
-                            if(err) {
-                                console.log(err);
-                            } else {
-                                if(report && report.length!=0) {
-                                    isReport=true;
-                                } else {
-                                    isReport=false;
-                                }
-                            }
-                        });
-                    } else {
-                        isReport=false;
-                    }
+                if(req.session.authenticated) {
+                    login=true;
+                } else {
+                    login=false;
+                }
+                R_NiceCount(function(responseList){
+                    RUNI_NiceCount(responseList, function(responseNiceCount){
 
-                    if(req.session.authenticated) {
-                        login=true;
-                    } else {
-                        login=false;
-                    }
-                    R_NiceCount(function(responseList){
-                        RUNI_NiceCount(responseList, function(responseNiceCount){
-                            
-                            articlesList[0].createdAt = new Date(articlesList[0].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                            articlesList[0].lastResponseTime = new Date(articlesList[0].lastResponseTime).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                            var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
-                            articlesList[0].content=articlesList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+                        articlesList[0].createdAt = new Date(articlesList[0].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                        articlesList[0].lastResponseTime = new Date(articlesList[0].lastResponseTime).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                        var regex = /\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g;
+                        articlesList[0].content=articlesList[0].content.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
 
-                            if(response.length!=0){
-                                for(i=0; i<response.length; i++) {
-                                    response[i].createdAt = new Date(response[i].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                        if(response.length!=0){
+                            for(i=0; i<response.length; i++) {
+                                response[i].createdAt = new Date(response[i].createdAt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                                     //預先處理comment中的圖片
                                     response[i].comment_image = response[i].comment_image.replace(/dummy href=/g, "a href=").replace(/\/dummy/g, "\/a");
                                     response[i].comment = response[i].comment.replace(regex, '<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
@@ -679,22 +685,25 @@ module.exports = {
                                         var metaUrl="http://zohue.im.ntu.edu.tw/article/"+articles[0].id;
                                         var metaDescription="ZOHUE作夥台灣頭頸癌病友加油站";
                                         var loginid = "guest"; // 沒登入者
-                                            if(typeof req.session.user !== 'undefined'){
-                                                loginid = req.session.user.id;
+                                        if(typeof req.session.user !== 'undefined'){
+                                            loginid = req.session.user.id;
                                         }
 
                                         var MobileDetect = require('mobile-detect'),
                                         md = new MobileDetect(req.headers['user-agent']);
                                         var page="";
                                         var m;
+                                        var css;
                                         if (md.mobile()==null){
                                             //PC
                                             page="article/index";
+                                            css="style";
                                             m="layout";
                                         }
                                         else{
                                             //mobile
                                             page="article/mindex";
+                                            css="mStyle";
                                             m="mlayout";
                                         }
                                         return res.view(page, {
@@ -716,68 +725,68 @@ module.exports = {
                                             reportCount: reportCount, 
                                             isFollower: isFollower,
                                             scripts: [
-                                                '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                                '/js/js_public/alertify.js',
-                                                '/js/js_article/mainJS.js',
-                                                '/js/js_post/cropper.min.js',
-                                                '/js/js_article/crop-avatar.js'
-                                              ],
+                                            '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                            '/js/js_public/alertify.js',
+                                            '/js/js_article/mainJS.js',
+                                            '/js/js_post/cropper.min.js',
+                                            '/js/js_article/crop-avatar.js'
+                                            ],
                                             stylesheets: [
-                                                '/styles/css_article/style.css',
-                                                '/styles/css_post/crop-avatar.css',
-                                                '/styles/css_post/cropper.min.css',
-                                                '/styles/importer.css',
-                                                '/styles/css_public/themes/alertify.core.css',
-                                                '/styles/css_public/themes/alertify.default.css'
-                                              ],
+                                            '/styles/css_article/'+css+'.css',
+                                            '/styles/css_post/crop-avatar.css',
+                                            '/styles/css_post/cropper.min.css',
+                                            '/styles/importer.css',
+                                            '/styles/css_public/themes/alertify.core.css',
+                                            '/styles/css_public/themes/alertify.default.css'
+                                            ],
                                         });
-                                    }   
-                                }
-                            });
-                        });
-                    });
-                }
-            }
-        });
-    },
-    
-	postArticle: function(req, res){
-        
-		var title=req.param("title");
-        var classification=req.param("classification");
-		var author=req.session.user.id;
-		var content=req.param("content");
-        var responseNum=req.param("responseNum");
-        var clickNum=req.param("clickNum");
-        var board=req.param("board");
-        var follower=[req.session.user.id];
-        
+}   
+}
+});
+});
+});
+}
+}
+});
+},
+
+postArticle: function(req, res){
+
+  var title=req.param("title");
+  var classification=req.param("classification");
+  var author=req.session.user.id;
+  var content=req.param("content");
+  var responseNum=req.param("responseNum");
+  var clickNum=req.param("clickNum");
+  var board=req.param("board");
+  var follower=[req.session.user.id];
+  
         // if(!req.session.user) {
         //     res.send({err: "尚未登入"});
         // } else {
-    		Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
-                if(error) {
-                    res.send(500,{err: "DB Error" });
-                    console.log(error);
-                } else {
-                    
-                    Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article2) {
-                        if(err) {
-                            res.send(500,{err: "DB Error" });
-                            console.log(err);
-                        } else {
+          Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
+            if(error) {
+                res.send(500,{err: "DB Error" });
+                console.log(error);
+            } else {
 
-                            if(article2[0].board==19||article2[0].board==20) {
-                                if(title.length>20) {
-                                    var notContent=title.substr(0, 20)+"...";
-                                } else {
-                                    var notContent=title;
+                Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article2) {
+                    if(err) {
+                        res.send(500,{err: "DB Error" });
+                        console.log(err);
+                    } else {
+
+                        if(article2[0].board==19||article2[0].board==20) {
+                            if(title.length>20) {
+                                var notContent=title.substr(0, 20)+"...";
+                            } else {
+                                var notContent=title;
+                            }
+                            Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
+                                if(err) {
+                                    console.log(err);
                                 }
-                                Notification.create({user: 45, notType: "11", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/article/"+article2[0].id, alreadySeen: false}).exec(function(err, not) {
-                                    if(err) {
-                                        console.log(err);
-                                    }
-                                });
+                            });
                                 //寄信給管理者
                                 //引用 nodemailer  
                                 var list
@@ -794,8 +803,8 @@ module.exports = {
                                     auth: {  
                                      user: 'ntu.cpcp@gmail.com',  
                                      pass: 'lckung413'  
-                                    }  
-                                });  
+                                 }  
+                             });  
                                 var options = {  
                                     //寄件者  
                                     from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
@@ -807,7 +816,7 @@ module.exports = {
                                     
                                     //嵌入 html 的內文  
                                     html: article2[0].content+"<br><br><a href=http://zohue.im.ntu.edu.tw/article/"+article2[0].id+">link</a>",   
-                                       
+                                    
                                 };  
                                 
                                 //發送信件方法  
@@ -826,86 +835,89 @@ module.exports = {
                             
                         }
                     });
-                }
-            });
-	},
-    syncArticleToTimeline: function(req, res){
-        var author=req.session.user.id;
-        var content=req.param("timeline_post_content");
-        var contentImg=req.param("timeline_post_image");
-        var auth=req.param("timeline_post_auth");
-        var board = req.param("timeline_post_board");
-        var isAdmin = req.session.user.isAdmin;
+}
+});
+},
+syncArticleToTimeline: function(req, res){
+    var author=req.session.user.id;
+    var content=req.param("timeline_post_content");
+    var contentImg=req.param("timeline_post_image");
+    var auth=req.param("timeline_post_auth");
+    var board = req.param("timeline_post_board");
+    var isAdmin = req.session.user.isAdmin;
 
-        if( isAdmin == true && board == "17"){
-            Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, updatedTime: new Date()}).exec(function(error, timeline) {
-                if(error) {
-                    res.send(500,{err: "發生錯誤了Q_Q" });
-                } else {
-                    User.find({id: req.session.user.id}).exec(function(err, admin) {
-                        if(err) {
-                            res.send(500,{err: "發生錯誤了Q_Q" });
-                        } else {
-                            if(content.length>20) {
-                                var notContent=content.substr(0, 20)+"...";
-                            } else {
-                                var notContent=content;
-                            }
-                            for(var i=0; i<admin[0].friends.length; i++) {
-                                Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
-                                    if(err) {
-                                        console.log(err);
-                                    }
-                                });
-                            }
-                            res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
-                        }
-                    });
-                }
-            });
-        }
-    },
-    setEditArticlePage: function(req, res){
-        var id=req.param("article_id");
-
-        Articles.find({id: id}).populate('author').exec(function(err, article) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
+    if( isAdmin == true && board == "17"){
+        Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, updatedTime: new Date()}).exec(function(error, timeline) {
+            if(error) {
+                res.send(500,{err: "發生錯誤了Q_Q" });
             } else {
-                if(article.length==0) {
-                    res.send(404, "查無此文章");
-                } else if(article[0].deleted&&article[0].deleted=="true") {
-                    res.send(404, "查無此文章");
-                } else {
-                    if(req.session.authenticated && 
-                        req.session.user.id==article[0].author.id) {
-                        isAuthor=true;
+                User.find({id: req.session.user.id}).exec(function(err, admin) {
+                    if(err) {
+                        res.send(500,{err: "發生錯誤了Q_Q" });
                     } else {
-                        isAuthor=false;
-                    }
-                    content = article[0].content.substring(0,article[0].content.indexOf("<div id='postContent_image'>\n"));
-                    content_image = article[0].content.substring(article[0].content.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, article[0].content.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
-                    content_image = content_image.replace(/<a/g, "<dummy");
-
-                    if(id=='undefined') res.send(500, "server error");
-                    Articles.find(id).exec(function(err, articles) {
-                        if(err) {
-                            console.log("錯誤訊息："+err);
-                            res.send(500, "server error");
+                        if(content.length>20) {
+                            var notContent=content.substr(0, 20)+"...";
                         } else {
-                            if(articles.length==1) {
-                                var MobileDetect = require('mobile-detect'),
-                                md = new MobileDetect(req.headers['user-agent']);
-                                var page="";
-                                var m;
-                                if (md.mobile()==null){
+                            var notContent=content;
+                        }
+                        for(var i=0; i<admin[0].friends.length; i++) {
+                            Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
+                                if(err) {
+                                    console.log(err);
+                                }
+                            });
+                        }
+                        res.send({timelinesList: [timeline], avatar: req.session.user.img, alias: req.session.user.alias, id: req.session.user.id});
+                    }
+                });
+}
+});
+}
+},
+setEditArticlePage: function(req, res){
+    var id=req.param("article_id");
+
+    Articles.find({id: id}).populate('author').exec(function(err, article) {
+        if (err) {
+            res.send(500, { err: "DB Error" });
+        } else {
+            if(article.length==0) {
+                res.send(404, "查無此文章");
+            } else if(article[0].deleted&&article[0].deleted=="true") {
+                res.send(404, "查無此文章");
+            } else {
+                if(req.session.authenticated && 
+                    req.session.user.id==article[0].author.id) {
+                    isAuthor=true;
+            } else {
+                isAuthor=false;
+            }
+            content = article[0].content.substring(0,article[0].content.indexOf("<div id='postContent_image'>\n"));
+            content_image = article[0].content.substring(article[0].content.indexOf("<div id='postContent_image'>\n")+"<div id='postContent_image'>\n".length, article[0].content.indexOf("id=\"clear\"><\/div>")+"id=\"clear\"><\/div>".length);
+            content_image = content_image.replace(/<a/g, "<dummy");
+
+            if(id=='undefined') res.send(500, "server error");
+            Articles.find(id).exec(function(err, articles) {
+                if(err) {
+                    console.log("錯誤訊息："+err);
+                    res.send(500, "server error");
+                } else {
+                    if(articles.length==1) {
+                        var MobileDetect = require('mobile-detect'),
+                        md = new MobileDetect(req.headers['user-agent']);
+                        var page="";
+                        var m;
+                        var css;
+                        if (md.mobile()==null){
                                     //PC
                                     page="editArticle/index";
+                                    css="style";
                                     m="layout";
                                 }
                                 else{
                                     //mobile
                                     page="editArticle/mindex";
+                                    css="mStyle";
                                     m="mlayout";
                                 }
                                 return res.view(page, {
@@ -915,430 +927,430 @@ module.exports = {
                                     layout:m,
                                     isAuthor: isAuthor, 
                                     scripts: [
-                                        '/js/js_editArticle/mainJS.js',
-                                        '/js/js_post/cropper.min.js',
-                                        '/js/js_editArticle/crop-avatar.js'
+                                    '/js/js_editArticle/mainJS.js',
+                                    '/js/js_post/cropper.min.js',
+                                    '/js/js_editArticle/crop-avatar.js'
                                     ],
                                     stylesheets: [
-                                        '/styles/css_editArticle/style.css',
-                                        '/styles/css_post/crop-avatar.css',
-                                        '/styles/css_post/cropper.min.css',
-                                        '/styles/importer.css',
+                                    '/styles/css_editArticle/'+css+'.css',
+                                    '/styles/css_post/crop-avatar.css',
+                                    '/styles/css_post/cropper.min.css',
+                                    '/styles/importer.css',
                                     ],
                                 });
                             }   
                         }
                     });
+}
+}
+});
+},
+changeArticle: function(req, res) {
+    var articleId = req.param("id");
+    var newTitle = req.param("newTitle");
+    var newContent = req.param("newContent");
+    
+    Articles.update({id: articleId}, {title: newTitle, content: newContent}).exec(function(error, article) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+            console.log(error);
+        } else {
+            Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article) {
+                if(err) {
+                    res.send(500,{err: "DB Error" });
+                    console.log(err);
+                } else {
+                    res.send(article);
+                }
+            });
+        }
+    });
+},
+
+
+updateClickNum: function(req, res) {
+    var id = req.param("id");
+
+    Articles.find({id: id}).exec(function(err, article) {
+        if (err) {
+            res.send(500, { err: "DB Error" });
+        } else {
+            var clickNum = parseInt(article[0].clickNum)+1;
+            Articles.update({id: id}, {clickNum: clickNum}).exec(function(error, updated) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                    console.log(error);
+                } else {
+                    res.send("ClickNum updated.");
+                }
+            });
+        }
+    });
+},
+
+setEliteArticle: function(req, res) {
+    var articleId = req.param("id");
+    
+    Articles.update({id: articleId}, {elite: "1"}).exec(function(err) {
+        if(err) {
+            console.log(error);
+            res.send(500,{err: "DB Error" });
+        } else {
+            console.log('The article record id:'+ articleId +' has been set to be elite');
+            res.send("已標記為精華文章");
+        }
+    });
+},
+
+cancelEliteArticle: function(req, res) {
+    var articleId = req.param("id");
+    
+    Articles.update({id: articleId}, {elite: "0"}).exec(function(err) {
+        if(err) {
+            console.log(error);
+            res.send(500,{err: "DB Error" });
+        } else {
+            console.log('The article record id:'+ articleId +' has been set NOT to be elite');
+            res.send("已標記為非精華文章");
+        }
+    });
+},
+
+deleteArticle: function(req, res) {
+    var articleId = req.param("id");
+    
+    Articles.update({id: articleId}, {deleted: "true"}).exec(function(err) {
+        if(err) {
+            console.log(error);
+            res.send(500,{err: "DB Error" });
+        } else {
+            console.log('The record has been deleted');
+            res.send("已刪除文章");
+        }
+    });
+},
+
+clickNice: function(req, res) {
+    var articleId = req.param("article_id");
+    Articles.find({id: articleId}).exec(function(error, article) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+            console.log("error"+error);
+        } else {
+            var newNicer=article[0].nicer;
+            var newFollower=article[0].follower;
+            if(req.session.user) {
+                if(newNicer.indexOf(req.session.user.id)==-1) {
+                    newNicer.push(req.session.user.id);
+                }
+                if(newFollower.indexOf(req.session.user.id)==-1) {
+                    newFollower.push(req.session.user.id);
                 }
             }
-        });
-    },
-    changeArticle: function(req, res) {
-        var articleId = req.param("id");
-        var newTitle = req.param("newTitle");
-        var newContent = req.param("newContent");
-        
-        Articles.update({id: articleId}, {title: newTitle, content: newContent}).exec(function(error, article) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } else {
-                Articles.update({id: article.id},{lastResponseTime: article.updatedAt}).exec(function(err, article) {
-                    if(err) {
-                        res.send(500,{err: "DB Error" });
-                        console.log(err);
+            
+            Articles.update({id: articleId}, {nicer: newNicer, follower: newFollower}).exec(function(error, updated) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                    console.log("error2"+error);
+                } else {
+                    if(updated[0].title.length>20) {
+                        var notContent=updated[0].title.substr(0, 20)+"...";
                     } else {
-                        res.send(article);
+                        var notContent=updated[0].title;
                     }
-                });
-            }
-        });
-    },
-
-
-    updateClickNum: function(req, res) {
-        var id = req.param("id");
-
-        Articles.find({id: id}).exec(function(err, article) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
-            } else {
-                var clickNum = parseInt(article[0].clickNum)+1;
-                Articles.update({id: id}, {clickNum: clickNum}).exec(function(error, updated) {
-                    if(error) {
-                        res.send(500,{err: "DB Error" });
-                        console.log(error);
-                    } else {
-                        res.send("ClickNum updated.");
-                    }
-                });
-            }
-        });
-    },
-
-    setEliteArticle: function(req, res) {
-        var articleId = req.param("id");
-        
-        Articles.update({id: articleId}, {elite: "1"}).exec(function(err) {
-            if(err) {
-                console.log(error);
-                res.send(500,{err: "DB Error" });
-            } else {
-                console.log('The article record id:'+ articleId +' has been set to be elite');
-                res.send("已標記為精華文章");
-            }
-        });
-    },
-
-    cancelEliteArticle: function(req, res) {
-        var articleId = req.param("id");
-        
-        Articles.update({id: articleId}, {elite: "0"}).exec(function(err) {
-            if(err) {
-                console.log(error);
-                res.send(500,{err: "DB Error" });
-            } else {
-                console.log('The article record id:'+ articleId +' has been set NOT to be elite');
-                res.send("已標記為非精華文章");
-            }
-        });
-    },
-
-    deleteArticle: function(req, res) {
-        var articleId = req.param("id");
-        
-        Articles.update({id: articleId}, {deleted: "true"}).exec(function(err) {
-            if(err) {
-                console.log(error);
-                res.send(500,{err: "DB Error" });
-            } else {
-                console.log('The record has been deleted');
-                res.send("已刪除文章");
-            }
-        });
-    },
-
-    clickNice: function(req, res) {
-        var articleId = req.param("article_id");
-        Articles.find({id: articleId}).exec(function(error, article) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log("error"+error);
-            } else {
-                var newNicer=article[0].nicer;
-                var newFollower=article[0].follower;
-                if(req.session.user) {
-                    if(newNicer.indexOf(req.session.user.id)==-1) {
-                        newNicer.push(req.session.user.id);
-                    }
-                    if(newFollower.indexOf(req.session.user.id)==-1) {
-                        newFollower.push(req.session.user.id);
-                    }
-                }
-                
-                Articles.update({id: articleId}, {nicer: newNicer, follower: newFollower}).exec(function(error, updated) {
-                    if(error) {
-                        res.send(500,{err: "DB Error" });
-                        console.log("error2"+error);
-                    } else {
-                        if(updated[0].title.length>20) {
-                            var notContent=updated[0].title.substr(0, 20)+"...";
-                        } else {
-                            var notContent=updated[0].title;
-                        }
-                        for(var i=0; i<updated[0].follower.length; i++) {
-                            if(updated[0].follower[i]!=req.session.user.id) {
-                                Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false, link: "/article/"+articleId, content: notContent, alreadySeen: false}).exec(function(err, not) {
-                                    if(err) {
-                                        console.log(err);
-                                        res.send({err:"DB error"});
-                                    }
-                                });
-                            }
-                        }
-                        res.send({num:updated[0].nicer.length});
-                    }
-                });
-            }
-        });
-    },
-
-    cancelNice: function(req, res) {
-        var articleId = req.param("article_id");
-        Articles.find({id: articleId}).populate("nicer").exec(function(error, article) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-            } else {
-                var niceList=article[0].nicer;
-                var newNiceList=[];
-                for(i=0; i<niceList.length; i++) {
-                    if(niceList[i]&&niceList[i].id!=req.session.user.id) {
-                        newNiceList.push(niceList[i]);
-                    }
-                }
-                Articles.update({id: articleId}, {nicer: newNiceList}).exec(function(error, updated) {
-                    if(error) {
-                        res.send(500,{err: "DB Error" });
-                    } else {
-                        res.send({num:updated[0].nicer.length});
-                    }
-                });
-            }
-        });
-    },
-
-    clickReport: function(req, res) {
-        var articleId = req.param("article_id");
-        var reason = req.param("reason");
-        Report.create({article: articleId, reporter: req.session.user.id, reason: reason}).exec(function(error, report) {
-            if(error) {
-                console.log("error:"+error);
-                res.send(500, {err: "DB Error"});
-            }
-        });
-        Articles.find({id: articleId}).populate('report').exec(function(error, article) {
-            if(error) {
-                res.send(500, {err: "DB Error"});
-                console.log(error);
-            } else {
-                res.send({num: article[0].report.length});
-            }
-        });
-    },
-
-    cancelReport: function(req, res) {
-        var articleId = req.param("article_id");
-        Articles.find({id: articleId}).populate("report").exec(function(error, article) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-            } else {
-                Report.destroy({article: articleId, reporter: req.session.user.id}).exec(function(error) {
-                    if(error) {
-                        console.log(error);
-                        res.send(500, {err: "DB Error"});
-                    } else {
-                        res.send({num: article[0].report.length-1});
-                    }
-                });
-            }
-        });
-    },
-
-    niceResponse: function(req, res) {
-        var response_id = req.param("response_id");
-        Response.find({id: response_id}).populate("nicer").exec(function(error, response) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } else {
-                var niceList=response[0].nicer;
-                if(!niceList) {
-                    niceList=[];
-                }
-                niceList.push(req.session.user);
-
-                Response.update({id: response_id}, {nicer: niceList}).exec(function(error, updated) {
-                    if(error) {
-                        res.send(500,{err: "DB Error" });
-                        console.log(error);
-                    } else {
-
-                        if(updated[0].author!=req.session.user.id) {
-                            if(updated[0].comment.length>20) {
-                                var notContent=updated[0].comment.substr(0, 20)+"...";
-                            } else {
-                                var notContent=updated[0].comment;
-                            }
-                            Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false, link: "/article/"+updated[0].article, content: notContent, alreadySeen: false}).exec(function(err, not) {
+                    for(var i=0; i<updated[0].follower.length; i++) {
+                        if(updated[0].follower[i]!=req.session.user.id) {
+                            Notification.create({user: updated[0].follower[i], notType: "2", from: req.session.user.id, alreadyRead: false, link: "/article/"+articleId, content: notContent, alreadySeen: false}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});
                                 }
                             });
                         }
-                        res.send(updated);
                     }
-                });
+                    res.send({num:updated[0].nicer.length});
+                }
+            });
+}
+});
+},
+
+cancelNice: function(req, res) {
+    var articleId = req.param("article_id");
+    Articles.find({id: articleId}).populate("nicer").exec(function(error, article) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+        } else {
+            var niceList=article[0].nicer;
+            var newNiceList=[];
+            for(i=0; i<niceList.length; i++) {
+                if(niceList[i]&&niceList[i].id!=req.session.user.id) {
+                    newNiceList.push(niceList[i]);
+                }
             }
-        });
-    },
-
-    notNiceResponse: function(req, res) {
-        var response_id = req.param("response_id");
-        Response.find({id: response_id}).populate("nicer").exec(function(error, response) {
-            if(error) {
-                res.send(500,{err: "DB Error" });
-                console.log(error);
-            } else {
-                var niceList=response[0].nicer;
-                index=niceList.indexOf(req.session.user);
-                niceList.splice(index, 1);
-                Response.update({id: response_id}, {nicer: niceList}).exec(function(error, updated) {
-                    if(error) {
-                        res.send(500,{err: "DB Error" });
-                        console.log(error);
-                    } else {
-                        res.send(updated);
-                    }
-                });
-            }
-        });
-    },
-
-    searchArticle: function(req, res){
-        var keyword = req.param("keyword");
-        var board=req.param("board");
-        
-
-        var tab=req.param("tab");
-        var classification;
-        switch (tab) {
-            case "all":
-              classification="";
-              break;
-            case "motion":
-              classification="心情"
-              break;
-            case "share":
-              classification="分享";
-              break;
-            case "problem":
-              classification="問題";
-              break;
-            case "others":
-              classification="其它";
-              break;
+            Articles.update({id: articleId}, {nicer: newNiceList}).exec(function(error, updated) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                } else {
+                    res.send({num:updated[0].nicer.length});
+                }
+            });
         }
+    });
+},
 
-        var boardCate;
-        BoardCategory.find().exec(function(err, boardCateList) {
-            boardCate=boardCateList;
-        });
+clickReport: function(req, res) {
+    var articleId = req.param("article_id");
+    var reason = req.param("reason");
+    Report.create({article: articleId, reporter: req.session.user.id, reason: reason}).exec(function(error, report) {
+        if(error) {
+            console.log("error:"+error);
+            res.send(500, {err: "DB Error"});
+        }
+    });
+    Articles.find({id: articleId}).populate('report').exec(function(error, article) {
+        if(error) {
+            res.send(500, {err: "DB Error"});
+            console.log(error);
+        } else {
+            res.send({num: article[0].report.length});
+        }
+    });
+},
+
+cancelReport: function(req, res) {
+    var articleId = req.param("article_id");
+    Articles.find({id: articleId}).populate("report").exec(function(error, article) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+        } else {
+            Report.destroy({article: articleId, reporter: req.session.user.id}).exec(function(error) {
+                if(error) {
+                    console.log(error);
+                    res.send(500, {err: "DB Error"});
+                } else {
+                    res.send({num: article[0].report.length-1});
+                }
+            });
+        }
+    });
+},
+
+niceResponse: function(req, res) {
+    var response_id = req.param("response_id");
+    Response.find({id: response_id}).populate("nicer").exec(function(error, response) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+            console.log(error);
+        } else {
+            var niceList=response[0].nicer;
+            if(!niceList) {
+                niceList=[];
+            }
+            niceList.push(req.session.user);
+
+            Response.update({id: response_id}, {nicer: niceList}).exec(function(error, updated) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                    console.log(error);
+                } else {
+
+                    if(updated[0].author!=req.session.user.id) {
+                        if(updated[0].comment.length>20) {
+                            var notContent=updated[0].comment.substr(0, 20)+"...";
+                        } else {
+                            var notContent=updated[0].comment;
+                        }
+                        Notification.create({user: updated[0].author, notType: "6", from: req.session.user.id, alreadyRead: false, link: "/article/"+updated[0].article, content: notContent, alreadySeen: false}).exec(function(err, not) {
+                            if(err) {
+                                console.log(err);
+                                res.send({err:"DB error"});
+                            }
+                        });
+                    }
+                    res.send(updated);
+                }
+            });
+}
+});
+},
+
+notNiceResponse: function(req, res) {
+    var response_id = req.param("response_id");
+    Response.find({id: response_id}).populate("nicer").exec(function(error, response) {
+        if(error) {
+            res.send(500,{err: "DB Error" });
+            console.log(error);
+        } else {
+            var niceList=response[0].nicer;
+            index=niceList.indexOf(req.session.user);
+            niceList.splice(index, 1);
+            Response.update({id: response_id}, {nicer: niceList}).exec(function(error, updated) {
+                if(error) {
+                    res.send(500,{err: "DB Error" });
+                    console.log(error);
+                } else {
+                    res.send(updated);
+                }
+            });
+        }
+    });
+},
+
+searchArticle: function(req, res){
+    var keyword = req.param("keyword");
+    var board=req.param("board");
+    
+
+    var tab=req.param("tab");
+    var classification;
+    switch (tab) {
+        case "all":
+        classification="";
+        break;
+        case "motion":
+        classification="心情"
+        break;
+        case "share":
+        classification="分享";
+        break;
+        case "problem":
+        classification="問題";
+        break;
+        case "others":
+        classification="其它";
+        break;
+    }
+
+    var boardCate;
+    BoardCategory.find().exec(function(err, boardCateList) {
+        boardCate=boardCateList;
+    });
 
         //Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
-        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
-            if (err){
-                res.send(500, { err: "DB Error" });
-            } else{
-                if(found){
-                    
-                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
-                        if (err){
-                            res.send(500, { err: "DB Error" });
-                        } else{
-                            if(found){
-                               
-                                Boards.find({id: board}).populate('category').exec(function(err, board) {
-                                    if(err) {
-                                        res.send(500, { err: "DB Error" });
-                                    } else {
-                                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-                                            res.send({articlesList: found, board: board[0], boards: boardsList, boardCate: boardCate});
-                                        });
+            Articles.find({classification: {'contains': classification}, deleted: "false"}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
+                if (err){
+                    res.send(500, { err: "DB Error" });
+                } else{
+                    if(found){
+
+                        Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").exec(function(err,found){
+                            if (err){
+                                res.send(500, { err: "DB Error" });
+                            } else{
+                                if(found){
+
+                                    Boards.find({id: board}).populate('category').exec(function(err, board) {
+                                        if(err) {
+                                            res.send(500, { err: "DB Error" });
+                                        } else {
+                                            Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                                                res.send({articlesList: found, board: board[0], boards: boardsList, boardCate: boardCate});
+                                            });
                                         //res.send({articlesList: found, board: board[0]});
                                     }
                                 });
-                            }else{
-                                console.log("not found");
-                                res.send(500, { err: "找不到喔！" });
+                                }else{
+                                    console.log("not found");
+                                    res.send(500, { err: "找不到喔！" });
+                                }
                             }
-                        }
-                    });
-                }else{
-                    console.log("not found");
-                    res.send(500, { err: "找不到喔！" });
-                }
-            }
-        });
-    },
+                        });
+}else{
+    console.log("not found");
+    res.send(500, { err: "找不到喔！" });
+}
+}
+});
+},
 
-    searchArticleFront: function(req, res){
-        var keyword = req.param("keyword");
-        console.log("searchArticleFront: "+keyword);
+searchArticleFront: function(req, res){
+    var keyword = req.param("keyword");
+    console.log("searchArticleFront: "+keyword);
 
-        var tab=req.param("tab");
-        var classification;
-        switch (tab) {
-            case "all":
-              classification="";
-              break;
-            case "motion":
-              classification="心情"
-              break;
-            case "share":
-              classification="分享";
-              break;
-            case "problem":
-              classification="問題";
-              break;
-            case "others":
-              classification="其它";
-              break;
-        }
+    var tab=req.param("tab");
+    var classification;
+    switch (tab) {
+        case "all":
+        classification="";
+        break;
+        case "motion":
+        classification="心情"
+        break;
+        case "share":
+        classification="分享";
+        break;
+        case "problem":
+        classification="問題";
+        break;
+        case "others":
+        classification="其它";
+        break;
+    }
 
-        var boardCate;
-        BoardCategory.find().exec(function(err, boardCateList) {
-            boardCate=boardCateList;
-        });
+    var boardCate;
+    BoardCategory.find().exec(function(err, boardCateList) {
+        boardCate=boardCateList;
+    });
 
         //Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}}).populate("author").populate('nicer').exec(function(err,found){
-        Articles.find({classification: {'contains': classification}, deleted: "false"}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
-            if (err){
-                res.send(500, { err: "DB Error" });
-            } else{
-                if(found){
-                    Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").populate("board").exec(function(err,found){
-                        if (err){
-                            res.send(500, { err: "DB Error" });
-                        } else{
-                            if(found[0]!==undefined){
-                                Boards.find({id: found[0].board.id}).populate('category').exec(function(err, board) {
-                                    if(err) {
-                                        res.send(500, { err: "DB Error" });
-                                    } else {
-                                        Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
-                                            boards=boardsList;
-                                            res.send({articlesList: found, board: board[0]});
-                                        });
-                                    }
-                                });
-                            }else{
-                                res.send({articlesList: found, board: []});
+            Articles.find({classification: {'contains': classification}, deleted: "false"}).populate("author", {alias: {'contains': keyword }}).populate("nicer").exec(function(err,found){
+                if (err){
+                    res.send(500, { err: "DB Error" });
+                } else{
+                    if(found){
+                        Articles.find({ title: { 'contains': keyword }, classification: {'contains': classification}, deleted: "false"}).populate("author").populate('nicer').populate("report").populate("board").exec(function(err,found){
+                            if (err){
+                                res.send(500, { err: "DB Error" });
+                            } else{
+                                if(found[0]!==undefined){
+                                    Boards.find({id: found[0].board.id}).populate('category').exec(function(err, board) {
+                                        if(err) {
+                                            res.send(500, { err: "DB Error" });
+                                        } else {
+                                            Boards.find({category: board[0].category.id}).exec(function(err, boardsList) {
+                                                boards=boardsList;
+                                                res.send({articlesList: found, board: board[0]});
+                                            });
+                                        }
+                                    });
+                                }else{
+                                    res.send({articlesList: found, board: []});
+                                }
                             }
-                        }
-                    });
-                }else{
-                    console.log("not found");
-                    res.send(500, { err: "找不到喔！" });
-                }
-            }
-        });
-    },
+                        });
+}else{
+    console.log("not found");
+    res.send(500, { err: "找不到喔！" });
+}
+}
+});
+},
 
-    mailAritlce: function(req,res){
-        var articleId = req.param("article_id");
-        var url=req.param("url");
-        url=url.replace(/article.+/,"");
-        Articles.find({id: articleId}).populate("response").populate("author").exec(function(err, article) {
-            if (err){
-                res.send(500,{err:"找不到文章!"});
+mailAritlce: function(req,res){
+    var articleId = req.param("article_id");
+    var url=req.param("url");
+    url=url.replace(/article.+/,"");
+    Articles.find({id: articleId}).populate("response").populate("author").exec(function(err, article) {
+        if (err){
+            res.send(500,{err:"找不到文章!"});
+        }
+        else{
+            var regex = /href=\".+?\">/g;
+            var author = "作者："+article[0].author.alias;
+            var orginurl=url+"article/"+articleId;
+            var link = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
+            var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
+            var arr=content.match(regex);
+            var counter=0;
+            for (var img in arr){
+                counter=counter+1;
+                pic_addr=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
+                content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
             }
-            else{
-                var regex = /href=\".+?\">/g;
-                var author = "作者："+article[0].author.alias;
-                var orginurl=url+"article/"+articleId;
-                var link = "點這裡看原文:" + "<a href='"+orginurl+"''>"+orginurl+"</a>";
-                var content=article[0].content.replace(/<img src=\"[a-zA-Z0-9_\/\.]+\">/g,"圖片連結");  
-                var arr=content.match(regex);
-                var counter=0;
-                for (var img in arr){
-                    counter=counter+1;
-                    pic_addr=arr[img].replace(/href=\"..\//,url).replace(/\">/,"");
-                    content=content+"圖片"+counter+" : "+"<a href='"+pic_addr+"''>"+pic_addr+"</a>"+"<br>";
-                }
-                content=content+"<br><br><hr>網友留言：<br>"
-                var async = require('async');
-                async.each(article[0].response, function(val, callback) {
+            content=content+"<br><br><hr>網友留言：<br>"
+            var async = require('async');
+            async.each(article[0].response, function(val, callback) {
                     //每次要做的
                     User.find({id: val.author}).exec(function(err,author){
                         if (err){
@@ -1362,12 +1374,12 @@ module.exports = {
                         }    
                     });
                 // show that no errors happened
-                }, function(err) {
-                    if(err) {
-                        console.log("There was an error" + err);
-                        res.send(500,{err:"找不到文章作者"});
-                    } else {
-                        
+            }, function(err) {
+                if(err) {
+                    console.log("There was an error" + err);
+                    res.send(500,{err:"找不到文章作者"});
+                } else {
+
                         //結束以後
                         //引用 nodemailer  
                         var nodemailer = require('nodemailer');  
@@ -1376,8 +1388,8 @@ module.exports = {
                             auth: {  
                              user: 'ntu.cpcp@gmail.com',  
                              pass: 'lckung413'  
-                            }  
-                        });  
+                         }  
+                     });  
                         var options = {  
                             //寄件者  
                             from: "頭頸癌病友加油站 <ntu.cpcp@gmail.com>",  
@@ -1389,7 +1401,7 @@ module.exports = {
                             
                             //嵌入 html 的內文  
                             html: author+"<br>"+link+"<br><br>"+content,   
-                               
+                            
                         };  
                         
                         // 發送信件方法  
@@ -1403,65 +1415,65 @@ module.exports = {
                         res.send("SEND");
                     }
                 });    
-            }
+}
 
-        });
-    },
-    changeFollow: function(req, res) {
-        if(!req.session.authenticated) {
-            res.send(404, {err: "請登入以使用此功能"});
-        } else {
-            var article_id=req.param("article_id");
-            Articles.findOne({id: article_id}).exec(function(err, article) {
-                if(err) {
-                    res.send(500, "server error");
-                } else {
-                    if(article.follower.indexOf(req.session.user.id)==-1) {
-                        var newFollower=article.follower;
-                        newFollower.push(req.session.user.id);
-                        Articles.update({id: article_id}, {follower: newFollower}).exec(function(err2, article2) {
-                            if(err2) {
-                                res.send(500, "server error");
-                            } else {
-                                res.send({isFollower: true});
-                            }
-                        });
-                    } else {
-                        var newFollower=article.follower;
-                        newFollower.splice(article.follower.indexOf(req.session.user.id), 1);
-                        Articles.update({id: article_id}, {follower: newFollower}).exec(function(err2, article2) {
-                            if(err2) {
-                                res.send(500, "server error");
-                            } else {
-                                res.send({isFollower: false});
-                            }
-                        });
-                    }
-                }
-            })
-        }
-    },
-    countForum: function(req, res) {
-        if(!req.session.authenticated) {
-            res.send({login: false});
-        } else {
-            User.findOne(req.session.user.id).exec(function(err1, user) {
-                if(err1) {
-                    console.log("錯誤訊息："+err1);
-                    res.send(500, "server error");
-                } else {
-                    var lastForumTime=user.lastForumTime;
-                    Articles.find({createdAt: {'>': lastForumTime}, deleted: false, board: {"<=": 19}}).exec(function(err2, articles) {
+});
+},
+changeFollow: function(req, res) {
+    if(!req.session.authenticated) {
+        res.send(404, {err: "請登入以使用此功能"});
+    } else {
+        var article_id=req.param("article_id");
+        Articles.findOne({id: article_id}).exec(function(err, article) {
+            if(err) {
+                res.send(500, "server error");
+            } else {
+                if(article.follower.indexOf(req.session.user.id)==-1) {
+                    var newFollower=article.follower;
+                    newFollower.push(req.session.user.id);
+                    Articles.update({id: article_id}, {follower: newFollower}).exec(function(err2, article2) {
                         if(err2) {
-                            console.log("錯誤訊息："+err2);
                             res.send(500, "server error");
                         } else {
-                            res.send({login: true, num: articles.length});
+                            res.send({isFollower: true});
+                        }
+                    });
+                } else {
+                    var newFollower=article.follower;
+                    newFollower.splice(article.follower.indexOf(req.session.user.id), 1);
+                    Articles.update({id: article_id}, {follower: newFollower}).exec(function(err2, article2) {
+                        if(err2) {
+                            res.send(500, "server error");
+                        } else {
+                            res.send({isFollower: false});
                         }
                     });
                 }
-            });
-        }
-    },
+            }
+        })
+}
+},
+countForum: function(req, res) {
+    if(!req.session.authenticated) {
+        res.send({login: false});
+    } else {
+        User.findOne(req.session.user.id).exec(function(err1, user) {
+            if(err1) {
+                console.log("錯誤訊息："+err1);
+                res.send(500, "server error");
+            } else {
+                var lastForumTime=user.lastForumTime;
+                Articles.find({createdAt: {'>': lastForumTime}, deleted: false, board: {"<=": 19}}).exec(function(err2, articles) {
+                    if(err2) {
+                        console.log("錯誤訊息："+err2);
+                        res.send(500, "server error");
+                    } else {
+                        res.send({login: true, num: articles.length});
+                    }
+                });
+            }
+        });
+    }
+},
 };
 

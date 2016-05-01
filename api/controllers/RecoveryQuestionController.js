@@ -5,10 +5,10 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-	getall: function(req, res) {
-		var array=[];
-		RecoveryQuestion.find({}).exec(function findCB(err,found){
+ module.exports = {
+ 	getall: function(req, res) {
+ 		var array=[];
+ 		RecoveryQuestion.find({}).exec(function findCB(err,found){
  			while (found.length){
  				var obj = found.pop();
  				var question = obj.question;
@@ -17,8 +17,8 @@ module.exports = {
  				array.push(array_s);
  			}
  			var str = JSON.stringify(array);
-        	res.end(str);
+ 			res.end(str);
  		});
-	},
-};
+ 	},
+ };
 

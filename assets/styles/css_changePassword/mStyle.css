@@ -1,0 +1,46 @@
+#changePassword{
+	margin-top:15px;
+	color:#533828;
+	font-size:20px;
+	font-weight: normal;
+	/*background-color: #FFFAF0;*/
+	padding: 35px 35px 50px;
+	margin-bottom: 20px;
+    /*border: 1px solid #CCCCCC;*/
+	border-radius: 10px;
+}
+
+.changePassword_s{
+	color:#816C58;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	line-height: 30px;
+	background-color: rgba(102, 141, 60, 0.4);
+	padding: 8px 8px 8px 8px;
+	margin-bottom: 10px;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	/*border: 1px solid rgba(0,0,0,0);*/
+	 border: 1px solid #FFCE54 !important;
+}
+
+#submit{
+	width:125px;
+	float:left;
+	font-size: 20px;
+	margin-top:10px;
+	color:#533828;
+}
+
+#submit:hover{
+	background-color: #D16900
+}
+
+#account{
+	onkeyup:"(/[^-_A-Z0-9]/g,'')";
+}

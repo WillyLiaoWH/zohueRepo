@@ -5,8 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-	clickReport: function(req, res) {
+ module.exports = {
+     clickReport: function(req, res) {
         if(typeof req.session.user == 'undefined'){
             res.send(500,{err: "您沒有權限" });
         }else{
@@ -28,10 +28,10 @@ module.exports = {
                 console.log(TimelineId);
                 console.log(timeline);
                 for(i in timeline.report){
-                	if(timeline.report[i].timeline == TimelineId & timeline.report[i].reporter == reporter){
+                 if(timeline.report[i].timeline == TimelineId & timeline.report[i].reporter == reporter){
                         //var id = timeline.report[i].id;
-                		delete timeline.report[i];
-                		timeline.save(function (err) {
+                        delete timeline.report[i];
+                        timeline.save(function (err) {
                             res.send({num:timeline.report.length-1});
                             // TimelineResponseReport.destroy({id: id}).exec(function(err){
                             //     if(err) {
@@ -40,8 +40,8 @@ module.exports = {
                             //         res.send({num:timeline.report.length-1});
                             //     }
                             // });
-                        });
-                	}
+                    });
+                    }
                 }
             });
         }

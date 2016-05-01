@@ -1,0 +1,381 @@
+#body{
+	font-family: "微軟正黑體";
+}
+
+.clear { /* 解決 float+height auto 問題 */
+  clear:both;
+}
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;
+    height: auto;
+    margin: 10 auto;
+}
+div.show-image:hover img{
+    opacity:0.5;
+}
+div.show-image:hover input {
+    display: block;
+}
+div.show-image input {
+    position:absolute;
+    display:none;
+}
+div.show-image input.delete {
+    top:0;
+    right:0;
+}
+
+#sideBanner{
+    /*display: none !important;*/
+}
+
+@media all and (max-width: 800px){
+	#post-form-main{
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+}
+
+#post-form-main{
+	/*float:left;*/
+	width: auto;
+	max-width: 70%;
+}
+
+#content{
+	display: block;
+	margin:36px 20px 20px 5px;
+	border-radius: 5px;
+	float:left;
+	width:90%;
+	height: 550px;
+	color:#D26900;
+	font-family: "微軟正黑體";
+	font-size:35px;
+}
+
+#postPanel{
+	margin-bottom:5px;	
+}
+
+#postArticle{
+	color:#533828;
+	font-size: 28px;
+	margin: 20px;
+	font-weight: bold;
+}
+
+#articleClass{
+	font-size: 22px;
+	font-weight: normal;
+}
+
+.c{
+	margin-left: 10px;
+	width:25px; 
+	height:16px;
+}
+
+#postContent{
+	min-height: 500px;
+	height:auto;
+	font-size: 22px;
+	margin-bottom:25px;
+}
+#postContent_image{
+	display: none;
+	min-height: 200px;
+	height:100%;
+	margin-bottom:25px;
+}
+
+#postTitle{
+	font-size: 22px;
+}
+
+#signup{
+	margin:20px 20px 20px 5px;
+	border-radius: 5px;
+	width: 24%;
+	height: 550px;
+	float:left;
+	/*color:#668D3C;*/
+	color:#D26900;
+	font-family: "微軟正黑體";
+	font-size:35px;
+	display: block
+
+}
+
+#simpleSignUp{
+	margin:15px;
+	color:#816C5B;
+	font-size:18px;
+	font-weight: normal;
+}
+
+.s{
+	color:#816C58;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	line-height: 22px;
+	background-color: rgba(102, 141, 60, 0.3);
+	padding: 8px 8px 8px 8px;
+	/*margin-bottom: 10px;*/
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+
+#submitArticle, #abortArticle{
+	margin: -20px 5px 10px 0px;
+	float:right;
+}
+
+
+.b{
+	background-color: rgba(232, 81, 0, 0.7);
+	color:#533828;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	margin:3px;
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+.b:hover{
+	background-color: rgba(102, 141, 60, 0.4);
+	color:#816C58;
+}
+#save{
+	background-color: #ADADAD;
+}
+
+
+.check{
+	color:#D26900;
+	font-size: 15px;
+}
+
+#submit{
+	width:100px;
+	float:right;
+	margin-top:25px;
+	color:#816C5B;
+}
+
+#submit:hover{
+	background-color: rgba(102, 141, 60, 0.7);
+}
+
+#account{
+	onkeyup:"(/[^-_A-Z0-9]/g,'')";
+}
+
+#savedText{
+	font-size: 28px;
+	color:#A7A7A7;
+	display: none;
+	font-weight: normal;
+	float:right;
+	margin: -15px 10px 10px 0px;
+
+}
+
+#loadedText{
+	font-size: 28px;
+	color:#A7A7A7;
+	display: none;
+	font-weight: normal;
+	float:right;
+	margin: -15px 10px 10px 0px;	
+}
+
+.imgupload_btn{
+	margin-right: 10px;
+	float:right;
+	background-color: rgba(232, 81, 0, 0.7);
+	color:#533828;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 20px;
+	border-radius: 10px;
+	line-height: 22px;
+	padding: 8px 8px 8px 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+}
+.imgupload_btn:hover{
+	background-color: rgba(102, 141, 60, 0.4);
+	color:#816C58;
+}
+
+#avatar-modal-label{
+	font-size: 40px;
+}
+.avatar-upload{
+	font-size: 25px;
+}
+
+
+
+
+
+/*Loading animation*/
+.spinner {
+  display: none;
+  margin: 5% auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.container1 > div, .container2 > div, .container3 > div {
+  width: 12px;
+  height: 12px;
+  background-color: #333;
+  border-radius: 100%;
+  position: absolute;
+  -webkit-animation: bouncedelay 1.2s infinite ease-in-out;
+  animation: bouncedelay 1.2s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.spinner .spinner-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.container2 {
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+}
+.container3 {
+  -webkit-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+.circle1 { top: 0; left: 0; }
+.circle2 { top: 0; right: 0; }
+.circle3 { right: 0; bottom: 0; }
+.circle4 { left: 0; bottom: 0; }
+.container2 .circle1 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.container3 .circle1 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+.container1 .circle2 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.container2 .circle2 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+.container3 .circle2 {
+  -webkit-animation-delay: -0.7s;
+  animation-delay: -0.7s;
+}
+.container1 .circle3 {
+  -webkit-animation-delay: -0.6s;
+  animation-delay: -0.6s;
+}
+.container2 .circle3 {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+.container3 .circle3 {
+  -webkit-animation-delay: -0.4s;
+  animation-delay: -0.4s;
+}
+.container1 .circle4 {
+  -webkit-animation-delay: -0.3s;
+  animation-delay: -0.3s;
+}
+.container2 .circle4 {
+  -webkit-animation-delay: -0.2s;
+  animation-delay: -0.2s;
+}
+.container3 .circle4 {
+  -webkit-animation-delay: -0.1s;
+  animation-delay: -0.1s;
+}
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+@keyframes bouncedelay {
+  0%, 80%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+
+.avatar-input {
+  color: transparent;
+}
+.avatar-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.avatar-input::before {
+  content: '選擇檔案';
+  display: inline-block;
+  /*background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);*/
+  /*border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;*/
+
+  cursor: pointer;
+  background-color: rgba(232, 81, 0, 0.7);
+  color:#533828;
+  font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  font-weight:500;
+  font-size: 20px;
+  border-radius: 10px;
+  margin:3px;
+  padding: 8px 8px 8px 8px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0);
+}
+.avatar-input:hover::before {
+  background-color: rgba(102, 141, 60, 0.4);
+  color:#816C58;
+}
+/*.avatar-input:active {
+  outline: 0;
+}*/
+/*.avatar-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+}*/
+

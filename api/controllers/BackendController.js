@@ -5,7 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
+ module.exports = {
     recordDownload:function(req,res){
         var isAdmin = req.session.user.isAdmin;
         if (isAdmin){
@@ -30,104 +30,104 @@ module.exports = {
                         // fs.writeFile("/tmp/test", csv, function(err) {
                         //     console.log("haha")
                         // });
-                        if (err) console.log(err);
-                        var filename = "report.csv";
-                        res.attachment(filename);
-                        res.end(csv, 'UTF-8');
-                    });
+                    if (err) console.log(err);
+                    var filename = "report.csv";
+                    res.attachment(filename);
+                    res.end(csv, 'UTF-8');
+                });
 
                 }
             })
-        }
-    },
-  	setPage: function(req, res) {
-        var page = req.param("page")
-        if (page==="userManage"){
+}
+},
+setPage: function(req, res) {
+    var page = req.param("page");
+    if (page==="userManage"){
 
-            res.view("backend/userManage",{
+        res.view("backend/userManage",{
 
-                layout: "back_layout"
-            });
-        }
-        else if (page === "forumManage"){
-            res.view("backend/forumManage",{
+            layout: "back_layout"
+        });
+    }
+    else if (page === "forumManage"){
+        res.view("backend/forumManage",{
 
-                layout: "back_layout"
-            });
+            layout: "back_layout"
+        });
 
-        }
-        else if (page === "subscriberManage"){
-            res.view("backend/subscriberManage",{
+    }
+    else if (page === "subscriberManage"){
+        res.view("backend/subscriberManage",{
 
-                layout: "back_layout"
-            });
+            layout: "back_layout"
+        });
 
-        }
-        else if (page === "edit"){
+    }
+    else if (page === "edit"){
 
-        }
-        else if (page ==="record"){
-            res.view("backend/record",{
+    }
+    else if (page ==="record"){
+        res.view("backend/record",{
 
-                layout: "back_layout"
-            });
+            layout: "back_layout"
+        });
 
-        }
-        else if (page ==="proInfo"){
-            res.view("backend/proInfo",{
+    }
+    else if (page ==="proInfo"){
+        res.view("backend/proInfo",{
 
-                layout: "back_layout"
-            });
+            layout: "back_layout"
+        });
 
-        }
-        else if (page ==="homepageManage"){
-            res.view("backend/homepageManage",{
+    }
+    else if (page ==="homepageManage"){
+        res.view("backend/homepageManage",{
 
-                layout: "back_layout"
-            });
+            layout: "back_layout"
+        });
 
-        }
-        else{
-            res.view("backend/default",{
+    }
+    else{
+        res.view("backend/default",{
 
-                layout: "back_layout"
-            });
-        }
-	    
-  	},
+            layout: "back_layout"
+        });
+    }
     
-    adminLogout: function (req, res) {
-        Record.create({user:req.session.user,ip:req.ip,action:"Logout"}).exec(function(err,record){
-            console.log("使用者登出")
-            req.session.destroy();
-            res.send("success");
-        })
-        
-    },
+},
 
-    checkAdmin: function(req, res) {
-        if(typeof req.session.user != 'undefined'){
-            var isAdmin = req.session.user.isAdmin;
-            if (isAdmin == true){
-                res.send("true");
-            }else{
-                res.send("false");
-            }
-        } else {
-          res.send("false");
-        }
-        
-    },
+adminLogout: function (req, res) {
+    Record.create({user:req.session.user,ip:req.ip,action:"Logout"}).exec(function(err,record){
+        console.log("使用者登出")
+        req.session.destroy();
+        res.send("success");
+    })
+    
+},
 
-    getAllUsers: function(req, res){
-        var searchUser = req.param("searchUser");
+checkAdmin: function(req, res) {
+    if(typeof req.session.user != 'undefined'){
         var isAdmin = req.session.user.isAdmin;
-        if (isAdmin == true) {
-            User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
-                if (allUsers.length==0) {
-                    res.send("查無結果！");
-                } else {
-                    sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
+        if (isAdmin == true){
+            res.send("true");
+        }else{
+            res.send("false");
+        }
+    } else {
+      res.send("false");
+  }
+  
+},
+
+getAllUsers: function(req, res){
+    var searchUser = req.param("searchUser");
+    var isAdmin = req.session.user.isAdmin;
+    if (isAdmin == true) {
+        User.find({or:[{account: {'contains': searchUser}}, {alias: {'contains': searchUser}}, {fname: {'contains': searchUser}}, {lname: {'contains': searchUser}}]}).populate('articlesPost').exec(function(err, allUsers) {
+            if (allUsers.length==0) {
+                res.send("查無結果！");
+            } else {
+                sails.services['util'].populateDeep('user', allUsers, 'articlesPost.report', function (err, userList) {
                     if (err) {
                         sails.log.error("ERR:", err);
                         console.log("err2");
@@ -141,41 +141,41 @@ module.exports = {
                 });
             }
         });
-        }else{
-            res.send("你不是管理員喔！");
-        }
-    },
-    getRecord: function(req,res){
-        var isAdmin = req.session.user.isAdmin;
-        if (isAdmin){
-            var num = req.param("num")
+    }else{
+        res.send("你不是管理員喔！");
+    }
+},
+getRecord: function(req,res){
+    var isAdmin = req.session.user.isAdmin;
+    if (isAdmin){
+        var num = req.param("num")
             /*
               num : 0 all
                     1 3days
                     2 1month
-            */
-            if (num == 0 ){
-                var day_filter = new Date('1/1/2014')
-            }
-            else if (num==1){
-                var day_filter = new Date() 
-                day_filter = day_filter.setDate(day_filter.getDate()-3)
+                    */
+                    if (num == 0 ){
+                        var day_filter = new Date('1/1/2014')
+                    }
+                    else if (num==1){
+                        var day_filter = new Date() 
+                        day_filter = day_filter.setDate(day_filter.getDate()-3)
 
-            }
-            else if (num == 2){
-                var day_filter = new Date() 
-                day_filter = day_filter.setMonth(day_filter.getMonth()-1)
-            }
-            Record.find({createdAt :{">": new Date(day_filter)} }).populate('user').exec(function(err,records){
-                if(err){
-                    res.send(500,{err: "DB Error"});
+                    }
+                    else if (num == 2){
+                        var day_filter = new Date() 
+                        day_filter = day_filter.setMonth(day_filter.getMonth()-1)
+                    }
+                    Record.find({createdAt :{">": new Date(day_filter)} }).populate('user').exec(function(err,records){
+                        if(err){
+                            res.send(500,{err: "DB Error"});
+                        }
+                        else{
+                            res.send(records);
+                        }
+                    })
                 }
-                else{
-                    res.send(records);
-                }
-            })
-        }
-    },
+            },
 
     getArticles: function(req, res){ // 根據board及category撈文章。
         var board=req.param("board");
@@ -202,7 +202,7 @@ module.exports = {
                 }
             });    
         } 
-	},
+    },
 
     getArticlesByArticleId: function(req, res){ // 根據board撈文章。  
         var isAdmin = req.session.user.isAdmin;
@@ -243,8 +243,8 @@ module.exports = {
                     //         res.send(article);
                     //     }
                     // });
-                }
-            });
+        }
+    });
         }
     },
 

@@ -1,0 +1,89 @@
+<!DOCTYPE=html>
+<script>
+  $( document ).ready(function() {
+    $.get("/checkAuth", function(auth){
+        if(auth.isAdmin==true){
+          $("#clubAnnounce").show();
+        }else if(auth.isAdmin==false){
+           $("#clubAnnounce").hide();
+        }
+    });
+    if($( window ).width() < 768){
+        $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
+    }
+  });
+</script>
+
+
+
+<style>
+  .nav-header{
+    padding:3px 15px;
+    font-weight: bold;
+    color:#1D3521;
+    font-size:30px;
+  }
+
+  .nav-list li{
+    line-height: 20px;
+  }
+
+  .nav-list a{
+    color:#1D3521;
+  }
+
+  .nav-list li a:hover {
+    color: white; 
+    background-color: #1D3521;
+  }
+  #sideBanner{
+    display: none !important;
+  }
+</style>
+
+
+
+    <div id="forumDiv" class="container-fluid">
+      <h1 style="color:#D26900;">作夥病友論壇 </h1>
+      <h3 style="color:#816C5B;">請選擇看板發表文章！</h3><br>
+      <div class="well col-md-2 sol-sm-12 sol-xs-12" style="margin-top:0px; padding:23px 0; background-color:rgba(102, 141, 60, 0.3); border-radius:15px;">
+      <ul class="nav nav-list" style="font-size:23px;">
+        <li class="nav-header" style="margin-bottom:15px;">病友照護</li>
+        <li class="active"><a href="/post/1">鼻咽癌</a></li>
+        <li><a href="/post/2">鼻腔/副鼻竇癌</a></li>
+        <!-- <li><a href="/board-3/1?tab=all">副鼻竇癌</a></li> -->
+        <li><a href="/post/4">口腔癌</a></li>
+        <li><a href="/post/5">口咽癌</a></li>
+        <li><a href="/post/6">下咽癌</a></li>
+        <li><a href="/post/7">喉癌</a></li>
+        <li><a href="/post/8">唾液腺癌</a></li>
+        <li><a href="/post/9">甲狀腺癌</a></li>
+        <li><a href="/post/10">其它</a></li>
+      </ul>
+      </div>
+      <div class="well col-md-2 sol-sm-12 sol-xs-12" style="margin:0px 0px 0px 0px; padding:23px 0; background-color:rgba(102, 141, 60, 0.3); border-radius:15px;">
+      <ul class="nav nav-list" style="font-size:23px;">
+        <li class="nav-header" style="margin-bottom:15px;">生活機能</li>
+        <li class="active"><a href="/post/11">食</a></li>
+        <li><a href="/post/12">衣</a></li>
+        <li><a href="/post/13">住</a></li>
+        <li><a href="/post/14">行</a></li>
+        <li><a href="/post/15">育</a></li>
+        <li><a href="/post/16">樂</a></li>
+      </ul>
+      </div>
+      <div id="clubAnnounce" class="well col-md-2 sol-sm-12 sol-xs-12" style="margin:0px 0px 0px 0px; padding:23px 0; background-color:rgba(102, 141, 60, 0.3); border-radius:15px;">
+      <ul class="nav nav-list" style="font-size:23px;">
+        <li class="nav-header" style="margin-bottom:15px;">社團公告</li>
+        <li class="active"><a href="/post/17">最新消息</a></li>
+        <li><a href="/post/18">門診訊息</a></li>
+      </ul>
+      </div>
+      <div class="well col-md-2 sol-sm-12 sol-xs-12" style="margin:0px 0px 0px 0px; padding:23px 0; background-color:rgba(102, 141, 60, 0.3); border-radius:15px;">
+      <ul class="nav nav-list" style="font-size:23px;">
+        <li class="nav-header" style="margin-bottom:15px;">平台小幫手</li>
+        <li><a href="/post/19">新手發問區</a></li>
+        <li><a href="post/20">問題回報</a></li>
+      </ul>
+      </div>
+    </div>

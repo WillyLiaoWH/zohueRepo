@@ -5,15 +5,15 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-	getNotification: function(req, res) {
-        var user=req.session.user.id;
-        Notification.find({user: user}).populate("from").exec(function(err, not){
-        	if(err) {
-        		console.log(err);
-        		res.send(500, {err: "DB error"});
-        	} else {
-                not.sort(function(a, b){return new Date(b.createdAt)-new Date(a.createdAt);});
+ module.exports = {
+   getNotification: function(req, res) {
+    var user=req.session.user.id;
+    Notification.find({user: user}).populate("from").exec(function(err, not){
+       if(err) {
+          console.log(err);
+          res.send(500, {err: "DB error"});
+      } else {
+        not.sort(function(a, b){return new Date(b.createdAt)-new Date(a.createdAt);});
         		// if(not.length>=10) {
         		// 	res.send(not.slice(0, 10));
         		// } else {
@@ -21,34 +21,34 @@ module.exports = {
         		// }
         	}
         });
-    },
+},
 
-    checkNotification: function(req, res) {
-        var id=req.param("id");
-        console.log(id);
-        Notification.update({id: id}, {alreadyRead: true, alreadySeen: true}).exec(function(err, not) {
+checkNotification: function(req, res) {
+    var id=req.param("id");
+    console.log(id);
+    Notification.update({id: id}, {alreadyRead: true, alreadySeen: true}).exec(function(err, not) {
+        if(err) {
+            console.log(err);
+            res.send(500, {err: "DB error"});
+        } else {
+            res.send("成功");
+        }
+    });
+},
+
+countNotification: function(req, res) {
+    if(req.session.user) {
+        var id=req.session.user.id;
+        Notification.find({user: id, alreadySeen: false}).exec(function(err, not){
             if(err) {
                 console.log(err);
                 res.send(500, {err: "DB error"});
             } else {
-                res.send("成功");
+                res.send({num: not.length});
             }
         });
-    },
-
-    countNotification: function(req, res) {
-        if(req.session.user) {
-            var id=req.session.user.id;
-            Notification.find({user: id, alreadySeen: false}).exec(function(err, not){
-                if(err) {
-                    console.log(err);
-                    res.send(500, {err: "DB error"});
-                } else {
-                    res.send({num: not.length});
-                }
-            });
-        }
-    },
+    }
+},
 
     // seeNotification: function(req, res) {
     //     if(req.session.user) {
@@ -77,7 +77,7 @@ module.exports = {
     //             // } else {
     //                 res.send(not);
     //             // }
-                
+    
     //         }
     //     });
     // },
@@ -101,39 +101,42 @@ module.exports = {
                             md = new MobileDetect(req.headers['user-agent']);
                             var page="";
                             var m;
+                            var css;
                             if (md.mobile()==null){
                                 //PC
                                 page="notifications/index";
+                                css="style";
                                 m="layout";
                             }
                             else{
                                 //mobile
                                 page="notifications/mindex";
+                                css="mStyle";
                                 m="mlayout";
                             }
                             res.view(page, {
                                 not: not,
                                 layout:m,
                                 scripts: [
-                                    '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                    '/js/js_public/alertify.js',
-                                    '/js/js_notifications/mainJS.js'
-                                  ],
+                                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                '/js/js_public/alertify.js',
+                                '/js/js_notifications/mainJS.js'
+                                ],
                                 stylesheets: [
-                                    '/styles/importer.css',
-                                    '/styles/css_public/themes/alertify.core.css',
-                                    '/styles/css_public/themes/alertify.default.css',
-                                    '/styles/css_notifications/style.css'
-                                  ]
-                             });
+                                '/styles/importer.css',
+                                '/styles/css_public/themes/alertify.core.css',
+                                '/styles/css_public/themes/alertify.default.css',
+                                '/styles/css_notifications/'+css+'.css'
+                                ]
+                            });
                         }
-                     });
-                }
-            });
-        }else {
-            res.send(false);
-        }
-    },
+                    });
+}
+});
+}else {
+    res.send(false);
+}
+},
 
 
 };

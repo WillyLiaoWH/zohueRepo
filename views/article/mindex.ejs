@@ -1,0 +1,267 @@
+ <!DOCTYPE HTML>
+  <div class="container-fluid col-md-8" id="post-form-main">
+    <h1 style="margin-bottom:30px; color:black;">癌病友論壇</h1>
+    <div class="row-fluid">
+      <div class="" id="artContent">
+        <div class="row-fluid text-right visible-desktop hidden-phone visible-tablet">
+          <button value="瀏覽其它文章" id="backToList" class="b" onclick="backToList(<%=articleList[0].board%>);"><img src="/images/img_forum/view_icon.png"/>瀏覽其他文章</button>
+          <% if(isAuthor){ %>
+            <button value="刪除文章" id="deleteArticle" class="b" onclick="deleteArticle(<%=articleList[0].board%>);">
+              <img src="/images/img_forum/delete_icon.png"/>刪除文章
+            </button>
+            <button value="編輯文章" id="editArticle" class="b" onclick="editArticle();">
+              <img src="/images/img_forum/post_icon.png"/>編輯文章
+            </button>
+          <% } %>
+          <button value="轉寄文章" id="sendEmail" class="b" onclick="sendEmail()"><span class="glyphicon glyphicon-envelope" ></span>轉寄文章</button>
+          <button value="分享至臉書" id="shareFB" class="b" onclick="shareFB()"><img id="FB"src="/images/img_forum/facebook.png" >分享至臉書</button>
+          <button value="追蹤" id="follow" class="b" onclick="follow();">
+            <% if(isFollower){ %>取消追蹤<% }else{ %>追蹤文章<% } %>
+          </button>
+        </div>
+
+        <!--mobile-->
+        <div class="row-fluid hidden-desktop visible-phone hidden-tablet">
+          <!--<button value="瀏覽其它文章" id="backToList" class="b" onclick="backToList();"><img src="/images/img_forum/view_icon.png"/>瀏覽其他文章</button>-->
+          <button value="分享至臉書" id="shareFB" class="b" onclick="shareFB()"><img id="FB"src="/images/img_forum/facebook.png" >分享至臉書</button>
+          <button value="轉寄文章" id="sendEmail" class="b" onclick="sendEmail()"><span class="glyphicon glyphicon-envelope" ></span>轉寄文章</button> <br>
+          <button value="編輯文章" id="mobile_editArticle" class="b" onclick="editArticle();" style="display:none; width:auto;"><img src="/images/img_forum/post_icon.png"/>&nbsp;編輯這篇文章</button>
+          <button value="刪除文章" id="mobile_deleteArticle" class="b" onclick="deleteArticle();" style="display:none; width:auto;"><img src="/images/img_forum/delete_icon.png"/>刪除文章</button>  
+        </div>  
+        <!--mobile-->
+
+        <div class="row-fluid" style="margin-top:10px;">
+          <table id="article">
+            <tr id="adj_tr">
+              
+　            <td id="articleAvatar" rowspan="2" style='width:50px;'>
+                <img src='<%= articleList[0].author.img %>'>
+              </td>
+　            <td id="articleTitle" colspan="3"><%= articleList[0].title %></td>
+              
+            </tr>
+　          <tr id="articleData">
+
+              <td valign='bottom' style='padding:0px 0px 7px 20px;'>
+                發表人：<a href='/profile/?<%= articleList[0].author.id %>'><%= articleList[0].author.alias %></a>
+                      <% if(articleList[0].author.type=="S"){ %> 社工師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
+                      <% }else if(articleList[0].author.type=="D"){ %> 醫師
+                       <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
+                      <% }else if(articleList[0].author.type=="RN"){ %> 護理師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
+                      <% } else{ %>
+                      <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
+                      <% } %>
+              </td>
+               
+            </tr>
+
+            <tr id="articleData">
+              <td></td>
+              <td valign='bottom' style='padding:0px 0px 7px 20px;'>發表時間：<%= articleList[0].createdAt %></td>
+              <td valign='bottom' style='padding:0px 0px 7px 20px; border-right:solid 1px rgba(102, 141, 60, 0.4);'>更新時間：<%= articleList[0].lastResponseTime %>
+                </td>
+            </tr>
+
+
+
+            <tr><td colspan="5" id="articleContent"><%- articleList[0].content %></td></tr>
+            <tr>
+              <td colspan="5" style="border-right:solid 1px rgba(102, 141, 60, 0.4);">
+                <table style="margin:10px 0px 10px 0px;">
+                  <tr>
+                    <td id="niceArticle">
+                      <% if(login){ if(isNice==true){ %>
+                        <button value='收回' onclick='cancelNice();'><img src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>
+                      <% }else if(isNice==false){ %>
+                        <button value='推薦' onclick='clickNice();'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>
+                      <% }} %>
+                    </td>
+                    <td id="niceCount">有 <%= lnicer %> 人推薦</td>
+                  </tr>
+                  <tr>
+                    <td id="report">
+                      <% if(login){ if(isReport){ %>
+                        <button value='收回' onclick='cancelReport()'><img src='/images/img_forum/bad2_icon.png'/>&nbsp收回</button>
+                      <% }else{ %>
+                        <button value='檢舉' onclick='clickReport()'><img src='/images/img_forum/bad_icon.png'/>&nbsp檢舉</button>
+                      <% }} %>
+                    </td>
+                    <td id="reportCount">有 <%= reportCount %> 人檢舉</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <% if(responseList.length!=0){ %>
+          <div class="row-fluid" id="commentListDiv">
+          
+            <table id="commentList">
+              <% for(i=0; i<responseList.length; i++){ %>
+                <tr>
+                  <td valign=top rowspan=4 class='comment_avatar'>
+                    <img src='<%= responseList[i].author.img %>'>
+                  </td>
+                </tr>
+                <tr>
+                  <td id="comment_createdAt">
+                    <label><%= responseList[i].createdAt %></label>
+                  </td>
+                </tr>      
+                <tr>
+                  <td id="comment_content">
+                    <label>
+                      <a href='/profile/?<%= responseList[i].author.id %>'>
+                      <%= responseList[i].author.alias %></a>
+                      <% if(responseList[i].author.type=="S"){ %> 社工師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
+                      <% }else if(responseList[i].author.type=="D"){ %> 醫師
+                       <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
+                      <% }else if(responseList[i].author.type=="RN"){ %> 護理師
+                      <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
+                      <% } else{ %>
+                      <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
+                      <% } %>
+                    </label>
+                    <% if(responseList[i].comment.trim()==""){ %>
+                      <label class='comment_content'><%- responseList[i].comment_image %></label>
+                    <% }else if(responseList[i].comment_image.indexOf("images")==-1){ %>
+                      <label class='comment_content'><%- responseList[i].comment %></label>
+                    <% }else{ %>
+                      <label class='comment_content'><%- responseList[i].comment %>
+                        <br>
+                        <hr id='hr'><%- responseList[i].comment_image %>
+                      </label>
+                    <% } %>
+                  </td>
+                </tr>
+                
+                <% if(login) { if(responseNice[i]){ %>
+                <tr>
+                  <td class="comment_row">
+                    <div id='response<%= responseList[i].id %>'>
+                      <button style='margin-right:10px;' value='收回' class='n' onclick='notNiceResponse(<%= responseList[i].id %>);'>
+                        <img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回
+                      </button>有&nbsp
+                      <label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
+                    </div>
+                  </td>
+                </tr>
+                <% } else { %>
+                <tr>
+                  <td class="comment_row">
+                    <div id='response<%= responseList[i].id %>'>
+                      <button style='margin-right:10px;' value='推薦' class='n' onclick='niceResponse(<%= responseList[i].id %>);'>
+                        <img src='/images/img_forum/good_icon.png'/>&nbsp推薦
+                      </button>有&nbsp
+                      <label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
+                    </div>
+                  </td>
+                </tr>
+                <% }} else { %>
+                <tr>
+                  <td class="comment_row">
+                    <div id='response<%= responseList[i].id %>'>
+                      有&nbsp<label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
+                    </div>
+                  </td>
+                </tr>
+                <% } %>
+              <% } %>
+            </table><br>
+          </div>
+        <% } %>
+        <div class="row-fluid" style="margin-top:20px;">
+          <div id="leaveMessage"><label style="font-size:22px;">留個言吧！</label><br>
+            <!-- <textarea type="text" name="comment" class="s" id="comment"> </textarea> -->
+
+            <div contentEditable="true" name="comment" class="s" id="comment"></div>
+            <div contentEditable="false" name="comment_image" class="s" id="comment_image">
+              <div class="clear" id="comment_clear"></div>
+            </div>
+
+            <button value="送出留言" id="commentSend" class="b" onclick="leaveComment();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+            <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插入圖片</button>
+          </div>
+        </div>
+      </div>
+
+    <!-- Cropping modal -->
+        <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" id="avatar-modal-label">上傳相片（讀者點擊縮圖後即可看到原圖）</h4>
+
+                  <div class="spinner">
+                    <div class="spinner-container container1">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container2">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container3">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="modal-body">
+                  <div class="avatar-body">
+                    <!-- Upload image and data -->
+                    <div class="avatar-upload">
+                      <input class="avatar-src" name="avatar_src" type="hidden">
+                      <input class="avatar-data" name="avatar_data" type="hidden">
+                      <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
+                    </div>
+                    <!-- Crop and preview -->
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="avatar-wrapper"></div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="avatar-preview preview-lg"></div>
+                        <div class="avatar-preview preview-md"></div>
+                        <div class="avatar-preview preview-sm"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>上傳</button>
+                  <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <!-- image modal -->
+    <div class="modalBox"></div>
+
+    <!-- 檢舉視窗 移至showDialog
+    <div id="reportDialog" title="協助我們瞭解發生的狀況">
+      <form id="reportForm">  
+        <label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br>
+        <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
+        <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
+        <label><input type="radio" name="reason" value="others"> 其它</label><br>
+        <input type="text" id="reasonInput" style="display: none;">
+      </form> 
+    </div>-->
+  </div>
