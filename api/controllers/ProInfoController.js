@@ -7,8 +7,6 @@
 
  module.exports = {
     setPage: function (req,res){
-
-
         function datesort(art1,art2){
           date1 = art1.date
           date2 = art2.date
@@ -23,8 +21,7 @@
             return year2-year1
         }
     }
-
-    var page = req.param("page")
+    var page = req.param("page");
     ProInfo.find({sort: "id desc"}).exec(function(err, articlesList) {
         if (err) {
             console.log("DB error")
@@ -32,35 +29,35 @@
             articlesList.sort(datesort)
             var MobileDetect = require('mobile-detect'),
             md = new MobileDetect(req.headers['user-agent']);
-            var page="";
+            var p;
             var m;
             var css;
             if (md.mobile()==null){
-                    //PC
-                    page="proInfo/index1";
-                    css="style";
-                    m="layout";
-                }
-                else{
-                    //mobile
-                    page="proInfo/mindex1";
-                    css="mStyle";
-                    m="mlayout";
-                }
-                res.view(page, {
-                    list:articlesList,
-                    layout:m,
-                    scripts: [
-                    '/js/js_public/modalBox.js-master/modalBox-min.js',
-                    '/js/js_ProInfo/mainJS.js',
-                    ],
-                    stylesheets: [
-                    '/styles/css_ProInfo/'+css+'.css',
-                    '/styles/importer.css'
-                    ],
-                });
+                //PC
+                p="proInfo/index1";
+                css="style";
+                m="layout";
             }
-        });
+            else{
+                //mobile
+                p="proInfo/mindex";
+                css="mStyle";
+                m="mlayout";
+            }
+            res.view(p, {
+                list: articlesList,
+                layout: m,
+                scripts: [
+                '/js/js_public/modalBox.js-master/modalBox-min.js',
+                '/js/js_ProInfo/mainJS.js',
+                ],
+                stylesheets: [
+                '/styles/css_ProInfo/'+css+'.css',
+                '/styles/importer.css'
+                ],
+            });
+        }
+    });
 
 },
 

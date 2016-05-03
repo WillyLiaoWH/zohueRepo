@@ -1,89 +1,33 @@
-<!DOCTYPE=html>
-    <script>
-      $( document ).ready(function() {
-        if($( window ).width() < 768){
-          $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-        }
-      });
-    </script>
+<div id="content">
+ <% for (var i=0;i<list.length;i++){ %>
+ <div class='not' id='<%=list[i].id%>'>
 
-
-
-<div class="container-fluid col-md-8">
-  <div class="" id="infoContent">
-    <div class="row-fluid">
-      <div class="col-md-12">
-        <h1>專業知識</h1>
-      </div>
-    </div>
-    <div class="row-fluid">
-      <div class="span10">
-        <div class="row-fluid">
-          <div class="col-md-6">
-            <input type="text" onkeypress="return enterSearch(event);" class="s" id="searchWord" placeholder="搜尋文章">
-          </div>
-          <div class="col-md-6 text-left" style="margin-left: -15px;">
-            <button value="搜尋" id="search" class="b" onclick="searchArticle();"><img src="/images/img_forum/search_icon.png"/>搜尋</button>
-            <button value="取消" id="cancleSearch" class="b" onclick="cancleSearch();"><img src="/images/img_forum/cancel_icon.png"/>取消</button>
-          </div>
-          <div class="span3">
-          </div>
+    <div class='message'>
+        <a class="show-info" title="<%=list[i].link %>" target='_blank' style='text-decoration:none; color:#336699;'>
+            <%-list[i].title %> </a><br>
+            [<%-list[i].classification%> – <%-list[i].cancerType%>]<br>
+            <div id='date'><%-list[i].date%></div>
+            <button class='button' onclick='location.href="<%=list[i].articleURL%>";'>前往討論</button>
         </div>
-      </div>
-
-      <table id="page" cellspacing=8>
-        <tr style='background-color: #3765A3; color:white;'>
-          <td style='width:12%; padding:10px 15px 10px 15px; text-align:center;'>類別</td>
-          <td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>
-          <td style='width:30%; padding:10px 15px 10px 15px;'>文章標題</td>
-          <td style='text-align:center;'>作者</td>
-          <td style='text-align:center;'>發表時間</td>
-          <td style='text-align:center;'>出處</td>
-          <td style='width:11%; text-align:center;'>相關討論</td>
-        </tr>
-        
-        <% for (var i=0;i<list.length;i++){ %>
-        <%if (i%2 ==0){ %>
-          <tr onMouseOver=this.style.backgroundColor='rgba(51,102,153,0.1)'; onMouseOut=this.style.backgroundColor='#F8F8F8'; style='background-color: #F8f8f8;'>
-        <%}else{%>
-          <tr onMouseOver=this.style.backgroundColor='rgba(51,102,153,0.1)'; onMouseOut=this.style.backgroundColor='#F8F8F8'; style='background-color: #f8f8f8;'>
-        <%}%>
-
-
-            <td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'><%= list[i].classification%> </td>
-
-          
-            <td style='text-align:center;'><%= list[i].cancerType %> </td>
-
-            <td style='width:30%; padding:10px 15px 10px 15px; cursor: pointer;'>
-
-              <a class="show-info" title="<%=list[i].link %>" target='_blank' style='text-decoration:none; color:#336699;'><%= list[i].title %> 
-
-              </a></td>
-
-            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%= list[i].author %> </td>
-
-            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%= list[i].date %> </td>
-
-            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%= list[i].note %> </td>
-
-
-            <td style='text-align:center;'><a href='<%= list[i].articleURL %> '>前往討論</a></td>
-        </tr>
-       
-        <%}%>
-
-      </table>
-
-
-      <br><br>
-      
-      <div class="modalBox"></div>
-      <table id="articleList"></table>
-      
-
-      <table id="pageDown" cellspacing=8></table>
-
-    </div>
-  </div>
+        <div class="right">
+            <!-- <div class='from'><%-list[i].note%></div> -->
+            <div class='author'>
+               <%-list[i].author%>
+           </div>
+           <div class='image'>
+            <center>
+               <% if(list[i].author.type=="S"){ %> 社工師
+               <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
+               <% }else if(list[i].author.type=="D"){ %> 醫師
+               <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
+               <% }else if(list[i].author.type=="RN"){ %> 護理師
+               <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
+               <% } else{ %>
+               <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
+               <% } %>
+            </center>
+           </div>
+       </div>  
+   </div>
+   <%}%>
 </div>
