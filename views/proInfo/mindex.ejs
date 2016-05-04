@@ -16,12 +16,12 @@
            </div>
            <div class='image'>
             <center>
-               <% if(list[i].author.type=="S"){ %> 社工師
-               <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'/>
-               <% }else if(list[i].author.type=="D"){ %> 醫師
-               <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'/>
-               <% }else if(list[i].author.type=="RN"){ %> 護理師
-               <img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'/>
+               <% if(list[i].author.indexOf("社工師")!=-1){ %> 
+               <img class='imgAuthorType' src='/images/img_forum/sw_icon.png'/>
+               <% }else if(list[i].author.indexOf("醫師")!=-1){ %> 
+               <img class='imgAuthorType' src='/images/img_forum/doctor_icon.png'/>
+               <% }else if(list[i].author.indexOf("護理師")!=-1 || list[i].author.indexOf("個案")!=-1){ %>
+               <img class='imgAuthorType' src='/images/img_forum/sw_icon.png'/>
                <% } else{ %>
                <img class='imgAuthorType' src='/images/img_forum/user_icon.png'/>
                <% } %>
