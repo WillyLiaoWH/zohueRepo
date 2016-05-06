@@ -324,6 +324,11 @@ module.exports.routes = {
     action: 'gettingStartedPage',
     skipAssets: true,
   },
+  '/changePassword':{
+    controller: 'changePasswordController',
+    action: 'changePasswordPage',
+    skipAssets: true,
+  },
 
   '/': '/home'
 

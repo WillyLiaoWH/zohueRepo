@@ -8,7 +8,7 @@
  */
 
  module.exports = {
- 	gettingStartedPage: function(req, res){
+ 	changePasswordPage: function(req, res){
 
  		var MobileDetect = require('mobile-detect'),
  		md = new MobileDetect(req.headers['user-agent']);
@@ -17,23 +17,23 @@
  		var css;
  		if (md.mobile()==null){
     	    //PC
-    	    page="gettingStarted/index";
+    	    page="changePassword/index";
     	    css="style";
     	    m="layout";
     	}
     	else{
     	    //mobile
-    	    page="gettingStarted/mindex";
+    	    page="changePassword/mindex";
     	    css="mStyle";
     	    m="mlayout";
     	}
     	res.view(page, {
     		layout:m,
     		scripts: [
-    		'/js/js_gettingStarted/mainJS.js'
+    		'/js/js_changePassword/mainJS.js'
     		],
     		stylesheets: [
-    		'/styles/css_gettingStarted/'+css+'.css',
+    		'/styles/css_changePassword/'+css+'.css',
     		'/styles/importer.css']
     	});
     }

@@ -5,7 +5,6 @@
 	padding-right: 0px !important;
 	padding-left: 0px !important;
 }
-
 button, input[type="button"], input[type="submit"]{
 	cursor: pointer;
 	background-color: #FFCE54;
@@ -14,29 +13,24 @@ button, input[type="button"], input[type="submit"]{
 	padding: 5px 5px 5px 5px;
 	border: 1px solid rgba(0, 0, 0, 0);
 }
-
 button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 	cursor: pointer;
 	background-color: #FFCE54;
 	color:#FFF !important;
 }
-
 select, input[type="text"], input[type="password"]{
 	/*background-color: #FFFAED;*/
 	background-color: #FFF;
 	color:#533828;
 }
-
 .icon-bar{
 	background-color: #FFF !important;
 }
-
 .navbar-brand{
 	float:right !important;
 	color: #FFF !important;
 	font-size: 13px;
 }
-
 .navbar-header{
 	display:inline !important;
 	margin: 0px !important;
@@ -46,30 +40,31 @@ select, input[type="text"], input[type="password"]{
 	color: #FFF;
 	border-width: 1px 0px 0px 0px;
 }
-
+.dropdown-menu{
+	background-color: #3765A3;
+}
+.navbar-collapse.in{
+	overflow-y: visible;
+}
 #label_complete_signup{
 	color:#EA7500;
 	font-size: 28px;
 	margin-left:-4px;
 }
-
 #label_complete_signup:hover{
 	color:#467500;
 	font-size: 28px;
 }
-
 #header{
 	height: 102px;
 	margin-top: 10px;
 }
-
 .imgAuthorType{
 	margin-left:10px; 
 	height:22px; 
 	width:22px;
 	margin-bottom:10px;
 }
-
 .title{
 	margin:3px;
 	font-family: "Gulim"; 
@@ -79,12 +74,10 @@ select, input[type="text"], input[type="password"]{
 .title:hover{
 	text-decoration: none;
 }
-
 #logo{
 	width: 100%;
 	margin-left:20px;
 }
-
 #topbar{
 	background-color: #3765A3;
 	padding: 10px;
