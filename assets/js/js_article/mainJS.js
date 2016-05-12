@@ -699,9 +699,9 @@ function follow() {
       showDialog("錯誤訊息", res.err);
     } else {
       if(res.isFollower){
-        $("#follow").html("<img src='/images/img_forum/follow.png' style='width:18%'>取消追蹤");
+        $("#follow").html("<img src='/images/img_forum/follow.png' style='width:18%'> 取消追蹤");
       } else {
-        $("#follow").html("<img src='/images/img_forum/follow.png' style='width:18%'>追蹤文章");
+        $("#follow").html("<img src='/images/img_forum/follow.png' style='width:18%'> 追蹤文章");
       }
     }
   });
