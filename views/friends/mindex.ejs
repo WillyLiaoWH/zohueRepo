@@ -15,9 +15,6 @@
     <script src="/js/js_friends/mainJS.js"></script>-->
     <script>
       $( document ).ready(function() {
-         setTimeout(function(){if($(window).width() < 768){
-            $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-         }}, 2000);
           <% if(page > 1){%>
             $("html, body").animate({ scrollTop: "<%- (page-1)*1010+130 %>px"} , 500, "swing");
           <% } %>

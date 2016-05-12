@@ -1183,22 +1183,22 @@ module.exports = {
                         hasNext=false;
                         var MobileDetect = require('mobile-detect'),
                         md = new MobileDetect(req.headers['user-agent']);
-                        var page="";
+                        var p="";
                         var m;
                         var css;
                         if (md.mobile()==null){
                             //PC
-                            page="friends/index";
+                            p="friends/index";
                             css="style";
                             m="layout";
                         }
                         else{
                             //mobile
-                            page="friends/mindex";
+                            p="friends/mindex";
                             css="mStyle";
                             m="mlayout";
                         }
-                        return res.view(page, {
+                        return res.view(p, {
                             layout:m,
                             users: users,
                             hasNext: hasNext,
@@ -1221,22 +1221,22 @@ module.exports = {
                         hasNext=true;
                             var MobileDetect = require('mobile-detect'),
                             md = new MobileDetect(req.headers['user-agent']);
-                            var page="";
+                            var p="";
                             var m;
                             var css;
                             if (md.mobile()==null){
                                 //PC
-                                page="friends/index";
+                                p="friends/index";
                                 css="style";
                                 m="layout";
                             }
                             else{
                                 //mobile
-                                page="friends/mindex";
+                                p="friends/mindex";
                                 css="mStyle";
                                 m="mlayout";
                             }
-                            return res.view(page, {
+                            return res.view(p, {
                                 layout:m,
                                 users: users.slice(0, page*unit+unit),
                                 hasNext: hasNext,

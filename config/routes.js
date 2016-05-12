@@ -320,15 +320,14 @@ module.exports.routes = {
     }
   },
   '/gettingStarted':{
-    view:'gettingStarted/index',
-    locals:{
-      scripts: [
-      ],
-      stylesheets:[
-        '/styles/css_gettingStarted/style.css',
-        '/styles/importer.css'
-      ]
-    }
+    controller: 'GettingStartedController',
+    action: 'gettingStartedPage',
+    skipAssets: true,
+  },
+  '/changePassword':{
+    controller: 'changePasswordController',
+    action: 'changePasswordPage',
+    skipAssets: true,
   },
 
   '/': '/home'

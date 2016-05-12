@@ -1,16 +1,4 @@
 <!DOCTYPE=html>
-    <script>
-      $( document ).ready(function() {
-        if($( window ).width() < 768){
-          $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-        }
-      });
-
-      obj_postal = <%- JSON.stringify(postalData) %>;
-    </script>
-
-
-
     <% if( !isFullSignup ){ %>
     <!-- 簡易註冊會員 -->
     <div id="form-main_ez" class="col-md-7">
