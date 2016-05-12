@@ -106,9 +106,9 @@ div.show-image input.delete {
 }
 
 #postContent{
-	min-height: 500px;
+	min-height: 300px;
 	height:auto;
-	font-size: 22px;
+	font-size: 18px;
 	margin-top: -12px;
 	margin-bottom:25px;
 }
@@ -119,7 +119,7 @@ div.show-image input.delete {
 }
 
 #postTitle{
-	font-size: 22px;
+	font-size: 18px;
 }
 
 #signup{
@@ -151,7 +151,7 @@ div.show-image input.delete {
 	border-radius: 10px;
 	line-height: 22px;
 	/*background-color: rgba(195, 183, 172, 0.5);*/
-	background-color: rgba(102, 141, 60, 0.3);
+	background-color: white;
 	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
 	width:100%;
@@ -169,11 +169,11 @@ div.show-image input.delete {
 
 .b{
 	margin:4px;
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: #FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 20px;
+	font-size: 16px;
 	border-radius: 10px;
 	/*line-height: 22px;*/
 	padding: 8px 8px 8px 8px;
@@ -184,8 +184,8 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 .b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	background-color: #FFCE54;
+	/*color:#816C58;*/
 }
 
 .check{
@@ -201,7 +201,7 @@ div.show-image input.delete {
 }
 
 #submit:hover{
-	background-color: rgba(102, 141, 60, 0.7);
+	background-color: #FFCE54;
 }
 
 #account{
@@ -217,7 +217,7 @@ div.show-image input.delete {
 .imgupload_btn{
 	margin-right: 10px;
 	float:right;
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: #FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -232,8 +232,8 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 .imgupload_btn:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	background-color: #FFCE54;
+	color:white;
 }
 
 #avatar-modal-label{
@@ -352,7 +352,7 @@ div.show-image input.delete {
   content: '選擇檔案';
   display: inline-block;
   cursor: pointer;
-  background-color: rgba(232, 81, 0, 0.7);
+  background-color: #FFCE54;
   color:#533828;
   font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   font-weight:500;
@@ -367,6 +367,6 @@ div.show-image input.delete {
   border: 1px solid rgba(0,0,0,0);
 }
 .avatar-input:hover::before {
-  background-color: rgba(102, 141, 60, 0.4);
+  background-color: #FFCE54;
   color:#816C58;
 }

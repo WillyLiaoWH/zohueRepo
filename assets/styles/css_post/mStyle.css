@@ -123,7 +123,7 @@ div.show-image input.delete {
 	font-size: 20px;
 	border-radius: 10px;
 	line-height: 22px;
-	background-color: rgba(102, 141, 60, 0.3);
+	background-color: white;
 	padding: 8px 8px 8px 8px;
 	/*margin-bottom: 10px;*/
 	width:100%;
@@ -141,7 +141,7 @@ div.show-image input.delete {
 
 
 .b{
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: #FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -156,7 +156,7 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 .b:hover{
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 	color:#816C58;
 }
 #save{
@@ -165,7 +165,7 @@ div.show-image input.delete {
 
 
 .check{
-	color:#D26900;
+	color:#FFCE54;
 	font-size: 15px;
 }
 
@@ -177,7 +177,7 @@ div.show-image input.delete {
 }
 
 #submit:hover{
-	background-color: rgba(102, 141, 60, 0.7);
+	background-color: #FFCE54;
 }
 
 #account{
@@ -206,7 +206,7 @@ div.show-image input.delete {
 .imgupload_btn{
 	margin-right: 10px;
 	float:right;
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: #FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -221,7 +221,7 @@ div.show-image input.delete {
   	border: 1px solid rgba(0,0,0,0);
 }
 .imgupload_btn:hover{
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: #FFCE54;
 	color:#816C58;
 }
 

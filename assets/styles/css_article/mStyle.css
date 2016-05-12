@@ -53,8 +53,8 @@ div.show-image input.delete {
 }
 
 #backToList,#shareFB{
-	width: 170px;
-	/*height:48px;*/
+	/*width: 170px;*/
+	height:40px;
 }
 
 #FB{
@@ -67,17 +67,58 @@ div.show-image input.delete {
 }
 
 #article{
-	border: solid 1px #cccccc;
-	background-color: rgba(255, 250, 240, 1); 
+	/*border: solid 1px #cccccc;*/
+	
 	/*floralwhite*/
-	border-width:1px;
-	border-radius: 10px;
-	width: 100%;
-	margin-top:-20px;
+	/*border-width:1px;*/
+	/*border-radius: 10px;*/
+	/*width: 100%;*/
+	/*margin-top:-20px;*/
+	/*border-top-left-radius: 15px;*/
+    /*border-top-right-radius: 15px;*/
+    /*overflow: hidden;*/
+/*    background-color: #FCFCFC; 
+
+
+	border: solid #cccccc;
+	border-width: 0px 1px 1px 1px;
+	padding:20px 20px 0px 20px;
+*/	/*background-color: rgba(234, 234, 234, 1);*/
+	/*font-size: 20px;*/
+/*	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+*/
 }
 
+
+
+#articlediv{
+	border: solid 1px #cccccc;
+	
+	/*floralwhite*/
+	/*border-width:1px;*/
+	/*border-radius: 10px;*/
+	/*width: 100%;*/
+	/*margin-top:-20px;*/
+	border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /*overflow: hidden;*/
+    background-color: #FCFCFC; 
+
+
+	/*border: solid #cccccc;*/
+	/*border-width: 0px 1px 1px 1px;*/
+	/*padding:20px 20px 0px 20px;*/
+	/*background-color: rgba(234, 234, 234, 1);*/
+	/*font-size: 20px;*/
+	/*border-bottom-right-radius: 10px;*/
+    /*border-bottom-left-radius: 10px;*/
+
+}
+
+
 #articleAvatar_type img, #articleAvatar img{
-	padding:5px 0px 0px 8px; 
+	padding:5px 10px 5px 5px; 
 	display: inline-block; 
 	height:70px;
 }
@@ -91,7 +132,7 @@ div.show-image input.delete {
 #articleTitle{
 	padding:15px 0px 5px 20px;
 	color:#533828;
-	font-size: 30px;
+	font-size: 20px;
 	font-weight: bold;
 
 	word-break:break-all;
@@ -99,16 +140,18 @@ div.show-image input.delete {
 
 #articleData{
 	color:#533828;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 #articleContent{
 	padding:20px;
 	color:#533828;
-	font-size: 20px;
-	border: solid 1px #cccccc;
+	font-size: 18px;
+	border: solid  #cccccc;
+	border-width: 1px 0px 1px 0px;
 	word-break:break-all;
 }
+
 
 #niceArticle, #report{
 	padding:0px 10px 0px 10px;
@@ -143,6 +186,38 @@ div.show-image input.delete {
 	color:#533828;
 }
 
+.container_edit, .container_r_edit{
+	margin: 15px;
+	padding:0px;
+	display:none;
+}
+
+div[id*="div_edit_content"], div[id*="div_r_edit_content"]{
+	word-break: break-all;
+	min-height: 100px;
+	color:#816C58;
+	font-size: 18px;
+	line-height: 22px;
+	background-color: white;
+	padding: 8px 8px 8px 8px;
+	width:auto;
+	border-radius: 10px;
+	/*border-top-left-radius: 10px;*/
+	/*border-top-right-radius: 10px;*/
+	border: 1px solid #ccc;
+}
+div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
+	float:left;
+	padding-bottom:0px;
+	display: none;
+	background-color: rgba(129, 108, 88, 0.6);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	/*border: solid rgb(196, 204, 209);*/
+	/*border-width: 0px 5px 5px 5px;*/
+}
+
+
 #commentSend:hover{
 	background-color: #FFCE54;
 	color:#816C58;	
@@ -151,9 +226,13 @@ div.show-image input.delete {
 #commentListDiv{
 	border: solid #cccccc;
 	border-width: 0px 1px 1px 1px;
-	padding:20px 20px 0px 20px;
-	background-color: rgba(255, 250, 240, 1);
-	font-size: 20px;
+	padding:10px 10px 0px 10px;
+	background-color: rgba(234, 234, 234, 1);
+	font-size: 18px;
+	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+	
+
 }
 
 #commentList label{
@@ -168,6 +247,7 @@ div.show-image input.delete {
 .comment_avatar img{
 	height:60px;
 	width:60px;
+	margin-right:10px;
 }
 
 #comment_createdAt label{
@@ -179,7 +259,15 @@ div.show-image input.delete {
 	color:#336699;
 }
 
-#comment_createdAt, #comment_content{
+#comment_createdAt{
+	
+	padding-left:10px;
+}
+
+
+#comment_content{
+	margin-top: 5px;
+    margin-bottom: 5px;
 	padding-left:10px;
 }
 
@@ -190,7 +278,7 @@ div.show-image input.delete {
 }
 
 .comment_row{
-	padding:3px 0px 30px 10px;
+	/*。padding:3px 0px 30px 10px;*/
 }
 
 #post-form-main{
@@ -238,7 +326,7 @@ div.show-image input.delete {
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
-  	border: 1px solid #FFCE54;
+  	border: 1px solid #ccc;
 }
 
 #commentSend, #image{
@@ -250,13 +338,13 @@ div.show-image input.delete {
 	/*margin: -20px 5px 10px 0px;*/
 	margin:3px;
 	/*display: none;*/
-	/*float:right;*/
-	width: 125px;
+	float:right;
+	/*width: 125px;*/
 	background-color: #FFCE54;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 20px;
+	font-size: 16px;
 	border-radius: 10px;
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
@@ -285,7 +373,7 @@ div.show-image input.delete {
 	border: 1px solid rgba(0,0,0,0);
 	background-color: rgba(255,206,84,1);
 	padding: 4px 8px 4px 8px;
-	font-size:20px;
+	font-size:18px;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
 	margin-bottom: 5px;
@@ -306,7 +394,7 @@ div.show-image input.delete {
 
 #niceCount, #reportCount{
 	color:#533828; 
-	font-size:20px;
+	font-size:18px;
 }
 
 

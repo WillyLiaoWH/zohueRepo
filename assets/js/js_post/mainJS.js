@@ -10,11 +10,11 @@ $(document).ready(function(){
     .on("keyup mouseup", function(){
       try{
         if($("#postContent").html().trim()!=""){
-          $("#save").css("background-color", "rgba(232, 81, 0, 0.7)");
+          $("#save").css("background-color", "#FFCE54");
           $("#save").hover(function(){
-            $("#save").css("background-color", "rgba(102, 141, 60, 0.4)");
+            $("#save").css("background-color", "#FFCE54");
             },function(){
-            $("#save").css("background-color", "rgba(232, 81, 0, 0.7)");
+            $("#save").css("background-color", "#FFCE54");
           });
         }else{
           $("#save").css("background-color", "#ADADAD");
