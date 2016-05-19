@@ -5,225 +5,232 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
- module.exports = {
+module.exports = {
 
-     setBoardPage: function(req, res){
+setBoardPage: function(req, res){
 
-        function getTimeString(date) {
-            if(date.getHours()/12==0) var tt="上午";
-            else var tt="下午";
-            return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
-        }
-        //settings
-        var maxReport=3;
-        var articleNumPerPage=20;
-
-        var tab=req.param("tab");
-        var order=req.param("order");
-        var sort=req.param("sort");
-        var board=req.param("board");
-        var keyword=req.param("search");
-        var page=req.param("page");
-
-        if(order!="DESC"&&order!="ASC") {
-            res.send(400, {error: "bad request error"});
-        }
-        if(sort!="classification"&&sort!="title"&&sort!="author"&&sort!="createdAt"&&sort!="clickNum"&&sort!="responseNum"&&sort!="niceNum"&&sort!="lastResponseTime") {
-            res.send(400, {error: "bad request error"});
-        }
-
-        var elite="";
-        switch (tab) {
-            case "all":
-            classification="";
-            break;
-            case "motion":
-            classification="病況與心情"
-            break;
-            case "share":
-            classification="分享";
-            break;
-            case "problem":
-            classification="問題";
-            break;
-            case "others":
-            classification="其它";
-            break;
-            case "elite":
-            classification="";
-            elite="1";
-            break;
-            default:
-            res.send(400, {error: "bad request error"});
-        }
-
-        if(board==21) { // 專業知識論壇頁面不開放
-            res.send(400, {error: "bad request error"});
-        } else if(board<1||board>20) {
-            res.send(400, {error: "bad request error"});
-        }
-        
-        Articles.find({classification: {'contains': classification}, title: {'contains': keyword}, board: board, deleted: "false", elite: {'contains': elite}}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
-            if (err) {
-                res.send(500, { err: "DB Error" });
-            } else {
-                Boards.find({id: board}).populate('category').exec(function(err2, board) {
-                    if(err2 || board.length<1) {
-                        res.send(500, { err: "DB Error" });
-                    } else {
-
-                        BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
-                            totalPage=Math.ceil(articleList.length/articleNumPerPage);
-                            if((totalPage!=0&&page>totalPage)||page<1) {
-                                res.send(400, {error: "bad request error"});
-                            } 
-
-                            articleList.sort(function(a, b) {
-                                if(order=="ASC") {
-                                    switch (sort) {
-                                        case "responseNum":
-                                        return a.response.length-b.response.length;
-                                        break;
-                                        case "niceNum":
-                                        return a.nicer.length-b.nicer.length;
-                                        break;
-                                        case "author":
-                                        return a[sort].alias.localeCompare(b[sort].alias);
-                                        break;
-                                        case "createdAt":
-                                        case "lastResponseTime":
-                                        return new Date(a[sort])-new Date(b[sort])
-                                        break;
-                                        case "classification":
-                                        case "title":
-                                        return a[sort].localeCompare(b[sort]);
-                                        break;
-                                        case "clickNum":
-                                        return a[sort]-b[sort];
-                                        break;
-                                        default:
-                                        res.send(400, {error: "bad request error"});
-                                    }
-                                } else {
-                                    switch (sort) {
-                                        case "responseNum":
-                                        return b.response.length-a.response.length;
-                                        break;
-                                        case "niceNum":
-                                        return b.nicer.length-a.nicer.length;
-                                        break;
-                                        case "author":
-                                        return b[sort].alias.localeCompare(a[sort].alias);
-                                        break;
-                                        case "createdAt":
-                                        case "lastResponseTime":
-                                        return new Date(b[sort])-new Date(a[sort])
-                                        break;
-                                        case "classification":
-                                        case "title":
-                                        return b[sort].localeCompare(a[sort]);
-                                        break;
-                                        case "clickNum":
-                                        return b[sort]-a[sort];
-                                        break;
-                                        default:
-                                        res.send(400, {error: "bad request error"});
-                                    }
-                                }
-                            });
-articleList=articleList.slice((page-1)*20, page*20);
-for(var i=0; i<articleList.length; i++) {
-    if(articleList[i].report&&articleList[i].report.length>=maxReport) {
-        articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
-        articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
-        articleList[i].color = "color:grey;";
-        articleList[i].linkcolor = "color:grey;";
-    } else {
-        articleList[i].badPic = '';
-        articleList[i].link = "href=/article/"+articleList[i].id;
-        articleList[i].color = "";
-        articleList[i].linkcolor = "color:#336699;";
+    function getTimeString(date) {
+        if(date.getHours()/12==0) var tt="上午";
+        else var tt="下午";
+        return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
     }
-    switch(articleList[i].author.type) {
-        case "D":
-        articleList[i].authorType="&nbsp醫師";
-        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
+    //settings
+    var maxReport=3;
+    var articleNumPerPage=20;
+
+    var tab=req.param("tab");
+    var order=req.param("order");
+    var sort=req.param("sort");
+    var board=req.param("board");
+    var keyword=req.param("search");
+    var page=req.param("page");
+
+    if(order!="DESC"&&order!="ASC") {
+        res.send(400, {error: "bad request error"});
+    }
+    if(sort!="classification"&&sort!="title"&&sort!="author"&&sort!="createdAt"&&sort!="clickNum"&&sort!="responseNum"&&sort!="niceNum"&&sort!="lastResponseTime") {
+        res.send(400, {error: "bad request error"});
+    }
+
+    var elite="0";
+    switch (tab) {
+        case "all":
+        classification="";
         break;
-        case "S":
-        articleList[i].authorType="&nbsp社工師";
-        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'";
+        case "motion":
+        classification="病況與心情"
         break;
-        case "RN":
-        articleList[i].authorType="&nbsp護理師";
-        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'";
+        case "share":
+        classification="分享";
         break;
-        case "P":
-        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友'";
-        articleList[i].authorType="";
+        case "problem":
+        classification="問題";
         break;
-        case "F":
-        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'";
-        articleList[i].authorType="";
+        case "others":
+        classification="其它";
+        break;
+        case "elite":
+        classification="";
+        elite="1";
         break;
         default:
-        articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'";
-        articleList[i].authorType="";
+        res.send(400, {error: "bad request error"});
     }
-    articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
-    articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
-}
 
-                            var proInfo=-1;
-                            for(var i=0; i<boardsCateList.length; i++) {
-                                if(boardsCateList[i].id==5) {
-                                    proInfo=i;
+    if(board==21) { // 專業知識論壇頁面不開放
+        res.send(400, {error: "bad request error"});
+    } else if(board<1||board>20) {
+        res.send(400, {error: "bad request error"});
+    }
+  //  console.log(board);
+   Articles.find({classification: {'contains': classification}, title: {'contains': keyword}, board: board, deleted: "false", elite:elite}).populate('author').populate('nicer').populate('report').populate('board').populate("response").exec(function(err, articleList) {
+
+       // console.log(articleList);
+        if (err) {
+            res.send(500, { err: "DB Error" });
+        } else {
+            Boards.find({id: board}).populate('category').exec(function(err2, board) {
+                if(err2 || board.length<1) {
+                    res.send(500, { err: "DB Error" });
+                } else {
+                    
+                    BoardCategory.find().populate("board").exec(function(err3, boardsCateList) {
+
+                        totalPage=Math.ceil(articleList.length/articleNumPerPage);
+                        if((totalPage!=0&&page>totalPage)||page<1) {
+                            res.send(400, {error: "bad request error"});
+                        } 
+
+                        articleList.sort(function(a, b) {
+                            if(order=="ASC") {
+                                switch (sort) {
+                                    case "responseNum":
+                                    return a.response.length-b.response.length;
                                     break;
+                                    case "niceNum":
+                                    return a.nicer.length-b.nicer.length;
+                                    break;
+                                    case "author":
+                                    return a[sort].alias.localeCompare(b[sort].alias);
+                                    break;
+                                    case "createdAt":
+                                    case "lastResponseTime":
+                                    return new Date(a[sort])-new Date(b[sort])
+                                    break;
+                                    case "classification":
+                                    case "title":
+                                    return a[sort].localeCompare(b[sort]);
+                                    break;
+                                    case "clickNum":
+                                    return a[sort]-b[sort];
+                                    break;
+                                    default:
+                                    res.send(400, {error: "bad request error"});
+                                }
+                            } else {
+                                switch (sort) {
+                                    case "responseNum":
+                                    return b.response.length-a.response.length;
+                                    break;
+                                    case "niceNum":
+                                    return b.nicer.length-a.nicer.length;
+                                    break;
+                                    case "author":
+                                    return b[sort].alias.localeCompare(a[sort].alias);
+                                    break;
+                                    case "createdAt":
+                                    case "lastResponseTime":
+                                    return new Date(b[sort])-new Date(a[sort])
+                                    break;
+                                    case "classification":
+                                    case "title":
+                                    return b[sort].localeCompare(a[sort]);
+                                    break;
+                                    case "clickNum":
+                                    return b[sort]-a[sort];
+                                    break;
+                                    default:
+                                    res.send(400, {error: "bad request error"});
                                 }
                             }
-                            boardsCateList.splice(i, 1);
+                        });
+                        
+                        articleList=articleList.slice((page-1)*20, page*20);
+                        
+                        for(var i=0; i<articleList.length; i++) {
+                            if(articleList[i].report&&articleList[i].report.length>=maxReport) {
+                                articleList[i].badPic='<img src="/images/img_forum/bad3_icon.png" title="這篇文章被檢舉三次以上了喔!" style="margin-right:5px; height:30px; width:30px;">';
+                                articleList[i].link="onClick='readConfirm("+articleList[i].id+");'";
+                                articleList[i].color = "color:grey;";
+                                articleList[i].linkcolor = "color:grey;";
+                            } else {
+                                articleList[i].badPic = '';
+                                articleList[i].link = "href=/article/"+articleList[i].id;
+                                articleList[i].color = "";
+                                articleList[i].linkcolor = "color:#336699;";
+                            }
+                            switch(articleList[i].author.type) {
+                                case "D":
+                                articleList[i].authorType="&nbsp醫師";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/doctor_icon.png' title='已認證醫師'";
+                                break;
+                                case "S":
+                                articleList[i].authorType="&nbsp社工師";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證社工師'";
+                                break;
+                                case "RN":
+                                articleList[i].authorType="&nbsp護理師";
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/sw_icon.png' title='已認證護理師'";
+                                break;
+                                case "P":
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='病友'";
+                                articleList[i].authorType="";
+                                break;
+                                case "F":
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='家屬'";
+                                articleList[i].authorType="";
+                                break;
+                                default:
+                                articleList[i].authorIcon="<img class='imgAuthorType' src='/images/img_forum/user_icon.png' title='一般民眾'";
+                                articleList[i].authorType="";
+                            }
+                            articleList[i].lastResponseTime=getTimeString(new Date(articleList[i].lastResponseTime));
+                            articleList[i].postTime=getTimeString(new Date(articleList[i].createdAt));
+                            //console.log("123");
+                        }
+                       // console.log(articleList);
+                        var proInfo=-1;
+                        for(var i=0; i<boardsCateList.length; i++) {
+                            if(boardsCateList[i].id==5) {
+                                proInfo=i;
+                                break;
+                            }
+                        }
+                        boardsCateList.splice(i, 1);
 
-                            var MobileDetect = require('mobile-detect'),
-                            md = new MobileDetect(req.headers['user-agent']);
-                            var page="";
-                            var m;
-                            var css;
-                            if (md.mobile()==null){
-                                //PC
-                                page="board/index";
-                                css="style";
-                                m="layout";
-                            }
-                            else{
-                                //mobile
-                                page="board/mindex";
-                                css="mStyle";
-                                m="mlayout";
-                            }
-                            res.view(page, {
-                                loginid: req.session.user.id, 
-                                tab: req.param("tab"),
-                                keyword: req.param("search"),
-                                layout:m,
-                                board: req.param("board"),
-                                boardTitle: board[0].title,
-                                boardCateTitle: board[0].category.title,
-                                boardsCateList: boardsCateList,
-                                articleList: articleList,
-                                totalPage: totalPage,
-                                page: page,
-                                scripts: [
-                                '/js/js_board/mainJS.js'
-                                ],
-                                stylesheets: [
-                                '/styles/css_board/'+css+'.css',
-                                '/styles/importer.css'
-                                ]
-                            });
-});
-}
-});
-}
-});
+                        var MobileDetect = require('mobile-detect'),
+                        md = new MobileDetect(req.headers['user-agent']);
+                        var p="";
+                        var m;
+                        var css;
+                        if (md.mobile()==null){
+                            //PC
+                            p="board/index";
+                            css="style";
+                            m="layout";
+                        }
+                        else{
+                            //mobile
+                            p="board/mindex";
+                            css="mStyle";
+                            m="mlayout";
+                        }
+                        
+                        res.view(p, {
+
+                            tab: req.param("tab"),
+                            keyword: req.param("search"),
+                            layout:m,
+                            board: req.param("board"),
+                            boardTitle: board[0].title,
+                            boardCateTitle: board[0].category.title,
+                            boardsCateList: boardsCateList,
+                            articleList: articleList,
+                            totalPage: totalPage,
+                            page: page,
+                            scripts: [
+                            '/js/js_board/mainJS.js'
+                            ],
+                            stylesheets: [
+                            '/styles/css_board/'+css+'.css',
+                            '/styles/importer.css'
+                            ]
+                        });
+                    });
+                }
+            });
+        }
+    });
 },
 
 setFrontBoard: function(req, res) {
@@ -764,7 +771,7 @@ postArticle: function(req, res){
         // if(!req.session.user) {
         //     res.send({err: "尚未登入"});
         // } else {
-          Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower}).exec(function(error, article) {
+          Articles.create({title: title, author: author, content: content, classification: classification, responseNum: responseNum, clickNum: clickNum, board: board, follower: follower,elite:0}).exec(function(error, article) {
             if(error) {
                 res.send(500,{err: "DB Error" });
                 console.log(error);

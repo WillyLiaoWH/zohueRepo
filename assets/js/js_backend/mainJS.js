@@ -1214,7 +1214,7 @@ function proInfoSubmit(){
   var cancer =$("#proInfoCancer").val()
   var time = $("#proInfoYear").val() +"年"+$("#proInfoMonth").val()+"月"
   var title = $("#proInfoTitle").val()
-  var author = $("#proInfoName").val()+" \n "+$("#proInfoName2").val()
+  var author = $("#proInfoName").val()+" "+$("#proInfoName2").val()
   var from = $("#proInfoFrom").val()
   var proInfo = $("#link").val() 
 

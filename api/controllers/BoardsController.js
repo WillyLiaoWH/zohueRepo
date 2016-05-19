@@ -14,6 +14,7 @@ module.exports = {
 				console.log(err);
 				res.send(500, "DB error");
 			} else {
+				
 				res.send(boards);
 			}
 		});
