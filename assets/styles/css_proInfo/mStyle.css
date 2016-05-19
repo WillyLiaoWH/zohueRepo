@@ -1,16 +1,22 @@
-#body{
-	font-family: "微軟正黑體";
+#content{
+	margin: 0px 5px 20px 5px;
 }
-
+.SearchBar{
+	border-radius: 10px;
+}
+.SearchButton{
+	border-radius: 10px;
+}
 .not {
 	background-color: floralwhite;
 	/*background-color: #FFF;*/
 	border-radius: 10px;
 	margin-top: 5px;
-	padding: 10px;
+	/*padding: 10px;*/
 	overflow:hidden;
 	font-size: 20px;
 	color: black;
+	padding: 5% 0;
 }
 .message {
 	width: 70%;
@@ -22,17 +28,20 @@
 	width: 25%;
 	float: left;
 	margin-left: 10px;
+	padding: 10% 0;
 }
 .author{
 	word-wrap: break-word;
 	text-align: center;
 	font-size: 18px;
-	margin-top: 30px;
 }
 .image {
 	margin-top: 5px;
 }
-
+#cat{
+	color: #868686;
+	font-size: 18px;
+}
 #date{
 	color: #868686;
 	font-size: 18px;

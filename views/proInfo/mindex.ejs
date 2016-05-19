@@ -1,11 +1,19 @@
 <div id="content">
+<div class="input-group">
+      <input type="text" class="form-control SearchBar" placeholder=" 搜尋專業文章">
+      <span class="input-group-btn">
+        <button class="btn btn-defaul SearchButton" type="button">
+            <span class=" glyphicon glyphicon-search SearchIcon" ></span>
+        </button>
+      </span>
+    </div>
  <% for (var i=0;i<list.length;i++){ %>
  <div class='not' id='<%=list[i].id%>'>
 
     <div class='message'>
         <a class="show-info" title="<%=list[i].link %>" target='_blank' style='text-decoration:none; color:#336699;'>
             <%-list[i].title %> </a><br>
-            [<%-list[i].classification%> – <%-list[i].cancerType%>]<br>
+            <span id='cat'>[<%-list[i].classification%> – <%-list[i].cancerType%>]</span><br>
             <div id='date'><%-list[i].date%></div>
             <button class='button' onclick='location.href="<%=list[i].articleURL%>";'>前往討論</button>
         </div>

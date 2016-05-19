@@ -193,7 +193,7 @@ select, input[type="text"], input[type="password"]{
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
   	border: 1px solid rgba(0,0,0,0);
-}
+}/*
 .lightgray{
 	background-color: #F5F5F5;
 }
@@ -203,7 +203,7 @@ select, input[type="text"], input[type="password"]{
 .orange{
 	background-color: rgba(232, 81, 0, 0.6);
 	cursor: pointer;
-}
+}*/
 
 #login:hover{
 	/*background-color: rgba(102, 141, 60, 0.4);*/

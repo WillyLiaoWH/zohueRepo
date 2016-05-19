@@ -44,12 +44,12 @@ select {
 }
 
 #form-div {
-	background-color: floralwhite;
+	/*background-color: floralwhite;*/
 /*	padding-left:35px;
 	padding-right:35px;
 	padding-top:35px;
 	padding-bottom:50px;*/
-	padding:35px 35px 50px 35px;
+	padding:35px 35px 50px 5px;
 	width: 100%;
   	-moz-border-radius: 7px;
   	-webkit-border-radius: 7px;
@@ -57,8 +57,8 @@ select {
   	/*margin-left:20px;*/
   	margin-top:15px;
   	margin-bottom:20px;
-    border: 1px solid #CCCCCC;
-	border-radius: 10px;
+   /* border: 1px solid #CCCCCC;
+	border-radius: 10px;*/
 }
 
 @media all and (max-width: 500px){

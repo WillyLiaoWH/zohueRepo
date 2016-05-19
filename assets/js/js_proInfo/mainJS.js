@@ -25,7 +25,7 @@ $(document).ready(function(){
   //     if($("#searchWord").val().trim()!=""){
   //       $("#search").css("background-color", "rgba(232, 81, 0, 0.7)");
   //     }else{$("#search").css("background-color", "rgba(102, 141, 60, 0.4)");}
-        
+
   //     if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
   //       this.appendChild(document.createChild("br"));
   //     }
@@ -47,7 +47,7 @@ function datesort(art1,art2){
     return year2-year1
   }
 
-   
+
 }
 
 
@@ -82,62 +82,62 @@ function cancleSearch(){
 }
 
 function setSearchResult(articleList){
-    myTable="<tr style='background-color: #1D3521; color:white;'>";
-    myTable+="<td style='width:12%; padding:10px 15px 10px 15px; text-align:center;'>類別</td>";
-    myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
-    myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'>文章標題</td>";
-    myTable+="<td style='text-align:center;'>作者</td>";
-    myTable+="<td style='text-align:center;'>發表時間</td>";
-    myTable+="<td style='text-align:center;'>出處</td>";
-    myTable+="<td style='width:11%; text-align:center;'>相關討論</td></tr>";
+  myTable="<tr style='background-color: #3765A3; color:white;'>";
+  myTable+="<td style='width:12%; padding:10px 15px 10px 15px; text-align:center;'>類別</td>";
+  myTable+="<td style='width:10%; padding:10px 15px 10px 15px; text-align:center;'>癌症別</td>";
+  myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'>文章標題</td>";
+  myTable+="<td style='text-align:center;'>作者</td>";
+  myTable+="<td style='text-align:center;'>發表時間</td>";
+  myTable+="<td style='text-align:center;'>出處</td>";
+  myTable+="<td style='width:11%; text-align:center;'>相關討論</td></tr>";
 
-    articleNum=20;
+  articleNum=20;
 
-    lastPageArticlesNum=articleList.length%articleNum;
-    pageNum=(articleList.length-lastPageArticlesNum)/articleNum;
-    if(lastPageArticlesNum!=0) {
-      pageNum+=1;
+  lastPageArticlesNum=articleList.length%articleNum;
+  pageNum=(articleList.length-lastPageArticlesNum)/articleNum;
+  if(lastPageArticlesNum!=0) {
+    pageNum+=1;
+  }
+  pageContext="<tr><td>頁次：</td>"
+  for(i=1; i<=pageNum; i++) {
+    if(i!=page) {
+      pageContext+="<td><label><a href='/forum/"+i+"'>"+i+"</a></label></td>"
+    } else {
+      pageContext+="<td>"+i+"</td>"
     }
-    pageContext="<tr><td>頁次：</td>"
-    for(i=1; i<=pageNum; i++) {
-      if(i!=page) {
-        pageContext+="<td><label><a href='/forum/"+i+"'>"+i+"</a></label></td>"
-      } else {
-        pageContext+="<td>"+i+"</td>"
-      }
-    }
-    pageContext+="</tr>"
-    document.getElementById("page").innerHTML = pageContext;
-    document.getElementById("pageDown").innerHTML = pageContext;
+  }
+  pageContext+="</tr>"
+  document.getElementById("page").innerHTML = pageContext;
+  document.getElementById("pageDown").innerHTML = pageContext;
 
-    if(articleList.length%20==0){
-      pageNum=articleList.length/20+1;
-    }
+  if(articleList.length%20==0){
+    pageNum=articleList.length/20+1;
+  }
 
 
-    if(page!=pageNum) {
-      for(i=0; i<articleNum; i++) {
+  if(page!=pageNum) {
+    for(i=0; i<articleNum; i++) {
 
-        if(i%2==0){
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
+      if(i%2==0){
+        myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.1].join(',') + ")'; onMouseOut=this.style.backgroundColor='#F8F8F8'; style='background-color: #F8F8F8;'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+        myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
-          myTable+="<td style='width:30%; padding:10px 15px 10px 15px; cursor: pointer;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#336699;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
+        myTable+="<td style='width:30%; padding:10px 15px 10px 15px; cursor: pointer;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#336699;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
-          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
-          myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
-        }else{
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
-          myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
+        myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
+        myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
+        myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
+        myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
+      }else{
+        myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.1].join(',') + ")'; onMouseOut=this.style.backgroundColor='#F8F8F8'; style='background-color: #F8F8F8;'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+        myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
           //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
           myTable+="<td style='width:30%; padding:10px 15px 10px 15px; cursor: pointer;'><a target='_blank' class='show-info' title="+articleList[i+articleNum*(page-1)].link+">"+articleList[i+articleNum*(page-1)].title+"</a></td>";
 
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].author+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
-                    myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
+          myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
           myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
         }
       }
@@ -147,7 +147,7 @@ function setSearchResult(articleList){
       for(i=0; i<lastPageArticlesNum; i++) {
 
         if(i%2==0){
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.5].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.5);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.1].join(',') + ")'; onMouseOut=this.style.backgroundColor='#F8F8F8'; style='background-color: #F8F8F8;'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
           //myTable+="<td style='width:30%; padding:10px 15px 10px 15px;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#000079;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
@@ -157,9 +157,9 @@ function setSearchResult(articleList){
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].date+"</td>";
           myTable+="<td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>"+articleList[i+articleNum*(page-1)].note+"</td>";
           myTable+="<td style='text-align:center;'><a href='"+articleList[i+articleNum*(page-1)].articleURL+"'>前往討論</a></td></tr>";
-         
+
         }else{
-          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.2].join(',') + ")'; onMouseOut=this.style.backgroundColor='rgba(" + [102,141,60,0.3].join(',') + ")'; style='background-color: rgba(102, 141, 60, 0.3);'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
+          myTable+="<tr onMouseOver=this.style.backgroundColor='rgba(" + [51,102,153,0.1].join(',') + ")'; onMouseOut=this.style.backgroundColor='#F8F8F8'; style='background-color: #F8F8F8;'><td style='width:10%; padding:10px 0px 10px 0px; text-align:center;'>"+articleList[i+articleNum*(page-1)].classification+"</td>";
           myTable+="<td style='text-align:center;'>"+articleList[i+articleNum*(page-1)].cancerType+"</td>";
 
           myTable+="<td style='width:30%; padding:10px 15px 10px 15px; cursor: pointer;'><a href=\""+articleList[i+articleNum*(page-1)].link+"\" target='_blank' style='text-decoration:none; color:#336699;text-decoration:underline;'>"+articleList[i+articleNum*(page-1)].title+"</a></td>";
@@ -173,21 +173,21 @@ function setSearchResult(articleList){
     } 
 
     document.getElementById("articleList").innerHTML = myTable;
-}
-
-function enterSearch(e) {
-  var keynum;
-  if(window.event) {
-    keynum = e.keyCode;
-  } else if(e.which) {
-    keynum = e.which;
   }
-  if(keynum=="13") {
-    searchArticle();
-  }
-}
 
-$(document).on("click","a.show-info",function(event){
+  function enterSearch(e) {
+    var keynum;
+    if(window.event) {
+      keynum = e.keyCode;
+    } else if(e.which) {
+      keynum = e.which;
+    }
+    if(keynum=="13") {
+      searchArticle();
+    }
+  }
+
+  $(document).on("click","a.show-info",function(event){
 //$(".show-info").on("click",function(event){
   //event.preventDefault();
   $.post("/recordProInfo",{link:$(this).attr("title")})
@@ -216,22 +216,22 @@ $(document).on("click","a.show-info",function(event){
     $( ".modalBox" ).append(ss);
     //$( ".modalBox" ).modalBox('open');
     $(".modalBox").modalBox({
-        width:"90%",
-        height:"90%",
-        top:"5%",
-        left:"5%",
-        iconImg:'/images/img_forum/cancelBlack_icon.png',
-        iconClose:true,
+      width:"90%",
+      height:"90%",
+      top:"5%",
+      left:"5%",
+      iconImg:'/images/img_forum/cancelBlack_icon.png',
+      iconClose:true,
     });
   }
 });
 
 $(document).on("click","#btn_backProInfo",function(event){
-    $(".mobile_modalBox").css("display", "none");
-    $(".mobile_modalBox").css("opacity", "1");
-    $("#layout").css("opacity", "1");
-    $("body").css("overflow", "scroll");
-    $("html").css("overflow", "scroll");
+  $(".mobile_modalBox").css("display", "none");
+  $(".mobile_modalBox").css("opacity", "1");
+  $("#layout").css("opacity", "1");
+  $("body").css("overflow", "scroll");
+  $("html").css("overflow", "scroll");
 });
 
 function showDialog(title, message, cb){

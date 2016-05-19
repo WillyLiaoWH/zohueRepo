@@ -42,7 +42,7 @@
 
 #page{
 	float:left;
-	margin: 15px 0px 0px 0px;
+	margin: 15px 0px 0px 10px;
 	font-size: 20px;
 	color:#533828;
 
@@ -50,10 +50,9 @@
 
 #pageDown{
 	float:left;
-	margin: 5px 0px 10px 20px;
+	margin: 5px 0px 10px 10px;
 	font-size: 20px;
 	color:#533828;
-
 }
 
 #sideBanner{
@@ -132,7 +131,7 @@
   	border: 1px solid rgba(0,0,0,0);
 }
 
-td{
+#articleList.td{
 	 border-bottom: 2px solid #3765A3 ;
 }
 
