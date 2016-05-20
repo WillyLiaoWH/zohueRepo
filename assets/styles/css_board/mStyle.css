@@ -1,3 +1,59 @@
+#content{
+	margin: 0px 5px 20px 5px;
+}
+.SearchBar{
+	border-radius: 10px;
+	min-height: 45px;
+}
+.SearchButton{
+	border-radius: 10px;
+	min-height: 45px;
+}
+.input-group{
+	margin-bottom: 10px;
+}
+.not {
+	background-color: floralwhite;
+	/*background-color: #FFF;*/
+	border-radius: 10px;
+	margin-top: 5px;
+	/*padding: 10px;*/
+	overflow:hidden;
+	font-size: 20px;
+	color: black;
+	padding: 2% 0;
+}
+.message {
+	width: 70%;
+	padding: 5px;
+	float: left;
+	word-wrap: break-word;
+}
+.right{
+	width: 25%;
+	float: left;
+	margin-left: 10px;
+	padding: 4% 0;
+}
+.author{
+	word-wrap: break-word;
+	text-align: center;
+	font-size: 18px;
+	margin-top: 20px;
+	text-align: center;
+}
+.image {
+	margin-top: 5px;
+}
+#cat{
+	color: #868686;
+	font-size: 18px;
+}
+#date{
+	color: #868686;
+	font-size: 18px;
+}
+
 #body{
 	font-family: "微軟正黑體";
 }
@@ -13,17 +69,17 @@
 }
 
 #searchWord{
-	width:250px;
+	/*width:250px;
 	margin: 15px -5px 0px 0px;
-	background-color: white;
+	background-color: white;*/
 }
 
 #search{
-	/*width:90px;*/
+/*	width:90px;
 	font-size: 20px;
 	color:#533828;
 	margin-top:15px;
-	background-color: #FFCE54;
+	background-color: #FFCE54;*/
 }
 
 #sortAs{
@@ -177,133 +233,6 @@
 #m_post{
 	display: none !important;
 }
-
-@media screen and (min-width: 600px){
-#signup{
-		display: none !important;
-	}
-}
-
-@media screen and (max-width: 480px){
-	#forumContent{
-		width: 100% !important;
-	}
-	#searchWord{
-		float: left;
-		width: 190px;
-		margin-right: 5px; 
-	}#m_post{
-		display: block !important;
-	}#d_post{
-		display: none !important;
-	}#signup h1{
-		text-align: center;
-	}
-}
-
-@media screen and (max-width: 480px) and (max-width: 768px) {
-	#post{
-		/*display: none !important;*/
-	}
-	#mobile_post{
-		display: inline-block !important;
-	}
-	#tabDiv{
-		width: 500px !important;
-	}
-	#goToBoard{
-		display: none !important;
-	} 
-	#page{
-		display: none !important;
-	}
-	#m_boardlist{
-		display: block !important;
-	}
-	#d_boardlist{
-		display: none !important;
-	}#m_post{
-		display: block !important;
-	}
-	#d_post{
-		display: none !important;
-	}
-	#articleListDiv{
-		margin-top: 51px !important;
-	}
-}
-
-@media all and (max-width: 768px) and (max-width: 1023px) {
-	#tabDiv{
-		width: 700px !important;
-	}
-	#post{
-		/*display: none !important;*/
-	}
-}
-
-
-#articleList td:nth-child(1){
-		width: 100px !important;
-	}
-#articleList td:nth-child(2){
-
-		width: 320px !important;
-
-	}
-#articleList td:nth-child(3){
-		width: 220px !important;
-	}
-#articleList td:nth-child(4){
-		width: 135px !important;
-	}
-#articleList td:nth-child(5){
-		width: 80px !important;
-	}
-#articleList td:nth-child(6){
-		width: 150px !important;
-	}
-
-/*	th:nth-child(1){
-		width: 125px !important;
-	}
-	th:nth-child(2){
-		width: 260px !important;
-	}
-	th:nth-child(3){
-		width: 210px !important;
-	}
-	th:nth-child(4){
-		width: 135px !important;
-	}
-	th:nth-child(5){
-		width: 80px !important;
-	}
-	th:nth-child(6){
-		width: 150px !important;
-	}*/
-
-
-/*#signup{
-	margin:20px 20px 20px 5px;
-	border-radius: 5px;
-	width: 24%;
-	height: 550px;
-	float:left;
-	//color:#668D3C;
-	color:#D26900;
-	font-family: "微軟正黑體";
-	font-size:35px;
-	display: block
-
-}
-*/
-/*#simpleSignUp{
-	margin:15px;
-	color:#816C5B
-	font-size:18px;
-	font-weight: normal;
-}*/
 
 .check{
 	color:#D26900;

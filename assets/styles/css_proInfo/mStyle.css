@@ -3,9 +3,14 @@
 }
 .SearchBar{
 	border-radius: 10px;
+	min-height: 45px;
 }
 .SearchButton{
 	border-radius: 10px;
+	min-height: 45px;
+}
+.input-group{
+	margin-bottom: 10px;
 }
 .not {
 	background-color: floralwhite;
@@ -16,7 +21,7 @@
 	overflow:hidden;
 	font-size: 20px;
 	color: black;
-	padding: 5% 0;
+	padding: 3% 0;
 }
 .message {
 	width: 70%;
@@ -28,7 +33,7 @@
 	width: 25%;
 	float: left;
 	margin-left: 10px;
-	padding: 10% 0;
+	padding: 6% 0;
 }
 .author{
 	word-wrap: break-word;

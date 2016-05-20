@@ -1,178 +1,69 @@
-<!doctype=html>
-    <div class="container-fluid col-md-9">
-      <div id="forumContent" style="margin-left:0px;">
-        <div class="row-fluid" style="margin-left: 0px; margin-bottom: 10px;">
-          <div class="col-md-6">
-           <h1 id="title" style="color:black; margin-left:0px;"><span style='cursor: pointer;' onclick="window.location.assign('/board-<%=board%>?tab=all&sort=lastResponseTime&order=DESC&page=<%=page%>&search=')">作夥病友論壇—<%=boardCateTitle%>—<%=boardTitle%></span></h1>
-          </div>
-          <div id="d_searchDiv" class="col-md-6" style="display:inline-block; text-align:right;">   
-            <input type="text" class="s" id="searchWord" placeholder="搜尋文章" value='<%=keyword%>'/>
-               <button value="搜尋" id="search" class="b" ><img src="/images/img_forum/search_icon.png"/>搜尋</button>
-          </div>
-       </div>
+<!DOCTYPE='HTML'>
+<div id="content">
+  <h2 id="title" style="color:black; margin-left:0px;">
+    <%if(boardTitle.indexOf("總")>=0){%>
+    <span style='cursor: pointer;' onclick="window.location.assign('/frontboard?tab=all&sort=createdAt&order=DESC&page=1&search=')">作夥病友論壇—<%=boardTitle%>
+      <%}else{%>
+      <span style='cursor: pointer;' onclick="window.location.assign('/board-<%=board%>?tab=all&sort=lastResponseTime&order=DESC&page=<%=page%>&search=')">作夥病友論壇
+        <br><%=boardCateTitle%>—<%=boardTitle%>
+        <%}%>
+      </span>
+    </h2>
 
-      <div class="row-fluid">
-        <div class="col-md-12" style="margin-left: 0px;">
-          <nav id="navbar-example" class="navbar navbar-default navbar-static">
-          <!--<ul id="m_boardlist" class="nav nav-pills navbar-right" role="tablist">
-            <li ><a href='/forum' style='color: #000000;' role='button'><span class='glyphicon glyphicon-list'></span> 論壇看板列表</a></li>
-          </ul>-->
-           <ul id="m_post" class="nav nav-pills navbar-right" role="tablist">
+    <div class="input-group">
+      <input id="searchWord" type="text" class="form-control SearchBar" placeholder=" 搜尋論壇文章">
+      <span class="input-group-btn">
+        <button id="search" class="btn btn-defaul SearchButton" type="button">
+          <span class=" glyphicon glyphicon-search SearchIcon" ></span>
+        </button>
+      </span>
+    </div>
+<!-- 
+  <nav id="navbar-example" class="navbar navbar-default navbar-static">
+          <ul id="m_post" class="nav nav-pills navbar-right" role="tablist">
             <li><a id="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
           </ul>
           
           <ul id="boardlist" class="nav nav-pills" role="tablist">
             <% for(var i=1; i<=boardsCateList.length; i++) { %>
-              <li><a id='drop<%=i%>' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><%=boardsCateList[i-1].title%><span class='caret'></span></a>
+            <li><a id='drop<%=i%>' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><%=boardsCateList[i-1].title%><span class='caret'></span></a>
               <ul id='menu<%=i%>' class='dropdown-menu' aria-labelledby='drop<%=i%>'>
-              <% for(var j=0;j<boardsCateList[i-1].board.length;j++) { %>
+                <% for(var j=0;j<boardsCateList[i-1].board.length;j++) { %>
                 <li><a href='/board-<%=boardsCateList[i-1].board[j].id%>?tab=all&sort=lastResponseTime&order=DESC&page=1&search='><%=boardsCateList[i-1].board[j].title%></a></li>
-              <% } %>
+                <% } %>
               </ul></li>
-            <% } %>
-          </ul>
+              <% } %>
+            </ul>
 
-           <ul id="d_post" class="nav nav-pills navbar-right" role="tablist">
-            <li><a id="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
-          </ul>&nbsp;
-          <!--<ul id="d_boardlist" class="nav nav-pills navbar-right" role="tablist">
-            <li ><a href='/forum' style='color: #000000;' role='button'><span class='glyphicon glyphicon-list'></span> 論壇看板列表</a></li>
-          </ul>-->
-
-        </div>
-      </nav>
-       </div>
-        
-        </div>
-       <!-- <div class="row-fluid">
-          <div style="col-md-12">
-           <h1 id="title" style="color:#D26900; margin-left:15px;"></h1>
-        </div>
-       </div>
-        <div class="row-fluid">
-          <div class="col-md-6" style="padding-right:0px">
-            
-            <label style="font-size: 22px; color:#533828;">搜尋：</label>
-            
-            <input type="text" class="s" id="searchWord" placeholder="搜尋文章">
-         </div>
-         <div class="col-md-3" style="padding-left:12px">   
-            <button value="搜尋" id="search" class="b" ><img src="/images/img_forum/search_icon.png"/>搜尋</button>
-            <button value="取消" id="cancleSearch" class="b" onclick="cancleSearch();"><img src="/images/img_forum/cancel_icon.png"/>取消</button>
-            <button id="mobile_post" class="b" onclick="postArticle();">
-                <img src="/images/img_forum/post_icon.png"/>發表文章
-            </button>
-          </div>
-          <div class="col-md-3 text-right">
-            <button id="post" class="b" onclick="postArticle();">
-                <img src="/images/img_forum/post_icon.png"/>發表文章
-            </button>
-          </div>
-          <div class="col-md-6">
-              <label style="font-size: 22px; color:#533828;">排序：</label>
-              <select id="sortAs" onchange="setPage(page, keyword, this.options[this.selectedIndex].value)">
-                <option value="0">以回應時間排序文章</option>
-                <option value="1">以發表時間排序文章</option>
-              </select>
-          </div>
+            <ul id="d_post" class="nav nav-pills navbar-right" role="tablist">
+              <li><a id="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
+            </ul>&nbsp;
          
+
         </div>
-      -->
-   
-        <div class="row-fluid">
-          <div class="col-md-7 text-left">
-             <table id="page" class="text-left" cellspacing=8 style="margin-left: 0px;">
-               <% if(totalPage>0) { %>
-                <tr><td>頁次：</td>
-                  <% for(var i=1; i<=totalPage; i++) { %>
-                    <% if(i!=page) { %>
-                      <td><a style='cursor: pointer;' onclick='pageClick(<%=i%>);'><%=i%></a></td>
-                    <% } else { %>
-                      <td><%=i%></td>
-                    <% } %>
-                  <% } %>
-               <% } %>
-             </table>
+      </nav> -->
+
+
+      <% for (var i=0;i<articleList.length;i++){ %>
+      <div class='not' id='<%=articleList[i].id%>'>
+
+        <div class='message'>
+          <a class="show-info" title="<%=articleList[i].link %>" target='_blank' style='text-decoration:none; color:#336699;'>
+            <%-articleList[i].title %> </a><br>
+            <span id='cat'>[<%-articleList[i].classification%>]</span><br>
+            <div id='date'><%-articleList[i].postTime%></div>
           </div>
-           <div class="col-md-5"/>
-        </div>
-   <br>
-      <div class="row-fluid">
-        <div id="tabDiv" class="col-md-9">
-          <!-- <ul class="tabs"> -->
-          <ul class="nav nav-pills" id="tabs">
-            <li id="all"<%if(tab=='all') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('all');">全部</a></li>
-            <li id="motion"<%if(tab=='motion') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('motion');">病況與心情</a></li>
-            <li id="share"<%if(tab=='share') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('share');">分享</a></li>
-            <li id="problem"<%if(tab=='problem') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('problem');">問題</a></li>
-            <li id="others"<%if(tab=='others') { %><%=' class=active'%><%}%>><a style="cursor: pointer;" onclick="tabClick('others');">其它</a></li>
-            <li id="elite"<%if(tab=='elite') { %><%=' class=activeOrange'%><%} else {%><%=' class=nonActiveOrange'%><%}%>><a style="cursor: pointer;" onclick="tabClick('elite');"><span class='glyphicon glyphicon-star' style="top:4px;"></span> 精華區</a></li>
-          </ul>
-           <br><br><br>
-        </div>
-         <div id="goToBoard" class="col-md-5">
-            <!--<label style="display: inline;font-size: 22px; margin-right: 10px; color:#533828;">前往：</label>-->
-            
-            <select id="board"></select>
-            <select id="boardCategory"></select>
+          <div class="right">
+           <div class='image'>
+            <center>
+              <img src='<%=articleList[i].author.img%>' style='height:50px; width:50px;'>
+            </center>
           </div>
-          <br><br><br>
-      </div>
-      <div id="articleListDiv" class="row-fluid">
-        <div class="col-md-12">
-          <table id="articleList" class="table table-hover">
-            <thead>
-                <tr style='background-color: #3765A3; color:white;'>
-                  <td style='width:8%; padding:10px 15px 10px 15px; text-align:center; cursor:pointer;'><span onClick='changeSort("classification");'>類別</span></td><td style='padding:10px 15px 10px 15px; cursor:pointer;'><span onClick='changeSort("title");'>文章標題</td>
-                  <td style='text-align:center; cursor:pointer;'><span onClick='changeSort("author");'>發表人<span class='caret'></span></span>/ <span onClick='changeSort("createdAt");'>發表時間<span class='caret'></span></span></td>
-                  <td style='text-align:center; cursor:pointer;'><span onClick='changeSort("clickNum");'>點閱<span class='caret'></span></span> / <span onClick='changeSort("responseNum");'>回覆<span class='caret'></span></span></td>
-                <td style='text-align:center; cursor:pointer;' onClick='changeSort("niceNum");'>推薦<span class='caret'></span></td>
-                 <td style='text-align:center; cursor:pointer;' onClick='changeSort("lastResponseTime");'>最新回應時間<span class='caret'></span></td>
-                 </tr>
-            </thead>
-            <tbody class="body">
-                <% for(var i=0; i<articleList.length; i++) { %>
-                  <tr>
-                    <td style='padding:10px 0px 10px 0px; text-align:center;'><%=articleList[i].badPic+articleList[i].classification%></td>
-                    <td style='padding:10px 15px 10px 15px; cursor: pointer;'><a <%=articleList[i].link%> style='text-decoration:none; <%=articleList[i].linkcolor%> '><%-articleList[i].title%></a></td>
-                    <td>
-                      <table>
-                        <tr>
-                          <td rowspan=1 style='padding:10px 0px 10px 10px; text-align:center;'><img src='<%=articleList[i].author.img%>' style='float:left; margin-right:10px; height:50px; width:50px;'></td>
-                          <td><a href='/profile?<%=articleList[i].author.id%>'>
-                            <%=articleList[i].author.alias%></a>
-                            <%-articleList[i].authorType%></td></tr>
-                        <tr>
-                          <td colspan=2 style="font-size: 18px; text-align:center"><%=articleList[i].postTime%></td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td style='padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].clickNum%>/<%=articleList[i].response.length%></td>
-                    <td style='padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].nicer.length%>&nbsp<img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/></td>
-                    <td style='padding:10px 15px 10px 15px; text-align:center;'><%=articleList[i].lastResponseTime%></td></tr>
-                <% } %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="row-fluid">
-        <span id="msg" style='color: #333; font-size:18px; text-align:center; margin:40px;'><% if(totalPage==0) { %>
-          嗨～快來發表一些文章吧！
-        <% } %></span>
-        <div class="col-md-12">
-          <table id="pageDown" cellspacing=8>
-            <% if(totalPage>0) { %>
-              <tr><td>頁次：</td>
-                <% for(var i=1; i<=totalPage; i++) { %>
-                  <% if(i!=page) { %>
-                    <td><a style='cursor: pointer;' onclick='pageClick(<%=i%>);'><%=i%></a></td>
-                  <% } else { %>
-                    <td><%=i%></td>
-                  <% } %>
-                <% } %>
-            <% } %>
-          </table>
-        </div>
-      </div> 
-    </div>
-  </div>
+          <div class='author'>
+           <a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a>
+           <%-articleList[i].authorType%>
+         </div>
+       </div>  
+     </div>
+     <%}%>
+   </div>

@@ -207,7 +207,6 @@ setBoardPage: function(req, res){
                         }
                         
                         res.view(p, {
-
                             tab: req.param("tab"),
                             keyword: req.param("search"),
                             layout:m,
@@ -431,7 +430,7 @@ if (md.mobile()==null){
                         keyword: req.param("search"),
                         board: req.param("board"),
                         boardTitle: "總板",
-                        slayout:m,
+                        layout:m,
                         boardCateTitle: "",
                         boardsCateList: boardsCateList,
                         articleList: articleList,
@@ -441,7 +440,7 @@ if (md.mobile()==null){
                         '/js/js_frontboard/mainJS.js'
                         ],
                         stylesheets: [
-                        '/styles/css_frontboard/'+css+'.css',
+                        '/styles/css_board/'+css+'.css',
                         '/styles/importer.css'
                         ]
                     });
