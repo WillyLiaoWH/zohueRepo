@@ -244,6 +244,11 @@ module.exports = {
             });
         }
 
+        function getTimeString(date) {
+            var reg = /\d+-\d+-\d+\s\d+:\d+/;
+            date = reg.exec(date);
+            return date;
+        }
         function findfriendStatus(target_id, cb){ // 找出與這個人的朋友關係
             console.log("fs");
             if(req.session.user) {
@@ -312,6 +317,7 @@ module.exports = {
                                                 m="mlayout";
                                             }
                                             res.view(page, {
+                                                getTimeString : getTimeString,
                                                 layout: m,
                                                 timeDiff: 0,
                                                 ago: 0,

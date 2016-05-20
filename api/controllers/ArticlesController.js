@@ -580,6 +580,11 @@ setBoardFrontPage: function(req, res){
                 });
             }
         }
+        function getTimeString(date) {
+            var reg = /\d+-\d+-\d+\s\d+:\d+/;
+            date = reg.exec(date);
+            return date;
+        }
         function R_NiceCount(cb){
             Response.find({article: id, }).populate('author').exec(function(error, responseList) {
                 if (error) {
@@ -714,7 +719,7 @@ setBoardFrontPage: function(req, res){
                                             m="mlayout";
                                         }
                                         return res.view(page, {
-
+                                            getTimeString : getTimeString,
                                             loginid:loginid,
                                             metaTitle: metaTitle,
                                             metaUrl: metaUrl,
