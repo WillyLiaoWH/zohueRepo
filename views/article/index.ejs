@@ -66,8 +66,8 @@
 
             <tr id="articleData">
               <td></td>
-              <td valign='bottom' style='padding:0px 0px 7px 20px;'>發表時間：<%= articleList[0].createdAt %></td>
-              <td valign='bottom' style='padding:0px 0px 7px 20px; '>更新時間：<%= articleList[0].lastResponseTime %>
+              <td valign='bottom' style='padding:0px 0px 7px 20px;'>發表時間：<%= getTimeString(articleList[0].createdAt) %></td>
+              <td valign='bottom' style='padding:0px 0px 7px 20px; '>更新時間：<%= getTimeString(articleList[0].lastResponseTime) %>
                 </td>
             </tr>
 
@@ -116,7 +116,7 @@
                       <img src='<%= responseList[i].author.img %>'>
                     </div>
                     <div id="comment_createdAt">
-                      <label><%= responseList[i].createdAt %></label>
+                      <label><%= getTimeString(responseList[i].createdAt) %></label>
                     </div>
                     <div>
                       <label>
