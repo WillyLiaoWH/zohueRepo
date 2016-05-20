@@ -29,8 +29,20 @@
                </td>
             </tr>
             <tr>
+              <%
+              timeDiff = (new Date()-new Date(timelinesList[i].updatedTime).getTime())/1000; // 計算幾天前
+              if(timeDiff > 86400){
+                ago=Math.round(timeDiff/86400)+" 天前";
+              }else if(timeDiff > 3600){
+                ago=Math.round(timeDiff/3600)+" 小時前";
+              }else if(timeDiff > 60){
+                ago=Math.round(timeDiff/60)+" 分鐘前";
+              }else{
+                ago="剛剛";
+              }
+              %>
                <td>
-                  <div id="event_time"><%= new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %></div>
+                  <div id="event_time"><%-ago%></div>
                </td>
             </tr>
          </tbody>
