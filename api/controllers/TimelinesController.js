@@ -302,11 +302,13 @@ module.exports = {
                                             if (md.mobile()==null){
                                                 //PC
                                                 page="profile/index";
+                                                css="style";
                                                 m="layout";
                                             }
                                             else{
                                                 //mobile
                                                 page="profile/mindex";
+                                                css="mStyle";
                                                 m="mlayout";
                                             }
                                             res.view(page, {
@@ -331,7 +333,8 @@ module.exports = {
                                                     '/js/js_profile/crop-avatar.js'
                                                 ],
                                                 stylesheets: [
-                                                    '/styles/css_profile/style.css',
+                                                    // '/styles/css_profile/style.css',
+                                                    '/styles/css_profile/'+css+'.css',
                                                     '/styles/css_post/crop-avatar.css',
                                                     '/styles/css_post/cropper.min.css',
                                                     '/styles/importer.css',

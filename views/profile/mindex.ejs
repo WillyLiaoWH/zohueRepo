@@ -1,10 +1,10 @@
 <!DOCTYPE html>
     <div class="container container-fluid" id="post-form-main">
-      <div id="timeline_profile" style="margin: 5px; float: left;">
+      <div id="timeline_profile" style="float: left;">
         
       <div id="mobile_upper_profile" class="hidden-desktop">
           <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
-            <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px"></img>
+            <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px ;margin-left: 20px;"></img>
           </span>
           <span style="margin: 40px 0px 40px 45px; display: inline-block;">
             <h3 id="m_alias"><%= aboutInfo.alias %></h3>
@@ -24,7 +24,7 @@
           </span>
         
           <!-- <ul class="tabs"> -->
-          <ul class="nav nav-pills" style="font-size: 19px;">
+          <ul class="nav nav-pills" style="font-size: 19px;margin-left: 20px;">
             <li class="active" style="width:40%; text-align:center;"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
             <li style="width:55%; text-align:center;"><a href="#about" data-toggle="pill" style="padding: 8px 10px;"> <% if(traveler != "guest" && traveler == id){%>個人權限設定<%}else{%> 關於<%}%></a></li>
             <% if(traveler != "guest" && traveler != id){ %>
@@ -119,7 +119,7 @@
      
      
           <!-- <ul class="tabs"> -->
-          <ul class="nav nav-pills" id="tabs" style="font-size:19px;">
+          <ul class="nav nav-pills" id="tabs" style="font-size:19px; margin-left: 20px; ">
             <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
             <li><a href="#about" data-toggle="pill">關於</a></li>
           </ul>
@@ -141,7 +141,7 @@
                 </div>
 
                 <div class="container-fluid">
-                  <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出留言</button>
+                  <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出</button>
                   <button value="插圖" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插圖</button>
                   
                   <div class="btn-group" style="float:right;" id="postTilmelineAuth">

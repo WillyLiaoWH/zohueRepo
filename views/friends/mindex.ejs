@@ -24,7 +24,7 @@
 	<body id="body" style="height: 100%">
     <div class="container-fluid"  style="height: 100%">
         <!-- 正文 -->
-        <h1 style="color:black;">找人</h1>
+        <h1 style="color:black; margin-left:40px;">找人</h1>
         
         <!--For desktop-->
         <div id="search" style="margin: 5px;">
@@ -135,7 +135,7 @@
                 <% for(i = 0; i < users.length; i++) { %>
                 <div class="friend">
                     <div class="image">
-                        <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin:10px; height:80%">
+                        <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin:10px; height:80px">
                     </div>
                     <div class="friendMid">
 

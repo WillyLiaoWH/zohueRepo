@@ -79,7 +79,7 @@ div.show-image input.delete {
 }
 
 #postContent{
-	min-height: 500px;
+	min-height: 300px;
 	height:auto;
 	font-size: 22px;
 	margin-bottom:25px;

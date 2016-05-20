@@ -61,7 +61,12 @@ div.show-image input.delete {
 	opacity:0.8;
 }
 
-#editArticle, #deleteArticle, #commentSend, #addImage{
+#comment-edit{
+	background-color: white;
+	min-width: 80px;
+}
+
+#editArticle, #deleteArticle,  #addImage{
 	width: 130px;
 	/*height:48px;*/
 }

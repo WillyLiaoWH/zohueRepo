@@ -1,6 +1,6 @@
 #body{
 	font-family: "微軟正黑體";
-	font-size: 22px;
+	font-size: 18px;
 }
 
 /*使 contenteditable 有 placeholder*/
@@ -10,7 +10,7 @@
 }
 
 #mobile_profile{
-	/*display: none !important;*/
+	display: none !important;
 }
 
 #timeline_profile{
@@ -97,7 +97,7 @@
 	min-height: 100px;
 	height: auto;
 	background-color: white;
-	border: 1px solid #FFCE54;
+	border: 1px solid #ccc;
 }
 #timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
@@ -123,7 +123,7 @@
 	border-radius: 10px;
 	margin-top:-20px;
 	padding: 0px;
-	background-color: floralwhite;
+	background-color: rgba(252,252,252,1);
 }
 .event_info, .event_comment {
 	padding:15px;
@@ -160,8 +160,9 @@
 .dropdown-menu{
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,0);
-	background-color: #FFCE54;
-	font-size:20px;
+	background-color: white;
+	font-size:18px;
+	min-width: 100px;
 	color:#533828;
 	vertical-align: center;
 }
@@ -181,13 +182,13 @@ div[id*="div_edit_content"], div[id*="div_r_edit_content"]{
 	color:#816C58;
 	font-size: 18px;
 	line-height: 22px;
-	background-color: rgba(102, 141, 60, 0.4);
+	background-color: white;
 	padding: 8px 8px 8px 8px;
 	width:auto;
 	border-radius: 10px;
 	/*border-top-left-radius: 10px;*/
 	/*border-top-right-radius: 10px;*/
-	/*border: 5px solid rgb(196, 204, 209);*/
+	border: 1px solid #ccc;
 }
 div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	float:left;
@@ -219,6 +220,9 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 }
 .event_comment{
 	border-top: 1px solid #CCCCCC;
+	background-color: rgba(221, 221, 221, 0.54);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 .event_commentlist{
 	/*border-top: 1px solid rgba(102, 141, 60, 0.4);*/
@@ -228,7 +232,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	border-top: 1px solid #CCCCCC;
 }
 .edit_content{
-	border: 1px solid #FFCE54;
+	border: 1px solid #ccc;
 	word-break: break-all;
 	min-height: 50px;
 	color:#816C58;
@@ -266,7 +270,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
-	font-size: 20px;
+	font-size: 18px;
 	border-radius: 10px;
 	padding: 8px 8px 8px 8px;
 	-webkit-box-sizing: border-box;
@@ -287,7 +291,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	border: 1px solid rgba(0,0,0,0);
 	background-color: #FFCE54;
 	padding: 4px 8px 4px 8px;
-	font-size:20px;
+	font-size:18px;
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
 	margin-bottom: 5px;

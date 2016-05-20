@@ -80,13 +80,13 @@
            <button type="button" class="n" data-toggle="dropdown" id="btn_timeline_auth<%= timelinesList[i].id %>">
             <% switch(timelinesList[i].auth){
               case 'all': %>
-                <img src="/images/img_timeline/all.png" height="20px" width="20px">&nbsp;每個人都看得到
+                <img src="/images/img_timeline/all.png" height="20px" width="20px">&nbsp;全部
             <% break;
               case 'friend': %>
-                <img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到
+                <img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友
             <% break;
               case 'self': %>
-                <img src="/images/img_timeline/self.png" height="20px" width="20px">&nbsp;只有自己看得到
+                <img src="/images/img_timeline/self.png" height="20px" width="20px">&nbsp;自己
             <% break;} %>
            </button>
            <ul class="dropdown-menu" role="menu">
@@ -329,10 +329,10 @@
                </td>
             </tr>
             <tr>
-               <td></td>
+               <td style="width:50px;"></td>
                <td>
-                <button value="送出留言" name="<%= timelinesList[i].id %>" id="TimelineCommentSend" class="b"><img src="/images/img_forum/check_icon.png"> 送出留言</button>
-                <button value="插入圖片" name="<%= timelinesList[i].id %>" id="TimelineImage" class="b"><img src="/images/img_forum/images_icon.png"> 插入圖片</button>
+                <button value="送出留言" name="<%= timelinesList[i].id %>" id="TimelineCommentSend" class="b"><img src="/images/img_forum/check_icon.png"> 送出</button>
+                <button value="插入圖片" name="<%= timelinesList[i].id %>" id="TimelineImage" class="b"><img src="/images/img_forum/images_icon.png"> 插圖</button>
                </td>
             </tr>
          </tbody>
