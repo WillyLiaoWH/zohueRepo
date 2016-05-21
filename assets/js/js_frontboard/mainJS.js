@@ -20,9 +20,6 @@ var url ="";
 
 
 $(document).ready(function(){
-  if($( window ).width() < 768){
-    $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-  }
   $.get('/updateLastForumTime',function(res){
   });
   $("#search").click(function(){ // 搜尋按鈕 listener

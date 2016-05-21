@@ -1,18 +1,4 @@
 <!DOCTYPE=html>
-<script>
-  $( document ).ready(function() {
-    $.get("/checkAuth", function(auth){
-        if(auth.isAdmin==true){
-          $("#clubAnnounce").show();
-        }else if(auth.isAdmin==false){
-           $("#clubAnnounce").hide();
-        }
-    });
-  });
-</script>
-
-
-
 <style>
   .nav-header{
     padding:3px 15px;

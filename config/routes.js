@@ -329,6 +329,12 @@ module.exports.routes = {
     action: 'changePasswordPage',
     skipAssets: true,
   },
+  '/forumView':{
+    view:'forumView/mindex',
+    locals: {
+      layout: 'mlayout'
+    }
+  },
 
   '/': '/home'
 

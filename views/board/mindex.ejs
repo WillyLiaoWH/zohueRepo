@@ -1,4 +1,10 @@
 <!DOCTYPE='HTML'>
+<div class="btn-group">
+ <button type="button" class="btn btn-top" onclick="window.location='/forumView'"><span class="glyphicon glyphicon-list-alt"></span> 選擇看板 </button>
+ <button type="button" class="btn btn-top" onclick="postArticle();"><span class="glyphicon glyphicon-pencil"></span> 發表文章 </button>
+ <!-- <button type="button" class="btn btn-top"><span class="glyphicon glyphicon-envelope"></span> 最新公告 </button> -->
+ 
+</div>
 <div id="content">
   <h2 id="title" style="color:black; margin-left:0px;">
     <%if(boardTitle.indexOf("總")>=0){%>
@@ -18,52 +24,28 @@
         </button>
       </span>
     </div>
-<!-- 
-  <nav id="navbar-example" class="navbar navbar-default navbar-static">
-          <ul id="m_post" class="nav nav-pills navbar-right" role="tablist">
-            <li><a id="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
-          </ul>
-          
-          <ul id="boardlist" class="nav nav-pills" role="tablist">
-            <% for(var i=1; i<=boardsCateList.length; i++) { %>
-            <li><a id='drop<%=i%>' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><%=boardsCateList[i-1].title%><span class='caret'></span></a>
-              <ul id='menu<%=i%>' class='dropdown-menu' aria-labelledby='drop<%=i%>'>
-                <% for(var j=0;j<boardsCateList[i-1].board.length;j++) { %>
-                <li><a href='/board-<%=boardsCateList[i-1].board[j].id%>?tab=all&sort=lastResponseTime&order=DESC&page=1&search='><%=boardsCateList[i-1].board[j].title%></a></li>
-                <% } %>
-              </ul></li>
-              <% } %>
-            </ul>
 
-            <ul id="d_post" class="nav nav-pills navbar-right" role="tablist">
-              <li><a id="post" onclick="postArticle();" style='margin:5px 5px 5px 5px; padding: 5px;background-color: #F19766; cursor: pointer;'><span class='glyphicon glyphicon-pencil'></span> 發表文章</a></li>
-            </ul>&nbsp;
-         
 
+    <% for (var i=0;i<articleList.length;i++){ %>
+    <div class='not' id='<%=articleList[i].id%>'>
+
+      <div class='message'>
+        <a class="show-info" title="<%=articleList[i].link %>" target='_blank' style='text-decoration:none; color:#336699;'>
+          <%-articleList[i].title %> </a><br>
+          <span id='cat'>[<%-articleList[i].classification%>]</span><br>
+          <div id='date'><%-articleList[i].postTime%></div>
         </div>
-      </nav> -->
-
-
-      <% for (var i=0;i<articleList.length;i++){ %>
-      <div class='not' id='<%=articleList[i].id%>'>
-
-        <div class='message'>
-          <a class="show-info" title="<%=articleList[i].link %>" target='_blank' style='text-decoration:none; color:#336699;'>
-            <%-articleList[i].title %> </a><br>
-            <span id='cat'>[<%-articleList[i].classification%>]</span><br>
-            <div id='date'><%-articleList[i].postTime%></div>
-          </div>
-          <div class="right">
-           <div class='image'>
-            <center>
-              <img src='<%=articleList[i].author.img%>' style='height:50px; width:50px;'>
-            </center>
-          </div>
-          <div class='author'>
-           <a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a>
-           <%-articleList[i].authorType%>
-         </div>
-       </div>  
-     </div>
-     <%}%>
+        <div class="right">
+         <div class='image'>
+          <center>
+            <img src='<%=articleList[i].author.img%>' style='height:50px; width:50px;'>
+          </center>
+        </div>
+        <div class='author'>
+         <a href='/profile?<%=articleList[i].author.id%>'><%=articleList[i].author.alias%></a>
+         <%-articleList[i].authorType%>
+       </div>
+     </div>  
    </div>
+   <%}%>
+ </div>

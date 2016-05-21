@@ -16,10 +16,6 @@ var url ="";
 
 
 $(document).ready(function(){
-  if($( window ).width() < 768){
-    $("html, body").animate({ scrollTop: "440px"} , 170, "swing");
-  }
-
   $("#search").click(function(){ // 搜尋按鈕 listener
     keyword=$("#searchWord").val().replace(/^\s+$/m,'');
     window.location.assign("/board-"+board+"?tab="+tab+"&sort="+sort+"&order="+order+"&page=1&search="+keyword);
@@ -50,7 +46,7 @@ $(document).ready(function(){
       if($("#searchWord").val().trim()!=""){
         $("#search").css("background-color", "#F19766");
       }else{$("#search").css("background-color", "#FFCE54");}
-        
+      
       if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
         this.appendChild(document.createChild("br"));
       }
