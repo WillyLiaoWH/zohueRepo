@@ -1,5 +1,5 @@
 #content{
-	margin: 0px 5px 20px 5px;
+	margin: -15px 5px 20px 5px;
 }
 .SearchBar{
 	border-radius: 10px;
@@ -13,8 +13,9 @@
 	margin-bottom: 10px;
 }
 .not {
-	background-color: floralwhite;
-	/*background-color: #FFF;*/
+	/*background-color: floralwhite;*/
+	background-color: #FCFCFC;
+	border: 1px solid #CCCCCC;
 	border-radius: 10px;
 	margin-top: 5px;
 	/*padding: 10px;*/

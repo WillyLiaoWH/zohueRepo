@@ -3,8 +3,8 @@
  <button type="button" class="btn btn-top" onclick="window.location='/forumView'"><span class="glyphicon glyphicon-list-alt"></span> 選擇看板 </button>
  <button type="button" class="btn btn-top" onclick="postArticle();"><span class="glyphicon glyphicon-pencil"></span> 發表文章 </button>
  <!-- <button type="button" class="btn btn-top"><span class="glyphicon glyphicon-envelope"></span> 最新公告 </button> -->
- 
 </div>
+
 <div id="content">
   <h2 id="title" style="color:black; margin-left:0px;">
     <%if(boardTitle.indexOf("總")>=0){%>
@@ -15,6 +15,7 @@
         <%}%>
       </span>
     </h2>
+
 
     <div class="input-group">
       <input id="searchWord" type="text" class="form-control SearchBar" placeholder=" 搜尋論壇文章">
