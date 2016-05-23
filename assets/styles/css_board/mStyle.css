@@ -23,13 +23,13 @@
 	color: #FFF;
 	font-size: 18px;
 	width: 50%;
-	height: 45px;
+	height: 55px;
 }
 .btn-top-r{
-	border-left: 0.5px solid #FFF;
+	border-left: 1px solid #FFF;
 }
 .btn-top-l{
-	border-right: 0.5px solid #FFF;
+	border-right: 0px solid #FFF;
 }
 .input-group{
 	margin-bottom: 10px;
