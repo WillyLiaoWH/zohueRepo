@@ -1,6 +1,9 @@
 #content{
 	margin: 0px 5px 20px 5px;
 }
+.navbar{
+	margin-bottom: 0px;
+}
 .SearchBar{
 	border-radius: 10px;
 	min-height: 45px;
@@ -10,16 +13,23 @@
 	min-height: 45px;
 }
 .btn-group{
-	margin: -23.5px 0px 0px 0px;
+	border-top: 1px solid transparent;
 	width: 100%;
 }
 .btn-top{
-	width: 50%;
-	border: 0.25px solid floralwhite;
-	font-size: 18px;
 	margin-left: 0px !important;
+	border-radius: 0px;
 	background-color: #3765A3;
 	color: #FFF;
+	font-size: 18px;
+	width: 50%;
+	height: 45px;
+}
+.btn-top-r{
+	border-left: 0.5px solid #FFF;
+}
+.btn-top-l{
+	border-right: 0.5px solid #FFF;
 }
 .input-group{
 	margin-bottom: 10px;
