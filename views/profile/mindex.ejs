@@ -151,7 +151,7 @@
                     <ul class="dropdown-menu" role="menu">
                       <li><a><img src="/images/img_timeline/all.png" height="20px" value="all">&nbsp;全部</a></li>
                       <li><a><img src="/images/img_timeline/friend.png" height="20px" width="20px" value="friend">&nbsp;好友</a></li>
-                      <li><a><img src="/images/img_timeline/self.png" height="20px" value="self">&nbsp;自己</a></li>
+                      <li><a><img src="/images/img_timeline/self.png" height="20px" value="self">&nbsp; 自己</a></li>
                     </ul>
                   </div>
                 </div>
@@ -188,219 +188,218 @@
 
 
           <div class="tab-pane" id="about">
-            <br>
-            <div class="row">
-              <!--<div class="col-md-3 "><img src="" id="avatar" height="100"></div>-->
-              <br>
+            <!-- <div class="row">
+              <div class="col-md-3 "><img src="" id="avatar" height="100"></div>
+             
               <h3 id="alias"><%- aboutInfo.alias %></h3> 
-            </div> 
-           <table class="table">
-            <tr class="auth_btn">
-              <th></th>
-              <th></th>
-              <% if(traveler == id){ %>
-              <th>權限設定</th>
-              <% } %>
-            </tr>
+            </div> -->
+
+<!--             <div class="row">
+                <div class="col-child-1" ></div>
+                <div class="col-child-2"></div>
+                <% if(traveler == id){ %>
+                <div class="col-child-3">權限設定</div>
+                <% } %>
+            </div>  -->
+
+
             <% if(authInfo.name){ %>
-            <tr id="name_row">
-              <td>姓名：</td>
-              <td id="name"><%- aboutInfo.fname + aboutInfo.lname %></td>
+            <div id="name_row" class="row">
+              <div class="col-child-1">姓名：</div>
+              <div class="col-child-2" id="name"><%- aboutInfo.fname + aboutInfo.lname %></div>
               <% if(traveler == id){ %>
-              <td>
+              <div class="col-child-3">
                 <div class="btn-group auth_btn" style="float:none;">
                   <button type="button" class="n" data-toggle="dropdown">
-                    <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px"><br>
+                    <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px">
                     <text id="name_btn_text">
                       <% switch(authData.name){
-                        case 'all': %>
-                          人人都看得到
+                        case 'all': %>全部
                       <% break;
-                        case 'friend': %>
-                          朋友才看得到
+                        case 'friend': %>朋友
                       <% break;
-                        case 'self': %>
-                          自己才看得到
+                        case 'self': %>自己
                       <% break;} %>
                     </text>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                   <li><a class="profile_auth" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
-                    <li><a class="profile_auth" name="name/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
-                    <li><a class="profile_auth" name="name/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                   <li><a class="profile_auth" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                    <li><a class="profile_auth" name="name/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                    <li><a class="profile_auth" name="name/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
                   </ul>
                 </div>
-              </td>
+              </div>
               <% } %>
-            </tr>
-            <% }
-            if(authInfo.bday){ %>
-             <tr id="bday_row">
-               <td>年齡：</td>
-               <td id="bday"><%- Math.floor((new Date()-new Date(aboutInfo.birthday))/(86400000*365)).toString()+" 歲" %></td>
+            </div>
+            <% }%>
+            <% if(authInfo.bday){ %>
+             <div id="bday_row" class="row">
+               <div class="col-child-1">年齡：</div>
+               <div class="col-child-2" id="bday"><%- Math.floor((new Date()-new Date(aboutInfo.birthday))/(86400000*365)).toString()+" 歲" %></div>
                <% if(traveler == id){ %>
-               <td>
+               <div class="col-child-3">
                 <div class="btn-group auth_btn" style="float:none;">
                   <button type="button" class="n" data-toggle="dropdown">
-                    <img id="bday_pic" src="/images/img_timeline/<%=authData.bday%>.png" height="20px" width="20px"><br>
+                    <img id="bday_pic" src="/images/img_timeline/<%=authData.bday%>.png" height="20px" width="20px">
                     <text id="bday_btn_text">
                       <% switch(authData.bday){
                         case 'all': %>
-                          人人都看得到
+                          全部
                       <% break;
                         case 'friend': %>
-                          朋友才看得到
+                          朋友
                       <% break;
                         case 'self': %>
-                          自己才看得到
+                          自己
                       <% break;} %>
                     </text>                  
                   </button>
                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                   <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
-                    <li><a class="profile_auth" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
-                    <li><a class="profile_auth" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                   <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                    <li><a class="profile_auth" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                    <li><a class="profile_auth" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
                   </ul>
                 </div>
-               </td>
+               </div>
                <% } %>
-             </tr>
+             </div>
             <% }
             if(authInfo.city){ %>
-             <tr id="city_row">
-               <td>來自：</td>
-               <td id="city"><%- aboutInfo.addressCity %></td>
+             <div  id="city_row" class="row">
+               <div class="col-child-1">來自：</div>
+               <div class="col-child-2" id="city"><%- aboutInfo.addressCity %></div>
                <% if(traveler == id){ %>
-               <td>
+               <div class="col-child-3">
                  <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown">
-                     <img id="city_pic" src="/images/img_timeline/<%=authData.city%>.png" height="20px" width="20px"><br>
+                     <img id="city_pic" src="/images/img_timeline/<%=authData.city%>.png" height="20px" width="20px">
                      <text id="city_btn_text">
                        <% switch(authData.city){
                         case 'all': %>
-                          人人都看得到
+                          全部
                       <% break;
                         case 'friend': %>
-                          朋友才看得到
+                          朋友
                       <% break;
                         case 'self': %>
-                          自己才看得到
+                          自己
                       <% break;} %>
                      </text>
                    </button>
                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                     <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
-                     <li><a class="profile_auth" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
-                     <li><a class="profile_auth" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                     <li><a class="profile_auth" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                     <li><a class="profile_auth" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                     <li><a class="profile_auth" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
                    </ul>
                  </div>
-               </td>
+               </div>
                <% } %>
-             </tr>
+             </div>
             <% }
             if(authInfo.gender){ %>
-             <tr id="gender_row">
-               <td>性別：</td>
+             <div class="row" id="gender_row">
+               <div class="col-child-1">性別：</div>
                <% if(aboutInfo.gender == "M"){ %>
-                <td id="gender">男性</td>
+                <div class="col-child-2" id="gender">男性</div>
                <% }else if(aboutInfo.gender == "F"){ %>
-                <td id="gender">女性</td>
+                <div class="col-child-2"id="gender">女性</div>
                <% }else{ %>
-                <td id="gender">其他</td>
+                <div class="col-child-2"id="gender">其他</div>
                <% } %>
                <% if(traveler == id){ %>
-               <td>
+               <div class="col-child-3"> 
                  <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
-                      <img id="gender_pic" src="/images/img_timeline/<%=authData.gender%>.png" height="20px" width="20px"><br>
+                      <img id="gender_pic" src="/images/img_timeline/<%=authData.gender%>.png" height="20px" width="20px">
                       <text id="gender_btn_text">
                         <% switch(authData.gender){
                           case 'all': %>
-                            <br>人人都看得到
+                            全部
                         <% break;
                           case 'friend': %>
-                            朋友才看得到
+                            朋友
                         <% break;
                           case 'self': %>
-                            自己才看得到
+                            自己
                         <% break;} %>
                       </text>
                     </button>
                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                       <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
-                       <li><a class="profile_auth" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
-                       <li><a class="profile_auth" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                       <li><a class="profile_auth" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                       <li><a class="profile_auth" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                       <li><a class="profile_auth" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
                     </ul>
                   </div>
-               </td>
+               </div>
                <% } %>
-             </tr>
+             </div>
             <% }
             if(authInfo.email){ %>
-             <tr id="email_row">
-               <td>E-mail：</td>
-               <td id="email"><%- aboutInfo.email %></td>
+             <div class="row" id="email_row">
+               <div class="col-child-1">E-mail：</div>
+               <div class="col-child-2" id="email"><%- aboutInfo.email %></div>
                <% if(traveler == id){ %>
-               <td>
+               <div class="col-child-3">
                  <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
-                      <img id="email_pic" src="/images/img_timeline/<%=authData.email%>.png" height="20px" width="20px"><br>
+                      <img id="email_pic" src="/images/img_timeline/<%=authData.email%>.png" height="20px" width="20px">
                       <text id="email_btn_text">
                         <% switch(authData.email){
                           case 'all': %>
-                            人人都看得到
+                            全部
                         <% break;
                           case 'friend': %>
-                            朋友才看得到
+                            朋友
                         <% break;
                           case 'self': %>
-                            自己才看得到
+                            自己
                         <% break;} %>
                       </text>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                      <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
-                      <li><a class="profile_auth" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
-                      <li><a class="profile_auth" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                      <li><a class="profile_auth" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                      <li><a class="profile_auth" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                      <li><a class="profile_auth" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
                     </ul>
                   </div>
-               </td>
+               </div>
                <% } %>
-             </tr>
+             </div>
             <% }
             if(authInfo.phone){ %>
-             <tr id="phone_row">
-               <td>電話：</td>
-               <td id="phone"><%- aboutInfo.phone %></td>
+             <div class="row" id="phone_row">
+               <div class="col-child-1">電話：</div>
+               <div class="col-child-2"id="phone"><%- aboutInfo.phone %></div>
                <% if(traveler == id){ %>
-               <td>
+               <div class="col-child-3">
                   <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown" id="phone_btn">
-                     <img id="phone_pic" src="/images/img_timeline/<%=authData.phone%>.png" height="20px" width="20px"><br>
+                     <img id="phone_pic" src="/images/img_timeline/<%=authData.phone%>.png" height="20px" width="20px">
                      <text id="phone_btn_text">
                         <% switch(authData.phone){
                           case 'all': %>
-                            人人都看得到
+                            全部
                         <% break;
                           case 'friend': %>
-                            朋友才看得到
+                            朋友
                         <% break;
                           case 'self': %>
-                            自己才看得到
+                            自己
                         <% break;} %>
                      </text>
                    </button>
                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
-                    <li><a class="profile_auth" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友才看得到</a></li>
-                    <li><a class="profile_auth" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己才看得到</a></li>
+                    <li><a class="profile_auth" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                    <li><a class="profile_auth" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                    <li><a class="profile_auth" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
                    </ul>
                  </div>
-               </td>
+               </div>
                <% } %>
-             </tr>
+             </div>
             <% } %>
-           </table>
+
+         
           </div>
         </div>
       </div>
