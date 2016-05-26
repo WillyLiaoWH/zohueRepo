@@ -705,17 +705,20 @@ setBoardFrontPage: function(req, res){
                                         var page="";
                                         var m;
                                         var css;
+                                        var cropCss;
                                         if (md.mobile()==null){
                                             //PC
                                             page="article/index";
                                             css="style";
                                             m="layout";
+                                            cropCss="crop-avatar";
                                         }
                                         else{
                                             //mobile
                                             page="article/mindex";
                                             css="mStyle";
                                             m="mlayout";
+                                            cropCss="mcrop-avatar";
                                         }
                                         return res.view(page, {
                                             getTimeString : getTimeString,
@@ -744,7 +747,7 @@ setBoardFrontPage: function(req, res){
                                             ],
                                             stylesheets: [
                                             '/styles/css_article/'+css+'.css',
-                                            '/styles/css_post/crop-avatar.css',
+                                            '/styles/css_post/'+cropCss+'.css',
                                             '/styles/css_post/cropper.min.css',
                                             '/styles/importer.css',
                                             '/styles/css_public/themes/alertify.core.css',

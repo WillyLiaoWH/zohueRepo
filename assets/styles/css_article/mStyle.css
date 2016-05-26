@@ -406,7 +406,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 .imgupload_btn{
 	margin-right: 10px;
 	float:right;
-	background-color: rgba(232, 81, 0, 0.7);
+	background-color: rgba(255,206,84,1);
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
   	font-weight:500;
@@ -421,12 +421,12 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 .imgupload_btn:hover{
-	background-color: rgba(102, 141, 60, 0.4);
-	color:#816C58;
+	background-color: rgba(255,206,84,1);
+	/*color:#816C58;*/
 }
 
 #avatar-modal-label{
-	font-size: 40px;
+	font-size: 20px;
 }
 .avatar-upload{
 	font-size: 25px;

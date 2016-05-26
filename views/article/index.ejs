@@ -143,9 +143,9 @@
                       <% if(responseList[i].comment.trim()==""){ %>
                         <label class='comment_content event_img'><%- responseList[i].comment_image %></label>
                       <% }else if(responseList[i].comment_image.indexOf("images")==-1){ %>
-                        <label class='comment_content event_text_r'><%= responseList[i].comment %></label>
+                        <label class='comment_content event_text_r'><%- responseList[i].comment %></label>
                       <% }else{ %>
-                        <label class='comment_content event_text_r event_img'><%= responseList[i].comment %>
+                        <label class='comment_content event_text_r event_img'><%- responseList[i].comment %>
                           <br>
                           <hr class="row-fluid event_img" id='hr'><%- responseList[i].comment_image %>
                         </label>
@@ -158,10 +158,10 @@
                       
                         <div class="container-fluid container_r_edit" id="container_r_edit<%= responseList[i].id %>">
                           <% if(responseList[i].comment_image == ""){ %>
-                            <div class="row-fluid" id="div_r_edit_content<%=  responseList[i].id %>" contenteditable="true" style=""><%=  responseList[i].comment %></div>
+                            <div class="row-fluid" id="div_r_edit_content<%=  responseList[i].id %>" contenteditable="true" style=""><%-  responseList[i].comment %></div>
                             <div class="row-fluid div_r_edit_img" id="div_r_edit_img<%= responseList[i].id %>" style="display:block;"></div>
                           <% }else{ %>
-                            <div class="row-fluid" id="div_r_edit_content<%= responseList[i].id %>" contenteditable="true" ><%= responseList[i].comment %></div>
+                            <div class="row-fluid" id="div_r_edit_content<%= responseList[i].id %>" contenteditable="true" ><%- responseList[i].comment %></div>
                             <div class="row-fluid div_r_edit_img" id="div_r_edit_img<%= responseList[i].id %>" style="display:block;"><%- responseList[i].comment_image %></div>
                           <% } %>
                           <button value="編輯完成" id="editRSend" class="b" name="<%= responseList[i].id %>">

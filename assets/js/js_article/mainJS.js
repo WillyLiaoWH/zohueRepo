@@ -289,10 +289,18 @@ function backToList(board) {
   // var page = url.replace(regex,"$3");
   // window.location.assign("/board-"+board+"/"+page+"#all");
   if(document.referrer.search("board")!=-1)
+     // window.location.assign("/board-"+board+"?tab=all&sort=lastResponseTime&order=DESC&page=1&search=")
+
+    // window.location.assign("/frontboard?tab=all&sort=lastResponseTime&order=DESC&page=1&search=")
     window.location.assign(document.referrer);
   else
-    window.location.assign("/board-"+board+"?tab=all&sort=lastResponseTime&order=DESC&page=1&search=")
+    window.location.assign("/frontboard?tab=all&sort=lastResponseTime&order=DESC&page=1&search=")
+    
+    // window.location.assign("/board-"+board+"?tab=all&sort=lastResponseTime&order=DESC&page=1&search=")
+
 }
+
+
 
 function editArticle() {
   var url = document.URL;

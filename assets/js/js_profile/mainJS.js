@@ -68,6 +68,10 @@ $(document).ready(function(){
     profile_auth(this.name);
   });
 
+  $(document).on("click",".profile_auth_mobile",function(e){
+    profile_auth_mobile(this.name);
+  });
+
   // 圖片跳窗，使用 modalBox.js
   $(document).on("click",".show-image a",function(event){
     event.preventDefault();
@@ -225,7 +229,26 @@ function profile_auth(route){   //去改按過權限按鈕之後的內容，只�
 }
 
 
-
+function profile_auth_mobile(route){   //去改按過權限按鈕之後的內容，只有前台
+  var item = route.split("/")[0];
+  var target = route.split("/")[1];
+  $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
+   if (target=="self"){
+        $('#'+item+'_btn_text').text("自己");
+      }
+      else if(target=="friend"){
+        $('#'+item+'_btn_text').text("朋友");
+      }
+      else if(target=="all"){
+        $('#'+item+'_btn_text').text("全部");
+      }
+      else if(target=="doctor"){
+        $('#'+item+'_btn_text').text("醫生");
+      }
+  $.get("/setProfileAuth/"+route,function(res){
+      showDialog("一般訊息",res);
+  });
+}
 
 
 // ------------------------------------------------------ timeline page

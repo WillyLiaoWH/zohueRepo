@@ -309,12 +309,14 @@ module.exports = {
                                                 page="profile/index";
                                                 css="style";
                                                 m="layout";
+                                                cropCss="crop-avatar";
                                             }
                                             else{
                                                 //mobile
                                                 page="profile/mindex";
                                                 css="mStyle";
                                                 m="mlayout";
+                                                cropCss="mcrop-avatar";
                                             }
                                             res.view(page, {
                                                 getTimeString : getTimeString,
@@ -341,7 +343,7 @@ module.exports = {
                                                 stylesheets: [
                                                     // '/styles/css_profile/style.css',
                                                     '/styles/css_profile/'+css+'.css',
-                                                    '/styles/css_post/crop-avatar.css',
+                                                    '/styles/css_post/'+cropCss+'.css',
                                                     '/styles/css_post/cropper.min.css',
                                                     '/styles/importer.css',
                                                     '/styles/css_public/themes/alertify.core.css',
