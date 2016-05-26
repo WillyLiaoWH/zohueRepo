@@ -261,6 +261,7 @@ function ShowAllCity(){
 function HandleResponse_ShowAllCity(response){
   obj_postal = JSON.parse(response);
   for(var r in obj_postal){
+    //console.log(r);
     var addressCity = obj_postal[r].addressCity;
     $(".place").append('<option value='+addressCity+'>'+addressCity+'</option>');
   }

@@ -15,6 +15,7 @@
     <script src="/js/js_friends/mainJS.js"></script>-->
     <script>
       $( document ).ready(function() {
+        ShowAllCity();
           <% if(page > 1){%>
             $("html, body").animate({ scrollTop: "<%- (page-1)*1010+130 %>px"} , 500, "swing");
           <% } %>
@@ -52,7 +53,7 @@
             <div id="inputPlace" style="display: inline;">
                 <select id="place1" class="place">
                     <option value="" selected="true">所有地區</option>
-                    <script>ShowAllCity();</script>
+                   
                 </select>
             </div>
 
@@ -103,7 +104,7 @@
                 <!--<label style="font-size: 22px; color:#533828;">地區</label>-->
                 <select id="place2" style="width: 80%;" class="place">
                     <option value="" selected="true">所有地區</option>
-                    <script>ShowAllCity();</script>
+                   
                 </select>
             </div>
            

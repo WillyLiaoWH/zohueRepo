@@ -221,14 +221,9 @@ module.exports.routes = {
   },
 
   '/forum': {
-    view: 'forum/index',
-    locals: {
-      scripts: [
-      ],
-      stylesheets: [
-        '/styles/importer.css'
-      ]
-    }
+    controller:'BoardsController',
+    action:'setForum',
+    skipAssets:true,
   },
 
   '/proInfo/:page': {

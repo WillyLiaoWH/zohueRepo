@@ -32,6 +32,36 @@ module.exports = {
 
 			}
 		});
+	},
+	setForum:function(req,res){
+		var MobileDetect = require('mobile-detect'),
+		md = new MobileDetect(req.headers['user-agent']);
+		var css;
+		var page;
+		var m;
+		if (md.mobile()==null){
+            //PC
+            css="style";
+            page = "forum/index";
+            m="layout";
+            
+        }
+        else{
+            //mobile
+            page="forum/mindex";
+            m="mlayout";
+            css="mStyle";
+        }
+
+	    return res.view(page, {
+			layout:m,
+			scripts: [
+			
+			],
+			stylesheets: [
+			'/styles/importer.css'
+			]
+		});
 	}
 };
 

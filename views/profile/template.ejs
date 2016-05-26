@@ -31,9 +31,14 @@
             <tr>
               <%
               timeDiff = (new Date()-new Date(timelinesList[i].updatedTime).getTime())/1000; // 計算幾天前
-              if(timeDiff > 86400){
+              if(timeDiff > 86400*7){
+                ago = new Date(timelinesList[i].updatedTime);
+                ago = ago.toDateString();
+              }
+              else if(timeDiff > 86400){
                 ago=Math.round(timeDiff/86400)+" 天前";
-              }else if(timeDiff > 3600){
+              }
+              else if(timeDiff > 3600){
                 ago=Math.round(timeDiff/3600)+" 小時前";
               }else if(timeDiff > 60){
                 ago=Math.round(timeDiff/60)+" 分鐘前";
