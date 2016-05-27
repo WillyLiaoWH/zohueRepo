@@ -28,31 +28,26 @@
             <li class="active" style="width:40%; text-align:center;"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
             <li style="width:55%; text-align:center;"><a href="#about" data-toggle="pill" style="padding: 8px 10px;"> <% if(traveler != "guest" && traveler == id){%>個人權限設定<%}else{%> 關於<%}%></a></li>
             <% if(traveler != "guest" && traveler != id){ %>
-            <li id="m_friend_setting" class="dropdown" >
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 8px 10px;">關係設定
-                <b class="caret"></b>
-              </a>
-              <ul id="m_RelSettings" class="d-menu dropdown-menu dropdown-menu-right">
-                <% if(traveler != "guest" && traveler != id){
+            
+            <% if(traveler != "guest" && traveler != id){
                 switch(friendStatus){
                 case 'friend': %>
-                  <li class='setUpItem' onclick='removeFriend(this.parentNode, <%- id %>)'>解除好友</li>
-                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                  <li style="width:40%; text-align:center;" onclick='removeFriend(this.parentNode, <%- id %>)'><a href="#about" data-toggle="pill" style="padding: 8px 10px;">解除好友</a></li>
+                  <li style="width:55%; text-align:center;" onclick='addBlack(this.parentNode, <%- id %>)'><a href="#about" data-toggle="pill" style="padding: 8px 10px;">封鎖</a></li>
                 <% break;
                 case 'unconfirmed': %>
-                  <li class='setUpItem' onclick='confirmFriend(this.parentNode, <%- id %>)'>加好友</li>
-                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                  <li style="width:40%; text-align:center;" class='setUpItem' onclick='confirmFriend(this.parentNode, <%- id %>)'>加好友</li>
+                  <li style="width:55%; text-align:center;" class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
                 <% break;
                 case 'sent': %>
-                  <li class='setUpItem' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回好友邀請</li>
-                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                  <li style="width:40%; text-align:center;" class='setUpItem' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回好友邀請</li>
+                  <li style="width:55%; text-align:center;" class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
                 <% break;
                 default: %>
-                  <li class='setUpItem' onclick='addFriend(this.parentNode, <%- id %>)'>加好友</li>
-                  <li class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li
+                  <li style="width:40%; text-align:center;" class='setUpItem' onclick='addFriend(this.parentNode, <%- id %>)'>加好友</li>
+                  <li style="width:55%; text-align:center;" class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li
                 <% break;}} %>
-              </ul>
-            </li>
+
             <% } %>
           </ul>
       </div>
