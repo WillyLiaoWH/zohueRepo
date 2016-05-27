@@ -67,8 +67,8 @@
                   <% } %>
                 </div>
 
-                <div valign='bottom' style='padding:0px 0px 7px 20px;'>發表時間：<%= articleList[0].createdAt %></div>
-                <div valign='bottom' style='padding:0px 0px 7px 20px; '>更新時間：<%= articleList[0].lastResponseTime %>
+                <div valign='bottom' style='padding:0px 0px 7px 20px;'>發表時間：<%= getTimeString(articleList[0].createdAt) %></div>
+                <div valign='bottom' style='padding:0px 0px 7px 20px; '>更新時間：<%= getTimeString(articleList[0].lastResponseTime) %>
                 </div>
                 <% if(isAuthor){ %>　 
                 <button  valign='bottom' value="編輯文章" id="mobile_editArticle" class="b" onclick="editArticle();" style="display:block; width:auto;"><img src="/images/img_forum/post_icon.png"/>&nbsp; 編輯文章</button>
@@ -124,7 +124,7 @@
                     <img style="float: left; " src='<%= responseList[i].author.img %>'>
                   </div>
                   <div id="comment_createdAt" style="font-size:15px;" class='col-md-2'>
-                    <label><%= responseList[i].createdAt %></label>
+                    <label><%= getTimeString(responseList[i].createdAt) %></label>
                   </div>
                   <div style="font-size:15px;">
                     <label>
@@ -337,14 +337,5 @@
     <!-- image modal -->
     <div class="modalBox"></div>
 
-    <!-- 檢舉視窗 移至showDialog
-    <div id="reportDialog" title="協助我們瞭解發生的狀況">
-      <form id="reportForm">  
-        <label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br>
-        <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
-        <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
-        <label><input type="radio" name="reason" value="others"> 其它</label><br>
-        <input type="text" id="reasonInput" style="display: none;">
-      </form> 
-    </div>-->
+
   </div>
