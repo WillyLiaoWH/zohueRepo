@@ -102,7 +102,8 @@ function removeAddFriend(parent, id) {
 }
 //搜尋使用者
 function search(page, mobile) {
-  var index = ($(window).width() < 768) ? "2" : "1";
+  // var index = ($(window).width() < 768) ? "2" : "1";
+  var index = 1;
   window.location.href = '/friends?alias='+$("#alias"+index).val()+'&disease='+$("#disease"+index).val()+'&place='+$("#place"+index).val()+'&userType='+$("#userType"+index).val()+'&thisPage='+page; 
 }
 
@@ -251,11 +252,11 @@ function toProfile(id) {
 /************************** 郵遞區號相關 **************************/
 function ShowAllCity(){
   $.get("/postallist/getall", function(res){
-      if(res.err) {
-        showDialog("錯誤訊息",res.err);
-      } else {
-        HandleResponse_ShowAllCity(res);
-      }
+    if(res.err) {
+      showDialog("錯誤訊息",res.err);
+    } else {
+      HandleResponse_ShowAllCity(res);
+    }
   });
 }
 function HandleResponse_ShowAllCity(response){

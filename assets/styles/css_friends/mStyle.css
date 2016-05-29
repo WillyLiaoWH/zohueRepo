@@ -1,15 +1,20 @@
 #body{
 	font-family: "微軟正黑體";
 }
+
+#inputAlias, #inputDisease, #inputPlace, #inputUserType {
+	width: 100%;
+}
+
 .disease, .place, .userType{
 	height:48px;
 	color:#816C58;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-  	font-weight:500;
+	font-weight:500;
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
-	width:150px;
+	width:100%;
 	background-color: #FFF;
 	/*background-color: rgba(102, 141, 60, 0.4);*/
 	padding: 8px 8px 8px 8px;
@@ -17,19 +22,13 @@
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);
-  	margin-top: 7px;
-}
-
-#inputAlias, #inputDisease, #inputPlace, #inputUserType {
-	margin: 7px 15px 0px 5px;
+	border: 1px solid rgba(0,0,0,0);
+	margin-top: 7px;
 }
 
 .alias{
 	height:48px;
 	color:#816C58;
-	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-  	font-weight:500;
 	font-size: 18px;
 	border-radius: 10px;
 	line-height: 22px;
@@ -37,32 +36,12 @@
 	background-color: rgba(102, 141, 60, 0.4);
 	padding: 8px 8px 8px 8px;
 	/*margin: 8px 3px 0px 0px;*/
-	width:150px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);
+	width:100%;
+	border: 1px solid rgba(0,0,0,0);
 }
 
-#mobile_search{
-	display: none !important;
-}
-
-@media all and (max-width: 480px){
-	#more button{
-		float: left;
-		margin-left: 10px;
-	}
-}
-
-@media all and (max-width: 1127px){
-	#search{
-		display: none !important;
-	}
-	#mobile_search{
-		display: block !important;
-	}
+#search{
+	margin: 5px;
 }
 
 #searchButton{
@@ -76,7 +55,7 @@
 	/*background-color: rgba(232, 81, 0, 0.7);*/
 	color:#533828;
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-  	font-weight:500;
+	font-weight:500;
 	font-size: 20px;
 	border-radius: 10px;
 	padding: 8px 8px 8px 8px;
@@ -84,11 +63,23 @@
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);
+	border: 1px solid rgba(0,0,0,0);
 }
 
 #searchButton:hover{
 	/*background-color: rgba(232, 81, 0, 0.7);*/
+}
+
+#title{
+	color:black; 
+	margin: 0px 0px 15px 5px;
+}
+
+#btnGroup{
+	display:inline-block; 
+	margin-top:5px;
+	height: 40%; 
+	width: 100%;
 }
 
 .button{
@@ -102,7 +93,7 @@
 	/*float:right;*/
 	/*background-color: rgba(232, 81, 0, 0.7);*/
 	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
-  	font-weight:500;
+	font-weight:500;
 	font-size: 18px;
 	border-radius: 7px;
 	padding: 5px 5px 5px 5px;
@@ -110,7 +101,7 @@
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
-  	border: 1px solid rgba(0,0,0,0);
+	border: 1px solid rgba(0,0,0,0);
 }
 
 .button:hover{
@@ -121,48 +112,8 @@
 	width: 100%;
 }
 
-@media all and (min-width: 901px) and (max-width: 1123px){
-	.friendRight{
-		width: 8% !important;
-	}
-}
-@media all and (max-width: 900px){
-	.imgAuthorType{
-		display: none !important;
-	}
-	.btnForbbiden{
-		display: none !important;
-	}
-	.image{
-		width: 110px !important;
-	}.friendRight{
-		display: none !important;
-	}
-	.friendMid{
-		width: 55% !important;
-	}
-	.friendMid a, div {
-		font-size: 24px !important;
-		height: auto !important;
-	}
-	.friendMid span {
-		width: 100% !important;
-		font-size: 14px !important;
-	}
-	.friendMid button{
-		font-size: 16px !important;
-	}
-	.friendMid div > div {
-		font-size: 16px !important;
-	}
-	#search_result{
-		padding-left:0px !important;
-	}
-}
-
 #searchResult {
 	padding-left: 0px;
-	width: 1000px;
 }
 
 .friend {
@@ -177,7 +128,7 @@
 .image {
 	display: inline-block; 
 	height: 100%;
-	width: 130px;
+	width: 30%;
 	padding: 0px;
 	vertical-align: top;
 	float: left;
@@ -187,20 +138,19 @@
 	vertical-align: top;
 	display: inline-block;
 	height: 100%;
-	width: 40%;
-	/*padding-bottom: 5px;*/
+	width: 70%;
 	text-align: left;
 	float: left;
 }
-
+/*
 .friendRight {
 	display: inline-block;
 	height: 100px;
-	width: 290px;
+	width: 20%;
 	float: left;
 	text-align: left;
 }
-
+*/
 .status {
 	font-size: 18px;
 	display: inline-block;

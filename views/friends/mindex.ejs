@@ -1,212 +1,127 @@
-<!DOCTYPE HTML>
-<html style="height: 100%">
-	<head>
-	<!--	<title>Join Us | ZOHUE</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-    <link rel="stylesheet" href="/styles/importer.css">
-    <link rel="stylesheet" href="/styles/css_public/themes/alertify.core.css">
-    <link rel="stylesheet" href="/styles/css_public/themes/alertify.default.css">
-    <link rel="stylesheet" href="/styles/css_friends/style.css">
+<!DOCTYPE HTML>    
+<script>
+$( document ).ready(function() {
+ ShowAllCity();
+ <% if(page > 1){%>
+    $("html, body").animate({ scrollTop: "<%- (page-1)*1000+455 %>px"} , 500, "swing");
+    <% } %>
+});
+</script>   
+<h2 id="title">作夥找人</h2>
+<div id="search">
+    <div id="inputAlias">
+        <input type="text" name="alias" id="alias1" class="alias" placeholder="輸入暱稱">
+    </div>
+    <!-- <label style="font-size: 22px; color:#533828; display: inline;">疾病</label> -->
+    <div id="inputDisease" style="display: inline;">
+        <select id="disease1" class="disease">
+            <option value="" selected="true">選擇疾病</option>
+            <option value='1'>鼻咽癌</option>
+            <option value='2'>鼻腔/副鼻竇癌</option>
+            <option value='3'>口腔癌</option>
+            <option value='4'>口咽癌</option>
+            <option value='5'>下咽癌</option>
+            <option value='6'>喉癌</option>
+            <option value='7'>唾液腺癌</option>
+            <option value='8'>甲狀腺癌</option>
+            <option value='999'>其它</option>
+        </select>
+    </div>
 
-    <script src="/js/js_public/modalBox.js-master/modalBox-min.js"></script>
-    <script src="/js/js_public/alertify.js"></script>
-    <script src="/js/js_friends/mainJS.js"></script>-->
-    <script>
-      $( document ).ready(function() {
-        ShowAllCity();
-          <% if(page > 1){%>
-            $("html, body").animate({ scrollTop: "<%- (page-1)*1010+130 %>px"} , 500, "swing");
-          <% } %>
-      });
-    </script>
-	</head>
-	<body id="body" style="height: 100%">
-    <div class="container-fluid"  style="height: 100%">
-        <!-- 正文 -->
-        <h1 style="color:black; margin-left:40px;">找人</h1>
-        
-        <!--For desktop-->
-        <div id="search" style="margin: 5px;">
-            <!-- <label style="font-size: 22px; color:#533828;">搜尋：</label>-->
-            <!-- <label style="font-size: 22px; color:#533828;">暱稱</label>-->
-            <div id="inputAlias" style="display: inline;"><input type="text" name="alias" id="alias1" class="alias" placeholder="暱稱"></div>
+    <!-- <label style="font-size: 22px; color:#533828;">居住地</label> -->
+    <div id="inputPlace" style="display: inline;">
+        <select id="place1" class="place">
+            <option value="" selected="true">選擇地區</option>
+        </select>
+    </div>
 
-            <label style="font-size: 22px; color:#533828;">疾病</label>
-            <div id="inputDisease" style="display: inline;">
-                <select id="disease1" class="disease">
-                    <option value="" selected="true">所有疾病</option>
-                    <option value='1'>鼻咽癌</option>
-                    <option value='2'>鼻腔/副鼻竇癌</option>
-                    <option value='3'>口腔癌</option>
-                    <option value='4'>口咽癌</option>
-                    <option value='5'>下咽癌</option>
-                    <option value='6'>喉癌</option>
-                    <option value='7'>唾液腺癌</option>
-                    <option value='8'>甲狀腺癌</option>
-                    <option value='999'>其它</option>
-                </select>
-            </div>
+    <!-- <label style="font-size: 22px; color:#533828;">身分</label> -->
+    <div id="inputUserType" style="display: inline;">
+        <select id="userType1" class="userType">
+            <option value="" selected="true">選擇身分</option>
+            <option value='P'>病友</option>
+            <option value='F'>家屬</option>
+            <option value='S'>社工師</option>
+            <option value='D'>醫生</option>
+            <option value='RN'>護理師</option>
+            <option value='N'>一般民眾</option>
+        </select>
+    </div>
 
-            <label style="font-size: 22px; color:#533828;">居住地</label>
-            <div id="inputPlace" style="display: inline;">
-                <select id="place1" class="place">
-                    <option value="" selected="true">所有地區</option>
-                   
-                </select>
-            </div>
+    <button value="搜尋" onclick="search(0)" id="searchButton">
+        <img src="/images/img_forum/search_icon.png">搜尋
+    </button>
+    <br>
+</div>
+<hr>
+<div id="searchResult" style="float: left; height: 100%;">
+   <div id="searchList">
+    <% if (users.length >0) { %>
+    <% for(i = 0; i < users.length; i++) { %>
+    <div class="friend">
+        <div class="image">
+            <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin:10px; height:80px">
+        </div>
+        <div class="friendMid">
 
-            <label style="font-size: 22px; color:#533828;">身分</label>
-            <div id="inputUserType" style="display: inline;">
-                <select id="userType1" class="userType">
-                    <option value="" selected="true">所有身分</option>
-                    <option value='P'>病友</option>
-                    <option value='F'>家屬</option>
-                    <option value='S'>社工師</option>
-                    <option value='D'>醫生</option>
-                    <option value='RN'>護理師</option>
-                    <option value='N'>一般民眾</option>
-                </select>
-            </div>
-
-            <button value="搜尋" onclick="search(0)" id="searchButton">
-                <img src="/images/img_forum/search_icon.png">搜尋
-            </button>
+            <div style="margin-top: 10px; display: inline-block;  width: 100%; font-size: 24px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 24px;"><%- users[i].alias %></a><%- users[i].authorType %> <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> <%- users[i].authorIcon %> <%}%></div>
             <br>
-        </div>
+            <span id="btnGroup">
+              <% if (users[i].isFriend==-1) { %>
+              <div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "<%- users[i].id %>")'>解除封鎖</button><br>
+              <% }else if(users[i].isFriend==0){ %>
+              <button type='button' class='button' onclick='addFriend(this.parentNode, <%- users[i].id %>)'>加為好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
+              <% }else if(users[i].isFriend==1){ %>
+              <div class='status'>要求加為好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "<%- users[i].id %>")'>確認好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
+              <% }else if(users[i].isFriend==2){ %>
+              <!--<div class='status'>已送出好友邀請&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "<%- users[i].id %>")'>收回邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
+              <% }else if(users[i].isFriend==3){ %>
+              <!--<div class='status'>好友&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeFriend(this.parentNode, "<%- users[i].id %>")'>解除好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "<%- users[i].id %>")'>封鎖</button><br>
+              <% } %>
+          </span>
+      </div>
+                  <!-- <div class="friendRight">
+                    <% if(users[i].addressCity&&users[i].addressCity!=""){ %>
 
-        <!--For mobile-->
-        <center>
-        <div id="mobile_search" class="">
-            <div id="inputAlias" style="width: 100%;">
-                <!--<label style="font-size: 22px; color:#533828;">暱稱</label>-->
-                <input type="text" name="alias" id="alias2" style="width: 80%;" class="alias" placeholder="暱稱">
-            </div>
-    
-            <div id="inputDisease" style="width: 100%;">
-                <!--<label style="font-size: 22px; color:#533828;">病因</label>-->
-                <select id="disease2" style="width: 80%;" class="disease">
-                    <option value="" selected="true">所有疾病</option>
-                    <option value='1'>鼻咽癌</option>
-                    <option value='2'>鼻腔/副鼻竇癌</option>
-                    <option value='3'>口腔癌</option>
-                    <option value='4'>口咽癌</option>
-                    <option value='5'>下咽癌</option>
-                    <option value='6'>喉癌</option>
-                    <option value='7'>唾液腺癌</option>
-                    <option value='8'>甲狀腺癌</option>
-                    <option value='999'>其它</option>
-                </select>
-            </div>
-            
-            <div id="inputPlace" style="width: 100%;">
-                <!--<label style="font-size: 22px; color:#533828;">地區</label>-->
-                <select id="place2" style="width: 80%;" class="place">
-                    <option value="" selected="true">所有地區</option>
-                   
-                </select>
-            </div>
-           
-            <div id="inputUserType" style="width: 100%;">
-                <!--<label style="font-size: 22px; color:#533828;">身分</label>-->
-                <select id="userType2" style="width: 80%;" class="userType">
-                    <option value="" selected="true">所有身分</option>
-                    <option value='P'>病友</option>
-                    <option value='F'>家屬</option>
-                    <option value='S'>社工師</option>
-                    <option value='D'>醫生</option>
-                    <option value='RN'>護理師</option>
-                    <option value='N'>一般民眾</option>
-                </select>
-            </div>
-          
-            <div style="width: 100%; margin: 7px 15px 0px 5px;">
-                <button onclick="search(0, true);" id="searchButton" style="width: 80%;">
-                    <img src="/images/img_forum/search_icon.png">搜尋
-                </button>
-            </div>
-            <br/>
-        </div>
-        <center>
-    <hr>
-        <div id="searchResult" class="col-md-9" style="float: left; height: 100%;">
-           <div id="searchList">
-            <% if (users.length >0) { %>
-                <% for(i = 0; i < users.length; i++) { %>
-                <div class="friend">
-                    <div class="image">
-                        <img class="imgUser" src="<%- users[i].img -%>" onclick="toProfile(<%- users[i].id %>)" style="margin:10px; height:80px">
-                    </div>
-                    <div class="friendMid">
+                    <div style='display:inline-block; font-size: 22px; margin-top:10px;width: 100%'>來自<%- users[i].addressCity %> </div><br>
+                    <% } 
+                    var pd = users[i].primaryDisease;
+                    if(pd!=""&&(pd=="D"||pd=="S"||pd=="RN"||pd=="P"||pd=="F")) { %>
+                    <div style="display:inline-block; font-size: 22px;margin-top:10px; width: 100%">
+                        <% if(users[i].type=="D"){ %>
 
-                        <div style="margin-top: 10px; display: inline-block;  width: 100%; font-size: 24px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 24px;"><%- users[i].alias %></a><%- users[i].authorType %> <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> <%- users[i].authorIcon %> <%}%></div>
-<!-- =======
-                        <div style="margin-right: 0px; display: inline-block; height: 55%; width: 100%; font-size: 32px;"><a href="/profile/?<%- users[i].id %>" style="font-size: 32px;"><%- users[i].alias %></a>
-                            <%- users[i].authorType %> 
-                            <% if(users[i].type=="D" || users[i].type=="S" || users[i].type=="RN"){ %> 
-                                <%- users[i].authorIcon %> <%}%>
-                        </div>
->>>>>>> c3ce019cf850af8e8c9f3ba17d191ecc889c1e51 -->
-                        <br>
-                        <span style="display:inline-block; margin-top:10px;height: 40%; width: 130%;">
-                          <% if (users[i].isFriend==-1) { %>
-                              <div class='status'>已封鎖&nbsp&nbsp</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "<%- users[i].id %>")'>解除封鎖</button><br>
-                          <% }else if(users[i].isFriend==0){ %>
-                              <button type='button' class='button' onclick='addFriend(this.parentNode, <%- users[i].id %>)'>加為好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
-                          <% }else if(users[i].isFriend==1){ %>
-                              <div class='status'>要求加為好友&nbsp&nbsp</div><button type='button' class='button' onclick='confirmFriend(this.parentNode, "<%- users[i].id %>")'>確認好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
-                          <% }else if(users[i].isFriend==2){ %>
-                              <!--<div class='status'>已送出好友邀請&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeAddFriend(this.parentNode, "<%- users[i].id %>")'>收回邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, <%- users[i].id %>)'>封鎖</button><br>
-                          <% }else if(users[i].isFriend==3){ %>
-                              <!--<div class='status'>好友&nbsp&nbsp</div>--><button type='button' class='button' onclick='removeFriend(this.parentNode, "<%- users[i].id %>")'>解除好友</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "<%- users[i].id %>")'>封鎖</button><br>
-                          <% } %>
-                        </span>
-                    </div>
-                    <div class="friendRight">
-                        <% if(users[i].addressCity&&users[i].addressCity!=""){ %>
-
-                            <div style='display:inline-block; font-size: 22px; margin-top:10px;width: 100%'>來自<%- users[i].addressCity %> </div><br>
-                        <% } 
-                        var pd = users[i].primaryDisease;
-                        if(pd!=""&&(pd=="D"||pd=="S"||pd=="RN"||pd=="P"||pd=="F")) { %>
-                            <div style="display:inline-block; font-size: 22px;margin-top:10px; width: 100%">
-                                <% if(users[i].type=="D"){ %>
-
-                                     主治 <%- diseaseList[users[i].primaryDisease] %>
-                                 <% }else if(users[i].type=="S"){ %>
-                                     主治 <%- diseaseList[users[i].primaryDisease] %>
-                                 <% }else if(users[i].type=="RN"){ %>
-                                     主治 <%- diseaseList[users[i].primaryDisease] %>
-                                 <% }else if(users[i].type=="P"){ %>
-                                     患有 <%- diseaseList[users[i].primaryDisease] %>
-                                 <% }else if(users[i].type=="F"){ %>
-                                     照顧 <%- diseaseList[users[i].primaryDisease] %> 患者 
-                                 <% } %>
-                            </div><br>
-                        <% } if(users[i].age!=-1) { %>
-                            <div style="display:inline-block; font-size: 22px; margin-top:10px; width: 100%"><%- users[i].age %>歲</div>
+                        主治 <%- diseaseList[users[i].primaryDisease] %>
+                        <% }else if(users[i].type=="S"){ %>
+                        主治 <%- diseaseList[users[i].primaryDisease] %>
+                        <% }else if(users[i].type=="RN"){ %>
+                        主治 <%- diseaseList[users[i].primaryDisease] %>
+                        <% }else if(users[i].type=="P"){ %>
+                        患有 <%- diseaseList[users[i].primaryDisease] %>
+                        <% }else if(users[i].type=="F"){ %>
+                        照顧 <%- diseaseList[users[i].primaryDisease] %> 患者 
                         <% } %>
-                    </div>
-                </div>
-                 <% } %>
-            <% } else { %>
-                找不到符合搜尋條件的人
-            <% } %>   
+                    </div><br>
+                    <% } if(users[i].age!=-1) { %>
+                    <div style="display:inline-block; font-size: 22px; margin-top:10px; width: 100%"><%- users[i].age %>歲</div>
+                    <% } %>
+                </div> -->
             </div>
+            <% } %>
+            <% } else { %>
+            找不到符合搜尋條件的人
+            <% } %>   
+        </div>
+        <br>
+        <center>
             <div id="more">
                 <% if (hasNext) { %>
-                    <button type="button" class="button" onclick="search(<%- page %>)">顯示更多人</button>
+                <button type="button" class="button" onclick="search(<%- page %>)">顯示更多人</button>
                 <% } %>
             </div>
-        </div>
-
-      
+        </center>
     </div>
-  
-   </body>
-</html>
+</div>
