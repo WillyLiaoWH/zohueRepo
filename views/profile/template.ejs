@@ -11,22 +11,27 @@
       <table style="width:100%;">
          <tbody>
             <tr>
-               <td rowspan="2" style="width:50px;padding-right:15px;">
-                  <img src="<%= avatar %>" height="50" width="50">
-               </td>
-               <td>
-                  <!--作者為塗鴉牆主人-->
-                  <% if(typeof timelinesList[i].owner == "undefined"){ %>
-                    <div id="event_author_name" style="float:left;">
-                      <a href="?<%= id %>"><%= alias %></a>
-                    </div>
-                  <!--作者為第三人或訪問者-->
-                  <% }else{ %>
-                    <div id="event_author_name" style="float:left;">
-                      <a href="?<%= timelinesList[i].owner.id %>"><%= timelinesList[i].owner.alias %></a> > <a href="?<%= id %>"><%= alias %></a>
-                    </div>
-                  <% } %>
-               </td>
+                      <!--作者為塗鴉牆主人-->
+              <% if(typeof timelinesList[i].owner == "undefined"){ %>
+                <td rowspan="2" style="width:50px;padding-right:15px;">
+                  <img src="<%= avatar%>" height="50" width="50">
+                </td>
+                <td>
+                  <div id="event_author_name" style="float:left;">
+                    <a href="?<%= id %>"><%= alias %></a>
+                  </div>
+                </td>
+              <!--作者為第三人或訪問者-->
+              <% }else{ %>
+                <td rowspan="2" style="width:50px;padding-right:15px;">
+                  <img src="<%= timelinesList[i].owner.img %>" height="50" width="50">
+                </td>
+                <td>
+                  <div id="event_author_name" style="float:left;">
+                    <a href="?<%= timelinesList[i].owner.id %>"><%= timelinesList[i].owner.alias %></<a href=""></a> > <a href="?<%= id %>"><%= alias %></a>
+                  </div>
+                </td>
+               <% } %>
             </tr>
             <tr>
               <%

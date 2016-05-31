@@ -123,9 +123,7 @@
                   <div valign=top  class='col-md-2 comment_avatar'>
                     <img style="float: left; " src='<%= responseList[i].author.img %>'>
                   </div>
-                  <div id="comment_createdAt" style="font-size:15px;" class='col-md-2'>
-                    <label><%= getTimeString(responseList[i].createdAt) %></label>
-                  </div>
+                  
                   <div style="font-size:15px;">
                     <label>
                       <a href='/profile/?<%= responseList[i].author.id %>'>
@@ -142,6 +140,9 @@
                         <% } %>
 
                       </label>
+                    </div>
+                    <div id="comment_createdAt" style="font-size:15px;" class='col-md-2'>
+                    <label><%= getTimeString(responseList[i].createdAt) %></label>
                     </div>
                   </div>
 
