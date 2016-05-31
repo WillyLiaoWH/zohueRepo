@@ -44,6 +44,7 @@ function addFriend(parent, id) {
     } else {
       var html="";
       //html+="已送出好友邀請&nbsp&nbsp<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp";
+      html+="<button type='button' class='button' onclick='removeAddFriend(this.parentNode, "+id+")'>收回邀請</button>&nbsp;&nbsp;&nbsp;&nbsp;";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }
@@ -56,7 +57,7 @@ function addBlack(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="已封鎖&nbsp&nbsp<button type='button' class='button' onclick='removeBlack(this.parentNode, "+id+")'>解除封鎖</button><br>";
+      html+="<div class='status'>已封鎖&nbsp;&nbsp;</div><button type='button' class='button' onclick='removeBlack(this.parentNode, "+id+")'>解除封鎖</button><br>";
       parent.innerHTML=html;
     }
   })
@@ -68,7 +69,7 @@ function confirmFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+      // html+="好友&nbsp&nbsp<button type='button' class='button' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='button btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
       parent.innerHTML=html;
     }

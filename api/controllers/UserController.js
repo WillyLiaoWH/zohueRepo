@@ -789,14 +789,17 @@ module.exports = {
                     var blackList=user[0].blackList;
                     blackList.push(parseInt(req.param("id")));
                     var friendsList=user[0].friends;
-                    if(friendsList.indexOf(parseInt(req.param("id"))!=-1)) {
+                    if(friendsList.length==0){
+                        friendsList = [];
+                    }else if(friendsList.indexOf(parseInt(req.param("id"))!=-1)) {
                         friendsList.splice(friendsList.indexOf(parseInt(req.param("id"))), 1);
                     }
                     var sentAddFriendsList=user[0].sentAddFriends;
-                    if(sentAddFriendsList.indexOf(parseInt(req.param("id"))!=-1)) {
+                    if(sentAddFriendsList.length==0){
+                        sentAddFriendsList = [];
+                    }else if(sentAddFriendsList.indexOf(parseInt(req.param("id"))!=-1)) {
                         sentAddFriendsList.splice(sentAddFriendsList.indexOf(parseInt(req.param("id"))), 1);
                     }
-
                     User.update({id: req.session.user.id}, {blackList: blackList, friends: friendsList, sentAddFriends: sentAddFriendsList}).exec(function(err, user) {
                         if(err) {
                             console.log(err);
