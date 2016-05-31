@@ -37,8 +37,9 @@
               <%
               timeDiff = (new Date()-new Date(timelinesList[i].updatedTime).getTime())/1000; // 計算幾天前
               if(timeDiff > 86400*7){
-                ago = new Date(timelinesList[i].updatedTime);
-                ago = ago.toDateString();
+                var date = new Date(timelinesList[i].updatedTime);
+                date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+                ago = date
               }
               else if(timeDiff > 86400){
                 ago=Math.round(timeDiff/86400)+" 天前";
@@ -157,10 +158,24 @@
         .replace(/dummy href=/g, "a href=")
         .replace(/\/dummy/g, "\/a");
       timeDiff = (new Date()-new Date(timelinesList[i].response[j].updatedTime).getTime())/1000; // 計算幾天前
-      if(timeDiff > 86400){ago=Math.round(timeDiff/86400)+" 天前";
-      }else if(timeDiff > 3600){ago=Math.round(timeDiff/3600)+" 小時前";
-      }else if(timeDiff > 60){ago=Math.round(timeDiff/60)+" 分鐘前";
-      }else{ago="剛剛";}%>
+      if(timeDiff > 86400*7){
+        var date = new Date(timelinesList[i].response[j].updatedTime);
+        date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        ago = date
+
+      }
+      else if(timeDiff > 86400){
+        ago=Math.round(timeDiff/86400)+" 天前";
+      }
+      else if(timeDiff > 3600){
+        ago=Math.round(timeDiff/3600)+" 小時前";
+      }else if(timeDiff > 60){
+        ago=Math.round(timeDiff/60)+" 分鐘前";
+      }else{
+        ago="剛剛";
+      }
+
+    %>
       <div id="container_timeline_res container-fluid" style="/*overflow:hidden;*/">
          <div id="sidebar_timeline_res">
           <img src="<%= timelinesList[i].response[j].img %>" height="50" width="50">
@@ -196,7 +211,7 @@
             <% } %>
             <!--留言時間、推薦、設定-->
             <div class="row-fluid event_option btn-group">
-               <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %>"><%- ago%></a></div>
+               <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].response[j].updatedTime).toTimeString() %>"><%- ago%></a></div>
                <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
                 <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+traveler+'}') > 0){ %>
@@ -246,10 +261,23 @@
         .replace(/dummy href=/g, "a href=")
         .replace(/\/dummy/g, "\/a");
       timeDiff = (new Date()-new Date(timelinesList[i].response[j].updatedTime).getTime())/1000; // 計算幾天前
-      if(timeDiff > 86400){ago=Math.round(timeDiff/86400)+" 天前";
-      }else if(timeDiff > 3600){ago=Math.round(timeDiff/3600)+" 小時前";
-      }else if(timeDiff > 60){ago=Math.round(timeDiff/60)+" 分鐘前";
-      }else{ago="剛剛";}%>
+      if(timeDiff > 86400*7){
+        var date = new Date(timelinesList[i].response[j].updatedTime);
+        date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        ago = date
+        
+      }
+      else if(timeDiff > 86400){
+        ago=Math.round(timeDiff/86400)+" 天前";
+      }
+      else if(timeDiff > 3600){
+        ago=Math.round(timeDiff/3600)+" 小時前";
+      }else if(timeDiff > 60){
+        ago=Math.round(timeDiff/60)+" 分鐘前";
+      }else{
+        ago="剛剛";
+      }  
+    %>
       <div id="container_timeline_res container-fluid" style="/*overflow:hidden;*/">
          <div id="sidebar_timeline_res">
           <img src="<%= timelinesList[i].response[j].img %>" height="50" width="50">
@@ -286,7 +314,7 @@
             <% } %>
             <!--留言時間、推薦、設定-->
             <div class="row-fluid event_option btn-group">
-               <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].updatedTime).toISOString().replace(/T/, ' ').replace(/\..+/, '') %>"><%- ago%></a></div>
+               <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].response[j].updatedTime).toTimeString() %>"><%- ago%></a></div>
                <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
                 <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+traveler+'}') > 0){ %>

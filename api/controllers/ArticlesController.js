@@ -10,9 +10,8 @@ module.exports = {
 setBoardPage: function(req, res){
 
     function getTimeString(date) {
-        if(date.getHours()/12==0) var tt="上午";
-        else var tt="下午";
-        return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
+        
+        return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
     }
     //settings
     var maxReport=3;
@@ -234,9 +233,7 @@ setBoardPage: function(req, res){
 
 setFrontBoard: function(req, res) {
     function getTimeString(date) {
-        if(date.getHours()/12==0) var tt="上午";
-        else var tt="下午";
-        return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+tt+" "+date.getHours()%12+":"+date.getMinutes();
+        return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
     }
         //settings
         var maxReport=3;
@@ -580,7 +577,9 @@ setBoardFrontPage: function(req, res){
             }
         }
         function getTimeString(date) {
-            var reg = /\d+-\d+-\d+\s\d+:\d+/;
+            date = date.replace(/-/g,"/");
+         //   console.log(date);
+            var reg = /\d+\/\d+\/\d+\s\d+:\d+/;
             date = reg.exec(date);
             return date;
         }

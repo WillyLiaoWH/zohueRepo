@@ -47,7 +47,7 @@ $(document).on("click",".comment_edit",function(e){
   $(document).on("click","#editRSend",function(e){
     editRArticleSend(this.name);
   });
-  $(document).one("click",".comment_del",function(e){
+  $(document).on("click",".comment_del",function(e){
     delArticle_Comment(this.name);
   });
 
