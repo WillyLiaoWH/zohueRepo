@@ -41,7 +41,7 @@ $(document).ready(function(){
   $(document).on("click","#editRSend",function(e){
     editRTimelineSend(this.name);
   });
-  $(document).one("click",".comment_del",function(e){
+  $(document).on("click",".comment_del",function(e){
     delTimeline_comment(this.name);
   });
   $(document).one("click","#TimelineResponseNice",function(e){
