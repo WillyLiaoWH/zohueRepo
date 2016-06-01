@@ -6,8 +6,10 @@
       <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
         <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px ;margin-left: 20px;"></img>
       </span>
-      <%if(aboutInfo.type=="N"){%>
-      <span style="margin:20px 0px 40px 5px; display: inline-block;">
+      <%if(traveler == id){%>
+        <span style="margin:40px 0px 40px 15px; display: inline-block;">
+      <%}else if(aboutInfo.type=="N"){%>
+      <span style="margin:20px 0px 40px 15px; display: inline-block;">
         <%}else{%>
         <span style="margin:0px 0px 40px 5px; display: inline-block;">
           <%}%>
