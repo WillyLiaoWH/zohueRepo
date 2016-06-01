@@ -181,7 +181,8 @@ module.exports = {
                             ret.alias = usr[0].alias; console.log(usr[0].alias);
                             ret.img = usr[0].img;
                             ret.type = usr[0].type;
-                            ret.primaryDisease = usr[0].primaryDisease;
+                            ret.primaryDisease = usr[0].primaryDisease==""?999:usr[0].primaryDisease;
+                            console.log(usr[0].primaryDisease=="");
                             var authcheck=require("../services/authcheck.js");
                             authcheck.authCheck(id,req,function(auth){
                                 // console.log(auth)
