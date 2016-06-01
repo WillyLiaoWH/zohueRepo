@@ -103,12 +103,12 @@ $(document).ready(function(){
     width: '50%',
     modal: true,
     buttons: {
-        "檢舉": function() {
-          report();
-        },
-        "取消": function() {
-          $(this).dialog("close");
-        }
+      "檢舉": function() {
+        report();
+      },
+      "取消": function() {
+        $(this).dialog("close");
+      }
     },
     close: function() {
       var form=document.getElementById('reportForm');
@@ -142,11 +142,15 @@ function removeBlack(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='b btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
-      parent.innerHTML=html;
-    }
-  })
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+       html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+       html+="<button type='button' class='b btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+     }else{
+       html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+       html+="<button type='button' class='b btnForbbiden' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+     }parent.innerHTML=html;
+   }
+ })
 }
 function addBlack(parent, id) {
   $.post("/addBlack", {id: id}, function(res){
@@ -165,11 +169,15 @@ function addFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+       html+="<button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回邀請</button>";
+       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+     }else{
       html+="&nbsp<button type='button' class='b' onclick='removeAddFriend(this.parentNode, "+id+")'>收回邀請</button>&nbsp&nbsp&nbsp&nbsp";
       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
-      parent.innerHTML=html;
-    }
-  })
+    }parent.innerHTML=html;
+  }
+})
 }
 function confirmFriend(parent, id) {
   $.post("/confirmFriend", {id: id}, function(res){
@@ -177,11 +185,14 @@ function confirmFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="&nbsp<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
-      parent.innerHTML=html;
-    }
-  })
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+       html+="<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>";
+       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+     }else{html+="&nbsp<button type='button' class='b' onclick='removeFriend(this.parentNode, "+id+")'>解除好友</button>&nbsp&nbsp&nbsp&nbsp";
+     html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+   }parent.innerHTML=html;
+ }
+})
 }
 function removeFriend(parent, id) {
   $.post("/removeFriend", {id: id}, function(res){
@@ -189,11 +200,14 @@ function removeFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
-      parent.innerHTML=html;
-    }
-  })
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+       html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>";
+       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+     }else{html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+     html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+   }parent.innerHTML=html;
+ }
+})
 }
 function removeAddFriend(parent, id) {
   $.post("/removeAddFriend", {id: id}, function(res){
@@ -201,30 +215,33 @@ function removeAddFriend(parent, id) {
       showDialog("錯誤訊息",res.err);
     } else {
       var html="";
-      html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
-      html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
-      parent.innerHTML=html;
-    }
-  });
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+       html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>";
+       html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+     }else{html+="<button type='button' class='b' onclick='addFriend(this.parentNode, "+id+")'>加好友</button>&nbsp&nbsp&nbsp&nbsp";
+     html+="<button type='button' class='b' onclick='addBlack(this.parentNode, "+id+")'>封鎖</button><br>";
+   }parent.innerHTML=html;
+ }
+});
 }
 function profile_auth(route){   //去改按過權限按鈕之後的內容，只有前台
   var item = route.split("/")[0];
   var target = route.split("/")[1];
   $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
-   if (target=="self"){
-        $('#'+item+'_btn_text').text("自己才看得到");
-      }
-      else if(target=="friend"){
-        $('#'+item+'_btn_text').text("朋友才看得到");
-      }
-      else if(target=="all"){
-        $('#'+item+'_btn_text').text("人人都看得到");
-      }
-      else if(target=="doctor"){
-        $('#'+item+'_btn_text').text("醫生");
-      }
+  if (target=="self"){
+    $('#'+item+'_btn_text').text("自己才看得到");
+  }
+  else if(target=="friend"){
+    $('#'+item+'_btn_text').text("朋友才看得到");
+  }
+  else if(target=="all"){
+    $('#'+item+'_btn_text').text("人人都看得到");
+  }
+  else if(target=="doctor"){
+    $('#'+item+'_btn_text').text("醫生");
+  }
   $.get("/setProfileAuth/"+route,function(res){
-      showDialog("一般訊息",res);
+    showDialog("一般訊息",res);
   });
 }
 
@@ -233,20 +250,20 @@ function profile_auth_mobile(route){   //去改按過權限按鈕之後的內容
   var item = route.split("/")[0];
   var target = route.split("/")[1];
   $('#'+item+'_pic').attr("src","/images/img_timeline/"+target+".png")
-   if (target=="self"){
-        $('#'+item+'_btn_text').text("自己");
-      }
-      else if(target=="friend"){
-        $('#'+item+'_btn_text').text("朋友");
-      }
-      else if(target=="all"){
-        $('#'+item+'_btn_text').text("全部");
-      }
-      else if(target=="doctor"){
-        $('#'+item+'_btn_text').text("醫生");
-      }
+  if (target=="self"){
+    $('#'+item+'_btn_text').text("自己");
+  }
+  else if(target=="friend"){
+    $('#'+item+'_btn_text').text("朋友");
+  }
+  else if(target=="all"){
+    $('#'+item+'_btn_text').text("全部");
+  }
+  else if(target=="doctor"){
+    $('#'+item+'_btn_text').text("醫生");
+  }
   $.get("/setProfileAuth/"+route,function(res){
-      showDialog("一般訊息",res);
+    showDialog("一般訊息",res);
   });
 }
 
@@ -325,23 +342,23 @@ function delTimeline(id){
         className: "btn-primary",
         callback: function() {
           $.post( "/delTimeline", { id: id }, function(res){
-            
+
             if(res.timelineLength=='0'){
-                 $("#no_post_message").show();
-              }
-            $("#container_edit"+id).parent().remove();
-          }).error(function(res){
-            showDialog("錯誤訊息",res.responseJSON.err);
-          });
-        }
-      }, no: {
-        label: "取消",
-        className: "btn-primary",
-        callback: function() {
-        }
+             $("#no_post_message").show();
+           }
+           $("#container_edit"+id).parent().remove();
+         }).error(function(res){
+          showDialog("錯誤訊息",res.responseJSON.err);
+        });
+       }
+     }, no: {
+      label: "取消",
+      className: "btn-primary",
+      callback: function() {
       }
     }
-  });
+  }
+});
 }
 function Timeline_nice(id){
   $.post( "/TimelineNice", { id: id }, function(res){
@@ -392,17 +409,17 @@ function report() {
 
   switch(activeSource){
     case 'report_event':
-      var url='/TimelineReport';
-      var className = 'cancelReport_event';
+    var url='/TimelineReport';
+    var className = 'cancelReport_event';
     break;
     case 'report_comment':
-      var url='/TimelineResponseReport';
-      var className = 'cancelReport_comment';
+    var url='/TimelineResponseReport';
+    var className = 'cancelReport_comment';
     break;
     default:
-      showDialog("錯誤訊息","住手！",function(){
-        return;
-      });
+    showDialog("錯誤訊息","住手！",function(){
+      return;
+    });
     break;
   }
 
@@ -431,17 +448,17 @@ function cancelReport() {
         callback: function() {
           switch(activeSource){
             case 'cancelReport_event':
-              var url='/TimelineCancelReport';
-              var className = 'report_event';
+            var url='/TimelineCancelReport';
+            var className = 'report_event';
             break;
             case 'cancelReport_comment':
-              var url='/TimelineResponseCancelReport';
-              var className = 'report_comment';
+            var url='/TimelineResponseCancelReport';
+            var className = 'report_comment';
             break;
             default:
-              showDialog("錯誤訊息","住手！",function(){
-                return;
-              });
+            showDialog("錯誤訊息","住手！",function(){
+              return;
+            });
             break;
           }
           $.post(url, {id: activeId}, function(res){
