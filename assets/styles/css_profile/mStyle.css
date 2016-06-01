@@ -1,7 +1,7 @@
 #body{
 	font-family: "微軟正黑體";
 	font-size: 18px;
-	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 /*使 contenteditable 有 placeholder*/
