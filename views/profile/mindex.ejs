@@ -1,170 +1,102 @@
 <!DOCTYPE html>
-    <div class="container container-fluid" id="post-form-main">
-      <div id="timeline_profile" style="float: left;">
-        
-      <div id="mobile_upper_profile" class="hidden-desktop">
-          <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
-            <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px ;margin-left: 20px;"></img>
-          </span>
-          <span style="margin: 40px 0px 40px 45px; display: inline-block;">
-            <h3 id="m_alias"><%= aboutInfo.alias %></h3>
-            <% switch(aboutInfo.type){
+<div class="container container-fluid" id="post-form-main">
+  <div id="timeline_profile" style="float: left;">
+
+    <div id="mobile_upper_profile" class="hidden-desktop">
+      <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
+        <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px ;margin-left: 20px;"></img>
+      </span>
+      <%if(aboutInfo.type=="N"){%>
+      <span style="margin:20px 0px 40px 5px; display: inline-block;">
+        <%}else{%>
+        <span style="margin:0px 0px 40px 5px; display: inline-block;">
+          <%}%>
+          <h3 id="m_alias"><%= aboutInfo.alias %></h3>
+          <% switch(aboutInfo.type){
             case 'S': %>
-              <b id="m_type">社工師</b>
-              <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+            <b id="m_type">社工師</b>
+            <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text><br>
             <% break;
             case 'D': %>
-              <b id="m_type">醫生</b>
-              <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+            <b id="m_type">醫生</b>
+            <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text><br>
             <% break;
             case 'RN': %>
-              <b id="m_type">護理師</b>
-              <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
+            <b id="m_type">護理師</b>
+            <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text><br>
             <% break;} %>
-          </span>
-        
-          <!-- <ul class="tabs"> -->
-          <ul class="nav nav-pills" style="font-size: 19px;margin-left: 20px;">
-            <li class="active" style="width:40%; text-align:center;"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
-            <li style="width:55%; text-align:center;"><a href="#about" data-toggle="pill" style="padding: 8px 10px;"> <% if(traveler != "guest" && traveler == id){%>個人權限設定<%}else{%> 關於<%}%></a></li>
-            <% if(traveler != "guest" && traveler != id){ %>
-            
+            <span>
             <% if(traveler != "guest" && traveler != id){
-                switch(friendStatus){
+              switch(friendStatus){
                 case 'friend': %>
-                  <li style="width:40%; text-align:center;" onclick='removeFriend(this.parentNode, <%- id %>)'><a href="#about" data-toggle="pill" style="padding: 8px 10px;">解除好友</a></li>
-                  <li style="width:55%; text-align:center;" onclick='addBlack(this.parentNode, <%- id %>)'><a href="#about" data-toggle="pill" style="padding: 8px 10px;">封鎖</a></li>
+                <button type='button' class='b' onclick='removeFriend(this.parentNode, <%- id %>)'>解除好友</button>
+                <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
                 <% break;
                 case 'unconfirmed': %>
-                  <li style="width:40%; text-align:center;" class='setUpItem' onclick='confirmFriend(this.parentNode, <%- id %>)'>加好友</li>
-                  <li style="width:55%; text-align:center;" class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                <button type='button' class='b' onclick='confirmFriend(this.parentNode, <%- id %>)'>加為好友</button>
+                <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
                 <% break;
                 case 'sent': %>
-                  <li style="width:40%; text-align:center;" class='setUpItem' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回好友邀請</li>
-                  <li style="width:55%; text-align:center;" class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li>
+                <button type='button' class='b' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回邀請</button>
+                <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
                 <% break;
                 default: %>
-                  <li style="width:40%; text-align:center;" class='setUpItem' onclick='addFriend(this.parentNode, <%- id %>)'>加好友</li>
-                  <li style="width:55%; text-align:center;" class='setUpItem' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</li
+                <button type='button' class='b' onclick='addFriend(this.parentNode, <%- id %>)'>加為好友</button>
+                <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
                 <% break;}} %>
+              </span>
+            </span>
 
-            <% } %>
-          </ul>
-      </div>
-
-
-      <div id="upper_profile" class="hidden-phone hidden-tablet">
-         <div class="col-md-3" style="">
-            <img src="<%- aboutInfo.img %>" id="avatar" height="150px"></img>
-          </div>
-          <div class="col-md-9">
-            <div class="row">
-              <div class="col-md-12 ">
-                <div class="col-md-6">
-                  <h3 id="alias"><%= aboutInfo.alias %></h3>
-                  <% switch(aboutInfo.type){
-                  case 'S': %>
-                    <b id="type">社工師</b>
-                    <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
-                  <% break;
-                  case 'D': %>
-                    <b id="type">醫生</b>
-                    <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
-                  <% break;
-                  case 'RN': %>
-                    <b id="type">護理師</b>
-                    <text id="primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
-                  <% break;} %>
-                </div>
-                <br>
-
-
-                <% if(traveler != "guest" && traveler != id){
-                switch(friendStatus){
-                case 'friend': %>
-                  <div id="friend" class="col-md-6" style="text-align:right">
-                    <button type='button' class='b' onclick='removeFriend(this.parentNode, <%- id %>)'>解除好友</button>&nbsp&nbsp&nbsp&nbsp
-                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
-                  </div>
-                <% break;
-                case 'unconfirmed': %>
-                  <div id="friend" class="col-md-6" style="text-align:right">
-                    &nbsp&nbsp<br>
-                    <button type='button' class='b' onclick='confirmFriend(this.parentNode, <%- id %>)'>加好友</button>&nbsp&nbsp&nbsp&nbsp
-                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
-                  </div>
-                <% break;
-                case 'sent': %>
-                  <div id="friend" class="col-md-6" style="text-align:right">
-                    <button type='button' class='b' onclick='removeAddFriend(this.parentNode, <%- id %>)'>收回好友邀請</button>&nbsp&nbsp&nbsp&nbsp
-                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>
-                  </div>
-                <% break;
-                default: %>
-                  <div id="friend" class="col-md-6" style="text-align:right">
-                    <p id="status"></p>
-                    <button type='button' class='b' onclick='addFriend(this.parentNode, <%- id %>)'>加好友</button>&nbsp&nbsp&nbsp&nbsp
-                    <button type='button' class='b' onclick='addBlack(this.parentNode, <%- id %>)'>封鎖</button><br>&nbsp&nbsp&nbsp&nbsp
-                  </div>
-                <% break;}} %>
-              </div>
+              <ul class="nav nav-pills" style="font-size: 19px;margin-left: 20px;">
+                <li class="active" style="width:40%; text-align:center;"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
+                <li style="width:55%; text-align:center;"><a href="#about" data-toggle="pill" style="padding: 8px 10px;"> <% if(traveler != "guest" && traveler == id){%>個人權限設定<%}else{%> 關於<%}%></a></li>
+              </ul>
             </div>
-          </div>
-       
-     
-     
-          <!-- <ul class="tabs"> -->
-          <ul class="nav nav-pills" id="tabs" style="font-size:19px; margin-left: 20px; ">
-            <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
-            <li><a href="#about" data-toggle="pill">關於</a></li>
-          </ul>
-        </div>
 
-  <hr>
-        <div class="tab-content">
-          <div class="tab-pane active" id="timeline">
-            <% if(traveler != "guest"){ %>
-            <div class="row-fluid" id="timeline_factory">
-              <div><label id="postTimelineLabel" style="font-size:22px;"></label><br>
-                <% if(traveler == id){ %>
-                  <div contentEditable="true" class="s" id="timeline_post_content" placeholder="在想什麼呢？"></div>
-                <% }else{ %>
-                  <div contentEditable="true" class="s" id="timeline_post_content" placeholder="留個言吧！"></div>
+            <hr>
+            <div class="tab-content">
+              <div class="tab-pane active" id="timeline">
+                <% if(traveler != "guest"){ %>
+                <div class="row-fluid" id="timeline_factory">
+                  <div><label id="postTimelineLabel" style="font-size:22px;"></label><br>
+                    <% if(traveler == id){ %>
+                    <div contentEditable="true" class="s" id="timeline_post_content" placeholder="在想什麼呢？"></div>
+                    <% }else{ %>
+                    <div contentEditable="true" class="s" id="timeline_post_content" placeholder="留個言吧！"></div>
+                    <% } %>
+                    <div contentEditable="false" class="s" id="timeline_post_image">
+                      <div class="clear" id="comment_clear"></div>
+                    </div>
+                    <div class="container-fluid">
+                      <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出</button>
+                      <button value="插圖" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插圖</button>
+
+                      <div class="btn-group" style="float:right;" id="postTilmelineAuth">
+                        <button type="button" class="b" data-toggle="dropdown">
+                          <img src="/images/img_timeline/all.png" height="20px" width="20px" value="all">&nbsp;全部                  
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a><img src="/images/img_timeline/all.png" height="20px" value="all">&nbsp;全部</a></li>
+                          <li><a><img src="/images/img_timeline/friend.png" height="20px" width="20px" value="friend">&nbsp;好友</a></li>
+                          <li><a><img src="/images/img_timeline/self.png" height="20px" value="self">&nbsp; 自己</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <% } %>
-                <div contentEditable="false" class="s" id="timeline_post_image">
-                  <div class="clear" id="comment_clear"></div>
-                </div>
-
-                <div class="container-fluid">
-                  <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/>送出</button>
-                  <button value="插圖" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/>插圖</button>
-                  
-                  <div class="btn-group" style="float:right;" id="postTilmelineAuth">
-                    <button type="button" class="b" data-toggle="dropdown">
-                      <img src="/images/img_timeline/all.png" height="20px" width="20px" value="all">&nbsp;全部                  
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a><img src="/images/img_timeline/all.png" height="20px" value="all">&nbsp;全部</a></li>
-                      <li><a><img src="/images/img_timeline/friend.png" height="20px" width="20px" value="friend">&nbsp;好友</a></li>
-                      <li><a><img src="/images/img_timeline/self.png" height="20px" value="self">&nbsp; 自己</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <% } %>
 
 
 
 
 
 
-<% include /mtemplate.ejs %>
+                <% include /mtemplate.ejs %>
 
-<script type="text/javascript">
+                <script type="text/javascript">
   $( ".div_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
   $( ".div_r_edit_img > .show-image" ).append( "<input class=\"delete\" type=\"button\" value=\"X\" id=\"rmimg\">" ); // 加入叉叉
-</script>
+  </script>
 
 
 
@@ -175,14 +107,14 @@
 
 
 
-            <div class="row-center">
-                <b id="no_post_message">尚無任何留言，快來一起互動分享吧！</b>
-            </div>
-          </div>
+  <div class="row-center">
+    <b id="no_post_message">尚無任何留言，快來一起互動分享吧！</b>
+  </div>
+</div>
 
 
 
-          <div class="tab-pane" id="about">
+<div class="tab-pane" id="about">
             <!-- <div class="row">
               <div class="col-md-3 "><img src="" id="avatar" height="100"></div>
              
@@ -195,283 +127,283 @@
                 <% if(traveler == id){ %>
                 <div class="col-child-3">權限設定</div>
                 <% } %>
-            </div>  -->
+              </div>  -->
 
 
-            <% if(authInfo.name){ %>
-            <div id="name_row" class="row">
-              <div class="col-child-1">姓名：</div>
-              <div class="col-child-2" id="name"><%- aboutInfo.fname + aboutInfo.lname %></div>
-              <% if(traveler == id){ %>
-              <div class="col-child-3">
-                <div class="btn-group auth_btn" style="float:none;">
-                  <button type="button" class="n" data-toggle="dropdown">
-                    <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px">
-                    <text id="name_btn_text">
-                      <% switch(authData.name){
-                        case 'all': %>全部
-                      <% break;
-                        case 'friend': %>朋友
-                      <% break;
-                        case 'self': %>自己
-                      <% break;} %>
-                    </text>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                   <li><a class="profile_auth_mobile" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
-                    <li><a class="profile_auth_mobile" name="name/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
-                    <li><a class="profile_auth_mobile" name="name/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
-                  </ul>
-                </div>
-              </div>
-              <% } %>
-            </div>
-            <% }%>
-            <% if(authInfo.bday){ %>
-             <div id="bday_row" class="row">
-               <div class="col-child-1">年齡：</div>
-               <div class="col-child-2" id="bday"><%- Math.floor((new Date()-new Date(aboutInfo.birthday))/(86400000*365)).toString()+" 歲" %></div>
-               <% if(traveler == id){ %>
-               <div class="col-child-3">
-                <div class="btn-group auth_btn" style="float:none;">
-                  <button type="button" class="n" data-toggle="dropdown">
-                    <img id="bday_pic" src="/images/img_timeline/<%=authData.bday%>.png" height="20px" width="20px">
-                    <text id="bday_btn_text">
-                      <% switch(authData.bday){
-                        case 'all': %>
-                          全部
-                      <% break;
-                        case 'friend': %>
-                          朋友
-                      <% break;
-                        case 'self': %>
-                          自己
-                      <% break;} %>
-                    </text>                  
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                   <li><a class="profile_auth_mobile" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
-                    <li><a class="profile_auth_mobile" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
-                    <li><a class="profile_auth_mobile" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
-                  </ul>
-                </div>
-               </div>
-               <% } %>
-             </div>
-            <% }
-            if(authInfo.city){ %>
-             <div  id="city_row" class="row">
-               <div class="col-child-1">來自：</div>
-               <div class="col-child-2" id="city"><%- aboutInfo.addressCity %></div>
-               <% if(traveler == id){ %>
-               <div class="col-child-3">
-                 <div class="btn-group auth_btn" style="float:none;">
-                   <button type="button" class="n" data-toggle="dropdown">
-                     <img id="city_pic" src="/images/img_timeline/<%=authData.city%>.png" height="20px" width="20px">
-                     <text id="city_btn_text">
-                       <% switch(authData.city){
-                        case 'all': %>
-                          全部
-                      <% break;
-                        case 'friend': %>
-                          朋友
-                      <% break;
-                        case 'self': %>
-                          自己
-                      <% break;} %>
-                     </text>
-                   </button>
-                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                     <li><a class="profile_auth_mobile" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
-                     <li><a class="profile_auth_mobile" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
-                     <li><a class="profile_auth_mobile" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
-                   </ul>
+              <% if(authInfo.name){ %>
+              <div id="name_row" class="row">
+                <div class="col-child-1">姓名：</div>
+                <div class="col-child-2" id="name"><%- aboutInfo.fname + aboutInfo.lname %></div>
+                <% if(traveler == id){ %>
+                <div class="col-child-3">
+                  <div class="btn-group auth_btn" style="float:none;">
+                    <button type="button" class="n" data-toggle="dropdown">
+                      <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px">
+                      <text id="name_btn_text">
+                        <% switch(authData.name){
+                          case 'all': %>全部
+                          <% break;
+                          case 'friend': %>朋友
+                          <% break;
+                          case 'self': %>自己
+                          <% break;} %>
+                        </text>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                       <li><a class="profile_auth_mobile" name="name/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                       <li><a class="profile_auth_mobile" name="name/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                       <li><a class="profile_auth_mobile" name="name/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                     </ul>
+                   </div>
                  </div>
+                 <% } %>
                </div>
-               <% } %>
-             </div>
-            <% }
-            if(authInfo.gender){ %>
-             <div class="row" id="gender_row">
-               <div class="col-child-1">性別：</div>
-               <% if(aboutInfo.gender == "M"){ %>
-                <div class="col-child-2" id="gender">男性</div>
-               <% }else if(aboutInfo.gender == "F"){ %>
-                <div class="col-child-2"id="gender">女性</div>
-               <% }else{ %>
-                <div class="col-child-2"id="gender">其他</div>
-               <% } %>
-               <% if(traveler == id){ %>
-               <div class="col-child-3"> 
-                 <div class="btn-group auth_btn" style="float:none;">
+               <% }%>
+               <% if(authInfo.bday){ %>
+               <div id="bday_row" class="row">
+                 <div class="col-child-1">年齡：</div>
+                 <div class="col-child-2" id="bday"><%- Math.floor((new Date()-new Date(aboutInfo.birthday))/(86400000*365)).toString()+" 歲" %></div>
+                 <% if(traveler == id){ %>
+                 <div class="col-child-3">
+                  <div class="btn-group auth_btn" style="float:none;">
+                    <button type="button" class="n" data-toggle="dropdown">
+                      <img id="bday_pic" src="/images/img_timeline/<%=authData.bday%>.png" height="20px" width="20px">
+                      <text id="bday_btn_text">
+                        <% switch(authData.bday){
+                          case 'all': %>
+                          全部
+                          <% break;
+                          case 'friend': %>
+                          朋友
+                          <% break;
+                          case 'self': %>
+                          自己
+                          <% break;} %>
+                        </text>                  
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                       <li><a class="profile_auth_mobile" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                       <li><a class="profile_auth_mobile" name="bday/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                       <li><a class="profile_auth_mobile" name="bday/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                     </ul>
+                   </div>
+                 </div>
+                 <% } %>
+               </div>
+               <% }
+               if(authInfo.city){ %>
+               <div  id="city_row" class="row">
+                 <div class="col-child-1">來自：</div>
+                 <div class="col-child-2" id="city"><%- aboutInfo.addressCity %></div>
+                 <% if(traveler == id){ %>
+                 <div class="col-child-3">
+                   <div class="btn-group auth_btn" style="float:none;">
+                     <button type="button" class="n" data-toggle="dropdown">
+                       <img id="city_pic" src="/images/img_timeline/<%=authData.city%>.png" height="20px" width="20px">
+                       <text id="city_btn_text">
+                         <% switch(authData.city){
+                          case 'all': %>
+                          全部
+                          <% break;
+                          case 'friend': %>
+                          朋友
+                          <% break;
+                          case 'self': %>
+                          自己
+                          <% break;} %>
+                        </text>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                       <li><a class="profile_auth_mobile" name="city/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                       <li><a class="profile_auth_mobile" name="city/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                       <li><a class="profile_auth_mobile" name="city/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                     </ul>
+                   </div>
+                 </div>
+                 <% } %>
+               </div>
+               <% }
+               if(authInfo.gender){ %>
+               <div class="row" id="gender_row">
+                 <div class="col-child-1">性別：</div>
+                 <% if(aboutInfo.gender == "M"){ %>
+                 <div class="col-child-2" id="gender">男性</div>
+                 <% }else if(aboutInfo.gender == "F"){ %>
+                 <div class="col-child-2"id="gender">女性</div>
+                 <% }else{ %>
+                 <div class="col-child-2"id="gender">其他</div>
+                 <% } %>
+                 <% if(traveler == id){ %>
+                 <div class="col-child-3"> 
+                   <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
                       <img id="gender_pic" src="/images/img_timeline/<%=authData.gender%>.png" height="20px" width="20px">
                       <text id="gender_btn_text">
                         <% switch(authData.gender){
                           case 'all': %>
-                            全部
-                        <% break;
+                          全部
+                          <% break;
                           case 'friend': %>
-                            朋友
-                        <% break;
+                          朋友
+                          <% break;
                           case 'self': %>
-                            自己
-                        <% break;} %>
-                      </text>
-                    </button>
-                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                          自己
+                          <% break;} %>
+                        </text>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
                        <li><a class="profile_auth_mobile" name="gender/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
                        <li><a class="profile_auth_mobile" name="gender/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
                        <li><a class="profile_auth_mobile" name="gender/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
-                    </ul>
-                  </div>
+                     </ul>
+                   </div>
+                 </div>
+                 <% } %>
                </div>
-               <% } %>
-             </div>
-            <% }
-            if(authInfo.email){ %>
-             <div class="row" id="email_row">
-               <div class="col-child-1">E-mail：</div>
-               <div class="col-child-2" id="email"><%- aboutInfo.email %></div>
-               <% if(traveler == id){ %>
-               <div class="col-child-3">
-                 <div class="btn-group auth_btn" style="float:none;">
+               <% }
+               if(authInfo.email){ %>
+               <div class="row" id="email_row">
+                 <div class="col-child-1">E-mail：</div>
+                 <div class="col-child-2" id="email"><%- aboutInfo.email %></div>
+                 <% if(traveler == id){ %>
+                 <div class="col-child-3">
+                   <div class="btn-group auth_btn" style="float:none;">
                     <button type="button" class="n" data-toggle="dropdown">
                       <img id="email_pic" src="/images/img_timeline/<%=authData.email%>.png" height="20px" width="20px">
                       <text id="email_btn_text">
                         <% switch(authData.email){
                           case 'all': %>
-                            全部
-                        <% break;
+                          全部
+                          <% break;
                           case 'friend': %>
-                            朋友
-                        <% break;
+                          朋友
+                          <% break;
                           case 'self': %>
-                            自己
-                        <% break;} %>
-                      </text>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                      <li><a class="profile_auth_mobile" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
-                      <li><a class="profile_auth_mobile" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
-                      <li><a class="profile_auth_mobile" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
-                    </ul>
+                          自己
+                          <% break;} %>
+                        </text>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a class="profile_auth_mobile" name="email/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                        <li><a class="profile_auth_mobile" name="email/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                        <li><a class="profile_auth_mobile" name="email/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                      </ul>
+                    </div>
                   </div>
-               </div>
-               <% } %>
-             </div>
-            <% }
-            if(authInfo.phone){ %>
-             <div class="row" id="phone_row">
-               <div class="col-child-1">電話：</div>
-               <div class="col-child-2"id="phone"><%- aboutInfo.phone %></div>
-               <% if(traveler == id){ %>
-               <div class="col-child-3">
+                  <% } %>
+                </div>
+                <% }
+                if(authInfo.phone){ %>
+                <div class="row" id="phone_row">
+                 <div class="col-child-1">電話：</div>
+                 <div class="col-child-2"id="phone"><%- aboutInfo.phone %></div>
+                 <% if(traveler == id){ %>
+                 <div class="col-child-3">
                   <div class="btn-group auth_btn" style="float:none;">
                    <button type="button" class="n" data-toggle="dropdown" id="phone_btn">
                      <img id="phone_pic" src="/images/img_timeline/<%=authData.phone%>.png" height="20px" width="20px">
                      <text id="phone_btn_text">
-                        <% switch(authData.phone){
-                          case 'all': %>
-                            全部
+                      <% switch(authData.phone){
+                        case 'all': %>
+                        全部
                         <% break;
-                          case 'friend': %>
-                            朋友
+                        case 'friend': %>
+                        朋友
                         <% break;
-                          case 'self': %>
-                            自己
+                        case 'self': %>
+                        自己
                         <% break;} %>
-                     </text>
-                   </button>
-                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    <li><a class="profile_auth_mobile" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
-                    <li><a class="profile_auth_mobile" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
-                    <li><a class="profile_auth_mobile" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
-                   </ul>
-                 </div>
-               </div>
-               <% } %>
-             </div>
-            <% } %>
-
-         
-          </div>
-        </div>
-      </div>
-
-      <!-- Cropping modal -->
-      <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="avatar-modal-label">上傳相片（讀者點擊縮圖後即可看到原圖）</h4>
-
-                <div class="spinner">
-                  <div class="spinner-container container1">
-                    <div class="circle1"></div>
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="circle4"></div>
-                  </div>
-                  <div class="spinner-container container2">
-                    <div class="circle1"></div>
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="circle4"></div>
-                  </div>
-                  <div class="spinner-container container3">
-                    <div class="circle1"></div>
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="circle4"></div>
+                      </text>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                      <li><a class="profile_auth_mobile" name="phone/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;全部</a></li>
+                      <li><a class="profile_auth_mobile" name="phone/friend"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友</a></li>
+                      <li><a class="profile_auth_mobile" name="phone/self"><img src="/images/img_timeline/self.png" height="20px">&nbsp;自己</a></li>
+                    </ul>
                   </div>
                 </div>
+                <% } %>
+              </div>
+              <% } %>
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Cropping modal -->
+        <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form class="avatar-form" method="post" action="/imgupload_post" enctype="multipart/form-data">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" id="avatar-modal-label">上傳相片（讀者點擊縮圖後即可看到原圖）</h4>
+
+                  <div class="spinner">
+                    <div class="spinner-container container1">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container2">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container3">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                  </div>
                   
-              </div>
-              <div class="modal-body">
-                <div class="avatar-body">
-                  <!-- Upload image and data -->
-                  <div class="avatar-upload">
-                    <input class="avatar-src" name="avatar_src" type="hidden">
-                    <input class="avatar-data" name="avatar_data" type="hidden">
-                    <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
-                  </div>
-                  <!-- Crop and preview -->
-                  <div class="row">
-                    <div class="col-md-9">
-                      <div class="avatar-wrapper"></div>
+                </div>
+                <div class="modal-body">
+                  <div class="avatar-body">
+                    <!-- Upload image and data -->
+                    <div class="avatar-upload">
+                      <input class="avatar-src" name="avatar_src" type="hidden">
+                      <input class="avatar-data" name="avatar_data" type="hidden">
+                      <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
                     </div>
-                    <div class="col-md-3">
-                      <div class="avatar-preview preview-lg"></div>
-                      <div class="avatar-preview preview-md"></div>
-                      <div class="avatar-preview preview-sm"></div>
+                    <!-- Crop and preview -->
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="avatar-wrapper"></div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="avatar-preview preview-lg"></div>
+                        <div class="avatar-preview preview-md"></div>
+                        <div class="avatar-preview preview-sm"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>上傳</button>
-                <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
-              </div>
-            </form>
+                <div class="modal-footer">
+                  <button class="imgupload_btn" id="avatar-save" type="submit"><img src="/images/img_forum/check_icon.png"/>上傳</button>
+                  <button class="imgupload_btn" type="button" data-dismiss="modal"><img src="/images/img_forum/cancel_icon.png"/>關閉</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- image modal -->
-    <div class="modalBox"></div>
+      <!-- image modal -->
+      <div class="modalBox"></div>
 
-    <!-- 檢舉視窗 -->
-    <div id="reportDialog" title="協助我們瞭解發生的狀況">
-      <form id="reportForm">  
-        <label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br>
-        <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
-        <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
-        <label><input type="radio" name="reason" value="others"> 其它</label><br>
-        <input type="text" id="reasonInput" style="display: none;">
-      </form> 
+      <!-- 檢舉視窗 -->
+      <div id="reportDialog" title="協助我們瞭解發生的狀況">
+        <form id="reportForm">  
+          <label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br>
+          <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
+          <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
+          <label><input type="radio" name="reason" value="others"> 其它</label><br>
+          <input type="text" id="reasonInput" style="display: none;">
+        </form> 
+      </div>
     </div>
-  </div>
