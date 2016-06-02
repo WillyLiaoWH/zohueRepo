@@ -1,0 +1,40 @@
+
+
+ 
+    <div id="signup" class="col-md-3 col-sm-12 col-xs-12 " style="font-size:30px;">
+        <h1 style="font-size:30px;" >註冊</h1>
+        <form id="simpleSignUp">
+          暱稱<label id="checkAlias" class="check"></label><br>
+          <input type="text" name="UserAlias" class="s" id="UserAlias" placeholder="請輸入暱稱"><br>
+          
+          帳號<label id="checkAccount" class="check"></label><br>
+          <input type="text" name="UserAccount" class="s" id="UserAccount" placeholder="請輸入帳號"  onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();"><br>
+          密碼<label id="checkPwd" class="check"></label><br>
+          <input type="password" name="UserPwd" class="s" id="UserPwd" placeholder="請輸入密碼" onchange="checkPwd();" onkeyup="checkPwd();"><br>
+          確認密碼<label id="checkPwdConfirm" class="check"></label><br>
+          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm" placeholder="請再輸入確認密碼" onchange="checkPwd();" onkeyup="checkPwd();"><br>
+          
+          E-mail（建議填寫）<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" placeholder="請輸入您的電子郵件地址" class="s" id="UserEmail"><br>
+          <input type="hidden" name="FB_id" id="FB_id" value="1">
+          <input type="hidden" name="UserGender" id="UserGender">
+          <input type="hidden" name="fname" id="fname">
+          <input type="hidden" name="lname" id="lname">
+          身分<label id="checkType" class="check"></label><br>
+          <select name="UserType" class="s" id="UserType">
+            <option value='P'>病友</option>
+            <option value='F'>家屬</option>
+            <option value='N'>一般民眾</option>
+          </select><br>
+          <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
+        </form>
+        <br><br><br>  
+        <div id="e-newsletter" >
+          <h1 style="font-size:30px;">訂閱電子報</h1>
+          <div style="margin:15px;">
+            <input class="s" id="subscribeEmail" placeholder="請輸入您的電子郵件地址">
+            <button type="button" class="b" id="subscribe" onclick="subscribe();"><img src="/images/img_forum/check_icon.png"/>訂閱</button>
+          </div>
+        </div>
+        <br><br>
+    </div>
+

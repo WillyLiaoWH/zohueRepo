@@ -111,13 +111,13 @@
            <button type="button" class="n" data-toggle="dropdown" id="btn_timeline_auth<%= timelinesList[i].id %>">
             <% switch(timelinesList[i].auth){
               case 'all': %>
-                <img src="/images/img_timeline/all.png" height="20px" width="20px">&nbsp;全部
+                <img src="/images/img_timeline/all.png" height="20px" width="20px">&nbsp;每個人都看得到
             <% break;
               case 'friend': %>
-                <img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;朋友
+                <img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到
             <% break;
               case 'self': %>
-                <img src="/images/img_timeline/self.png" height="20px" width="20px">&nbsp;自己
+                <img src="/images/img_timeline/self.png" height="20px" width="20px">&nbsp;只有自己看得到
             <% break;} %>
            </button>
            <ul class="dropdown-menu" role="menu">
@@ -397,7 +397,7 @@
       <table style="width:100%;">
          <tbody>
             <tr>
-               <td style="width:50px;"><img src="<%= avatar %>" height="50" width="50"></td>
+               <td style="width:50px;"><img src="<%= travelerAvatar %>" height="50" width="50"></td>
                <td style="padding:5px">
                   <div id="timeline_comment_content<%= timelinesList[i].id %>" contenteditable="true" class="edit_content" placeholder="留言..."></div>
                </td>
