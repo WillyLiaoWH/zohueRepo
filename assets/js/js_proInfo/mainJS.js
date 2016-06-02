@@ -191,7 +191,7 @@ function setSearchResult(articleList){
 //$(".show-info").on("click",function(event){
   //event.preventDefault();
   $.post("/recordProInfo",{link:$(this).attr("title")})
-  if ($(window).width() < 768) {
+  if ($(window).width() < 768 && $(this).attr("title").substr($(this).attr("title").length-3).indexOf("pdf")>-1) {
     var ss = "<button id='btn_backProInfo' class='button'><span class='glyphicon glyphicon-chevron-left'>返回專業文章</span></button><iframe id='ifm_article' src='https://docs.google.com/gview?url="+$(this).attr("title")+"&embedded=true'></iframe>";
     $("#layout").css("opacity", "0.4");
     $(".mobile_modalBox").empty();
@@ -208,21 +208,22 @@ function setSearchResult(articleList){
     $(".mobile_modalBox").css("top", "0px");
     $(".mobile_modalBox").css("left", "0px");
   }else{
-    //$(".modalBox").css("display", "block");
-    //var ss = '<img src="'+$(this).attr("href")+'">';
-    var ss = "<embed src="+$(this).attr("title")+" height='100%' width='100%'></embed>";
-    //var ss =$(this).attr("href")
-    $( ".modalBox" ).empty();
-    $( ".modalBox" ).append(ss);
-    //$( ".modalBox" ).modalBox('open');
-    $(".modalBox").modalBox({
-      width:"90%",
-      height:"90%",
-      top:"5%",
-      left:"5%",
-      iconImg:'/images/img_forum/cancelBlack_icon.png',
-      iconClose:true,
-    });
+    window.open($(this).attr("title"));
+    // //$(".modalBox").css("display", "block");
+    // //var ss = '<img src="'+$(this).attr("href")+'">';
+    // var ss = "<embed src="+$(this).attr("title")+" height='100%' width='100%'></embed>";
+    // //var ss =$(this).attr("href")
+    // $( ".modalBox" ).empty();
+    // $( ".modalBox" ).append(ss);
+    // //$( ".modalBox" ).modalBox('open');
+    // $(".modalBox").modalBox({
+    //   width:"90%",
+    //   height:"90%",
+    //   top:"5%",
+    //   left:"5%",
+    //   iconImg:'/images/img_forum/cancelBlack_icon.png',
+    //   iconClose:true,
+    // });
   }
 });
 
