@@ -1,7 +1,7 @@
 #body{
 	/*background-image: url(../../../images/img_home/shl.png);*/
 	background-color:#F2F2F2;
-	font-family: "微軟正黑體";
+	font-family: "微軟正黑體" !important;
 	padding-right: 0px !important;
 	padding-left: 0px !important;
 }
