@@ -1,26 +1,24 @@
-
-     <div id="login" style="margin: 10%;">
-          <h1 style="font-size:30px;" >登入作夥</h1>
-          <hr>
-          <div>
-          帳號:&nbsp;<input type="text" name="LoginAccount" class="l" id="mLoginAccount" style="width:150px;"></div>
-          <div>
-          密碼:&nbsp;<input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="mLoginPwd"  style="width:150px;">
-          </div>
-          <div>
-            <button value="登入" id="login" onclick="Login()"style="float:right"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp;登入</button>
-            <button value="忘記密碼" id="forget" onclick="window.location.href='/forget'" style="float:right"><img src="/images/img_signup/forgetQ.png" style="width:26px; height:26px;" alt="">&nbsp;忘記密碼</button><br>
-          </div>
-          <hr>
-          <div style="text-align:center">
-          <h1 style="font-size:15px;" >或選擇</h1>
-          <button value="臉書登入" id="Fblogin" onclick="fbLogin()"><img src="/images/img_forum/facebook.png" >&nbsp;FB登入</button><br>
-        </div>
+ <!DOCTYPE=html>
+ <div id="login" style="margin: -20px 0px 10px 0px;">
+  <h2 >登入作夥</h2>
+    <hr>
+    <div>
+      <input type="text" name="LoginAccount" class="l" id="mLoginAccount" style="width:100%;" placeholder="輸入帳號"></div>
+      <div>
+        <input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="mLoginPwd"  placeholder="輸入密碼" style="width:100%">
+      </div>
+      <div>
+        <button value="登入" id="login" onclick="Login()"style="float:left; margin-left:0px !important;"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp;登入</button>
+        <button value="忘記密碼" id="forget" onclick="window.location.href='/forget'" style="float:left;"><img src="/images/img_signup/forgetQ.png" style="width:26px; height:26px;" alt="">&nbsp;忘記密碼</button><br>
+      </div>
+      <hr>
+      <div style="text-align:left; margin-left:0px;">
+        <h1 style="font-size:15px;margin-left:10px;" >或選擇</h1>
+        <button value="臉書登入" id="Fblogin" style="margin-left:0px !important;" onclick="fbLogin()"><img src="/images/img_forum/facebook.png">&nbsp;FB登入</button><br>
+      </div>
         <!--   <div class="FB col-md-2" >
             <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkLoginState()"></div>
 
           </div> -->
-
         </div>
- 
-    
+

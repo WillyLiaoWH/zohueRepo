@@ -1,3 +1,4 @@
+<!DOCTYPE=html>
 <div class="container-fluid col-md-8">
   <div class="" id="infoContent">
     <div class="row-fluid">
@@ -50,11 +51,14 @@
 
               </a></td>
 
-            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%= list[i].author %> </td>
+            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>
+              <%-list[i].author %> </td>
 
-            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%= list[i].date %> </td>
+            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>
+              <%- list[i].date %> </td>
 
-            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'><%= list[i].note %> </td>
+            <td style='width:0%; padding:10px 15px 10px 15px; text-align:center;'>
+              <%- list[i].note %> </td>
 
 
             <td style='text-align:center;'><a href='<%= list[i].articleURL %> '>前往討論</a></td>
