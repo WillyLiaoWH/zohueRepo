@@ -3,6 +3,30 @@
 	font-size: 15px;
 }
 
+.btn-group{
+	/*border-top: 1px solid transparent;*/
+	width: 100%;
+	margin-top:-20px; 
+	border-top: 1px solid #FFF;
+	margin-bottom: 20px;
+}
+.btn-top{
+	margin-left: 0px !important;
+	border-radius: 0px;
+	background-color: #3765A3;
+	color: #FFF;
+	font-size: 18px;
+	width: 33.3%;
+	height: 55px;
+	padding: 0px;
+}
+.btn-top-r{
+	border-left: 1px solid #FFF;
+}
+.btn-top-l{
+	border-right: 0px solid #FFF;
+}
+
 #submit{
 	/*width:100px;*/
 	float:right;

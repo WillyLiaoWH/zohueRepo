@@ -183,6 +183,39 @@ select, input[type="text"], input[type="password"]{
   	border: 1px solid rgba(0,0,0,0);
 }
 
+#mobile_signin{
+	margin-left:10px;
+	color:rgb(51, 122, 183);
+	margin-top: 1px;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 15px;
+	border-radius: 10px;
+	padding: 4px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+  	text-align: center;
+}
+#mobile_signup{
+	margin-left:10px;
+	color:rgb(51, 122, 183);
+	margin-top: 1px;
+	font-family: Helvetica, Arial, sans-serif, "微軟正黑體";
+  	font-weight:500;
+	font-size: 15px;
+	border-radius: 10px;
+	padding: 4px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  	border: 1px solid rgba(0,0,0,0);
+  	text-align: center;
+}
+
 #mobile_notification{
 	margin-left:10px;
 	color:rgb(51, 122, 183);
@@ -512,7 +545,9 @@ select, input[type="text"], input[type="password"]{
 	font-size:20px;
 	font-family: "微軟正黑體";
 	color:#816C5B;
+	margin-top: 10px;
 	display: none;
+	line-height: normal;
 }
 
 #mobile_logout{
@@ -534,7 +569,7 @@ select, input[type="text"], input[type="password"]{
 }
 
 #mobile_profile{
-	font-size:13px;
+	font-size:15px;
 	font-family: "微軟正黑體";
 	margin-top:10px;
 	color:#816C5B;

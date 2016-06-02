@@ -293,8 +293,10 @@ module.exports = {
                                     findAuthData(id, function(authData){
                                         findfriendStatus(id, function(friendStatus){
                                             var traveler = "guest"; // 沒登入者
+                                            var travelerAvatar="";
                                             if(typeof req.session.user !== 'undefined'){
                                                 traveler = req.session.user.id;
+                                                travelerAvatar=req.session.user.img;
                                             }
                                             Response4.timelinesPost.sort(function(a, b){
                                                 return new Date(b.updatedTime)-new Date(a.updatedTime);
@@ -304,6 +306,7 @@ module.exports = {
                                             var page="";
                                             var m;
                                             var css;
+                                            var cropCss;
                                             if (md.mobile()==null){
                                                 //PC
                                                 page="profile/index";
@@ -325,6 +328,7 @@ module.exports = {
                                                 ago: 0,
                                                 timelinesList: Response4.timelinesPost,
                                                 avatar: Response.img,
+                                                travelerAvatar:travelerAvatar,
                                                 alias: Response.alias,
                                                 id: Response.id,                // 塗鴉牆主人
                                                 traveler: traveler,             // 訪客
@@ -420,6 +424,7 @@ module.exports = {
             var content=req.param("timeline_post_content");
             var contentImg=req.param("timeline_post_image");
             var auth=req.param("timeline_post_auth");
+
             if(content.trim()=="" & contentImg.trim()==""){res.send(500,{err: "文章內容不能為空喔！" });}
             if(req.session.user.id == req.session.stay){
                 Timelines.create({author: author, content: content, contentImg: contentImg, responseNum: "0", clickNum: "0", auth: auth, follower: [req.session.user.id], updatedTime: new Date()}).exec(function(error, timeline) {
@@ -446,11 +451,21 @@ module.exports = {
                                 }
                             });
                         }
-                        res.render("profile/template", {
+                        var MobileDetect = require('mobile-detect'),
+                        md = new MobileDetect(req.headers['user-agent']);
+                        if (md.mobile()==null){
+                            page="profile/template";
+                        }else{
+                            page="profile/mtemplate"
+                        }
+
+                        res.render(page, {
                             timeDiff: 0,
                             ago: 0,
                             timelinesList: [timeline],
                             avatar: req.session.user.img,
+                            travelerAvatar: req.session.user.img,
+                            
                             alias: req.session.user.alias,
                             id: req.session.stay,                   // 塗鴉牆主人
                             traveler: req.session.user.id           // 訪客
@@ -466,11 +481,21 @@ module.exports = {
                             res.send(500,{err: "發生錯誤了Q_Q" });
                         } else {
                             Timelines.find(timeline.id).populate('owner', {select: ['img', 'alias', 'id']}).populate('author', {select: ['img', 'alias', 'id']}).exec(function(error, timeline2) {
-                                res.render("profile/template", {
+                                var MobileDetect = require('mobile-detect'),
+                                md = new MobileDetect(req.headers['user-agent']);
+                                if (md.mobile()==null){
+                                    page="profile/template";
+                                }else{
+                                    page="profile/mtemplate"
+                                }
+                                res.render(page, {
                                     timeDiff: 0,
                                     ago: 0,
                                     timelinesList: [timeline2[0]],
-                                    avatar: timeline2[0].author.img,
+                                    // avatar: timeline2[0].author.img,
+                                    avatar:req.session.user.img,
+                                    travelerAvatar: req.session.user.img,
+                            
                                     alias: timeline2[0].author.alias,
                                     id: timeline2[0].author.id,             // 塗鴉牆主人
                                     traveler: req.session.user.id           // 訪客

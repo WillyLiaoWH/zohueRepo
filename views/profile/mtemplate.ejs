@@ -114,9 +114,9 @@
             <% break;} %>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li><a class="auth_set_all" name="<%= timelinesList[i].id %>"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>
-            <li><a class="auth_set_friend" name="<%= timelinesList[i].id %>"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到</a></li>
-            <li><a class="auth_set_self" name="<%= timelinesList[i].id %>"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>
+            <li><a class="auth_set_all_mobile" name="<%= timelinesList[i].id %>"><img src="/images/img_timeline/all.png" height="20px">&nbsp;每個人都看得到</a></li>
+            <li><a class="auth_set_friend_mobile" name="<%= timelinesList[i].id %>"><img src="/images/img_timeline/friend.png" height="20px" width="20px">&nbsp;只有好友看得到</a></li>
+            <li><a class="auth_set_self_mobile" name="<%= timelinesList[i].id %>"><img src="/images/img_timeline/self.png" height="20px">&nbsp;只有自己看得到</a></li>
           </ul>
         </div>
         <% } %>
@@ -347,7 +347,7 @@
   <table style="width:100%;">
    <tbody>
     <tr>
-     <td style="width:50px;"><img src="<%= avatar %>" height="50" width="50"></td>
+     <td style="width:50px;"><img src="<%= travelerAvatar %>" height="50" width="50"></td>
      <td style="padding:5px">
       <div id="timeline_comment_content<%= timelinesList[i].id %>" contenteditable="true" class="edit_content" placeholder="留言..."></div>
     </td>

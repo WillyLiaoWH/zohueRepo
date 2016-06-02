@@ -330,7 +330,18 @@ module.exports.routes = {
       layout: 'mlayout'
     }
   },
-
+  '/mlogin':{
+    view:'mlogin',
+    locals: {
+      layout: 'mlayout'
+    }
+  },
+  '/mquickSignup':{
+    view:'mquickSignup',
+    locals: {
+      layout: 'mlayout'
+    }
+  },  
   '/': '/home'
 
 

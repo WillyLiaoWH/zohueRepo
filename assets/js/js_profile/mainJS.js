@@ -64,6 +64,19 @@ $(document).ready(function(){
     auth_set(this.name,"self","只有自己看得到");
   });
 
+  $(document).on("click",".auth_set_friend_mobile",function(e){
+    auth_set(this.name,"friend","好友");
+  });
+  $(document).on("click",".auth_set_doctor_mobile",function(e){
+    auth_set(this.name,"doctor","醫生");
+  });
+  $(document).on("click",".auth_set_all_mobile",function(e){
+    auth_set(this.name,"all","全部");
+  });
+  $(document).on("click",".auth_set_self_mobile",function(e){
+    auth_set(this.name,"self","自己");
+  });
+
   $(document).on("click",".profile_auth",function(e){
     profile_auth(this.name);
   });

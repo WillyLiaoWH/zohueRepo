@@ -125,10 +125,10 @@ input[type="text"], select {
 
 
 	#form-div {
-		background-color: floralwhite;
+		/*background-color: floralwhite;*/
 		padding:35px 35px 50px 35px;
 		width: 100%;
-		border: 1px solid #CCCCCC;
+		/*border: 1px solid #CCCCCC;*/
 		border-radius: 10px;
 		margin-top:15px;
 		margin-bottom:20px;

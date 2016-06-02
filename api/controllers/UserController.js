@@ -19,17 +19,20 @@ module.exports = {
                     var page="";
                     var m;
                     var css;
+                    var cropCss;
                     if (md.mobile()==null){
                         //PC
                         page="signup/index";
                         css="style_signup";
                         m="layout";
+                        cropCss="crop-avatar";
                     }
                     else{
                         //mobile
                         page="signup/mindex";
                         css="mStyle_signup";
                         m="mlayout";
+                        cropCss="mcrop-avatar";
                     }
                     res.view(page, {
                         layout:m,
@@ -42,7 +45,7 @@ module.exports = {
                             'js/js_signup/joinus.js'
                         ],
                         stylesheets: [
-                            'styles/css_post/crop-avatar.css',
+                            'styles/css_post/'+cropCss+'.css',,
                             'styles/css_post/cropper.min.css',
                             'styles/css_signup/'+css+'.css'
                         ]

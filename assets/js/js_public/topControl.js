@@ -412,7 +412,13 @@ function Login(){
       }else{
         if(res.isFullSignup==true){
           showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
-            location.replace(url);
+
+            if ($(window).width() <= 979){
+              window.location.assign("/home");
+            }else{
+                 location.replace(url);
+            }
+           
           });
         }else{
           bootbox.dialog({
@@ -430,7 +436,11 @@ function Login(){
                 label: "以後再說",
                 className: "btn-default",
                 callback: function() {
-                  location.replace(url);
+                      if ($(window).width() <= 979){
+                        window.location.assign("/home");
+                      }else{
+                           location.replace(url);
+                      }
                 }
               }
             }
@@ -446,7 +456,11 @@ function Login(){
 function loginWithAccount(account, password) {
   var posting = $.post( "/login", { account: account, password: password}, function(res){
     showDialog("一般訊息","首次登入成功，歡迎來作夥！",function(){
-      location.reload();
+      if ($(window).width() <= 979){
+         window.location.assign("/home");
+      }else{
+        location.reload();
+      }
     });
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
@@ -542,6 +556,17 @@ function notification() {
       window.location.assign("/notifications");
     
 }
+function login_mobile() {
+
+      window.location.assign("/mlogin");
+    
+}
+function quickSignup_mobile() {
+
+      window.location.assign("/mquickSignup");
+    
+}
+
 function checkNot() {
   /*$.get('/countNot',function(res){*/
   io.socket.get('/countNot',function(res){
