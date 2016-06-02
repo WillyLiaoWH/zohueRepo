@@ -301,8 +301,10 @@ module.exports = {
                                         findAuthData(id, function(authData){
                                             findfriendStatus(id, function(friendStatus){
                                                 var traveler = "guest"; // 沒登入者
+                                                var travelerAvatar="";
                                                 if(typeof req.session.user !== 'undefined'){
                                                     traveler = req.session.user.id;
+                                                    travelerAvatar=req.session.user.img;
                                                 }
                                                 Response4.timelinesPost.sort(function(a, b){
                                                     return new Date(b.updatedTime)-new Date(a.updatedTime);
@@ -312,6 +314,7 @@ module.exports = {
                                                 var page="";
                                                 var m;
                                                 var css;
+                                                var cropCss;
                                                 if (md.mobile()==null){
                                                     //PC
                                                     page="profile/index";
@@ -332,9 +335,10 @@ module.exports = {
                                                     timeDiff: 0,
                                                     ago: 0,
                                                     timelinesList: Response4.timelinesPost,
-                                                    avatar: Response.img,
-                                                    alias: Response.alias,
-                                                    id: Response.id,                // 塗鴉牆主人
+                                                    avatar: User.img,
+                                                    travelerAvatar:travelerAvatar,
+                                                    alias: User.alias,
+                                                    id: User.id,                // 塗鴉牆主人
                                                     traveler: traveler,             // 訪客
                                                     aboutInfo: aboutInfo,           // about 頁面主人的 user 資料
                                                     authInfo: authInfo,             // about 頁面每個項目的授權資料 (true/false)
