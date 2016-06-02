@@ -337,6 +337,7 @@ module.exports = {
                 user.phone = phone;
                 user.postalCode = postalCode;
                 user.addressCity = addressCity;
+                console.log(addressCity);
                 user.addressDistrict = addressDistrict;
                 user.address = address;
                 user.birthday = birthday;
@@ -1091,7 +1092,8 @@ module.exports = {
                             } else {
                                 users[users.length-1].age=-1;
                             }
-
+                            console.log("~~~"+users[users.length-1].addressCity);
+                            console.log(cityAuth);
                             switch(cityAuth) {
                                 case "all":
                                     break;
@@ -1126,6 +1128,7 @@ module.exports = {
                                   '8':"甲狀腺癌",
                                   '999':"其它"
                             };
+
                             if(users.length>0) {
                                 switch(type){
                                     case "D":
