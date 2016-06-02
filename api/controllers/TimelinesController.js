@@ -35,7 +35,7 @@ module.exports = {
             // notes: 未來可能需要用到.skip(10).limit(10)
             User.find({id: id}).populate('timelinesPost', { sort: 'updatedTime DESC' }).exec(function (err, user) {
                 if(user.length < 1 ){
-                    res.send(500,{err: "查無此人" });
+                    //res.send(500,{err: "查無此人" });
                 }else{
                     if(err) {
                         sails.log.error("ERR:", err);
@@ -174,15 +174,16 @@ module.exports = {
             else{
                 User.findById(id).exec(function(err, usr) {
                     if (err) {
-                        res.send(500, { err: "DB Error" });
+                        //res.send(500, { err: "DB Error" });
                     } else {
                         if (usr.length!=0) {
                             var ret= new Object();
-                            ret.alias = usr[0].alias; console.log(usr[0].alias);
+                            ret.alias = usr[0].alias;
+                            // console.log(usr[0].alias);
                             ret.img = usr[0].img;
                             ret.type = usr[0].type;
                             ret.primaryDisease = usr[0].primaryDisease==""?999:usr[0].primaryDisease;
-                            console.log(usr[0].primaryDisease=="");
+                            //console.log(usr[0].primaryDisease=="");
                             var authcheck=require("../services/authcheck.js");
                             authcheck.authCheck(id,req,function(auth){
                                 // console.log(auth)
@@ -215,7 +216,7 @@ module.exports = {
                                 cb(ret,auth);
                             });
                         } else {
-                            res.send(404, { err: "查無此帳號" });
+                            //res.send(404, { err: "查無此帳號" });
                         }
                     }
                 });
@@ -233,7 +234,7 @@ module.exports = {
                 if(err){
                     res.send(500,{err:"DB error"});
                 }
-                if(result.length==0){
+                else if(result.length==0){
                     str='{"name":"all","city":"all","email":"all","gender":"all","phone":"all","bday":"all"}';
                     // res.send(JSON.parse(str));
                     cb(JSON.parse(str));
@@ -257,7 +258,7 @@ module.exports = {
                 User.findById(my_id).exec(function(err,usr){
                     if (err){
                         console.log(err);
-                        res.send(500)
+                        //res.send(500)
                     }
                     friendlist = usr[0].friends;
                     unconfirmedFriends = usr[0].unconfirmedFriends;
@@ -282,80 +283,89 @@ module.exports = {
             }
         }
 
+
+
+
         checkLogin(function(){
             findId(function(id){
                 req.session.stay = id;
-                findTimelineResponse(id, function(Response){
-                    getNicer(Response, function(Response2){
-                        addAuth(id, Response2, function(Response3){
-                            findTimelineResponseAuthor(Response3, function(Response4){
-                                findAboutInfo(id, function(aboutInfo,authInfo){
-                                    findAuthData(id, function(authData){
-                                        findfriendStatus(id, function(friendStatus){
-                                            var traveler = "guest"; // 沒登入者
-                                            if(typeof req.session.user !== 'undefined'){
-                                                traveler = req.session.user.id;
-                                            }
-                                            Response4.timelinesPost.sort(function(a, b){
-                                                return new Date(b.updatedTime)-new Date(a.updatedTime);
-                                            });
-                                            var MobileDetect = require('mobile-detect'),
-                                            md = new MobileDetect(req.headers['user-agent']);
-                                            var page="";
-                                            var m;
-                                            var css;
-                                            if (md.mobile()==null){
-                                                //PC
-                                                page="profile/index";
-                                                css="style";
-                                                m="layout";
-                                                cropCss="crop-avatar";
-                                            }
-                                            else{
-                                                //mobile
-                                                page="profile/mindex";
-                                                css="mStyle";
-                                                m="mlayout";
-                                                cropCss="mcrop-avatar";
-                                            }
-                                            res.view(page, {
-                                                getTimeString : getTimeString,
-                                                layout: m,
-                                                timeDiff: 0,
-                                                ago: 0,
-                                                timelinesList: Response4.timelinesPost,
-                                                avatar: Response.img,
-                                                alias: Response.alias,
-                                                id: Response.id,                // 塗鴉牆主人
-                                                traveler: traveler,             // 訪客
-                                                aboutInfo: aboutInfo,           // about 頁面主人的 user 資料
-                                                authInfo: authInfo,             // about 頁面每個項目的授權資料 (true/false)
-                                                authData: authData,             // about 頁面每個項目的授權狀態 (all/friend/self)
-                                                friendStatus: friendStatus,
-                                                diseaseList: {'1':"鼻咽癌",'2':"鼻腔/副鼻竇癌",'3':"口腔癌",'4':"口咽癌",'5':"下咽癌",'6':"喉癌",'7':"唾液腺癌",'8':"甲狀腺癌",'999':"其它"},
-                                                scripts: [
-                                                    '/js/js_public/modalBox.js-master/modalBox-min.js',
-                                                    '/js/js_public/alertify.js',
-                                                    '/js/js_profile/mainJS.js',
-                                                    '/js/js_post/cropper.min.js',
-                                                    '/js/js_profile/crop-avatar.js'
-                                                ],
-                                                stylesheets: [
-                                                    // '/styles/css_profile/style.css',
-                                                    '/styles/css_profile/'+css+'.css',
-                                                    '/styles/css_post/'+cropCss+'.css',
-                                                    '/styles/css_post/cropper.min.css',
-                                                    '/styles/importer.css',
-                                                    '/styles/css_public/themes/alertify.core.css',
-                                                    '/styles/css_public/themes/alertify.default.css'
-                                                ]
+                findTimelineResponse(id, function(User){
+                    if (!User.isFullSignup){
+                        res.send("<script>alert('他還沒完整註冊喔!');history.go(-1)</script>");
+                    }
+                    else{
+                        getNicer(User, function(Response2){
+                            addAuth(id, Response2, function(Response3){
+                                findTimelineResponseAuthor(Response3, function(Response4){
+                                    findAboutInfo(id, function(aboutInfo,authInfo){
+                                        findAuthData(id, function(authData){
+                                            findfriendStatus(id, function(friendStatus){
+                                                var traveler = "guest"; // 沒登入者
+                                                if(typeof req.session.user !== 'undefined'){
+                                                    traveler = req.session.user.id;
+                                                }
+                                                Response4.timelinesPost.sort(function(a, b){
+                                                    return new Date(b.updatedTime)-new Date(a.updatedTime);
+                                                });
+                                                var MobileDetect = require('mobile-detect'),
+                                                md = new MobileDetect(req.headers['user-agent']);
+                                                var page="";
+                                                var m;
+                                                var css;
+                                                if (md.mobile()==null){
+                                                    //PC
+                                                    page="profile/index";
+                                                    css="style";
+                                                    m="layout";
+                                                    cropCss="crop-avatar";
+                                                }
+                                                else{
+                                                    //mobile
+                                                    page="profile/mindex";
+                                                    css="mStyle";
+                                                    m="mlayout";
+                                                    cropCss="mcrop-avatar";
+                                                }
+                                                res.view(page, {
+                                                    getTimeString : getTimeString,
+                                                    layout: m,
+                                                    timeDiff: 0,
+                                                    ago: 0,
+                                                    timelinesList: Response4.timelinesPost,
+                                                    avatar: Response.img,
+                                                    alias: Response.alias,
+                                                    id: Response.id,                // 塗鴉牆主人
+                                                    traveler: traveler,             // 訪客
+                                                    aboutInfo: aboutInfo,           // about 頁面主人的 user 資料
+                                                    authInfo: authInfo,             // about 頁面每個項目的授權資料 (true/false)
+                                                    authData: authData,             // about 頁面每個項目的授權狀態 (all/friend/self)
+                                                    friendStatus: friendStatus,
+                                                    diseaseList: {'1':"鼻咽癌",'2':"鼻腔/副鼻竇癌",'3':"口腔癌",'4':"口咽癌",'5':"下咽癌",'6':"喉癌",'7':"唾液腺癌",'8':"甲狀腺癌",'999':"其它"},
+                                                    scripts: [
+                                                        '/js/js_public/modalBox.js-master/modalBox-min.js',
+                                                        '/js/js_public/alertify.js',
+                                                        '/js/js_profile/mainJS.js',
+                                                        '/js/js_post/cropper.min.js',
+                                                        '/js/js_profile/crop-avatar.js'
+                                                    ],
+                                                    stylesheets: [
+                                                        // '/styles/css_profile/style.css',
+                                                        '/styles/css_profile/'+css+'.css',
+                                                        '/styles/css_post/'+cropCss+'.css',
+                                                        '/styles/css_post/cropper.min.css',
+                                                        '/styles/importer.css',
+                                                        '/styles/css_public/themes/alertify.core.css',
+                                                        '/styles/css_public/themes/alertify.default.css'
+                                                    ]
+                                                });
+                                                
                                             });
                                         });
                                     });
                                 });
                             });
                         });
-                    });
+                    }
                 });
             });
         });           

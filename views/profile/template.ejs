@@ -38,7 +38,15 @@
               timeDiff = (new Date()-new Date(timelinesList[i].updatedTime).getTime())/1000; // 計算幾天前
               if(timeDiff > 86400*7){
                 var date = new Date(timelinesList[i].updatedTime);
-                date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+                var min_space="";
+                var hour_space="";
+                if (date.getMinutes()<10){
+                  min_space="0";
+                }
+                if (date.getHours()<10){
+                  hour_space="0";
+                }
+                date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+hour_space+date.getHours()+":"+min_space+date.getMinutes();
                 ago = date
               }
               else if(timeDiff > 86400){
@@ -160,7 +168,15 @@
       timeDiff = (new Date()-new Date(timelinesList[i].response[j].updatedTime).getTime())/1000; // 計算幾天前
       if(timeDiff > 86400*7){
         var date = new Date(timelinesList[i].response[j].updatedTime);
-        date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        var min_space="";
+        var hour_space="";
+        if (date.getMinutes()<10){
+          min_space="0";
+        }
+        if (date.getHours()<10){
+         hour_space="0";
+        }
+        date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+hour_space+date.getHours()+":"+min_space+date.getMinutes();
         ago = date
 
       }
@@ -263,7 +279,15 @@
       timeDiff = (new Date()-new Date(timelinesList[i].response[j].updatedTime).getTime())/1000; // 計算幾天前
       if(timeDiff > 86400*7){
         var date = new Date(timelinesList[i].response[j].updatedTime);
-        date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        var min_space="";
+        var hour_space="";
+        if (date.getMinutes()<10){
+          min_space="0";
+        }
+        if (date.getHours()<10){
+         hour_space="0";
+        }
+        date=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+hour_space+date.getHours()+":"+min_space+date.getMinutes();
         ago = date
         
       }
