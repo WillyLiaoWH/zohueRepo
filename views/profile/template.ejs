@@ -198,7 +198,12 @@
          </div>
          <div id="content_timeline_res">
             <!--留言內容-->
-            <div class="event_text_r"><a class="name" href="?<%= timelinesList[i].response[j].author%>"><%= timelinesList[i].response[j].alias%></a> <%- timelinesList[i].response[j].comment.replace(/\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g, '<iframe width="100%" height="350px" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>') %></div>
+            <div class="event_text_r"><a class="name" href="?<%= timelinesList[i].response[j].author%>"><%= timelinesList[i].response[j].alias%></a></div>
+            <div style="padding-left:80px;">
+               <%- ago%>
+             </div>
+             <div style="margin: 15px;">
+             <%- timelinesList[i].response[j].comment.replace(/\bhttps:\/\/www\.youtube\.com\/watch\?v\=+(\w*)+\b/g, '<iframe width="100%" height="350px" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>') %></div>
             <% if(timelinesList[i].response[j].comment_image == ""){ %>
              <div class="row-fluid event_img" style="display:none;"></div>
             <% }else{ %>
@@ -225,9 +230,9 @@
               </button>                      
             </div>
             <% } %>
-            <!--留言時間、推薦、設定-->
+            <!--留言、推薦、設定-->
             <div class="row-fluid event_option btn-group">
-               <div style="min-height:30px;padding-top:10px;padding-right:10px;float:left;"><a target="_blank" title="<%- new Date(timelinesList[i].response[j].updatedTime).toTimeString() %>"><%- ago%></a></div>
+               
                <% if(traveler != "guest"){ %>
                <div class="btn-group" id="RniceArticle<%= timelinesList[i].response[j].id %>" style="float:none;">
                 <% if( JSON.stringify(timelinesList[i].response[j].rnicer).indexOf('{"id":'+traveler+'}') > 0){ %>
@@ -266,6 +271,8 @@
             </div>
          </div>
       </div>
+      
+      <hr>
     <% } %>
    </div>
 
@@ -377,6 +384,8 @@
             </div>
          </div>
       </div>
+
+    <hr>
     <% } %>
    </div>
 

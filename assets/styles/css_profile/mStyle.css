@@ -151,8 +151,11 @@
 .event_text_r{
 	color: #533828;
 	padding:15px;
+
+	padding-left:80px;
 	padding-bottom:0px;
 	word-wrap: break-word; /*自動換行*/
+	padding-top: 8px;
 }
 .event_text_r a, #event_author_name{
 	font-weight: 700;
@@ -249,7 +252,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 #content_timeline_res { /*右*/
     /*float:left;*/
     width:100%;
-    border-left: 65px solid transparent;
+    /*border-left: 5px solid transparent;*/
 }
 .event_comment{
 	border-top: 1px solid #CCCCCC;
