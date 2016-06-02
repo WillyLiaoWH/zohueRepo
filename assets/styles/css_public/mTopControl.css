@@ -361,7 +361,7 @@ select, input[type="text"], input[type="password"]{
 	display: block;
 	margin:20px 5px 20px 5px;
 	border-radius: 5px;
-	float:left;
+	/*float:left;*/
 	height: 550px;
 	color:#D26900;
 	font-family: "微軟正黑體";
