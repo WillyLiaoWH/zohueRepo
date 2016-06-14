@@ -24,7 +24,27 @@
       </div>
 
       <!-- Table -->
-      <table class="table table-hover" id="backend_homepagePicList"></table>
+      <table class="table table-hover" id="backend_homepagePicList">
+        <tr class='tableHead'>
+          <th>#</th>
+          <th style='width:20%'>圖片</th>
+          <th>標題</th>
+          <th>新增日期</th>
+          <th>刪除照片</th>
+        <tr>
+        <% for(i=0; i<homepagePics.length; i++){ %>
+          <%createdAt=new Date(homepagePics[i].createdAt).toLocaleString();%>
+        <tr>
+          <td><%=i+1%></td>
+          <td><img src='<%=homepagePics[i].pic%>' class='img-responsive'></img></td>
+          <td><%=homepagePics[i].title%></td>
+          <td><%=createdAt%></td>
+          <td><span class='glyphicon glyphicon-trash delSub' aria-hidden='true' onclick='deleteHomepagePic(<%=homepagePics[i].id%>);'></span></td>
+        </tr>
+
+        <% } %>
+
+      </table>
     </div>
   </div>
 
@@ -35,15 +55,15 @@
     <div class="panel-body">
       <div class="col-md-4">
         <label>推薦次數權重</label>
-        <input type="text" class="form-control" id="nicerNumWeight" placeholder="推薦次數權重">
+        <input type="text" class="form-control" id="nicerNumWeight" placeholder="<%=nicerNumWeight%>">
       </div>
       <div class="col-md-4">
         <label for="responseNumWeight">回應次數權重</label>
-        <input type="text" class="form-control" id="responseNumWeight" placeholder="回應次數權重">
+        <input type="text" class="form-control" id="responseNumWeight" placeholder="<%=responseNumWeight%>">
       </div>
       <div class="col-md-4">
         <label for="clickNumWeight">點閱次數權重</label>
-        <input type="text" class="form-control" id="clickNumWeight" placeholder="點閱次數權重">
+        <input type="text" class="form-control" id="clickNumWeight" placeholder="<%=clickNumWeight%>">
       </div>
 
       <div class="col-md-12" style="margin-top:5px;">

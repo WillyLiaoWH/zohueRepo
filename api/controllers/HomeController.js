@@ -103,11 +103,12 @@ upload_homepagePic: function (req, res) {
 		
 
 		if(typeof req.param("title")=='undefined'){
+			console.log("undefined title");
 			var title=time;
 		}else var title=req.param("title");
 
 		if(typeof req.file("avatar")=='undefined'){
-			res.redirect("/backendbackend");
+			res.redirect("/backendbackend/homepageManage");
 		}
 
 		console.log(title);
@@ -138,7 +139,7 @@ upload_homepagePic: function (req, res) {
 	  	if (err) return res.serverError(err);
 	  	else{
 	  		var string = encodeURIComponent('homepageManage');
-	  		res.redirect('/backendbackend?tab=' + string);
+	  		res.redirect('/backendbackend/' + string);
 	  	}
 	  });
 	},

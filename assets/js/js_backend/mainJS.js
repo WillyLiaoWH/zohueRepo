@@ -1029,7 +1029,8 @@ function deleteHomepagePic(id) {
         callback: function() {
           $.post( "/deleteHomepagePic", { id: id}, function(res){
             showDialog("一般訊息","刪除成功！",function(){
-              loadHomepage();
+              // loadHomepage();
+              window.location.replace("/backendbackend/homepageManage");
             });
           }).error(function(res){
             showDialog("錯誤訊息",res.responseJSON.err);

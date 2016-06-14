@@ -80,11 +80,24 @@ setPage: function(req, res) {
         });
 
     }
-    else if (page ==="homepageManage"){
-        res.view("backend/homepageManage",{
-
-            layout: "back_layout"
+    else if (page ==="homepageManage"){     
+        HomepagePic.find({}).exec(function(err, homepagePics) {
+            fs = require('fs');
+            fs.readFile('config/formula.json', 'utf8', function (err, data) {
+                if (err) return console.log(err);
+                // res.send(data);
+                var formulaData = JSON.parse(data);
+                res.view("backend/homepageManage",{
+                    nicerNumWeight:formulaData.nicerNumWeight,
+                    responseNumWeight:formulaData.responseNumWeight,
+                    clickNumWeight:formulaData.clickNumWeight,
+                    homepagePics: homepagePics,
+                    layout: "back_layout"
+                });
+            });
+                
         });
+        
 
     }
     else{
