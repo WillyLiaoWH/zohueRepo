@@ -10,10 +10,9 @@
     <%if(boardTitle.indexOf("總")>=0){%>
     <span style='cursor: pointer;' onclick="window.location.assign('/frontboard?tab=all&sort=createdAt&order=DESC&page=1&search=')">作夥病友論壇—<%=boardTitle%>
       <%}else{%>
-      <span style='cursor: pointer;' onclick="window.location.assign('/board-<%=board%>?tab=all&sort=lastResponseTime&order=DESC&page=<%=page%>&search=')">作夥病友論壇
+      作夥病友論壇
         <br><%=boardCateTitle%>—<%=boardTitle%>
         <%}%>
-      </span>
     </h2>
 
 
