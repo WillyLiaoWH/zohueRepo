@@ -93,7 +93,7 @@
 }
 
 /* PO 文區塊 */
-#timeline_post_block{
+.timeline_post_block{
 	background-color: white;
 	border-radius: 10px;
 	border: 1px solid #ccc;
@@ -240,7 +240,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	border-top: 1px solid #CCCCCC;
 }
 .edit_content{
-	border: 1px solid #ccc;
+	/*border: 1px solid #ccc;*/
 	word-break: break-all;
 	min-height: 50px;
 	color:#816C58;

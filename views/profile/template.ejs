@@ -408,7 +408,12 @@
             <tr>
                <td style="width:50px;"><img src="<%= travelerAvatar %>" height="50" width="50"></td>
                <td style="padding:5px">
+                <div class="timeline_post_block">
                   <div id="timeline_comment_content<%= timelinesList[i].id %>" contenteditable="true" class="edit_content" placeholder="留言..."></div>
+                  <div contenteditable="false" class="edit_content" id="timeline_comment_image<%= timelinesList[i].id %>"></div>
+                  <div class="clear" id="comment_clear"></div>
+                  
+                 </div> 
                </td>
             </tr>
             <tr>
