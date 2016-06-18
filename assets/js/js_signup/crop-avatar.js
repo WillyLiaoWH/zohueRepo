@@ -79,7 +79,9 @@
 
     initPreview: function () {
       var url = this.$avatar.attr("src");
-
+      if(url==undefined){
+          url="/images/img_public/default.jpg"
+      };
       this.$avatarPreview.empty().html('<img src="/' + url + '">');
     },
 
