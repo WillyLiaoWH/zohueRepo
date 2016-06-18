@@ -112,16 +112,21 @@
 }
 
 /* PO 文區塊 */
+.timeline_post_block{
+	background-color: white;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+}
 #timeline_post_content{
 	min-height: 100px;
 	height: auto;
 	background-color: white;
-	border: 1px solid #ccc;
+	/*border: 1px solid #ccc;*/
 }
 #timeline_post_image, div[id*="timeline_comment_image"]{ /* CSS id name prefix */
 	display: none;
 	height:100%;
-	margin-bottom:25px;
+	/*margin-bottom:25px;*/
 	float: left; /*把float設為left，且不要限制min-height，即可自動調整height*/
 }
 .clear { /* 解決 float+height auto 問題 */
@@ -268,7 +273,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	border-top: 1px solid #CCCCCC;
 }
 .edit_content{
-	border: 1px solid #ccc;
+	/*border: 1px solid #ccc;*/
 	word-break: break-all;
 	min-height: 50px;
 	color:#816C58;
@@ -277,7 +282,7 @@ div[id*="div_edit_img"], div[id*="div_r_edit_img"]{
 	line-height: 22px;
 	background-color: white;
 	padding: 8px 8px 8px 8px;
-	margin: 5px;
+	/*margin: 5px;*/
 	width:100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
