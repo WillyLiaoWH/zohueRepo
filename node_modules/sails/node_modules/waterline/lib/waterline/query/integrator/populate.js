@@ -4,7 +4,6 @@
 var _ = require('lodash');
 
 
-
 /**
  * populate()
  *
@@ -19,12 +18,11 @@ var _ = require('lodash');
  * @option {String} fkToChild       - the foreign key associating a row with the child table
  * @option {String} childPK         - the primary key of the child table
  *
- * @option [{String}] select        - attributes to keep
  * @option [{String}] childNamespace- attributes to keep
  *
  * @return {*Object} reference to `parentRows`
  */
-module.exports = function populate (options) {
+module.exports = function populate(options) {
 
   var parentRows = options.parentRows;
   var alias = options.alias;
@@ -35,14 +33,13 @@ module.exports = function populate (options) {
   var fkToChild = options.fkToChild;
   var fkToParent = parentPK;// At least for all use cases currently, `fkToParent` <=> `parentPK`
 
-  var select = options.select;
   var childNamespace = options.childNamespace || '';
 
-  return _.map(parentRows, function _insertJoinedResults (parentRow) {
+  return _.map(parentRows, function _insertJoinedResults(parentRow) {
 
     // Gather the subset of child rows associated with the current parent row
     var associatedChildRows = _.where(childRows,
-      //{ (parentPK): (parentRow[(parentPK)]) }, e.g. { id: 3 }
+      // { (parentPK): (parentRow[(parentPK)]) }, e.g. { id: 3 }
       _cons(fkToParent, parentRow[parentPK])
     );
 
@@ -52,7 +49,7 @@ module.exports = function populate (options) {
 
     // Stuff the sanitized associated child rows into the parent row.
     parentRow[alias] =
-    _.reduce(associatedChildRows, function (memo, childRow) {
+    _.reduce(associatedChildRows, function(memo, childRow) {
 
       // Ignore child rows without an appropriate foreign key
       // to an instance in the REAL child collection.
@@ -63,20 +60,31 @@ module.exports = function populate (options) {
       var childPKValue = childRow[fkToChild];
       childRow[childPK] = childPKValue;
 
-      // If specified, pick a subset of attributes from child row
-      if (select) {
-        childRow = _.pick(childRow, select);
-        var _origChildRow = childRow;
+      // Determine if we have any double nested attributes.
+      // These would come from m:m joins
+      var doubleNested = _.find(childRow, function(name, key) {
+        return _.startsWith(key, '..');
+      });
 
-        // Strip off childNamespace prefix
-        childRow = {};
-        var PREFIX_REGEXP = new RegExp('^' + childNamespace + '');
-        _.each(_origChildRow, function (attrValue, attrName) {
-          var unprefixedKey = attrName.replace(PREFIX_REGEXP, '');
-          // console.log('unprefixedKey',unprefixedKey,attrName);
-          childRow[unprefixedKey] = attrValue;
-        });
-      }
+      // Grab all the keys that start with a dot or double dot depending on
+      // the status of doubleNested
+      childRow = _.pick(childRow, function(name, key) {
+        if (doubleNested) {
+          return _.startsWith(key, '..');
+        } else {
+          return _.startsWith(key, '.');
+        }
+      });
+
+      var _origChildRow = childRow;
+
+      // Strip off childNamespace prefix
+      childRow = {};
+      var PREFIX_REGEXP = new RegExp('^' + childNamespace + '');
+      _.each(_origChildRow, function(attrValue, attrName) {
+        var unprefixedKey = attrName.replace(PREFIX_REGEXP, '');
+        childRow[unprefixedKey] = attrValue;
+      });
 
       // Build the set of rows to stuff into our parent row.
       memo.push(childRow);
@@ -86,8 +94,6 @@ module.exports = function populate (options) {
     return parentRow;
   });
 };
-
-
 
 
 /**
@@ -101,7 +107,3 @@ function _cons(key, value) {
   obj[key] = value;
   return obj;
 }
-
-
-
-

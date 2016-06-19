@@ -25,11 +25,15 @@ var Update = module.exports = function(collection, proto, mutatedModels, cb) {
   var attributes = collection.waterline.schema[collection.identity].attributes;
   var primaryKey = this.findPrimaryKey(attributes, values);
 
-  if(!primaryKey) return cb(new Error('No Primary Key set to update the record with! ' +
-    'Try setting an attribute as a primary key or include an ID property.'));
+  if (!primaryKey) {
+    return cb(new Error('No Primary Key set to update the record with! ' +
+      'Try setting an attribute as a primary key or include an ID property.'));
+  }
 
-  if(!values[primaryKey]) return cb(new Error('No Primary Key set to update the record with! ' +
-    'Primary Key must have a value, it can\'t be an optional value.'));
+  if (!values[primaryKey]) {
+    return cb(new Error('No Primary Key set to update the record with! ' +
+      'Primary Key must have a value, it can\'t be an optional value.'));
+  }
 
   // Build Search Criteria
   var criteria = {};
@@ -44,8 +48,17 @@ var Update = module.exports = function(collection, proto, mutatedModels, cb) {
   var keys = _.keys(_values);
   keys.forEach(function(key) {
 
+    // Nix any collection attributes so that they do not get sync'd during the update process.
+    // One reason for this is that the result set is not guaranteed to be complete,
+    // so the sync could exclude items.
+    if (attributes[key] && hop(attributes[key], 'collection') && attributes[key].collection) {
+
+      delete _values[key];
+      return;
+    }
+
     // If the key was changed, keep it expanded
-    if(mutatedModels.indexOf(key) !== -1) return;
+    if (mutatedModels.indexOf(key) !== -1) return;
 
     // Reduce it down to a foreign key value
     var vals = {};
@@ -53,7 +66,7 @@ var Update = module.exports = function(collection, proto, mutatedModels, cb) {
 
     // Delete and replace the value with a reduced version
     delete _values[key];
-    var reduced = nestedOperations.reduceAssociations(collection.identity, collection.waterline.schema, vals);
+    var reduced = nestedOperations.reduceAssociations.call(collection, collection.identity, collection.waterline.schema, vals);
     _values = _.merge(_values, reduced);
   });
 
@@ -73,15 +86,15 @@ var Update = module.exports = function(collection, proto, mutatedModels, cb) {
 Update.prototype.findPrimaryKey = function(attributes, values) {
   var primaryKey = null;
 
-  for(var attribute in attributes) {
-    if(hop(attributes[attribute], 'primaryKey') && attributes[attribute].primaryKey) {
+  for (var attribute in attributes) {
+    if (hop(attributes[attribute], 'primaryKey') && attributes[attribute].primaryKey) {
       primaryKey = attribute;
       break;
     }
   }
 
   // If no primary key check for an ID property
-  if(!primaryKey && hop(values, 'id')) primaryKey = 'id';
+  if (!primaryKey && hop(values, 'id')) primaryKey = 'id';
 
   return primaryKey;
 };

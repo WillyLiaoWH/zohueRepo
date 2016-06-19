@@ -375,6 +375,7 @@ function delTimeline(id){
 }
 function Timeline_nice(id){
   $.post( "/TimelineNice", { id: id }, function(res){
+    console.log(res.num);
     document.getElementById("niceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
     document.getElementById("niceArticle"+id).innerHTML = '<button value="收回" class="n" name="'+id+'" id="TimelineCancelNice"><img style="width:24px; height:24px;" src="/images/img_forum/good2_icon.png"/>&nbsp收回</button>';
     $(document).one("click","#TimelineNice",function(e){ // 把 listener 加回去
@@ -386,6 +387,7 @@ function Timeline_nice(id){
 }
 function Timeline_cancel_nice(id){
   $.post( "/TimelineCancelNice", { id: id }, function(res){
+    console.log(res.num);
     document.getElementById("niceCount"+id).innerHTML = "有 "+res.num+" 人推薦";
     document.getElementById("niceArticle"+id).innerHTML = '<button value="推薦" class="n" name="'+id+'" id="TimelineNice"><img src="/images/img_forum/good_icon.png">&nbsp;推薦</button>';
     $(document).one("click","#TimelineCancelNice",function(e){ // 把 listener 加回去
