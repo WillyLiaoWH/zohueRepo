@@ -6,10 +6,8 @@
  *
  * (Note that you can take advantage of Grunt-style wildcard/glob/splat expressions
  * for matching multiple files.)
- *
- * For more information see:
- *   https://github.com/balderdashy/sails-docs/blob/master/anatomy/myApp/tasks/pipeline.js.md
  */
+
 
 
 // CSS files to inject in order
@@ -24,7 +22,7 @@ var cssFilesToInject = [
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-
+  
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 
@@ -52,24 +50,15 @@ var templateFilesToInject = [
 
 
 
-
-
-
-
-// Default path for public folder (see documentation for more information)
-var tmpPath = '.tmp/public/';
-
 // Prefix relative paths to source files so they point to the proper locations
 // (i.e. where the other Grunt tasks spit them out, or in some cases, where
 // they reside in the first place)
-module.exports.cssFilesToInject = cssFilesToInject.map(function(cssPath) {
-  return require('path').join('.tmp/public/', cssPath);
+module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
+  return '.tmp/public/' + path;
 });
-module.exports.jsFilesToInject = jsFilesToInject.map(function(jsPath) {
-  return require('path').join('.tmp/public/', jsPath);
+module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
+  return '.tmp/public/' + path;
 });
-module.exports.templateFilesToInject = templateFilesToInject.map(function(tplPath) {
-  return require('path').join('assets/',tplPath);
+module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
+  return 'assets/' + path;
 });
-
-

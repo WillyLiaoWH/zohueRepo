@@ -8,10 +8,9 @@
 <div id="content">
   <h2 id="title" style="color:black; margin-left:0px;">
     <%if(boardTitle.indexOf("總")>=0){%>
-    <span style='cursor: pointer;' onclick="window.location.assign('/frontboard?tab=all&sort=createdAt&order=DESC&page=1&search=')">作夥病友論壇—<%=boardTitle%>
+      作夥病友論壇—<%=boardTitle%>
       <%}else{%>
-      作夥病友論壇
-        <br><%=boardCateTitle%>—<%=boardTitle%>
+      作夥病友論壇<br><%=boardCateTitle%>—<%=boardTitle%>
         <%}%>
     </h2>
 
