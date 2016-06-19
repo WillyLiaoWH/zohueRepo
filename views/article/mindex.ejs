@@ -257,12 +257,17 @@
           </div>
         </div>
         <% } %>
-        <div class="row-fluid" style="margin-top:20px;">
+        
+      </div>
+      <div class="row-fluid" style="margin-top:20px;">
           <div id="leaveMessage"><label style="font-size:22px;   margin-left: 10px;">留個言吧！</label><br>
             <!-- <textarea type="text" name="comment" class="s" id="comment"> </textarea> -->
 
-            <div contentEditable="true" name="comment" class="s" id="comment"></div>
-            <div contentEditable="false" name="comment_image" class="s" id="comment_image">
+            <div class="timeline_post_block">
+              <div contentEditable="true" name="comment" class="s" id="comment"></div>
+              <div contentEditable="false" name="comment_image" class="s" id="comment_image">
+              
+              </div>
               <div class="clear" id="comment_clear"></div>
             </div>
 
@@ -270,8 +275,6 @@
             <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/> 插入圖片</button>
           </div>
         </div>
-      </div>
-
       <!-- Cropping modal -->
       <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
