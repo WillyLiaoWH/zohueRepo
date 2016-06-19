@@ -3,7 +3,7 @@
  */
 
 var _ = require('lodash')
-	, switchback = require('node-switchback')
+	, switchback = require('switchback')
 	, mergeDefaults = require('merge-defaults')
 	, captains = require('captains-log');
 

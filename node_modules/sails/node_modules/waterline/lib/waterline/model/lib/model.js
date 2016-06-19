@@ -42,10 +42,10 @@ var Model = module.exports = function(attrs, options) {
   this._defineAssociations();
 
   // Attach attributes to the model instance
-  for(var key in attrs) {
+  for (var key in attrs) {
     this[key] = attrs[key];
 
-    if(this.associationsCache.hasOwnProperty(key)) {
+    if (this.associationsCache.hasOwnProperty(key)) {
       this.associationsCache[key] = _.cloneDeep(attrs[key]);
     }
   }
@@ -59,16 +59,20 @@ var Model = module.exports = function(attrs, options) {
    * @return {String} output when this model is util.inspect()ed
    * (usually with console.log())
    */
-  this.inspect = function() {
-    var output;
-    try {
-      output = self.toObject();
+
+  Object.defineProperty(this, 'inspect', {
+    enumerable: false,
+    configurable: false,
+    writable: false,
+    value: function() {
+      var output;
+      try {
+        output = self.toObject();
+      } catch (e) {}
+
+      return output ? util.inspect(output) : self;
     }
-    catch (e) {}
-
-    return output ? util.inspect(output) : self;
-  };
-
+  });
 
   return this;
 };

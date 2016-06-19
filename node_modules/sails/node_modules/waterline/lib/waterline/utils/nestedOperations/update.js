@@ -22,19 +22,16 @@ module.exports = function(parents, values, associations, cb) {
 
   var self = this;
 
-  // Cache parents
-  this.parents = parents;
-
   // Combine model and collection associations
   associations = associations.collections.concat(associations.models);
 
   // Build up .add and .update operations for each association
-  var operations = buildOperations.call(self, associations, values);
+  var operations = buildOperations.call(self, parents, associations, values);
 
   // Now that our operations are built, lets go through and run any updates.
   // Then for each parent, find all the current associations and remove them then add
   // all the new associations in using .add()
-  sync.call(self, operations, cb);
+  sync.call(self, parents, operations, cb);
 
 };
 
@@ -47,7 +44,7 @@ module.exports = function(parents, values, associations, cb) {
  * @return {Object}
  */
 
-function buildOperations(associations, values) {
+function buildOperations(parents, associations, values) {
 
   var self = this;
   var operations = {};
@@ -59,7 +56,7 @@ function buildOperations(associations, values) {
 
     // If values are being nulled out just return. This is used when removing foreign
     // keys on the parent model.
-    if(optValues === null) return;
+    if (optValues === null) return;
 
     // Pull out any association values that have primary keys, these will need to be updated. All
     // values can be added for each parent however.
@@ -69,8 +66,8 @@ function buildOperations(associations, values) {
     };
 
     // Normalize optValues to an array
-    if(!Array.isArray(optValues)) optValues = [optValues];
-    queueOperations.call(self, association, operations[association], optValues);
+    if (!Array.isArray(optValues)) optValues = [optValues];
+    queueOperations.call(self, parents, association, operations[association], optValues);
   });
 
   return operations;
@@ -87,28 +84,31 @@ function buildOperations(associations, values) {
  * @param {Array} values
  */
 
-function queueOperations(association, operation, values) {
+function queueOperations(parents, association, operation, values) {
 
   var self = this;
   var attribute = self.waterline.schema[self.identity].attributes[association];
   var modelName;
 
-  if(hop(attribute, 'collection')) modelName = attribute.collection;
-  if(hop(attribute, 'foreignKey')) modelName = attribute.references;
-  if(!modelName) return;
+  if (hop(attribute, 'collection')) modelName = attribute.collection;
+  if (hop(attribute, 'foreignKey')) modelName = attribute.references;
+  if (!modelName) return;
 
   var collection = self.waterline.collections[modelName];
-  var modelPk = collection.primaryKey;
+
+  // Grab the relation's PK
+  var relatedPK = _.find(collection.attributes, { primaryKey: true });
+  var relatedPkName = collection.primaryKey;
 
   // If this is a join table, we can just queue up operations on the parent
   // for this association.
-  if(collection.junctionTable) {
+  if (collection.junctionTable) {
 
     // For each parent, queue up any .add() operations
-    self.parents.forEach(function(parent) {
+    parents.forEach(function(parent) {
       values.forEach(function(val) {
-        if(!hop(parent, association)) return;
-        if(typeof parent[association].add !== 'function') return;
+        if (!hop(parent, association)) return;
+        if (typeof parent[association].add !== 'function') return;
         parent[association].add(val);
       });
     });
@@ -122,27 +122,36 @@ function queueOperations(association, operation, values) {
     // the schema attribute and check if this is a collection or model attribute. If it's
     // a collection attribute lets update the child record and if it's a model attribute,
     // update the child and set the parent's foreign key value to the new primary key.
-    if(!hop(val, modelPk)) {
+    //
+    // If a custom PK was used and it's not autoIncrementing add the record. This
+    // allows nested creates to work when custom PK's are used.
+    if (!relatedPK.autoIncrement && !collection.autoPK) {
+      operation.add.push(val);
+      return;
+    }
+
+    // If it's missing a PK queue up an add
+    if (!hop(val, relatedPkName)) {
       operation.add.push(val);
       return;
     }
 
     // Build up the criteria that will be used to update the child record
     var criteria = {};
-    criteria[modelPk] = val[modelPk];
+    criteria[relatedPkName] = val[relatedPkName];
 
     // Queue up the update operation
     operation.update.push({ model: modelName, criteria: criteria, values: val });
 
     // Check if the parents foreign key needs to be updated
-    if(!hop(attribute, 'foreignKey')) {
-      operation.add.push(val[modelPk]);
+    if (!hop(attribute, 'foreignKey')) {
+      operation.add.push(val[relatedPkName]);
       return;
     }
 
     // Set the new foreign key value for each parent
-    self.parents.forEach(function(parent) {
-      parent[association] = val[modelPk];
+    parents.forEach(function(parent) {
+      parent[association] = val[relatedPkName];
     });
 
   });
@@ -161,25 +170,25 @@ function queueOperations(association, operation, values) {
  * @param {Function} cb
  */
 
-function sync(operations, cb) {
+function sync(parents, operations, cb) {
   var self = this;
 
   async.auto({
 
     // Update any nested associations
     update: function(next) {
-      updateRunner.call(self, operations, next);
+      updateRunner.call(self, parents, operations, next);
     },
 
     // For each parent, unlink all the associations currently set
     unlink: ['update', function(next) {
-      unlinkRunner.call(self, operations, next);
+      unlinkRunner.call(self, parents, operations, next);
     }],
 
     // For each parent found, link any associations passed in by either creating
     // the new record or linking an existing record
     link: ['unlink', function(next) {
-      linkRunner.call(self, operations, next);
+      linkRunner.call(self, parents, operations, next);
     }]
 
   }, cb);
@@ -201,7 +210,7 @@ function sync(operations, cb) {
  * @param {Function} cb
  */
 
-function updateRunner(operations, cb) {
+function updateRunner(parents, operations, cb) {
 
   var self = this;
 
@@ -235,7 +244,7 @@ function updateRunner(operations, cb) {
  * @param {Function} cb
  */
 
-function unlinkRunner(operations, cb) {
+function unlinkRunner(parents, operations, cb) {
 
   var self = this;
 
@@ -245,7 +254,7 @@ function unlinkRunner(operations, cb) {
     removeOperationRunner.call(self, opts, next);
   }
 
-  async.each(this.parents, unlinkParentAssociations, cb);
+  async.each(parents, unlinkParentAssociations, cb);
 }
 
 
@@ -260,7 +269,7 @@ function unlinkRunner(operations, cb) {
  * @param {Function} cb
  */
 
-function linkRunner(operations, cb) {
+function linkRunner(parents, operations, cb) {
 
   var self = this;
 
@@ -276,7 +285,7 @@ function linkRunner(operations, cb) {
     // Create the new records and update the parent with the new foreign key
     // values that may have been set when creating child records.
     createNewRecords.call(self, parent, recordsToCreate, function(err) {
-      if(err) return next(err);
+      if (err) return next(err);
       updateParentRecord(parent, cb);
     });
   }
@@ -314,14 +323,14 @@ function linkRunner(operations, cb) {
     var pValues = parent.toObject();
 
     model.update(criteria, pValues).exec(function(err) {
-      if(err) return next(err);
+      if (err) return next(err);
 
       // Call .save() to persist any .add() functions that may have been used.
       parent.save(next);
     });
   }
 
-  async.each(this.parents, linkChildRecords, cb);
+  async.each(parents, linkChildRecords, cb);
 }
 
 
@@ -361,7 +370,7 @@ function buildParentRemoveOperations(parent, operations) {
     // If the foreign key is stored on the parent side, null it out
     /////////////////////////////////////////////////////////////////////////
 
-    if(hop(attribute, 'foreignKey')) {
+    if (hop(attribute, 'foreignKey')) {
 
       // Set search criteria where primary key is equal to the parents primary key
       searchCriteria[self.primaryKey] = parent[self.primaryKey];
@@ -394,7 +403,7 @@ function buildParentRemoveOperations(parent, operations) {
     // If the childAttribute stores the foreign key, find all children with the
     // foreignKey equal to the parent's primary key and null them out or in the case of
     // a `junctionTable` flag destroy them.
-    if(hop(childAttribute, 'foreignKey')) {
+    if (hop(childAttribute, 'foreignKey')) {
 
       // Store any information needed to perform the query. Set nullify to false if
       // a `junctionTable` property is found.
@@ -402,8 +411,9 @@ function buildParentRemoveOperations(parent, operations) {
         model: child.identity,
         criteria: searchCriteria,
         keyName: attribute.on,
-        nullify: hop(child, 'junctionTable') ? false : true
+        nullify: !hop(child, 'junctionTable')
       };
+
 
       opts.push(criteria);
       return;
@@ -433,7 +443,7 @@ function removeOperationRunner(operations, cb) {
 
     // If nullify is false, run a destroy method using the criteria to destroy
     // the join table records.
-    if(!operation.nullify) {
+    if (!operation.nullify) {
       self.waterline.collections[operation.model].destroy(operation.criteria).exec(next);
       return;
     }
@@ -473,7 +483,7 @@ function buildParentLinkOperations(parent, operations) {
   function determineOperation(association, opt) {
 
     // Check if the association has an `add` method, if so use it.
-    if(hop(parent[association], 'add')) {
+    if (hop(parent[association], 'add')) {
       parent[association].add(opt);
       return;
     }
@@ -513,7 +523,12 @@ function createNewRecords(parent, recordsToCreate, cb) {
   // For each association, run the createRecords function
   // in the model context.
   function mapAssociations(association, next) {
-    var model = self.waterline.collections[association];
+
+    // First, pull the model attribute's referenced (foreign) collection
+    var attribute = self.waterline.schema[self.identity].attributes[association];
+    var referencedCollection = attribute.references;
+
+    var model = self.waterline.collections[referencedCollection];
     var records = recordsToCreate[association];
 
     function createRunner(record, nextRecord) {
@@ -530,7 +545,7 @@ function createNewRecords(parent, recordsToCreate, cb) {
     var self = this;
 
     this.create(record).exec(function(err, val) {
-      if(err) return next(err);
+      if (err) return next(err);
       parent[association] = val[self.primaryKey];
       next();
     });

@@ -31,8 +31,8 @@ exports.objMap = function objMap(input, mapper, context) {
  */
 
 exports.pluralize = function pluralize(collection, application) {
-  if(Array.isArray(collection)) return _.map(collection, application);
-  if(_.isObject(collection)) return application(collection);
+  if (Array.isArray(collection)) return _.map(collection, application);
+  if (_.isObject(collection)) return application(collection);
   return collection;
 };
 
@@ -66,7 +66,7 @@ exports.object = {};
 
 var hop = Object.prototype.hasOwnProperty;
 exports.object.hasOwnProperty = function(obj, prop) {
-  if (obj === null) return false;
+  if (obj === null || obj === undefined) return false;
   return hop.call(obj, prop);
 };
 
@@ -82,8 +82,8 @@ exports.object.hasOwnProperty = function(obj, prop) {
 exports.matchMongoId = function matchMongoId(id) {
   // id must be truthy- and either BE a string, or be an object
   // with a toString method.
-  if( !id ||
-   ! (_.isString(id) || (_.isObject(id) || _.isFunction(id.toString)))
+  if (!id ||
+   !(_.isString(id) || (_.isObject(id) || _.isFunction(id.toString)))
   ) return false;
-  else return id.toString().match(/^[a-fA-F0-9]{24}$/) ? true : false;
+  else return /^[a-fA-F0-9]{24}$/.test(id.toString());
 };

@@ -38,11 +38,11 @@ var Define = module.exports = function(context, proto) {
     value: {}
   });
 
-  var attributes = _.cloneDeep(context._attributes) || {};
+  var attributes = context._attributes || {};
   var collections = this.collectionKeys(attributes);
   var models = this.modelKeys(attributes);
 
-  if(collections.length === 0 && models.length === 0) return;
+  if (collections.length === 0 && models.length === 0) return;
 
   // Create an Association getter and setter for each collection
   collections.forEach(function(collection) {
@@ -67,9 +67,9 @@ Define.prototype.collectionKeys = function(attributes) {
   var collections = [];
 
   // Find any collection keys
-  for(var attribute in attributes) {
-    if(!hasOwnProperty(attributes[attribute], 'collection')) continue;
-    collections.push(attribute);
+  for (var attribute in attributes) {
+    if (!hasOwnProperty(attributes[attribute], 'collection')) continue;
+    collections.push(_.cloneDeep(attribute));
   }
 
   return collections;
@@ -87,9 +87,9 @@ Define.prototype.modelKeys = function(attributes) {
   var models = [];
 
   // Find any collection keys
-  for(var attribute in attributes) {
-    if(!hasOwnProperty(attributes[attribute], 'model')) continue;
-    models.push({ key: attribute, val: attributes[attribute] });
+  for (var attribute in attributes) {
+    if (!hasOwnProperty(attributes[attribute], 'model')) continue;
+    models.push({ key: _.cloneDeep(attribute), val: _.cloneDeep(attributes[attribute]) });
   }
 
   return models;
