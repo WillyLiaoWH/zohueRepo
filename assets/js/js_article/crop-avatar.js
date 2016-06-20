@@ -331,6 +331,7 @@ function insertHtmlAtCursor(html) {
       this.$avatarData.val("");
       this.$avatar.attr("src", this.url);
       this.stopCropper();
+      this.$avatarPreview.empty().html('<img src="/images/img_public/default.jpg">');
       this.$avatarModal.modal("hide");
     },
 

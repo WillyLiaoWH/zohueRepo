@@ -151,7 +151,7 @@ editCommentTimeline: function(req, res){
             var nicer = req.session.user.id;
             TimelineResponse.findOne(TimelineId).populate('nicer').exec(function (err, timeline) {
                 timeline.nicer.remove(nicer);
-                timeline.save(function (err) { res.send({num:timeline.nicer.length}); });
+                timeline.save(function (err) { res.send({num:timeline.nicer.length-1}); });
             });
         }
     }
