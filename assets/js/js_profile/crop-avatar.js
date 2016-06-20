@@ -351,7 +351,7 @@ function insertHtmlAtCursor(html) {
     cropDone: function () {
       this.$avatarSrc.val("");
       this.$avatarData.val("");
-      this.$avatar.attr("src", this.url);
+      this.$avatar.attr("src", "/images/img_public/default.jpg");
       this.stopCropper();
       this.$avatarPreview.empty().html('<img src="/images/img_public/default.jpg">');
       this.$avatarModal.modal("hide");
