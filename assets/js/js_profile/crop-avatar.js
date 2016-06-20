@@ -173,6 +173,8 @@ function insertHtmlAtCursor(html) {
     click: function () {
       //if(check_out == 1){
         this.$avatarModal.modal("show");
+        $(".cropper-container").children("img").attr("src","/images/img_public/default.jpg")
+        $("span.cropper-viewer").children("img").attr("src","/images/img_public/default.jpg")
         insert_ele = "timeline_post_image";
         //check_out = 0;
       //}

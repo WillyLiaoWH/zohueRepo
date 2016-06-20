@@ -152,6 +152,8 @@ function insertHtmlAtCursor(html) {
     click: function () {
       //if(check_out == 1){
         this.$avatarModal.modal("show");
+        $(".cropper-container").children("img").attr("src","/images/img_public/default.jpg")
+        $("span.cropper-viewer").children("img").attr("src","/images/img_public/default.jpg")
         //check_out = 0;
       //}
     },
@@ -330,6 +332,7 @@ function insertHtmlAtCursor(html) {
       this.$avatarSrc.val("");
       this.$avatarData.val("");
       this.$avatar.attr("src", "/images/img_public/default.jpg");
+     $(".cropper-container").children("img").attr("src","/images/img_public/default.jpg")
       this.stopCropper();
       this.$avatarPreview.empty().html('<img src="/images/img_public/default.jpg">');
       this.$avatarModal.modal("hide");
