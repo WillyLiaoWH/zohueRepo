@@ -186,10 +186,7 @@
                       
                         <button style='margin-right:10px; margin-left: -10px' value='收回' class='n ' onclick='notNiceResponse(<%= responseList[i].id %>);'>
                           <img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回
-                        </button>
-                        
-                         
-                            有&nbsp
+                        </button>有
                            <label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
                          </div>
 
@@ -212,10 +209,7 @@
                       <div id='response<%= responseList[i].id%>'  class="col-md-4">
                         <button style='margin-right:10px;margin-left: -10px' value='推薦' class='n' onclick='niceResponse(<%= responseList[i].id %>);'>
                           <img src='/images/img_forum/good_icon.png'/>&nbsp推薦
-                        </button>
-                         
-                      
-                        有&nbsp
+                        </button>有
                         <label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
                       </div>
                       <%if (loginid==responseList[i].author.id){  %>
@@ -235,9 +229,7 @@
                   <div>
                     <div class="comment_row">
                       <div id='response<%= responseList[i].id %>'>
-                        
-                         
-                        有&nbsp<label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
+                       有<label id=N_res_nice<%= responseList[i].id %>><%= responseNiceCount[i] %></label>&nbsp人推薦
                       </div>
                     </div>
                   </div>
