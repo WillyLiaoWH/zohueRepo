@@ -51,7 +51,7 @@ $(document).ready(function(){
         $("#boardCategory").val("allCategory");//boardCategory沒顯示出
         $("#board").empty();
         $("#board").append("<option>選擇全部</option>")
-        getart(loadForumList, 2);
+        //getart(loadForumList, 2);
 
         $("#boardCategory").change(function(){
           var category = $("#boardCategory").val();
@@ -94,6 +94,7 @@ $(document).ready(function(){
   $(document).on("click","#functionList li",function(e){
     $("#backend_content .mainContent").removeClass("in"); // 收起已經打開的其他content
     $("#editArticle").css("display","none");
+    loadUserList();
   });
 
   $(document).on("click", "#enlSend", function(e){

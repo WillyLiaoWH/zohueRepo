@@ -43,23 +43,22 @@
 setPage: function(req, res) {
     var page = req.param("page");
     if (page==="userManage"){
-
         res.view("backend/userManage",{
-
-            layout: "back_layout"
+            layout: "back_layout",
+            action: "loadUserList()"
         });
     }
     else if (page === "forumManage"){
         res.view("backend/forumManage",{
-
-            layout: "back_layout"
+            layout: "back_layout",
+            action:"loadForumList()"
         });
 
     }
     else if (page === "subscriberManage"){
         res.view("backend/subscriberManage",{
-
-            layout: "back_layout"
+            layout: "back_layout",
+            action:"loadsubscriberList()"
         });
 
     }
@@ -68,15 +67,15 @@ setPage: function(req, res) {
     }
     else if (page ==="record"){
         res.view("backend/record",{
-
-            layout: "back_layout"
+            layout: "back_layout",
+            action:"loadRecord(1)"
         });
 
     }
     else if (page ==="proInfo"){
         res.view("backend/proInfo",{
-
-            layout: "back_layout"
+            layout: "back_layout",
+            action:"loadProInfo()"
         });
 
     }
@@ -92,7 +91,8 @@ setPage: function(req, res) {
                     responseNumWeight:formulaData.responseNumWeight,
                     clickNumWeight:formulaData.clickNumWeight,
                     homepagePics: homepagePics,
-                    layout: "back_layout"
+                    layout: "back_layout",
+                    action:"loadHomepage()"
                 });
             });
                 
@@ -102,8 +102,8 @@ setPage: function(req, res) {
     }
     else{
         res.view("backend/default",{
-
-            layout: "back_layout"
+            layout: "back_layout",
+            action:""
         });
     }
     
