@@ -525,6 +525,7 @@ setBoardFrontPage: function(req, res){
     },
     
     setArticlePage: function(req, res){
+        console.log("test");
         response=[];
         responseNice=[];
         responseNiceCount=[];

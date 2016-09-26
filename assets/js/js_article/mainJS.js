@@ -526,7 +526,7 @@ function niceResponse(response_id) {
     var N_res_nicer = document.getElementById(N_res).innerHTML;
     N_res_nicer = parseInt(N_res_nicer)+1;
 
-    document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;margin-left: -10px' value='收回' class='n' onclick='notNiceResponse("+response_id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
+    document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;margin-left: -10px' value='收回' class='n' onclick='notNiceResponse("+response_id+");'><img style='width:24px; height:24px;' src='/images/img_forum/good2_icon.png'/>&nbsp收回</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label> 人推薦";
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
   });
@@ -537,7 +537,7 @@ function notNiceResponse(response_id) {
     var N_res = "N_res_nice"+response_id;
     var N_res_nicer = document.getElementById(N_res).innerHTML;
     N_res_nicer = parseInt(N_res_nicer)-1;
-    document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;margin-left: -10px' value='推薦' class='n' onclick='niceResponse("+response_id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
+    document.getElementById("response"+response_id).innerHTML = "<button style='margin-right:10px;margin-left: -10px' value='推薦' class='n' onclick='niceResponse("+response_id+");'><img src='/images/img_forum/good_icon.png'/>&nbsp推薦</button>有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label> 人推薦";
    // document.getElementById("responseNice"+response_id).innerHTML ="<有&nbsp<label id=N_res_nice"+response_id+">"+N_res_nicer+"</label>&nbsp人推薦";
   }).error(function(res){
     showDialog("錯誤訊息",res.responseJSON.err);
