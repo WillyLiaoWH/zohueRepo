@@ -29,11 +29,29 @@ app.controller('announcementCtrl', function($scope, $http) {
 
 $(document).ready(function(){
   
-  $(document).on("click","#img_1",function(e){
+  $(document).on("click",".img-responsive",function(e){
     $("#myModal").css( "display", "block" );
+
+    $.ajax({
+            url: 'home/test',
+            type: 'POST',
+            cache: false, 
+            success: function(data){
+               alert(data);
+             }
+             ,error: function(jqXHR, textStatus, err){
+                  alert('text status '+textStatus+', err '+err);
+             } 
+          });
 
     // modal.style.display = "block";
   });
+
+  $(document).on("click",window,function(e){
+    $("#myModal").css( "display", "none" );
+});
+
+
 });
 
 

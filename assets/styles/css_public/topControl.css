@@ -22,6 +22,8 @@ select, input[type="text"], input[type="password"]{
 	color:#533828;
 }
 
+
+
 #label_complete_signup{
 	color:#EA7500;
 	font-size: 28px;
@@ -314,6 +316,8 @@ select, input[type="text"], input[type="password"]{
 	font-size:35px;
 }
 
+
+
 #signup{
 	/*margin:0px 0px 20px 5px;*/
 	border-radius: 5px;
@@ -324,6 +328,7 @@ select, input[type="text"], input[type="password"]{
 	color:#D26900;
 	font-family: "微軟正黑體";
 	font-size:30px;
+	float:right;
 }
 
 #simpleSignUp{

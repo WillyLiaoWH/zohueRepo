@@ -61,9 +61,6 @@ body {
 	width: 100%;
 }
 
-#myCarousel{
-	max-width: 90%;
-}
 
 @media screen and (max-width: 1023px) {
 	#content {
