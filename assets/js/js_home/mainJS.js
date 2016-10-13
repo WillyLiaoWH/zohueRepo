@@ -56,7 +56,7 @@ app.controller('announcementCtrl', function($scope, $http) {
 $(document).ready(function(){
   
   $(document).on("click",".img-responsive",function(e){
-    $("#myModal").css( "display", "block " );
+    $("#myModal").css("display","block");
   
     $.ajax({
             url: 'home/test',
@@ -73,7 +73,7 @@ $(document).ready(function(){
     // modal.style.display = "block";
 
   $(document).on("click",window,function(e){
-    $("#myModal").css( "display", "none" );
+    $("#myModal").css("display", "none");
   });
 
  });
