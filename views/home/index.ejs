@@ -22,14 +22,15 @@
           <!-- The Modal -->
           <div id="myModal" class="modal">
 
-          <!-- The Close Button -->
-          <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+            <!-- The Close Button -->
+            <!-- <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span> -->
 
-          <!-- Modal Content (The Image) -->
-          <img class="modal-content" id="above_<%=i%>" src='<%=homepagePics[i].pic%>'>
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="above_<%=i%>" src='<%=homepagePics[i].pic%>'>
 
-          <!-- Modal Caption (Image Text) -->
-          <div id="caption"></div>
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+          
           </div>
           
 
@@ -37,9 +38,20 @@
           <div class='item'>
             <img id='img_<%=i%>' src='<%=homepagePics[i].pic%>' class='img-responsive'  style='min-height: 330px; max-height:340px; max-width:540px;' align='middle'></img>
           </div>
-
           
+          <div id="myModal_2" class="modal">
 
+            <!-- The Close Button -->
+            <!-- <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span> -->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="above_<%=i%>" src='<%=homepagePics[i].pic%>'>
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+          
+          </div>
+          
           </div>
 
         <% } %>

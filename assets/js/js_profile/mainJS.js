@@ -283,6 +283,7 @@ function profile_auth_mobile(route){   //去改按過權限按鈕之後的內容
 
 // ------------------------------------------------------ timeline page
 function postTimeline(){
+
   if($("#timeline_post_image #rmimg")){$("#timeline_post_image .delete").remove();} // 去除叉叉紐
   if($("#timeline_post_image #comment_clear")){$("#timeline_post_image .clear").remove();} // 去除clear
   var timeline_post_content = $("#timeline_post_content").html();
