@@ -13,10 +13,10 @@ $(document).ready(function(){
   $.get("/checkAuth", function(auth){
     if(auth) {
       //document.getElementById("content").style.width = "80%";
-      document.getElementById("infoContent").className = "span10";
+      //document.getElementById("infoContent").className = "span10";
       //document.getElementById("articleList").style.width = "100%";
     }else{
-      document.getElementById("infoContent").className = "span10";
+      //document.getElementById("infoContent").className = "span10";
     }
   });
 
@@ -186,8 +186,8 @@ function setSearchResult(articleList){
       searchArticle();
     }
   }
-
-  $(document).on("click","a.show-info",function(event){
+  
+  $(document).on("click touchend","a.show-info",function(event){
 //$(".show-info").on("click",function(event){
   //event.preventDefault();
   $.post("/recordProInfo",{link:$(this).attr("title")})

@@ -407,7 +407,7 @@ getRecord: function(req,res){
         var info = req.param("proInfo");
         if(info.indexOf('.pdf')>-1)
         {
-            var content ='<a href="'+info+'">請點擊打開pdf</a>';
+            var content ='<a href="'+info+'" target="_blank">請點擊打開pdf</a>';
         }
         else{
             var content = '<embed src="'+info+'" height="100%" width="100%" internalinstanceid="9"><div id="postContent_image"><div class="clear" id="clear"></div></div>';
