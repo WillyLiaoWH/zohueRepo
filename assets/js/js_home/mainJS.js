@@ -67,6 +67,30 @@ var NoOfPhoto;
 $(document).ready(function(){
 
   $(document).on("click",".img-responsive",function(e){
+<<<<<<< HEAD
+=======
+    $("#myModal").css("display","block");
+  
+    $.ajax({
+            url: 'home/test',
+            type: 'POST',
+            cache: false, 
+            success: function(data){
+               alert(data);
+             }
+             ,error: function(jqXHR, textStatus, err){
+                  alert('text status '+textStatus+', err '+err);
+             } 
+          });
+ });
+    // modal.style.display = "block";
+
+  $(document).on("click",window,function(e){
+    $("#myModal").css("display", "none");
+  });
+
+ });
+>>>>>>> 9af85e5b4d3cdcb4fa2584a3043d59fdf70000a7
 
     var IdOfPhoto = this.id;
       NoOfPhoto =IdOfPhoto.split('_')[1];
