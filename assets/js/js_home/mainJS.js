@@ -14,7 +14,7 @@ function compare(a,b) {
     	return -1;
   	return 0;
 }
-
+/*
 var app = angular.module('homeApp', []);
 app.controller('announcementCtrl', function($scope, $http) {
 	$http.get("./getAnnouncement").success(function(response) {
@@ -24,7 +24,7 @@ app.controller('announcementCtrl', function($scope, $http) {
     	$scope.topArticles = response;
     });
 });
-
+*/
 // $(document).ready(function(){
   
 //   $(document).on("click",".img-responsive",function(e){
@@ -53,31 +53,58 @@ app.controller('announcementCtrl', function($scope, $http) {
 // });
 
 
+// document.getElementsByClassName("img-responsive").onclick = function() {myFunction()};
+// function myFunction() {
+//     var IdOfPhoto = document.getElementsByClassName(this."img-responsive").id;
+//     console.log(IdOfPhoto);
+//     var NoOfPhoto = document.write(IdOfPhoto.split('_') + "<br />");
+//     console.log(NoOfPhoto);
+
+// }
+
+var NoOfPhoto;
+
 $(document).ready(function(){
-  
+
   $(document).on("click",".img-responsive",function(e){
-    $("#myModal").css( "display", "block " );
-  
-    $.ajax({
-            url: 'home/test',
-            type: 'POST',
-            cache: false, 
-            success: function(data){
-               alert(data);
-             }
-             ,error: function(jqXHR, textStatus, err){
-                  alert('text status '+textStatus+', err '+err);
-             } 
-          });
- });
-    // modal.style.display = "block";
 
-  $(document).on("click",window,function(e){
-    $("#myModal").css( "display", "none" );
-  });
+    var IdOfPhoto = this.id;
+      NoOfPhoto =IdOfPhoto.split('_')[1];
+    $("#myModal_"+NoOfPhoto).css("display","block");
+    
+    // $.ajax({
+    //         url: 'home/test',
+    //         type: 'POST',
+    //         cache: false, 
+    //         success: function(data){
+    //            alert(data);
+    //          }
+    //          ,error: function(jqXHR, textStatus, err){
+    //               alert('text status '+textStatus+', err '+err);
+    //          } 
+    //       });
 
- });
 
+        
+    });
+ //    // modal.style.display = "block";
+// if(flag){
+//   $(document).on("click",window,function(e){
+//     $("#myModal"+NoOfPhoto).css( "display", "none" );
+//   });
+//   // flag = false;
+// }
+
+});
+
+window.onclick = function(event) {
+
+      if (event.target.className != 'img-responsive') {
+        console.log("inin")
+            $(".modal").css("display","none");
+           
+          }
+      }
 
 
 // Get the modal
