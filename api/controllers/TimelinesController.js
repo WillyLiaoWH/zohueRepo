@@ -453,7 +453,7 @@ module.exports = {
                                         var notContent=content;
                                     }
                                     for(var i=0; i<admin[0].friends.length; i++) {
-                                        Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+req.session.user.id, alreadySeen: false}).exec(function(err, not) {
+                                        Notification.create({user: admin[0].friends[i], notType: "10", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+req.session.user.id+"#time_"+timelinesList[i].id, alreadySeen: false}).exec(function(err, not) {
                                             if(err) {
                                                 console.log(err);
                                             }
@@ -519,7 +519,7 @@ module.exports = {
                             } else {
                                 var notContent=content;
                             }
-                            Notification.create({user: owner[0].id, notType: "9", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+owner[0].id, alreadySeen: false}).exec(function(err, not) {
+                            Notification.create({user: owner[0].id, notType: "9", from: req.session.user.id, alreadyRead: false, content: notContent, link: "/profile?"+owner[0].id+"#time_"+timeline.id, alreadySeen: false}).exec(function(err, not) {
                                 if(err) {
                                     console.log(err);
                                     res.send({err:"DB error"});
@@ -620,7 +620,7 @@ module.exports = {
                         } else {
                             var notContent=timeline.content;
                         }
-                        Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.id, alreadySeen: false}).exec(function(err, not) {
+                        Notification.create({user: timeline.author.id, notType: "4", from: req.session.user.id, alreadyRead: false, content: timeline.content, link: "/profile?"+timeline.author.id+"#time_"+timelinesList[i].id, alreadySeen: false}).exec(function(err, not) {
                             if(err) {
                                 console.log(err);
                                 res.send({err:"DB error"});

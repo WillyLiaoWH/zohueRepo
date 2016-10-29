@@ -22,7 +22,7 @@
                 } else {
                     var notContent=comment;
                 }
-                for(var i=0; i<timeline[0].follower.length; i++) {
+                for(var i=0; i<tllower.length; i++) {
                     if(timeline[0].follower[i]!=req.session.user.id) {
                         Notification.create({user: timeline[0].follower[i], notType: "3", from: req.session.user.id, content: notContent, alreadyRead: false, content: comment, link: "/profile?"+timeline[0].author.id, alreadySeen: false}).exec(function(err, not) {
                             if(err) {

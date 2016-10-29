@@ -66,6 +66,7 @@
       					<%="很讚"%>
       				<%}%>
           		</div>
+
       			<div class='go'>
       				
       				<%if (not[i].notType==1||not[i].notType==2||not[i].notType==5||not[i].notType==11){%>
@@ -74,7 +75,7 @@
       				<%}%>
 
       				<%if (not[i].notType==3||not[i].notType==4||not[i].notType==6||not[i].notType==8||not[i].notType==9||not[i].notType==10){%>
-      					<button value='查看動態時報' class='button' onclick='check("<%=not[i].link%>", "<%=not[i].id%>");'>&nbsp查看動態時報</button>
+      					<button value='查看動態時報' class='button' onclick='check("<%=not[i].link%>","<%=not[i].id%>");'>&nbsp查看動態時報</button>
       				<%}%>
       				<%if (not[i].notType==7){%>
       					<button value='確認好友' class='button' onclick='confirmFriend(<%=not[i].from.id%>, <%=not[i].id%>);'>&nbsp確認好友</button>

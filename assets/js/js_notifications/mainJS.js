@@ -128,6 +128,7 @@ var board="";
 function toProfile(id) {
   window.location.assign("/profile/?"+id);
 }
+
 function check(link, id) {
   $.post("/setRead", {id: id}, function(res) {
     if(res.err) {

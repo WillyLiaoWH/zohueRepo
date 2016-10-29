@@ -5,7 +5,7 @@
     .replace(/dummy href=/g, "a href=")
     .replace(/\/dummy/g, "\/a");%>
 
-<div class="container-fluid timeline_event" style="margin-top:30px;">
+<div class="container-fluid timeline_event" style="margin-top:30px;" id = "time_<%= timelinesList[i].id %>">
    <!--作者訊息-->
    <div class="row-fluid event_info">
       <table style="width:100%;">
