@@ -67,13 +67,28 @@ var NoOfPhoto;
 $(document).ready(function(){
 
   $(document).on("click",".img-responsive",function(e){
-
+    // var userID = $(this).attr("value");
     var IdOfPhoto = this.id;
       NoOfPhoto =IdOfPhoto.split('_')[1];
     $("#myModal_"+NoOfPhoto).css("display","block");
+
+    
+
+
+    // Record.create({
+    //     user: "Peter",
+    //     photoID: "23",
+    //     action:"ClickThePhoto"
+    //     }).exec(function(err,record){
+    //         console.log("發表文章")
+    //                      }
+
+    // $.post('/Record',{user: userID,action:"Click the "+IdOfPhoto+" Photo"},function(){alert("success");});
+
+    // $.post(url, {id: activeId, reason: reason}, function(res){
     
     // $.ajax({
-    //         url: 'home/test',
+    //         url: 'home/getPhotoId',
     //         type: 'POST',
     //         cache: false, 
     //         success: function(data){
@@ -83,10 +98,12 @@ $(document).ready(function(){
     //               alert('text status '+textStatus+', err '+err);
     //          } 
     //       });
-
-
-        
     });
+
+  $(document).on("click",".img-responsive",function(e){
+    return 
+});
+
  //    // modal.style.display = "block";
 // if(flag){
 //   $(document).on("click",window,function(e){
