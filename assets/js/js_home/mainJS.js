@@ -71,8 +71,15 @@ $(document).ready(function(){
     var IdOfPhoto = this.id;
       NoOfPhoto =IdOfPhoto.split('_')[1];
     $("#myModal_"+NoOfPhoto).css("display","block");
+    console.log("out");
 
-    
+    $.get("home/getPhotoId/",function(ret){
+                return true ;
+                // console.log("in");
+    });
+
+    });
+
 
 
     // Record.create({
@@ -98,11 +105,15 @@ $(document).ready(function(){
     //               alert('text status '+textStatus+', err '+err);
     //          } 
     //       });
-    });
 
-  $(document).on("click",".img-responsive",function(e){
-    return 
-});
+
+    //   $(document).on("click",".img-responsive",function(e){
+    //     return getPhotoId();
+        
+    // });
+
+    //     function getPhotoId(target){
+    //      );
 
  //    // modal.style.display = "block";
 // if(flag){
@@ -112,7 +123,6 @@ $(document).ready(function(){
 //   // flag = false;
 // }
 
-});
 
 window.onclick = function(event) {
 
@@ -145,7 +155,7 @@ var span = document.getElementsByClassName("close")[0];
 // }
 
 
-
+});
 
 
 // function homepagePic(){

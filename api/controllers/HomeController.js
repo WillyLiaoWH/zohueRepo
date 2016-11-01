@@ -7,19 +7,16 @@
 
  module.exports = {
 
- 	function getPhotoId(target){
-	 $.get("/getPhotoId/"+target,function(ret){
-			return true 
-	})
+
 
  	getPhotoId: function(req,res){
- 		var target = req.param("target");
-		console.log(target);
-	    var IdOfPhoto = this.id;
+ 	// 	var target = req.param("target");
+		// console.log(target);
+	 	var IdOfPhoto = req.id;
 		Record.create({user:req.session.user,ip:req.ip,action:"Click the "+IdOfPhoto+" Photo"}).exec(function(err,record){
-			console.log("傳送點擊圖片到record資料庫")
+		console.log("傳送點擊圖片到record資料庫");
 			res.send("ok");
-		})
+		 })
 	},
 
  
