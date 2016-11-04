@@ -67,13 +67,35 @@ var NoOfPhoto;
 $(document).ready(function(){
 
   $(document).on("click",".img-responsive",function(e){
-
+    // var userID = $(this).attr("value");
     var IdOfPhoto = this.id;
       NoOfPhoto =IdOfPhoto.split('_')[1];
     $("#myModal_"+NoOfPhoto).css("display","block");
+    console.log("out");
+
+    $.get("home/getPhotoId/",function(ret){
+                return true ;
+                // console.log("in");
+    });
+
+    });
+
+
+
+    // Record.create({
+    //     user: "Peter",
+    //     photoID: "23",
+    //     action:"ClickThePhoto"
+    //     }).exec(function(err,record){
+    //         console.log("發表文章")
+    //                      }
+
+    // $.post('/Record',{user: userID,action:"Click the "+IdOfPhoto+" Photo"},function(){alert("success");});
+
+    // $.post(url, {id: activeId, reason: reason}, function(res){
     
     // $.ajax({
-    //         url: 'home/test',
+    //         url: 'home/getPhotoId',
     //         type: 'POST',
     //         cache: false, 
     //         success: function(data){
@@ -85,8 +107,14 @@ $(document).ready(function(){
     //       });
 
 
+    //   $(document).on("click",".img-responsive",function(e){
+    //     return getPhotoId();
         
-    });
+    // });
+
+    //     function getPhotoId(target){
+    //      );
+
  //    // modal.style.display = "block";
 // if(flag){
 //   $(document).on("click",window,function(e){
@@ -95,7 +123,6 @@ $(document).ready(function(){
 //   // flag = false;
 // }
 
-});
 
 window.onclick = function(event) {
 
@@ -128,7 +155,7 @@ var span = document.getElementsByClassName("close")[0];
 // }
 
 
-
+});
 
 
 // function homepagePic(){
