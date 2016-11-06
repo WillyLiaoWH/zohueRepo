@@ -155,6 +155,7 @@ function editProfile(){
 
 var saveContent="";
 var saveContent_image="";
+
 function save() {
   var postContent = $("#postContent").html();
   var postContent_image = $("#postContent_image").html();
