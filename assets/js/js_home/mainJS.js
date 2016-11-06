@@ -72,13 +72,20 @@ $(document).ready(function(){
       NoOfPhoto =IdOfPhoto.split('_')[1];
     $("#myModal_"+NoOfPhoto).css("display","block");
     console.log("out");
+    getPhotoId(IdOfPhoto);
 
-    $.get("home/getPhotoId/",function(ret){
-                return true ;
-                // console.log("in");
-    });
+    // $.get("home/getPhotoId/",function(ret){
+    //             return true ;
+    //             // console.log("in");
+    // });
 
     });
+  function getPhotoId(target){
+  $.get("home/getPhotoId/"+target,function(ret){
+    return true 
+    console.log(target);
+     })
+    }
 
 
 
