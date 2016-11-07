@@ -32,6 +32,7 @@
                     	    css="mStyle";
                     	    m="mlayout";
                     	}
+                    	console.log(page);
                     	res.view(page, {
                     		layout:m,
                     		homepagePics: homepagePics,
