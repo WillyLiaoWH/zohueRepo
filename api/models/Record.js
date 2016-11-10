@@ -2,15 +2,18 @@ module.exports = {
 
   attributes: {
    user : {
-      model : "User",
+      model : "User"
     },
     ip:{
-      type:'string',
-      required: true
+      type:'string'
+      // required: true
     },
    action:{
-    type:'string',
-    required : true
+    type:'string'
+    // required : true
    }
+   // photoID:{
+   //  type:'string'
+   // }
   }
 };

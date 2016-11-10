@@ -8,20 +8,20 @@ function editProfile(){
 
 
 function compare(a,b) {
-	if (a.createdAt < b.createdAt)
-		return 1;
-	if (a.createdAt > b.createdAt)
-    	return -1;
-  	return 0;
+  if (a.createdAt < b.createdAt)
+    return 1;
+  if (a.createdAt > b.createdAt)
+      return -1;
+    return 0;
 }
 /*
 var app = angular.module('homeApp', []);
 app.controller('announcementCtrl', function($scope, $http) {
-	$http.get("./getAnnouncement").success(function(response) {
-    	$scope.announcement = response.sort(compare).slice(0,5);
+  $http.get("./getAnnouncement").success(function(response) {
+      $scope.announcement = response.sort(compare).slice(0,5);
     });
     $http.get("./getTopArticles").success(function(response) {
-    	$scope.topArticles = response;
+      $scope.topArticles = response;
     });
 });
 */
@@ -67,13 +67,43 @@ var NoOfPhoto;
 $(document).ready(function(){
 
   $(document).on("click",".img-responsive",function(e){
-
+    // var userID = $(this).attr("value");
     var IdOfPhoto = this.id;
       NoOfPhoto =IdOfPhoto.split('_')[1];
     $("#myModal_"+NoOfPhoto).css("display","block");
+    console.log("out");
+    getPhotoId(this.id);
+
+    // $.get("home/getPhotoId/",function(ret){
+    //             return true ;
+    //             // console.log("in");
+    // });
+
+    });
+  function getPhotoId(target){
+  $.get("home/getPhotoId/"+target,function(ret){
+    console.log(target);
+    return true 
+    // console.log(target);
+     })
+    }
+
+
+
+    // Record.create({
+    //     user: "Peter",
+    //     photoID: "23",
+    //     action:"ClickThePhoto"
+    //     }).exec(function(err,record){
+    //         console.log("發表文章")
+    //                      }
+
+    // $.post('/Record',{user: userID,action:"Click the "+IdOfPhoto+" Photo"},function(){alert("success");});
+
+    // $.post(url, {id: activeId, reason: reason}, function(res){
     
     // $.ajax({
-    //         url: 'home/test',
+    //         url: 'home/getPhotoId',
     //         type: 'POST',
     //         cache: false, 
     //         success: function(data){
@@ -85,8 +115,14 @@ $(document).ready(function(){
     //       });
 
 
+    //   $(document).on("click",".img-responsive",function(e){
+    //     return getPhotoId();
         
-    });
+    // });
+
+    //     function getPhotoId(target){
+    //      );
+
  //    // modal.style.display = "block";
 // if(flag){
 //   $(document).on("click",window,function(e){
@@ -95,7 +131,6 @@ $(document).ready(function(){
 //   // flag = false;
 // }
 
-});
 
 window.onclick = function(event) {
 
@@ -128,7 +163,7 @@ var span = document.getElementsByClassName("close")[0];
 // }
 
 
-
+});
 
 
 // function homepagePic(){

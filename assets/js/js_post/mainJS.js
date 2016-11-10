@@ -1,15 +1,16 @@
+
 var allow_create;
 var board="";
 var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],x=w.innerWidth||e.clientWidth||g.clientWidth,y=w.innerHeight||e.clientHeight||g.clientHeight;
 $(document).ready(function(){
   
   //checkAuth2();
-
   $("#postContent") // 確保 contentEditable 的跳行不會包在 div 內
     // make sure br is always the lastChild of contenteditable
     .on("keyup mouseup", function(){
       try{
         if($("#postContent").html().trim()!=""){
+          
           $("#save").css("background-color", "#FFCE54");
           $("#save").hover(function(){
             $("#save").css("background-color", "#FFCE54");
@@ -17,6 +18,7 @@ $(document).ready(function(){
             $("#save").css("background-color", "#FFCE54");
           });
         }else{
+          
           $("#save").css("background-color", "#ADADAD");
           $("#save").hover(function(){
             $("#save").css("background-color", "#ADADAD");
@@ -24,10 +26,18 @@ $(document).ready(function(){
             $("#save").css("background-color", "#ADADAD");
           });
         }
+
         
         if (!this.lastChild || this.lastChild.nodeName.toLowerCase() != "br") {
           this.appendChild(document.createChild("br"));
         }
+
+        // if ($("#postContent").html().trim()!=""){
+        //   $("#save_mobile").css("background-color", "#FFCE54");
+        // }else{
+        //   $("#save_mobile").css("background-color", "#ADADAD");
+        // }
+
       }catch(err){}
     })
 
@@ -154,6 +164,7 @@ function editProfile(){
 
 var saveContent="";
 var saveContent_image="";
+
 function save() {
   var postContent = $("#postContent").html();
   var postContent_image = $("#postContent_image").html();
