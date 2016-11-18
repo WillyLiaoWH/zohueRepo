@@ -61,7 +61,7 @@ module.exports = {
    ***************************************************************************/
 
   // port : 80,
-  port:80,
+  port:8000,
   //port:8000,
   //   ssl:  {
   //     key: fs.readFileSync('ssl/key.pem'),
