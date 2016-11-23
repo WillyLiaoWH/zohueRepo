@@ -350,7 +350,7 @@ function Submit(){
         label: "不同意",
         className: "btn-default",
         callback: function() {
-          window.location.assign("/home");
+//          window.location.assign("/home");
         }
       },
       main: {
