@@ -293,14 +293,14 @@
         <h1 style="font-size:30px;" >簡易註冊</h1>
         <form id="simpleSignUp">
           暱稱<label id="checkAlias" class="check"></label><br>
-          <input type="text" name="UserAlias" class="s" id="UserAlias" placeholder="請輸入暱稱"><br>
+          <input type="text" name="UserAlias" class="s" id="UserAlias" placeholder="請輸入暱稱" onkeyup="check_allnotblank();"><br>
           <div id="FBlogin">
           帳號<label id="checkAccount" class="check"></label><br>
-          <input type="text" name="UserAccount" class="s" id="UserAccount" placeholder="請輸入帳號"  onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();"><br>
+          <input type="text" name="UserAccount" class="s" id="UserAccount" placeholder="請輸入帳號"  onchange="checkIfAccountExist();" onkeyup="checkIfAccountExist();check_allnotblank();"><br>
           密碼<label id="checkPwd" class="check"></label><br>
-          <input type="password" name="UserPwd" class="s" id="UserPwd" placeholder="請輸入密碼" onchange="checkPwd();" onkeyup="checkPwd();"><br>
+          <input type="password" name="UserPwd" class="s" id="UserPwd" placeholder="請輸入密碼" onchange="checkPwd();" onkeyup="checkPwd();check_allnotblank();"><br>
           確認密碼<label id="checkPwdConfirm" class="check"></label><br>
-          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm" placeholder="請再輸入確認密碼" onchange="checkPwd();" onkeyup="checkPwd();"><br>
+          <input type="password" name="UserPwdConfirm" class="s" id="UserPwdConfirm" placeholder="請再輸入確認密碼" onchange="checkPwd();" onkeyup="checkPwd();check_allnotblank();"><br>
           </div>
           E-mail（建議填寫）<label id="checkEmail" class="check"></label><br><input type="text" name="UserEmail" placeholder="請輸入您的電子郵件地址" class="s" id="UserEmail"><br>
           <input type="hidden" name="FB_id" id="FB_id" value="1">
@@ -313,7 +313,7 @@
             <option value='F'>家屬</option>
             <option value='N'>一般民眾</option>
           </select><br>
-          <button type="button" id="submit" class="b" onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
+          <button type="button" id="submit" class="b" disabled=true onclick="check();"><img src="/images/img_forum/check_icon.png"/>確認送出</button>
         </form>
         <br><br><br>  
         <div id="e-newsletter" >
