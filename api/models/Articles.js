@@ -51,7 +51,8 @@ module.exports = {
     },
     follower: {
       collection: 'user',
-    },elite: {
+    },
+    elite: {
       type: 'string',
       //defaulsTo: "0"
     }
