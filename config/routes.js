@@ -112,6 +112,7 @@ module.exports.routes = {
   'POST /deleteHomepagePic': 'HomeController.deleteHomepagePic',
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
+
   'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
 
   'GET /recordLink/:target':'HomeController.recordLink',
@@ -286,6 +287,20 @@ module.exports.routes = {
     //   ]
     // }
   },
+
+// //evan's testing
+//   '/reg':{
+//     view: 'test',
+//   },
+//   'POST /test':{
+//     controller: 'DiaryController',
+//     action:'editDiary',
+//   },
+
+
+
+
+
   'GET /friends': {
     controller: 'UserController',
     action: 'searchFriends',
