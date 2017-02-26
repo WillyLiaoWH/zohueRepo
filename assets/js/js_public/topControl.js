@@ -33,8 +33,27 @@ $(document).ready(function(){
 });
 
   // This is called with the results from from FB.getLoginStatus().
-function FB_API(){
- window.fbAsyncInit = function() {
+ function FB_API(){
+ 
+
+//   window.fbAsyncInit = function() {
+//     FB.init({
+//       appId      : '1805396253053866',
+//       xfbml      : true,
+//       version    : 'v2.8'
+//     });
+//     FB.AppEvents.logPageView();
+//   };
+
+//   (function(d, s, id){
+//      var js, fjs = d.getElementsByTagName(s)[0];
+//      if (d.getElementById(id)) {return;}
+//      js = d.createElement(s); js.id = id;
+//      js.src = "//connect.facebook.net/en_US/sdk.js";
+//      fjs.parentNode.insertBefore(js, fjs);
+//    }(document, 'script', 'facebook-jssdk'));
+
+  window.fbAsyncInit = function() {
     FB.init({
       appId      : '1639694986252116',
       xfbml      : true,
@@ -49,6 +68,8 @@ function FB_API(){
      js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1639694986252116&version=v2.3";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+
 }
 
 
@@ -526,6 +547,16 @@ function fbLogin() {
         //console.log(response)
        if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      // add by Peter
+      // window.location.assign("/home").
+      // res.isFullSignup==true
+      //     showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
+
+      //       if ($(window).width() <= 979){
+      //         window.location.assign("/home");
+      //       }else{
+      //            location.replace(url);
+      //       }}
       FB.api('/me',function(response){
         console.log(response);
         

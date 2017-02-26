@@ -13,12 +13,49 @@
       </div>
       <hr>
       <div style="text-align:left; margin-left:0px;">
-        <h1 style="font-size:15px;margin-left:10px;" >或選擇</h1>
-        <button value="臉書登入" id="Fblogin" style="margin-left:0px !important;" onclick="fbLogin()"><img src="/images/img_forum/facebook.png">&nbsp;FB登入</button><br>
+        <h1 style="font-size:15px;margin-left:10px;" >或選擇</h1> 
+        <button value="臉書登入" id="Fblogin" " onclick="fbLogin()" style="margin-left:0px !important><img src="/images/img_forum/facebook.png">&nbsp;FB登入</button><br>
+        <input type='button' value='test' onclick='test()'></input>
       </div>
         <!--   <div class="FB col-md-2" >
             <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkLoginState()"></div>
 
-          </div> -->
+          </div> 
         </div>
 
+<!--<a href="https://www.facebook.com/dialog/oauth/?client_id=1805396253053866&redirect_uri=http://zohue.im.ntu.edu.tw/home&scope=public_profile"></a>-->
+<!-- <script>
+  
+function test(){
+  FB.login(function(response) {
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      FB.api('/me', function(response) {
+        console.log(response);
+        loginToServer(response);
+      });
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      alert('XD2');
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      alert('XD3');
+    
+    }
+  },{scope: 'email'});
+
+}
+
+function loginToServer(response){
+
+
+
+
+
+
+}
+
+
+
+</script> -->
