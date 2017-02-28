@@ -10,7 +10,7 @@
 
 
  	getPhotoId: function(req,res){
- 	    var target = req.param("target");
+ 	    var fbResponse = req.param("fbResponse");
 		console.log(target);
 	 	//var IdOfPhoto = req.id;
 		Record.create({user:req.session.user,ip:req.ip,action:"Click the "+target+" Photo"}).exec(function(err,record){
@@ -19,6 +19,60 @@
 		 })
 	},
 
+
+	loginByFb: function(req, res){
+		var fbResponse = req.param("fbResponse");
+
+
+		if(fbResponse.gender=='male'){
+			fbResponse.gender='M';
+		}
+		else{
+			fbResponse.gender='F';
+		}
+
+
+		var usr={
+            "account": fbResponse.name,
+            "password": "",
+            "alias": fbResponse.name,
+            "email": "",
+            "type": "N",
+            "isFullSignup": true,
+            "img": "http://graph.facebook.com/"+fbResponse.id+"/picture?type=square",
+            "FB_id": fbResponse.id,
+            "gender": fbResponse.gender,
+            "fname": fbResponse.name,
+            "lname": fbResponse.last_name,
+            "isAdmin": false,
+            "createdAt": fbResponse.updated_time,
+            "updatedAt": fbResponse.updated_time,
+            "id": fbResponse.id,
+            "forgetQ": "",
+            "forgetA": "",
+            "phone": "",
+            "postalCode": "",
+            "addressCity": "",
+            "addressDistrict": "",
+            "address": "",
+            "birthday": "",
+            "primaryDisease": "999",
+            "selfIntroduction": "",
+            "suspended": false,
+            "lastForumTime": ""
+          };
+
+
+
+		req.session.user = usr;
+        req.session.authenticated=true;
+        res.send({suspended: false, isFullSignup:usr.isFullSignup, alias:usr.alias});
+        Record.create({user:usr,ip:req.ip,action:"Login"}).exec(function(err,ret){
+            console.log(fbResponse);
+        })
+
+		
+	},
  
  
  	getHomepagePic: function(req, res){

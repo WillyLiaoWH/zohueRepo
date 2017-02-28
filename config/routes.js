@@ -155,6 +155,7 @@ module.exports.routes = {
   'GET /getSuspendReason': 'Backend.getSuspendReason',
   'GET /countForum': 'Articles.countForum',
   'GET /updateLastForumTime': 'User.updateLastForumTime',
+  'POST /loginByFb': 'HomeController.loginByFb',
 
   'GET /signup': { // 完整註冊
     controller: 'UserController',
@@ -339,7 +340,7 @@ module.exports.routes = {
   '/mlogin':{
     view:'mlogin',
     locals: {
-      layout: 'mlayout'
+      layout: 'mlayout',
     }
   },
   '/mquickSignup':{
@@ -349,6 +350,7 @@ module.exports.routes = {
     }
   },  
   '/': '/home'
+
 
 
 
