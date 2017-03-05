@@ -12,9 +12,12 @@ $(window).load(function(){ // 暫存回覆頁面
 });
 
 $(document).ready(function(){  
+
   FB_API();
   checkAuth();
   markMenuItem();
+
+  checkIfSuccessLogin();
   // 強制貼上純文字
   $(document).on("paste", "div[contenteditable='true']" ,function(e) {
     e.preventDefault();
@@ -31,6 +34,38 @@ $(document).ready(function(){
   //   }
   // });
 });
+
+  function checkIfSuccessLogin(){
+    var token =window.location.href.split("?#")[1];
+    if(token!=null){
+      $.get("https://graph.facebook.com/me?"+token, function(response){
+        $.post('/checkFB',{FB_id:response.id},function(res){
+          if(res){
+            window.location.assign("/home");
+          }else{
+            var password=response.id+Math.random();
+            document.getElementById('FBlogin').style.display='none';
+            document.getElementById('mobile_fblogin').style.display='none';
+            document.getElementById('UserAccount').value=response.id;
+            document.getElementById('UserAlias').value=response.name;
+            document.getElementById('UserPwd').value=password;
+            document.getElementById('UserPwdConfirm').value=password;
+            document.getElementById('FB_id').value=response.id;            
+            document.getElementById('UserGender').value=response.gender;
+            document.getElementById('fname').value=response.first_name;
+            document.getElementById('lname').value=response.last_name;
+            if (typeof response.email != "undefined"){
+              document.getElementById('UserEmail').value= response.email;
+            }
+
+            Submit();
+          }
+
+        });
+      });
+    }
+
+  }
 
   // This is called with the results from from FB.getLoginStatus().
  function FB_API(){
@@ -543,6 +578,13 @@ function subscribe(){
 
 
 function fbLogin() {  
+    if($(window).width()<500){
+      var client_id='1639694986252116';
+      var redirect_uri='http://zohue.im.ntu.edu.tw/home';
+      var response_type='token';
+      window.location.href='https://www.facebook.com/v2.8/dialog/oauth?client_id='+client_id+"&redirect_uri="+redirect_uri+"&response_type="+response_type;
+    }
+    else{
       FB.login(function(response) {
         //console.log(response)
        if (response.status === 'connected') {
@@ -582,15 +624,17 @@ function fbLogin() {
           });
         } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into this app.';
+        } else {
+          // The person is not logged into Facebook, so we're not sure if
+          // they are logged into this app or not.
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into Facebook.';
+        }
      }); //設定需要授權的項目
+    }
+      
   }
 function notification() {
 
