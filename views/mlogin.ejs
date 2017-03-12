@@ -8,17 +8,68 @@
         <input type="password" onkeypress="return enterLogin(event);" name="LoginPwd" class="l" id="mLoginPwd"  placeholder="輸入密碼" style="width:100%">
       </div>
       <div>
-        <button value="登入" id="login" onclick="Login()"style="float:left; margin-left:0px !important;"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp;登入</button>
+        <button value="登入" id="login" onclick="Login()" style="float:left; margin-left:0px !important;"><img style="width:24px; height:24px;" src="/images/img_public/login_icon.png"/>&nbsp;登入</button>
         <button value="忘記密碼" id="forget" onclick="window.location.href='/forget'" style="float:left;"><img src="/images/img_signup/forgetQ.png" style="width:26px; height:26px;" alt="">&nbsp;忘記密碼</button><br>
       </div>
       <hr>
       <div style="text-align:left; margin-left:0px;">
-        <h1 style="font-size:15px;margin-left:10px;" >或選擇</h1>
-        <button value="臉書登入" id="Fblogin" style="margin-left:0px !important;" onclick="fbLogin()"><img src="/images/img_forum/facebook.png">&nbsp;FB登入</button><br>
+        <h2 style="font-size:20px;margin-left:10px;" >或選擇</h2> 
+        <button value="臉書登入" id="Fblogin" " onclick="fbLogin()" style="margin-left:0px !important;"><img src="/images/img_forum/facebook.png">&nbsp;FB登入</button><br>
+      </div>
+      <div style='display: none' class='hide'>
+        <inupt id='FBlogin'></inupt>
+        <inupt id='mobile_fblogin'></inupt>
+        <inupt id='UserAccount'></inupt>
+        <inupt id='UserAlias'></inupt>
+        <inupt id='UserPwd'></inupt>
+        <inupt id='UserPwdConfirm'></inupt>
+        <inupt id='FB_id'></inupt>
+        <inupt id='UserGender'></inupt>
+        <inupt id='fname'></inupt>
+        <inupt id='lname'></inupt>
+        <inupt id='UserEmail'></inupt>s
+
+
       </div>
         <!--   <div class="FB col-md-2" >
             <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkLoginState()"></div>
 
-          </div> -->
+          </div> 
         </div>
+      <>
+<!--<a href="https://www.facebook.com/dialog/oauth/?client_id=1805396253053866&redirect_uri=http://zohue.im.ntu.edu.tw/home&scope=public_profile"></a>-->
+<!-- <script>
+  
+function test(){
+  FB.login(function(response) {
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      FB.api('/me', function(response) {
+        console.log(response);
+        loginToServer(response);
+      });
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      alert('XD2');
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      alert('XD3');
+    
+    }
+  },{scope: 'email'});
 
+}
+
+function loginToServer(response){
+
+
+
+
+
+
+}
+
+
+
+</script>

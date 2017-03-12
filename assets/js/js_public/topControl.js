@@ -12,9 +12,12 @@ $(window).load(function(){ // 暫存回覆頁面
 });
 
 $(document).ready(function(){  
+
   FB_API();
   checkAuth();
   markMenuItem();
+
+  checkIfSuccessLogin();
   // 強制貼上純文字
   $(document).on("paste", "div[contenteditable='true']" ,function(e) {
     e.preventDefault();
@@ -32,9 +35,60 @@ $(document).ready(function(){
   // });
 });
 
+  function checkIfSuccessLogin(){
+    var token =window.location.href.split("?#")[1];
+    if(token!=null){
+      $.get("https://graph.facebook.com/me?"+token, function(response){
+        $.post('/checkFB',{FB_id:response.id},function(res){
+          if(res){
+            window.location.assign("/home");
+          }else{
+            var password=response.id+Math.random();
+            document.getElementById('FBlogin').style.display='none';
+            document.getElementById('mobile_fblogin').style.display='none';
+            document.getElementById('UserAccount').value=response.id;
+            document.getElementById('UserAlias').value=response.name;
+            document.getElementById('UserPwd').value=password;
+            document.getElementById('UserPwdConfirm').value=password;
+            document.getElementById('FB_id').value=response.id;            
+            document.getElementById('UserGender').value=response.gender;
+            document.getElementById('fname').value=response.first_name;
+            document.getElementById('lname').value=response.last_name;
+            if (typeof response.email != "undefined"){
+              document.getElementById('UserEmail').value= response.email;
+            }
+
+            Submit();
+          }
+
+        });
+      });
+    }
+
+  }
+
   // This is called with the results from from FB.getLoginStatus().
-function FB_API(){
- window.fbAsyncInit = function() {
+ function FB_API(){
+ 
+
+//   window.fbAsyncInit = function() {
+//     FB.init({
+//       appId      : '1805396253053866',
+//       xfbml      : true,
+//       version    : 'v2.8'
+//     });
+//     FB.AppEvents.logPageView();
+//   };
+
+//   (function(d, s, id){
+//      var js, fjs = d.getElementsByTagName(s)[0];
+//      if (d.getElementById(id)) {return;}
+//      js = d.createElement(s); js.id = id;
+//      js.src = "//connect.facebook.net/en_US/sdk.js";
+//      fjs.parentNode.insertBefore(js, fjs);
+//    }(document, 'script', 'facebook-jssdk'));
+
+  window.fbAsyncInit = function() {
     FB.init({
       appId      : '1639694986252116',
       xfbml      : true,
@@ -49,6 +103,8 @@ function FB_API(){
      js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1639694986252116&version=v2.3";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+
 }
 
 
@@ -422,42 +478,42 @@ function Login(){
           }
         });
       }else{
-        if(res.isFullSignup==true){
-          showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
+            if(res.isFullSignup==true){
+              showDialog("一般訊息",res.alias+"，歡迎回來作夥！",function(){
 
-            if ($(window).width() <= 979){
-              window.location.assign("/home");
-            }else{
-                 location.replace(url);
-            }
-           
-          });
-        }else{
-          bootbox.dialog({
-            message: res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔 ~ 完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友。\n快填寫資料加入大家的行列吧！",
-            title: "一般訊息",
-            buttons: {
-              yes: {
-                label: "好，立即前往完整註冊",
-                className: "btn-primary",
-                callback: function() {
-                window.location.assign("/signup");
-              }
-              },
-              no: {
-                label: "以後再說",
-                className: "btn-default",
-                callback: function() {
-                      if ($(window).width() <= 979){
-                        window.location.assign("/home");
-                      }else{
-                           location.replace(url);
-                      }
+                if ($(window).width() <= 979){
+                  window.location.assign("/home");
+                }else{
+                     location.replace(url);
                 }
-              }
+               
+              });
+            }else{
+              bootbox.dialog({
+                message: res.alias+"，歡迎回來作夥！\n\n您尚未完整註冊喔 ~ 完整註冊後就可以在論壇發表文章、創建自己的動態時報，更可以和其他會員成為好友。\n快填寫資料加入大家的行列吧！",
+                title: "一般訊息",
+                buttons: {
+                  yes: {
+                    label: "好，立即前往完整註冊",
+                    className: "btn-primary",
+                    callback: function() {
+                    window.location.assign("/signup");
+                  }
+                  },
+                  no: {
+                    label: "以後再說",
+                    className: "btn-default",
+                    callback: function() {
+                          if ($(window).width() <= 979){
+                            window.location.assign("/home");
+                          }else{
+                               location.replace(url);
+                          }
+                    }
+                  }
+                }
+              });  
             }
-          });  
-        }
       }
     }).error(function(res){
       showDialog("錯誤訊息",res.responseJSON.err);
@@ -522,46 +578,63 @@ function subscribe(){
 
 
 function fbLogin() {  
+    if($(window).width()<500){
+      var client_id='1639694986252116';
+      var redirect_uri='http://zohue.im.ntu.edu.tw/home';
+      var response_type='token';
+      window.location.href='https://www.facebook.com/v2.8/dialog/oauth?client_id='+client_id+"&redirect_uri="+redirect_uri+"&response_type="+response_type;
+    }
+    else{
       FB.login(function(response) {
         //console.log(response)
        if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      FB.api('/me',function(response){
-        console.log(response);
-        
-        $.post('/checkFB',{FB_id:response.id},function(res){
-          if(res){
-            location.reload();
-          }else{
-            var password=response.id+Math.random();
-            document.getElementById('FBlogin').style.display='none';
-            document.getElementById('mobile_fblogin').style.display='none';
-            document.getElementById('UserAccount').value=response.id;
-            document.getElementById('UserAlias').value=response.name;
-            document.getElementById('UserPwd').value=password;
-            document.getElementById('UserPwdConfirm').value=password;
-            document.getElementById('FB_id').value=response.id;            
-            document.getElementById('UserGender').value=response.gender;
-            document.getElementById('fname').value=response.first_name;
-            document.getElementById('lname').value=response.last_name;
-            if (typeof response.email != "undefined"){
-              document.getElementById('UserEmail').value= response.email;
-            }
-          }
+          // Logged into your app and Facebook.
+          // add by Peter
+          console.log(response);
+         // var posting = $.post( "/loginByFb", {fbResponse:response},function(res){
+          //    window.location.assign("/home");
+        //  });
 
-        });
-      });
-    } else if (response.status === 'not_authorized') {
+          FB.api('/me',function(response){
+            console.log(response);
+            
+            $.post('/checkFB',{FB_id:response.id},function(res){
+              if(res){
+                window.location.assign("/home");
+              }else{
+                var password=response.id+Math.random();
+                document.getElementById('FBlogin').style.display='none';
+                document.getElementById('mobile_fblogin').style.display='none';
+                document.getElementById('UserAccount').value=response.id;
+                document.getElementById('UserAlias').value=response.name;
+                document.getElementById('UserPwd').value=password;
+                document.getElementById('UserPwdConfirm').value=password;
+                document.getElementById('FB_id').value=response.id;            
+                document.getElementById('UserGender').value=response.gender;
+                document.getElementById('fname').value=response.first_name;
+                document.getElementById('lname').value=response.last_name;
+                if (typeof response.email != "undefined"){
+                  document.getElementById('UserEmail').value= response.email;
+                }
+
+                Submit();
+              }
+
+            });
+          });
+        } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into this app.';
+        } else {
+          // The person is not logged into Facebook, so we're not sure if
+          // they are logged into this app or not.
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into Facebook.';
+        }
      }); //設定需要授權的項目
+    }
+      
   }
 function notification() {
 
