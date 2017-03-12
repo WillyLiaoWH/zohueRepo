@@ -17,7 +17,7 @@ $(function(){
 
 	$("#edit_sub").click(function(){
 		// console.log("there")
-		//alert("hhh")
+		//alert("aaa")
 		Edate = $("#date").val()
 		Eweight = $("#weight").val()
 		EbloodPresure = $("#bloodPresure").val()

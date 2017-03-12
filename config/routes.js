@@ -113,7 +113,7 @@ module.exports.routes = {
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
-//evan's testing
+//evan's test
   '/reg':{
     view: 'test',
     locals:{
