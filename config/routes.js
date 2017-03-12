@@ -113,6 +113,33 @@ module.exports.routes = {
   'POST /addHomepagePic': 'HomeController.addHomepagePic',
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
+//evan's testing
+  '/reg':{
+    view: 'test',
+    locals:{
+      scripts:['js/js_test.js']
+    }
+  },
+  'POST /test':{
+    controller: 'DiaryController',
+    action:'editDiary',
+  },
+  'POST /add_test':{
+    controller: 'DiaryController',
+    action:'addDiary',
+  },
+  'POST /del_test':{
+    controller: 'DiaryController',
+    action:'deleteDiary',
+  },
+//  'POST /test': 'DiaryController.addDiary',
+
+
+//   //Diary
+//   'POST /createDiary': 'DiaryController.createDiary',
+//   'POST /deleteDiary': 'DiaryController.deleteDiary',
+
+  
   'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
 
   'GET /recordLink/:target':'HomeController.recordLink',
@@ -287,17 +314,6 @@ module.exports.routes = {
     //   ]
     // }
   },
-
-// //evan's testing
-//   '/reg':{
-//     view: 'test',
-//   },
-//   'POST /test':{
-//     controller: 'DiaryController',
-//     action:'editDiary',
-//   },
-
-
 
 
 

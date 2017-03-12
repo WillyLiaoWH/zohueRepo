@@ -14,7 +14,7 @@ function compare(a,b) {
       return -1;
     return 0;
 }
-/*
+
 var app = angular.module('homeApp', []);
 app.controller('announcementCtrl', function($scope, $http) {
   $http.get("./getAnnouncement").success(function(response) {
@@ -24,7 +24,7 @@ app.controller('announcementCtrl', function($scope, $http) {
       $scope.topArticles = response;
     });
 });
-*/
+
 // $(document).ready(function(){
   
 //   $(document).on("click",".img-responsive",function(e){

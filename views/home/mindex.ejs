@@ -55,10 +55,17 @@
         </thead>
         <tbody>
           <tr class="active" ng-repeat="todo in announcement">
-            <td><b>{{ todo.createdAt.toString().substring(0, 10) }}</b></td>
-            <td>
-              <a href="./article/{{ todo.id }}">{{ todo.title }}</a>
-            </td>
+            
+                
+             
+
+                <td><b>{{ todo.createdAt.toString().substring(0, 10) }}</b></td>
+                <td>
+                  <a href="./article/{{ todo.id }}">{{ todo.title }}</a>
+                </td>
+             
+
+
           </tr>
         </tbody>
       </table>
@@ -73,10 +80,13 @@
         </thead>
         <tbody>
           <tr class="active" ng-repeat="todo in topArticles">
-            <td><b>{{ todo.createdAt.toString().substring(0, 10) }}</b></td>
-            <td>
-              <a href="{{ todo.href }}">{{ todo.title }}</a>
-            </td>
+           
+
+                <td><b>{{ todo.createdAt.toString().substring(0, 10) }}</b></td>
+                <td>
+                  <a href="./article/{{ todo.id }}">{{ todo.title }}</a>
+                </td>
+              
           </tr>
         </tbody>
       </table>
