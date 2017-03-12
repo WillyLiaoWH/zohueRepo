@@ -7,6 +7,7 @@
 
 module.exports = {
 	addDiary: function(req,res){
+		//test
 		var Aauthor=req.session.user.id;
  	    var Adate = req.param("adddate");
  	    var Aweight = req.param("addweight");
