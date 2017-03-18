@@ -12,16 +12,17 @@ module.exports = {
  	    var Adate = req.param("adddate");
  	    var Aweight = req.param("addweight");
  	    var Amemo = req.param("addmemo");
-	    var AbloodPresure= req.param("addbloodPresure");
-	  	Diary.create({author:Aauthor,date:Adate,weight:Aweight,memo:Amemo,bloodPresure:AbloodPresure}).exec(
+ 	    var AsqubloodPresure = req.param("squ");
+	    var AbloodPresure = req.param("addbloodPresure");
+	  	Diary.create({author:Aauthor,date:Adate,weight:Aweight,memo:Amemo,squbloodPresure:AsqubloodPresure,bloodPresure:AbloodPresure}).exec(
 	  			function(err,ret){
 	  				if(err){
 	  					console.log(err);
 	  					res.send({err:"DB error"});
 	  				}
 	  				else{
-	  					res.send("OK");
-	  					console.log("success");
+	  					res.send("健康紀錄新增成功！");
+	  					// console.log("success");
 	  				}
 	  			}
 	  	);
@@ -31,13 +32,13 @@ module.exports = {
 		var Ndate = request.param("date")
 		var Nweight = request.param("weight")
 		var Nmemo = request.param("memo")
+		var NsqubloodPresure = request.param("squbloodPresure")
 		var NbloodPresure = request.param("bloodPresure")
-		//Nauthor = request.param("author")
 		var Nauthor = request.session.user.id;
 		var nndate = new Date(Ndate);
 		// console.log(nndate.toISOString());
 		// console.log(err);
-		Diary.update({author:Nauthor, date:nndate.toISOString() },{weight:Nweight,memo:Nmemo,bloodPresure:NbloodPresure}).exec(
+		Diary.update({author:Nauthor, date:nndate.toISOString() },{weight:Nweight,memo:Nmemo,squbloodPresure:NsqubloodPresure,bloodPresure:NbloodPresure}).exec(
 			//ret是執行結果
 			function(errr,rett){
 				if(errr){
@@ -48,7 +49,7 @@ module.exports = {
 					if(rett.length==0)
 						ress.send("data not found");
 					else
-						ress.send("success");
+						ress.send("健康紀錄編輯成功！");
 				}				
 
 			}

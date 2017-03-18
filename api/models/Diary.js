@@ -18,9 +18,14 @@ module.exports = {
   	memo:{
   		type:"string"
   	},
-  	bloodPresure:{
+    //收縮壓
+  	squbloodPresure:{
   		type:"integer"
   	},
+    //舒張壓
+    bloodPresure:{
+      type:"integer"
+    },
   	author:{
   		model:"User"
   	}

@@ -121,6 +121,7 @@
     <ul class="nav nav-pills" id="tabs" style="font-size:19px;">
     <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
     <li><a href="#about" data-toggle="pill">關於</a></li>
+    <li><a href="#record" data-toggle="pill">個人健康紀錄</a></li>
     </ul>
     </div>
 
@@ -395,8 +396,90 @@
     <% } %>
     </table>
     </div>
+    <div class="tab-pane" id="record">
+    <div class="row">
+        <div class="col-md-1-2">
+            <div id="calender"></div>
+            <script>
+            var chn={
+               dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+               dayNamesMin:["日","一","二","三","四","五","六"],
+               monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+               monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+               prevText:"上月",
+               nextText:"次月",
+               weekHeader:"週",
+               showMonthAfterYear:true,
+               dateFormat:"yyyy-mm-dd"
+               };
+
+            $( "#calender" ).datepicker(chn);
+            
+
+    //         $(function() {
+    //             $('#calender').datepicker({
+    //             clearBtn: true,
+    //             todayHighlight: false,
+    //         multidate: true
+
+    //     }) .on('changeDate', function(e){
+    //         $('#col-md-1-2').html(JSON.stringify(e));
+    //         alert("hey");
+
+    //     });
+    // });
+            </script>
+        </div>
+        <div class="col-md-1-2" style="position:relative;width:50%;">
+            <div id="add_test">
+            <!-- author:<input type="text" id="author"> -->
+            <!-- <br> -->
+            <h3>新增健康紀錄</h3>
+            <br>
+            日期: <input type="text" class="s" id="add_date" placeholder="ex.2017-01-01">
+            <br>
+            體重:<input type="text" class="s" id="add_weight">
+            <br>
+            收縮壓(大):<input type="text" class="s" id="add_squbloodPresure">
+            <br>
+            舒張壓(小):<input type="text" class="s" id="add_bloodPresure">
+            <br>
+            日記:<input type="text" id="add_memo" class="s" placeholder="輸入想說的話吧">
+            <br>
+            <button id="add_sub" class="n">submit</button>
+            </div>
+        <div id="edit_test">
+            <!-- author:<input type="text" id="author"> -->
+            <!-- <br> -->
+            <h3>修改健康紀錄</h3>
+            <br>
+            日期: <input type="text" class="s" id="date" placeholder="ex.2017-01-01">
+            <br>
+            體重:<input type="text" class="s" id="weight">
+            <br>
+            收縮壓(大):<input type="text" class="s" id="squbloodPresure">
+            <br>
+            舒張壓(小):<input type="text" class="s" id="bloodPresure">
+            <br>
+            日記:<input type="text" id="memo" class="s" placeholder="輸入想說的話吧">
+            <br>
+            <button id="edit_sub" class="n"> submit</button>
+        </div>
+
+        <div id="delete_test">
+            <!-- author:<input type="text" id="author"> -->
+            <!-- <br> -->
+            <h3>刪除健康紀錄</h3>
+            <br>
+            日期:<input type="text" class="s" id="del_date" placeholder="ex.2017-01-01" >
+            <br>
+            <button id="delete_sub" class="n">submit</button>
+        </div>
+    </div>
+        </div>
     </div>
     </div>
+    </hr>
 
     <!-- Cropping modal -->
     <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true">

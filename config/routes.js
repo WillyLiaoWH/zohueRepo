@@ -114,12 +114,12 @@ module.exports.routes = {
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
 //evan's test
-  '/reg':{
-    view: 'test',
-    locals:{
-      scripts:['js/js_test.js']
-    }
-  },
+  // '/reg':{
+  //   view: 'test',
+  //   locals:{
+  //     scripts:['js/js_test.js']
+  //   }
+  // },
   'POST /test':{
     controller: 'DiaryController',
     action:'editDiary',
@@ -132,12 +132,6 @@ module.exports.routes = {
     controller: 'DiaryController',
     action:'deleteDiary',
   },
-//  'POST /test': 'DiaryController.addDiary',
-
-
-//   //Diary
-//   'POST /createDiary': 'DiaryController.createDiary',
-//   'POST /deleteDiary': 'DiaryController.deleteDiary',
 
   
   'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
@@ -192,7 +186,10 @@ module.exports.routes = {
   'GET /profile': { // 個人頁面
     controller: 'TimelinesController',
     action: 'setProfilePage',
-    skipAssets: true
+    skipAssets: true,
+    locals:{
+      scripts:['js/js_test.js']
+    }
   },
 
   'GET /editArticle/:article_id': {
