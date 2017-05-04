@@ -6,6 +6,27 @@
  */
 
 module.exports = {
+	findDiary :function(request,res){
+		var userA=req.session.user.id;
+		Diary.find({author:userA}).exec(
+			function(err,ret){
+				// if(!err){
+				// 	res.view("welcome.ejs",{result:ret});
+				// }
+				//console.log("Login!");
+				//console.log(name1);
+				//console.log(password1);
+				if(ret.length >0){
+					res.send(ret)
+				}
+				else{
+					res.send("no data")
+				}
+			}
+		);
+
+	},
+
 	addDiary: function(req,res){
 		//test
 		var Aauthor=req.session.user.id;
@@ -47,7 +68,7 @@ module.exports = {
 				} 
 				else {			
 					if(rett.length==0)
-						ress.send("data not found");
+						ress.send("找不到此日的紀錄! 請重新填寫!");
 					else
 						ress.send("健康紀錄編輯成功！");
 				}				
@@ -78,56 +99,5 @@ module.exports = {
 		});
 	},
 
-
-	// deleteDiary: function(req, res)
-	// {
-	// 	var year = req.param("year");
-	// 	var month = req.param("month");
-	// 	var day = req.param("day");
-	// 	var author=req.session.user.id;
-	//     //var author = req.param("author");
-
-	// 	var date = new Date(parseDate(year, month, day));
-
-	// 	Diary.destroy({date: date.toISOString(), author: author}).exec(function(err, ret)
-	// 	{
-	// 		if(err)
-	// 		{
-	// 			console.log(err);
-	// 			res.send(500, {err: "DB Error"});
-	// 		} 
-	// 		else 
-	// 		{			
-	// 			if(ret.length==0)
-	// 				res.send("找不到此紀錄！");
-	// 			else
-	// 				res.send("健康紀錄刪除成功！");
-	// 		}
-	// 	});
-	// },
-
 	
 };
-
-
-
-function parseDate(year, month, day)
-{
-	//如果是民國年，轉換成西元年
-	var year_int = parseInt(year);
-	if(year_int<1000)
-	{
-		year_int=year_int+1911;
-		year=year_int.toString();
-	}
-
-	var month_int = parseInt(month);
-	if(month_int<10)
-		month="0"+month_int.toString();
-
-	var day_int = parseInt(day);
-	if(day_int<10)
-		day="0"+day_int.toString();
-
-	return (year+"-"+month+"-"+day);
-}

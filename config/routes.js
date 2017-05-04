@@ -114,12 +114,14 @@ module.exports.routes = {
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
 //evan's test
-  // '/reg':{
-  //   view: 'test',
-  //   locals:{
-  //     scripts:['js/js_test.js']
-  //   }
-  // },
+  '/reg':{
+    view: 'test',
+    // locals:{
+    //   scripts:['js/js_test.js']
+    // }
+    controller:'DiaryController',
+    action:'findDiary',
+  },
   'POST /test':{
     controller: 'DiaryController',
     action:'editDiary',
@@ -132,7 +134,6 @@ module.exports.routes = {
     controller: 'DiaryController',
     action:'deleteDiary',
   },
-
   
   'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',
 
@@ -188,7 +189,7 @@ module.exports.routes = {
     action: 'setProfilePage',
     skipAssets: true,
     locals:{
-      scripts:['js/js_test.js']
+      scripts:['js/js_diary/mainJS.js']
     }
   },
 
@@ -197,23 +198,6 @@ module.exports.routes = {
     action: 'setEditArticlePage',
     skipAssets: true
   },
-
-  // 'GET /editArticle/*': {
-  //   view: 'editArticle/index',
-  //   locals: {
-  //     scripts: [
-  //       '/js/js_editArticle/mainJS.js',
-  //       '/js/js_post/cropper.min.js',
-  //       '/js/js_editArticle/crop-avatar.js'
-  //     ],
-  //     stylesheets: [
-  //       '/styles/css_editArticle/style.css',
-  //       '/styles/css_post/crop-avatar.css',
-  //       '/styles/css_post/cropper.min.css',
-  //       '/styles/importer.css'
-  //     ]
-  //   }
-  // },
 
   
 
