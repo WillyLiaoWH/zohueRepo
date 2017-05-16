@@ -7,19 +7,18 @@
 
 module.exports = {
 	findDiary :function(request,res){
-		var userA=req.session.user.id;
+		var userA=request.session.user.id;
 		Diary.find({author:userA}).exec(
 			function(err,ret){
-				// if(!err){
-				// 	res.view("welcome.ejs",{result:ret});
-				// }
-				//console.log("Login!");
+				//console.log("into finddiary");
 				//console.log(name1);
 				//console.log(password1);
 				if(ret.length >0){
-					res.send(ret)
+					// console.log(ret[0].date);
+					res.send(ret);
 				}
 				else{
+					console.log(ret);
 					res.send("no data")
 				}
 			}
@@ -28,7 +27,6 @@ module.exports = {
 	},
 
 	addDiary: function(req,res){
-		//test
 		var Aauthor=req.session.user.id;
  	    var Adate = req.param("adddate");
  	    var Aweight = req.param("addweight");

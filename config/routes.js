@@ -114,25 +114,26 @@ module.exports.routes = {
   'POST /setTopArticleFormula': 'HomeController.setTopArticleFormula',
 
 //evan's test
-  '/reg':{
-    view: 'test',
-    // locals:{
-    //   scripts:['js/js_test.js']
-    // }
-    controller:'DiaryController',
-    action:'findDiary',
-  },
-  'POST /test':{
+  // '/reg':{
+  //   view: 'test',
+  //   controller:'DiaryController',
+  //   action:'findDiary',
+  // },
+  'POST /edit_diary':{
     controller: 'DiaryController',
     action:'editDiary',
   },
-  'POST /add_test':{
+  'POST /add_diary':{
     controller: 'DiaryController',
     action:'addDiary',
   },
-  'POST /del_test':{
+  'POST /del_diary':{
     controller: 'DiaryController',
     action:'deleteDiary',
+  },
+  'POST /find_diary':{
+    controller: 'DiaryController',
+    action:'findDiary',
   },
   
   'GET /getTopArticleFormula': 'HomeController.getTopArticleFormula',

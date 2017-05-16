@@ -27,7 +27,7 @@
     <li class="active"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
     <li><a href="#about" data-toggle="pill" style="padding: 8px 10px;">關於</a></li>
     <% if(traveler != "guest" && traveler != id){ %>
-    <li id="m_friend_setting" class="dropdown" >
+    <li id="m_friend_setting" class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 8px 10px;">關係設定
     <b class="caret"></b>
     </a>
@@ -55,7 +55,6 @@
     <% } %>
     </ul>
     </div>
-
 
     <div id="upper_profile" class="hidden-phone hidden-tablet">
     <div class="col-md-3" style="">
@@ -199,7 +198,6 @@
     <div class="btn-group auth_btn" style="float:none;">
     <button type="button" class="n" data-toggle="dropdown">
     <img id="name_pic" src="/images/img_timeline/<%=authData.name%>.png" height="20px" width="20px">
-
     <text id="name_btn_text">
     <% switch(authData.name){
     case 'all': %>
@@ -398,27 +396,12 @@
     
         <div class="col-md-1-2" style="display:inline-block;vertical-align:top;">
             <div id="calender"></div>
-            <script>
-                var chn={
-                    dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
-                    dayNamesMin:["日","一","二","三","四","五","六"],
-                    monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
-                    monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
-                    prevText:"上月",
-                    nextText:"次月",
-                    weekHeader:"週",
-                    showMonthAfterYear:true,
-                    dateFormat:"yy-mm-dd",
-                    onSelect:function(dateText,inst){
-                        add_date.value=dateText;
-                        date.value=dateText;
-                        del_date.value=dateText;
-                    }
-                };
-                $( "#calender" ).datepicker(chn);
-            </script>
+            <br>
+            <div id="records">
+                <table id="recordTable" border="1"></table>
+            </div>
+            
         </div>
-
 
         <div class="col-md-1-2" style="display:inline-block;vertical-align:top;margin-left:100px;margin-bottom:75px">
             <div id="add_test">

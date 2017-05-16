@@ -1,4 +1,25 @@
 $(function(){
+    $.post("/find_diary",{},
+        function(ret){
+        	var num=ret.length;
+        	// alert(num);
+            $("#recordTable").append("<tr><td>日期</td><td>體重</td><td>收縮壓</td><td>舒張壓</td><td>心情</td></tr>");
+            for(var i=0 ; i<ret.length ; i++){
+            	var datewithoutTime=ret[i].date.substring(0, 10);
+            	var weight=ret[i].weight;
+            	var squbloodPresure=ret[i].squbloodPresure;
+            	var bloodPresure=ret[i].bloodPresure;
+            	var memo=ret[i].memo;
+             //    $("#recordTable").append("<tr><td>"+(datewithoutTime)+"</td>");
+             //    $("#recordTable").append("<td>"+(weight)+"</td>");
+             //    $("#recordTable").append("<td>"+(squbloodPresure)+"</td>");
+             //    $("#recordTable").append("<td>"+(bloodPresure)+"</td>");
+             //    $("#recordTable").append("<td>"+(memo)+"</td></tr>");
+                $("#recordTable").append("<tr><td>"+(datewithoutTime)+"</td><td>"+(weight)+"</td><td>"+(squbloodPresure)+"</td><td>"+(bloodPresure)+"</td><td>"+(memo)+"</td></tr>");
+            }
+            $("#records").append("您目前有"+(num)+"筆健康記錄");
+        }
+    );  
 	$("#add_sub").click(function(){
 		date = $("#add_date").val()
 		weight = $("#add_weight").val()
@@ -59,7 +80,7 @@ $(function(){
 				        label: "確認",
 				        className: "btn-primary",
 				        callback: function() {
-				          	$.post("/add_test",{adddate:date,addweight:weight,squ:squbloodPresure,addbloodPresure:bloodPresure,addmemo:memo},
+				          	$.post("/add_diary",{adddate:date,addweight:weight,squ:squbloodPresure,addbloodPresure:bloodPresure,addmemo:memo},
 								function(ret){
 									bootbox.alert(ret);
 								}
@@ -77,7 +98,7 @@ $(function(){
 				});	
 		}
 		else{
-			$.post("/add_test",{adddate:date,addweight:weight,squ:squbloodPresure,addbloodPresure:bloodPresure,addmemo:memo},
+			$.post("/add_diary",{adddate:date,addweight:weight,squ:squbloodPresure,addbloodPresure:bloodPresure,addmemo:memo},
 				function(ret){
 					bootbox.alert(ret);
 				}
@@ -145,7 +166,7 @@ $(function(){
 				        label: "確認",
 				        className: "btn-primary",
 				        callback: function() {
-				          	$.post("/test",{date:Edate,weight:Eweight,squbloodPresure:EsqubloodPresure,bloodPresure:EbloodPresure,memo:Ememo},
+				          	$.post("/edit_diary",{date:Edate,weight:Eweight,squbloodPresure:EsqubloodPresure,bloodPresure:EbloodPresure,memo:Ememo},
 								function(ret){
 									bootbox.alert(ret);
 								}
@@ -163,7 +184,7 @@ $(function(){
 				});	
 		}
 		else{
-			$.post("/test",{date:Edate,weight:Eweight,squbloodPresure:EsqubloodPresure,bloodPresure:EbloodPresure,memo:Ememo},
+			$.post("/edit_diary",{date:Edate,weight:Eweight,squbloodPresure:EsqubloodPresure,bloodPresure:EbloodPresure,memo:Ememo},
 				function(rett){
 					bootbox.alert(rett);
 				}
@@ -177,13 +198,29 @@ $(function(){
 		// console.log("there")
 		//alert("hhh")
 		Ddate = $("#del_date").val()
-		$.post("/del_test",{date:Ddate},
+		$.post("/del_diary",{date:Ddate},
 			function(ret){
 				bootbox.alert(ret);
 			}
 		)
-
 	});
 	
-	
+	var chn={
+        dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+        dayNamesMin:["日","一","二","三","四","五","六"],
+        monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+        monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+        prevText:"上月",
+        nextText:"次月",
+        weekHeader:"週",
+        showMonthAfterYear:true,
+        dateFormat:"yy-mm-dd",
+        onSelect:function(dateText,inst){
+            add_date.value=dateText;
+            date.value=dateText;
+            del_date.value=dateText;
+        }
+    };
+    $("#calender").datepicker(chn);
+
 })
