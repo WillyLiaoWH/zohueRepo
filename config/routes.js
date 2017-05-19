@@ -116,8 +116,11 @@ module.exports.routes = {
 //evan's test
   // '/reg':{
   //   view: 'test',
-  //   controller:'DiaryController',
-  //   action:'findDiary',
+  //   // controller:'DiaryController',
+  //   // action:'findDiary',
+  //   locals:{
+  //     scripts:['js/js_diary/mainJS.js']
+  //   }
   // },
   'POST /edit_diary':{
     controller: 'DiaryController',

@@ -17,9 +17,91 @@ $(function(){
              //    $("#recordTable").append("<td>"+(memo)+"</td></tr>");
                 $("#recordTable").append("<tr><td>"+(datewithoutTime)+"</td><td>"+(weight)+"</td><td>"+(squbloodPresure)+"</td><td>"+(bloodPresure)+"</td><td>"+(memo)+"</td></tr>");
             }
-            $("#records").append("您目前有"+(num)+"筆健康記錄");
+            $("#records").append("您目前有"+(num)+"筆健康記錄");   
+
+	var parseDate = d3.time.format("%Y-%m-%d").parse;
+	// alert(parseDate(ret[3].date.substring(0, 10)));
+
+    var data = [];
+    for(var i=0 ; i<num ; i++){
+    	data.push({x:parseDate(ret[i].date.substring(0,10)),y:ret[i].weight})
+    }
+    data.sort(function(a, b){return a.x-b.x});
+      
+    var width = 360, height = 240;
+
+	var scaleX = d3.time.scale()
+                 .range([0,width])
+                 .domain(d3.extent(data, function(d) { return d.x; })); //x資料的範圍
+    var scaleY = d3.scale.linear()
+                 .range([height,0])
+                 // .domain([0,d3.max(data, function(d) { return d.y; }) ]); //Y的資料範圍
+                 .domain([d3.min(data, function(d) { return d.y; })-20,d3.max(data, function(d) { return d.y; })+10 ]);
+
+	var s = d3.select('#recordGraph'); //取得SVG的物件
+    s.attr({'width': 450,'height': 300,}) //設定畫布範圍
+	.style({'border':'1px dotted #aaa'});
+
+	var line = d3.svg.line()
+    .x(function(d) {return scaleX(d.x);})
+    .y(function(d) {return scaleY(d.y);});
+
+	var axisX = d3.svg.axis()
+	    .scale(scaleX)
+	    .ticks(5) //刻度大小
+		.orient("bottom"); //X軸數字的位置
+		// .tickFormat("");
+	var axisY = d3.svg.axis()
+	    .scale(scaleY)
+	    .ticks(5) //刻度大小
+		.orient("left"); //Y軸數字的位置
+
+
+	s.append('path')
+	    .attr({
+	      'd': line(data),
+	      'stroke': '#09c',
+	      'fill': 'none',
+	      'transform':'translate(35,20)' //偏移
+	    });
+
+	s.append('g')
+		.call(axisX)
+		.attr({
+			'fill':'none', //空心，但是字要另外處理
+		    'stroke':'#000',
+		    'transform':'translate(35,' + (height+20) + ')' //偏移
+		})
+		.selectAll('text') //字也會套用空心，另外處理
+		.attr({
+	    	'fill':'#000',
+	    	'stroke':'none',
+		})
+		.style({
+	    	'font-size':'11px'
+		});
+
+	s.append('g')
+		.call(axisY)
+		.attr({
+	    	'fill':'none',
+	    	'stroke':'#000',
+	    	'transform':'translate(35,20)'
+		})
+		.selectAll('text')
+		.attr({
+	    	'fill':'#000',
+	    	'stroke':'none',
+		})
+		.style({
+	    	'font-size':'11px'
+		});
+
+
+
         }
-    );  
+    );
+
 	$("#add_sub").click(function(){
 		date = $("#add_date").val()
 		weight = $("#add_weight").val()
