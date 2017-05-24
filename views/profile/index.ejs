@@ -1,6 +1,6 @@
     <div class="container container-fluid" id="post-form-main">
     <div id="timeline_profile" style="margin: 15px; float: left;">
-    
+
     <div id="mobile_upper_profile" class="hidden-desktop">
     <span style="margin: 5px; display: inline-block; float: left; width: 40%;">
     <img src="<%- aboutInfo.img %>" id="m_avatar" style="height: 120px"></img>
@@ -21,7 +21,7 @@
     <text id="m_primaryDisease">主治<%= diseaseList[aboutInfo.primaryDisease] %></text>
     <% break;} %>
     </span>
-    
+
     <!-- <ul class="tabs"> -->
     <ul class="nav nav-pills" style="font-size: 19px;">
     <li class="active"><a href="#timeline" data-toggle="pill" style="padding: 8px 10px;" >動態時報</a></li>
@@ -113,9 +113,9 @@
     </div>
     </div>
     </div>
-    
-    
-    
+
+
+
     <!-- <ul class="tabs"> -->
     <ul class="nav nav-pills" id="tabs" style="font-size:19px;">
     <li class="active"><a href="#timeline" data-toggle="pill">動態時報</a></li>
@@ -138,15 +138,15 @@
     <div contentEditable="false" class="s" id="timeline_post_image">
    </div>
     <div class="clear" id="comment_clear"></div>
-    
+
     </div>
     <div class="container-fluid">
         <button value="送出留言" id="commentSend" class="b" onclick="postTimeline();"><img src="/images/img_forum/check_icon.png"/> 送出</button>
         <button value="插入圖片" name="image" id="image" class="b"><img src="/images/img_forum/images_icon.png"/> 插入圖片</button>
-        
+
         <div class="btn-group" style="float:right;" id="postTilmelineAuth">
         <button type="button" class="b" data-toggle="dropdown">
-        <img src="/images/img_timeline/all.png" height="20px" width="20px" value="all">&nbsp;每個人都看得到                  
+        <img src="/images/img_timeline/all.png" height="20px" width="20px" value="all">&nbsp;每個人都看得到
         </button>
         <ul class="dropdown-menu" role="menu">
         <li><a><img src="/images/img_timeline/all.png" height="20px" value="all">&nbsp;每個人都看得到</a></li>
@@ -241,7 +241,7 @@
     case 'self': %>
     自己才看得到
     <% break;} %>
-    </text>                  
+    </text>
     </button>
     <ul class="dropdown-menu" role="menu">
     <li><a class="profile_auth" name="bday/all"><img src="/images/img_timeline/all.png" height="20px">&nbsp;人人都看得到</a></li>
@@ -393,7 +393,7 @@
 
     <div class="tab-pane" id="record">
     <div class="row">
-    
+
         <div class="col-md-1-2" style="display:inline-block;vertical-align:top;">
             <div id="calender"></div>
             <br>
@@ -404,22 +404,24 @@
             <script src="http:\/\/mbostock.github.com/d3/d3.v2.js"></script>
             <svg id="recordGraph"></svg>
         </div>
-
         <div class="col-md-1-2" style="display:inline-block;vertical-align:top;margin-left:100px;margin-bottom:75px">
+          <form name="diaryForm" action="/add_diary" method="post" enctype="multipart/form-data">
             <div id="add_test">
                 <h2>新增健康紀錄</h2>
-                日期: <input type="text" class="s" id="add_date" placeholder="ex.2017-01-01">
+                日期: <input type="text" class="s" id="add_date" name="adddate" placeholder="ex.2017-01-01">
                 <br>
-                請填入您當天的體重(公斤):<input type="text" class="s" id="add_weight">
+                請填入您當天的體重(公斤):<input type="text" class="s" id="add_weight" name="addweight">
                 <br>
-                請填入您當天的收縮壓(mm-Hg):<input type="text" class="s" id="add_squbloodPresure">
+                請填入您當天的收縮壓(mm-Hg):<input type="text" class="s" id="add_squbloodPresure" name="squ">
                 <br>
-                請填入您當天的舒張壓(mm-Hg):<input type="text" class="s" id="add_bloodPresure">
+                請填入您當天的舒張壓(mm-Hg):<input type="text" class="s" id="add_bloodPresure" name="addbloodPresure">
                 <br>
-                日記:<input type="text" id="add_memo" class="s" placeholder="輸入想說的話吧">
+                日記:<input type="text" id="add_memo" class="s" placeholder="輸入想說的話吧" name="addmemo">
                 <br>
+                <input type="file" id="add_diary_pic" value="upload" name="diary_pic" accept="image/*" multiple>
                 <button id="add_sub" class="n">submit</button>
             </div>
+          </form>
             <br>
             <div id="edit_test">
                 <h2>修改健康紀錄</h2>
@@ -478,7 +480,7 @@
     <div class="circle4"></div>
     </div>
     </div>
-    
+
     </div>
     <div class="modal-body">
     <div class="avatar-body">
@@ -516,12 +518,12 @@
 
     <!-- 檢舉視窗 -->
     <div id="reportDialog" title="協助我們瞭解發生的狀況">
-    <form id="reportForm">  
+    <form id="reportForm">
     <label><input type="radio" name="reason" value="boring"> 這令人討厭或很無聊</label><br>
     <label><input type="radio" name="reason" value="shouldn't exist"> 我認為這不應該出現在論壇</label><br>
     <label><input type="radio" name="reason" value="garbage"> 這是垃圾訊息</label><br>
     <label><input type="radio" name="reason" value="others"> 其它</label><br>
     <input type="text" id="reasonInput" style="display: none;">
-    </form> 
+    </form>
     </div>
     </div>

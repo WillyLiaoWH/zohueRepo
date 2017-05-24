@@ -28,24 +28,46 @@ module.exports = {
 
 	addDiary: function(req,res){
 		var Aauthor=req.session.user.id;
- 	    var Adate = req.param("adddate");
- 	    var Aweight = req.param("addweight");
- 	    var Amemo = req.param("addmemo");
- 	    var AsqubloodPresure = req.param("squ");
-	    var AbloodPresure = req.param("addbloodPresure");
-	  	Diary.create({author:Aauthor,date:Adate,weight:Aweight,memo:Amemo,squbloodPresure:AsqubloodPresure,bloodPresure:AbloodPresure}).exec(
-	  			function(err,ret){
-	  				if(err){
-	  					console.log(err);
-	  					res.send({err:"DB error"});
-	  				}
-	  				else{
-	  					res.send("健康紀錄新增成功！");
-	  					// console.log("success");
-	  				}
-	  			}
-	  	);
+ 	  var Adate = req.param("adddate");
+ 	  var Aweight = req.param("addweight");
+ 	  var Amemo = req.param("addmemo");
+ 	  var AsqubloodPresure = req.param("squ");
+	  var AbloodPresure = req.param("addbloodPresure");
+    var diary_pic = req.file("diary_pic");
+    var imgURLArryay = [];
+
+    // upload diary pic
+    res.setTimeout(0);
+
+    /*var time = new Date().getTime();
+    img_recall_url="../images/img_diary/upload/"+time+".jpg";
+    console.log(img_recall_url);*/
+
+    diary_pic.upload({
+        dirname: '../../assets/images/img_diary/upload',
+        saveAs: function (__newFileStream, next) {
+          var time = new Date().getTime();
+          var url = time+".jpg";
+          imgURLArryay.push(url);
+          console.log(url);
+          return next(undefined, url); },
+        },function whenDone(err) {
+          if (err) return res.serverError(err);
+        });
+
+	  Diary.create({author:Aauthor,date:Adate,weight:Aweight,memo:Amemo,squbloodPresure:AsqubloodPresure,bloodPresure:AbloodPresure,img:imgURLArryay}).exec(
+	  	function(err,ret){
+	  		if(err){
+	  			console.log(err);
+	  			res.send({err:"DB error"});
+	  		} else {
+	  			res.redirect("/profile");
+	  			// console.log("success");
+	  		}
+      }
+	  );
 	},
+
 	//request是進入 res是出去
 	editDiary: function (request,ress){
 		var Ndate = request.param("date")
@@ -63,13 +85,13 @@ module.exports = {
 				if(errr){
 					console.log(errr);
 					ress.send("error!");
-				} 
-				else {			
+				}
+				else {
 					if(rett.length==0)
 						ress.send("找不到此日的紀錄! 請重新填寫!");
 					else
 						ress.send("健康紀錄編輯成功！");
-				}				
+				}
 
 			}
 		)
@@ -86,9 +108,9 @@ module.exports = {
 			{
 				console.log(err);
 				res.send(500, {err: "DB Error"});
-			} 
-			else 
-			{			
+			}
+			else
+			{
 				if(ret.length==0)
 					res.send("找不到此紀錄！");
 				else
@@ -97,5 +119,5 @@ module.exports = {
 		});
 	},
 
-	
+
 };

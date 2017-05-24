@@ -26,6 +26,9 @@ module.exports = {
     bloodPresure:{
       type:"integer"
     },
+    img:{
+      type:"array"
+    },
   	author:{
   		model:"User"
   	}

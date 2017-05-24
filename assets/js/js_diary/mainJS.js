@@ -17,7 +17,7 @@ $(function(){
              //    $("#recordTable").append("<td>"+(memo)+"</td></tr>");
                 $("#recordTable").append("<tr><td>"+(datewithoutTime)+"</td><td>"+(weight)+"</td><td>"+(squbloodPresure)+"</td><td>"+(bloodPresure)+"</td><td>"+(memo)+"</td></tr>");
             }
-            $("#records").append("您目前有"+(num)+"筆健康記錄");   
+            $("#records").append("您目前有"+(num)+"筆健康記錄");
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 	// alert(parseDate(ret[3].date.substring(0, 10)));
@@ -27,7 +27,7 @@ $(function(){
     	data.push({x:parseDate(ret[i].date.substring(0,10)),y:ret[i].weight})
     }
     data.sort(function(a, b){return a.x-b.x});
-      
+
     var width = 360, height = 240;
 
 	var scaleX = d3.time.scale()
@@ -113,35 +113,35 @@ $(function(){
 			bootbox.alert({
 				    message: "您填的體重小於零! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			add_weight.value="";
 		}
 		else if(squbloodPresure<=0){
 			bootbox.alert({
 				    message: "您填的收縮壓小於零! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			add_squbloodPresure.value="";
 		}
 		else if(squbloodPresure>300){
 			bootbox.alert({
 				    message: "您填的收縮壓大於三百! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			add_squbloodPresure.value="";
 		}
 		else if(bloodPresure<=0){
 			bootbox.alert({
 				    message: "您填的舒張壓小於零! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			add_bloodPresure.value="";
 		}
 		else if(bloodPresure>300){
 			bootbox.alert({
 				    message: "您填的舒張壓大於三百! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			add_bloodPresure.value="";
 		}
 
@@ -149,7 +149,7 @@ $(function(){
 			bootbox.alert({
 				    message: "您填的收縮壓小於舒張壓! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			add_bloodPresure.value="";
 			add_squbloodPresure.value="";
 		}
@@ -162,11 +162,7 @@ $(function(){
 				        label: "確認",
 				        className: "btn-primary",
 				        callback: function() {
-				          	$.post("/add_diary",{adddate:date,addweight:weight,squ:squbloodPresure,addbloodPresure:bloodPresure,addmemo:memo},
-								function(ret){
-									bootbox.alert(ret);
-								}
-							)
+				          	document.diaryForm.submit();
 				        }
 				      },
 				      no: {
@@ -177,14 +173,10 @@ $(function(){
 				        }
 				      }
 				    }
-				});	
+				});
 		}
 		else{
-			$.post("/add_diary",{adddate:date,addweight:weight,squ:squbloodPresure,addbloodPresure:bloodPresure,addmemo:memo},
-				function(ret){
-					bootbox.alert(ret);
-				}
-			)		
+			document.diaryForm.submit();
 		}
 	});
 
@@ -200,42 +192,42 @@ $(function(){
 			bootbox.alert({
 				    message: "您填的體重小於零! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			weight.value="";
 		}
 		else if(EsqubloodPresure<=0){
 			bootbox.alert({
 				    message: "您填的收縮壓小於零! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			squbloodPresure.value="";
 		}
 		else if(EsqubloodPresure>300){
 			bootbox.alert({
 				    message: "您填的收縮壓大於三百! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			squbloodPresure.value="";
 		}
 		else if(EbloodPresure<=0){
 			bootbox.alert({
 				    message: "您填的舒張壓小於零! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			bloodPresure.value="";
 		}
 		else if(EbloodPresure>300){
 			bootbox.alert({
 				    message: "您填的舒張壓大於三百! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			bloodPresure.value="";
 		}
 		else if(minus<=0){
 			bootbox.alert({
 				    message: "您填的收縮壓小於舒張壓! 請重新填寫!",
 				    title: "再次確認"
-			});	
+			});
 			bloodPresure.value="";
 			squbloodPresure.value="";
 		}
@@ -263,14 +255,14 @@ $(function(){
 				        }
 				      }
 				    }
-				});	
+				});
 		}
 		else{
 			$.post("/edit_diary",{date:Edate,weight:Eweight,squbloodPresure:EsqubloodPresure,bloodPresure:EbloodPresure,memo:Ememo},
 				function(rett){
 					bootbox.alert(rett);
 				}
-			)			
+			)
 		}
 
 
@@ -286,7 +278,7 @@ $(function(){
 			}
 		)
 	});
-	
+
 	var chn={
         dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
         dayNamesMin:["日","一","二","三","四","五","六"],
