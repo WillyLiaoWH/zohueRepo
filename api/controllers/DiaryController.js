@@ -10,11 +10,7 @@ module.exports = {
 		var userA=request.session.user.id;
 		Diary.find({author:userA}).exec(
 			function(err,ret){
-				//console.log("into finddiary");
-				//console.log(name1);
-				//console.log(password1);
 				if(ret.length >0){
-					// console.log(ret[0].date);
 					res.send(ret);
 				}
 				else{
@@ -29,6 +25,8 @@ module.exports = {
 	addDiary: function(req,res){
 		var Aauthor=req.session.user.id;
  	    var Adate = req.param("adddate");
+ 	    // Adate = new Date(Adate).toISOString();
+ 	    // console.log(Adate);
  	    var Aweight = req.param("addweight");
  	    var Amemo = req.param("addmemo");
  	    var AsqubloodPresure = req.param("squ");

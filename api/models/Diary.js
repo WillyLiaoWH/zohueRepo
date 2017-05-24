@@ -10,6 +10,7 @@ module.exports = {
   attributes: {
   	date:{
   		type:"date",
+      // unique:true,
   		required:true
   	},
   	weight:{

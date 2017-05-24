@@ -24,11 +24,15 @@ $(function(){
 
     var data = [];
     for(var i=0 ; i<num ; i++){
-    	data.push({x:parseDate(ret[i].date.substring(0,10)),y:ret[i].weight})
+    	data.push({x:parseDate(ret[i].date.substring(0,10)), y:ret[i].weight, b1:ret[i].squbloodPresure, b2:ret[i].bloodPresure})
     }
     data.sort(function(a, b){return a.x-b.x});
-      
+
     var width = 360, height = 240;
+
+	var s = d3.select('#graphW'); //取得SVG的物件
+    s.attr({'width': 450,'height': 300,}) //設定畫布範圍
+		.style({'border':'1px dotted #aaa'});
 
 	var scaleX = d3.time.scale()
                  .range([0,width])
@@ -36,11 +40,7 @@ $(function(){
     var scaleY = d3.scale.linear()
                  .range([height,0])
                  // .domain([0,d3.max(data, function(d) { return d.y; }) ]); //Y的資料範圍
-                 .domain([d3.min(data, function(d) { return d.y; })-20,d3.max(data, function(d) { return d.y; })+10 ]);
-
-	var s = d3.select('#recordGraph'); //取得SVG的物件
-    s.attr({'width': 450,'height': 300,}) //設定畫布範圍
-	.style({'border':'1px dotted #aaa'});
+                 .domain([d3.min(data, function(d) { return d.y; })-20, d3.max(data, function(d) { return d.y; })+10 ]);
 
 	var line = d3.svg.line()
     .x(function(d) {return scaleX(d.x);})
@@ -48,14 +48,13 @@ $(function(){
 
 	var axisX = d3.svg.axis()
 	    .scale(scaleX)
-	    .ticks(5) //刻度大小
+	    .ticks(num/2) //刻度大小
 		.orient("bottom"); //X軸數字的位置
 		// .tickFormat("");
 	var axisY = d3.svg.axis()
 	    .scale(scaleY)
-	    .ticks(5) //刻度大小
+	    .ticks(6) //刻度大小
 		.orient("left"); //Y軸數字的位置
-
 
 	s.append('path')
 	    .attr({
@@ -96,7 +95,73 @@ $(function(){
 		.style({
 	    	'font-size':'11px'
 		});
+	
 
+	var ss = d3.select('#graphB'); //取得SVG的物件
+    ss.attr({'width': 450,'height': 300,}) //設定畫布範圍
+		.style({'border':'1px dotted #aaa'});	
+
+    var scaleY2 = d3.scale.linear()
+         .range([height,0])
+         // .domain([0,d3.max(data, function(d) { return d.y; }) ]); //Y的資料範圍
+         .domain([d3.min(data, function(d) { return d.b1; })-20, d3.max(data, function(d) { return d.b1; })+10 ]);
+	var line2 = d3.svg.line()
+	    .x(function(d) {return scaleX(d.x);})
+    	.y(function(d) {return scaleY2(d.b1);});
+	var line3 = d3.svg.line()
+	    .x(function(d) {return scaleX(d.x);})
+    	.y(function(d) {return scaleY2(d.b2);});
+	var axisY2 = d3.svg.axis()
+	    .scale(scaleY2)
+	    .ticks(5) //刻度大小
+		.orient("left"); //Y軸數字的位置
+
+	ss.append('path')
+	    .attr({
+	      'd': line2(data),
+	      'stroke': '#CC0000',
+	      'fill': 'none',
+	      'transform':'translate(35,20)' //偏移
+	    });
+	ss.append('path')
+	    .attr({
+	      'd': line3(data),
+	      'stroke': '#FF3333',
+	      'fill': 'none',
+	      'transform':'translate(35,20)' //偏移
+	    });
+
+	ss.append('g')
+		.call(axisX)
+		.attr({
+			'fill':'none', //空心，但是字要另外處理
+		    'stroke':'#000',
+		    'transform':'translate(35,' + (height+20) + ')' //偏移
+		})
+		.selectAll('text') //字也會套用空心，另外處理
+		.attr({
+	    	'fill':'#000',
+	    	'stroke':'none',
+		})
+		.style({
+	    	'font-size':'11px'
+		});
+
+	ss.append('g')
+		.call(axisY2)
+		.attr({
+	    	'fill':'none',
+	    	'stroke':'#000',
+	    	'transform':'translate(35,20)'
+		})
+		.selectAll('text')
+		.attr({
+	    	'fill':'#000',
+	    	'stroke':'none',
+		})
+		.style({
+	    	'font-size':'11px'
+		});
 
 
         }
